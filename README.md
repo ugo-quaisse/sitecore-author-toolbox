@@ -1,2 +1,21 @@
 # sitecore-author-toolbox
 A google Chrome extension that brings a set of handy tools for Sitecore's authors.
+
+This extension will help you to save a lot of time by providing a set of handy tools into Sitecore Content Editor.
+
+• Displays Live URL of a page
+• Shows grouped error messages
+• Brings current language version flag in the active tab and the language menu
+• Adds support of native Drag and Drop upload to your media folders
+• Customizes the look and feel of admin/cache.aspx
+
+---
+
+If your Sitecore install is highly customised or not one of the tested versions, then certain features might not work.
+Requires that Sitecore is installed to the default directory of /sitecore/.
+
+---
+
+Tested on Sitecore versions:
+• 9.2.0 (rev. 002893)
+• 8.2 (rev. 180406)

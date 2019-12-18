@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Options</title>
+	<style type="text/css">
+		body {
+		  width: 400px;
+		  font-family: arial, verdana;
+		}
+		#message {
+			color:red;
+			font-size: 17px;
+			font-weight: bold;
+		}
+		#set {
+		    cursor: pointer;
+		    padding: 12px 40px;
+		    display: inline-block;
+		    margin: 15px 0px;
+		    text-transform: uppercase;
+		    letter-spacing: 1px;
+		    font-weight: 700;
+		    outline: none;
+		    position: relative;
+		    color: #fff;
+		    background: #DC291E;
+		    transition: none;
+		    border: 0px;
+		}
+
+		#set:hover {
+		    background: #474747;
+		    color: rgb(255, 255, 255);
+		    border: 0px; 
+		}
+	</style>
+</head>
+<body>
+	<h2>Hi, I'm Sitecore Author Toolbox extension</h2>
+	<div id="message"></div>
+
+	<p>1. Display URLs<br />
+	<input id="urls_true" type="radio" name="feature_urls" value="true"> true <input id="urls_false" type="radio" name="feature_urls" value="false"> false</p>
+
+	<p>2. Show flags<br />
+	<input id="flags_true" type="radio" name="feature_flags" value="true"> true <input id="flags_false" type="radio" name="feature_flags" value="false"> false</p>
+
+	<p>3. Show grouped errors<br />
+	<input id="errors_true" type="radio" name="feature_errors" value="true"> true <input id="errors_false" type="radio" name="feature_errors" value="false"> false</p>
+
+	<p>4. Enable Media folders Drag & Drop <br />
+	<input id="dragdrop_true" type="radio" name="feature_dragdrop" value="true"> true <input id="dragdrop_false" type="radio" name="feature_dragdrop" value="false"> false</p>
+
+	<p>5. Enable notificaiton on publish end <br />
+	<input id="notification_true" type="radio" name="feature_notification" value="true"> true <input id="notification_false" type="radio" name="feature_notification" value="false"> false</p>
+
+	<p>Debug mode:<br />
+	<input id="debug_false" type="radio" name="debug" value="false"> false <input id="debug_true" type="radio" name="debug" value="true"> true</p>
+
+	<button id="set">Save my preferences</button>
+
+	<hr />
+
+	<p>Crafted with love by Ugo Quaisse (Paris, France)<br />Follow me at <a href="https://twitter.com/uquaisse" target="_blank">https://twitter.com/uquaisse</a></p>
+	<p>Do you like me? Please post <a href="https://chrome.google.com/webstore/detail/mckfcmcdbgkgffdknpkaihjigmcnnbco/publish-accepted?authuser=0&hl=en" target="_blank">a review here</a> ;-)</p>
+
+	<script src="js/options.js"></script>
+</body>
+</html>

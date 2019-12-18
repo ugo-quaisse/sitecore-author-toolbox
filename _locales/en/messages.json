@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Sitecore Live URL",
+    "description": "Preview Sitecore URL in Content Editor"
+  },
+  "appDescription": {
+    "message": "Preview Sitecore URL in Content Editor",
+    "description": "Sitecore Live URL Chrome Extension"
+  }
+}

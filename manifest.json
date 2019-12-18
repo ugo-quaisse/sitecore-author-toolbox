@@ -1,0 +1,52 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"name": "Sitecore Author Toolbox",
+	"version": "0.2.4",
+	"manifest_version": 2,
+	"description": "A set of handy tools for Sitecore's Authors: Live URL, Grouped errors, Language icons, Desktop notifications, Media upload drag & drop.",
+	"icons": {
+		"128": "images/icon.png"
+	},
+	"permissions": ["storage", "activeTab", "notifications"],
+	"options_ui": {
+    	"page": "options.html",
+    	"open_in_tab": false
+  	},
+	"default_locale": "en",
+	"browser_action": {
+		"default_icon": "images/icon.png",
+		"default_popup": "options.html"
+	},
+	"commands": {
+      "_execute_browser_action": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+F",
+          "mac": "MacCtrl+Shift+F"
+        },
+        "description": "options.html"
+      }
+    },
+	"content_scripts": [
+		{
+			"matches": [
+				"http://*/sitecore/*",
+        		"https://*/sitecore/*"
+			],
+			"css": [
+				"css/style.css",
+				"js/tabulator/tabulator_semantic-ui.min.css"
+			],
+			"js": [
+				"js/tabulator/tabulator.min.js",
+				"js/toolbox.js",
+				"js/cache.js"
+			],
+			"run_at": "document_end",
+			"all_frames": true
+		}
+	],
+	"web_accessible_resources": [
+		"images/*"
+	]
+}

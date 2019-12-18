@@ -4,7 +4,7 @@
 	"name": "Sitecore Author Toolbox",
 	"version": "0.2.4",
 	"manifest_version": 2,
-	"description": "A set of handy tools for Sitecore's Authors: Live URL, Grouped errors, Language icons, Desktop notifications, Media upload drag & drop.",
+	"description": "A set of handy tools for Sitecore's Authors: Live URL, Grouped errors, Language icons, Notifications, Media drag & drop.",
 	"icons": {
 		"128": "images/icon.png"
 	},

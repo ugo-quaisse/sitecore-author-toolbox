@@ -15,6 +15,8 @@ document.body.onload = function() {
       } else {
         document.getElementById("debug_false").checked = true;
       }
+    } else {
+      document.getElementById("debug_false").checked = true;
     }
   });
   //Urls
@@ -25,6 +27,8 @@ document.body.onload = function() {
       } else {
         document.getElementById("urls_false").checked = true;
       }
+    } else {
+      document.getElementById("urls_true").checked = true;
     }
   });
   //Flags
@@ -35,6 +39,8 @@ document.body.onload = function() {
       } else {
         document.getElementById("flags_false").checked = true;
       }
+    } else {
+      document.getElementById("flags_true").checked = true;
     }
   });
   //Errors
@@ -45,6 +51,8 @@ document.body.onload = function() {
       } else {
         document.getElementById("errors_false").checked = true;
       }
+    } else {
+      document.getElementById("errors_true").checked = true;
     }
   });
   //Drag and drop
@@ -55,6 +63,8 @@ document.body.onload = function() {
       } else {
         document.getElementById("dragdrop_false").checked = true;
       }
+    } else {
+      document.getElementById("dragdrop_true").checked = true;
     }
   });
   //Notification
@@ -65,6 +75,8 @@ document.body.onload = function() {
       } else {
         document.getElementById("notification_false").checked = true;
       }
+    } else {
+      document.getElementById("notification_true").checked = true;
     }
   });
 }

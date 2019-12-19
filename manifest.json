@@ -2,7 +2,7 @@
 "update_url": "https://clients2.google.com/service/update2/crx",
 
 	"name": "Sitecore Author Toolbox",
-	"version": "0.2.4",
+	"version": "0.2.5",
 	"manifest_version": 2,
 	"description": "A set of handy tools for Sitecore's Authors: Live URL, Grouped errors, Language icons, Notifications, Media drag & drop.",
 	"icons": {
@@ -35,12 +35,15 @@
 			],
 			"css": [
 				"css/style.css",
+				"css/pace.css",
 				"js/tabulator/tabulator_semantic-ui.min.css"
+
 			],
 			"js": [
 				"js/tabulator/tabulator.min.js",
 				"js/toolbox.js",
-				"js/cache.js"
+				"js/cache.js",
+				"js/pace.min.js"
 			],
 			"run_at": "document_end",
 			"all_frames": true

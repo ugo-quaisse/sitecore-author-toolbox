@@ -8,11 +8,11 @@
 
 //User preferences
 var debug = false;
-var feature_urls = false;
-var feature_flags = false;
-var feature_errors = false;
-var feature_dragdrop = false;
-var feature_notification = false;
+var feature_urls = true;
+var feature_flags = true;
+var feature_errors = true;
+var feature_dragdrop = true;
+var feature_notification = true;
 
 
 //Helper functions
@@ -76,6 +76,18 @@ chrome.storage.sync.get(['feature_notification'], function(result) {
 });
 
 /*
+ * Pace progress bar
+ */
+// paceOptions = {
+//   elements: false,
+//   restartOnRequestAfter: false,
+//   restartOnPushState: false
+// }
+
+//Sitecore UI Fixes
+//document.querySelector ( ".scWebEditContentEditorButton" ).parentNode.style.zIndex = 10;
+
+/*
  * Extension main execution code
  */
 function _addEnvironmentLabel() {
@@ -104,7 +116,6 @@ function _addEnvironmentLabel() {
   //Sitecore Editor Frames
   let scEditorFrames = document.querySelector ( "#EditorFrames" );
 
-
   if (scQuickInfo) {
 
     /*
@@ -115,6 +126,8 @@ function _addEnvironmentLabel() {
     var temp = document.getElementsByClassName("scEditorHeaderQuickInfoInput");  
     var sitecoreItemID = temp[0].getAttribute("value");
     var sitecoreItemPath = temp[1].getAttribute("value");
+    var sitecoreItemPathOriginal = sitecoreItemPath;
+    var sitecoreData = false;
     sitecoreItemPath = sitecoreItemPath.split("/Home/");
     var sitecoreSite = sitecoreItemPath[0];
     sitecoreSite = sitecoreSite.split("/");
@@ -122,6 +135,11 @@ function _addEnvironmentLabel() {
 
     //Display name
 
+    //Check if item is data source
+    var temp = sitecoreItemPathOriginal.split("/");
+    if(temp[temp.length-1] == 'Data'){
+      var sitecoreData = true;
+    }
 
     //Sitecore variable
     var scLanguage = document.getElementById("scLanguage").getAttribute("value").toLowerCase();
@@ -139,10 +157,10 @@ function _addEnvironmentLabel() {
       sitecoreItemPath = encodeURI(window.location.origin + "/" + scLanguage + "/?sc_site=" + sitecoreSite).toLowerCase();
     }
 
-    //Check if a data source
+    //Check if item under data source (=component)
     var isDataSource = sitecoreItemPath.includes('/data/');
 
-    if(sitecoreItemPath != encodeURI(window.location.origin + "/" + scLanguage + "/"+ "?sc_site=" + sitecoreSite).toLowerCase() && !isDataSource) {
+    if(!sitecoreData && sitecoreItemPath != encodeURI(window.location.origin + "/" + scLanguage + "/"+ "?sc_site=" + sitecoreSite).toLowerCase() && !isDataSource) {
 
       //If not added yet
       if(!document.getElementById("scMessageBarUrl") && feature_urls) {

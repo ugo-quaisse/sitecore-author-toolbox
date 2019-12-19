@@ -1,3 +1,11 @@
+/*
+ * Sitecore Author Toolbox
+ * - A Google Chrome Extension -
+ * - created by Ugo Quaisse -
+ * https://twitter.com/uquaisse
+ * ugo.quaisse@gmail.com
+ */
+ 
 document.body.onload = function() {
   //Debug
   chrome.storage.sync.get(['debug'], function(result) {

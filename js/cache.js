@@ -1,3 +1,11 @@
+/*
+ * Sitecore Author Toolbox
+ * - A Google Chrome Extension -
+ * - created by Ugo Quaisse -
+ * https://twitter.com/uquaisse
+ * ugo.quaisse@gmail.com
+ */
+
 const multipliers = {
     'GB': 1024 * 1024 * 1024,
     'MB': 1024 * 1024,

@@ -6,6 +6,8 @@
  * ugo.quaisse@gmail.com
  */
 
+ /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
+
 const multipliers = {
     'GB': 1024 * 1024 * 1024,
     'MB': 1024 * 1024,
@@ -64,11 +66,14 @@ const clearAllButton = document.getElementsByName('c_clearAll')[0].cloneNode()
 form.appendChild(refreshButton)
 form.appendChild(clearAllButton)
 }
-const enhancedTable = document.createElement('div')
-enhancedTable.setAttribute('id', 'enhanced-table')
-document.body.appendChild(enhancedTable)
+
 
 if(window.location.pathname == "/sitecore/admin/cache.aspx") {
+    
+    const enhancedTable = document.createElement('div')
+    enhancedTable.setAttribute('id', 'enhanced-table')
+    document.body.appendChild(enhancedTable)
+
     const iconRam = chrome.runtime.getURL("images/ram.png")
     const data = getData()
     const table = new Tabulator('#enhanced-table', {

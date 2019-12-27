@@ -1,32 +1,22 @@
 {
-"update_url": "https://clients2.google.com/service/update2/crx",
-
 	"name": "Sitecore Author Toolbox",
-	"version": "0.2.5",
+	"version": "0.3.3",
 	"manifest_version": 2,
 	"description": "A set of handy tools for Sitecore's Authors: Live URL, Grouped errors, Language icons, Notifications, Media drag & drop.",
 	"icons": {
 		"128": "images/icon.png"
 	},
-	"permissions": ["storage", "activeTab", "notifications"],
-	"options_ui": {
-    	"page": "options.html",
-    	"open_in_tab": false
-  	},
 	"default_locale": "en",
-	"browser_action": {
-		"default_icon": "images/icon.png",
-		"default_popup": "options.html"
-	},
-	"commands": {
-      "_execute_browser_action": {
-        "suggested_key": {
-          "default": "Ctrl+Shift+F",
-          "mac": "MacCtrl+Shift+F"
-        },
-        "description": "options.html"
-      }
-    },
+	"background": {
+    	"scripts": ["js/background-min.js"],
+    	"persistent": false
+  	},
+	"permissions": [
+		"tabs",
+	    "storage",
+	    "notifications",
+	    "declarativeContent"
+	],
 	"content_scripts": [
 		{
 			"matches": [
@@ -36,20 +26,27 @@
 			"css": [
 				"css/style.css",
 				"css/pace.css",
-				"js/tabulator/tabulator_semantic-ui.min.css"
-
+				"css/tabulator_semantic-ui-min.css"
 			],
 			"js": [
-				"js/tabulator/tabulator.min.js",
-				"js/toolbox.js",
-				"js/cache.js",
-				"js/pace.min.js"
+				"js/tabulator-min.js",
+				"js/toolbox-min.js",
+				"js/cache-min.js"
 			],
-			"run_at": "document_end",
+			"run_at": "document_idle",
 			"all_frames": true
 		}
 	],
+	"options_ui": {
+    	"page": "options.html",
+    	"chrome_style": true
+  	},	
+	"page_action": {
+		"default_popup": "options.html",
+		"default_icon": "images/icon.png"
+	},
 	"web_accessible_resources": [
-		"images/*"
+		"images/*",
+		"css/dark/*"
 	]
 }

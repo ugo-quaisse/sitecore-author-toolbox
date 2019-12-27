@@ -5,6 +5,8 @@
  * https://twitter.com/uquaisse
  * ugo.quaisse@gmail.com
  */
+
+ /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
  
 document.body.onload = function() {
   //Debug
@@ -79,9 +81,22 @@ document.body.onload = function() {
       document.getElementById("notification_true").checked = true;
     }
   });
+  //Dark Mode
+  chrome.storage.sync.get(['feature_darkmode'], function(result) {
+    if (!chrome.runtime.error && result.feature_darkmode != undefined) {
+      if(result.feature_darkmode) {
+        document.getElementById("darkmode_true").checked = true;
+      } else {
+        document.getElementById("darkmode_false").checked = true;
+      }
+    } else {
+      document.getElementById("darkmode_true").checked = true;
+    }
+  });
 }
 
 document.getElementById("set").onclick = function() {
+  console.info('test');
   //Debug
   var value_debug =document.querySelector('input[name="debug"]:checked').value;
   value_debug = (value_debug == 'true');
@@ -117,6 +132,12 @@ document.getElementById("set").onclick = function() {
   value_notification = (value_notification == 'true');
   chrome.storage.sync.set({"feature_notification": value_notification}, function() {
     console.log('Notifications are set to ' + value_notification);
+  });
+  //Dark mode
+  var value_darkmode =document.querySelector('input[name="feature_darkmode"]:checked').value;
+  value_darkmode = (value_darkmode == 'true');
+  chrome.storage.sync.set({"feature_darkmode": value_darkmode}, function() {
+    console.log('Dark mode set to ' + value_darkmode);
   });
   document.getElementById("message").innerHTML = "Please reload the page to see your changes!";
 }

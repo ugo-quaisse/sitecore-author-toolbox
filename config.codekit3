@@ -25,14 +25,6 @@
 		"oAP": "/.travis.yml",
 		"oF": 0
 		},
-	"/0.2.5.zip": {
-		"cB": 0,
-		"ft": 8192,
-		"hM": 0,
-		"oA": 1,
-		"oAP": "/0.2.5.zip",
-		"oF": 1
-		},
 	"/_locales/en/messages.json": {
 		"ft": 524288,
 		"oA": 1,
@@ -3446,9 +3438,9 @@
 		"eSQ": 1,
 		"ft": 4096,
 		"hM": 0,
-		"oA": 0,
+		"oA": 1,
 		"oAP": "/README.html",
-		"oF": 0,
+		"oF": 1,
 		"oFM": 0,
 		"oS": 0,
 		"pHT": 0,

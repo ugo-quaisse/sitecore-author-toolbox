@@ -27,6 +27,10 @@ Tested on Sitecore versions:
 * 9.2.0 (rev. 002893)
 * 8.2 (rev. 180406)
 
+## Live version
+
+The latest version can be installed from the [Chrome Web Store here](https://chrome.google.com/webstore/detail/mckfcmcdbgkgffdknpkaihjigmcnnbco/publish-accepted?authuser=1&hl=en) 
+
 ## Support
 
 The official support Twitter account for the library is at <https://twitter.com/uquaisse>.

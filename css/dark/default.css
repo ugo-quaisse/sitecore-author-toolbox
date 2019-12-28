@@ -136,7 +136,7 @@ textarea {
   font-size: 12px;
   line-height: 1.42857143;
   color: #cccccc !important;
-  background-color: #191919 !important;;
+  background-color: #191919 !important;
   background-image: none;
   border: 1px solid #191919 !important;
   border-radius: 5px;
@@ -1152,7 +1152,7 @@ iframe.scContentControl {
 
 .scContentControlImageImage {
   padding: 8px 12px;
-  /* background-color: #fff; */
+  background-color: #181818 !important;
   text-align: center;
 }
 
@@ -3798,4 +3798,23 @@ span.sc-ext-fieldSearchClear {
 
 .scEditorTabControls input[type="text"].sc-ext-fieldSearch {
 	height: 30px !important;
+}
+.Metro {
+	background-color: #0e0e0e !important;
+}
+.reMode_html span, .reMode_selected.reMode_html span {
+	color: #333333 !important;
+}
+.reMode_design span, .reMode_selected.reMode_design span {
+	color: #333333 !important;
+}
+.reContentCell, .reContentCell iframe {
+	background-color: #191919 !important;
+}
+.RadForm.rfdTextarea textarea {
+	font-family: monospace !important;
+    line-height: 20px !important;
+}
+#ContentWrapper {
+    padding: 5px !important;
 }

@@ -8,15 +8,7 @@
 
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
-//User preferences
 var debug = false;
-var feature_urls = true;
-var feature_flags = true;
-var feature_errors = true;
-var feature_dragdrop = true;
-var feature_notification = true;
-var feature_darkmode = false;
-
 
 /*
  * Helper functions
@@ -38,83 +30,51 @@ function sendNotification(scTitle, scBody) {
 }
 
 /*
- * Read preferences
- */
-chrome.storage.sync.get(['debug'], function(result) {
-  if (!chrome.runtime.error && result.debug != undefined) { debug = result.debug; }
-});
-
-chrome.storage.sync.get(['feature_urls'], function(result) {
-  if (!chrome.runtime.error && result.feature_urls != undefined) { feature_urls = result.feature_urls; }
-});
-
-chrome.storage.sync.get(['feature_flags'], function(result) {
-  if (!chrome.runtime.error && result.feature_flags != undefined) { feature_flags = result.feature_flags; }
-});
-
-chrome.storage.sync.get(['feature_errors'], function(result) {
-  if (!chrome.runtime.error && result.feature_errors != undefined) { feature_errors = result.feature_errors; }
-});
-
-chrome.storage.sync.get(['feature_dragdrop'], function(result) {
-  if (!chrome.runtime.error && result.feature_dragdrop != undefined) { feature_dragdrop = result.feature_dragdrop; }
-});
-
-chrome.storage.sync.get(['feature_notification'], function(result) {
-  if (!chrome.runtime.error && result.feature_notification != undefined) { feature_notification = result.feature_notification; }
-});
-
-chrome.storage.sync.get(['feature_darkmode'], function(result) {
-  if (!chrome.runtime.error && result.feature_darkmode != undefined) { feature_darkmode = result.feature_darkmode; }
-});
-
-/*
- * Pace progress bar
- */
-// paceOptions = {
-//   elements: false,
-//   restartOnRequestAfter: false,
-//   restartOnPushState: false
-// }
-
-feature_darkmode = true;
-
-/*
  * Dark mode
  */
-if(feature_darkmode && window.location.pathname != "/sitecore/login") {
-  console.log('start');
-  var link = document.createElement("link");
-  link.type = "text/css";
-  link.rel = "stylesheet";
-  link.href =  chrome.runtime.getURL("css/dark/default-min.css");
-  document.getElementsByTagName("head")[0].appendChild(link);
+chrome.storage.sync.get(['feature_darkmode'], function(result) {
 
-  link = document.createElement("link");
-  link.type = "text/css";
-  link.rel = "stylesheet";
-  link.href =  chrome.runtime.getURL("css/dark/ribbon-min.css");
-  document.getElementsByTagName("head")[0].appendChild(link);
+  if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
 
-  link = document.createElement("link");
-  link.type = "text/css";
-  link.rel = "stylesheet";
-  link.href =  chrome.runtime.getURL("css/dark/contentmanager-min.css");
-  document.getElementsByTagName("head")[0].appendChild(link);
+  if(result.feature_darkmode && window.location.pathname != "/sitecore/login") {
+    var link = document.createElement("link");
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    link.href =  chrome.runtime.getURL("css/dark/default-min.css");
+    document.getElementsByTagName("head")[0].appendChild(link);
 
-  link = document.createElement("link");
-  link.type = "text/css";
-  link.rel = "stylesheet";
-  link.href =  chrome.runtime.getURL("css/dark/dialogs-min.css");
-  document.getElementsByTagName("head")[0].appendChild(link);
+    link = document.createElement("link");
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    link.href =  chrome.runtime.getURL("css/dark/ribbon-min.css");
+    document.getElementsByTagName("head")[0].appendChild(link);
 
-  link = document.createElement("link");
-  link.type = "text/css";
-  link.rel = "stylesheet";
-  link.href =  chrome.runtime.getURL("css/dark/gallery-min.css");
-  document.getElementsByTagName("head")[0].appendChild(link);
-  console.log('end');
-}
+    link = document.createElement("link");
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    link.href =  chrome.runtime.getURL("css/dark/contentmanager-min.css");
+    document.getElementsByTagName("head")[0].appendChild(link);
+
+    link = document.createElement("link");
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    link.href =  chrome.runtime.getURL("css/dark/dialogs-min.css");
+    document.getElementsByTagName("head")[0].appendChild(link);
+
+    link = document.createElement("link");
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    link.href =  chrome.runtime.getURL("css/dark/gallery-min.css");
+    document.getElementsByTagName("head")[0].appendChild(link);
+
+    link = document.createElement("link");
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    link.href =  chrome.runtime.getURL("css/dark/speak-min.css");
+    document.getElementsByTagName("head")[0].appendChild(link);
+  }
+
+});
 
 /*
  * Extension main execution code
@@ -191,14 +151,19 @@ function _addEnvironmentLabel() {
 
     if(!sitecoreData && sitecoreItemPath != encodeURI(window.location.origin + "/" + scLanguage + "/"+ "?sc_site=" + sitecoreSite).toLowerCase() && !isDataSource) {
 
-      //If not added yet
-      if(!document.getElementById("scMessageBarUrl") && feature_urls) {
-        //Prepare HTML (scInformation scWarning scError)
-        var scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + icon + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Sitecore Live URL</div><div class="scMessageBarText">If you want to preview this page in <b>' + scLanguageTxtLong + '</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + sitecoreItemPath + '" target="_blank" class="scMessageBarOption">Open this link</a> or try <a href="' + scUrl + '" target="_blank" class="scMessageBarOption">this alternative link</a></li></ul></div></div>'
+      
+      chrome.storage.sync.get(['feature_urls'], function(result) {
+        
+        //If not added yet
+        if(!document.getElementById("scMessageBarUrl") && result.feature_urls) {
+          //Prepare HTML (scInformation scWarning scError)
+          var scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + icon + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Sitecore Live URL</div><div class="scMessageBarText">If you want to preview this page in <b>' + scLanguageTxtLong + '</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + sitecoreItemPath + '" target="_blank" class="scMessageBarOption">Open this link</a> or try <a href="' + scUrl + '" target="_blank" class="scMessageBarOption">this alternative link</a></li></ul></div></div>'
 
-        //Insert message bar into Sitecore Content Editor
-        scEditorID.insertAdjacentHTML( 'afterend', scMessage );
-      }
+          //Insert message bar into Sitecore Content Editor
+          scEditorID.insertAdjacentHTML( 'afterend', scMessage );
+        }
+
+      });
 
     }
 
@@ -206,14 +171,19 @@ function _addEnvironmentLabel() {
 
       sitecoreItemPath = sitecoreItemPath.split("/data/");
 
-      //If not added yet
-      if(!document.getElementById("scMessageBarInfo") && feature_urls) {
-        //Prepare HTML (scInformation scWarning scError scOrange scGray scGreen)
-        scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + iconEdit + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing a data source...</div><div class="scMessageBarText">To see it, you need to add/edit it to your page via the</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + sitecoreItemPath[0] + '?sc_mode=edit" target="_blank" class="scMessageBarOption">Experience Editor</a> or <a href="" class="scMessageBarOption" onclick="javascript:return scForm.invoke(\'item:setlayoutdetails\', event)">Presentation details<a></li></ul></div></div>'
+      
+      chrome.storage.sync.get(['feature_urls'], function(result) {
 
-        //Insert message bar into Sitecore Content Editor
-        scEditorID.insertAdjacentHTML( 'afterend', scMessage );
-      }
+        //If not added yet
+        if(!document.getElementById("scMessageBarInfo") && result.feature_urls) {
+          //Prepare HTML (scInformation scWarning scError scOrange scGray scGreen)
+          var scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + iconEdit + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing a data source...</div><div class="scMessageBarText">To see it, you need to add/edit it to your page via the</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + sitecoreItemPath[0] + '?sc_mode=edit" target="_blank" class="scMessageBarOption">Experience Editor</a> or <a href="" class="scMessageBarOption" onclick="javascript:return scForm.invoke(\'item:setlayoutdetails\', event)">Presentation details<a></li></ul></div></div>'
+
+          //Insert message bar into Sitecore Content Editor
+          scEditorID.insertAdjacentHTML( 'afterend', scMessage );
+        }
+
+      });
 
     }
 
@@ -222,15 +192,19 @@ function _addEnvironmentLabel() {
      * 2. Insert Flag
      */
 
-    //If flags not yet injected in DOM
-    if(!document.getElementById("scFlag") && feature_flags) {
-      scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + flagsPath + scLanguage +'.png" style="width: 20px; vertical-align: middle; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + flagsPath + 'missing.png\';" />' );
-    }
+    chrome.storage.sync.get(['feature_flags'], function(result) {
 
-    if(feature_flags) {
-    //Insert Flags into Sitecore Language selector
-    scLanguageMenu.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + flagsPath + scLanguage +'.png" style="width: 15px; vertical-align: sub; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + flagsPath + 'missing.png\';" />' );
-    }
+      //If flags not yet injected in DOM
+      if(!document.getElementById("scFlag") && result.feature_flags) {
+        scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + flagsPath + scLanguage +'.png" style="width: 20px; vertical-align: middle; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + flagsPath + 'missing.png\';" />' );
+      }
+
+      if(result.feature_flags) {
+      //Insert Flags into Sitecore Language selector
+      scLanguageMenu.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + flagsPath + scLanguage +'.png" style="width: 15px; vertical-align: sub; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + flagsPath + 'missing.png\';" />' );
+      }
+
+    });
     
   }
 
@@ -238,26 +212,30 @@ function _addEnvironmentLabel() {
   /*
    * 3. Display Grouped Errors
    */
-  if(scErrors[0]!=undefined && feature_errors) {
+  chrome.storage.sync.get(['feature_errors'], function(result) {
 
-    //Prepare HTML
-    var scMessageErrors = '<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' + iconError + ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">'
-    
-    for (let item of scErrors) {
+    if(scErrors[0]!=undefined && result.feature_errors) {
 
-        if( item.getAttribute("src") != '/sitecore/shell/themes/standard/images/bullet_square_yellow.png') {
-          scMessageErrors += '<li class="scMessageBarOptionBullet" onclick="' + item.getAttribute("onclick") + '" style="cursor:pointer;">' + item.getAttribute("title") + '</li>';
-          count++;
-        }
+      //Prepare HTML
+      var scMessageErrors = '<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' + iconError + ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">'
+      
+      for (let item of scErrors) {
+
+          if( item.getAttribute("src") != '/sitecore/shell/themes/standard/images/bullet_square_yellow.png') {
+            scMessageErrors += '<li class="scMessageBarOptionBullet" onclick="' + item.getAttribute("onclick") + '" style="cursor:pointer;">' + item.getAttribute("title") + '</li>';
+            count++;
+          }
+      }
+      scMessageErrors += '</ul></div></div>';
+   
+      //Insert message bar into Sitecore Content Editor
+      if(count>0) {
+        scEditorID.insertAdjacentHTML( 'afterend', scMessageErrors );
+      }
+
     }
-    scMessageErrors += '</ul></div></div>';
- 
-    //Insert message bar into Sitecore Content Editor
-    if(count>0) {
-      scEditorID.insertAdjacentHTML( 'afterend', scMessageErrors );
-    }
 
-  }
+  });
 
 
   /*
@@ -287,42 +265,48 @@ function _addEnvironmentLabel() {
       }
     }
 
-    if(isMediaFolder && feature_dragdrop) {
-      scIframeMedia.onload = function() {
 
-        //Variables
-        scIframeSrc = scIframeSrc.split("id=%7B");
-        scIframeSrc = scIframeSrc[1].split("%7B");
-        var scMediaID = scIframeSrc[0];
+    chrome.storage.sync.get(['feature_dragdrop'], function(result) {
+      
+      if(isMediaFolder && result.feature_dragdrop) {
+        scIframeMedia.onload = function() {
 
-        //Prepare HTML
-        var scUploadMediaUrl = '/sitecore/client/Applications/Dialogs/UploadMediaDialog?fo=sitecore://master/{' + scMediaID + '}';
-        var scUploadMedia = '<iframe id="sitecorAuthorToolbox" class="sitecorAuthorToolbox" src="' + scUploadMediaUrl + '" style="width:100%; height:500px; margin-top: -60px; resize: vertical;"></iframe>';
-        scIframeMedia.setAttribute("style", "margin-top: -60px;");
+          //Variables
+          scIframeSrc = scIframeSrc.split("id=%7B");
+          scIframeSrc = scIframeSrc[1].split("%7B");
+          var scMediaID = scIframeSrc[0];
+
+          //Prepare HTML
+          var scUploadMediaUrl = '/sitecore/client/Applications/Dialogs/UploadMediaDialog?fo=sitecore://master/{' + scMediaID + '}';
+          var scUploadMedia = '<iframe id="sitecorAuthorToolbox" class="sitecorAuthorToolbox" src="' + scUploadMediaUrl + '" style="width:100%; height:500px; margin-top: -60px; resize: vertical;"></iframe>';
+          scIframeMedia.setAttribute("style", "margin-top: -60px;");
+          
+          //Check if Drag and Drop IFrame already exists in DOM
+          var scUploadDragDrop = document.getElementById("sitecorAuthorToolbox");
+          if(scUploadDragDrop){
+            //Delete existing Drag and Drop iFrame
+            scUploadDragDrop.remove();
+            if(debug) { console.info("Remove iFrame from DOM"); }
+          }    
+          
+          //Insert new button
+          scEditorFrames.insertAdjacentHTML( 'afterbegin', scUploadMedia );
+      
+        }
+      } else {
         
-        //Check if Drag and Drop IFrame already exists in DOM
+        //Remove iFrame Drang Drop if not on a Media Folder
         var scUploadDragDrop = document.getElementById("sitecorAuthorToolbox");
-        if(scUploadDragDrop){
+        if(scUploadDragDrop) {
           //Delete existing Drag and Drop iFrame
           scUploadDragDrop.remove();
-          if(debug) { console.info("Remove iFrame from DOM"); }
-        }    
-        
-        //Insert new button
-        scEditorFrames.insertAdjacentHTML( 'afterbegin', scUploadMedia );
-    
-      }
-    } else {
-      
-      //Remove iFrame Drang Drop if not on a Media Folder
-      var scUploadDragDrop = document.getElementById("sitecorAuthorToolbox");
-      if(scUploadDragDrop) {
-        //Delete existing Drag and Drop iFrame
-        scUploadDragDrop.remove();
-        if(debug) { console.info("Remove iFrame from DOM (no folder)"); }
+          if(debug) { console.info("Remove iFrame from DOM (no folder)"); }
+        }
+
       }
 
-    }
+    });
+
   }
 
   if (debug === true) {
@@ -396,12 +380,17 @@ var elementObserver2 = new MutationObserver(function(e) {
     "attributes" == e.type && _addEnvironmentLabel();
   });
 
-  if(feature_notification) {
-    var notificationTitle = element2.getElementsByClassName("DialogHeader").item(0).innerHTML;
-    var notificationSubTitle = element2.getElementsByClassName("sc-text-largevalue").item(0).innerHTML;
-    var notificationBody = element2.getElementsByClassName("scFieldLabel").item(0).innerHTML
-    sendNotification(notificationSubTitle,notificationBody);
-  }
+  chrome.storage.sync.get(['feature_notification'], function(result) {
+
+    if(result.feature_notification) {
+      var notificationTitle = element2.getElementsByClassName("DialogHeader").item(0).innerHTML;
+      var notificationSubTitle = element2.getElementsByClassName("sc-text-largevalue").item(0).innerHTML;
+      var notificationBody = element2.getElementsByClassName("scFieldLabel").item(0).innerHTML
+      sendNotification(notificationSubTitle,notificationBody);
+    }
+
+  });
+
   if(debug) { console.info('Publish Done'); }
    
 });

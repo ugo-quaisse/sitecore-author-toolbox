@@ -1,6 +1,6 @@
 {
 	"name": "Sitecore Author Toolbox",
-	"version": "0.3.3",
+	"version": "0.3.7",
 	"manifest_version": 2,
 	"description": "A set of handy tools for Sitecore's Authors: Live URL, Grouped errors, Language icons, Notifications, Media drag & drop.",
 	"icons": {
@@ -24,13 +24,12 @@
         		"https://*/sitecore/*"
 			],
 			"css": [
-				"css/style.css",
-				"css/pace.css",
+				"css/style-min.css",
 				"css/tabulator_semantic-ui-min.css"
 			],
 			"js": [
-				"js/tabulator-min.js",
 				"js/toolbox-min.js",
+				"js/tabulator-min.js",
 				"js/cache-min.js"
 			],
 			"run_at": "document_idle",

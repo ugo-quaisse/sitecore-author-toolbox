@@ -1290,6 +1290,10 @@ a.scSearchLink img {
     border-radius: 5px !important;
 }
 
+.defaultFieldEditorsFrameContainer > html > body {
+  background-color: #191919 !important;
+}
+
 .scEditorFieldMarkerInputCell .scContentControlTreelist, .scEditorFieldMarkerInputCell .scContentControlTreelist_Active {
     height: 220px;
     padding-bottom: 5px;

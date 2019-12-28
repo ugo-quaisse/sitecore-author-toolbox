@@ -9,18 +9,6 @@
  /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
  
 document.body.onload = function() {
-  //Debug
-  chrome.storage.sync.get(['debug'], function(result) {
-    if (!chrome.runtime.error && result.debug != undefined) {
-      if(result.debug) {
-        document.getElementById("debug_true").checked = true;
-      } else {
-        document.getElementById("debug_false").checked = true;
-      }
-    } else {
-      document.getElementById("debug_false").checked = true;
-    }
-  });
   //Urls
   chrome.storage.sync.get(['feature_urls'], function(result) {
     if (!chrome.runtime.error && result.feature_urls != undefined) {
@@ -90,54 +78,47 @@ document.body.onload = function() {
         document.getElementById("darkmode_false").checked = true;
       }
     } else {
-      document.getElementById("darkmode_true").checked = true;
+      document.getElementById("darkmode_true").checked = false;
     }
   });
 }
 
 document.getElementById("set").onclick = function() {
-  console.info('test');
-  //Debug
-  var value_debug =document.querySelector('input[name="debug"]:checked').value;
-  value_debug = (value_debug == 'true');
-  chrome.storage.sync.set({"debug": value_debug}, function() {
-    console.log('Debug is set to ' + value_debug);
-  });
   //URLs
   var value_urls =document.querySelector('input[name="feature_urls"]:checked').value;
   value_urls = (value_urls == 'true');
   chrome.storage.sync.set({"feature_urls": value_urls}, function() {
-    console.log('Urls are set to ' + value_urls);
+    console.info('Urls are set to ' + value_urls);
   });
   //Flags
   var value_flags =document.querySelector('input[name="feature_flags"]:checked').value;
   value_flags = (value_flags == 'true');
   chrome.storage.sync.set({"feature_flags": value_flags}, function() {
-    console.log('Flags are set to ' + value_flags);
+    console.info('Flags are set to ' + value_flags);
   });
   //Errors
   var value_errors =document.querySelector('input[name="feature_errors"]:checked').value;
   value_errors = (value_errors == 'true');
   chrome.storage.sync.set({"feature_errors": value_errors}, function() {
-    console.log('Errors are set to ' + value_errors);
+    console.info('Errors are set to ' + value_errors);
   });
   //Drag and Drop
   var value_dragdrop =document.querySelector('input[name="feature_dragdrop"]:checked').value;
   value_dragdrop = (value_dragdrop == 'true');
   chrome.storage.sync.set({"feature_dragdrop": value_dragdrop}, function() {
-    console.log('Drag and drop is set to ' + value_dragdrop);
+    console.info('Drag and drop is set to ' + value_dragdrop);
   });
   //Notificattion
   var value_notification =document.querySelector('input[name="feature_notification"]:checked').value;
   value_notification = (value_notification == 'true');
   chrome.storage.sync.set({"feature_notification": value_notification}, function() {
-    console.log('Notifications are set to ' + value_notification);
+    console.info('Notifications are set to ' + value_notification);
   });
   //Dark mode
   var value_darkmode =document.querySelector('input[name="feature_darkmode"]:checked').value;
   value_darkmode = (value_darkmode == 'true');
   chrome.storage.sync.set({"feature_darkmode": value_darkmode}, function() {
-    console.log('Dark mode set to ' + value_darkmode);
+    console.info('Dark mode set to ' + value_darkmode);
   });
-  document.getElementById("message").innerHTML = "Please reload the page to see your changes!";
+  document.getElementById("message").innerHTML = "Reload the page to see your changes...";
 }

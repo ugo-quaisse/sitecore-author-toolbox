@@ -2,15 +2,21 @@
 <html>
 <head>
 	<title>Options</title>
+
+	<link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+
 	<style type="text/css">
 		body {
-		  width: 300px;
+		  width: 400px;
 		  font-family: arial, verdana;
+		  margin: 0px;
+		  padding: 0px;
 		}
 		#message {
-			color:red;
-			font-size: 17px;
-			font-weight: bold;
+			color:#F20D00;
+			font-size: 20px;
+			text-align: center;
+			font-family: 'Lato', sans-serif;
 		}
 		#set {
 		    cursor: pointer;
@@ -26,6 +32,7 @@
 		    background: #DC291E;
 		    transition: none;
 		    border: 0px;
+		    text-shadow: none;
 		}
 
 		#set:hover {
@@ -33,40 +40,87 @@
 		    color: rgb(255, 255, 255);
 		    border: 0px; 
 		}
+		#banner {
+			width: 100%;
+			background-color: #F20D00;
+			height: 75px;
+    		text-align: center;
+    		padding: 40px 0px 0px 0px;
+		}
+		#banner > img {
+			width: 150px;
+		}
+		#intro {
+			text-align: center;
+    		padding: 50px 0px 0px 0px;
+    		font-size: 30px;
+    		font-family: 'Lato', sans-serif;
+		}
+		#main {
+			padding: 0px 25px;
+		}
+		#save {
+			text-align: center;
+		}
+		#footer {
+			padding: 0px 25px;
+		}
 	</style>
+
 </head>
 <body>
-	<h2>Hi, I'm Sitecore Author Toolbox extension</h2>
+	<div id="banner">
+		<img src="images/icon_round.png">
+	</div>
+	<div id="intro">
+		<h2>Hello, I'm Sitecore Author Toolbox!</h2>
+	</div>
+
+	<div id="main">	
+
+		<p><b>Live URL</b><br />
+			<input id="urls_true" type="radio" name="feature_urls" value="true"> Yes
+			<input id="urls_false" type="radio" name="feature_urls" value="false"> No
+		</p>
+
+		<p><b>Language flags</b><br />
+			<input id="flags_true" type="radio" name="feature_flags" value="true"> Yes
+			<input id="flags_false" type="radio" name="feature_flags" value="false"> No
+		</p>
+
+		<p><b>Grouped errors</b><br />
+			<input id="errors_true" type="radio" name="feature_errors" value="true"> Yes
+			<input id="errors_false" type="radio" name="feature_errors" value="false"> No
+		</p>
+
+		<p><b>Media Drag & Drop</b><br />
+			<input id="dragdrop_true" type="radio" name="feature_dragdrop" value="true"> Yes
+			<input id="dragdrop_false" type="radio" name="feature_dragdrop" value="false"> No
+		</p>
+
+		<p><b>Publish notificaiton</b><br />
+			<input id="notification_true" type="radio" name="feature_notification" value="true"> Yes
+			<input id="notification_false" type="radio" name="feature_notification" value="false"> No
+		</p>
+
+		<p><b>Sitecore Theme</b><br />
+			<input id="darkmode_true" type="radio" name="feature_darkmode" value="true"> Dark mode
+			<input id="darkmode_false" type="radio" name="feature_darkmode" value="false"> Light mode
+		</p>
+	</div>
+
 	<div id="message"></div>
 
-	<p>1. Display URLs<br />
-	<input id="urls_true" type="radio" name="feature_urls" value="true"> true <input id="urls_false" type="radio" name="feature_urls" value="false"> false</p>
-
-	<p>2. Show flags<br />
-	<input id="flags_true" type="radio" name="feature_flags" value="true"> true <input id="flags_false" type="radio" name="feature_flags" value="false"> false</p>
-
-	<p>3. Show grouped errors<br />
-	<input id="errors_true" type="radio" name="feature_errors" value="true"> true <input id="errors_false" type="radio" name="feature_errors" value="false"> false</p>
-
-	<p>4. Enable Media folders Drag & Drop <br />
-	<input id="dragdrop_true" type="radio" name="feature_dragdrop" value="true"> true <input id="dragdrop_false" type="radio" name="feature_dragdrop" value="false"> false</p>
-
-	<p>5. Enable notificaiton on publish end <br />
-	<input id="notification_true" type="radio" name="feature_notification" value="true"> true <input id="notification_false" type="radio" name="feature_notification" value="false"> false</p>
-
-	<p>6. Dark Mode UI <br />
-	<input id="darkmode_true" type="radio" name="feature_darkmode" value="true"> enable <input id="darkmode_false" type="radio" name="feature_darkmode" value="false"> disabled</p>
-
-	<p>Debug mode:<br />
-	<input id="debug_false" type="radio" name="debug" value="false"> false <input id="debug_true" type="radio" name="debug" value="true"> true</p>
-
-	<button id="set">Save my preferences</button>
+	<div id="save">
+		<button id="set">Save my preferences</button>
+	</div>
 
 	<hr />
 
-	<p>Crafted with love by Ugo Quaisse (Paris, France)<br />Follow me at <a href="https://twitter.com/uquaisse" target="_blank">https://twitter.com/uquaisse</a></p>
-	<p>Do you like me? Please post <a href="https://chrome.google.com/webstore/detail/mckfcmcdbgkgffdknpkaihjigmcnnbco/publish-accepted?authuser=0&hl=en" target="_blank">a review here</a> ;-)</p>
-
-	<script src="js/options.js"></script>
+	<div id="footer">
+		<p>Crafted with love by Ugo Quaisse (Paris, France)<br />Follow me at <a href="https://twitter.com/uquaisse" target="_blank">https://twitter.com/uquaisse</a></p>
+		<p>Do you like me? Please post <a href="https://chrome.google.com/webstore/detail/mckfcmcdbgkgffdknpkaihjigmcnnbco/publish-accepted?authuser=0&hl=en" target="_blank">a review here</a> ;-)</p>
+	</div>
+	<script src="js/options-min.js"></script>
 </body>
 </html>

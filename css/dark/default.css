@@ -355,7 +355,7 @@ input[type="submit"] {
         background-repeat: repeat-x;
         border-color: #000000 !important;
         background-color: #000000 !important;
-        color: #111111 !important;
+        color: #248cb4 !important;
         /* background-position: 0 0; */
         /* background-image: linear-gradient(to bottom, #f0f0f0 0%, #f0f0f0 100%); */
     }
@@ -364,16 +364,16 @@ input[type="submit"] {
     .scButton:active,
     input[type="submit"]:active {
         background-color: #d1d1d1;
-        background-image: -webkit-linear-gradient(top, #d9d9d9 0%, #d9d9d9 100%);
-        background-image: -o-linear-gradient(top, #d9d9d9 0%, #d9d9d9 100%);
-        background-image: linear-gradient(to bottom, #d9d9d9 0%, #d9d9d9 100%);
+        background-image: -webkit-linear-gradient(top, transparent 0%, transparent 100%);
+        background-image: linear-gradient(to bottom, transparent 0%, transparent 100%);
         background-repeat: repeat-x;
         -webkit-box-shadow: inset 0 0px 6px #cccccc !important;
-        box-shadow: inset 0 0px 6px #cccccc !important;
+        box-shadow: inset 0 0px 6px transparent !important;
         background-image: none;
         border-color: #bdbdbd;
-        -webkit-box-shadow: inset 0 3px 3px #b0b0b0;
-        box-shadow: inset 0 3px 3px #b0b0b0;
+        -webkit-box-shadow: inset 0 3px 3px transparent;
+        box-shadow: inset 0 3px 3px transparent;
+        color: #cccccc !important;
     }
 
 
@@ -2720,7 +2720,7 @@ input[type="text"][readonly].scComboboxEdit {
 }
 
 .scTabs {
-  background-color: #fff;
+  background-color: #111111 !important;
   position: absolute;
   z-index: 9;
   top: 40px;
@@ -2746,7 +2746,7 @@ input[type="text"][readonly].scComboboxEdit {
 .scTab_Hover,
 .scTabActive,
 .scTabActive_Hover {
-  background-color: #fff;
+  background-color: #333333 !important;
   cursor: pointer;
   line-height: 39px;
   padding: 0 20px;

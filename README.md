@@ -5,11 +5,13 @@ A google Chrome extension that brings a set of handy tools for Sitecore's author
 
 This extension will help you to save a lot of time by providing a set of handy tools into Sitecore Content Editor.
 
-• Displays Live URL of a page
-• Shows grouped error messages
-• Brings current language version flag in the active tab and the language menu
-• Adds support of native Drag and Drop upload to your media folders
-• Customizes the look and feel of admin/cache.aspx
+* Displays Live URL of a page
+* Shows grouped error messages
+* Brings current language version flag in the active tab and the language menu
+* Adds support of native Drag and Drop upload to your media folders
+* Customizes the look and feel of admin/cache.aspx
+* Dark mode for Sitecore UI
+* Desktop notifications
 
 ## Information
 

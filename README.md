@@ -15,7 +15,7 @@ This extension will help you to save a lot of time by providing a set of handy t
 * Dark mode for Sitecore UI
 * Desktop notifications
 
-## Information
+## Sitecore installation directory
 
 If your Sitecore install is highly customised or not one of the tested versions, then certain features might not work.
 Requires that Sitecore is installed to the default directory of /sitecore/.
@@ -24,8 +24,8 @@ Requires that Sitecore is installed to the default directory of /sitecore/.
 ## Supported Sitecore version
 
 Tested on Sitecore versions:
-• 9.2.0 (rev. 002893)
-• 8.2 (rev. 180406)
+* 9.2.0 (rev. 002893)
+* 8.2 (rev. 180406)
 
 ## Support
 

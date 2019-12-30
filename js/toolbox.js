@@ -30,13 +30,24 @@ function sendNotification(scTitle, scBody) {
 }
 
 /*
+ * Fadein onload
+ */
+var link = document.createElement("link");
+link.type = "text/css";
+link.rel = "stylesheet";
+link.href =  chrome.runtime.getURL("css/onload-min.css");
+document.getElementsByTagName("head")[0].appendChild(link);
+
+/*
  * Dark mode
  */
 chrome.storage.sync.get(['feature_darkmode'], function(result) {
 
   if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
 
-  if(result.feature_darkmode && window.location.pathname != "/sitecore/login") {
+  if(debug) { console.log("Pathname: "+window.location.pathname); }
+
+  if(result.feature_darkmode && window.location.pathname != "/sitecore/login" && window.location.pathname != "/sitecore/client/Applications/ExperienceEditor/Ribbon.aspx") {
     var link = document.createElement("link");
     link.type = "text/css";
     link.rel = "stylesheet";
@@ -72,9 +83,13 @@ chrome.storage.sync.get(['feature_darkmode'], function(result) {
     link.rel = "stylesheet";
     link.href =  chrome.runtime.getURL("css/dark/speak-min.css");
     document.getElementsByTagName("head")[0].appendChild(link);
+
+    // chrome.browserAction.setBadgeText({text:'Dark'});
+    // chrome.browserAction.setBadgeBackgroundColor({color:"#DC291E"});
   }
 
 });
+
 
 /*
  * Extension main execution code
@@ -104,6 +119,10 @@ function _addEnvironmentLabel() {
   var scErrors = document.getElementsByClassName("scValidationMarkerIcon");
   //Sitecore Editor Frames
   let scEditorFrames = document.querySelector ( "#EditorFrames" );
+  //Sitecore Search Panel
+  let scSearchPanel = document.getElementById ( "SearchPanel" );
+  //Sitecore Content Tree
+  let scContentTree= document.getElementById ( "ContentTreeHolder" );
 
   if (scQuickInfo) {
 
@@ -177,7 +196,7 @@ function _addEnvironmentLabel() {
         //If not added yet
         if(!document.getElementById("scMessageBarInfo") && result.feature_urls) {
           //Prepare HTML (scInformation scWarning scError scOrange scGray scGreen)
-          var scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + iconEdit + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing a data source...</div><div class="scMessageBarText">To see it, you need to add/edit it to your page via the</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + sitecoreItemPath[0] + '?sc_mode=edit" target="_blank" class="scMessageBarOption">Experience Editor</a> or <a href="" class="scMessageBarOption" onclick="javascript:return scForm.invoke(\'item:setlayoutdetails\', event)">Presentation details<a></li></ul></div></div>'
+          var scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + iconEdit + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing a data source...</div><div class="scMessageBarText">To see it, you need to add/edit it to your page via the</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + sitecoreItemPath[0] + '?sc_mode=edit" target="_blank" class="scMessageBarOption">Experience Editor</a></li></ul></div></div>'
 
           //Insert message bar into Sitecore Content Editor
           scEditorID.insertAdjacentHTML( 'afterend', scMessage );
@@ -216,6 +235,7 @@ function _addEnvironmentLabel() {
 
     if(scErrors[0]!=undefined && result.feature_errors) {
 
+      // Update on load
       //Prepare HTML
       var scMessageErrors = '<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' + iconError + ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">'
       
@@ -232,6 +252,43 @@ function _addEnvironmentLabel() {
       if(count>0) {
         scEditorID.insertAdjacentHTML( 'afterend', scMessageErrors );
       }
+
+
+      //Update on change
+      var target = document.querySelector( ".scValidatorPanel" )
+      var observer = new MutationObserver(function(mutations) {
+
+        count = 0;
+
+        //Prepare HTML
+        var scMessageErrors = '<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' + iconError + ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">'
+        
+        for (let item of scErrors) {
+
+            if( item.getAttribute("src") != '/sitecore/shell/themes/standard/images/bullet_square_yellow.png') {
+              scMessageErrors += '<li class="scMessageBarOptionBullet" onclick="' + item.getAttribute("onclick") + '" style="cursor:pointer;">' + item.getAttribute("title") + '</li>';
+              count++;
+            }
+        }
+        scMessageErrors += '</ul></div></div>';
+          
+        if(count>0) {
+          //Insert message bar into Sitecore Content Editor
+          scEditorID.insertAdjacentHTML( 'afterend', scMessageErrors );
+        } else {
+          //Delete all errors
+          var element = document.getElementById("scMessageBarError");
+          if(element) { element.parentNode.removeChild(element); }
+        }
+
+        if(debug) { console.log("Changement: "+document.getElementsByClassName("scValidatorPanel")); }
+
+
+      });
+      // configuration of the observer:
+      var config = { attributes: true, childList: true, characterData: true };
+      // pass in the target node, as well as the observer options
+      observer.observe(target, config);
 
     }
 
@@ -260,7 +317,7 @@ function _addEnvironmentLabel() {
       isMediaFolder = scIframeSrc.includes('/Media/');
       count++;
       if (isMediaFolder) {
-        //console.info("SRC of MEDIA IFRAME "+count+" - "+scIframeSrc);
+        if(debug) { console.info("SRC of MEDIA IFRAME "+count+" - "+scIframeSrc); }
         break;
       }
     }
@@ -279,7 +336,7 @@ function _addEnvironmentLabel() {
           //Prepare HTML
           var scUploadMediaUrl = '/sitecore/client/Applications/Dialogs/UploadMediaDialog?fo=sitecore://master/{' + scMediaID + '}';
           var scUploadMedia = '<iframe id="sitecorAuthorToolbox" class="sitecorAuthorToolbox" src="' + scUploadMediaUrl + '" style="width:100%; height:500px; margin-top: -60px; resize: vertical;"></iframe>';
-          scIframeMedia.setAttribute("style", "margin-top: -60px;");
+          scIframeMedia.setAttribute("style", "margin-top: -30px;");
           
           //Check if Drag and Drop IFrame already exists in DOM
           var scUploadDragDrop = document.getElementById("sitecorAuthorToolbox");
@@ -309,14 +366,9 @@ function _addEnvironmentLabel() {
 
   }
 
-  if (debug === true) {
-    console.info("Media folder:" + isMediaFolder);
-    console.info("Active language: " + scLanguage);
-  }
-
 
   /*
-   * 5. Desktop notificaitons on Publish end
+   * 5. Desktop notificaitons (Publish)
    */
   if (!window.Notification) {
       console.info('Browser does not support notifications.');
@@ -333,43 +385,105 @@ function _addEnvironmentLabel() {
                  console.info('User blocked notifications.');
              }
           }).catch(function(err) {
-              console.error(err);
+              console.warn(err);
           });
       }
+  }
+
+  /*
+   * 6. My Shortcut
+   */
+
+  chrome.storage.sync.get(['feature_favorites'], function(result) {
+
+    if(result.feature_favorites == undefined || result.feature_favorites) {
+
+      var scFavoritesIframe = document.getElementById("sitecorAuthorToolboxFav");
+
+      //If already there
+      if(scFavoritesIframe) { scFavoritesIframe.remove(); }
+        
+        //Prepare HTML
+        // var scMyShortcut = '<div id="scFavorites" style="padding: 10px 20px;"><b>My favorite:</b> <a href="" onclick="javascript: return scForm.invoke(\'item:load(id=' + scShortcutItemId + ',language=' + scLanguage + ',version=1)\')">Home</a></div>';
+        var scFavoritesUrl = '../default.aspx?xmlcontrol=Gallery.Favorites&id=' + sitecoreItemID + '&la=' + scLanguage + '&vs=1';      
+        var scMyShortcut = '<iframe id="sitecorAuthorToolboxFav" class="sitecorAuthorToolboxFav" src="' + scFavoritesUrl + '" style="width:100%; height:125px; margin-top: 0px; resize: vertical;"></iframe>';
+
+        //Insert HTML
+        scContentTree.insertAdjacentHTML( 'afterend', scMyShortcut );
+      }
+
+  });
+
+  if (debug === true) {
+    console.info("Item ID: " + sitecoreItemID);
+    console.info("Language: " + scLanguage);
+    console.info("Version: na");
   }
 
 }
 //End
 
+
 //TO DO check onchange to display errors without save (Sitecore does an ajax call to get errors, there is no way to get the result of this call)
 // $("#ValidatorPanelF071072BBAD6468FB2C35DD754C06D8B").bind("DOMSubtreeModified", function() {
 //     alert("tree changed");
-// });
-
-
+// })
 
 /*
  * Chrome extention and JS Observers
  */
-
 //On change
 var MutationObserver = window.MutationObserver;
 
 var elementObserver = new MutationObserver(function(e) {
-  if(debug) { console.info('Change'); }
-  //var scIframe = document.getElementById('EditorFrames');
-  //scIframe.addEventListener("focusout", () => test());
+  if(debug) { console.info('**Update UI**'); }
+
+  //Sitecore Variables
+  var temp = document.getElementsByClassName("scEditorHeaderQuickInfoInput");  
+  var sitecoreItemID = temp[0].getAttribute("value");
+  var scLanguage = document.getElementById("scLanguage").getAttribute("value").toLowerCase();
+  
+  //Set ItemID (Storage)
+  chrome.storage.sync.set({"scItemID": sitecoreItemID}, function() {
+    if(debug) { console.info(">> Store ItemID: " + sitecoreItemID); }
+  });
+  chrome.storage.sync.set({"scLanguage": scLanguage}, function() {
+    if(debug) { console.info(">> Store Language: " + scLanguage); }
+  });
+
+
   e.forEach(function(e) {
-    console.info(e);
     "attributes" == e.type && _addEnvironmentLabel();
   });
 });
 
-//On first load
+//Reload
 var element = document.getElementById("scLanguage");
 
 if(element){
-  if(debug) { console.info('First load'); }
+  if(debug) { console.info('**Reload**'); }
+
+  //Sitecore Variables
+  var scLanguage = element.getAttribute("value").toLowerCase();
+
+  //Get itemID (Storage)
+  chrome.storage.sync.get(['scItemID','feature_reloadnode'], function(result) {
+    if (!chrome.runtime.error && result.scItemID != undefined) {
+      if(result.scItemID && result.feature_reloadnode == true) {
+
+        //Load node by code injection
+        var actualCode = `scForm.invoke("item:load(id=` + result.scItemID + `,language=` + scLanguage + `,version=1)");`;
+        var script = document.createElement('script');
+        script.textContent = actualCode;
+        (document.head||document.documentElement).appendChild(script);
+        script.remove();
+
+        if(debug) { console.info(">> User Preference -----> " + result.feature_reloadnode); }
+        if(debug) { console.info(">> GoTo ItemID ----->  " + result.scItemID); }
+      }
+    }
+  });
+
   _addEnvironmentLabel();
   elementObserver.observe(element, { attributes: !0 });
 }
@@ -391,7 +505,7 @@ var elementObserver2 = new MutationObserver(function(e) {
 
   });
 
-  if(debug) { console.info('Publish Done'); }
+  if(debug) { console.info('**Publish Done**'); }
    
 });
 
@@ -399,7 +513,7 @@ var elementObserver2 = new MutationObserver(function(e) {
 var element2 = document.getElementById("LastPage");
 
 if(element2){
-  if(debug) { console.info('Open publish'); }
+  if(debug) { console.info('**Open dialog**'); }
   _addEnvironmentLabel();
   elementObserver2.observe(element2, { attributes: !0 });
 }

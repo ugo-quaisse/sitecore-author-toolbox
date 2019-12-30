@@ -3,8 +3,13 @@
  * ribbon.css
  */
 
+#RibbonPanel {
+    border-bottom: 1px solid #333333 !important;
+}
+
 .RibbonPanel {
     clear:both !important;
+    border-bottom: 1px solid #333333 !important;
 }
 
 
@@ -403,8 +408,8 @@ a:hover .scRibbonToolbarSmallButtonPrefix {
     float: left !important;
     padding: 5px 8px !important;
     white-space: nowrap !important;
-    background-color:#f7f7f7 !important;
-    border: 1px solid #ccc !important;
+    background-color:#111111 !important;
+    border: 1px solid #111111 !important;
     margin: 2px 2px 0px 1px !important;
     height: 36px !important;
 }
@@ -1012,9 +1017,9 @@ a.scRibbonToolbarSmallButtonDown:hover > span,
     .scRibbon a.scRibbonToolbarSmallComboButtonRight:hover,
     .scRibbon a.scRibbonToolbarSmallComboButtonRight:hover,
     .scRibbonToolbarLargeComboButtonDown:hover {
-        background-color: #a2d8ef !important;
+        background-color: #40a4cc !important;
         color: #131313 !important;
-        border-radius: 3px !important;
+        border-radius: 2px !important;
     }
 
     .scRibbonToolbarLargeButtonDown:hover > span,

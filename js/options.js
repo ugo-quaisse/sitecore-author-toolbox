@@ -78,7 +78,31 @@ document.body.onload = function() {
         document.getElementById("darkmode_false").checked = true;
       }
     } else {
-      document.getElementById("darkmode_true").checked = false;
+      document.getElementById("darkmode_false").checked = true;
+    }
+  });
+  //Favorites bar
+  chrome.storage.sync.get(['feature_favorites'], function(result) {
+    if (!chrome.runtime.error && result.feature_favorites != undefined) {
+      if(result.feature_favorites) {
+        document.getElementById("favorites_true").checked = true;
+      } else {
+        document.getElementById("favorites_false").checked = true;
+      }
+    } else {
+      document.getElementById("favorites_true").checked = true;
+    }
+  });
+  //reload from where you left
+  chrome.storage.sync.get(['feature_reloadnode'], function(result) {
+    if (!chrome.runtime.error && result.feature_reloadnode != undefined) {
+      if(result.feature_reloadnode) {
+        document.getElementById("reloadnode_true").checked = true;
+      } else {
+        document.getElementById("reloadnode_false").checked = true;
+      }
+    } else {
+      document.getElementById("reloadnode_true").checked = true;
     }
   });
 }
@@ -120,5 +144,49 @@ document.getElementById("set").onclick = function() {
   chrome.storage.sync.set({"feature_darkmode": value_darkmode}, function() {
     console.info('Dark mode set to ' + value_darkmode);
   });
-  document.getElementById("message").innerHTML = "Reload the page to see your changes...";
+  //Favorites
+  var value_favorites =document.querySelector('input[name="feature_favorites"]:checked').value;
+  value_favorites = (value_favorites == 'true');
+  chrome.storage.sync.set({"feature_favorites": value_favorites}, function() {
+    console.info('Favorites bar set to ' + value_favorites);
+  });
+  //Reload from where you left
+  var value_reloadnode =document.querySelector('input[name="feature_reloadnode"]:checked').value;
+  value_reloadnode = (value_reloadnode == 'true');
+  chrome.storage.sync.set({"feature_reloadnode": value_reloadnode}, function() {
+    console.info('Reload from where you left set to ' + value_reloadnode);
+  });
+
+  chrome.tabs.query({active: true, currentWindow: true}, function (arrayOfTabs) {
+    var code = 'window.location.reload();';
+    chrome.tabs.executeScript(arrayOfTabs[0].id, {code: code});
+  });
+  //document.getElementById("message").innerHTML = "Reload the page to see your changes...";
+
 }
+
+
+let last_known_scroll_position = 0;
+let ticking = false;
+
+function doSomething(scroll_pos) {
+  var element = document.getElementById("banner");
+  if(scroll_pos >= 90) {
+    element.classList.add("animate");
+  } else {
+    element.classList.remove("animate");
+  }
+}
+
+window.addEventListener('scroll', function(e) {
+  last_known_scroll_position = window.scrollY;
+
+  if (!ticking) {
+    window.requestAnimationFrame(function() {
+      doSomething(last_known_scroll_position);
+      ticking = false;
+    });
+
+    ticking = true;
+  }
+});

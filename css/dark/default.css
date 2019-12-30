@@ -10,8 +10,8 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   font-size: 100%;
   font: inherit;
   color: #cccccc !important;
-  -webkit-font-smoothing: antialiased !important;
-  font-smoothing: antialiased !important;
+  /*-webkit-font-smoothing: antialiased !important;
+  font-smoothing: antialiased !important;*/
 }
 
 button, input, optgroup, select, textarea {
@@ -136,9 +136,9 @@ textarea {
   font-size: 12px;
   line-height: 1.42857143;
   color: #cccccc !important;
-  background-color: #191919 !important;
+  background-color: #222222 !important;
   background-image: none;
-  border: 1px solid #191919 !important;
+  border: 1px solid #2f2f2f !important;
   border-radius: 5px;
   box-shadow: inset 0 0px 4px transparent !important;
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
@@ -549,10 +549,10 @@ input[type="submit"] {
   box-sizing: border-box;
   padding: 8px 15px 9px;
   text-align: right;
-  background: #222222 !important;
   white-space: nowrap;
   line-height: 34px;
-  border-top: 1px solid #111111 !important;
+  background-color: #1d1d1d !important;
+  border-top: 1px solid #292929 !important;
 }
 
 .scWizardPageContainer {
@@ -968,7 +968,7 @@ a.scContentLabelLink, a.scContentLabelLink:active, a.scContentLabelLink:visited 
 }
 
     .scContentControl[disabled] .scComboboxEdit, .scContentControl[disabled] .scComboboxDropDown {
-        background-color: #e3e3e3 !important;
+        background-color: #181818 !important;
         box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     }
 
@@ -1620,9 +1620,9 @@ a.scHyperlinkButton {
 }
 
 .scListviewViewDetailsHeader {
-  background-color: #f0f0f0;
-  border-right: 1px solid #cccccc !important;
-  border-top: 1px solid #cccccc !important;
+  background-color: #000000;
+  border-right: 1px solid #111111 !important;
+  border-top: 1px solid #111111 !important;
   line-height: 32px;
   padding: 0 15px;
   text-align: left;
@@ -1635,8 +1635,8 @@ a.scHyperlinkButton {
 
 
 .scListviewViewDetailsHeaderHover {
-  background-color: #f7f7f7;
-  border-right: 1px solid #cccccc !important;
+  background-color: #000000;
+  border-right: 1px solid #111111 !important;
   height: 17px;
   padding: 1px 3px 1px 3px;
   text-align: left;
@@ -2580,25 +2580,25 @@ input[type="text"][readonly].scComboboxEdit {
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
   height: 35px;
-  background: white;
-  border-color: #cccccc !important;
+  background: #181818 !important;
+  border-color: #202020 !important;
   box-shadow: none !important;
 }
 
 .scComboboxDropDown {
   margin: 0;
-  background-color: #fff;
   padding: 14px 5px;
-  border: 1px solid #cccccc !important;
   border-left: none;
   border-radius: 2px;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   cursor: pointer;
+  background-color: #181818 !important;
+  border: 1px solid #1f1f1f !important;
 }
 
 
   .scComboboxDropDown:hover {
-    background-color: #e3e3e3;
+    background-color: #333333 !important;
   }
 
 .scListbox {
@@ -3000,8 +3000,8 @@ a.scContentTreeNodeStatic {
   a.scContentTreeNodeNormal:hover,
   a.scContentTreeNodeActive,
   a.scContentTreeNodeNormal.scDragHover {
-    background-color: #2594c0 !important;
-    border-radius: 5px;
+    background-color: #00b6ff !important;
+    border-radius: 4px;
   }
 
   a.scContentTreeNodeActive > span {
@@ -3010,7 +3010,7 @@ a.scContentTreeNodeStatic {
 
 
 a.scContentTreeNodeActive {
-  background-color: #a2d9ef !important;
+  background-color: #00b6ff !important;
   color: #202020 !important;
 }
 
@@ -3070,9 +3070,9 @@ a.scContentTreeNodeBlured {
 .scContentTreeNodeGutterFlyout {
   position: absolute;
   z-index: 999;
-  border: 1px solid #E3E3E3;
+  border: 1px solid #111111;
   padding: 5px;
-  background-color: #fff;
+  background-color: #000000;
   margin: -3px 0px 0px -3px;
   -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.175);
   -moz-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.175);
@@ -3309,8 +3309,8 @@ margin-right: 8px;
 
 .scApplicationFooter {
   position: relative;
-  background-color: #f0f0f0;
-  border-top: 1px solid #e3e3e3;
+  background-color: #000000;
+  border-top: 1px solid #111111;
   padding: 8px 15px 9px;
   height: 56px;
   -moz-box-sizing: border-box;
@@ -3372,8 +3372,8 @@ margin-right: 8px;
 }
 
 .SecurityLegend {
-  background-color: #f0f0f0;
-  border-top: 1px solid #cccccc !important;
+  background-color: #000000;
+  border-top: 1px solid #111111 !important;
   overflow: hidden;
   padding: 5px 10px;
 }
@@ -3791,9 +3791,9 @@ form[lang|='ja'] *,
 }
 
 span.sc-ext-fieldSearchClear {
-	border-top: 6px solid #181818 !important;
-	border-right: 6px solid #181818 !important;
-	border-bottom: 6px solid #181818 !important;
+	border-top: 6px solid #222222 !important;
+	border-right: 6px solid #222222 !important;
+	border-bottom: 6px solid #222222 !important;
 }
 
 .scEditorTabControls input[type="text"].sc-ext-fieldSearch {
@@ -3817,4 +3817,89 @@ span.sc-ext-fieldSearchClear {
 }
 #ContentWrapper {
     padding: 5px !important;
+}
+.Row {
+  background-color: #222222;
+}
+.Row:nth-child(odd) {
+  background-color: #333333;
+}
+.Row:hover,
+.Row:nth-child(odd):hover {
+  background-color: #000000;
+}
+
+a.scTileItem {
+  background-color: #222222;
+  border: 1px solid #111111;
+  border-radius: 5px;
+}
+
+a.scTileItem:hover {
+  background-color: #333333;
+}
+div.content {
+  background-color: #0f0f0f;
+}
+.search-box {
+  background-color: #212121;
+  border: 1px solid #212121;
+}
+.btn-search {
+  background-color: #212121;
+  background-image: url(../images/edition-magnifier.png);
+  box-shadow: inset 0 1px transparent;
+}
+.btn-search, .btn-clear {
+  border-left: 1px solid #333333;
+  box-shadow: none;
+}
+.BlogPostArea:hover, .ie .BlogPostArea.hover {
+    background-color: #212121;
+}
+.sideMask {
+    background-color: #0f0f0f;
+}
+.filters .filter {
+    border: 1px solid transparent;
+    background-color: #333333;
+}
+.filters .filter .icon {
+  border-right: 1px solid #212121;
+}
+.filters .filter .remove {
+  border-left: 1px solid #212121;
+}
+#grid-content .post_float {
+  background-color: #222222;
+  border: 1px solid #111111;
+  border-radius: 5px;
+}
+#grid-content .post_float:hover {
+  background-color: #333333;
+}
+.pagination li a {
+  background-color: #222222;
+}
+.pagination li a:hover {
+  background-color: #333333;
+}
+.pagination li.active a {
+    background-color: #dc2a1e;
+}
+.pagination li:last-of-type a {
+    border-right: 1px solid #222222;
+}
+.scFlexColumnContainer > div, .scFlexColumnContainerWithoutFlexie > div {
+  background-color: #222222 !important;
+}
+.sc-button-text,
+.sc .btn {
+  color: #555555 !important;
+}
+.sc .btn .btn-primary {
+  color: #ffffff !important;
+}
+#sitecorAuthorToolboxFav {
+  box-shadow: rgba(0, 0, 0, 0.5) 0px -10px 10px 0px;
 }

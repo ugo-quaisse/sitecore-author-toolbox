@@ -1,0 +1,23 @@
+/* Sitecore EE  */
+.selected .mode, .selected .mode:hover, .selected .mode:active {
+	background-color: #444444;
+    border: 1px solid #444444;
+    padding: 7px;
+}
+
+.main-column {
+    border: 1px solid #444444;
+    background: #333333!important;
+}
+
+.section-header {
+	border: 1px solid #333333;
+}
+
+.scWarning {
+    background: #b99226;
+}
+
+iframe.scSpeakWebEditRibbon {
+    background: #2b2b2b;
+}

@@ -1,0 +1,4 @@
+/* Sitecore transition onload */
+form#ContentEditorForm {
+	filter: blur(0px) brightness(1) grayscale(0) !important;
+}

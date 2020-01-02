@@ -164,10 +164,6 @@ form {
     background-color: #222222 !important;
 }
 
-.ui-dialog-content.ui-widget-content {
-    box-shadow: none;
-}
-
 .scFormDialogHeader,
 .scDialogHeader,
 .ui-widget-header {

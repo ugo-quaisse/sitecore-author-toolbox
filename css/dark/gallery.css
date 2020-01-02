@@ -10,12 +10,9 @@ html {
 
 body {
   background-color: transparent !important;
-  overflow: hidden;
   height: 100%;
   padding:0px;
   margin:0px;
-  -webkit-box-shadow: 0 5px 50px rgb(0, 0, 0) !important;
-  box-shadow: 0 5px 50px rgb(0, 0, 0) !important;
   background-clip: padding-box;
 }
 
@@ -29,11 +26,6 @@ form {
   border: 1px solid #868686;
   height: 100%;
 }
-
-/*
- * Sitecore Dark Mode UI, by Ugo Quaisse
- * gallery.css
- */
 
 .scGalleryInnerFrame {
   background: #f5f5f5;

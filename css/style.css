@@ -81,3 +81,7 @@ form#ContentEditorForm {
 #sitecorAuthorToolboxFav {
   box-shadow: rgba(235, 235, 235, 0.5) 0px -10px 10px 0px;
 }
+
+#LanguagesPanel > #Languages {
+    column-count: 2;
+}

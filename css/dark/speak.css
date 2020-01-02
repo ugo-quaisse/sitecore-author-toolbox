@@ -12,6 +12,10 @@ body {
   color: #121212;
 }
 
+.sc-dialogHeader {
+  background-color: #212121 !important;
+}
+
 .sc-applicationContent-main {
   color: #121212 !important;
   border-color: #cccccc !important;
@@ -34,7 +38,7 @@ body {
   overflow: hidden;
 }
 .sc-dialogContent-toolbar {
-  background-color: #0e0e0e !important;
+  background-color: #111111 !important;
   padding: 12px 15px;
   height: 60px;
   line-height: 36px;
@@ -57,7 +61,6 @@ body {
   background: none;
   color: #ffffff;
   box-shadow: none;
-  display: none !important;
 }
 .sc .sc-text-largetitle {
   font-size: 1.5em;
@@ -72,4 +75,32 @@ body {
 
 .sc .sc-border[data-sc-id="AnalyticsFallback"] {
   background-color: #333333 !important;
+}
+
+.sc-togglebutton-text {
+    color: #202020 !important;
+}
+.btn-primary > .sc-button-text {
+  color: #FFFFFF !important;
+}
+
+.sc-iconList-wrap .sc-iconList-item {
+    border: 1px solid #444444;
+    background: #222222;
+}
+
+form.sc-uploader {
+  background-color: #222222 !important;
+}
+
+.sc .sc-smartpanel {
+  background: #212121 !important;
+}
+
+.sc .sc-smartpanel-buttons,
+.sc .sc-smartpanel-header {
+    background-color: #202020;
+    border: 1px solid #333333;
+    border-right: 0px;
+    border-left: 0px;
 }

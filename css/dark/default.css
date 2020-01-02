@@ -410,7 +410,7 @@ input[type="submit"] {
     .scButtonPrimary:hover,
     input[type="submit"].scButtonPrimary:hover {
       background-repeat: repeat-x;
-      color: #000000 !important;
+      color: #cccccc !important;
       border-color: #175973;
       background-color: #1d7395;
       background-position: 0 0;
@@ -1009,8 +1009,8 @@ iframe.scContentControl {
 }
 
 .scTreelistEx {
-    border: 1px solid #cccccc !important;
-    background: white;
+    border: 1px solid #2f2f2f !important;
+    background: #212121;
     height: 150px;
     overflow: auto;
 }
@@ -2775,26 +2775,18 @@ input[type="text"][readonly].scComboboxEdit {
 
 .scTabActive,
 .scTabActive_Hover {
-    background-color: #474747;
+    background-color: #474747 !important;
     color: #fff;
     cursor: default;
     position: relative;
     left: -1px;
-    border-top: 1px solid #474747;
+    border: 1px solid #474747 !important;
     border-right: none;
     padding: 0 19px 0 21px;
 }
 
     .scTabActive:after, .scTabActive_Hover:after {
-        content: ".";
-        display: inline-block;
-        color: transparent;
-        background: #474747;
-        width: 1px;
-        position: relative;
-        right: -20px;
-        height: 40px;
-        top: -1px;
+        width: 0px;
     }
 
 .scTab_Hover {
@@ -3914,4 +3906,38 @@ div.content {
 }
 #sitecorAuthorToolboxFav {
   box-shadow: rgba(0, 0, 0, 0.5) 0px -10px 10px 0px;
+}
+a.scItemThumbnailSelected,
+a.scItemThumbnail:hover {
+    background-color: #00b6ff;
+    border: 1px solid #00b6ff;
+    padding: 4px 11px;
+    text-decoration: none;
+}
+
+a.scItemThumbnail:hover > span.scDisplayName {
+    color: #333333 !important;
+}
+
+.ff #Right {
+    background-color: #171717;
+}
+
+.selected .mode, .selected .mode:hover, .selected .mode:active {
+    background-color: #00b6ff;
+    border: 1px solid #00b6ff;
+    padding: 7px;
+}
+
+.main-column {
+    border: 1px solid #333333;
+}
+
+.section-header {
+    font-weight: bold;
+    color: #333333;
+    border-bottom: 0px solid #333333;
+    height: 16px;
+    width: 100%;
+    padding: 5px;
 }

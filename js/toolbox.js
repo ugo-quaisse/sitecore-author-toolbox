@@ -40,13 +40,19 @@ document.getElementsByTagName("head")[0].appendChild(link);
 
 
 /*
- * Dect which URL/Frame is loading the script? (Languages, Favorites, etc...)
+ * Dectect which URL/Frame is loading the script? (Languages, Favorites, etc...)
  */
-if(debug) { console.info("Call URL: "+window.location); }
+if(debug) { console.info("***** URL loaded ***** "+window.location); }
 
 var isGalleryLanguage = window.location.href.includes('Gallery.Language');
 var isGalleryFavorites = window.location.href.includes('Gallery.Favorites');
 var isAdminCache = window.location.href.includes('/admin/cache.aspx');
+var isMediaBrowser = window.location.href.includes('Sitecore.Shell.Applications.Media.MediaBrowser');
+var isPublishWindow = window.location.href.includes('/shell/Applications/Publish.aspx');
+var isSecurityWindow = window.location.href.includes('/shell/Applications/Security/');
+var isExperienceEditor = window.location.href.includes('/Applications/ExperienceEditor/');
+var isContentHome = window.location.href.includes('/content/home');
+var isLoginPage = window.location.href.includes('sitecore/login');
 
 if(isGalleryLanguage) {
 
@@ -59,7 +65,6 @@ if(isGalleryLanguage) {
     /*
      * Load Json data for languages
      */
-    var jsonFile = chrome.runtime.getURL("data/languages.json");
     var rawFile = new XMLHttpRequest();
     var jsonData;
     rawFile.overrideMimeType("application/json");
@@ -176,9 +181,33 @@ if(isGalleryLanguage) {
   });
 
  
+} else if(isPublishWindow) {
+
+  if(debug) { console.info("====================> PUBLISH WINDOW <===================="); }
+
+    var dom = document.getElementById("Languages");
+    console.log(dom);
+    var label = dom.getElementsByTagName('label');
+
+    for (let item of label) {
+
+      //Add Flag into label
+      //item.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="-/icon/Flags/16x16/flag_CHINA.png" style="display: inline; vertical-align: text-bottom; padding-right: 2px;" onerror="this.onerror=null;this.src=\'-/icon/Flags/16x16/flag_generic.png\';"/>' );
+
+    }
+
+
 } else if(isGalleryFavorites) {
 
   if(debug) { console.info("====================> FAVORITES <===================="); }
+
+} else if(isMediaBrowser) {
+
+  if(debug) { console.info("====================> MEDIA BROWSER <===================="); }
+
+} else if(isAdminCache) {
+
+  if(debug) { console.info("====================> ADMIN CACHE <===================="); }
 
 }
 
@@ -190,7 +219,8 @@ chrome.storage.sync.get(['feature_darkmode'], function(result) {
 
   if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
 
-  if(result.feature_darkmode && window.location.pathname != "/sitecore/login" && window.location.pathname != "/sitecore/client/Applications/ExperienceEditor/Ribbon.aspx" && window.location.pathname != "/sitecore/admin/cache.aspx") {
+  if(result.feature_darkmode && !isExperienceEditor && !isAdminCache && !isSecurityWindow && !isContentHome && !isLoginPage) {
+    
     var link = document.createElement("link");
     link.type = "text/css";
     link.rel = "stylesheet";
@@ -602,7 +632,7 @@ function _addEnvironmentLabel() {
 
   chrome.storage.sync.get(['feature_favorites'], function(result) {
 
-    if(result.feature_favorites == undefined || result.feature_favorites) {
+    if(result.feature_favorites == undefined && !isPublishWindow || result.feature_favorites && !isPublishWindow) {
 
       var scFavoritesIframe = document.getElementById("sitecorAuthorToolboxFav");
 
@@ -667,12 +697,16 @@ if(element){
   //Sitecore Variables
   var scLanguage = element.getAttribute("value").toLowerCase();
 
-  //Get itemID (Storage)
+  //Get itemID (Storage) Resume from Where you left
+  /*
+   * Resume from where you left
+   */
   chrome.storage.sync.get(['scItemID','feature_reloadnode'], function(result) {
+
     if (!chrome.runtime.error && result.scItemID != undefined) {
       if(result.scItemID && result.feature_reloadnode == true) {
 
-        //Load node by code injection
+        //Load node by code injection {681D640C-C820-483A-9249-3637312CD415}
         var actualCode = `scForm.invoke("item:load(id=` + result.scItemID + `,language=` + scLanguage + `,version=1)");`;
         var script = document.createElement('script');
         script.textContent = actualCode;
@@ -683,6 +717,7 @@ if(element){
         if(debug) { console.info(">> GoTo ItemID ----->  " + result.scItemID); }
       }
     }
+
   });
 
   _addEnvironmentLabel();

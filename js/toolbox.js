@@ -46,6 +46,7 @@ if(debug) { console.info("Call URL: "+window.location); }
 
 var isGalleryLanguage = window.location.href.includes('Gallery.Language');
 var isGalleryFavorites = window.location.href.includes('Gallery.Favorites');
+var isAdminCache = window.location.href.includes('/admin/cache.aspx');
 
 if(isGalleryLanguage) {
 
@@ -189,7 +190,7 @@ chrome.storage.sync.get(['feature_darkmode'], function(result) {
 
   if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
 
-  if(result.feature_darkmode && window.location.pathname != "/sitecore/login" && window.location.pathname != "/sitecore/client/Applications/ExperienceEditor/Ribbon.aspx") {
+  if(result.feature_darkmode && window.location.pathname != "/sitecore/login" && window.location.pathname != "/sitecore/client/Applications/ExperienceEditor/Ribbon.aspx" && window.location.pathname != "/sitecore/admin/cache.aspx") {
     var link = document.createElement("link");
     link.type = "text/css";
     link.rel = "stylesheet";
@@ -439,9 +440,8 @@ function _addEnvironmentLabel() {
 
     if(scErrors[0]!=undefined && result.feature_errors) {
 
-      // Update on load
       //Prepare HTML
-      var scMessageErrors = '<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' + iconError + ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">'
+      var scMessageErrors = '<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' + iconError + ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">';
       
       for (let item of scErrors) {
 

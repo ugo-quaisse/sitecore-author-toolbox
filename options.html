@@ -11,6 +11,7 @@
 		  font-family: arial, verdana;
 		  margin: 0px;
 		  padding: 0px;
+		  font-size: 13px;
 		}
 		a {
 			color: #DC291E;
@@ -18,6 +19,7 @@
 		label {
 		  display: inline-block;
 		  transition: .4s;
+		  margin-right: 0.5em;
 		}
 		label > input {
 		  display: none;
@@ -27,8 +29,7 @@
 		  width: 1.1em;
 		  height: 1.1em;
 		  border-radius: 50%;
-		  border: 1px solid rgba(0, 0, 0, 0.5);
-		  margin-right: 0.5em;
+		  border: 1px solid rgba(0, 0, 0, 0.5);	  
 		  vertical-align: middle;
 		  transition: .4s;
 		}
@@ -49,7 +50,7 @@
 		    cursor: pointer;
 		    padding: 12px 40px;
 		    display: inline-block;
-		    margin: 15px 0px;
+		    margin: 15px 10px 30px 10px;
 		    text-transform: uppercase;
 		    letter-spacing: 1px;
 		    font-weight: 700;
@@ -89,8 +90,8 @@
 		}
 		#banner > h3 {
 			position: fixed;
-		    top: 19px;
-		    left: 120px;
+		    top: 0px;
+		    left: 105px;
 		    color: #ffffff;
 		    font-family: 'Lato', sans-serif;
 		    font-size: 22px;
@@ -98,7 +99,7 @@
 		    opacity: 0;
 		}
 		#banner.animate {
-			height: 50px;
+			height: 10px;
 		}
 		#banner.animate > img {
 			transform: scale(0.5);
@@ -114,6 +115,9 @@
     		font-size: 22px;
     		font-family: 'Lato', sans-serif;
 		}
+		#intro > h2 {
+			line-height: 35px;
+		}
 		#main {
 			padding: 0px 25px;
 		}
@@ -121,7 +125,10 @@
 			text-align: center;
 		}
 		#footer {
-			padding: 0px 25px;
+			padding: 10px 25px;
+		    background-color: #f0f0f0;
+		    text-align: center;
+		    color: #666666;
 		}
 		input {
 			margin: 0px 0px 0px 5px !important;
@@ -135,7 +142,7 @@
 		<h3>Sitecore Author Toolbox</h3>
 	</div>
 	<div id="intro">
-		<h2>Hello I am<br />Sitecore Author Toolbox!</h2>
+		<h2>Hello, I am<br />Sitecore Author Toolbox</h2>
 	</div>
 
 	<div id="main">	
@@ -145,7 +152,7 @@
 			<label><input id="urls_false" type="radio" name="feature_urls" value="false"><i></i> No</label>
 		</p>
 
-		<p><b>Language flags</b><br />
+		<p><b>Language flags / Version highlighter</b><br />
 			<label><input id="flags_true" type="radio" name="feature_flags" value="true"><i></i> Yes</label>
 			<label><input id="flags_false" type="radio" name="feature_flags" value="false"><i></i> No</label>
 		</p>
@@ -175,7 +182,7 @@
 			<label><input id="favorites_false" type="radio" name="feature_favorites" value="false"><i></i> No</label>
 		</p>
 
-		<p><b>Reload from where you left</b><br />
+		<p><b>Resume from where you left</b><br />
 			<label><input id="reloadnode_true" type="radio" name="feature_reloadnode" value="true"><i></i> Yes</label>
 			<label><input id="reloadnode_false" type="radio" name="feature_reloadnode" value="false"><i></i> No</label>
 		</p>
@@ -186,8 +193,6 @@
 	<div id="save">
 		<button id="set">Save and reload Sitecore</button>
 	</div>
-
-	<hr />
 
 	<div id="footer">
 		<p>Crafted with love by <b>Ugo Quaisse</b> (Paris, France)<br />Follow me at <a href="https://twitter.com/uquaisse" target="_blank">https://twitter.com/uquaisse</a></p>

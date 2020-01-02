@@ -38,14 +38,156 @@ link.rel = "stylesheet";
 link.href =  chrome.runtime.getURL("css/onload-min.css");
 document.getElementsByTagName("head")[0].appendChild(link);
 
+
+/*
+ * Dect which URL/Frame is loading the script? (Languages, Favorites, etc...)
+ */
+if(debug) { console.info("Call URL: "+window.location); }
+
+var isGalleryLanguage = window.location.href.includes('Gallery.Language');
+var isGalleryFavorites = window.location.href.includes('Gallery.Favorites');
+
+if(isGalleryLanguage) {
+
+  if(debug) { console.info("====================> LANGUAGES <===================="); }
+
+  chrome.storage.sync.get(['feature_flags'], function(result) {
+
+    if(result.feature_flags) {
+      
+    /*
+     * Load Json data for languages
+     */
+    var jsonFile = chrome.runtime.getURL("data/languages.json");
+    var rawFile = new XMLHttpRequest();
+    var jsonData;
+    rawFile.overrideMimeType("application/json");
+    rawFile.open("GET", chrome.runtime.getURL("data/languages.json"), true);
+    rawFile.onreadystatechange = function() {
+        if (rawFile.readyState === 4 && rawFile.status == "200") {
+           
+            jsonData = JSON.parse(rawFile.responseText);
+            //console.info("JSON "+jsonData);
+
+            //Loop the languages table
+
+            var isRegionFrame;
+            var dom = document.getElementById("Languages");
+            var div = dom.querySelectorAll('.scMenuPanelItem,.scMenuPanelItemSelected')
+            var td;
+            var divcount = 0;
+            var tdcount = 0;
+            var tdlanguage;
+            var tdversion;
+            var tdimage;
+            var temp;
+            var key;
+
+            for (let item of div) {
+                
+                //console.log("---> LANGUAGE DIV #"+divcount);
+                tdcount = 0;
+                td = item.getElementsByTagName("td");
+                
+                for (let item2 of td) {      
+                  
+                  if(tdcount==0) {
+                    
+                    tdimage = item2.getElementsByTagName("img");
+                    //console.log(tdimage);
+                  
+                  } else {
+                    
+                    tdlanguage = item2.getElementsByTagName("b");
+                    tdlanguage = tdlanguage[0].innerHTML;
+
+                    tdversion = item2.getElementsByTagName("div");
+                    tdversion = tdversion[2].innerHTML;
+                    tdversion = tdversion.split(" ");
+
+                    //Check version
+                    if(tdversion[0]!="0") {
+                      temp = item2.getElementsByTagName("div")
+                      temp[2].setAttribute( 'style', 'background-color: yellow; display: initial; padding: 0px 3px; color: #000000 !important' );
+                    }
+
+                    isRegionFrame = tdlanguage.includes('(region)');
+
+                    //Check country
+                    if(isRegionFrame) {
+
+                      //Clean country name
+                      tdlanguage = tdlanguage.split(" (region");
+
+                      for (key in jsonData) {
+                        if (jsonData.hasOwnProperty(key)) {
+                            if( tdlanguage[0].toUpperCase() == jsonData[key]["language"].toUpperCase()) {
+                              
+                              tdlanguage = jsonData[key]["flag"];
+                              //console.log(tdlanguage);
+
+                            }
+                        }
+                      }
+
+                    } else {
+
+                      //Clean country name
+                      temp = tdlanguage.split(" (");
+                      if(temp[1] == undefined) { temp = temp[0]; } else { temp = temp[1]; }
+                      temp = temp.split(")");
+                      temp = temp[0].replace(" ", "_");
+                      temp = temp.toUpperCase();
+                      tdlanguage = temp.replace("TRADITIONAL,_","");
+                      tdlanguage = tdlanguage.replace("SIMPLIFIED,_","");
+
+                      //Replace non-standard country name
+                      tdlanguage = tdlanguage.replace("U.A.E.","UNITED_ARAB_EMIRATES");
+                      tdlanguage = tdlanguage.replace("KOREA","SOUTH_KOREA");
+                      tdlanguage = tdlanguage.replace("UNITED_STATES","USA");
+                      tdlanguage = tdlanguage.replace("UNITED_KINGDOM","GREAT_BRITAIN");
+
+                      //console.log(tdlanguage);
+
+                    }
+                    
+                    //Now replace images src and add an image fallback if doesn't exist
+                    tdimage[0].onerror = function() { this.src = '-/icon/Flags/32x32/flag_generic.png'; }
+                    tdimage[0].src = "-/icon/Flags/32x32/flag_"+tdlanguage+".png";
+                    //console.log(tdlanguage);
+                  }
+
+                  tdcount++;
+
+                }
+
+            divcount++;
+
+            }
+
+
+        }
+    }
+    rawFile.send(null);
+
+    }
+
+  });
+
+ 
+} else if(isGalleryFavorites) {
+
+  if(debug) { console.info("====================> FAVORITES <===================="); }
+
+}
+
+
 /*
  * Dark mode
  */
 chrome.storage.sync.get(['feature_darkmode'], function(result) {
 
   if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
-
-  if(debug) { console.log("Pathname: "+window.location.pathname); }
 
   if(result.feature_darkmode && window.location.pathname != "/sitecore/login" && window.location.pathname != "/sitecore/client/Applications/ExperienceEditor/Ribbon.aspx") {
     var link = document.createElement("link");
@@ -101,7 +243,7 @@ function _addEnvironmentLabel() {
   var icon = chrome.runtime.getURL("images/rocket.png");
   var iconError = chrome.runtime.getURL("images/error.png");
   var iconEdit = chrome.runtime.getURL("images/edit.png");
-  var flagsPath = chrome.runtime.getURL("images/flags/");
+  var jsonLanguages = chrome.runtime.getURL("data/languages.json");
 
   //Sitecore item title bar
   let scEditorID = document.querySelector ( ".scEditorHeader" );
@@ -141,8 +283,6 @@ function _addEnvironmentLabel() {
     sitecoreSite = sitecoreSite.split("/");
     sitecoreSite = sitecoreSite.slice(-1)[0]
 
-    //Display name
-
     //Check if item is data source
     temp = sitecoreItemPathOriginal.split("/");
     if(temp[temp.length-1] == 'Data'){
@@ -157,6 +297,8 @@ function _addEnvironmentLabel() {
     temp = document.getElementsByClassName("scEditorHeaderVersionsLanguage");
     var scLanguageTxtLong = temp[0].getAttribute("title");
     var scLanguageTxtShort = stripHtml(temp[0].innerHTML);
+    var isNotRegion = scLanguageTxtShort.includes('(');
+    var scFlag;  
 
     //Generating Live URLs
     if (sitecoreItemPath[1]!=undefined) {
@@ -213,15 +355,77 @@ function _addEnvironmentLabel() {
 
     chrome.storage.sync.get(['feature_flags'], function(result) {
 
-      //If flags not yet injected in DOM
-      if(!document.getElementById("scFlag") && result.feature_flags) {
-        scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + flagsPath + scLanguage +'.png" style="width: 20px; vertical-align: middle; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + flagsPath + 'missing.png\';" />' );
-      }
+      if(isNotRegion) {
 
-      if(result.feature_flags) {
-      //Insert Flags into Sitecore Language selector
-      scLanguageMenu.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + flagsPath + scLanguage +'.png" style="width: 15px; vertical-align: sub; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + flagsPath + 'missing.png\';" />' );
-      }
+        //Clean country name
+        temp = scLanguageTxtShort.split(" (");
+        if(temp[1] == undefined) { temp = temp[0]; } else { temp = temp[1]; }
+        temp = temp.split(")");
+        temp = temp[0].replace(" ", "_");
+        temp = temp.toUpperCase();
+        scFlag = temp.replace("TRADITIONAL,_","");
+        scFlag = scFlag.replace("SIMPLIFIED,_","");
+
+        if (debug) { console.log("Flag:" + scFlag); }
+
+        //Replace non-standard country name
+        scFlag = scFlag.replace("U.A.E.","UNITED_ARAB_EMIRATES");
+        scFlag = scFlag.replace("KOREA","SOUTH_KOREA");
+        scFlag = scFlag.replace("UNITED_STATES","USA");
+        scFlag = scFlag.replace("UNITED_KINGDOM","GREAT_BRITAIN");
+
+
+        //Insert Flag into Active Tab
+        if(!document.getElementById("scFlag") && result.feature_flags && scFlag) {
+          scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="-/icon/Flags/32x32/flag_' + scFlag +'.png" style="width: 20px; vertical-align: middle; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'-/icon/Flags/32x32/flag_generic.png\';"/>' );
+        }
+
+        if(result.feature_flags && scFlag) {
+          //Insert Flag into Sitecore Language selector
+          scLanguageMenu.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="-/icon/Flags/32x32/flag_' + scFlag +'.png" style="width: 15px; vertical-align: sub; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'-/icon/Flags/32x32/flag_generic.png\';"/>' );
+        }
+
+      } else {
+
+        if(result.feature_flags) {
+          //External JSON
+          var rawFile = new XMLHttpRequest();
+          rawFile.overrideMimeType("application/json");
+          rawFile.open("GET", jsonLanguages, true);
+          rawFile.onreadystatechange = function() {
+              if (rawFile.readyState === 4 && rawFile.status == "200") {
+
+                  var data = JSON.parse(rawFile.responseText);
+                  var key;
+
+                  for (key in data) {
+                      if (data.hasOwnProperty(key)) {
+                          if( scLanguageTxtShort.toUpperCase() == data[key]["language"].toUpperCase()) {
+                            
+                            scFlag = data[key]["flag"];
+                            if (debug) { console.log("Flag:" + scFlag); }
+
+                            //Insert Flag into Active Tab
+                            if(!document.getElementById("scFlag") && result.feature_flags && scFlag) {
+                              scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="-/icon/Flags/32x32/flag_' + scFlag +'.png" style="width: 20px; vertical-align: middle; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'-/icon/Flags/32x32/flag_generic.png\';"/>' );
+                            }
+
+                            if(result.feature_flags && scFlag) {
+                            //Insert Flag into Sitecore Language selector
+                            scLanguageMenu.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="-/icon/Flags/32x32/flag_' + scFlag +'.png" style="width: 15px; vertical-align: sub; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'-/icon/Flags/32x32/flag_generic.png\';"/>' );
+                            }
+                          }
+                          //console.log(key + " = " + data[key]["language"] + " : " + data[key]["flag"]);
+                      }
+                  } 
+
+              }
+          }
+          rawFile.send(null);
+        }
+
+      }      
+
 
     });
     
@@ -423,11 +627,6 @@ function _addEnvironmentLabel() {
 }
 //End
 
-
-//TO DO check onchange to display errors without save (Sitecore does an ajax call to get errors, there is no way to get the result of this call)
-// $("#ValidatorPanelF071072BBAD6468FB2C35DD754C06D8B").bind("DOMSubtreeModified", function() {
-//     alert("tree changed");
-// })
 
 /*
  * Chrome extention and JS Observers

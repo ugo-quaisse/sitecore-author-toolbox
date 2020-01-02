@@ -2,3 +2,43 @@
 form#ContentEditorForm {
 	filter: blur(0px) brightness(1) grayscale(0) !important;
 }
+
+.scMenuPanelItem, .scMenuPanelItem_Hover, .scMenuPanelItemSelected_Hover, .scMenuPanelItemSelected {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.scGalleryGrip {
+	position: absolute;
+	bottom: 1px;
+	left: 1px;
+	right: 1px;
+	height: 10px;
+}
+
+.scLanguagesGalleryMenu {
+	overflow: hidden;
+	vertical-align: top;
+	border-bottom: 12px solid transparent;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	width: 100%;
+	height: 100%;
+	border-collapse: separate;
+}
+
+div#Languages img {
+	display: block;
+}
+
+/*https://qa-cm-mst-lcorp-eu-ce.e-loreal.com/sitecore/shell/default.aspx?xmlcontrol=Gallery.Languages&id=%7B110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9%7D&la=en&vs=1&db=master&align=right*/
+
+
+/* https://qa-cm-mst-lcorp-eu-ce.e-loreal.com/-/icon/Flags/32x32/flag_generic.png */
+
+/*https://qa-cm-mst-lcorp-eu-ce.e-loreal.com/-/icon/Flags/32x32/flag_CZECH_REPUBLIC.png*/
+
+/*https://qa-cm-mst-lcorp-eu-ce.e-loreal.com/-/icon/Flags/32x32/flag_FRANCE.png*/
+/*https://qa-cm-mst-lcorp-eu-ce.e-loreal.com/-/icon/Flags/32x32/flag_USA.png */

@@ -1731,6 +1731,13 @@ a.scHyperlinkButton {
 	color: #111111 !important;
 }
 
+.scMenuPanelItem,
+.scMenuPanelItem_Hover,
+.scMenuPanelItemSelected,
+.scMenuPanelItemSelected_Hover {
+  padding: 8px 0px !important;
+}
+
 .scMenuItemIcon,
 .scMenuItemIcon_Hover,
 .scMenuItemIcon_Disabled {
@@ -1823,7 +1830,12 @@ a.scHyperlinkButton {
 
 .versionNumSelected,
 .scMenuPanelItemSelected {
-  background-color: #323232 !important;
+  background-color: #00b6ff !important;
+}
+
+.scMenuPanelItemSelected_Hover > table > tbody > tr > td > div > div > b,
+.scMenuPanelItemSelected > table > tbody > tr > td > div > div > b {
+  color: #000000 !important;
 }
 
 .versionNum,

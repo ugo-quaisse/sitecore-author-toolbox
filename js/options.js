@@ -18,7 +18,7 @@ document.body.onload = function() {
         document.getElementById("urls_false").checked = true;
       }
     } else {
-      document.getElementById("urls_true").checked = true;
+      document.getElementById("urls_false").checked = true;
     }
   });
   //Flags
@@ -30,7 +30,7 @@ document.body.onload = function() {
         document.getElementById("flags_false").checked = true;
       }
     } else {
-      document.getElementById("flags_true").checked = true;
+      document.getElementById("flags_false").checked = true;
     }
   });
   //Errors
@@ -42,7 +42,7 @@ document.body.onload = function() {
         document.getElementById("errors_false").checked = true;
       }
     } else {
-      document.getElementById("errors_true").checked = true;
+      document.getElementById("errors_false").checked = true;
     }
   });
   //Drag and drop
@@ -54,7 +54,7 @@ document.body.onload = function() {
         document.getElementById("dragdrop_false").checked = true;
       }
     } else {
-      document.getElementById("dragdrop_true").checked = true;
+      document.getElementById("dragdrop_false").checked = true;
     }
   });
   //Notification
@@ -66,7 +66,7 @@ document.body.onload = function() {
         document.getElementById("notification_false").checked = true;
       }
     } else {
-      document.getElementById("notification_true").checked = true;
+      document.getElementById("notification_false").checked = true;
     }
   });
   //Dark Mode
@@ -90,7 +90,7 @@ document.body.onload = function() {
         document.getElementById("favorites_false").checked = true;
       }
     } else {
-      document.getElementById("favorites_true").checked = true;
+      document.getElementById("favorites_false").checked = true;
     }
   });
   //reload from where you left
@@ -102,7 +102,7 @@ document.body.onload = function() {
         document.getElementById("reloadnode_false").checked = true;
       }
     } else {
-      document.getElementById("reloadnode_true").checked = true;
+      document.getElementById("reloadnode_false").checked = true;
     }
   });
 }

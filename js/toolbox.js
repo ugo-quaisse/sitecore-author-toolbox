@@ -438,11 +438,12 @@ function _addEnvironmentLabel() {
   chrome.storage.sync.get(['feature_errors'], function(result) {
 
     if(scErrors[0]!=undefined && result.feature_errors) {
+  
+      count = 0;
 
-      // Update on load
       //Prepare HTML
       var scMessageErrors = '<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' + iconError + ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">'
-      
+
       for (let item of scErrors) {
 
           if( item.getAttribute("src") != '/sitecore/shell/themes/standard/images/bullet_square_yellow.png') {
@@ -458,8 +459,8 @@ function _addEnvironmentLabel() {
       }
 
 
-      //Update on change
-      var target = document.querySelector( ".scValidatorPanel" )
+      //Update on change/unblur
+      var target = document.querySelector( ".scValidatorPanel" );
       var observer = new MutationObserver(function(mutations) {
 
         count = 0;
@@ -610,7 +611,7 @@ function _addEnvironmentLabel() {
         //Prepare HTML
         // var scMyShortcut = '<div id="scFavorites" style="padding: 10px 20px;"><b>My favorite:</b> <a href="" onclick="javascript: return scForm.invoke(\'item:load(id=' + scShortcutItemId + ',language=' + scLanguage + ',version=1)\')">Home</a></div>';
         var scFavoritesUrl = '../default.aspx?xmlcontrol=Gallery.Favorites&id=' + sitecoreItemID + '&la=' + scLanguage + '&vs=1';      
-        var scMyShortcut = '<iframe id="sitecorAuthorToolboxFav" class="sitecorAuthorToolboxFav" src="' + scFavoritesUrl + '" style="width:100%; height:125px; margin-top: 0px; resize: vertical;"></iframe>';
+        var scMyShortcut = '<iframe id="sitecorAuthorToolboxFav" class="sitecorAuthorToolboxFav" src="' + scFavoritesUrl + '" style="width:100%; height:150px; margin-top: 0px; resize: vertical;"></iframe>';
 
         //Insert HTML
         scContentTree.insertAdjacentHTML( 'afterend', scMyShortcut );

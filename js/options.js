@@ -18,7 +18,7 @@ document.body.onload = function() {
         document.getElementById("urls_false").checked = true;
       }
     } else {
-      document.getElementById("urls_false").checked = true;
+      document.getElementById("urls_true").checked = true;
     }
   });
   //Flags
@@ -30,7 +30,7 @@ document.body.onload = function() {
         document.getElementById("flags_false").checked = true;
       }
     } else {
-      document.getElementById("flags_false").checked = true;
+      document.getElementById("flags_true").checked = true;
     }
   });
   //Errors
@@ -42,7 +42,7 @@ document.body.onload = function() {
         document.getElementById("errors_false").checked = true;
       }
     } else {
-      document.getElementById("errors_false").checked = true;
+      document.getElementById("errors_true").checked = true;
     }
   });
   //Drag and drop
@@ -54,7 +54,7 @@ document.body.onload = function() {
         document.getElementById("dragdrop_false").checked = true;
       }
     } else {
-      document.getElementById("dragdrop_false").checked = true;
+      document.getElementById("dragdrop_true").checked = true;
     }
   });
   //Notification
@@ -66,7 +66,7 @@ document.body.onload = function() {
         document.getElementById("notification_false").checked = true;
       }
     } else {
-      document.getElementById("notification_false").checked = true;
+      document.getElementById("notification_true").checked = true;
     }
   });
   //Dark Mode
@@ -90,7 +90,7 @@ document.body.onload = function() {
         document.getElementById("favorites_false").checked = true;
       }
     } else {
-      document.getElementById("favorites_false").checked = true;
+      document.getElementById("favorites_true").checked = true;
     }
   });
   //reload from where you left
@@ -102,7 +102,19 @@ document.body.onload = function() {
         document.getElementById("reloadnode_false").checked = true;
       }
     } else {
-      document.getElementById("reloadnode_false").checked = true;
+      document.getElementById("reloadnode_true").checked = true;
+    }
+  });
+  //reload from where you left
+  chrome.storage.sync.get(['feature_contextmenu'], function(result) {
+    if (!chrome.runtime.error && result.feature_reloadnode != undefined) {
+      if(result.feature_reloadnode) {
+        document.getElementById("contextmenu_true").checked = true;
+      } else {
+        document.getElementById("contextmenu_false").checked = true;
+      }
+    } else {
+      document.getElementById("contextmenu_false").checked = true;
     }
   });
 }
@@ -156,12 +168,18 @@ document.getElementById("set").onclick = function() {
   chrome.storage.sync.set({"feature_reloadnode": value_reloadnode}, function() {
     console.info('Reload from where you left set to ' + value_reloadnode);
   });
+  //Context menu: edit in Experience Editor
+  // var value_contextmenu =document.querySelector('input[name="feature_contextmenu"]:checked').value;
+  // value_contextmenu = (value_contextmenu == 'true');
+  // chrome.storage.sync.set({"feature_contextmenu": value_contextmenu}, function() {
+  //   console.info('Context menu set to ' + value_contextmenu);
+  // });
 
+  //Reload sitecore
   chrome.tabs.query({active: true, currentWindow: true}, function (arrayOfTabs) {
     var code = 'window.location.reload();';
     chrome.tabs.executeScript(arrayOfTabs[0].id, {code: code});
   });
-  //document.getElementById("message").innerHTML = "Reload the page to see your changes...";
 
 }
 

@@ -59,6 +59,8 @@ if(isGalleryLanguage) {
 
   chrome.storage.sync.get(['feature_flags'], function(result) {
 
+    if(result.feature_flags == undefined) { result.feature_flags = true; }
+
     if(result.feature_flags) {
       
     /*
@@ -349,6 +351,8 @@ function _addEnvironmentLabel() {
 
       
       chrome.storage.sync.get(['feature_urls'], function(result) {
+
+      if(result.feature_urls == undefined) { result.feature_urls = true; }
         
         //If not added yet
         if(!document.getElementById("scMessageBarUrl") && result.feature_urls) {
@@ -370,6 +374,8 @@ function _addEnvironmentLabel() {
       
       chrome.storage.sync.get(['feature_urls'], function(result) {
 
+        if(result.feature_urls == undefined) { result.feature_urls = true; }
+
         //If not added yet
         if(!document.getElementById("scMessageBarInfo") && result.feature_urls) {
           //Prepare HTML (scInformation scWarning scError scOrange scGray scGreen)
@@ -389,6 +395,8 @@ function _addEnvironmentLabel() {
      */
 
     chrome.storage.sync.get(['feature_flags'], function(result) {
+
+      if(result.feature_flags == undefined) { result.feature_flags = true; }
 
       if(isNotRegion) {
 
@@ -480,6 +488,8 @@ function _addEnvironmentLabel() {
    * 3. Display Grouped Errors
    */
   chrome.storage.sync.get(['feature_errors'], function(result) {
+
+    if(result.feature_errors == undefined) { result.feature_errors = true; }
 
     if(scErrors[0]!=undefined && result.feature_errors) {
 
@@ -579,6 +589,8 @@ function _addEnvironmentLabel() {
 
     chrome.storage.sync.get(['feature_dragdrop'], function(result) {
       
+      if(result.feature_dragdrop == undefined) { result.feature_dragdrop = true; }
+
       if(isMediaFolder && result.feature_dragdrop) {
         scIframeMedia.onload = function() {
 
@@ -650,7 +662,9 @@ function _addEnvironmentLabel() {
 
   chrome.storage.sync.get(['feature_favorites'], function(result) {
 
-    if(result.feature_favorites == undefined && !isPublishWindow || result.feature_favorites && !isPublishWindow) {
+    if(result.feature_favorites == undefined) { result.feature_favorites = true; }
+
+    if(result.feature_favorites && !isPublishWindow) {
 
       var scFavoritesIframe = document.getElementById("sitecorAuthorToolboxFav");
 
@@ -722,6 +736,9 @@ if(element){
   chrome.storage.sync.get(['scItemID','feature_reloadnode'], function(result) {
 
     if (!chrome.runtime.error && result.scItemID != undefined) {
+
+      if(result.feature_reloadnode == undefined) { result.feature_reloadnode = true; }
+
       if(result.scItemID && result.feature_reloadnode == true) {
 
         //Load node by code injection {681D640C-C820-483A-9249-3637312CD415}
@@ -750,6 +767,8 @@ var elementObserver2 = new MutationObserver(function(e) {
 
   chrome.storage.sync.get(['feature_notification'], function(result) {
 
+    if(result.feature_notification == undefined) { result.feature_notification = true; }
+    
     if(result.feature_notification) {
       var notificationTitle = element2.getElementsByClassName("DialogHeader").item(0).innerHTML;
       var notificationSubTitle = element2.getElementsByClassName("sc-text-largevalue").item(0).innerHTML;

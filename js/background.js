@@ -1,41 +1,70 @@
-// Copyright 2018 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
 "use strict";
 
-// chrome.runtime.onInstalled.addListener(function(details) {
-// 	console.log("previousVersion",details.previousVersion)
-// }),
-// chrome.runtime.onMessage.addListener(function(request,sender,sendResponse){
-// 	//chrome.browserAction.setBadgeText({tabId:sender.tab.id,text:'1'}),
-// 	chrome.browserAction.setBadgeBackgroundColor({color:"#DC291E"}),
-// 	chrome.browserAction.setIcon({path:'images/icon.png',tabId:sender.tab.id}),
-// 	chrome.browserAction.setPopup({tabId:sender.tab.id,popup:"options.html"})
-// });
+let isContextMenu = false;
 
-var lastTabId = 0;
+// The onClicked callback function.
+function onClickHandler(info, tab) {
+    console.info("item " + info.menuItemId + " was clicked");
+    console.info("info: " + JSON.stringify(info));
+    console.info("tab: " + JSON.stringify(tab));
+    var url = info.pageUrl.substring(0, info.pageUrl.indexOf('?'));
+    chrome.tabs.executeScript(tab.id, {code: 'window.location.href = "' + url + '?sc_mode=edit";'});
+}
 
-chrome.tabs.onSelectionChanged.addListener(function(tabId) {
-	lastTabId = tabId;
+chrome.contextMenus.onClicked.addListener(onClickHandler);
+
+//When a tab is activated
+chrome.tabs.onActivated.addListener(function(tabId, changeInfo, tab){
+  chrome.tabs.getSelected(null, function(tab) { 
+
+    //Tab URL
+    var url = new URL(tab.url)
+    var isSitecore = tab.url.includes("/sitecore/");
+
+    //Get all cookies
+    chrome.cookies.getAll({}, function(cookies) {
+      for (var i in cookies) {
+        if(url.hostname == cookies[i].domain && cookies[i].name == "sxa_site" && !isSitecore) {
+          
+          console.info("isSitecore: "+isSitecore+ " --> isMenu: "+isContextMenu+" --> Cookie: "+cookies[i].name+" --> Value: "+cookies[i].value);
+          
+          if(!isContextMenu) {
+            chrome.contextMenus.create({"title": "Edit in Experience Editor (beta)", "contexts":["page"], "id": "SitecoreAuthorToolbox"});
+            isContextMenu = true;
+          }
+          break;
+        
+        } else {
+          
+          if(isContextMenu) {
+            chrome.contextMenus.remove("SitecoreAuthorToolbox");
+            isContextMenu = false;
+          }
+
+        }
+      }
+    });
+
+  });
+
 });
+
+
 
 // When the extension is installed or upgraded ...
 chrome.runtime.onInstalled.addListener(function() {
-  // Replace all rules ...
+
+  //Page action
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
-    // With a new rule ...
     chrome.declarativeContent.onPageChanged.addRules([
       {
-        // That fires when a page's URL contains a 'g' ...
         conditions: [
           new chrome.declarativeContent.PageStateMatcher({
             pageUrl: { urlContains: '/sitecore/' }
           })
         ],
-        // And shows the extension's page action.
         actions: [ new chrome.declarativeContent.ShowPageAction() ]
       }
     ]);

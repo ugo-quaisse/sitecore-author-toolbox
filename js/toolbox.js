@@ -38,7 +38,6 @@ link.rel = "stylesheet";
 link.href =  chrome.runtime.getURL("css/onload-min.css");
 document.getElementsByTagName("head")[0].appendChild(link);
 
-
 /*
  * Dectect which URL/Frame is loading the script? (Languages, Favorites, etc...)
  */

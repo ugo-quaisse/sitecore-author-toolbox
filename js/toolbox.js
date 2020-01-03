@@ -142,6 +142,8 @@ if(isGalleryLanguage) {
                       temp = tdlanguage.split(" (");
                       if(temp[1] == undefined) { temp = temp[0]; } else { temp = temp[1]; }
                       temp = temp.split(")");
+                      temp = temp[0].split(" :");
+                      if(temp[0].includes(', ')) { temp = temp[0].split(", "); temp[0] = temp[1]; temp[0] = temp[0].replace(" ", "_"); }
                       temp = temp[0].replace(" ", "_");
                       temp = temp.toUpperCase();
                       tdlanguage = temp.replace("TRADITIONAL,_","");
@@ -152,14 +154,16 @@ if(isGalleryLanguage) {
                       tdlanguage = tdlanguage.replace("KOREA","SOUTH_KOREA");
                       tdlanguage = tdlanguage.replace("UNITED_STATES","USA");
                       tdlanguage = tdlanguage.replace("UNITED_KINGDOM","GREAT_BRITAIN");
-
+                      tdlanguage = tdlanguage.replace("ENGLISH","GREAT_BRITAIN");
+                      
                       //console.log(tdlanguage);
 
                     }
                     
                     //Now replace images src and add an image fallback if doesn't exist
-                    tdimage[0].onerror = function() { this.src = '-/icon/Flags/32x32/flag_generic.png'; }
-                    tdimage[0].src = "-/icon/Flags/32x32/flag_"+tdlanguage+".png";
+                    tdlanguage = tdlanguage.toLowerCase();
+                    tdimage[0].onerror = function() { this.src = chrome.runtime.getURL("images/Flags/32x32/flag_generic.png"); }
+                    tdimage[0].src = chrome.runtime.getURL("images/Flags/32x32/flag_" + tdlanguage + ".png");
                     //console.log(tdlanguage);
                   }
 
@@ -274,6 +278,7 @@ function _addEnvironmentLabel() {
   var icon = chrome.runtime.getURL("images/rocket.png");
   var iconError = chrome.runtime.getURL("images/error.png");
   var iconEdit = chrome.runtime.getURL("images/edit.png");
+  var iconFlagGeneric = chrome.runtime.getURL("images/Flags/32x32/flag_generic.png");
   var jsonLanguages = chrome.runtime.getURL("data/languages.json");
 
   //Sitecore item title bar
@@ -392,6 +397,8 @@ function _addEnvironmentLabel() {
         temp = scLanguageTxtShort.split(" (");
         if(temp[1] == undefined) { temp = temp[0]; } else { temp = temp[1]; }
         temp = temp.split(")");
+        temp = temp[0].split(" :");
+        if(temp[0].includes(', ')) { temp = temp[0].split(", "); temp[0] = temp[1]; temp[0] = temp[0].replace(" ", "_"); }
         temp = temp[0].replace(" ", "_");
         temp = temp.toUpperCase();
         scFlag = temp.replace("TRADITIONAL,_","");
@@ -404,16 +411,19 @@ function _addEnvironmentLabel() {
         scFlag = scFlag.replace("KOREA","SOUTH_KOREA");
         scFlag = scFlag.replace("UNITED_STATES","USA");
         scFlag = scFlag.replace("UNITED_KINGDOM","GREAT_BRITAIN");
+        scFlag = scFlag.replace("ENGLISH","GREAT_BRITAIN");
 
+        scFlag = scFlag.toLowerCase();
+        scFlag = chrome.runtime.getURL("images/Flags/32x32/flag_" + scFlag + ".png");
 
         //Insert Flag into Active Tab
         if(!document.getElementById("scFlag") && result.feature_flags && scFlag) {
-          scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="-/icon/Flags/32x32/flag_' + scFlag +'.png" style="width: 20px; vertical-align: middle; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'-/icon/Flags/32x32/flag_generic.png\';"/>' );
+          scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + scFlag +'" style="width: 20px; vertical-align: middle; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + iconFlagGeneric + '\';"/>' );
         }
 
         if(result.feature_flags && scFlag) {
           //Insert Flag into Sitecore Language selector
-          scLanguageMenu.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="-/icon/Flags/32x32/flag_' + scFlag +'.png" style="width: 15px; vertical-align: sub; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'-/icon/Flags/32x32/flag_generic.png\';"/>' );
+          scLanguageMenu.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + scFlag +'" style="width: 15px; vertical-align: sub; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + iconFlagGeneric + '\';"/>' );
         }
 
       } else {
@@ -434,16 +444,20 @@ function _addEnvironmentLabel() {
                           if( scLanguageTxtShort.toUpperCase() == data[key]["language"].toUpperCase()) {
                             
                             scFlag = data[key]["flag"];
+                            scFlag = scFlag.toLowerCase();
+                            scFlag = chrome.runtime.getURL("images/Flags/32x32/flag_" + scFlag + ".png")
+
+
                             if (debug) { console.log("Flag:" + scFlag); }
 
                             //Insert Flag into Active Tab
                             if(!document.getElementById("scFlag") && result.feature_flags && scFlag) {
-                              scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="-/icon/Flags/32x32/flag_' + scFlag +'.png" style="width: 20px; vertical-align: middle; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'-/icon/Flags/32x32/flag_generic.png\';"/>' );
+                              scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + scFlag +'" style="width: 20px; vertical-align: middle; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + iconFlagGeneric + '\';"/>' );
                             }
 
                             if(result.feature_flags && scFlag) {
                             //Insert Flag into Sitecore Language selector
-                            scLanguageMenu.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="-/icon/Flags/32x32/flag_' + scFlag +'.png" style="width: 15px; vertical-align: sub; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'-/icon/Flags/32x32/flag_generic.png\';"/>' );
+                            scLanguageMenu.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + scFlag +'" style="width: 15px; vertical-align: sub; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + iconFlagGeneric + '\';"/>' );
                             }
                           }
                           //console.log(key + " = " + data[key]["language"] + " : " + data[key]["flag"]);
@@ -469,6 +483,11 @@ function _addEnvironmentLabel() {
   chrome.storage.sync.get(['feature_errors'], function(result) {
 
     if(scErrors[0]!=undefined && result.feature_errors) {
+
+      //Check Unicorn message
+      //loop scMessageBar scError
+      //if scMessageBarTitle == "This item is controlled by Unicorn"
+      //Change icon
   
       count = 0;
 

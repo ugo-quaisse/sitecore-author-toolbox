@@ -6,43 +6,78 @@
  * Helpers and variables
  */
 let isContextMenu = false;
+let sxa_site;
+let sc_site;
+
 
 function onClickHandler(info, tab) {
     //console.info("info: " + JSON.stringify(info));
     //console.info("tab: " + JSON.stringify(tab));
-    var url = info.pageUrl.substring(0, info.pageUrl.indexOf('?'));
-    chrome.tabs.executeScript(tab.id, {code: 'window.location.href = "' + url + '?sc_mode=edit";'});
+    var url = info.pageUrl.substring(0, info.pageUrl.indexOf('?'));   
+    if(sxa_site != undefined) { sc_site = "&sc_site="+sxa_site } else { sc_site = ""; }
+ 
+    if(info.menuItemId == "SitecoreAuthorToolbox") {
+      //Edit
+      chrome.tabs.executeScript(tab.id, {code: 'window.location.href = "' + url + '?sc_mode=edit' + sc_site + '";'});
+    } else if(info.menuItemId == "SitecoreAuthorToolboxDebug") {
+      //Debug
+      chrome.tabs.executeScript(tab.id, {code: 'window.location.href = "' + url + '?sc_debug=1&sc_trace=1&sc_prof=1&sc_ri=1' + sc_site + '";'});
+    }
+
 }
 
 function showContextMenu(tab) {
-  //Tab URL
-  var url = new URL(tab.url)
-  var isSitecore = tab.url.includes("/sitecore/");
+  if(tab.url != undefined) {
 
-  //Get and loop throught all cookies
-  chrome.cookies.getAll({}, function(cookies) {
-    for (var i in cookies) {
+    var isSitecore = tab.url.includes("/sitecore/");
+    var isChromeTab = tab.url.includes("chrome://");
 
-      if(url.hostname == cookies[i].domain && cookies[i].name == "shell#lang" && !isSitecore) {
-        //console.info("isSitecore: "+isSitecore+ " --> isMenu: "+isContextMenu+" --> Cookie: "+cookies[i].name+" --> Value: "+cookies[i].value);      
-        if(!isContextMenu) {
-          chrome.contextMenus.create({"title": "Edit in Experience Editor (beta)", "contexts":["page"], "id": "SitecoreAuthorToolbox"});
-          isContextMenu = true;
+    if(!isChromeTab) {
+      //Tab URL
+      var url = new URL(tab.url);
+
+      chrome.cookies.getAll({}, function(cookies) {
+        
+        //Discpay context menu if Sitecore website and Sitecore Back-office opened
+        for (var i in cookies) {
+          
+          //console.info("Cookie: "+cookies[i].name+" - "+url.hostname);    
+          if(url.hostname == cookies[i].domain && cookies[i].name == "shell#lang" && !isSitecore) {
+              
+            if(!isContextMenu) {
+              chrome.contextMenus.create({"title": "Edit in Experience Editor (beta)", "contexts":["page"], "id": "SitecoreAuthorToolbox"});
+              //chrome.contextMenus.create({"title": "Debug in Sitecore (beta)", "contexts":["page"], "id": "SitecoreAuthorToolboxDebug"});
+              isContextMenu = true;
+            }
+            break;
+
+          } else {
+
+            if(isContextMenu) {
+              chrome.contextMenus.remove("SitecoreAuthorToolbox");
+              //chrome.contextMenus.remove("SitecoreAuthorToolboxDebug");
+              isContextMenu = false;
+            }
+
+          }
         }
-        break;   
-      } else {      
-        if(isContextMenu) {
-          chrome.contextMenus.remove("SitecoreAuthorToolbox");
-          isContextMenu = false;
+
+        //Retrieve SXA site
+        for (i in cookies) {
+          if(url.hostname == cookies[i].domain && cookies[i].name == "sxa_site") {
+
+            sxa_site = cookies[i].value;
+
+          }
         }
-      }
+      });
     }
-  });
+  }
 }
 
 //When a tab is updated
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  chrome.tabs.getSelected(null, function(tab) { 
+  chrome.tabs.getSelected(null, function(tab) {
     showContextMenu(tab);
   });
 });
@@ -50,7 +85,6 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 //When a tab is activated
 chrome.tabs.onActivated.addListener(function(tabId, changeInfo, tab) {
   chrome.tabs.getSelected(null, function(tab) { 
-    showContextMenu(tab) ;
   });
 });
 

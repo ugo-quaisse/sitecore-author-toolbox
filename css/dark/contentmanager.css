@@ -1434,6 +1434,7 @@ a.scSearchLink img {
 
 #EditorTop {
     height: 27px;
+    filter: invert(1);
 }
 
 #EditorWrapper td.reToolZone {

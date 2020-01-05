@@ -7,8 +7,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
-  font: inherit;
   color: #cccccc !important;
   /*-webkit-font-smoothing: antialiased !important;
   font-smoothing: antialiased !important;*/
@@ -3940,4 +3938,8 @@ a.scItemThumbnail:hover > span.scDisplayName {
     height: 16px;
     width: 100%;
     padding: 5px;
+}
+
+.reContentCell {
+  border: 1px solid #0f0f0f !important;
 }

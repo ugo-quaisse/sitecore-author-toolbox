@@ -39,6 +39,15 @@ link.href =  chrome.runtime.getURL("css/onload-min.css");
 document.getElementsByTagName("head")[0].appendChild(link);
 
 /*
+ * Code injection (BETA)
+ */
+console.log("Loaded");
+var script = document.createElement('script');
+script.src = chrome.runtime.getURL("js/BucketList.js");
+(document.head||document.documentElement).appendChild(script);
+script.remove();
+
+/*
  * Dectect which URL/Frame is loading the script? (Languages, Favorites, etc...)
  */
 if(debug) { console.info("***** URL loaded ***** "+window.location); }
@@ -52,8 +61,37 @@ var isSecurityWindow = window.location.href.includes('/shell/Applications/Securi
 var isExperienceEditor = window.location.href.includes('/Applications/ExperienceEditor/');
 var isContentHome = window.location.href.includes('/content/home');
 var isLoginPage = window.location.href.includes('sitecore/login');
+var isLaunchpad = window.location.href.includes('/client/Applications/Launchpad');
+var isRichTextEditor = window.location.href.includes('/Controls/Rich%20Text%20Editor/');
 
-if(isGalleryLanguage) {
+if(isLaunchpad) {
+
+  if(debug) { console.info("====================> LAUNCHPAD <===================="); }
+
+  chrome.storage.sync.get(['feature_launchpad'], function(result) {
+
+    if(result.feature_launchpad == undefined) { result.feature_launchpad = true; }
+
+    if(result.feature_launchpad) {
+
+    //Find last dom item
+    var launchpadCol = document.querySelectorAll('.last');
+    var launchpadPage = chrome.runtime.getURL("options.html");
+    var launchpadIcon = chrome.runtime.getURL("images/icon.png");
+    var launchpadGroupTitle = "Sitecore Author Toolbox";
+    var launchpadTitle = "Options";
+    var launchpadUrl = window.location.href;
+    //get popup url
+    var html = '<div class="sc-launchpad-group"><header class="sc-launchpad-group-title">' + launchpadGroupTitle + '</header><div class="sc-launchpad-group-row"><a href="#" onclick="window.location.href=\'' + launchpadPage + '?launchpad=true&url=' + launchpadUrl + '\'" class="sc-launchpad-item" title="' + launchpadTitle + '"><span class="icon"><img src="' + launchpadIcon + '" width="48" height="48" alt="' + launchpadTitle + '"></span><span class="sc-launchpad-text">' + launchpadTitle + '</span></a></div></div>';
+
+    //Insert into launchpad
+    launchpadCol[0].insertAdjacentHTML( 'afterend', html );
+
+    }
+
+  });
+
+} else if(isGalleryLanguage) {
 
   if(debug) { console.info("====================> LANGUAGES <===================="); }
 
@@ -191,7 +229,6 @@ if(isGalleryLanguage) {
   if(debug) { console.info("====================> PUBLISH WINDOW <===================="); }
 
     var dom = document.getElementById("Languages");
-    console.log(dom);
     var label = dom.getElementsByTagName('label');
 
     for (let item of label) {
@@ -215,7 +252,6 @@ if(isGalleryLanguage) {
   if(debug) { console.info("====================> ADMIN CACHE <===================="); }
 
 }
-
 
 /*
  * Dark mode
@@ -262,8 +298,6 @@ chrome.storage.sync.get(['feature_darkmode'], function(result) {
     link.href =  chrome.runtime.getURL("css/dark/speak-min.css");
     document.getElementsByTagName("head")[0].appendChild(link);
 
-    // chrome.browserAction.setBadgeText({text:'Dark'});
-    // chrome.browserAction.setBadgeBackgroundColor({color:"#DC291E"});
   }
 
 });
@@ -281,6 +315,7 @@ function _addEnvironmentLabel() {
   var iconEdit = chrome.runtime.getURL("images/edit.png");
   var iconFlagGeneric = chrome.runtime.getURL("images/Flags/32x32/flag_generic.png");
   var jsonLanguages = chrome.runtime.getURL("data/languages.json");
+  let rteLanguages = ["ARABIC", "HEBREW", "PERSIAN", "URDU", "SINDHI"];
 
   //Sitecore item title bar
   let scEditorID = document.querySelector ( ".scEditorHeader" );
@@ -483,6 +518,49 @@ function _addEnvironmentLabel() {
     
   }
 
+  /*
+   * Right to left editor mode
+   */
+  chrome.storage.sync.get(['feature_rtl'], function(result) {
+
+    if(result.feature_rtl == undefined) { result.feature_rtl = true; }
+
+    if(result.feature_rtl) {
+      //Get active language
+      temp = scLanguageTxtShort.split(" (");
+      scFlag = temp[0].toUpperCase();
+      var iframes;
+
+      //Inject css stylesheet
+      link = document.createElement("link");
+      link.type = "text/css";
+      link.rel = "stylesheet";
+
+      if(rteLanguages.includes(scFlag)) {
+        //RTE
+        link.href =  chrome.runtime.getURL("css/rtl-min.css");
+
+        iframes = document.getElementsByClassName('scContentControlHtml');
+        for (let iframe of iframes) {
+          iframe.onload= function() { iframe.contentWindow.document.getElementById('ContentWrapper').style.direction = "RTL"; };
+        }
+
+        if(debug) { console.log("RTE:" + scFlag); }
+      } else {
+        //LTR
+        link.href =  chrome.runtime.getURL("css/ltr-min.css");
+       
+        iframes = document.getElementsByClassName('scContentControlHtml');
+        for (let iframe of iframes) {
+          iframe.onload= function() { iframe.contentWindow.document.getElementById('ContentWrapper').style.direction = "LTR"; };
+        }
+
+        if(debug) { console.log("LTR:" + scFlag); }
+      }
+      document.getElementsByTagName("head")[0].appendChild(link);
+    }
+
+  });
 
   /*
    * 3. Display Grouped Errors
@@ -492,11 +570,6 @@ function _addEnvironmentLabel() {
     if(result.feature_errors == undefined) { result.feature_errors = true; }
 
     if(scErrors[0]!=undefined && result.feature_errors) {
-
-      //Check Unicorn message
-      //loop scMessageBar scError
-      //if scMessageBarTitle == "This item is controlled by Unicorn"
-      //Change icon
   
       count = 0;
 
@@ -768,7 +841,7 @@ var elementObserver2 = new MutationObserver(function(e) {
   chrome.storage.sync.get(['feature_notification'], function(result) {
 
     if(result.feature_notification == undefined) { result.feature_notification = true; }
-    
+
     if(result.feature_notification) {
       var notificationTitle = element2.getElementsByClassName("DialogHeader").item(0).innerHTML;
       var notificationSubTitle = element2.getElementsByClassName("sc-text-largevalue").item(0).innerHTML;

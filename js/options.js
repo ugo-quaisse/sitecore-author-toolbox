@@ -9,177 +9,217 @@
  /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
  
 document.body.onload = function() {
+
+  //Extension version
+  var manifestData = chrome.runtime.getManifest();
+  document.getElementById("scVersion").innerHTML = manifestData.version;
+
+  //Get URL parameters
+  var url = new URL(window.location.href);
+  var fromLaunchpad = url.searchParams.get("launchpad");
+  var backUrl = url.searchParams.get("url");
+
+  if(fromLaunchpad) {
+    document.getElementById("set").innerHTML = "Save your preferences";
+    document.getElementById("scHeader").style.display = "inherit";
+    document.getElementById("scBack").href = backUrl;
+    document.getElementById("banner").style.top = "50px";
+    document.getElementById("bannerTitle").style.opacity = "1";
+    document.getElementById("intro").style.marginTop = "50px";
+    document.getElementById("scVideo").style.display = "inherit";
+  }
+
   //Urls
   chrome.storage.sync.get(['feature_urls'], function(result) {
     if (!chrome.runtime.error && result.feature_urls != undefined) {
       if(result.feature_urls) {
-        document.getElementById("urls_true").checked = true;
-      } else {
-        document.getElementById("urls_false").checked = true;
+        document.getElementById("feature_urls").checked = true;
       }
     } else {
-      document.getElementById("urls_true").checked = true;
+      document.getElementById("feature_urls").checked = true;
     }
   });
   //Flags
   chrome.storage.sync.get(['feature_flags'], function(result) {
     if (!chrome.runtime.error && result.feature_flags != undefined) {
       if(result.feature_flags) {
-        document.getElementById("flags_true").checked = true;
-      } else {
-        document.getElementById("flags_false").checked = true;
+        document.getElementById("feature_flags").checked = true;
       }
     } else {
-      document.getElementById("flags_true").checked = true;
+      document.getElementById("feature_flags").checked = true;
     }
   });
   //Errors
   chrome.storage.sync.get(['feature_errors'], function(result) {
     if (!chrome.runtime.error && result.feature_errors != undefined) {
       if(result.feature_errors) {
-        document.getElementById("errors_true").checked = true;
-      } else {
-        document.getElementById("errors_false").checked = true;
+        document.getElementById("feature_errors").checked = true;
       }
     } else {
-      document.getElementById("errors_true").checked = true;
+      document.getElementById("feature_errors").checked = true;
     }
   });
   //Drag and drop
   chrome.storage.sync.get(['feature_dragdrop'], function(result) {
     if (!chrome.runtime.error && result.feature_dragdrop != undefined) {
       if(result.feature_dragdrop) {
-        document.getElementById("dragdrop_true").checked = true;
-      } else {
-        document.getElementById("dragdrop_false").checked = true;
+        document.getElementById("feature_dragdrop").checked = true;
       }
     } else {
-      document.getElementById("dragdrop_true").checked = true;
+      document.getElementById("feature_dragdrop").checked = true;
     }
   });
   //Notification
   chrome.storage.sync.get(['feature_notification'], function(result) {
     if (!chrome.runtime.error && result.feature_notification != undefined) {
       if(result.feature_notification) {
-        document.getElementById("notification_true").checked = true;
-      } else {
-        document.getElementById("notification_false").checked = true;
+        document.getElementById("feature_notification").checked = true;
       }
     } else {
-      document.getElementById("notification_true").checked = true;
+      document.getElementById("feature_notification").checked = true;
     }
   });
   //Dark Mode
   chrome.storage.sync.get(['feature_darkmode'], function(result) {
     if (!chrome.runtime.error && result.feature_darkmode != undefined) {
       if(result.feature_darkmode) {
-        document.getElementById("darkmode_true").checked = true;
-      } else {
-        document.getElementById("darkmode_false").checked = true;
+        document.getElementById("feature_darkmode").checked = true;
+        var element = document.getElementById("extensionOptions");
+        element.classList.add("dark");
       }
     } else {
-      document.getElementById("darkmode_false").checked = true;
+      document.getElementById("feature_darkmode").checked = false;
+      element = document.getElementById("extensionOptions");
+      element.classList.add("light");
     }
+    console.log("load"+result.feature_darkmode);
   });
   //Favorites bar
   chrome.storage.sync.get(['feature_favorites'], function(result) {
     if (!chrome.runtime.error && result.feature_favorites != undefined) {
       if(result.feature_favorites) {
-        document.getElementById("favorites_true").checked = true;
-      } else {
-        document.getElementById("favorites_false").checked = true;
+        document.getElementById("feature_favorites").checked = true;
       }
     } else {
-      document.getElementById("favorites_true").checked = true;
+      document.getElementById("feature_favorites").checked = true;
     }
   });
   //reload from where you left
   chrome.storage.sync.get(['feature_reloadnode'], function(result) {
     if (!chrome.runtime.error && result.feature_reloadnode != undefined) {
       if(result.feature_reloadnode) {
-        document.getElementById("reloadnode_true").checked = true;
-      } else {
-        document.getElementById("reloadnode_false").checked = true;
+        document.getElementById("feature_reloadnode").checked = true;
+
       }
     } else {
-      document.getElementById("reloadnode_true").checked = true;
+      document.getElementById("feature_reloadnode").checked = true;
     }
   });
-  //reload from where you left
-  chrome.storage.sync.get(['feature_contextmenu'], function(result) {
-    if (!chrome.runtime.error && result.feature_reloadnode != undefined) {
-      if(result.feature_reloadnode) {
-        document.getElementById("contextmenu_true").checked = true;
-      } else {
-        document.getElementById("contextmenu_false").checked = true;
+  //Launchpad icon
+  chrome.storage.sync.get(['feature_launchpad'], function(result) {
+    if (!chrome.runtime.error && result.feature_launchpad != undefined) {
+      if(result.feature_launchpad) {
+        document.getElementById("feature_launchpad").checked = true;
       }
     } else {
-      document.getElementById("contextmenu_false").checked = true;
+      document.getElementById("feature_launchpad").checked = true;
     }
   });
+  //Right to left
+  chrome.storage.sync.get(['feature_rtl'], function(result) {
+    if (!chrome.runtime.error && result.feature_rtl != undefined) {
+      if(result.feature_rtl) {
+        document.getElementById("feature_rtl").checked = true;
+      }
+    } else {
+      document.getElementById("feature_rtl").checked = true;
+    }
+  });
+  //Context menu
+  // chrome.storage.sync.get(['feature_contextmenu'], function(result) {
+  //   if (!chrome.runtime.error && result.feature_reloadnode != undefined) {
+  //     if(result.feature_reloadnode) {
+  //       document.getElementById("contextmenu_true").checked = true;
+  //     } else {
+  //       document.getElementById("contextmenu_false").checked = true;
+  //     }
+  //   } else {
+  //     document.getElementById("contextmenu_false").checked = true;
+  //   }
+  // });
 }
 
 document.getElementById("set").onclick = function() {
   //URLs
-  var value_urls =document.querySelector('input[name="feature_urls"]:checked').value;
-  value_urls = (value_urls == 'true');
-  chrome.storage.sync.set({"feature_urls": value_urls}, function() {
-    console.info('Urls are set to ' + value_urls);
+  chrome.storage.sync.set({"feature_urls": document.getElementById('feature_urls').checked}, function() {
+    console.info('--> Urls: ' + document.getElementById('feature_urls').checked);
   });
   //Flags
-  var value_flags =document.querySelector('input[name="feature_flags"]:checked').value;
-  value_flags = (value_flags == 'true');
-  chrome.storage.sync.set({"feature_flags": value_flags}, function() {
-    console.info('Flags are set to ' + value_flags);
+  chrome.storage.sync.set({"feature_flags": document.getElementById('feature_flags').checked}, function() {
+    console.info('--> Flags: ' + document.getElementById('feature_flags').checked);
   });
   //Errors
-  var value_errors =document.querySelector('input[name="feature_errors"]:checked').value;
-  value_errors = (value_errors == 'true');
-  chrome.storage.sync.set({"feature_errors": value_errors}, function() {
-    console.info('Errors are set to ' + value_errors);
+  chrome.storage.sync.set({"feature_errors": document.getElementById('feature_errors').checked}, function() {
+    console.info('--> Errors: ' + document.getElementById('feature_errors').checked);
   });
   //Drag and Drop
-  var value_dragdrop =document.querySelector('input[name="feature_dragdrop"]:checked').value;
-  value_dragdrop = (value_dragdrop == 'true');
-  chrome.storage.sync.set({"feature_dragdrop": value_dragdrop}, function() {
-    console.info('Drag and drop is set to ' + value_dragdrop);
+  chrome.storage.sync.set({"feature_dragdrop": document.getElementById('feature_dragdrop').checked}, function() {
+    console.info('--> Drag and drop: ' + document.getElementById('feature_dragdrop').checked);
   });
   //Notificattion
-  var value_notification =document.querySelector('input[name="feature_notification"]:checked').value;
-  value_notification = (value_notification == 'true');
-  chrome.storage.sync.set({"feature_notification": value_notification}, function() {
-    console.info('Notifications are set to ' + value_notification);
+  chrome.storage.sync.set({"feature_notification": document.getElementById('feature_notification').checked}, function() {
+    console.info('--> Notifications: ' + document.getElementById('feature_notification').checked);
   });
   //Dark mode
-  var value_darkmode =document.querySelector('input[name="feature_darkmode"]:checked').value;
-  value_darkmode = (value_darkmode == 'true');
-  chrome.storage.sync.set({"feature_darkmode": value_darkmode}, function() {
-    console.info('Dark mode set to ' + value_darkmode);
+  chrome.storage.sync.set({"feature_darkmode": document.getElementById('feature_darkmode').checked}, function() {
+    console.info('--> Dark mode:' + document.getElementById('feature_darkmode').checked);
+      if(document.getElementById('feature_darkmode').checked) {
+        var element = document.getElementById("extensionOptions");
+        element.classList.remove("light");
+        element.classList.add("dark");
+      } else {
+        element = document.getElementById("extensionOptions");
+        element.classList.remove("dark");
+        element.classList.add("light");
+      }
   });
   //Favorites
-  var value_favorites =document.querySelector('input[name="feature_favorites"]:checked').value;
-  value_favorites = (value_favorites == 'true');
-  chrome.storage.sync.set({"feature_favorites": value_favorites}, function() {
-    console.info('Favorites bar set to ' + value_favorites);
+  chrome.storage.sync.set({"feature_favorites": document.getElementById('feature_favorites').checked}, function() {
+    console.info('--> Favorites: ' + document.getElementById('feature_favorites').checked);
   });
   //Reload from where you left
-  var value_reloadnode =document.querySelector('input[name="feature_reloadnode"]:checked').value;
-  value_reloadnode = (value_reloadnode == 'true');
-  chrome.storage.sync.set({"feature_reloadnode": value_reloadnode}, function() {
-    console.info('Reload from where you left set to ' + value_reloadnode);
+  chrome.storage.sync.set({"feature_reloadnode": document.getElementById('feature_reloadnode').checked}, function() {
+    console.info('--> Reload: ' + document.getElementById('feature_reloadnode').checked);
   });
-  //Context menu: edit in Experience Editor
-  // var value_contextmenu =document.querySelector('input[name="feature_contextmenu"]:checked').value;
-  // value_contextmenu = (value_contextmenu == 'true');
-  // chrome.storage.sync.set({"feature_contextmenu": value_contextmenu}, function() {
-  //   console.info('Context menu set to ' + value_contextmenu);
-  // });
+  //Launchpad
+  chrome.storage.sync.set({"feature_launchpad": document.getElementById('feature_launchpad').checked}, function() {
+    console.info('--> Launchpad: ' + document.getElementById('feature_launchpad').checked);
+  });
+  //RTL
+  chrome.storage.sync.set({"feature_rtl": document.getElementById('feature_rtl').checked}, function() {
+    console.info('--> RTL: ' + document.getElementById('feature_rtl').checked);
+  });
+
+  //Get URL parameters
+  var url = new URL(window.location.href);
+  var fromLaunchpad = url.searchParams.get("launchpad");
+  console.log("Launchpad: "+fromLaunchpad);
 
   //Reload sitecore
-  chrome.tabs.query({active: true, currentWindow: true}, function (arrayOfTabs) {
-    var code = 'window.location.reload();';
-    chrome.tabs.executeScript(arrayOfTabs[0].id, {code: code});
-  });
+  if(!fromLaunchpad) {
+    chrome.tabs.query({active: true, currentWindow: true}, function (arrayOfTabs) {
+      var code = 'window.location.reload();';
+      chrome.tabs.executeScript(arrayOfTabs[0].id, {code: code});
+      document.getElementById("set").innerHTML = "Saving...";
+      setTimeout(function(){ document.getElementById("set").innerHTML = "Save and reload sitecore"; }, 1000);
+    });
+  } else {
+    document.getElementById("set").innerHTML = "Saving...";
+    setTimeout(function(){ document.getElementById("set").innerHTML = "Save your preferences"; }, 1000);
+  }
+
+  //Reload parent
+  //window.opener.location.reload();
 
 }
 
@@ -198,9 +238,16 @@ function doSomething(scroll_pos) {
 
 window.addEventListener('scroll', function(e) {
   last_known_scroll_position = window.scrollY;
+  
+  //Get URL parameters
+  var url = new URL(window.location.href);
+  var fromLaunchpad = url.searchParams.get("launchpad");
 
-  if (!ticking) {
+  if (!ticking && !fromLaunchpad) {
     window.requestAnimationFrame(function() {
+
+      console.log(fromLaunchpad);
+
       doSomething(last_known_scroll_position);
       ticking = false;
     });

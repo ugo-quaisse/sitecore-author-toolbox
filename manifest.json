@@ -1,6 +1,6 @@
 {
 	"name": "Sitecore Author Toolbox",
-	"version": "1.0.4",
+	"version": "1.2.0",
 	"manifest_version": 2,
 	"description": "A set of handy tools for Sitecore's Author: Live URL, Grouped errors, Flags, Dark mode, Notifications, Media drag & drop.",
 	"icons": {
@@ -35,7 +35,8 @@
 			"js": [
 				"js/toolbox-min.js",
 				"js/tabulator-min.js",
-				"js/cache-min.js"
+				"js/cache-min.js",
+				"js/BucketList.js"
 			],
 			"run_at": "document_idle",
 			"all_frames": true
@@ -43,7 +44,7 @@
 	],
 	"options_ui": {
     	"page": "options.html",
-    	"chrome_style": true
+    	"chrome_style": false
   	},	
 	"page_action": {
 		"default_popup": "options.html",
@@ -52,6 +53,8 @@
 	"web_accessible_resources": [
 		"images/*",
 		"css/*",
+		"js/*",
+		"options.html",
 		"data/languages.json"
 	]
 }

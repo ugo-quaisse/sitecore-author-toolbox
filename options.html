@@ -1,225 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Options</title>
+	<title>Sitecore Author Toolbox</title>
 
-	<link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
-
-	<style type="text/css">
-		body {
-		  width: 375px;
-		  font-family: arial, verdana;
-		  margin: 0px;
-		  padding: 0px;
-		  font-size: 13px;
-		}
-		a {
-			color: #DC291E;
-		}
-		label {
-		  display: inline-block;
-		  transition: .4s;
-		  margin-right: 0.5em;
-		}
-		label > input {
-		  display: none;
-		}
-		label i {
-		  display: inline-block;
-		  width: 1.1em;
-		  height: 1.1em;
-		  border-radius: 50%;
-		  border: 1px solid rgba(0, 0, 0, 0.5);	  
-		  vertical-align: middle;
-		  transition: .4s;
-		}
-		label > input:checked + i {
-		  box-shadow: inset 0 0 0 0.2em #ffffff;
-		  background: #DC291E;
-		}
-		label:hover {
-		  cursor: pointer;
-		}
-		#message {
-			color:#F20D00;
-			font-size: 20px;
-			text-align: center;
-			font-family: 'Lato', sans-serif;
-		}
-		#set {
-		    cursor: pointer;
-		    padding: 12px 40px;
-		    display: inline-block;
-		    margin: 15px 10px 30px 10px;
-		    text-transform: uppercase;
-		    letter-spacing: 1px;
-		    font-weight: 700;
-		    outline: none;
-		    position: relative;
-		    color: #fff;
-		    background: #DC291E;
-		    transition: none;
-		    border: 0px;
-		    text-shadow: none;
-		    border: 0px;
-		    border-radius: 3px;
-		    box-shadow: none;
-		}
-
-		#set:hover {
-		    background: #474747;
-		    color: rgb(255, 255, 255);
-		    border: 0px; 
-		}
-		#banner {
-			width: 100%;
-			height: 75px;
-    		text-align: center;
-    		padding: 50px 0px 0px 0px;
-    		background: #DC291E;  /* fallback for old browsers */
-			background: -webkit-linear-gradient(to right, #93291E, #DC291E);  /* Chrome 10-25, Safari 5.1-6 */
-			background: linear-gradient(to right, #93291E, #DC291E); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-			position: fixed;
-    		z-index: 10;
-    		transition: all .2s ease-in-out;
-		}
-		#banner > img {
-			width: 150px;
-			transform: scale(1);
-    		transition: all .2s ease-in-out;
-		}
-		#banner > h3 {
-			position: fixed;
-		    top: 0px;
-		    left: 105px;
-		    color: #ffffff;
-		    font-family: 'Lato', sans-serif;
-		    font-size: 22px;
-		    transition: all .3s ease-in-out;
-		    opacity: 0;
-		}
-		#banner.animate {
-			height: 10px;
-		}
-		#banner.animate > img {
-			transform: scale(0.5);
-			margin-left: -275px;
-    		margin-top: -75px;
-		}
-		#banner.animate > h3 {
-			opacity: 1;
-		}
-		#intro {
-			text-align: center;
-    		padding: 180px 0px 0px 0px;
-    		font-size: 22px;
-    		font-family: 'Lato', sans-serif;
-		}
-		#intro > h2 {
-			line-height: 35px;
-		}
-		#main {
-			padding: 0px 25px;
-		}
-		#save {
-			text-align: center;
-		}
-		#footer {
-			padding: 10px 25px;
-		    background-color: #f0f0f0;
-		    text-align: center;
-		    color: #666666;
-		}
-		input {
-			margin: 0px 0px 0px 5px !important;
-		}
-	</style>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/options-min.css">
 
 </head>
 <body>
-	<div id="banner">
-		<img src="images/icon_round.png">
-		<h3>Sitecore Author Toolbox</h3>
-	</div>
-	<div id="intro">
-		<h2>Hello, I am<br />Sitecore Author Toolbox</h2>
-	</div>
+	<div id="extensionOptions" class="wrapper">
+		<header class="sc-globalHeader" id="scHeader">
+			<a href="" id="scBack">
+				<img class="sc-global-logo" src="../images/global_logo.png" />
+			</a>
+		</header>
+		<div id="banner">
+			<h3 id="bannerTitle">Sitecore Author Toolbox</h3>
+			<img src="images/icon_round.png">
+		</div>
+		<div id="intro">
+			<h2>Hello, I am<br />Sitecore Author Toolbox</h2>
+		</div>
 
-	<div id="main">	
+		<div id="main">
+			<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/f-IT1sLyl44" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen id="scVideo"></iframe>
 
-		<p><b>Live URL</b><br />
-			<label><input id="urls_true" type="radio" name="feature_urls" value="true"><i></i> Yes</label>
-			<label><input id="urls_false" type="radio" name="feature_urls" value="false"><i></i> No</label>
-		</p>
+			<p><b>Choose which option you want to activate:</b></p>
+			<input type="checkbox" id="feature_urls" name="feature_urls"> <label for="feature_urls">Live URL</label><br>
+			<input type="checkbox" id="feature_flags" name="feature_flags"> <label for="feature_flags">Language and versions flags</label><br>
+			<input type="checkbox" id="feature_errors" name="feature_errors"> <label for="feature_errors">Grouped error messages</label><br>
+			<input type="checkbox" id="feature_dragdrop" name="feature_dragdrop"> <label for="feature_dragdrop">Media Drag & Drop</label><br>
+			<input type="checkbox" id="feature_notification" name="feature_notification"> <label for="feature_notification">Publish notificaiton</label><br>
+			<input type="checkbox" id="feature_darkmode" name="feature_darkmode"> <label for="feature_darkmode">Dark mode</label><br>
+			<input type="checkbox" id="feature_favorites" name="feature_favorites"> <label for="feature_favorites">Favorites sidebar</label><br>
+			<input type="checkbox" id="feature_reloadnode" name="feature_reloadnode"> <label for="feature_reloadnode">Resume on reload</label><br>
+			<input type="checkbox" id="feature_rtl" name="feature_rtl"> <label for="feature_rtl">RTE support (Arabic, Hebrew, Persian, Undu, Sindhi)</label><br>
+			<input type="checkbox" id="feature_launchpad" name="feature_launchpad"> <label for="feature_launchpad">Launchpad icon</label><br>
 
-		<p><b>Language and versions flags</b><br />
-			<label><input id="flags_true" type="radio" name="feature_flags" value="true"><i></i> Yes</label>
-			<label><input id="flags_false" type="radio" name="feature_flags" value="false"><i></i> No</label>
-		</p>
 
-		<p><b>Grouped error messages</b><br />
-			<label><input id="errors_true" type="radio" name="feature_errors" value="true"><i></i> Yes</label>
-			<label><input id="errors_false" type="radio" name="feature_errors" value="false"><i></i> No</label>
-		</p>
+		</div>
 
-		<p><b>Media Drag & Drop</b><br />
-			<label><input id="dragdrop_true" type="radio" name="feature_dragdrop" value="true"><i></i> Yes</label>
-			<label><input id="dragdrop_false" type="radio" name="feature_dragdrop" value="false"><i></i> No</label>
-		</p>
+		<div id="save">
+			<button id="set">Save and reload Sitecore</button>
+		</div>
 
-		<p><b>Publish notificaiton</b><br />
-			<label><input id="notification_true" type="radio" name="feature_notification" value="true"><i></i> Yes</label>
-			<label><input id="notification_false" type="radio" name="feature_notification" value="false"><i></i> No</label>
-		</p>
+		<div id="footer">
+			<p>Crafted with love by <b>Ugo Quaisse</b> (Paris, France)<br>
+				Follow me at <a href="https://twitter.com/uquaisse" target="_blank">https://twitter.com/uquaisse</a><br>
+			</p>
+			<p>Version <span id="scVersion"></span> - Post a review <a href="https://chrome.google.com/webstore/detail/mckfcmcdbgkgffdknpkaihjigmcnnbco/publish-accepted?authuser=0&hl=en" target="_blank">here</a>.</p>
 
-		<p><b>Dark mode</b><br />
-			<label><input id="darkmode_true" type="radio" name="feature_darkmode" value="true"><i></i> On</label>
-			<label><input id="darkmode_false" type="radio" name="feature_darkmode" value="false"><i></i> Off</label>
-		</p>
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+			<input type="hidden" name="cmd" value="_donations" />
+			<input type="hidden" name="business" value="97J4VES38WELE" />
+			<input type="hidden" name="item_name" value="Support the development of Sitecore Author Toolbox extension" />
+			<input type="hidden" name="currency_code" value="EUR" />
+			<input type="image" src="https://www.paypalobjects.com/en_US/FR/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+			</form>
 
-		<p><b>Favorites sidebar</b><br />
-			<label><input id="favorites_true" type="radio" name="feature_favorites" value="true"><i></i> Yes</label>
-			<label><input id="favorites_false" type="radio" name="feature_favorites" value="false"><i></i> No</label>
-		</p>
-
-		<p><b>Resume on reload</b><br />
-			<label><input id="reloadnode_true" type="radio" name="feature_reloadnode" value="true"><i></i> Yes</label>
-			<label><input id="reloadnode_false" type="radio" name="feature_reloadnode" value="false"><i></i> No</label>
-		</p>
-
-		<!-- <p><b>Context menu: edit in Experience Editor</b><br />
-			<label><input id="contextmenu_true" type="radio" name="feature_contextmenu" value="true"><i></i> Yes</label>
-			<label><input id="contextmenu_false" type="radio" name="feature_contextmenu" value="false"><i></i> No</label>
-			[<a href="">configuration</a>]
-
-			<div>
-				<form action="../../form-result.php" method="post" target="_blank">
-				  <table>
-				  	<tr>
-				  		<td>Live website</td>
-				  		<td>CM website</td>
-				  	</tr>
-				  	<tr>
-				  		<td><input type="url" name="live_website" pattern="https?://.+" required></td>
-				  		<td><input type="url" name="cm_website" pattern="https?://.+" required></td>
-				  	</tr>	
-				  </table>
-				  <input type="submit" value="Send data">
-				</form>
-			</div>
-		</p> -->
+		</div>
 	</div>
 
-	<div id="message"></div>
+	<script type="text/javascript" src="js/options.js"></script>
 
-	<div id="save">
-		<button id="set">Save and reload Sitecore</button>
-	</div>
-
-	<div id="footer">
-		<p>Crafted with love by <b>Ugo Quaisse</b> (Paris, France)<br />Follow me at <a href="https://twitter.com/uquaisse" target="_blank">https://twitter.com/uquaisse</a></p>
-		<p>Do you like this extension? Please post <a href="https://chrome.google.com/webstore/detail/mckfcmcdbgkgffdknpkaihjigmcnnbco/publish-accepted?authuser=0&hl=en" target="_blank">a review here</a>.</p>
-	</div>
-	<script src="js/options-min.js"></script>
 </body>
 </html>

@@ -1,4 +1,5 @@
- /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
+/* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
+/* global scForm, scContent */
 /* eslint no-undef: "error" */
 
 var Sitecore = Sitecore || {};
@@ -44,7 +45,7 @@ Sitecore.InitBucketList = function (id, clientId, pageNumber, searchHandlerUrl, 
 
     // Cunstructor for request success handler
     self.SuccessHandler = function (multilist) {
-        console.log(multilist);
+        //multilist = HTML <select> element
         return function (request) {
             var response = eval(request.responseText);
             multilist.options.length = 0;

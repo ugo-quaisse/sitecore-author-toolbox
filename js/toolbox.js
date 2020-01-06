@@ -30,6 +30,14 @@ function sendNotification(scTitle, scBody) {
 }
 
 /*
+ * Code injection for multilist in a Bucket (BETA)
+ */
+var script = document.createElement('script');
+script.src = chrome.runtime.getURL("js/BucketList.js");
+(document.head||document.documentElement).appendChild(script);
+script.remove();
+
+/*
  * Fadein onload
  */
 var link = document.createElement("link");
@@ -37,15 +45,6 @@ link.type = "text/css";
 link.rel = "stylesheet";
 link.href =  chrome.runtime.getURL("css/onload-min.css");
 document.getElementsByTagName("head")[0].appendChild(link);
-
-/*
- * Code injection (BETA)
- */
-console.log("Loaded");
-var script = document.createElement('script');
-script.src = chrome.runtime.getURL("js/BucketList.js");
-(document.head||document.documentElement).appendChild(script);
-script.remove();
 
 /*
  * Dectect which URL/Frame is loading the script? (Languages, Favorites, etc...)

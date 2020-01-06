@@ -34,7 +34,6 @@ Sitecore.InitBucketList = function (id, clientId, pageNumber, searchHandlerUrl, 
     // Sends 'GET' request to url specified by parameter
     // and apply success handler to multilist element
     self.sendRequest = function (url, data, multilist) {
-        console.log(data);
         new Ajax.Request(url,
             {
                 method: 'POST',
@@ -65,16 +64,25 @@ Sitecore.InitBucketList = function (id, clientId, pageNumber, searchHandlerUrl, 
             }
             var author;
             var folder;
+            var scOption;
+
             for (i = 0; i < reducedItems.length; i++) {
                 item = reducedItems[i];
-                //multilist.options[multilist.options.length] = new Option('🇫🇷 ' + (item.DisplayName || item.Name) + ' / ' + item.Path + ' (-->' + item.TemplateName + (item.Bucket && (' - ' + item.Bucket)) + ') Created by '+item.CreatedBy, item.ItemId);
                 author = item.CreatedBy;
                 author = author.split("\\");
                 folder = item.Path
                 folder = folder.split("/Home/");
-                multilist.options[multilist.options.length] = new Option('👤' + author[1] + ' --> ' + folder[1] , item.ItemId);
-            }
+                folder = folder[1];
 
+                //Custom code for icon
+                scOption = new Option((item.DisplayName || item.Name) + ' (' + item.Path + '/)', item.ItemId);
+                multilist.options[multilist.options.length] = scOption;
+                scOption.setAttribute("style","margin: 4px 0px; padding-left: 25px; background-repeat: no-repeat; background-size: contain;background-image:url(" + item.ImagePath + ")");
+
+                //multilist.options[multilist.options.length] = new Option((item.DisplayName || item.Name) + ' (' + item.TemplateName + (item.Bucket && (' - ' + item.Bucket)) + ')', item.ItemId);
+                //multilist.options[multilist.options.length] = new Option('👤' + author[1] + ' --> ' + folder[1] , item.ItemId);
+            }
+            // console.log(multilist.options);
             self.pageNumber = response.PageNumbers;
             self.currentPage = response.CurrentPage;
             $('pageNumber' + self.clientId).innerHTML = self.format(self.of, self.currentPage, self.pageNumber);

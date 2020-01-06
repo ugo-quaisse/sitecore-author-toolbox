@@ -3,6 +3,6 @@
 #Editors input[type="password"],
 #Editors select, #Editors textarea,
 #ContentWrapper {
-	direction: ltr;
+	direction: ltr !important;
 	text-align: unset;
 }

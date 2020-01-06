@@ -85,3 +85,7 @@ form#ContentEditorForm {
 #LanguagesPanel > #Languages {
     column-count: 2;
 }
+
+.sc-dialogContent-toolbar-back {
+    display: none;
+}

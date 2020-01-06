@@ -471,7 +471,7 @@ a.scEditorHeaderNavigatorSection {
     background-color: #000000 !important;;
     white-space: nowrap;
     line-height: 35px;
-    color: #ccc;
+    color: #999999;
     font-weight: 600;
     cursor: pointer;
     border-bottom: 1px solid transparent !important;
@@ -496,7 +496,7 @@ a.scEditorHeaderNavigatorSection {
     cursor: pointer;
     border-bottom: 1px solid #111111 !important;;
     padding: 0 0 0 15px;
-    color: #444444 !important;
+    color: #999999 !important;
 }
 
     .scEditorSectionCaptionCollapsed::selection {

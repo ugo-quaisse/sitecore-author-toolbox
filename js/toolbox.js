@@ -61,9 +61,32 @@ var isExperienceEditor = window.location.href.includes('/Applications/Experience
 var isContentHome = window.location.href.includes('/content/home');
 var isLoginPage = window.location.href.includes('sitecore/login');
 var isLaunchpad = window.location.href.includes('/client/Applications/Launchpad');
+var isDesktop = window.location.href.includes('/shell/default.aspx');
 var isRichTextEditor = window.location.href.includes('/Controls/Rich%20Text%20Editor/');
 
-if(isLaunchpad) {
+
+var launchpadPage = chrome.runtime.getURL("options.html");
+var launchpadIcon = chrome.runtime.getURL("images/icon.png");
+var launchpadGroupTitle = "Sitecore Author Toolbox";
+var launchpadTitle = "Options";
+var launchpadUrl = window.location.href;
+
+if(isDesktop) {
+
+  if(debug) { console.info("====================> DESKTOP <===================="); }
+
+  var html = '<a href="#" class="scStartMenuLeftOption" title="" onclick="window.location.href=\'' + launchpadPage + '?launchpad=true&url=' + launchpadUrl + '\'"><img src="' + launchpadIcon + '" class="scStartMenuLeftOptionIcon" alt="" border="0"><div class="scStartMenuLeftOptionDescription"><div class="scStartMenuLeftOptionDisplayName">' + launchpadGroupTitle + '</div><div class="scStartMenuLeftOptionTooltip">' + launchpadTitle + '</div></div></a>';
+  
+  // //Find last dom item
+  var desktopOptionMenu = document.querySelectorAll('.scStartMenuLeftOption');
+  // Loop and fin title = "Command line interface to manage content."
+  for (let item of desktopOptionMenu) {
+    if(item.getAttribute("title") == "Install and maintain apps.") {
+      item.insertAdjacentHTML( 'afterend', html );
+    }
+  }
+
+} else if(isLaunchpad) {
 
   if(debug) { console.info("====================> LAUNCHPAD <===================="); }
 
@@ -75,11 +98,7 @@ if(isLaunchpad) {
 
     //Find last dom item
     var launchpadCol = document.querySelectorAll('.last');
-    var launchpadPage = chrome.runtime.getURL("options.html");
-    var launchpadIcon = chrome.runtime.getURL("images/icon.png");
-    var launchpadGroupTitle = "Sitecore Author Toolbox";
-    var launchpadTitle = "Options";
-    var launchpadUrl = window.location.href;
+
     //get popup url
     var html = '<div class="sc-launchpad-group"><header class="sc-launchpad-group-title">' + launchpadGroupTitle + '</header><div class="sc-launchpad-group-row"><a href="#" onclick="window.location.href=\'' + launchpadPage + '?launchpad=true&url=' + launchpadUrl + '\'" class="sc-launchpad-item" title="' + launchpadTitle + '"><span class="icon"><img src="' + launchpadIcon + '" width="48" height="48" alt="' + launchpadTitle + '"></span><span class="sc-launchpad-text">' + launchpadTitle + '</span></a></div></div>';
 
@@ -90,7 +109,9 @@ if(isLaunchpad) {
 
   });
 
-} else if(isGalleryLanguage) {
+}
+
+if(isGalleryLanguage) {
 
   if(debug) { console.info("====================> LANGUAGES <===================="); }
 
@@ -362,7 +383,7 @@ function _addEnvironmentLabel() {
 
     //Sitecore variable
     var scLanguage = document.getElementById("scLanguage").getAttribute("value").toLowerCase();
-    var scUrl = window.location.origin + '/?sc_itemid=' + sitecoreItemID + '&sc_mode=normal&sc_lang=' + scLanguage + "&sc_site=" + sitecoreSite;
+    var scUrl = window.location.origin + '/?sc_itemid=' + sitecoreItemID + '&sc_mode=normal&sc_lang=' + scLanguage;
 
     //Sitecore language (text)
     temp = document.getElementsByClassName("scEditorHeaderVersionsLanguage");
@@ -462,9 +483,9 @@ function _addEnvironmentLabel() {
           scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + scFlag +'" style="width: 20px; vertical-align: middle; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + iconFlagGeneric + '\';"/>' );
         }
 
-        if(result.feature_flags && scFlag) {
+        if(!document.getElementById("scFlagMenu") && result.feature_flags && scFlag) {
           //Insert Flag into Sitecore Language selector
-          scLanguageMenu.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + scFlag +'" style="width: 15px; vertical-align: sub; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + iconFlagGeneric + '\';"/>' );
+          scLanguageMenu.insertAdjacentHTML( 'afterbegin', '<img id="scFlagMenu" src="' + scFlag +'" style="width: 15px; vertical-align: sub; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + iconFlagGeneric + '\';"/>' );
         }
 
       } else {
@@ -496,9 +517,9 @@ function _addEnvironmentLabel() {
                               scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + scFlag +'" style="width: 20px; vertical-align: middle; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + iconFlagGeneric + '\';"/>' );
                             }
 
-                            if(result.feature_flags && scFlag) {
+                            if(!document.getElementById("scFlagMenu") && result.feature_flags && scFlag) {
                             //Insert Flag into Sitecore Language selector
-                            scLanguageMenu.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + scFlag +'" style="width: 15px; vertical-align: sub; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + iconFlagGeneric + '\';"/>' );
+                            scLanguageMenu.insertAdjacentHTML( 'afterbegin', '<img id="scFlagMenu" src="' + scFlag +'" style="width: 15px; vertical-align: sub; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + iconFlagGeneric + '\';"/>' );
                             }
                           }
                           //console.log(key + " = " + data[key]["language"] + " : " + data[key]["flag"]);
@@ -777,6 +798,25 @@ var elementObserver = new MutationObserver(function(e) {
   var temp = document.getElementsByClassName("scEditorHeaderQuickInfoInput");  
   var sitecoreItemID = temp[0].getAttribute("value");
   var scLanguage = document.getElementById("scLanguage").getAttribute("value").toLowerCase();
+  var scEditorQuickInfo = document.querySelectorAll(".scEditorQuickInfo");
+  var scEditorTitle = document.getElementsByClassName("scEditorHeaderTitle");
+  var count = 0;
+  var showInContentTree = document.getElementById("showInContentTree");
+  console.log(scEditorQuickInfo);
+    //Add text after title
+      for (let item of scEditorQuickInfo) {
+        if(count > 0 && showInContentTree == null) {
+          temp = item.getElementsByClassName("scEditorHeaderQuickInfoInput");
+          sitecoreItemID = temp[0].getAttribute("value");
+          console.log("ID "+sitecoreItemID);
+
+          var testJS = '[<a id="showInContentTree" href="" onclick="return scForm.invoke(\'item:load(id=' + sitecoreItemID + ',language=' + scLanguage + ',version=1)\')" />Show in content tree</a>]';
+          scEditorTitle[count].insertAdjacentHTML( 'afterend', testJS );
+          break;
+        }
+        count++;
+      }
+        
   
   //Set ItemID (Storage)
   chrome.storage.sync.set({"scItemID": sitecoreItemID}, function() {

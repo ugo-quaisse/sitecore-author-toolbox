@@ -2874,7 +2874,6 @@ nobr:last-child > .scTabActive_Hover {
 
 .scDesktopItemIcons {
   cursor: default;
-  display: inline;
   overflow: hidden;
   padding: 5px;
   text-align: center;
@@ -2887,7 +2886,6 @@ nobr:last-child > .scTabActive_Hover {
   background: highlight;
   color: highlighttext;
   cursor: default;
-  display: inline;
   overflow: hidden;
   padding: 5px;
   text-align: center;

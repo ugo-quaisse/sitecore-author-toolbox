@@ -15,12 +15,18 @@ function onClickHandler(info, tab) {
     //console.info("tab: " + JSON.stringify(tab));
     var url = info.pageUrl.substring(0, info.pageUrl.indexOf('?'));   
     if(sxa_site != undefined) { sc_site = "&sc_site="+sxa_site } else { sc_site = ""; }
- 
+    
+    //Get in an array the website configuration from local storage
+
+
     if(info.menuItemId == "SitecoreAuthorToolbox") {
-      //Edit
+
+      //If domain of url includes in array[key], return the new url + query + sc_mode=edit
+
+      //Experience Editor
       chrome.tabs.executeScript(tab.id, {code: 'window.location.href = "' + url + '?sc_mode=edit' + sc_site + '";'});
     } else if(info.menuItemId == "SitecoreAuthorToolboxDebug") {
-      //Debug
+      //Debug mode
       chrome.tabs.executeScript(tab.id, {code: 'window.location.href = "' + url + '?sc_debug=1&sc_trace=1&sc_prof=1&sc_ri=1' + sc_site + '";'});
     }
 

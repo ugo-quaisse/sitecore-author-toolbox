@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="UTF-8">
 	<title>Sitecore Author Toolbox</title>
 
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
@@ -8,7 +9,10 @@
 
 </head>
 <body>
+	
 	<div id="extensionOptions" class="wrapper">
+
+		<!-- Header -->
 		<header class="sc-globalHeader" id="scHeader">
 			<a href="" id="scBack">
 				<img class="sc-global-logo" src="../images/global_logo.png" />
@@ -22,10 +26,15 @@
 			<h2>Hello, I am<br />Sitecore Author Toolbox</h2>
 		</div>
 
-		<div id="main">
-			<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/f-IT1sLyl44" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen id="scVideo"></iframe>
+		<!-- Video-->
+		<div id="video">
+			<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/f-IT1sLyl44" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		</div>
 
-			<p><b>Choose which option you want to activate:</b></p>
+		<!-- Main panel-->
+		<div id="main">
+	
+			<h4>Choose which option you want to activate:</h4>
 			<input type="checkbox" id="feature_urls" name="feature_urls"> <label for="feature_urls">Live URL</label><br>
 			<input type="checkbox" id="feature_flags" name="feature_flags"> <label for="feature_flags">Language and versions flags</label><br>
 			<input type="checkbox" id="feature_errors" name="feature_errors"> <label for="feature_errors">Grouped error messages</label><br>
@@ -36,7 +45,21 @@
 			<input type="checkbox" id="feature_reloadnode" name="feature_reloadnode"> <label for="feature_reloadnode">Resume on reload</label><br>
 			<input type="checkbox" id="feature_rtl" name="feature_rtl"> <label for="feature_rtl">RTL support (Arabic, Hebrew, Persian, Undu, Sindhi)</label><br>
 			<input type="checkbox" id="feature_launchpad" name="feature_launchpad"> <label for="feature_launchpad">Launchpad icon</label><br>
+			<input type="checkbox" id="feature_rightclic" name="feature_rightclic"> <label for="feature_rightclic">Right click to Experience Editor <a id="settings">[URL manmager]</a></label><br>
+		</div>
 
+
+		<!-- Panel domains -->
+		<div id="domains">
+			<h4>Enter your list of Sitecore domains:</h4>
+
+			<div id="load">
+				<!-- Call JS to generate list -->
+			</div>
+
+  			<div id="return">
+  				<a id="back">< Back to main menu</a>
+  			</div>
 
 		</div>
 
@@ -44,6 +67,7 @@
 			<button id="set">Save and reload Sitecore</button>
 		</div>
 
+		<!-- Footer-->
 		<div id="footer">
 			<p>Crafted with love by <b>Ugo Quaisse</b> (Paris, France)<br>
 				Follow me at <a href="https://twitter.com/uquaisse" target="_blank">https://twitter.com/uquaisse</a><br>

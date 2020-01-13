@@ -147,11 +147,13 @@ form {
     .ui-dialog .ui-dialog-titlebar {
         padding: 0;
         position: relative;
+        background-color: #111111;
     }
 
+        .scFormDialogHeader .DialogHeader,
         .ui-dialog .ui-dialog-titlebar + .DialogHeader {
             height: 45px;
-            background: #222222;
+            background: #111111;
             color: #fff;
             padding: 0 0 0 15px;
             line-height: 28px;
@@ -220,4 +222,8 @@ form {
     background: #0e0e0e !important;
     border: 0px !important;
     padding: 10px;
+}
+
+#FooterRow {
+    border-top: 1px solid #2f2f2f;
 }

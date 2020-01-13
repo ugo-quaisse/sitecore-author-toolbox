@@ -1899,6 +1899,7 @@ a.scHyperlinkButton {
   bottom: 0;
   left: 0;
   right: 0;
+  background-color: #222222;
 }
 
 .scStretchAbsolute .scTreeviewContainerLayout {
@@ -3941,3 +3942,23 @@ a.scItemThumbnail:hover > span.scDisplayName {
 .reContentCell {
   border: 1px solid #0f0f0f !important;
 }
+.scChecked {
+  background-color: #00b6ff;
+}
+
+.scStartMenu,
+.scStartMenuPrograms {
+  background-color: #222222;
+}
+
+.scStartMenuRightFolder:hover,
+.scStartMenuProgramsMenu:hover,
+.scStartMenuLeftOption:hover {
+  background-color: #00b6ff;
+}
+
+.scStartMenuDivider {
+  filter: invert(1);
+}
+
+

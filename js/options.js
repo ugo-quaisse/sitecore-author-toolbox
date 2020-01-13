@@ -7,7 +7,7 @@
  */
 
  /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
- 
+
 document.body.onload = function() {
 
   //Extension version
@@ -26,8 +26,28 @@ document.body.onload = function() {
     document.getElementById("banner").style.top = "50px";
     document.getElementById("bannerTitle").style.opacity = "1";
     document.getElementById("intro").style.marginTop = "50px";
-    document.getElementById("scVideo").style.display = "inherit";
+    document.getElementById("video").style.display = "inherit";
   }
+
+  //Generate domains
+  var html = "";
+  for (var i = 1; i <= 6; i++) {
+    console.log(html);
+    html += `<!-- loop start -->
+        <p>Domain #` + i + `</p>
+          <div class="cd_url">
+            <label for="cd_` + i + `">Live website<b>*</b>:</label>
+            <input name="cd_` + i + `" type="url" placeholder="https://example.com" pattern="https?://.*" required>
+          </div>
+          <div class="cm_url">
+          <label for="cm_` + i + `">Content manager<b>*</b>:</label>
+            <input name="cm_` + i + `" type="url" placeholder="https://example.com" pattern="https?://.*" required>
+           </div>
+        
+          <div id="clear"></div>
+          <!-- loop end -->`;
+  }
+  document.getElementById("load").innerHTML = html;
 
   //Urls
   chrome.storage.sync.get(['feature_urls'], function(result) {
@@ -149,6 +169,16 @@ document.body.onload = function() {
   // });
 }
 
+document.getElementById("settings").onclick = function() {
+  document.querySelector("#main").setAttribute( 'style', 'display:none' );
+  document.querySelector("#domains").setAttribute( 'style', 'display:block' );
+}
+
+document.getElementById("back").onclick = function() {
+  document.querySelector("#main").setAttribute( 'style', 'display:block' );
+  document.querySelector("#domains").setAttribute( 'style', 'display:none' );
+}
+
 document.getElementById("set").onclick = function() {
   //URLs
   chrome.storage.sync.set({"feature_urls": document.getElementById('feature_urls').checked}, function() {
@@ -245,8 +275,6 @@ window.addEventListener('scroll', function(e) {
 
   if (!ticking && !fromLaunchpad) {
     window.requestAnimationFrame(function() {
-
-      console.log(fromLaunchpad);
 
       doSomething(last_known_scroll_position);
       ticking = false;

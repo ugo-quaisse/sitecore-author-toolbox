@@ -8,7 +8,7 @@
 
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
-var debug = false;
+var debug = true;
 
 /*
  * Helper functions
@@ -52,6 +52,7 @@ document.getElementsByTagName("head")[0].appendChild(link);
 if(debug) { console.info("***** URL loaded ***** "+window.location); }
 
 var isGalleryLanguage = window.location.href.includes('Gallery.Language');
+var isGalleryLanguageExpEd = window.location.href.includes('SelectLanguageGallery');
 var isGalleryFavorites = window.location.href.includes('Gallery.Favorites');
 var isAdminCache = window.location.href.includes('/admin/cache.aspx');
 var isMediaBrowser = window.location.href.includes('Sitecore.Shell.Applications.Media.MediaBrowser');
@@ -63,6 +64,7 @@ var isLoginPage = window.location.href.includes('sitecore/login');
 var isLaunchpad = window.location.href.includes('/client/Applications/Launchpad');
 var isDesktop = window.location.href.includes('/shell/default.aspx');
 var isRichTextEditor = window.location.href.includes('/Controls/Rich%20Text%20Editor/');
+var isFieldEditor = window.location.href.includes('field%20editor.aspx');
 
 
 var launchpadPage = chrome.runtime.getURL("options.html");
@@ -111,7 +113,82 @@ if(isDesktop) {
 
 }
 
-if(isGalleryLanguage) {
+if(isFieldEditor) {
+
+  if(debug) { console.info("====================> FIELD EDITOR <===================="); }
+
+  chrome.storage.sync.get(['feature_errors'], function(result) {
+
+    if(result.feature_errors == undefined) { result.feature_errors = true; }
+
+    //Variables
+    var count = 0;
+    var scErrors = document.getElementsByClassName("scValidationMarkerIcon");  
+    var scEditorID = document.querySelector ("#MainPanel");
+    var iconError = chrome.runtime.getURL("images/error.png");
+
+    if(result.feature_errors) {
+
+      //Prepare HTML
+      var scMessageErrors = '<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' + iconError + ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">';
+
+      for (let item of scErrors) {
+
+          if( item.getAttribute("src") != '/sitecore/shell/themes/standard/images/bullet_square_yellow.png') {
+            scMessageErrors += '<li class="scMessageBarOptionBullet" onclick="' + item.getAttribute("onclick") + '" style="cursor:pointer;">' + item.getAttribute("title") + '</li>';
+            count++;
+          }
+      }
+      scMessageErrors += '</ul></div></div>';
+   
+      //Insert message bar into Sitecore Content Editor
+      if(count>0) {
+        scEditorID.insertAdjacentHTML( 'beforebegin', scMessageErrors );
+      }
+
+      //Update on change/unblur
+      var target = document.querySelector( ".scValidatorPanel" );
+      var observer = new MutationObserver(function(mutations) {
+
+        //Variables
+        count = 0;
+
+        //Prepare HTML
+        var scMessageErrors = '<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' + iconError + ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">'
+        
+        for (let item of scErrors) {
+
+            if( item.getAttribute("src") != '/sitecore/shell/themes/standard/images/bullet_square_yellow.png') {
+              scMessageErrors += '<li class="scMessageBarOptionBullet" onclick="' + item.getAttribute("onclick") + '" style="cursor:pointer;">' + item.getAttribute("title") + '</li>';
+              count++;
+            }
+        }
+        scMessageErrors += '</ul></div></div>';
+          
+        if(count>0) {
+          //Insert message bar into Sitecore Content Editor
+          scEditorID.insertAdjacentHTML( 'beforebegin', scMessageErrors );
+        } else {
+          //Delete all errors
+          var element = document.getElementById("scMessageBarError");
+          if(element) { element.parentNode.removeChild(element); }
+        }
+
+        if(debug) { console.log("!! Change !!"); }
+
+      });
+      // configuration of the observer:
+      var config = { attributes: true, childList: true, characterData: true };
+      // pass in the target node, as well as the observer options
+      observer.observe(target, config);
+
+
+
+    }
+  });
+
+
+} else if(isGalleryLanguage) {
 
   if(debug) { console.info("====================> LANGUAGES <===================="); }
 
@@ -135,7 +212,6 @@ if(isGalleryLanguage) {
             //console.info("JSON "+jsonData);
 
             //Loop the languages table
-
             var isRegionFrame;
             var dom = document.getElementById("Languages");
             var div = dom.querySelectorAll('.scMenuPanelItem,.scMenuPanelItemSelected')
@@ -244,6 +320,109 @@ if(isGalleryLanguage) {
   });
 
  
+} else if(isGalleryLanguageExpEd) {
+  
+  if(debug) { console.info("====================> LANGUAGES IN EXPERIENCE EDITOR <===================="); }
+
+  chrome.storage.sync.get(['feature_flags'], function(result) {
+
+    if(result.feature_flags == undefined) { result.feature_flags = true; }
+
+    if(result.feature_flags) {
+      console.log("GO");
+      /*
+       * Load Json data for languages
+       */
+      var rawFile = new XMLHttpRequest();
+      var jsonData;
+      rawFile.overrideMimeType("application/json");
+      rawFile.open("GET", chrome.runtime.getURL("data/languages.json"), true);
+      rawFile.onreadystatechange = function() {
+        if (rawFile.readyState === 4 && rawFile.status == "200") {
+
+          jsonData = JSON.parse(rawFile.responseText);
+          //console.info("JSON "+jsonData);
+
+          //Loop the languages table
+          var isRegionFrame;
+          var dom = document.querySelector('.sc-gallery-content');
+          var div = dom.querySelectorAll('.sc-gallery-option-content,.sc-gallery-option-content-active');
+          var td;
+          var divcount = 0;
+          var tdcount = 0;
+          var tdDiv;
+          var tdlanguage;
+          var tdversion;
+          var tdimage;
+          var temp;
+          var key;
+
+          //Loop results, extract divs infos
+          //sc-gallery-option-content-header > span (country)
+          //sc-gallery-option-content-description > span (version)
+
+          for (let item of div) {
+            
+            tdDiv = item.closest('.sc-gallery-option-content,.sc-gallery-option-content-active');
+            tdlanguage = item.querySelector('.sc-gallery-option-content-header > span');
+            tdversion = item.querySelector('.sc-gallery-option-content-description > span');
+
+            temp = tdversion.innerHTML.split(" ");
+            //Check version
+            if(temp[0]!="0") {
+              tdversion.setAttribute( 'style', 'background-color: yellow; display: initial; padding: 0px 3px; color: #000000 !important' );
+            }
+
+            //Clean country name
+            temp = tdlanguage.innerHTML.split(" :");
+            temp = temp[0].split(" (");
+            if(temp[1] == undefined) { temp = temp[0]; } else { temp = temp[1]; }
+            temp = temp.split(")");
+            if(temp[0].includes(', ')) { temp = temp[0].split(", "); temp[0] = temp[1]; temp[0] = temp[0].replace(" ", "_"); }
+            temp = temp[0].replace(" ", "_");
+            temp = temp.toUpperCase();
+            tdlanguage = temp.replace("TRADITIONAL,_","");
+            tdlanguage = tdlanguage.replace("SIMPLIFIED,_","");
+
+            //Replace non-standard country name
+            tdlanguage = tdlanguage.replace("U.A.E.","UNITED_ARAB_EMIRATES");
+            tdlanguage = tdlanguage.replace("KOREA","SOUTH_KOREA");
+            tdlanguage = tdlanguage.replace("UNITED_STATES","USA");
+            tdlanguage = tdlanguage.replace("UNITED_KINGDOM","GREAT_BRITAIN");
+            tdlanguage = tdlanguage.replace("ENGLISH","GREAT_BRITAIN");
+
+            //Compare with Json data
+            for (key in jsonData) {
+              if (jsonData.hasOwnProperty(key)) {
+                  if( tdlanguage == jsonData[key]["language"].toUpperCase()) {
+
+                    tdlanguage = jsonData[key]["flag"];
+
+                  }
+              }
+            }
+
+            console.log(tdlanguage);
+
+            //Now replace images src and add an image fallback if doesn't exist
+            //tdlanguage = tdlanguage.toLowerCase();
+            //tdimage[0].onerror = function() { this.src = chrome.runtime.getURL("images/Flags/32x32/flag_generic.png"); }
+            //tdimage[0].src = chrome.runtime.getURL("images/Flags/32x32/flag_" + tdlanguage + ".png");
+
+            tdDiv.setAttribute( 'style', 'padding-left:48px; background-image: url(' + chrome.runtime.getURL("images/Flags/32x32/flag_" + tdlanguage + ".png") + '); background-repeat: no-repeat; background-position: 5px;' );
+
+            //console.log(tdlanguage);
+            //console.log(tdversion);
+          }
+
+        }
+      }
+      rawFile.send(null);
+    }
+
+  });
+
+
 } else if(isPublishWindow) {
 
   if(debug) { console.info("====================> PUBLISH WINDOW <===================="); }
@@ -349,14 +528,23 @@ function _addEnvironmentLabel() {
   let scLanguageMenu = document.querySelector ( ".scEditorHeaderVersionsLanguage" );
   //Sitecore Active Tab
   let scActiveTab = document.querySelector ( ".scEditorTabHeaderActive" );
+  //Sitecore Normal Tab
+  let scNormalTab = document.querySelectorAll ( ".scRibbonEditorTabNormal" );
   //Sitecore errors
   var scErrors = document.getElementsByClassName("scValidationMarkerIcon");
   //Sitecore Editor Frames
   let scEditorFrames = document.querySelector ( "#EditorFrames" );
+  //Sitecore Editor Sections
+  let scEditorSections = document.querySelector ( ".scEditorSections" );
   //Sitecore Search Panel
   let scSearchPanel = document.getElementById ( "SearchPanel" );
   //Sitecore Content Tree
   let scContentTree= document.getElementById ( "ContentTreeHolder" );
+
+  //Language name in menu
+  var scEditorHeaderVersionsLanguage = document.getElementsByClassName("scEditorHeaderVersionsLanguage");
+  var scLanguageTxtLong = scEditorHeaderVersionsLanguage[0].getAttribute("title");
+  var scLanguageTxtShort = stripHtml(scEditorHeaderVersionsLanguage[0].innerHTML);
 
   if (scQuickInfo) {
 
@@ -386,9 +574,6 @@ function _addEnvironmentLabel() {
     var scUrl = window.location.origin + '/?sc_itemid=' + sitecoreItemID + '&sc_mode=normal&sc_lang=' + scLanguage;
 
     //Sitecore language (text)
-    temp = document.getElementsByClassName("scEditorHeaderVersionsLanguage");
-    var scLanguageTxtLong = temp[0].getAttribute("title");
-    var scLanguageTxtShort = stripHtml(temp[0].innerHTML);
     var isNotRegion = scLanguageTxtShort.includes('(');
     var scFlag;  
 
@@ -536,6 +721,19 @@ function _addEnvironmentLabel() {
 
     });
     
+  } else {
+
+    /*
+     * If Title bar and Quick info section disabled scEditorSections
+     */
+    if(!document.getElementById("scMessageBarUrl")) {
+      //Prepare HTML (scInformation scWarning scError)
+      var scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + icon + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Oh snap! 😭😭😭</div><div class="scMessageBarText">To fully enjoy Sitecore Author Toolbox, please enable <b>Title bar</b> and <b>Quick info section</b> under <b>Application Options</b>.</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="" onclick="javascript:return scForm.postEvent(this,event,\'shell:useroptions\')" class="scMessageBarOption">Open Application Options</a>.</li></ul></div></div>'
+
+      //Insert message bar into Sitecore Content Editor
+      scEditorSections.insertAdjacentHTML( 'afterbegin', scMessage );
+    }
+
   }
 
   /*
@@ -590,7 +788,7 @@ function _addEnvironmentLabel() {
     if(result.feature_errors == undefined) { result.feature_errors = true; }
 
     if(scErrors[0]!=undefined && result.feature_errors) {
-  
+      
       count = 0;
 
       //Prepare HTML
@@ -794,37 +992,42 @@ var MutationObserver = window.MutationObserver;
 var elementObserver = new MutationObserver(function(e) {
   if(debug) { console.info('**Update UI**'); }
 
-  //Sitecore Variables
-  var temp = document.getElementsByClassName("scEditorHeaderQuickInfoInput");  
-  var sitecoreItemID = temp[0].getAttribute("value");
-  var scLanguage = document.getElementById("scLanguage").getAttribute("value").toLowerCase();
-  var scEditorQuickInfo = document.querySelectorAll(".scEditorQuickInfo");
-  var scEditorTitle = document.getElementsByClassName("scEditorHeaderTitle");
-  var count = 0;
-  var showInContentTree = document.getElementById("showInContentTree");
-  console.log(scEditorQuickInfo);
-    //Add text after title
-      for (let item of scEditorQuickInfo) {
-        if(count > 0 && showInContentTree == null) {
-          temp = item.getElementsByClassName("scEditorHeaderQuickInfoInput");
-          sitecoreItemID = temp[0].getAttribute("value");
-          console.log("ID "+sitecoreItemID);
-
-          var testJS = '[<a id="showInContentTree" href="" onclick="return scForm.invoke(\'item:load(id=' + sitecoreItemID + ',language=' + scLanguage + ',version=1)\')" />Show in content tree</a>]';
-          scEditorTitle[count].insertAdjacentHTML( 'afterend', testJS );
-          break;
-        }
-        count++;
-      }
-        
+  /*
+   * Open in Content Tree link (Beta)
+   */
   
-  //Set ItemID (Storage)
-  chrome.storage.sync.set({"scItemID": sitecoreItemID}, function() {
-    if(debug) { console.info(">> Store ItemID: " + sitecoreItemID); }
-  });
-  chrome.storage.sync.set({"scLanguage": scLanguage}, function() {
-    if(debug) { console.info(">> Store Language: " + scLanguage); }
-  });
+  var scQuickInfo = document.querySelector ( ".scEditorHeaderQuickInfoInput" );
+
+  if (scQuickInfo) {
+
+    var sitecoreItemID = scQuickInfo.getAttribute("value");
+    var scLanguage = document.getElementById("scLanguage").getAttribute("value").toLowerCase();
+    var scEditorQuickInfo = document.querySelectorAll(".scEditorQuickInfo");
+    var lastScEditorQuickInfo = scEditorQuickInfo[scEditorQuickInfo.length- 1];
+    var countTab = scEditorQuickInfo.length;
+    var scEditorTitle = document.getElementsByClassName("scEditorHeaderTitle");
+
+    var tabSitecoreItemID = document.querySelectorAll(".scEditorHeaderQuickInfoInput");
+    var lastTabSitecoreItemID = tabSitecoreItemID[tabSitecoreItemID.length- 2].getAttribute("value");
+    
+    console.log(sitecoreItemID);
+    if(debug) { console.log("Number of tabs "+countTab); }
+
+    if(countTab >1 && !document.getElementById("showInContentTree"+(countTab)+"")) {
+      //Add text after title
+      var javascript = 'scForm.invoke("item:load(id=' + lastTabSitecoreItemID + ',language=' + scLanguage + ',version=1)"); setTimeout(function(){ (location.reload(); }, 3000);';
+      scEditorTitle[countTab-1].insertAdjacentHTML( 'afterend', '[<a id="showInContentTree' + countTab + '" href="" onclick="' + javascript + '" />Show in content tree</a>]' );
+    }
+          
+    //Set ItemID (Storage)
+    chrome.storage.sync.set({"scItemID": sitecoreItemID}, function() {
+      if(debug) { console.info(">> Store ItemID: " + sitecoreItemID); }
+    });
+    chrome.storage.sync.set({"scLanguage": scLanguage}, function() {
+      if(debug) { console.info(">> Store Language: " + scLanguage); }
+    });
+
+  }
 
 
   e.forEach(function(e) {

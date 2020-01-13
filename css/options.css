@@ -8,6 +8,9 @@ html, body {
   height: 100%;
   background-color: #f0f0f0;
 }
+a {
+  color: #DC291E;
+}
 input[type=checkbox] {
 	cursor: pointer;
 }
@@ -24,6 +27,7 @@ input[type=checkbox] {
     background-color: #f0f0f0;
     color: #000000;
 }
+
 a {
 	color: #DC291E;
 }
@@ -57,6 +61,7 @@ label:hover {
 	text-align: center;
 	font-family: 'Open Sans', sans-serif;
 }
+#set_domains,
 #set {
     cursor: pointer;
     padding: 12px 40px;
@@ -77,6 +82,7 @@ label:hover {
     box-shadow: none;
 }
 
+#set_domains:hover,
 #set:hover {
     background: #474747;
     color: rgb(255, 255, 255);
@@ -151,20 +157,21 @@ label:hover {
 	line-height: 30px;
 	margin: 0px;
 }
-#scVideo {
+#video {
 	display: none;
-	margin: 20px 0px;
+	padding: 20px 0px 0px;
+  max-width: 550px;
+  margin: auto;
 }
 h4 {
-	font-size: 14px;
-	font-family: 'Open Sans', sans-serif;
+  margin: 20px 5px;
 }
 #main {
 	padding: 0px 25px;
 	margin: auto;
-    text-align: left;
-    max-width: 550px;
-    line-height: 25px;
+  text-align: left;
+  max-width: 550px;
+  line-height: 25px;
 }
 #save {
 	text-align: center;
@@ -201,4 +208,94 @@ input {
     margin: 8.5px 14.5px;
     height: 33px;
     width: 33px;
+}
+
+#scVideo {
+  padding: 25px 25px 0px 25px;
+  margin: auto;
+  max-width: 550px;
+}
+
+#domains {
+  padding: 0px 25px;
+  margin: auto;
+  text-align: left;
+  max-width: 550px;
+  line-height: 25px;
+  display: none;
+}
+#extensionOptions.dark > #domains > #load > p {
+  font-size: 14px;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  margin-bottom: 5px;
+  color: rgba(0,0,0,0.7);
+}
+#extensionOptions.light > #domains > #load > p {
+  font-size: 14px;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  margin-bottom: 5px;
+  color: rgba(0,0,0,0.7);
+}
+#domains > #load > #clear {
+  clear:both;
+}
+
+.cd_url {
+  width: 46%;
+  float: left;
+}
+  .cd_url > label {
+    display: block;
+  }
+    .cd_url > label > b {
+      color: #DC291E;
+      font-weight: bold;
+      display: none;
+    }
+  .cd_url > input {
+    display: block;
+    width: 90.5%;
+    font-size: 14px;
+    padding: 5px;
+    border-radius: 3px;
+  }
+
+.cm_url {
+  width: 46%;
+  float: right;
+}
+  .cm_url > label {
+    display: block;
+  }
+    .cm_url > label > b {
+      color: #DC291E;
+      font-weight: bold;
+      display: none;
+    }
+  .cm_url > input {
+    display: block;
+    width: 90.5%;
+    font-size: 14px;
+    padding: 5px;
+    border-radius: 3px;
+  }
+
+.cm_cd {
+  width: 8%;
+  float: left;
+  text-align: center;
+  font-size: 25px;
+  margin-top: 29px;
+}
+
+#save_domains {
+  text-align: center;
+  margin: 20px 0px;
+}
+#return {
+  text-align: center;
+  padding: 20px 0px 0px;
+}
+#return > a {
+  cursor: pointer;
 }

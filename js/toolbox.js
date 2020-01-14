@@ -124,9 +124,10 @@ if(isExperienceEditor) {
 
     //Loop .scChromeToolbar
     var scChromeToolbar = document.querySelectorAll( ".scChromeToolbar" );
+
     //Find scChromeCommand
     for(var controls of scChromeToolbar) {
-
+          controls.setAttribute('style', 'margin-left:50px');
           //Get buttons
           var scChromeCommand = controls.querySelectorAll( ".scChromeCommand" );
           for(var command of scChromeCommand) {
@@ -787,7 +788,7 @@ function _addEnvironmentLabel() {
 
     if(result.feature_rtl == undefined) { result.feature_rtl = true; }
 
-    if(result.feature_rtl) {
+    if(result.feature_rtl && scLanguageTxtShort) {
       //Get active language
       temp = scLanguageTxtShort.split(" (");
       scFlag = temp[0].toUpperCase();
@@ -999,7 +1000,7 @@ function _addEnvironmentLabel() {
 
     if(result.feature_favorites == undefined) { result.feature_favorites = true; }
 
-    if(result.feature_favorites && !isPublishWindow) {
+    if(result.feature_favorites && !isPublishWindow && scContentTree) {
 
       var scFavoritesIframe = document.getElementById("sitecorAuthorToolboxFav");
 

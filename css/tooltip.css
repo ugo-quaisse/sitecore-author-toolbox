@@ -125,3 +125,22 @@
 [data-tooltip].t-left:hover:before, [data-tooltip].t-left:hover:after {
   transform: translateX(-5px) translateY(-50%);
 }
+.scChromeToolbar {
+  box-shadow: 0px 4px 17px 9px rgba(0, 0, 0, 0.3) !important;
+}
+.scChromeControls, .scChromeDropDown {
+  border-radius: 6px !important;
+}
+.scChromeName {
+  border-radius: 4px 4px 0px 0px !important;
+}
+.scFrameSideHorizontal {
+  filter: drop-shadow(0px 0px 6px rgba(0,0,0,0.8)) !important;
+  height: 2px !important;
+  background-color: #289bc8 !important;
+}
+.scFrameSideVertical {
+  filter: drop-shadow(0px 0px 6px rgba(0,0,0,0.8)) !important;
+  width: 2px !important;
+  background-color: #289bc8 !important;
+}

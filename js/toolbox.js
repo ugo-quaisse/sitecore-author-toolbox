@@ -58,13 +58,14 @@ var isAdminCache = window.location.href.includes('/admin/cache.aspx');
 var isMediaBrowser = window.location.href.includes('Sitecore.Shell.Applications.Media.MediaBrowser');
 var isPublishWindow = window.location.href.includes('/shell/Applications/Publish.aspx');
 var isSecurityWindow = window.location.href.includes('/shell/Applications/Security/');
-var isExperienceEditor = window.location.href.includes('/Applications/ExperienceEditor/');
+var isExperienceEditor = window.location.href.includes('sc_mode=edit');
 var isContentHome = window.location.href.includes('/content/home');
 var isLoginPage = window.location.href.includes('sitecore/login');
 var isLaunchpad = window.location.href.includes('/client/Applications/Launchpad');
 var isDesktop = window.location.href.includes('/shell/default.aspx');
 var isRichTextEditor = window.location.href.includes('/Controls/Rich%20Text%20Editor/');
 var isFieldEditor = window.location.href.includes('field%20editor.aspx');
+var isModalDialogs = window.location.href.includes('JqueryModalDialogs');
 
 
 var launchpadPage = chrome.runtime.getURL("options.html");
@@ -113,7 +114,43 @@ if(isDesktop) {
 
 }
 
-if(isFieldEditor) {
+if(isExperienceEditor) {
+
+  if(debug) { console.info("====================> ECPERIENCE EDITOR <===================="); }
+
+  //Listenner
+  var target = document.querySelector( ".scChromeControls" );
+  var observer = new MutationObserver(function(mutations) {
+
+    //Loop .scChromeToolbar
+    var scChromeToolbar = document.querySelectorAll( ".scChromeToolbar" );
+    //Find scChromeCommand
+    for(var controls of scChromeToolbar) {
+
+          //Get buttons
+          var scChromeCommand = controls.querySelectorAll( ".scChromeCommand" );
+          for(var command of scChromeCommand) {
+            var title = command.getAttribute("title");          
+            command.setAttribute('style', 'z-index:auto');
+            
+            if(title != null) {
+              //Add data
+              command.setAttribute('data-tooltip', title);
+              //Add classes
+              command.classList.add("t-bottom");
+              command.classList.add("t-sm");
+              //Remove title
+              command.removeAttribute("title");
+            }
+          }
+    }
+
+  });
+  var config = { attributes: true, childList: true, characterData: true };
+  observer.observe(target, config);
+
+
+} else if(isFieldEditor) {
 
   if(debug) { console.info("====================> FIELD EDITOR <===================="); }
 
@@ -175,6 +212,11 @@ if(isFieldEditor) {
         }
 
         if(debug) { console.log("!! Change !!"); }
+
+        //TODO: Show an alert when the popup is closed so the User knwo what to do
+        // var saveButton = document.querySelector(".scButtonPrimary");
+        // saveButton.onclick = function() { alert('blah'); };
+
 
       });
       // configuration of the observer:
@@ -543,8 +585,10 @@ function _addEnvironmentLabel() {
 
   //Language name in menu
   var scEditorHeaderVersionsLanguage = document.getElementsByClassName("scEditorHeaderVersionsLanguage");
-  var scLanguageTxtLong = scEditorHeaderVersionsLanguage[0].getAttribute("title");
-  var scLanguageTxtShort = stripHtml(scEditorHeaderVersionsLanguage[0].innerHTML);
+  if(scEditorHeaderVersionsLanguage[0]) {
+    var scLanguageTxtLong = scEditorHeaderVersionsLanguage[0].getAttribute("title");
+    var scLanguageTxtShort = stripHtml(scEditorHeaderVersionsLanguage[0].innerHTML);
+  }
 
   if (scQuickInfo) {
 
@@ -726,7 +770,7 @@ function _addEnvironmentLabel() {
     /*
      * If Title bar and Quick info section disabled scEditorSections
      */
-    if(!document.getElementById("scMessageBarUrl")) {
+    if(!document.getElementById("scMessageBarUrl") && scEditorSections) {
       //Prepare HTML (scInformation scWarning scError)
       var scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + icon + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Oh snap! 😭😭😭</div><div class="scMessageBarText">To fully enjoy Sitecore Author Toolbox, please enable <b>Title bar</b> and <b>Quick info section</b> under <b>Application Options</b>.</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="" onclick="javascript:return scForm.postEvent(this,event,\'shell:useroptions\')" class="scMessageBarOption">Open Application Options</a>.</li></ul></div></div>'
 

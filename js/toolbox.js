@@ -58,7 +58,7 @@ var isAdminCache = window.location.href.includes('/admin/cache.aspx');
 var isMediaBrowser = window.location.href.includes('Sitecore.Shell.Applications.Media.MediaBrowser');
 var isPublishWindow = window.location.href.includes('/shell/Applications/Publish.aspx');
 var isSecurityWindow = window.location.href.includes('/shell/Applications/Security/');
-var isExperienceEditor = window.location.href.includes('sc_mode=edit');
+var isExperienceEditor = window.location.href.includes('/Applications/ExperienceEditor/');
 var isContentHome = window.location.href.includes('/content/home');
 var isLoginPage = window.location.href.includes('sitecore/login');
 var isLaunchpad = window.location.href.includes('/client/Applications/Launchpad');
@@ -66,7 +66,8 @@ var isDesktop = window.location.href.includes('/shell/default.aspx');
 var isRichTextEditor = window.location.href.includes('/Controls/Rich%20Text%20Editor/');
 var isFieldEditor = window.location.href.includes('field%20editor.aspx');
 var isModalDialogs = window.location.href.includes('JqueryModalDialogs');
-
+//var isEditMode = document.querySelector(".pagemode-edit");
+var isEditMode = window.location.href.includes('sc_mode=edit');
 
 var launchpadPage = chrome.runtime.getURL("options.html");
 var launchpadIcon = chrome.runtime.getURL("images/icon.png");
@@ -114,9 +115,9 @@ if(isDesktop) {
 
 }
 
-if(isExperienceEditor) {
+if(isEditMode) {
 
-  if(debug) { console.info("====================> ECPERIENCE EDITOR <===================="); }
+  if(debug) { console.info("====================> EDIT MODE <===================="); }
 
   //Listenner
   var target = document.querySelector( ".scChromeControls" );
@@ -502,8 +503,8 @@ chrome.storage.sync.get(['feature_darkmode'], function(result) {
 
   if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
 
-  if(result.feature_darkmode && !isExperienceEditor && !isAdminCache && !isSecurityWindow && !isContentHome && !isLoginPage) {
-    
+  if(result.feature_darkmode && !isExperienceEditor && !isAdminCache && !isSecurityWindow && !isContentHome && !isLoginPage && !isEditMode) {
+
     var link = document.createElement("link");
     link.type = "text/css";
     link.rel = "stylesheet";

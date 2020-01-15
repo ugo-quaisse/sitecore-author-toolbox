@@ -29,6 +29,7 @@ function sendNotification(scTitle, scBody) {
   });
 }
 
+
 /*
  * Code injection for multilist in a Bucket (BETA)
  */
@@ -49,7 +50,7 @@ document.getElementsByTagName("head")[0].appendChild(link);
 /*
  * Dectect which URL/Frame is loading the script? (Languages, Favorites, etc...)
  */
-if(debug) { console.info("***** URL loaded ***** "+window.location); }
+if(debug) { console.info("###### URL loaded: "+window.location); }
 
 var isGalleryLanguage = window.location.href.includes('Gallery.Language');
 var isGalleryLanguageExpEd = window.location.href.includes('SelectLanguageGallery');
@@ -625,28 +626,47 @@ function _addEnvironmentLabel() {
 
     //Generating Live URLs
     if (sitecoreItemPath[1]!=undefined) {
-      sitecoreItemPath = encodeURI(window.location.origin + "/" + scLanguage + "/" + sitecoreItemPath[1]+ "?sc_site=" + sitecoreSite + "&sc_mode=normal").toLowerCase();
+      sitecoreItemPath = encodeURI(window.location.origin + "/" + scLanguage + "/" + sitecoreItemPath[1]+ "?sc_site=xxxsxa_sitexxx&sc_mode=normal").toLowerCase();
     } else {
-      sitecoreItemPath = encodeURI(window.location.origin + "/" + scLanguage + "/?sc_site=" + sitecoreSite).toLowerCase();
+      sitecoreItemPath = encodeURI(window.location.origin + "/" + scLanguage + "/?sc_site=xxxsxa_sitexxx").toLowerCase();
     }
 
     //Check if item under data source (=component)
     var isDataSource = sitecoreItemPath.includes('/data/');
 
-    if(!sitecoreData && sitecoreItemPath != encodeURI(window.location.origin + "/" + scLanguage + "/"+ "?sc_site=" + sitecoreSite).toLowerCase() && !isDataSource) {
+    if(!sitecoreData && sitecoreItemPath != encodeURI(window.location.origin + "/" + scLanguage + "/"+ "?sc_site=xxxsxa_sitexxx") && !isDataSource) {
 
-      
+      //Get user preference
       chrome.storage.sync.get(['feature_urls'], function(result) {
 
       if(result.feature_urls == undefined) { result.feature_urls = true; }
         
         //If not added yet
         if(!document.getElementById("scMessageBarUrl") && result.feature_urls) {
-          //Prepare HTML (scInformation scWarning scError)
-          var scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + icon + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Sitecore Live URL</div><div class="scMessageBarText">If you want to preview this page in <b>' + scLanguageTxtLong + '</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + sitecoreItemPath + '" target="_blank" class="scMessageBarOption">Open this link</a> or try <a href="' + scUrl + '" target="_blank" class="scMessageBarOption">this alternative link</a></li></ul></div></div>'
 
-          //Insert message bar into Sitecore Content Editor
-          scEditorID.insertAdjacentHTML( 'afterend', scMessage );
+          //Get cookie sxa_site
+          chrome.runtime.sendMessage({greeting: "sxa_site"}, function(response) {
+
+            if(response.farewell != null ) {
+
+              sitecoreItemPath = sitecoreItemPath.replace("xxxsxa_sitexxx", response.farewell);
+              if(debug) { console.info("- Sitecore sxa_site (cookie): "+response.farewell); }
+
+            } else {
+
+              sitecoreItemPath = sitecoreItemPath.replace("xxxsxa_sitexxx", sitecoreSite);
+              if(debug) { console.info("- Sitecore sxa_site (quick info): "+sitecoreSite); }
+
+            }
+
+            //Prepare HTML (scInformation scWarning scError)
+            var scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + icon + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Sitecore Live URL</div><div class="scMessageBarText">If you want to preview this page in <b>' + scLanguageTxtLong + '</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + sitecoreItemPath + '" target="_blank" class="scMessageBarOption">Open this link</a> or try <a href="' + scUrl + '" target="_blank" class="scMessageBarOption">this alternative link</a></li></ul></div></div>'
+
+            //Insert message bar into Sitecore Content Editor
+            scEditorID.insertAdjacentHTML( 'afterend', scMessage );
+
+          });
+
         }
 
       });
@@ -738,9 +758,6 @@ function _addEnvironmentLabel() {
                             scFlag = scFlag.toLowerCase();
                             scFlag = chrome.runtime.getURL("images/Flags/32x32/flag_" + scFlag + ".png")
 
-
-                            if (debug) { console.log("Flag:" + scFlag); }
-
                             //Insert Flag into Active Tab
                             if(!document.getElementById("scFlag") && result.feature_flags && scFlag) {
                               scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + scFlag +'" style="width: 20px; vertical-align: middle; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + iconFlagGeneric + '\';"/>' );
@@ -807,7 +824,6 @@ function _addEnvironmentLabel() {
           iframe.onload= function() { iframe.contentWindow.document.getElementById('ContentWrapper').style.direction = "RTL"; };
         }
 
-        if(debug) { console.log("RTE:" + scFlag); }
       } else {
         //LTR
         link.href =  chrome.runtime.getURL("css/ltr-min.css");
@@ -817,7 +833,6 @@ function _addEnvironmentLabel() {
           iframe.onload= function() { iframe.contentWindow.document.getElementById('ContentWrapper').style.direction = "LTR"; };
         }
 
-        if(debug) { console.log("LTR:" + scFlag); }
       }
       document.getElementsByTagName("head")[0].appendChild(link);
     }
@@ -1018,9 +1033,9 @@ function _addEnvironmentLabel() {
   });
 
   if (debug === true) {
-    console.info("Item ID: " + sitecoreItemID);
-    console.info("Language: " + scLanguage);
-    console.info("Version: TODO");
+    console.info("- Sitecore Item: " + sitecoreItemID);
+    console.info("- Sitecore Language: " + scLanguage);
+    console.info("- Sitecore Version: *todo*");
   }
 
 }
@@ -1057,7 +1072,7 @@ var elementObserver = new MutationObserver(function(e) {
     //Add hash to URL
     window.location.hash = sitecoreItemID;
 
-    if(debug) { console.log("Number of tabs "+countTab); }
+    if(debug) { console.log("- Tabs opened: "+countTab); }
 
     if(countTab >1 && !document.getElementById("showInContentTree"+(countTab)+"")) {
       //Add text after title

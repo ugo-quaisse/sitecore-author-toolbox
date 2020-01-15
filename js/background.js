@@ -10,6 +10,30 @@ let sxa_site;
 let sc_site;
 
 //Getcookie https://stackoverflow.com/questions/5892176/getting-cookies-in-a-google-chrome-extension
+chrome.runtime.onMessage.addListener(
+            function(request, sender, sendResponse) {
+                if (request.greeting == "sxa_site"){
+                    checkSiteSxa(request, sender, sendResponse);
+                }
+                return true;
+            });
+
+        function checkSiteSxa(request, sender, sendResponse){
+
+            var url = new URL(sender.tab.url);
+            chrome.cookies.getAll({}, function(cookies) {
+        
+              //Display context menu if Sitecore website and Sitecore Back-office opened
+              for (var i in cookies) {
+                if(cookies[i].domain == url.hostname && cookies[i].name == "sxa_site" && cookies[i].value != "login") {
+                  sendResponse({farewell: cookies[i].value});
+                  break;
+                } 
+              }
+              sendResponse({farewell: null});
+
+            });
+        }
 
 function onClickHandler(info, tab) {
     //console.info("info: " + JSON.stringify(info));

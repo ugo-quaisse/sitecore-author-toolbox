@@ -697,8 +697,6 @@ function _addEnvironmentLabel() {
         scFlag = temp.replace("TRADITIONAL,_","");
         scFlag = scFlag.replace("SIMPLIFIED,_","");
 
-        if (debug) { console.log("Flag:" + scFlag); }
-
         //Replace non-standard country name
         scFlag = scFlag.replace("U.A.E.","UNITED_ARAB_EMIRATES");
         scFlag = scFlag.replace("KOREA","SOUTH_KOREA");
@@ -1022,7 +1020,7 @@ function _addEnvironmentLabel() {
   if (debug === true) {
     console.info("Item ID: " + sitecoreItemID);
     console.info("Language: " + scLanguage);
-    console.info("Version: na");
+    console.info("Version: TODO");
   }
 
 }
@@ -1055,8 +1053,10 @@ var elementObserver = new MutationObserver(function(e) {
 
     var tabSitecoreItemID = document.querySelectorAll(".scEditorHeaderQuickInfoInput");
     var lastTabSitecoreItemID = tabSitecoreItemID[tabSitecoreItemID.length- 2].getAttribute("value");
-    
-    console.log(sitecoreItemID);
+
+    //Add hash to URL
+    window.location.hash = sitecoreItemID;
+
     if(debug) { console.log("Number of tabs "+countTab); }
 
     if(countTab >1 && !document.getElementById("showInContentTree"+(countTab)+"")) {
@@ -1089,32 +1089,53 @@ if(element){
 
   //Sitecore Variables
   var scLanguage = element.getAttribute("value").toLowerCase();
+  var hash = window.location.hash.substr(1);
 
-  //Get itemID (Storage) Resume from Where you left
-  /*
-   * Resume from where you left
-   */
-  chrome.storage.sync.get(['scItemID','feature_reloadnode'], function(result) {
+  //Cookies (sxa_site?)
+  //ToDO from background script
 
-    if (!chrome.runtime.error && result.scItemID != undefined) {
 
-      if(result.feature_reloadnode == undefined) { result.feature_reloadnode = true; }
+  if(hash!="") {
 
-      if(result.scItemID && result.feature_reloadnode == true) {
+    /*
+     * Resume from hash value
+     */
+    //Load node by code injection {681D640C-C820-483A-9249-3637312CD415}
+    var actualCode = `scForm.invoke("item:load(id=` + hash + `,language=` + scLanguage + `,version=1)");`;
+    script = document.createElement('script');
+    script.textContent = actualCode;
+    (document.head||document.documentElement).appendChild(script);
+    script.remove();
 
-        //Load node by code injection {681D640C-C820-483A-9249-3637312CD415}
-        var actualCode = `scForm.invoke("item:load(id=` + result.scItemID + `,language=` + scLanguage + `,version=1)");`;
-        var script = document.createElement('script');
-        script.textContent = actualCode;
-        (document.head||document.documentElement).appendChild(script);
-        script.remove();
+    if(debug) { console.info(">> Hash ----->  " + hash); }
 
-        if(debug) { console.info(">> User Preference -----> " + result.feature_reloadnode); }
-        if(debug) { console.info(">> GoTo ItemID ----->  " + result.scItemID); }
+  } else {
+
+    /*
+     * Resume from where you left
+     */
+    chrome.storage.sync.get(['scItemID','feature_reloadnode'], function(result) {
+
+      if (!chrome.runtime.error && result.scItemID != undefined) {
+
+        if(result.feature_reloadnode == undefined) { result.feature_reloadnode = true; }
+
+        if(result.scItemID && result.feature_reloadnode == true) {
+
+          //Load node by code injection {681D640C-C820-483A-9249-3637312CD415}
+          var actualCode = `scForm.invoke("item:load(id=` + result.scItemID + `,language=` + scLanguage + `,version=1)");`;
+          var script = document.createElement('script');
+          script.textContent = actualCode;
+          (document.head||document.documentElement).appendChild(script);
+          script.remove();
+
+          if(debug) { console.info(">> Resume from where you left ----->  " + result.scItemID); }
+        }
       }
-    }
 
-  });
+    });
+
+  }
 
   _addEnvironmentLabel();
   elementObserver.observe(element, { attributes: !0 });

@@ -9,6 +9,7 @@ let isContextMenu = false;
 let sxa_site;
 let sc_site;
 
+//Getcookie https://stackoverflow.com/questions/5892176/getting-cookies-in-a-google-chrome-extension
 
 function onClickHandler(info, tab) {
     //console.info("info: " + JSON.stringify(info));

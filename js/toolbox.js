@@ -649,6 +649,8 @@ function _addEnvironmentLabel() {
 
             if(response.farewell != null ) {
 
+              //Check if sxa_site in cookie incluedes sitecoreSite from quickinfo. If not, better to display quickinfo as website not might be different (ie lcorpcm -> dev or Lcorp)
+
               sitecoreItemPath = sitecoreItemPath.replace("xxxsxa_sitexxx", response.farewell);
               if(debug) { console.info("- Sitecore sxa_site (cookie): "+response.farewell); }
 
@@ -1076,8 +1078,11 @@ var elementObserver = new MutationObserver(function(e) {
 
     if(countTab >1 && !document.getElementById("showInContentTree"+(countTab)+"")) {
       //Add text after title
-      var javascript = 'scForm.invoke("item:load(id=' + lastTabSitecoreItemID + ',language=' + scLanguage + ',version=1)"); setTimeout(function(){ (location.reload(); }, 3000);';
-      scEditorTitle[countTab-1].insertAdjacentHTML( 'afterend', '[<a id="showInContentTree' + countTab + '" href="" onclick="' + javascript + '" />Show in content tree</a>]' );
+      var url = window.location.href;
+      url = url.split("#");
+      var javascript = 'scForm.invoke("item:load(id=' + lastTabSitecoreItemID + ',language=' + scLanguage + ',version=1)");';
+      var href = url[0]+'&reload#'+lastTabSitecoreItemID;
+      scEditorTitle[countTab-1].insertAdjacentHTML( 'afterend', '[<a id="showInContentTree' + countTab + '" href="" onclick="javascript:window.location.href=\'' + href + '\'; return false;" />Show in content tree</a>]' );
     }
           
     //Set ItemID (Storage)

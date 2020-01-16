@@ -3537,6 +3537,10 @@ form[lang|='ja'] *,
     background-color: #323232;
   }
 
+  .scListControl > tbody > tr:nth-child(even) {
+    background-color: #212121;
+  }
+
   .scListControl > tbody > tr:hover {
     background-color: #444444;
   }
@@ -3564,7 +3568,7 @@ form[lang|='ja'] *,
 
     .scListControl > thead th:after,
     .scListControl > tbody:first-child > tr:first-child > td:after {
-      background: #d6d6d6 right center;
+      background: #5e5e5e right center;
       position: absolute;
       width: 1px;
       display: block;
@@ -3889,7 +3893,7 @@ div.content {
     border-right: 1px solid #222222;
 }
 .scFlexColumnContainer > div, .scFlexColumnContainerWithoutFlexie > div {
-  background-color: #222222 !important;
+  /*background-color: #222222 !important;*/
 }
 .sc-button-text,
 .sc .btn {
@@ -3960,4 +3964,15 @@ a.scItemThumbnail:hover > span.scDisplayName {
 
 #DatabaseSelector.scToolbutton {
   color: #ffffff;
+}
+.ui-progressbar-value {
+  background-color: #00b6ff !important;
+}
+.scEditorInformationHelp,
+.scEditorInformationTitle {
+  color: #ffffff;
+}
+#StatusBar .status-bar-panel {
+  background-color: #212121;
+  border: 0px;
 }

@@ -8,7 +8,7 @@
 
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
-var debug = true;
+var debug = false;
 
 /*
  * Helper functions
@@ -116,7 +116,7 @@ if(isDesktop) {
 
 }
 
-if(isEditMode) {
+if(isEditMode && !isLoginPage) {
 
   if(debug) { console.info("====================> EDIT MODE <===================="); }
 

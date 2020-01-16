@@ -28,7 +28,6 @@ form {
 
     .scFormDialogFooter .footerOkCancel {
         white-space: nowrap;
-        position: absolute;
         right: 15px;
         text-align: right;
     }

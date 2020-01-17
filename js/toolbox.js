@@ -34,7 +34,7 @@ function sendNotification(scTitle, scBody) {
  * Code injection for multilist in a Bucket (BETA)
  */
 var script = document.createElement('script');
-script.src = chrome.runtime.getURL("js/BucketList.js");
+script.src = chrome.runtime.getURL("js/BucketList-min.js");
 (document.head||document.documentElement).appendChild(script);
 script.remove();
 

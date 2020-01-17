@@ -3976,3 +3976,6 @@ a.scItemThumbnail:hover > span.scDisplayName {
   background-color: #212121;
   border: 0px;
 }
+.sc .sc-border[data-sc-id="FallbackMessageWrap"] {
+  color: #ffffff;
+}

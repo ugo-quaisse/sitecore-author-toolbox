@@ -1,7 +1,8 @@
 # Sitecore Author Toolbox (Chrome extension)
 A google Chrome extension that brings a set of handy tools for Sitecore's authors.
 
-![Screenshot](/images/screenshots/screen%205.jpg)
+[![Sitecore Author Toolbox Video](http://img.youtube.com/vi/f-IT1sLyl44/0.jpg)](http://www.youtube.com/watch?v=f-IT1sLyl44)
+
 
 ## Presentation
 

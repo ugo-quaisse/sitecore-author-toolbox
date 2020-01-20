@@ -11,3 +11,4 @@ build 0.3.8.zip
 build/
 *.zip
 .config.codekit3
+_config.yml

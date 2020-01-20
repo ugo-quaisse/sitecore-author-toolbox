@@ -8,7 +8,7 @@
 
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
-var debug = false;
+var debug = true;
 
 /*
  * Helper functions
@@ -156,6 +156,33 @@ if(isEditMode && !isLoginPage) {
 } else if(isFieldEditor) {
 
   if(debug) { console.info("====================> FIELD EDITOR <===================="); }
+
+  //TODO: Edit item, in fields editor document.querySelector(".scBucketListSelectedBox").value
+  /*
+   * Enhanced Bucket List Select Box (multilist)
+   */
+  var scBucketListSelectedBox = document.querySelector(".scBucketListSelectedBox");
+  var Section_Data = document.querySelector("#Section_Data");
+  console.log(window.location);
+
+  scBucketListSelectedBox.addEventListener("change", function() {
+ 
+      var itemId = scBucketListSelectedBox.value;
+      var itemName = scBucketListSelectedBox[scBucketListSelectedBox.selectedIndex].text;
+      var scMessageEditText = '<a href="' + window.location.origin + '/sitecore/shell/Applications/Content%20Editor.aspx#' + itemId + '" target="_blank"><b>Clic here</b></a> to edit <a href="' + window.location.origin + '/sitecore/shell/Applications/Content%20Editor.aspx#' + itemId + '" target="_blank"><u>\'' + itemName + '\'</u></a> in Content Editor.';
+      //var scMessageEdit = '<p id="satEditContentEditor" style="padding:15px;">' + scMessageEditText + '</p>';
+      var scMessageEdit = '<div id="Warnings" class="scMessageBar scWarning"><div class="scMessageBarIcon"></div><div class="scMessageBarTextContainer"><span id="Information" class="scMessageBarText">' + scMessageEditText + '</span></div></div>';
+
+
+      console.log("Change: "+itemId);
+      //Add hash to URL
+      if(!document.querySelector(".scMessageBarText")) {
+        Section_Data.insertAdjacentHTML( 'afterend', scMessageEdit );
+      } else {
+        document.querySelector(".scMessageBarText").innerHTML = scMessageEditText;
+      }
+  });
+
 
   chrome.storage.sync.get(['feature_errors'], function(result) {
 

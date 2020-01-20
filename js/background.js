@@ -133,6 +133,9 @@ chrome.runtime.onInstalled.addListener(function() {
         conditions: [
           new chrome.declarativeContent.PageStateMatcher({
             pageUrl: { urlContains: '/sitecore/' }
+          }),
+          new chrome.declarativeContent.PageStateMatcher({
+            pageUrl: { queryContains: 'sc_mode=' }
           })
         ],
         actions: [ new chrome.declarativeContent.ShowPageAction() ]

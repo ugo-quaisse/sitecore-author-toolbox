@@ -226,3 +226,10 @@ form {
 #FooterRow {
     border-top: 1px solid #2f2f2f;
 }
+#Editors, #MainPanel, .scValidatorPanel, .scEditorSections {
+    background-color: #222222 !important;
+}
+
+#FooterRow {
+    background: #222222 !important;
+}

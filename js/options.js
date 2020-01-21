@@ -155,6 +155,16 @@ document.body.onload = function() {
       document.getElementById("feature_rtl").checked = true;
     }
   });
+  //Character counter
+  chrome.storage.sync.get(['feature_charscount'], function(result) {
+    if (!chrome.runtime.error && result.feature_charscount != undefined) {
+      if(result.feature_charscount) {
+        document.getElementById("feature_charscount").checked = true;
+      }
+    } else {
+      document.getElementById("feature_charscount").checked = true;
+    }
+  });
   //Context menu
   // chrome.storage.sync.get(['feature_contextmenu'], function(result) {
   //   if (!chrome.runtime.error && result.feature_reloadnode != undefined) {
@@ -228,6 +238,10 @@ document.getElementById("set").onclick = function() {
   //RTL
   chrome.storage.sync.set({"feature_rtl": document.getElementById('feature_rtl').checked}, function() {
     console.info('--> RTL: ' + document.getElementById('feature_rtl').checked);
+  });
+  //RTL
+  chrome.storage.sync.set({"feature_charscount": document.getElementById('feature_charscount').checked}, function() {
+    console.info('--> Character counter: ' + document.getElementById('feature_charscount').checked);
   });
 
   //Get URL parameters

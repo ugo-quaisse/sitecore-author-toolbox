@@ -14,11 +14,9 @@ var debug = false;
  * Helper functions
  */
 function stripHtml(html){
-    // Create a new div element
+
     var temporalDivElement = document.createElement("div");
-    // Set the HTML content with the providen
     temporalDivElement.innerHTML = html;
-    // Retrieve the text property of the element (cross-browser support)
     return temporalDivElement.textContent || temporalDivElement.innerText || "";
 }
 
@@ -157,20 +155,59 @@ if(isEditMode && !isLoginPage) {
 
   if(debug) { console.info("====================> FIELD EDITOR <===================="); }
 
-  /*
-   * Add a characters count next to each input and textarea field
-   */
-  //var lng = str.length;
-  //document.querySelector("#charcount").innerHTML = lng + ' chars';
-  var scTextFields = document.querySelectorAll(".scContentControl, .scContentControlMemo");
-  //Loop thru all the fields and add Chars counter logic + FE display within the field itself
-  console.log(scTextFields);
-  for(var field of scTextFields) {
-    console.log(field.value);
-    field.onkeyup = function() {
-      console.log("Chars: "+field.value);
-    };
-  }
+
+  chrome.storage.sync.get(['feature_charscount'], function(result) {
+
+  if(result.feature_charscount == undefined) { result.feature_charscount = true; }
+
+    if(result.feature_charscount) {
+
+      /*
+       * Add a characters count next to each input and textarea field
+       */
+      var scTextFields = document.querySelectorAll("input, textarea");
+      var countHtml;
+      var chars = 0;
+      var charsText;
+
+      //On load
+      for(var field of scTextFields) {
+        
+        if(field.className == "scContentControl" || field.className == "scContentControlMemo") {
+          
+          field.setAttribute( 'style', 'padding-right: 70px !important' );
+          field.parentElement.setAttribute( 'style', 'position:relative !important' );
+          chars = field.value.length;
+          if(chars > 1) { charsText = chars+" chars"; } else { charsText = chars+" char"; }
+          countHtml = '<div id="chars_' + field.id + '" style="position: absolute; bottom: 1px; right: 1px; padding: 6px 10px; border-radius: 4px; line-height: 20px; opacity:0.5;">' + charsText + '</div>';
+          //Add div
+          field.insertAdjacentHTML( 'afterend', countHtml );
+
+        }
+      
+      }
+
+      //On keyup
+      document.addEventListener('keyup', function (event) {
+
+          if (event.target.localName == "input" || event.target.localName == "textarea") {
+            
+            chars = event.target.value.length;
+            if(chars > 1) { charsText = chars+" chars"; } else { charsText = chars+" char"; }
+
+            if(debug) { console.log('chars_'+event.target.id+" -> "+charsText); }
+
+            document.querySelector('#chars_'+event.target.id).innerText = charsText;
+
+            //event.target.setAttribute( 'style', 'border: 1px solid red !important' );
+          
+          }
+
+        }, false);
+
+      }
+
+  });
 
   /*
    * Enhanced Bucket List Select Box (multilist)
@@ -730,7 +767,7 @@ function _addEnvironmentLabel() {
         //If not added yet
         if(!document.getElementById("scMessageBarInfo") && result.feature_urls) {
           //Prepare HTML (scInformation scWarning scError scOrange scGray scGreen)
-          var scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + iconEdit + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing a data source...</div><div class="scMessageBarText">To see it, you need to add/edit it to your page via the</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="" class="scMessageBarOption">Presentation Details</a> or <a href="" class="scMessageBarOption">Experience Editor</a></li></ul></div></div>'
+          var scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + iconEdit + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing a data source...</div><div class="scMessageBarText">To see it, you need to add/edit it to your page via the</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><span class="scMessageBarOption">Presentation Details</span> or <span class="scMessageBarOption">Experience Editor</span></li></ul></div></div>'
 
           //Insert message bar into Sitecore Content Editor
           scEditorID.insertAdjacentHTML( 'afterend', scMessage );
@@ -944,10 +981,12 @@ function _addEnvironmentLabel() {
 
 
       });
-      // configuration of the observer:
-      var config = { attributes: true, childList: true, characterData: true };
-      // pass in the target node, as well as the observer options
-      observer.observe(target, config);
+
+      if(target) {
+        //Observer
+        var config = { attributes: true, childList: true, characterData: true };
+        observer.observe(target, config);
+      }
 
     }
 
@@ -1077,11 +1116,69 @@ function _addEnvironmentLabel() {
 
   });
 
-  if (debug === true) {
-    console.info("- Sitecore Item: " + sitecoreItemID);
-    console.info("- Sitecore Language: " + scLanguage);
-    console.info("- Sitecore Version: *todo*");
-  }
+  /*
+   * Character counter
+   */
+
+   chrome.storage.sync.get(['feature_charscount'], function(result) {
+
+    if(result.feature_charscount == undefined) { result.feature_charscount = true; }
+
+      if(result.feature_charscount) {
+
+        /*
+         * Add a characters count next to each input and textarea field
+         */
+        var scTextFields = document.querySelectorAll("input, textarea");
+        var countHtml;
+        var chars = 0;
+        var charsText;
+
+        //On load
+        for(var field of scTextFields) {
+          
+          if(field.className == "scContentControl" || field.className == "scContentControlMemo") {
+            
+            field.setAttribute( 'style', 'padding-right: 70px !important' );
+            field.parentElement.setAttribute( 'style', 'position:relative !important' );
+            chars = field.value.length;
+            if(chars > 1) { charsText = chars+" chars"; } else { charsText = chars+" char"; }
+            countHtml = '<div id="chars_' + field.id + '" style="position: absolute; bottom: 1px; right: 1px; padding: 6px 10px; border-radius: 4px; line-height: 20px; opacity:0.5;">' + charsText + '</div>';
+            //Add div
+            field.insertAdjacentHTML( 'afterend', countHtml );
+
+          }
+        
+        }
+
+        //On keyup
+        document.addEventListener('keyup', function (event) {
+
+            if (event.target.localName == "input" || event.target.localName == "textarea") {
+              
+              chars = event.target.value.length;
+              if(chars > 1) { charsText = chars+" chars"; } else { charsText = chars+" char"; }
+
+              if(debug) { console.log('chars_'+event.target.id+" -> "+charsText); }
+
+              document.querySelector('#chars_'+event.target.id).innerText = charsText;
+
+              //event.target.setAttribute( 'style', 'border: 1px solid red !important' );
+            
+            }
+
+          }, false);
+
+        }
+
+    });
+
+    //Debug
+    if (debug === true) {
+      console.info("- Sitecore Item: " + sitecoreItemID);
+      console.info("- Sitecore Language: " + scLanguage);
+      console.info("- Sitecore Version: *todo*");
+    }
 
 }
 //End

@@ -233,3 +233,6 @@ form {
 #FooterRow {
     background: #222222 !important;
 }
+#Renderings, #placeholders {
+    color: #555555;
+}

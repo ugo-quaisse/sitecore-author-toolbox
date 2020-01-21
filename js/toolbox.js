@@ -169,17 +169,18 @@ if(isEditMode && !isLoginPage) {
  
       var itemId = scBucketListSelectedBox.value;
       var itemName = scBucketListSelectedBox[scBucketListSelectedBox.selectedIndex].text;
-      var scMessageEditText = '<a href="' + window.location.origin + '/sitecore/shell/Applications/Content%20Editor.aspx#' + itemId + '" target="_blank"><b>Clic here</b></a> to edit <a href="' + window.location.origin + '/sitecore/shell/Applications/Content%20Editor.aspx#' + itemId + '" target="_blank"><u>\'' + itemName + '\'</u></a> in Content Editor.';
-      //var scMessageEdit = '<p id="satEditContentEditor" style="padding:15px;">' + scMessageEditText + '</p>';
-      var scMessageEdit = '<div id="Warnings" class="scMessageBar scWarning"><div class="scMessageBarIcon"></div><div class="scMessageBarTextContainer"><span id="Information" class="scMessageBarText">' + scMessageEditText + '</span></div></div>';
+      var iconError = chrome.runtime.getURL("images/rocket.png");
+      var scMessageEditText = '<a class="scMessageBarOption" href="' + window.location.origin + '/sitecore/shell/Applications/Content%20Editor.aspx#' + itemId + '" target="_blank">Open in a new tab.</a> ';
+      var scMessageEdit = '<div id="Warnings" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + iconError + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">' + itemName + '</div><span id="Information" class="scMessageBarText">To edit this item in Content Editor</span><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet">' + scMessageEditText + '</li></ul></div></div>';
 
 
       console.log("Change: "+itemId);
       //Add hash to URL
-      if(!document.querySelector(".scMessageBarText")) {
-        Section_Data.insertAdjacentHTML( 'afterend', scMessageEdit );
+      if(!document.querySelector(".scMessageBar")) {
+        Section_Data.insertAdjacentHTML( 'beforebegin', scMessageEdit );
       } else {
-        document.querySelector(".scMessageBarText").innerHTML = scMessageEditText;
+        document.querySelector(".scMessageBarTitle").innerHTML = itemName;
+        document.querySelector(".scMessageBarOptionBullet").innerHTML = scMessageEditText;
       }
   });
 

@@ -135,10 +135,12 @@ chrome.runtime.onInstalled.addListener(function() {
             pageUrl: { urlContains: '/sitecore/' }
           }),
           new chrome.declarativeContent.PageStateMatcher({
-            pageUrl: { queryContains: 'sc_mode=' }
-          })
+            css: [".pagemode-edit"]
+          })    
         ],
-        actions: [ new chrome.declarativeContent.ShowPageAction() ]
+        actions: [
+          new chrome.declarativeContent.ShowPageAction()
+        ]
       }
     ]);
   });

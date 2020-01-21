@@ -36,7 +36,7 @@
 				"css/tooltip-min.css"
 			],
 			"js": [
-				"js/toolbox-min.js",
+				"js/toolbox.js",
 				"js/tabulator-min.js",
 				"js/cache-min.js",
 				"js/BucketList-min.js"

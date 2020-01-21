@@ -19,12 +19,12 @@ form#ContentEditorForm {
 }
 
 .scMessageBar.scGreen {
-    background-color: #AAEEB5;
-    color: #1E7B18;
+    background-color: #76a797;
+    color: #e6eae9;
 }
 
     .scMessageBar.scGreen .scMessageBarIcon {
-        background-color: #4EC026;
+        background-color: #0f9467;
     }
 
 .scMessageBar.scOrange {

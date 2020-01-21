@@ -215,8 +215,6 @@ if(isEditMode && !isLoginPage) {
   var scBucketListSelectedBox = document.querySelectorAll(".scBucketListSelectedBox, .scContentControlMultilistBox");
   var Section_Data = document.querySelector("#Section_Data");
 
-  console.log(scBucketListSelectedBox);
-
   if(scBucketListSelectedBox[1]) {
     scBucketListSelectedBox = scBucketListSelectedBox[1];
   } else {
@@ -224,7 +222,7 @@ if(isEditMode && !isLoginPage) {
   }
 
   if(scBucketListSelectedBox) {
-    console.log('OK');
+
     scBucketListSelectedBox.addEventListener("change", function() {
    
       var itemId = scBucketListSelectedBox.value;
@@ -233,8 +231,6 @@ if(isEditMode && !isLoginPage) {
       var scMessageEditText = '<a class="scMessageBarOption" href="' + window.location.origin + '/sitecore/shell/Applications/Content%20Editor.aspx#' + itemId + '" target="_blank">Open it in a new tab.</a> ';
       var scMessageEdit = '<div id="Warnings" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + iconError + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">' + itemName + '</div><span id="Information" class="scMessageBarText">To edit this item in Content Editor</span><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet">' + scMessageEditText + '</li></ul></div></div>';
 
-
-      console.log("Change: "+itemId);
       //Add hash to URL
       if(!document.querySelector(".scMessageBar")) {
         Section_Data.insertAdjacentHTML( 'beforebegin', scMessageEdit );

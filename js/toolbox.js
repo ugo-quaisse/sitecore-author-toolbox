@@ -8,7 +8,7 @@
 
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
-var debug = true;
+var debug = false;
 
 /*
  * Helper functions
@@ -157,31 +157,44 @@ if(isEditMode && !isLoginPage) {
 
   if(debug) { console.info("====================> FIELD EDITOR <===================="); }
 
-  //TODO: Edit item, in fields editor document.querySelector(".scBucketListSelectedBox").value
+  /*
+   * Add a characters count next to each input and textarea field
+   */
+  //var lng = str.length;
+  //document.querySelector("#charcount").innerHTML = lng + ' chars';
+  var scTextFields = document.querySelectorAll(".scContentControl, .scContentControlMemo");
+  //Loop thru all the fields and add Chars counter logic + FE display within the field itself
+  console.log(scTextFields);
+  for(var field of scTextFields) {
+    console.log(field.value);
+    field.onkeyup = function() {
+      console.log("Chars: "+field.value);
+    };
+  }
+
   /*
    * Enhanced Bucket List Select Box (multilist)
    */
   var scBucketListSelectedBox = document.querySelector(".scBucketListSelectedBox");
   var Section_Data = document.querySelector("#Section_Data");
-  console.log(window.location);
 
-  scBucketListSelectedBox.addEventListener("change", function() {
- 
-      var itemId = scBucketListSelectedBox.value;
-      var itemName = scBucketListSelectedBox[scBucketListSelectedBox.selectedIndex].text;
-      var scMessageEditText = '<a href="' + window.location.origin + '/sitecore/shell/Applications/Content%20Editor.aspx#' + itemId + '" target="_blank"><b>Clic here</b></a> to edit <a href="' + window.location.origin + '/sitecore/shell/Applications/Content%20Editor.aspx#' + itemId + '" target="_blank"><u>\'' + itemName + '\'</u></a> in Content Editor.';
-      //var scMessageEdit = '<p id="satEditContentEditor" style="padding:15px;">' + scMessageEditText + '</p>';
-      var scMessageEdit = '<div id="Warnings" class="scMessageBar scWarning"><div class="scMessageBarIcon"></div><div class="scMessageBarTextContainer"><span id="Information" class="scMessageBarText">' + scMessageEditText + '</span></div></div>';
+  if(scBucketListSelectedBox) {
+    scBucketListSelectedBox.addEventListener("change", function() {
+   
+        var itemId = scBucketListSelectedBox.value;
+        var itemName = scBucketListSelectedBox[scBucketListSelectedBox.selectedIndex].text;
+        var scMessageEditText = '<a href="' + window.location.origin + '/sitecore/shell/Applications/Content%20Editor.aspx#' + itemId + '" target="_blank"><b>Clic here</b></a> to edit <a href="' + window.location.origin + '/sitecore/shell/Applications/Content%20Editor.aspx#' + itemId + '" target="_blank"><u>\'' + itemName + '\'</u></a> in Content Editor.';
+        //var scMessageEdit = '<p id="satEditContentEditor" style="padding:15px;">' + scMessageEditText + '</p>';
+        var scMessageEdit = '<div id="Warnings" class="scMessageBar scWarning"><div class="scMessageBarIcon"></div><div class="scMessageBarTextContainer"><span id="Information" class="scMessageBarText">' + scMessageEditText + '</span></div></div>';
 
-
-      console.log("Change: "+itemId);
-      //Add hash to URL
-      if(!document.querySelector(".scMessageBarText")) {
-        Section_Data.insertAdjacentHTML( 'afterend', scMessageEdit );
-      } else {
-        document.querySelector(".scMessageBarText").innerHTML = scMessageEditText;
-      }
-  });
+        //Add hash to URL
+        if(!document.querySelector(".scMessageBarText")) {
+          Section_Data.insertAdjacentHTML( 'afterend', scMessageEdit );
+        } else {
+          document.querySelector(".scMessageBarText").innerHTML = scMessageEditText;
+        }
+    });
+  }
 
 
   chrome.storage.sync.get(['feature_errors'], function(result) {
@@ -604,6 +617,8 @@ function _addEnvironmentLabel() {
   let scNormalTab = document.querySelectorAll ( ".scRibbonEditorTabNormal" );
   //Sitecore errors
   var scErrors = document.getElementsByClassName("scValidationMarkerIcon");
+  //Sitecore validation
+  var scValidation = document.getElementsByClassName("scValidationResult");
   //Sitecore Editor Frames
   let scEditorFrames = document.querySelector ( "#EditorFrames" );
   //Sitecore Editor Sections
@@ -705,7 +720,6 @@ function _addEnvironmentLabel() {
     if(isDataSource) {
 
       sitecoreItemPath = sitecoreItemPath.split("/data/");
-
       
       chrome.storage.sync.get(['feature_urls'], function(result) {
 
@@ -714,7 +728,7 @@ function _addEnvironmentLabel() {
         //If not added yet
         if(!document.getElementById("scMessageBarInfo") && result.feature_urls) {
           //Prepare HTML (scInformation scWarning scError scOrange scGray scGreen)
-          var scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + iconEdit + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing a data source...</div><div class="scMessageBarText">To see it, you need to add/edit it to your page via the</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + sitecoreItemPath[0] + '?sc_mode=edit" target="_blank" class="scMessageBarOption">Experience Editor</a></li></ul></div></div>'
+          var scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + iconEdit + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing a data source...</div><div class="scMessageBarText">To see it, you need to add/edit it to your page via the</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="" class="scMessageBarOption">Presentation Details</a> or <a href="" class="scMessageBarOption">Experience Editor</a></li></ul></div></div>'
 
           //Insert message bar into Sitecore Content Editor
           scEditorID.insertAdjacentHTML( 'afterend', scMessage );
@@ -875,7 +889,7 @@ function _addEnvironmentLabel() {
 
     if(result.feature_errors == undefined) { result.feature_errors = true; }
 
-    if(scErrors[0]!=undefined && result.feature_errors) {
+    if(result.feature_errors) {
       
       count = 0;
 

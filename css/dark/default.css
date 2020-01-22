@@ -1005,8 +1005,8 @@ iframe.scContentControl {
 }
 
 .scTreelistEx {
-    border: 1px solid #2f2f2f !important;
-    background: #212121;
+    border: 1px solid #222222 !important;
+    background: #171717;
     height: 150px;
     overflow: auto;
 }

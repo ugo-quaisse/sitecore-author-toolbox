@@ -58,7 +58,7 @@ var isMediaBrowser = window.location.href.includes('Sitecore.Shell.Applications.
 var isPublishWindow = window.location.href.includes('/shell/Applications/Publish.aspx');
 var isSecurityWindow = window.location.href.includes('/shell/Applications/Security/');
 var isExperienceEditor = window.location.href.includes('/Applications/ExperienceEditor/');
-var isContentHome = window.location.href.includes('/content/home');
+var isContentHome = window.location.href.includes('/content/');
 var isLoginPage = window.location.href.includes('sitecore/login');
 var isLaunchpad = window.location.href.includes('/client/Applications/Launchpad');
 var isDesktop = window.location.href.includes('/shell/default.aspx');
@@ -147,9 +147,11 @@ if(isEditMode && !isLoginPage) {
     }
 
   });
-  var config = { attributes: true, childList: true, characterData: true };
-  observer.observe(target, config);
-
+  //Observer
+  if(target) {
+    var config = { attributes: true, childList: true, characterData: true };
+    observer.observe(target, config);
+  }
 
 } else if(isFieldEditor) {
 
@@ -197,7 +199,9 @@ if(isEditMode && !isLoginPage) {
 
             if(debug) { console.log('chars_'+event.target.id+" -> "+charsText); }
 
-            document.querySelector('#chars_'+event.target.id).innerText = charsText;
+            if(document.querySelector('#chars_'+event.target.id)) {
+              document.querySelector('#chars_'+event.target.id).innerText = charsText;
+            }
 
             //event.target.setAttribute( 'style', 'border: 1px solid red !important' );
           
@@ -306,10 +310,12 @@ if(isEditMode && !isLoginPage) {
 
 
       });
-      // configuration of the observer:
-      var config = { attributes: true, childList: true, characterData: true };
-      // pass in the target node, as well as the observer options
-      observer.observe(target, config);
+      
+      //Observer
+      if(target) {
+        var config = { attributes: true, childList: true, characterData: true };
+        observer.observe(target, config);
+      }
 
 
 
@@ -1166,7 +1172,9 @@ function _addEnvironmentLabel() {
 
               if(debug) { console.log('chars_'+event.target.id+" -> "+charsText); }
 
-              document.querySelector('#chars_'+event.target.id).innerText = charsText;
+              if(document.querySelector('#chars_'+event.target.id)) {
+                document.querySelector('#chars_'+event.target.id).innerText = charsText;
+              }
 
               //event.target.setAttribute( 'style', 'border: 1px solid red !important' );
             

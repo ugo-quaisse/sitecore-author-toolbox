@@ -135,8 +135,8 @@ chrome.runtime.onInstalled.addListener(function() {
             pageUrl: { urlContains: '/sitecore/' }
           }),
           new chrome.declarativeContent.PageStateMatcher({
-            css: [".pagemode-edit"]
-          })    
+            pageUrl: { urlContains: 'sc_mode=' }
+          })   
         ],
         actions: [
           new chrome.declarativeContent.ShowPageAction()

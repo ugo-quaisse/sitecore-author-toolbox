@@ -8,7 +8,7 @@
 
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
-var debug = false;
+var debug = true;
 
 /*
  * Helper functions
@@ -65,8 +65,10 @@ var isDesktop = window.location.href.includes('/shell/default.aspx');
 var isRichTextEditor = window.location.href.includes('/Controls/Rich%20Text%20Editor/');
 var isFieldEditor = window.location.href.includes('field%20editor.aspx');
 var isModalDialogs = window.location.href.includes('JqueryModalDialogs');
-//var isEditMode = document.querySelector(".pagemode-edit");
-var isEditMode = window.location.href.includes('sc_mode=edit');
+var isEditMode = document.querySelector(".pagemode-edit");
+if(!isEditMode) { isEditMode = window.location.href.includes('sc_mode=edit'); }
+if(!isEditMode) { isEditMode = window.location.href.includes('/ExperienceEditor/'); }
+
 
 var launchpadPage = chrome.runtime.getURL("options.html");
 var launchpadIcon = chrome.runtime.getURL("images/icon.png");
@@ -114,15 +116,16 @@ if(isDesktop) {
 
 }
 
-if(isEditMode && !isLoginPage) {
+if(isEditMode && !isLoginPage && !isModalDialogs) {
 
   if(debug) { console.info("====================> EDIT MODE <===================="); }
 
-  //Listenner
+  /**
+   * Tooltip EE bar
+   */
   var target = document.querySelector( ".scChromeControls" );
   var observer = new MutationObserver(function(mutations) {
 
-    //Loop .scChromeToolbar
     var scChromeToolbar = document.querySelectorAll( ".scChromeToolbar" );
 
     //Find scChromeCommand

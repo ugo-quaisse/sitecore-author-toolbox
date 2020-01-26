@@ -3795,9 +3795,9 @@ form[lang|='ja'] *,
 }
 
 span.sc-ext-fieldSearchClear {
-	border-top: 6px solid #222222 !important;
-	border-right: 6px solid #222222 !important;
-	border-bottom: 6px solid #222222 !important;
+	border-top: 6px solid #171717 !important;
+	border-right: 6px solid #171717 !important;
+	border-bottom: 6px solid #171717 !important;
 }
 
 .scEditorTabControls input[type="text"].sc-ext-fieldSearch {

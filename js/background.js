@@ -106,6 +106,27 @@ function showContextMenu(tab) {
   }
 }
 
+function setPageActionIcon(tab) {
+    console.log("CLICKED");
+    var canvas = document.createElement('canvas');
+    var img = document.createElement('img');
+    img.onload = function () {
+        var context = canvas.getContext('2d');
+        context.drawImage(img, 0, 2);
+        context.fillStyle = "rgba(255,0,0,1)";
+        context.fillRect(10, 0, 19, 19);
+        context.fillStyle = "white";
+        context.font = "11px Arial";
+        context.fillText("3", 0, 19);
+
+        chrome.pageAction.setIcon({
+            imageData: context.getImageData(0, 0, 19, 19),
+            tabId:     tab.id
+        });
+    };
+    img.src = "images/icon_gray.png";
+}
+
 //When a tab is updated
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
   chrome.tabs.getSelected(null, function(tab) {
@@ -126,6 +147,9 @@ chrome.runtime.onInstalled.addListener(function() {
   //Context menu
   chrome.contextMenus.onClicked.addListener(onClickHandler);
 
+  //Chrome badge (not working)
+  //chrome.pageAction.onClicked.addListener(setPageActionIcon);
+
   //Page action
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
     chrome.declarativeContent.onPageChanged.addRules([
@@ -144,6 +168,5 @@ chrome.runtime.onInstalled.addListener(function() {
       }
     ]);
   });
-
 
 });

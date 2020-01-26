@@ -172,7 +172,7 @@ form {
     background-image: none;
     padding: 0;
     color: #fff;
-    background-color: #111111;
+    background-color: #111111 !important;
     min-height: 15px;
     position: relative;
     border-radius: 0;

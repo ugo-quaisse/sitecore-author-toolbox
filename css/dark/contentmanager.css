@@ -560,6 +560,7 @@ div#QuickInfo + .scEditorSectionPanel {
     color: #333333 !important;;
     padding-bottom: 1px;
     text-decoration: none;
+    color: #cccccc !important;
 }
 
     .scEditorFieldLabelLink:hover {

@@ -5,35 +5,26 @@
 /*
  * Helpers and variables
  */
-let isContextMenu = false;
 let sxa_site;
 let sc_site;
+let contextMenuEE = false;
+let contextMenuCE = false;
 
-//Getcookie https://stackoverflow.com/questions/5892176/getting-cookies-in-a-google-chrome-extension
-chrome.runtime.onMessage.addListener(
-            function(request, sender, sendResponse) {
-                if (request.greeting == "sxa_site"){
-                    checkSiteSxa(request, sender, sendResponse);
-                }
-                return true;
-            });
+function checkSiteSxa(request, sender, sendResponse){
 
-        function checkSiteSxa(request, sender, sendResponse){
+    var url = new URL(sender.tab.url);
+    chrome.cookies.getAll({}, function(cookies) {
 
-            var url = new URL(sender.tab.url);
-            chrome.cookies.getAll({}, function(cookies) {
-        
-              //Display context menu if Sitecore website and Sitecore Back-office opened
-              for (var i in cookies) {
-                if(cookies[i].domain == url.hostname && cookies[i].name == "sxa_site" && cookies[i].value != "login") {
-                  sendResponse({farewell: cookies[i].value});
-                  break;
-                } 
-              }
-              sendResponse({farewell: null});
+      for (var i in cookies) {
+        if(cookies[i].domain == url.hostname && cookies[i].name == "sxa_site" && cookies[i].value != "login") {
+          sendResponse({farewell: cookies[i].value});
+          break;
+        } 
+      }
+      sendResponse({farewell: null});
 
-            });
-        }
+    });
+}
 
 function onClickHandler(info, tab) {
     //console.info("info: " + JSON.stringify(info));
@@ -41,16 +32,12 @@ function onClickHandler(info, tab) {
     var url = info.pageUrl.substring(0, info.pageUrl.indexOf('?'));   
     if(sxa_site != undefined) { sc_site = "&sc_site="+sxa_site } else { sc_site = ""; }
     
-    //Get in an array the website configuration from local storage
-
+    //If Experience Editor ON -> add Edit in Content Editor
 
     if(info.menuItemId == "SitecoreAuthorToolbox") {
-
-      //If domain of url includes in array[key], return the new url + query + sc_mode=edit
-
       //Experience Editor
       chrome.tabs.executeScript(tab.id, {code: 'window.location.href = "' + url + '?sc_mode=edit' + sc_site + '";'});
-    } else if(info.menuItemId == "SitecoreAuthorToolboxDebug") {
+    } else if(info.menuItemId == "SitecoreAuthorToolboxEditor") {
       //Debug mode
       chrome.tabs.executeScript(tab.id, {code: 'window.location.href = "' + url + '?sc_debug=1&sc_trace=1&sc_prof=1&sc_ri=1' + sc_site + '";'});
     }
@@ -58,99 +45,118 @@ function onClickHandler(info, tab) {
 }
 
 function showContextMenu(tab) {
+
   if(tab.url != undefined) {
 
-    var isSitecore = tab.url.includes("/sitecore/");
-    var isChromeTab = tab.url.includes("chrome://");
+    var url = tab.url.split("?");
+    url = url[0];
 
-    if(!isChromeTab) {
-      //Tab URL
-      var url = new URL(tab.url);
+    var isSitecore = url.includes("/sitecore/");
+    var isUrl = url.includes("http");
+    var isEditMode = tab.url.includes("sc_mode=edit");
+    var isViewSource = url.includes("view-source:");
 
-      chrome.cookies.getAll({}, function(cookies) {
+    if(isUrl && !isViewSource) {
+
+      chrome.cookies.get({"url": tab.url, "name": "sxa_site"}, function(cookie) {
         
-        //Discpay context menu if Sitecore website and Sitecore Back-office opened
-        for (var i in cookies) {
+        //Tab URL
+        url = new URL(tab.url);
           
-          //console.info("Cookie: "+cookies[i].name+" - "+url.hostname);    
-          if(url.hostname == cookies[i].domain && cookies[i].name == "shell#lang" && !isSitecore) {
-              
-            if(!isContextMenu) {
+        if(cookie && !isSitecore) {
+
+          sxa_site = cookie.value;
+
+          if(!isEditMode) {
+            if(!contextMenuEE) {
               chrome.contextMenus.create({"title": "Edit in Experience Editor (beta)", "contexts":["page"], "id": "SitecoreAuthorToolbox"});
-              //chrome.contextMenus.create({"title": "Debug in Sitecore (beta)", "contexts":["page"], "id": "SitecoreAuthorToolboxDebug"});
-              isContextMenu = true;
+              contextMenuEE = true;
+              if(contextMenuCE) {
+                chrome.contextMenus.remove("SitecoreAuthorToolboxEditor");
+                contextMenuCE = false;
+              }
             }
-            break;
-
           } else {
-
-            if(isContextMenu) {
-              chrome.contextMenus.remove("SitecoreAuthorToolbox");
-              //chrome.contextMenus.remove("SitecoreAuthorToolboxDebug");
-              isContextMenu = false;
+            if(!contextMenuCE) {
+              chrome.contextMenus.create({"title": "Edit in Content Editor (beta)", "contexts":["page"], "id": "SitecoreAuthorToolboxEditor"});
+              contextMenuCE = true;
+              if(contextMenuEE) {
+                chrome.contextMenus.remove("SitecoreAuthorToolbox");
+                contextMenuEE = false;
+              }
             }
-
           }
-        }
 
-        //Retrieve SXA site
-        for (i in cookies) {
-          if(url.hostname == cookies[i].domain && cookies[i].name == "sxa_site") {
-
-            sxa_site = cookies[i].value;
-
-          }
-        }
+        }  
       });
     }
   }
 }
 
-function setPageActionIcon(tab) {
-    console.log("CLICKED");
-    var canvas = document.createElement('canvas');
-    var img = document.createElement('img');
-    img.onload = function () {
-        var context = canvas.getContext('2d');
-        context.drawImage(img, 0, 2);
-        context.fillStyle = "rgba(255,0,0,1)";
-        context.fillRect(10, 0, 19, 19);
-        context.fillStyle = "white";
-        context.font = "11px Arial";
-        context.fillText("3", 0, 19);
+function setIcon(tab) {
 
-        chrome.pageAction.setIcon({
-            imageData: context.getImageData(0, 0, 19, 19),
-            tabId:     tab.id
-        });
-    };
-    img.src = "images/icon_gray.png";
+  //Variables
+  var url = tab.url.split("?");
+  url = url[0];
+  var isSitecore = url.includes("/sitecore/");
+  var isUrl = url.includes("http");
+  var isViewSource = url.includes("view-source:");
+
+  if(isUrl && !isViewSource) {
+
+    chrome.cookies.get({"url": tab.url, "name": "sitecore_userticket"}, function(cookie) {
+      chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
+      if(cookie) {
+        chrome.browserAction.setIcon({path: 'images/icon.png'});
+        chrome.browserAction.setBadgeText({text: 'ON'});
+      } else {
+        chrome.browserAction.setIcon({path: 'images/icon_gray.png'});
+        chrome.browserAction.setBadgeText({text: ''});
+      }
+    });
+
+  } else if(isSitecore) {
+    chrome.browserAction.setIcon({path: 'images/icon.png'});
+    chrome.browserAction.setBadgeText({text: 'ON'});
+  }
+
 }
+
+//When message is requested from toolbox.js
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.greeting == "sxa_site"){
+        checkSiteSxa(request, sender, sendResponse);
+    }
+    return true;
+});
 
 //When a tab is updated
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
   chrome.tabs.getSelected(null, function(tab) {
     showContextMenu(tab);
+    setIcon(tab);
   });
 });
 
 //When a tab is activated
 chrome.tabs.onActivated.addListener(function(tabId, changeInfo, tab) {
-  chrome.tabs.getSelected(null, function(tab) { 
+  chrome.tabs.getSelected(null, function(tab) {
+    showContextMenu(tab);
+    setIcon(tab);
   });
 });
 
-
 // When the extension is installed or upgraded ...
-chrome.runtime.onInstalled.addListener(function() {
+chrome.runtime.onInstalled.addListener(function(tabId) {
 
   //Context menu
   chrome.contextMenus.onClicked.addListener(onClickHandler);
 
-  //Chrome badge (not working)
-  //chrome.pageAction.onClicked.addListener(setPageActionIcon);
+  //Badge click action
+  //If new, on click redirect to what's new page + store value 1 with version number
 
-  //Page action
+
+  //Page action only
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
     chrome.declarativeContent.onPageChanged.addRules([
       {
@@ -170,3 +176,5 @@ chrome.runtime.onInstalled.addListener(function() {
   });
 
 });
+
+

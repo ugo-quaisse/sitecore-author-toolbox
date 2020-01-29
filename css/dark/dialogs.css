@@ -236,3 +236,9 @@ form {
 #Renderings, #placeholders {
     color: #555555;
 }
+.scEditorInformation {
+    background-color: #00b6ff !important;
+}
+.standardWindowCaption {
+    background-color: #111111 !important;
+}

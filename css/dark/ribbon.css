@@ -655,7 +655,7 @@ a:hover .scRibbonToolbarSmallButtonPrefix {
 
 .scRibbonToolbarSmallInputBox,
 .scRibbonToolbarSmallInputBoxDisabled {
-    color: #303030 !important;
+    color: #cccccc !important;
     display: block !important;
     padding: 0px 6px 2px 6px !important;
     white-space: nowrap !important;

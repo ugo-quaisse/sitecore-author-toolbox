@@ -55,6 +55,7 @@ function showContextMenu(tab) {
     var isUrl = url.includes("http");
     var isEditMode = tab.url.includes("sc_mode=edit");
     var isViewSource = url.includes("view-source:");
+    var isItemId = tab.url.includes("sc_itemid=");
 
     if(isUrl && !isViewSource) {
 
@@ -107,16 +108,19 @@ function setIcon(tab) {
     chrome.cookies.get({"url": tab.url, "name": "sitecore_userticket"}, function(cookie) {
       chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
       if(cookie) {
-        chrome.browserAction.setIcon({path: 'images/icon.png'});
+        //chrome.browserAction.setIcon({path: 'images/icon.png'});
+        chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
         chrome.browserAction.setBadgeText({text: 'ON'});
       } else {
-        chrome.browserAction.setIcon({path: 'images/icon_gray.png'});
-        chrome.browserAction.setBadgeText({text: ''});
+        //chrome.browserAction.setIcon({path: 'images/icon_gray.png'});
+        chrome.browserAction.setBadgeBackgroundColor({ color: "#777777" });
+        chrome.browserAction.setBadgeText({text: 'OFF'});
       }
     });
 
   } else if(isSitecore) {
-    chrome.browserAction.setIcon({path: 'images/icon.png'});
+    //chrome.browserAction.setIcon({path: 'images/icon.png'});
+    chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
     chrome.browserAction.setBadgeText({text: 'ON'});
   }
 
@@ -138,7 +142,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
   });
 });
 
-//When a tab is activated
+//When a tab is activated (does not fired is default_popup exists)
 chrome.tabs.onActivated.addListener(function(tabId, changeInfo, tab) {
   chrome.tabs.getSelected(null, function(tab) {
     showContextMenu(tab);
@@ -151,10 +155,6 @@ chrome.runtime.onInstalled.addListener(function(tabId) {
 
   //Context menu
   chrome.contextMenus.onClicked.addListener(onClickHandler);
-
-  //Badge click action
-  //If new, on click redirect to what's new page + store value 1 with version number
-
 
   //Page action only
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {

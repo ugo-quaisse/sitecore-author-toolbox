@@ -46,7 +46,7 @@
   	},	
 	"browser_action": {
 		"default_popup": "options.html",
-		"default_title": "Sitecore Author Toolbox options", 
+		"default_title": "Sitecore Author Toolbox (options)", 
 		"default_icon": "images/icon.png"
 	},
 	"web_accessible_resources": [

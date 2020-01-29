@@ -16,11 +16,28 @@ body {
   background-color: #212121 !important;
 }
 
+.sc-applicationContent,
 .sc-applicationContent-main {
   color: #121212 !important;
   border-color: #cccccc !important;
   background-color: #222222 !important;
   padding: 15px;
+}
+.sc-applicationContent {
+  padding: 0px !important;
+}
+.sc-controlpanel-box-content {
+  background-color: #333333;
+}
+.sc-controlpanel-box-content li {
+  border-bottom: 1px solid #444444 !important;
+}
+.sc-applicationHeader-row2 {
+  background-color: #2b2b2b !important;
+  border-bottom: 1px solid #444444;
+}
+.sc-controlpanel-box-header h4 {
+  color: #444444 !important;
 }
 .sc-dialogFooter {
   background-color: #101010 !important;

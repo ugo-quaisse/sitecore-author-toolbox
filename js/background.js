@@ -107,6 +107,7 @@ function setIcon(tab) {
 
     chrome.cookies.get({"url": tab.url, "name": "sitecore_userticket"}, function(cookie) {
       chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
+      //If sitecore cookie detected
       if(cookie) {
         //chrome.browserAction.setIcon({path: 'images/icon.png'});
         chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });

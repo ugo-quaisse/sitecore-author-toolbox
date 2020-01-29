@@ -178,6 +178,10 @@ form {
     border-radius: 0;
 }
 
+.ui-progressbar-value {
+    background-color: #00b6ff !important;
+}
+
 .ui-dialog-titlebar-buttonpane {
     margin-top: 0 !important;
     position: absolute;
@@ -241,4 +245,13 @@ form {
 }
 .standardWindowCaption {
     background-color: #111111 !important;
+}
+.cmd .clipboard {
+    background-color: transparent !important;
+    border: 0px !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+.spe-secured-app .scEditorWarningOption {
+    color: #897a2e !important;
 }

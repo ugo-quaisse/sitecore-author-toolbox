@@ -32,7 +32,7 @@
 				"css/tabulator_semantic-ui-min.css"
 			],
 			"js": [
-				"js/toolbox-min.js",
+				"js/toolbox.js",
 				"js/tabulator-min.js",
 				"js/cache-min.js"
 			],

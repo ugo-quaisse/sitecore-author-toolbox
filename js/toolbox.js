@@ -27,6 +27,31 @@ function sendNotification(scTitle, scBody) {
   });
 }
 
+function cleanCountryName(name) {
+
+  var temp = name;
+  var language;
+
+  //If language name includes ":"
+  if(temp!='' && temp.includes(' :')) { temp = temp.split(" :"); temp = temp[0]; }
+  temp = temp.split(" (");
+  if(temp[1] == undefined) { temp = temp[0]; } else { temp = temp[1]; }
+  temp = temp.split(")");
+  if(temp[0].includes(', ')) { temp = temp[0].split(", "); temp[0] = temp[1]; temp[0] = temp[0].replace(" ", "_"); }
+  temp = temp[0].replace(" ", "_");
+  temp = temp.toUpperCase();
+  language = temp.replace("TRADITIONAL,_","");
+  language = language.replace("SIMPLIFIED,_","");
+  //Replace non-standard country name
+  language = language.replace("U.A.E.","UNITED_ARAB_EMIRATES");
+  language = language.replace("KOREA","SOUTH_KOREA");
+  language = language.replace("UNITED_STATES","USA");
+  language = language.replace("UNITED_KINGDOM","GREAT_BRITAIN");
+  language = language.replace("ENGLISH","GREAT_BRITAIN");
+
+  return language;
+}
+
 function sitecoreAuthorToolbox() {
 
   //App settings 
@@ -195,23 +220,9 @@ function sitecoreAuthorToolbox() {
     if(isNotRegion) {
 
       //Clean country name
-      temp = scLanguageTxtShort.split(" (");
-      if(temp[1] == undefined) { temp = temp[0]; } else { temp = temp[1]; }
-      temp = temp.split(")");
-      temp = temp[0].split(" :");
-      if(temp[0].includes(', ')) { temp = temp[0].split(", "); temp[0] = temp[1]; temp[0] = temp[0].replace(" ", "_"); }
-      temp = temp[0].replace(" ", "_");
-      temp = temp.toUpperCase();
-      scFlag = temp.replace("TRADITIONAL,_","");
-      scFlag = scFlag.replace("SIMPLIFIED,_","");
+      scFlag = cleanCountryName(scLanguageTxtShort);
 
-      //Replace non-standard country name
-      scFlag = scFlag.replace("U.A.E.","UNITED_ARAB_EMIRATES");
-      scFlag = scFlag.replace("KOREA","SOUTH_KOREA");
-      scFlag = scFlag.replace("UNITED_STATES","USA");
-      scFlag = scFlag.replace("UNITED_KINGDOM","GREAT_BRITAIN");
-      scFlag = scFlag.replace("ENGLISH","GREAT_BRITAIN");
-
+      //Flag images
       scFlag = scFlag.toLowerCase();
       scFlag = chrome.runtime.getURL("images/Flags/32x32/flag_" + scFlag + ".png");
 
@@ -631,7 +642,6 @@ var isSecurityDetails = window.location.href.includes('SecurityDetails.aspx');
 var isEditorFolder = window.location.href.includes('Editors.Folder.aspx');
 var isRibbon = window.location.href.includes('/Ribbon.aspx');
 var isInsertPage = window.location.href.includes('/Dialogs/InsertPage/');
-//if(isEditMode && isInsertPage) { isEditMode = false; };
 
 //Launchpad icon variables
 var launchpadPage = chrome.runtime.getURL("options.html");
@@ -980,24 +990,7 @@ if(isSitecore && !isEditMode && !isLoginPage) {
                       } else {
 
                         //Clean country name
-                        temp = tdlanguage.split(" (");
-                        if(temp[1] == undefined) { temp = temp[0]; } else { temp = temp[1]; }
-                        temp = temp.split(")");
-                        temp = temp[0].split(" :");
-                        if(temp[0].includes(', ')) { temp = temp[0].split(", "); temp[0] = temp[1]; temp[0] = temp[0].replace(" ", "_"); }
-                        temp = temp[0].replace(" ", "_");
-                        temp = temp.toUpperCase();
-                        tdlanguage = temp.replace("TRADITIONAL,_","");
-                        tdlanguage = tdlanguage.replace("SIMPLIFIED,_","");
-
-                        //Replace non-standard country name
-                        tdlanguage = tdlanguage.replace("U.A.E.","UNITED_ARAB_EMIRATES");
-                        tdlanguage = tdlanguage.replace("KOREA","SOUTH_KOREA");
-                        tdlanguage = tdlanguage.replace("UNITED_STATES","USA");
-                        tdlanguage = tdlanguage.replace("UNITED_KINGDOM","GREAT_BRITAIN");
-                        tdlanguage = tdlanguage.replace("ENGLISH","GREAT_BRITAIN");
-                        
-                        //console.log(tdlanguage);
+                        tdlanguage = cleanCountryName(tdlanguage);
 
                       }
                       
@@ -1026,100 +1019,6 @@ if(isSitecore && !isEditMode && !isLoginPage) {
     });
 
    
-  } else if(isGalleryLanguageExpEd) {
-    
-    if(debug) { console.info("====================> LANGUAGES IN EXPERIENCE EDITOR <===================="); }
-
-    chrome.storage.sync.get(['feature_flags'], function(result) {
-
-      if(result.feature_flags == undefined) { result.feature_flags = true; }
-
-      if(result.feature_flags) {
-
-        /*
-         * Load Json data for languages
-         */
-        var rawFile = new XMLHttpRequest();
-        var jsonData;
-        rawFile.overrideMimeType("application/json");
-        rawFile.open("GET", chrome.runtime.getURL("data/languages.json"), true);
-        rawFile.onreadystatechange = function() {
-          if (rawFile.readyState === 4 && rawFile.status == "200") {
-
-            jsonData = JSON.parse(rawFile.responseText);
-            //console.info("JSON "+jsonData);
-
-            //Loop the languages table
-            var isRegionFrame;
-            var dom = document.querySelector('.sc-gallery-content');
-            var div = dom.querySelectorAll('.sc-gallery-option-content,.sc-gallery-option-content-active');
-            var td;
-            var divcount = 0;
-            var tdcount = 0;
-            var tdDiv;
-            var tdlanguage;
-            var tdversion;
-            var tdimage;
-            var temp;
-            var key;
-
-            //Loop results, extract divs infos
-            //sc-gallery-option-content-header > span (country)
-            //sc-gallery-option-content-description > span (version)
-
-            for (let item of div) {
-              
-              tdDiv = item.closest('.sc-gallery-option-content,.sc-gallery-option-content-active');
-              tdlanguage = item.querySelector('.sc-gallery-option-content-header > span');
-              tdversion = item.querySelector('.sc-gallery-option-content-description > span');
-
-              temp = tdversion.innerHTML.split(" ");
-              //Check version
-              if(temp[0]!="0") {
-                tdversion.setAttribute( 'style', 'background-color: yellow; display: initial; padding: 0px 3px; color: #000000 !important' );
-              }
-
-              //Clean country name
-              temp = tdlanguage.innerHTML.split(" :");
-              temp = temp[0].split(" (");
-              if(temp[1] == undefined) { temp = temp[0]; } else { temp = temp[1]; }
-              temp = temp.split(")");
-              if(temp[0].includes(', ')) { temp = temp[0].split(", "); temp[0] = temp[1]; temp[0] = temp[0].replace(" ", "_"); }
-              temp = temp[0].replace(" ", "_");
-              temp = temp.toUpperCase();
-              tdlanguage = temp.replace("TRADITIONAL,_","");
-              tdlanguage = tdlanguage.replace("SIMPLIFIED,_","");
-
-              //Replace non-standard country name
-              tdlanguage = tdlanguage.replace("U.A.E.","UNITED_ARAB_EMIRATES");
-              tdlanguage = tdlanguage.replace("KOREA","SOUTH_KOREA");
-              tdlanguage = tdlanguage.replace("UNITED_STATES","USA");
-              tdlanguage = tdlanguage.replace("UNITED_KINGDOM","GREAT_BRITAIN");
-              tdlanguage = tdlanguage.replace("ENGLISH","GREAT_BRITAIN");
-
-              //Compare with Json data
-              for (key in jsonData) {
-                if (jsonData.hasOwnProperty(key)) {
-                    if( tdlanguage == jsonData[key]["language"].toUpperCase()) {
-
-                      tdlanguage = jsonData[key]["flag"];
-
-                    }
-                }
-              }
-
-              tdDiv.setAttribute( 'style', 'padding-left:48px; background-image: url(' + chrome.runtime.getURL("images/Flags/32x32/flag_" + tdlanguage + ".png") + '); background-repeat: no-repeat; background-position: 5px;' );
-
-            }
-
-          }
-        }
-        rawFile.send(null);
-      }
-
-    });
-
-
   } else if(isPublishWindow) {
 
     if(debug) { console.info("====================> PUBLISH WINDOW <===================="); } 
@@ -1150,23 +1049,10 @@ if(isSitecore && !isEditMode && !isLoginPage) {
 
             for (let item of label) {
 
-              //Clean country name
-              temp = item.innerText.split(" :");
-              temp = temp[0].split(" (");
-              if(temp[1] == undefined) { temp = temp[0]; } else { temp = temp[1]; }
-              temp = temp.split(")");
-              if(temp[0].includes(', ')) { temp = temp[0].split(", "); temp[0] = temp[1]; temp[0] = temp[0].replace(" ", "_"); }
-              temp = temp[0].replace(" ", "_");
-              temp = temp.toUpperCase();
-              tdlanguage = temp.replace("TRADITIONAL,_","");
-              tdlanguage = tdlanguage.replace("SIMPLIFIED,_","");
+              temp = item.innerText;
 
-              //Replace non-standard country name
-              tdlanguage = tdlanguage.replace("U.A.E.","UNITED_ARAB_EMIRATES");
-              tdlanguage = tdlanguage.replace("KOREA","SOUTH_KOREA");
-              tdlanguage = tdlanguage.replace("UNITED_STATES","USA");
-              tdlanguage = tdlanguage.replace("UNITED_KINGDOM","GREAT_BRITAIN");
-              tdlanguage = tdlanguage.replace("ENGLISH","GREAT_BRITAIN");
+              //Clean country name
+              tdlanguage = cleanCountryName(temp);
 
               //Compare with Json data
               for (key in jsonData) {
@@ -1417,7 +1303,7 @@ if(isSitecore && !isEditMode && !isLoginPage) {
  * 2. Experience Editor *
  ************************
  */
-if(isEditMode && !isRibbon) {
+if(isEditMode) {
 
   if(debug) { console.info("%c 🎨 Experience Editor detected ", 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;'); }
 
@@ -1426,6 +1312,145 @@ if(isEditMode && !isRibbon) {
   link.rel = "stylesheet";
   link.href =  chrome.runtime.getURL("css/tooltip-min.css");
   document.getElementsByTagName("head")[0].appendChild(link);
+
+  /**
+   * Flags in language menu
+   */
+  if(isGalleryLanguageExpEd) {
+    
+    if(debug) { console.info("====================> LANGUAGES IN EXPERIENCE EDITOR <===================="); }
+
+    chrome.storage.sync.get(['feature_flags'], function(result) {
+
+      if(result.feature_flags == undefined) { result.feature_flags = true; }
+
+      if(result.feature_flags) {
+
+        /*
+         * Load Json data for languages
+         */
+        var rawFile = new XMLHttpRequest();
+        var jsonData;
+        rawFile.overrideMimeType("application/json");
+        rawFile.open("GET", chrome.runtime.getURL("data/languages.json"), true);
+        rawFile.onreadystatechange = function() {
+          if (rawFile.readyState === 4 && rawFile.status == "200") {
+
+            jsonData = JSON.parse(rawFile.responseText);
+            //console.info("JSON "+jsonData);
+
+            //Loop the languages table
+            var isRegionFrame;
+            var dom = document.querySelector('.sc-gallery-content');
+            var div = dom.querySelectorAll('.sc-gallery-option-content,.sc-gallery-option-content-active');
+            var td;
+            var divcount = 0;
+            var tdcount = 0;
+            var tdDiv;
+            var tdlanguage;
+            var tdversion;
+            var tdimage;
+            var temp;
+            var key;
+
+            //Loop results, extract divs infos
+            //sc-gallery-option-content-header > span (country)
+            //sc-gallery-option-content-description > span (version)
+
+            for (let item of div) {
+              
+              tdDiv = item.closest('.sc-gallery-option-content,.sc-gallery-option-content-active');
+              tdlanguage = item.querySelector('.sc-gallery-option-content-header > span').innerText;
+              tdversion = item.querySelector('.sc-gallery-option-content-description > span');
+
+              temp = tdversion.innerHTML.split(" ");
+              //Check version
+              if(temp[0]!="0") {
+                tdversion.setAttribute( 'style', 'background-color: yellow; display: initial; padding: 0px 3px; color: #000000 !important' );
+              }
+
+              //Clean country name
+              tdlanguage = cleanCountryName(tdlanguage);
+
+              //Compare with Json data
+              for (key in jsonData) {
+                if (jsonData.hasOwnProperty(key)) {
+                    if( tdlanguage == jsonData[key]["language"].toUpperCase()) {
+
+                      tdlanguage = jsonData[key]["flag"];
+
+                    }
+                }
+              }
+
+              tdDiv.setAttribute( 'style', 'padding-left:48px; background-image: url(' + chrome.runtime.getURL("images/Flags/32x32/flag_" + tdlanguage + ".png") + '); background-repeat: no-repeat; background-position: 5px;' );
+
+            }
+
+          }
+        }
+        rawFile.send(null);
+      }
+
+
+
+    });
+
+
+  } 
+
+  /**
+   * Flags in Ribbon
+   */
+  if(isRibbon) {
+
+    if(debug) { console.info("====================> RIBBON <===================="); }
+    
+    var scRibbonFlagIcons = document.querySelectorAll( ".flag_generic_24" );
+    var tdlanguage;
+    var temp;
+    var key;
+    
+    /*
+     * Load Json data for languages
+     */
+    var rawFile = new XMLHttpRequest();
+    var jsonData;
+    rawFile.overrideMimeType("application/json");
+    rawFile.open("GET", chrome.runtime.getURL("data/languages.json"), true);
+    rawFile.onreadystatechange = function() {
+      if (rawFile.readyState === 4 && rawFile.status == "200") {
+
+        jsonData = JSON.parse(rawFile.responseText);
+
+
+        //loop and check language
+        for(var flag of scRibbonFlagIcons) {
+
+          tdlanguage = flag.nextSibling.innerText;
+
+          //Clean country name
+          tdlanguage = cleanCountryName(tdlanguage);
+
+          //Compare with Json data
+          for (key in jsonData) {
+            if (jsonData.hasOwnProperty(key)) {
+                if( tdlanguage == jsonData[key]["language"].toUpperCase()) {
+
+                  tdlanguage = jsonData[key]["flag"];
+
+                }
+            }
+          }
+
+          flag.setAttribute( 'style', 'background-image: url(' + chrome.runtime.getURL("images/Flags/24x24/flag_" + tdlanguage + ".png") + '); background-repeat: no-repeat; background-position: top left;' );
+
+        }
+
+      }
+    }
+    rawFile.send(null);
+  }
 
   /**
    * Tooltip bar
@@ -1468,4 +1493,9 @@ if(isEditMode && !isRibbon) {
   }
 
 }
+
+// if(debug) { console.info("%c [Storage Get] Item : "+ result.scItemID + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+// if(debug) { console.info("%c [Storage Get] Language : "+ result.scLanguage + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+// if(debug) { console.info("%c [Storage Get] Version : "+ result.scVersion + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+
 

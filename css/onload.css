@@ -33,6 +33,19 @@ div#Languages img {
 	display: block;
 }
 
+.sc-ribbon .sc-chunk-datepanel .sc-chunk-datepanel-day {
+    display: block !important;
+    font-size: 1.3em !important;
+    padding: 0px 15px 0px 0px !important;
+    position: relative !important;
+    top: 13px !important;
+    left: 0px !important;
+}
+.sc-ribbon .sc-chunk-datepanel .sc-chunk-datepanel-date {
+    font-size: 3.4em !important;
+    margin-top: -5px !important;
+}
+
 /*https://qa-cm-mst-lcorp-eu-ce.e-loreal.com/sitecore/shell/default.aspx?xmlcontrol=Gallery.Languages&id=%7B110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9%7D&la=en&vs=1&db=master&align=right*/
 
 

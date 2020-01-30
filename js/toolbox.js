@@ -262,9 +262,9 @@ function sitecoreAuthorToolbox() {
                             scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + scFlag +'" style="width: 20px; vertical-align: middle; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + iconFlagGeneric + '\';"/>' );
                           }
 
-                          if(!document.getElementById("scFlagMenu") && result.feature_flags && scFlag) {
                           //Insert Flag into Sitecore Language selector
-                          scLanguageMenu.insertAdjacentHTML( 'afterbegin', '<img id="scFlagMenu" src="' + scFlag +'" style="width: 15px; vertical-align: sub; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + iconFlagGeneric + '\';"/>' );
+                          if(!document.getElementById("scFlagMenu") && result.feature_flags && scFlag) {
+                            scLanguageMenu.insertAdjacentHTML( 'afterbegin', '<img id="scFlagMenu" src="' + scFlag +'" style="width: 15px; vertical-align: sub; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + iconFlagGeneric + '\';"/>' );
                           }
                         }
 
@@ -1463,8 +1463,6 @@ if(isEditMode) {
     for(var controls of scChromeToolbar) {
           
       controls.setAttribute('style', 'margin-left:50px');
-      
-      //Get buttons
       var scChromeCommand = controls.querySelectorAll( ".scChromeCommand" );
       
       for(var command of scChromeCommand) {
@@ -1492,10 +1490,27 @@ if(isEditMode) {
     observer.observe(target, config);
   }
 
+  /*
+   * Dark mode
+   */
+  chrome.storage.sync.get(['feature_darkmode'], function(result) {
+
+    if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
+
+    if(result.feature_darkmode && isRibbon) {
+
+      var link = document.createElement("link");
+      link.type = "text/css";
+      link.rel = "stylesheet";
+      link.href =  chrome.runtime.getURL("css/dark/experience-min.css");
+      document.getElementsByTagName("head")[0].appendChild(link);
+
+    }
+
+  });
+
 }
 
-// if(debug) { console.info("%c [Storage Get] Item : "+ result.scItemID + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
-// if(debug) { console.info("%c [Storage Get] Language : "+ result.scLanguage + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
-// if(debug) { console.info("%c [Storage Get] Version : "+ result.scVersion + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+
 
 

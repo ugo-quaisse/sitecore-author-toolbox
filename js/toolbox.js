@@ -8,7 +8,7 @@
 
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
-var debug = false;
+var debug = true;
 
 /*
  * Helper functions
@@ -74,7 +74,8 @@ function sitecoreAuthorToolbox() {
   //Sitecore Language Menu
   let scLanguageMenu = document.querySelector ( ".scEditorHeaderVersionsLanguage" );
   //Sitecore url Version
-  let scItemVersion = document.querySelector ( ".scEditorHeaderVersionsVersion > span" ).innerText;
+  let scItemVersion = document.querySelector ( ".scEditorHeaderVersionsVersion > span" );
+  if(scItemVersion) { scItemVersion = scItemVersion.innerText; }
   //Sitecore item Hash
   let scUrlHash = window.location.hash;
   //Sitecore Active Tab
@@ -131,6 +132,11 @@ function sitecoreAuthorToolbox() {
     sitecoreSite = sitecoreSite.split("/");
     sitecoreSite = sitecoreSite.slice(-1)[0].toLowerCase();
     var isDataSource = sitecoreItemPathOriginal.includes('/data/');
+    var isMarketingControlPanel = sitecoreItemPathOriginal.includes('/marketing control panel/');
+    var isTemplate = sitecoreItemPathOriginal.includes('/sitecore/templates/');
+    var isSystem = sitecoreItemPathOriginal.includes('/sitecore/system/');
+    var isLayout = sitecoreItemPathOriginal.includes('/sitecore/layout/');
+    var isForms = sitecoreItemPathOriginal.includes('/sitecore/forms/');
 
     //Sitecore variables
     var scLanguage = document.getElementById("scLanguage").getAttribute("value").toLowerCase();
@@ -146,7 +152,7 @@ function sitecoreAuthorToolbox() {
     }
 
     //Excluding home and data
-    if(sitecoreSite!="home" && !isDataSource) {
+    if(sitecoreSite!="home" && !isDataSource && !isMarketingControlPanel && !isLayout && !isSystem && !isTemplate && !isForms) {
 
       //Get user preference
       chrome.storage.sync.get(['feature_urls'], function(result) {
@@ -250,7 +256,7 @@ function sitecoreAuthorToolbox() {
                 var key;
 
                 for (key in data) {
-                    if (data.hasOwnProperty(key)) {
+                    if (data.hasOwnProperty(key) && scLanguageTxtShort) {
                         if( scLanguageTxtShort.toUpperCase() == data[key]["language"].toUpperCase()) {
                           
                           scFlag = data[key]["flag"];
@@ -587,69 +593,57 @@ function sitecoreAuthorToolbox() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*
- * Code injection for multilist in a Bucket (BETA)
- */
-var script = document.createElement('script');
-script.src = chrome.runtime.getURL("js/BucketList-min.js");
-(document.head||document.documentElement).appendChild(script);
-script.remove();
-
-/*
- * Fadein onload
- */
-var link = document.createElement("link");
-link.type = "text/css";
-link.rel = "stylesheet";
-link.href =  chrome.runtime.getURL("css/onload-min.css");
-document.getElementsByTagName("head")[0].appendChild(link);
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
  * Dectect which URL/Frame is loading the script? (Languages, Favorites, etc...)
  */
+
 if(debug) {
   console.info("%c *********************************** Url Loaded *********************************** ", 'font-size:14px; background: #32ed74; color: black; border-radius:5px; padding 3px;');
   console.info("%c "+window.location.href,'font-size:8px');
 }
 
 //Url variables
+var windowLocationHref = window.location.href.toLowerCase();
 var isSitecore = window.location.pathname.includes('/sitecore/');
 var isEditMode = document.querySelector(".pagemode-edit");
-if(!isEditMode) { isEditMode = window.location.href.includes('sc_mode=edit'); }
-if(!isEditMode) { isEditMode = window.location.href.includes('/ExperienceEditor/'); }
+if(!isEditMode) { isEditMode = windowLocationHref.includes('sc_mode=edit'); }
+if(!isEditMode) { isEditMode = windowLocationHref.includes('/experienceeditor/'); }
 
-var isGalleryLanguage = window.location.href.includes('Gallery.Language');
-var isGalleryLanguageExpEd = window.location.href.includes('SelectLanguageGallery');
-var isGalleryFavorites = window.location.href.includes('Gallery.Favorites');
-var isGalleryVersions = window.location.href.includes('Gallery.Versions');
-var isAdminCache = window.location.href.includes('/admin/cache.aspx');
-var isMediaBrowser = window.location.href.includes('Sitecore.Shell.Applications.Media.MediaBrowser');
-var isPublishWindow = window.location.href.includes('/shell/Applications/Publish.aspx');
-var isSecurityWindow = window.location.href.includes('/shell/Applications/Security/');
-var isExperienceEditor = window.location.href.includes('/Applications/ExperienceEditor/');
-var isContentHome = window.location.href.includes('/content/');
-var isLoginPage = window.location.href.includes('sitecore/login');
-var isLaunchpad = window.location.href.includes('/client/Applications/Launchpad');
-var isDesktop = window.location.href.includes('/shell/default.aspx');
-var isRichTextEditor = window.location.href.includes('/Controls/Rich%20Text%20Editor/');
-var isFieldEditor = window.location.href.includes('field%20editor.aspx');
-var isModalDialogs = window.location.href.includes('JqueryModalDialogs.html');
-var isSecurityDetails = window.location.href.includes('SecurityDetails.aspx');
-var isEditorFolder = window.location.href.includes('Editors.Folder.aspx');
-var isRibbon = window.location.href.includes('/Ribbon.aspx');
-var isInsertPage = window.location.href.includes('/Dialogs/InsertPage/');
+var isGalleryLanguage = windowLocationHref.includes('gallery.language');
+var isGalleryLanguageExpEd = windowLocationHref.includes('selectlanguagegallery');
+var isGalleryFavorites = windowLocationHref.includes('gallery.favorites');
+var isGalleryVersions = windowLocationHref.includes('gallery.versions');
+var isAdminCache = windowLocationHref.includes('/admin/cache.aspx');
+var isMediaBrowser = windowLocationHref.includes('sitecore.shell.applications.media.mediabrowser');
+var isPublishWindow = windowLocationHref.includes('/shell/applications/publish.aspx');
+var isSecurityWindow = windowLocationHref.includes('/shell/applications/security/');
+var isExperienceEditor = windowLocationHref.includes('/applications/experienceeditor/');
+var isContentHome = windowLocationHref.includes('/content/');
+var isLoginPage = windowLocationHref.includes('sitecore/login');
+var isLaunchpad = windowLocationHref.includes('/client/applications/launchpad');
+var isDesktop = windowLocationHref.includes('/shell/default.aspx');
+var isRichTextEditor = windowLocationHref.includes('/controls/rich%20text%20editor/');
+var isFieldEditor = windowLocationHref.includes('field%20editor.aspx');
+var isModalDialogs = windowLocationHref.includes('jquerymodaldialogs.html');
+var isSecurityDetails = windowLocationHref.includes('securitydetails.aspx');
+var isEditorFolder = windowLocationHref.includes('editors.folder.aspx');
+var isRibbon = windowLocationHref.includes('/ribbon.aspx');
+var isDialog = windowLocationHref.includes('experienceeditor/dialogs/confirm/');
+var isInsertPage = windowLocationHref.includes('/dialogs/insertpage/');
+var isCreateUser = windowLocationHref.includes('createnewuser');
+var isUserManager = windowLocationHref.includes('user%20manager.aspx');
+var isPersonalization = windowLocationHref.includes('dialogs.personalization');
+var isRules = windowLocationHref.includes('rules.aspx');
+
 
 //Launchpad icon variables
 var launchpadPage = chrome.runtime.getURL("options.html");
 var launchpadIcon = chrome.runtime.getURL("images/icon.png");
 var launchpadGroupTitle = "Sitecore Author Toolbox";
 var launchpadTitle = "Options";
-var launchpadUrl = window.location.href;
-
+var launchpadUrl = windowLocationHref;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -662,6 +656,23 @@ var launchpadUrl = window.location.href;
 if(isSitecore && !isEditMode && !isLoginPage) {
 
   if(debug) { console.info("%c ✏️ Sitecore detected ", 'font-size:14px; background: #f33d35; color: white; border-radius:5px; padding 3px;'); }
+
+  /*
+  * Code injection for multilist in a Bucket (BETA)
+  */
+  var script = document.createElement('script');
+  script.src = chrome.runtime.getURL("js/BucketList-min.js");
+  (document.head||document.documentElement).appendChild(script);
+  script.remove();
+
+  /*
+  * Fadein onload
+  */
+  var link = document.createElement("link");
+  link.type = "text/css";
+  link.rel = "stylesheet";
+  link.href =  chrome.runtime.getURL("css/onload-min.css");
+  document.getElementsByTagName("head")[0].appendChild(link);
 
   if(isDesktop) {
 
@@ -1066,7 +1077,7 @@ if(isSitecore && !isEditMode && !isLoginPage) {
               }
 
               //Add Flag into label
-              item.insertAdjacentHTML( 'afterend', ' <img id="scFlag" src="-/icon/Flags/16x16/flag_' + tdlanguage + '.png" style="display: inline; vertical-align: middle; padding-right: 2px;" onerror="this.onerror=null;this.src=\'-/icon/Flags/16x16/flag_generic.png\';"/>' );
+              item.insertAdjacentHTML( 'beforebegin', ' <img id="scFlag" src="-/icon/Flags/16x16/flag_' + tdlanguage + '.png" style="display: inline; vertical-align: middle; padding-right: 2px;" onerror="this.onerror=null;this.src=\'-/icon/Flags/16x16/flag_generic.png\';"/>' );
 
             }
 
@@ -1081,15 +1092,15 @@ if(isSitecore && !isEditMode && !isLoginPage) {
 
   }
 
-
   /*
    * Dark mode
    */
+  //@media (prefers-color-scheme: dark) {
   chrome.storage.sync.get(['feature_darkmode'], function(result) {
 
     if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
 
-    if(result.feature_darkmode && !isExperienceEditor && !isAdminCache && !isSecurityWindow && !isContentHome && !isLoginPage && !isEditMode) {
+    if(result.feature_darkmode && !isExperienceEditor && !isModalDialogs && !isAdminCache && !isSecurityWindow && !isContentHome && !isLoginPage && !isEditMode && !isUserManager && !isPersonalization && !isRules) {
 
       var link = document.createElement("link");
       link.type = "text/css";
@@ -1130,6 +1141,7 @@ if(isSitecore && !isEditMode && !isLoginPage) {
     }
 
   });
+  //}
 
 
 
@@ -1307,6 +1319,19 @@ if(isEditMode) {
 
   if(debug) { console.info("%c 🎨 Experience Editor detected ", 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;'); }
 
+
+  /*
+  * Fadein onload
+  */
+  link = document.createElement("link");
+  link.type = "text/css";
+  link.rel = "stylesheet";
+  link.href =  chrome.runtime.getURL("css/onload-min.css");
+  document.getElementsByTagName("head")[0].appendChild(link);
+
+  /*
+  * Tooltip styling
+  */
   link = document.createElement("link");
   link.type = "text/css";
   link.rel = "stylesheet";
@@ -1464,6 +1489,9 @@ if(isEditMode) {
           
       controls.setAttribute('style', 'margin-left:50px');
       var scChromeCommand = controls.querySelectorAll( ".scChromeCommand" );
+      var scChromeText = controls.querySelector( ".scChromeText" );
+
+      if(scChromeText.innerText == "Copy") { scChromeText.innerText = "Text"; }
       
       for(var command of scChromeCommand) {
         var title = command.getAttribute("title");          
@@ -1493,11 +1521,12 @@ if(isEditMode) {
   /*
    * Dark mode
    */
+  //@media (prefers-color-scheme: dark) {
   chrome.storage.sync.get(['feature_darkmode'], function(result) {
 
     if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
 
-    if(result.feature_darkmode && isRibbon) {
+    if(result.feature_darkmode && isRibbon || result.feature_darkmode && isDialog) {
 
       var link = document.createElement("link");
       link.type = "text/css";
@@ -1508,6 +1537,7 @@ if(isEditMode) {
     }
 
   });
+  //}
 
 }
 

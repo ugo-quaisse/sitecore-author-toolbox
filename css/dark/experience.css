@@ -143,3 +143,18 @@ iframe.scSpeakWebEditRibbon {
     border-left: 0px solid transparent !important;
 
 }
+.sc-dialogWindow-header {
+    background: #111111 !important;
+}
+
+.sc-dialogWindow-buttons {
+    background-color: #222222;
+    border-top: 1px solid #333333;
+}
+[data-sc-id="MessageBody"] {
+    color: #cccccc !important;
+}
+
+.sc {
+    background-color: #222222 !important;
+}

@@ -95,7 +95,7 @@ body {
 }
 
 .sc-togglebutton-text {
-    color: #202020 !important;
+    color: #222222 !important;
 }
 .btn-primary > .sc-button-text {
   color: #FFFFFF !important;
@@ -116,8 +116,14 @@ form.sc-uploader {
 
 .sc .sc-smartpanel-buttons,
 .sc .sc-smartpanel-header {
-    background-color: #202020;
+    background-color: #222222;
     border: 1px solid #333333;
     border-right: 0px;
     border-left: 0px;
+}
+.sc-listcontrol-body {
+  background-color: #222222;
+}
+.sc-listcontrol .sc-table {
+  background-color: #333333;
 }

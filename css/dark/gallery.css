@@ -17,9 +17,13 @@ body {
 }
 
 form {
-  background: #0f0f0f !important;
+  background: transparent !important;
   height: 100%;
   margin:0px;
+}
+
+.sc {
+  background-color: #222222 !important;
 }
 
 .scGalleryOuterFrame {

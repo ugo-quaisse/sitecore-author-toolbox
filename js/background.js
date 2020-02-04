@@ -79,7 +79,7 @@ function showContextMenu(tab) {
             }
           } else {
             if(!contextMenuCE) {
-              chrome.contextMenus.create({"title": "Edit in Content Editor (beta)", "contexts":["page"], "id": "SitecoreAuthorToolboxEditor"});
+              chrome.contextMenus.create({"title": "Debug this page (beta)", "contexts":["page"], "id": "SitecoreAuthorToolboxEditor"});
               contextMenuCE = true;
               if(contextMenuEE) {
                 chrome.contextMenus.remove("SitecoreAuthorToolbox");

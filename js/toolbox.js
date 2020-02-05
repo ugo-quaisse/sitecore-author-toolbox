@@ -133,10 +133,11 @@ function sitecoreAuthorToolbox() {
     sitecoreSite = sitecoreSite.slice(-1)[0].toLowerCase();
     var isDataSource = sitecoreItemPathOriginal.includes('/data/');
     var isMarketingControlPanel = sitecoreItemPathOriginal.includes('/marketing control panel/');
-    var isTemplate = sitecoreItemPathOriginal.includes('/sitecore/templates/');
-    var isSystem = sitecoreItemPathOriginal.includes('/sitecore/system/');
-    var isLayout = sitecoreItemPathOriginal.includes('/sitecore/layout/');
-    var isForms = sitecoreItemPathOriginal.includes('/sitecore/forms/');
+    var isTemplate = sitecoreItemPathOriginal.includes('/sitecore/templates');
+    var isSystem = sitecoreItemPathOriginal.includes('/sitecore/system');
+    var isLayout = sitecoreItemPathOriginal.includes('/sitecore/layout');
+    var isForms = sitecoreItemPathOriginal.includes('/sitecore/forms');
+    var isContent = sitecoreItemPathOriginal.includes('/sitecore/content');
 
     //Sitecore variables
     var scLanguage = document.getElementById("scLanguage").getAttribute("value").toLowerCase();
@@ -152,7 +153,7 @@ function sitecoreAuthorToolbox() {
     }
 
     //Excluding home and data
-    if(sitecoreSite!="home" && !isDataSource && !isMarketingControlPanel && !isLayout && !isSystem && !isTemplate && !isForms) {
+    if(sitecoreSite!="home" && isContent) {
 
       //Get user preference
       chrome.storage.sync.get(['feature_urls'], function(result) {
@@ -1163,6 +1164,8 @@ if(isSitecore && !isEditMode && !isLoginPage) {
 
     if (scQuickInfo) {
 
+      var windowLocationHref = window.location.href.toLowerCase();
+      console.log(windowLocationHref);
       var sitecoreItemID = scQuickInfo.getAttribute("value");
       var scLanguage = document.getElementById("scLanguage").getAttribute("value").toLowerCase();
       var scVersion = document.querySelector ( ".scEditorHeaderVersionsVersion > span" ).innerText;
@@ -1174,8 +1177,13 @@ if(isSitecore && !isEditMode && !isLoginPage) {
       var tabSitecoreItemID = document.querySelectorAll(".scEditorHeaderQuickInfoInput");
       var lastTabSitecoreItemID = tabSitecoreItemID[tabSitecoreItemID.length- 2].getAttribute("value");
 
+      var hasRedirection = windowLocationHref.includes("&ro=");
+      console.log(hasRedirection);
+
       //Add hash to URL
-      window.location.hash = sitecoreItemID;
+      if(!hasRedirection) {
+        window.location.hash = sitecoreItemID;
+      }
 
       if(debug) { console.info('%c - Tabs opened: ' + countTab + ' ', 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;'); }
 
@@ -1216,51 +1224,59 @@ if(isSitecore && !isEditMode && !isLoginPage) {
     if(debug) { console.info('%c *** Reload *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); }
 
     //Sitecore Variables
+    var windowLocationHref = window.location.href.toLowerCase();
     var scLanguage = element.getAttribute("value").toLowerCase();
     var scVersion;
     var hash = window.location.hash.substr(1);
+    var hasRedirection = windowLocationHref.includes("&ro=");
+    
+    console.log(hasRedirection);
 
-    if(hash!="") {
+    if(!hasRedirection) {
 
-      /*
-       * 9. Resume from hash value
-       */
-      var actualCode = `scForm.invoke("item:load(id=` + hash + `,language=` + scLanguage + `,version=1)");`;
-      script = document.createElement('script');
-      script.textContent = actualCode;
-      (document.head||document.documentElement).appendChild(script);
-      script.remove();
+      if(hash!="") {
 
-      if(debug) { console.info('%c - Sitecore Hash : '+ hash + ' ', 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;'); }
+        /*
+         * 9. Resume from hash value
+         */
+        var actualCode = `scForm.invoke("item:load(id=` + hash + `,language=` + scLanguage + `,version=1)");`;
+        script = document.createElement('script');
+        script.textContent = actualCode;
+        (document.head||document.documentElement).appendChild(script);
+        script.remove();
+
+        if(debug) { console.info('%c - Sitecore Hash : '+ hash + ' ', 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;'); }
 
 
-    } else {
+      } else {
 
-      /*
-       * 8. Resume from where you left
-       */
-      chrome.storage.sync.get(['scItemID','scLanguage','scVersion','feature_reloadnode'], function(result) {
+        /*
+         * 8. Resume from where you left
+         */
+        chrome.storage.sync.get(['scItemID','scLanguage','scVersion','feature_reloadnode'], function(result) {
 
-        if (!chrome.runtime.error && result.scItemID != undefined) {
+          if (!chrome.runtime.error && result.scItemID != undefined) {
 
-          if(result.feature_reloadnode == undefined) { result.feature_reloadnode = true; }
+            if(result.feature_reloadnode == undefined) { result.feature_reloadnode = true; }
 
-          if(result.scItemID && result.feature_reloadnode == true) {
+            if(result.scItemID && result.feature_reloadnode == true) {
 
-            var actualCode = `scForm.invoke("item:load(id=` + result.scItemID + `,language=` + scLanguage + `,version=` + scVersion + `)");`;
-            var script = document.createElement('script');
-            script.textContent = actualCode;
-            (document.head||document.documentElement).appendChild(script);
-            script.remove();
+              var actualCode = `scForm.invoke("item:load(id=` + result.scItemID + `,language=` + scLanguage + `,version=` + scVersion + `)");`;
+              var script = document.createElement('script');
+              script.textContent = actualCode;
+              (document.head||document.documentElement).appendChild(script);
+              script.remove();
 
-            if(debug) { console.info("%c [Storage Get] Item : "+ result.scItemID + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
-            if(debug) { console.info("%c [Storage Get] Language : "+ result.scLanguage + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
-            if(debug) { console.info("%c [Storage Get] Version : "+ result.scVersion + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+              if(debug) { console.info("%c [Storage Get] Item : "+ result.scItemID + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+              if(debug) { console.info("%c [Storage Get] Language : "+ result.scLanguage + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+              if(debug) { console.info("%c [Storage Get] Version : "+ result.scVersion + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
 
+            }
           }
-        }
 
-      });
+        });
+
+      }
 
     }
 

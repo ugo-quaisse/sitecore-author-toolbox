@@ -154,6 +154,8 @@ chrome.tabs.onActivated.addListener(function(tabId, changeInfo, tab) {
 // When the extension is installed or upgraded ...
 chrome.runtime.onInstalled.addListener(function(tabId) {
 
+  console.log(">>> Extension Updated <<<")
+
   //Context menu
   chrome.contextMenus.onClicked.addListener(onClickHandler);
 

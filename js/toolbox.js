@@ -131,12 +131,13 @@ function sitecoreAuthorToolbox() {
     var sitecoreSite = sitecoreItemPath[0];
     sitecoreSite = sitecoreSite.split("/");
     sitecoreSite = sitecoreSite.slice(-1)[0].toLowerCase();
-    var isDataSource = sitecoreItemPathOriginal.includes('/data/');
+    var isData = sitecoreItemPathOriginal.includes('/data/');
     var isMarketingControlPanel = sitecoreItemPathOriginal.includes('/marketing control panel/');
     var isTemplate = sitecoreItemPathOriginal.includes('/sitecore/templates');
     var isSystem = sitecoreItemPathOriginal.includes('/sitecore/system');
     var isLayout = sitecoreItemPathOriginal.includes('/sitecore/layout');
     var isForms = sitecoreItemPathOriginal.includes('/sitecore/forms');
+    var isPresentation = sitecoreItemPathOriginal.includes('/presentation');
     var isContent = sitecoreItemPathOriginal.includes('/sitecore/content');
 
     //Sitecore variables
@@ -153,7 +154,7 @@ function sitecoreAuthorToolbox() {
     }
 
     //Excluding home and data
-    if(sitecoreSite!="home" && isContent) {
+    if(sitecoreSite!="home" && isContent && !isData) {
 
       //Get user preference
       chrome.storage.sync.get(['feature_urls'], function(result) {
@@ -196,7 +197,7 @@ function sitecoreAuthorToolbox() {
 
       });
 
-    } else if(isDataSource) {
+    } else if(isData) {
       
       chrome.storage.sync.get(['feature_urls'], function(result) {
 
@@ -637,6 +638,7 @@ var isCreateUser = windowLocationHref.includes('createnewuser');
 var isUserManager = windowLocationHref.includes('user%20manager.aspx');
 var isPersonalization = windowLocationHref.includes('dialogs.personalization');
 var isRules = windowLocationHref.includes('rules.aspx');
+var isCss = windowLocationHref.includes('.css');
 
 
 //Launchpad icon variables
@@ -654,7 +656,7 @@ var launchpadUrl = windowLocationHref;
  * 1. Content Editor *
  ************************
  */
-if(isSitecore && !isEditMode && !isLoginPage) {
+if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
   if(debug) { console.info("%c ✏️ Sitecore detected ", 'font-size:14px; background: #f33d35; color: white; border-radius:5px; padding 3px;'); }
 
@@ -1046,6 +1048,7 @@ if(isSitecore && !isEditMode && !isLoginPage) {
         var temp;
         var tdlanguage;
         var key;
+        var scFlag;
 
         /*
          * Load Json data for languages
@@ -1077,8 +1080,11 @@ if(isSitecore && !isEditMode && !isLoginPage) {
                 }
               }
 
+              scFlag = tdlanguage.toLowerCase();
+              scFlag = chrome.runtime.getURL("images/Flags/16x16/flag_" + scFlag + ".png")
+
               //Add Flag into label
-              item.insertAdjacentHTML( 'beforebegin', ' <img id="scFlag" src="-/icon/Flags/16x16/flag_' + tdlanguage + '.png" style="display: inline; vertical-align: middle; padding-right: 2px;" onerror="this.onerror=null;this.src=\'-/icon/Flags/16x16/flag_generic.png\';"/>' );
+              item.insertAdjacentHTML( 'beforebegin', ' <img id="scFlag" src="' + scFlag + '" style="display: inline; vertical-align: middle; padding-right: 2px;" onerror="this.onerror=null;this.src=\'-/icon/Flags/16x16/flag_generic.png\';"/>' );
 
             }
 
@@ -1224,7 +1230,7 @@ if(isSitecore && !isEditMode && !isLoginPage) {
     if(debug) { console.info('%c *** Reload *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); }
 
     //Sitecore Variables
-    var windowLocationHref = window.location.href.toLowerCase();
+    windowLocationHref = window.location.href.toLowerCase();
     var scLanguage = element.getAttribute("value").toLowerCase();
     var scVersion;
     var hash = window.location.hash.substr(1);

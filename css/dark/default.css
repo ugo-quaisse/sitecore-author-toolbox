@@ -3675,12 +3675,12 @@ form[lang|='ja'] *,
         }
 
     .scMessageBar.scInformation {
-        background-color: #2594c0 !important;
+        background-color: #2281a6 !important;
         color: #AADBEE !important;
     }
 
         .scMessageBar.scInformation .scMessageBarIcon {
-            background-color: #1f779a !important;
+            background-color: #1b6886 !important;
         }
 
     .scMessageBar.scError {

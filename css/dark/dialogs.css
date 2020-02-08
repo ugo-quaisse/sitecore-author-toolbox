@@ -147,7 +147,7 @@ form {
     .ui-dialog .ui-dialog-titlebar {
         padding: 0;
         position: relative;
-        background-color: #111111;
+        background-color: #111111 !important;
     }
 
         .scFormDialogHeader .DialogHeader,

@@ -8,6 +8,7 @@
 
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
+
 var debug = true;
 
 /*
@@ -477,7 +478,7 @@ function sitecoreAuthorToolbox() {
   }
 
   /*
-   * 6. Desktop notificaitons (Publish)
+   * 6. Desktop notifications (Publish)
    */
   if (!window.Notification) {
       console.info('Browser does not support notifications.');
@@ -679,7 +680,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
   if(isDesktop) {
 
-    if(debug) { console.info("====================> SHELL <===================="); }
+    if(debug) { console.info("====================> DESKTOP SHELL <===================="); }
 
     chrome.storage.sync.get(['feature_launchpad'], function(result) {
       
@@ -956,7 +957,6 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
               for (let item of div) {
                   
-                  //console.log("---> LANGUAGE DIV #"+divcount);
                   tdcount = 0;
                   td = item.getElementsByTagName("td");
                   
@@ -965,7 +965,6 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
                     if(tdcount==0) {
                       
                       tdimage = item2.getElementsByTagName("img");
-                      //console.log(tdimage);
                     
                     } else {
                       
@@ -995,7 +994,6 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
                               if( tdlanguage[0].toUpperCase() == jsonData[key]["language"].toUpperCase()) {
                                 
                                 tdlanguage = jsonData[key]["flag"];
-                                //console.log(tdlanguage);
 
                               }
                           }
@@ -1012,7 +1010,6 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
                       tdlanguage = tdlanguage.toLowerCase();
                       tdimage[0].onerror = function() { this.src = chrome.runtime.getURL("images/Flags/32x32/flag_generic.png"); }
                       tdimage[0].src = chrome.runtime.getURL("images/Flags/32x32/flag_" + tdlanguage + ".png");
-                      //console.log(tdlanguage);
                     }
 
                     tdcount++;
@@ -1107,7 +1104,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
     if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
 
-    if(result.feature_darkmode && !isExperienceEditor && !isModalDialogs && !isAdminCache && !isSecurityWindow && !isContentHome && !isLoginPage && !isEditMode && !isUserManager && !isPersonalization && !isRules) {
+    if(result.feature_darkmode && !isExperienceEditor && !isAdminCache && !isSecurityWindow && !isContentHome && !isLoginPage && !isEditMode && !isUserManager && !isPersonalization && !isRules) {
 
       var link = document.createElement("link");
       link.type = "text/css";
@@ -1150,7 +1147,43 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
   });
   //}
 
+  /*
+   * Auto Expand Tree (Inspired by https://github.com/alan-null/sc_ext)
+   */
+  chrome.storage.sync.get(['feature_autoexpand'], function(result) {
 
+    if(result.feature_autoexpand == undefined) { result.feature_autoexpand = true; }
+    
+    if(result.feature_autoexpand) {
+
+      document.addEventListener('click', function (event) {
+
+        if (!event.target.matches('.scContentTreeNodeGlyph')) return;
+        let glyphId = event.target.id;
+
+        setTimeout(function(){   
+          let subTreeDiv = document.querySelector("#"+glyphId).nextSibling.nextSibling.nextSibling;
+          if(subTreeDiv) {
+            let newNodes = subTreeDiv.querySelectorAll(".scContentTreeNode");
+            if(newNodes.length == 1) { newNodes[0].querySelector(".scContentTreeNodeGlyph").click(); }
+          }
+        }, 50);
+
+      }, false);
+
+      //Security Editor
+      document.addEventListener('mousedown', function (event) {
+
+        if (!event.target.matches('.glyph')) return;
+        let glyphId = event.target.id;
+
+        //Todo (how to detect children? +18px on margin-left cell text)
+
+      }, false);
+
+    }
+  
+  });
 
   /*
    * Chrome extention and JS Observers
@@ -1171,7 +1204,6 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
     if (scQuickInfo) {
 
       var windowLocationHref = window.location.href.toLowerCase();
-      console.log(windowLocationHref);
       var sitecoreItemID = scQuickInfo.getAttribute("value");
       var scLanguage = document.getElementById("scLanguage").getAttribute("value").toLowerCase();
       
@@ -1188,7 +1220,6 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
       var lastTabSitecoreItemID = tabSitecoreItemID[tabSitecoreItemID.length- 2].getAttribute("value");
 
       var hasRedirection = windowLocationHref.includes("&ro=");
-      console.log(hasRedirection);
 
       //Add hash to URL
       if(!hasRedirection) {
@@ -1239,8 +1270,6 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
     var scVersion;
     var hash = window.location.hash.substr(1);
     var hasRedirection = windowLocationHref.includes("&ro=");
-    
-    console.log(hasRedirection);
 
     if(!hasRedirection) {
 

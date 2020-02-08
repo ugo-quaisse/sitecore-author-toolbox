@@ -165,6 +165,16 @@ document.body.onload = function() {
       document.getElementById("feature_charscount").checked = true;
     }
   });
+  //Auto Expand Tree
+  chrome.storage.sync.get(['feature_autoexpand'], function(result) {
+    if (!chrome.runtime.error && result.feature_autoexpand != undefined) {
+      if(result.feature_autoexpand) {
+        document.getElementById("feature_autoexpand").checked = true;
+      }
+    } else {
+      document.getElementById("feature_autoexpand").checked = true;
+    }
+  });
   //Context menu
   // chrome.storage.sync.get(['feature_contextmenu'], function(result) {
   //   if (!chrome.runtime.error && result.feature_reloadnode != undefined) {
@@ -239,9 +249,13 @@ document.getElementById("set").onclick = function() {
   chrome.storage.sync.set({"feature_rtl": document.getElementById('feature_rtl').checked}, function() {
     console.info('--> RTL: ' + document.getElementById('feature_rtl').checked);
   });
-  //RTL
+  //Chars count
   chrome.storage.sync.set({"feature_charscount": document.getElementById('feature_charscount').checked}, function() {
     console.info('--> Character counter: ' + document.getElementById('feature_charscount').checked);
+  });
+  //Auto Expand
+  chrome.storage.sync.set({"feature_autoexpand": document.getElementById('feature_autoexpand').checked}, function() {
+    console.info('--> Auto Expand: ' + document.getElementById('feature_autoexpand').checked);
   });
 
   //Get URL parameters

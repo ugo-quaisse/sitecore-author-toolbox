@@ -3998,3 +3998,13 @@ form {
 .scLineHover {
   background-color: #289bc8 !important;
 }
+.right-column {
+  background-color: #222222 !important;
+}
+#SectionHeader {
+  color: #cccccc !important;
+}
+.mode:hover {
+  background-color: #00b6ff;
+  border: 1px solid #00b6ff !important;
+}

@@ -1174,7 +1174,11 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
       console.log(windowLocationHref);
       var sitecoreItemID = scQuickInfo.getAttribute("value");
       var scLanguage = document.getElementById("scLanguage").getAttribute("value").toLowerCase();
-      var scVersion = document.querySelector ( ".scEditorHeaderVersionsVersion > span" ).innerText;
+      
+      if(document.querySelector ( ".scEditorHeaderVersionsVersion > span" )) {
+        var scVersion = document.querySelector ( ".scEditorHeaderVersionsVersion > span" ).innerText;
+      }
+
       var scEditorQuickInfo = document.querySelectorAll(".scEditorQuickInfo");
       var lastScEditorQuickInfo = scEditorQuickInfo[scEditorQuickInfo.length- 1];
       var countTab = scEditorQuickInfo.length;

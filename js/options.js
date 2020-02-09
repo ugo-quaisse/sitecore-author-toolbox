@@ -175,6 +175,16 @@ document.body.onload = function() {
       document.getElementById("feature_autoexpand").checked = true;
     }
   });
+  //Translation mode
+  chrome.storage.sync.get(['feature_translatemode'], function(result) {
+    if (!chrome.runtime.error && result.feature_translatemode != undefined) {
+      if(result.feature_translatemode) {
+        document.getElementById("feature_translatemode").checked = true;
+      }
+    } else {
+      document.getElementById("feature_translatemode").checked = true;
+    }
+  });
   //Context menu
   // chrome.storage.sync.get(['feature_contextmenu'], function(result) {
   //   if (!chrome.runtime.error && result.feature_reloadnode != undefined) {
@@ -256,6 +266,10 @@ document.getElementById("set").onclick = function() {
   //Auto Expand
   chrome.storage.sync.set({"feature_autoexpand": document.getElementById('feature_autoexpand').checked}, function() {
     console.info('--> Auto Expand: ' + document.getElementById('feature_autoexpand').checked);
+  });
+  //Translation mode
+  chrome.storage.sync.set({"feature_translatemode": document.getElementById('feature_translatemode').checked}, function() {
+    console.info('--> Translation Mode: ' + document.getElementById('feature_translatemode').checked);
   });
 
   //Get URL parameters

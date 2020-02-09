@@ -1,1 +1,1 @@
-chrome.extension.sendMessage({},(function(e){}));
+function copyTranslate(e,c){var l=document.querySelector("#"+e),r=document.querySelector("#"+c);l.value=r.value}function copyTranslateAll(){var e=document.querySelectorAll(".scTranslateRTL");for(var c of e)c.click()}

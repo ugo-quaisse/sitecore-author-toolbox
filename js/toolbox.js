@@ -8,8 +8,7 @@
 
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
-
-var debug = true;
+var debug = false;
 
 /*
  * Helper functions
@@ -60,6 +59,7 @@ function sitecoreAuthorToolbox() {
   var icon = chrome.runtime.getURL("images/rocket.png");
   var iconError = chrome.runtime.getURL("images/error.png");
   var iconEdit = chrome.runtime.getURL("images/edit.png");
+  var iconTranslate = chrome.runtime.getURL("images/translate.png");
   var iconFlagGeneric = chrome.runtime.getURL("images/Flags/32x32/flag_generic.png");
   var jsonLanguages = chrome.runtime.getURL("data/languages.json");
   let rteLanguages = ["ARABIC", "HEBREW", "PERSIAN", "URDU", "SINDHI"];
@@ -95,6 +95,8 @@ function sitecoreAuthorToolbox() {
   let scSearchPanel = document.getElementById ( "SearchPanel" );
   //Sitecore Content Tree
   let scContentTree= document.getElementById ( "ContentTreeHolder" );
+  //Translation Mode
+  let isTranslateMode = false;
 
   //Language name in menu
   var scEditorHeaderVersionsLanguage = document.getElementsByClassName("scEditorHeaderVersionsLanguage");
@@ -208,7 +210,7 @@ function sitecoreAuthorToolbox() {
         if(!document.getElementById("scMessageBarInfo") && result.feature_urls) {
           
           var scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + iconEdit + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing a data source...</div><div class="scMessageBarText">To see it, you need to add/edit it to your page via the</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><span class="scMessageBarOption">Presentation Details</span> or <span class="scMessageBarOption">Experience Editor</span></li></ul></div></div>'
-          scEditorID.insertAdjacentHTML( 'afterend', scMessage );
+          //scEditorID.insertAdjacentHTML( 'afterend', scMessage );
 
         }
 
@@ -582,6 +584,85 @@ function sitecoreAuthorToolbox() {
 
     });
 
+
+
+  /*
+   * Translate Mode
+   */ 
+   chrome.storage.sync.get(['feature_translatemode'], function(result) {
+
+    if(result.feature_translatemode == undefined) { result.feature_translatemode = true; }
+
+      if(result.feature_translatemode) {
+
+        var scEditorPanel = document.querySelector(".scEditorPanel");
+        var scEditorSectionPanel = document.querySelectorAll(".scEditorSectionPanel .scEditorSectionPanelCell")[1];
+        var scTextFields = scEditorPanel.querySelectorAll("input, textarea, select");
+        count = 0;
+
+        //Detect if Translate Mode is on
+        if(scEditorSectionPanel) {
+          if(scEditorSectionPanel.querySelector(".scEditorFieldMarkerInputCell > table > tbody") != null) {
+            isTranslateMode = true;
+          }
+        }
+        
+        if(isTranslateMode) {
+
+          for(var field of scTextFields) {
+
+            if(field.className == "scContentControl" || field.className == "scContentControlMemo" || field.className == "scContentControlImage" || field.className.includes("scCombobox") && !field.className.includes("scComboboxEdit")) {
+
+              tdMiddle = null;
+
+              if(count%2 == 0) {
+                //Left
+                var fieldLeft = field;
+                var fieldLeftLang = field.getAttribute("onfocus");
+                fieldLeftLang = fieldLeftLang.split("lang=");
+                fieldLeftLang = fieldLeftLang[1].split("&");
+                fieldLeftLang = fieldLeftLang[0].toUpperCase();
+
+              } else {
+                //Right
+                var fieldRight = field;
+                var fieldRightLang = field.getAttribute("onfocus");
+                fieldRightLang = fieldRightLang.split("lang=");
+                fieldRightLang = fieldRightLang[1].split("&");
+                fieldRightLang = fieldRightLang[0].toUpperCase();
+
+                //Find closest TD
+                var tr = field.closest("td").parentNode;
+                var td = tr.querySelectorAll("td");
+                var tdMiddle = td[1];
+
+                //Add images
+                if(tdMiddle != null) {
+                  tdMiddle.innerHTML = '<a class="scTranslateRTL" href="javascript:copyTranslate(\'' + fieldLeft.id + '\',\'' + fieldRight.id + '\',\'RTL\');" title="Copy ' + fieldRightLang + ' to ' + fieldLeftLang + '"><img src="' + chrome.runtime.getURL("images/navigate_left.png") + '" style="padding: 0px 2px 0px 0px; vertical-align: bottom; width: 20px;" alt="Copy"></a>';
+                }
+                
+              }
+
+              //Counter increment
+              count++;
+
+            }
+
+          }
+
+          //Add message bar
+          //if(fieldLeftLang != fieldRightLang) {
+          if(!document.getElementById("scMessageBarTranslation")) {
+            scMessage = '<div id="scMessageBarTranslation" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + iconTranslate + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Translation Mode (' + fieldLeftLang + ' < ' + fieldRightLang + ')</div><div class="scMessageBarText">You are translating content. If you want, you can directly </b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><span class="scMessageBarOption" onclick="javascript:copyTranslateAll();" style="cursor:pointer">Automatically copy existing content to '+scLanguageTxtShort+'</span></li></ul></div></div>';
+            scEditorID.insertAdjacentHTML( 'afterend', scMessage );
+          }
+          //}
+
+        }
+
+      }
+    });
+
     /*
      * Debug info
      */
@@ -590,6 +671,7 @@ function sitecoreAuthorToolbox() {
       console.info("%c - Sitecore Item: " + sitecoreItemID + " ", 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;');
       console.info("%c - Sitecore Language: " + scLanguage + " ", 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;');
       console.info("%c - Sitecore Version: "+ scItemVersion + " ", 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;');
+      console.info("%c - Translation Mode: "+ isTranslateMode + " ", 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;');
     
     }
 
@@ -666,6 +748,14 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
   */
   var script = document.createElement('script');
   script.src = chrome.runtime.getURL("js/BucketList-min.js");
+  (document.head||document.documentElement).appendChild(script);
+  script.remove();
+
+  /*
+  * Code injection for Translate mode
+  */
+  script = document.createElement('script');
+  script.src = chrome.runtime.getURL("js/inject-min.js");
   (document.head||document.documentElement).appendChild(script);
   script.remove();
 

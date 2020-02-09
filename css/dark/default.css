@@ -4008,3 +4008,9 @@ form {
   background-color: #00b6ff;
   border: 1px solid #00b6ff !important;
 }
+#FileList a:hover, #FileList a:active, #FileList a.highlight {
+  background-color: #00b6ff !important;
+}
+.sc-uploader-content {
+  border: 1px dashed #cccccc !important;
+}

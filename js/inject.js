@@ -1,16 +1,30 @@
-// const actualCode = 'console.info("Capture loaded");';
+/*
+ * Sitecore Author Toolbox
+ * - A Google Chrome Extension -
+ * - created by Ugo Quaisse -
+ * https://twitter.com/uquaisse
+ * ugo.quaisse@gmail.com
+ */
 
-//https://www.moesif.com/blog/technical/apirequest/How-We-Captured-AJAX-Requests-with-a-Chrome-Extension/
-//https://dzone.com/articles/how-we-captured-ajax-api-requests-from-arbitrary-w
-//chrome.tabs.executeScript(tabId, {code: actualCode, runAt: 'document_end'}, cb);
+ /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
-// var s = document.createElement('script');
-// s.textContent = '(' + fn_code + ')();';
-// (document.head||document.documentElement).appendChild(s);
-// s.parentNode.removeChild(s);
+ function copyTranslate(leftElemId,rightElemId) {
 
-/* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
+ 	var left = document.querySelector('#'+leftElemId);
+ 	var right = document.querySelector('#'+rightElemId);
 
-chrome.extension.sendMessage({}, function(response) {
-	//go
-});
+ 	left.value = right.value;
+
+ }
+
+ function copyTranslateAll() {
+
+ 	var scTranslateRTL = document.querySelectorAll(".scTranslateRTL");
+
+ 	for(var field of scTranslateRTL) {
+
+ 		field.click();
+
+ 	}
+
+ }

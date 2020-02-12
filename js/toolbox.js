@@ -701,6 +701,7 @@ var isGalleryLanguageExpEd = windowLocationHref.includes('selectlanguagegallery'
 var isGalleryFavorites = windowLocationHref.includes('gallery.favorites');
 var isGalleryVersions = windowLocationHref.includes('gallery.versions');
 var isAdminCache = windowLocationHref.includes('/admin/cache.aspx');
+var isAdmin = windowLocationHref.includes('/admin/');
 var isMediaBrowser = windowLocationHref.includes('sitecore.shell.applications.media.mediabrowser');
 var isPublishWindow = windowLocationHref.includes('/shell/applications/publish.aspx');
 var isSecurityWindow = windowLocationHref.includes('/shell/applications/security/');
@@ -722,14 +723,6 @@ var isUserManager = windowLocationHref.includes('user%20manager.aspx');
 var isPersonalization = windowLocationHref.includes('dialogs.personalization');
 var isRules = windowLocationHref.includes('rules.aspx');
 var isCss = windowLocationHref.includes('.css');
-
-
-//Launchpad icon variables
-var launchpadPage = chrome.runtime.getURL("options.html");
-var launchpadIcon = chrome.runtime.getURL("images/icon.png");
-var launchpadGroupTitle = "Sitecore Author Toolbox";
-var launchpadTitle = "Options";
-var launchpadUrl = windowLocationHref;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -768,6 +761,13 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
   link.href =  chrome.runtime.getURL("css/onload-min.css");
   document.getElementsByTagName("head")[0].appendChild(link);
 
+  //Launchpad icon variables
+  var launchpadPage = chrome.runtime.getURL("options.html");
+  var launchpadIcon = chrome.runtime.getURL("images/icon.png");
+  var launchpadGroupTitle = "Sitecore Author Toolbox";
+  var launchpadTitle = "Options";
+  var launchpadUrl = windowLocationHref;
+  
   if(isDesktop) {
 
     if(debug) { console.info("====================> DESKTOP SHELL <===================="); }

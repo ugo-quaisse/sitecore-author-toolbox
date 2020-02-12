@@ -52,3 +52,25 @@
 	}
 
  }
+
+var contextmenu = document.querySelector('.scExpTab');
+var initX, initY, mousePressX;
+
+if(contextmenu) {
+	contextmenu.addEventListener('mousedown', function(event) {
+
+		initX = this.offsetLeft;
+		mousePressX = event.clientX;
+
+		this.addEventListener('mousemove', repositionElement, false);
+
+		window.addEventListener('mouseup', function() {
+		  contextmenu.removeEventListener('mousemove', repositionElement, false);
+		}, false);
+
+	}, false);
+}
+
+function repositionElement(event) {
+	this.style.left = initX + event.clientX - mousePressX + 'px';
+}

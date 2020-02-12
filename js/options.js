@@ -185,6 +185,16 @@ document.body.onload = function() {
       document.getElementById("feature_translatemode").checked = true;
     }
   });
+  //EE toggle ribon button
+  chrome.storage.sync.get(['feature_toggleribbon'], function(result) {
+    if (!chrome.runtime.error && result.feature_toggleribbon != undefined) {
+      if(result.feature_toggleribbon) {
+        document.getElementById("feature_toggleribbon").checked = true;
+      }
+    } else {
+      document.getElementById("feature_toggleribbon").checked = true;
+    }
+  });
   //Context menu
   // chrome.storage.sync.get(['feature_contextmenu'], function(result) {
   //   if (!chrome.runtime.error && result.feature_reloadnode != undefined) {
@@ -270,6 +280,10 @@ document.getElementById("set").onclick = function() {
   //Translation mode
   chrome.storage.sync.set({"feature_translatemode": document.getElementById('feature_translatemode').checked}, function() {
     console.info('--> Translation Mode: ' + document.getElementById('feature_translatemode').checked);
+  });
+  //Toggle Ribbon
+  chrome.storage.sync.set({"feature_toggleribbon": document.getElementById('feature_toggleribbon').checked}, function() {
+    console.info('--> Toggle Button: ' + document.getElementById('feature_toggleribbon').checked);
   });
 
   //Get URL parameters

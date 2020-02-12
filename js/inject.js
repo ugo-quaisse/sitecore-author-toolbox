@@ -28,3 +28,27 @@
  	}
 
  }
+
+ function toggleRibbon() {
+ 	
+	var scCrossPiece = document.querySelectorAll("#scCrossPiece");
+	var scWebEditRibbon = document.querySelectorAll("#scWebEditRibbon"); 
+	var scExpTab = document.querySelectorAll(".scExpTab"); 
+
+	var scWebEditRibbonStatus = scWebEditRibbon[0].getAttribute("style");
+
+	if(scWebEditRibbonStatus != "display:none !important") {
+
+		scCrossPiece[0].setAttribute( 'style', 'height:0px !important' );
+		scWebEditRibbon[0].setAttribute( 'style', 'display:none !important' );
+		scExpTab[0].innerText = "▼ Show";
+
+	} else {
+
+		scCrossPiece[0].setAttribute( 'style', 'height:300px !important' );
+		scWebEditRibbon[0].setAttribute( 'style', 'display:block !important' );
+		scExpTab[0].innerText = "▲ Hide";
+
+	}
+
+ }

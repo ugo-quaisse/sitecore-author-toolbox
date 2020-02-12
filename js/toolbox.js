@@ -8,7 +8,7 @@
 
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
-var debug = false;
+var debug = true;
 
 /*
  * Helper functions
@@ -1466,8 +1466,8 @@ if(isEditMode) {
 
 
   /*
-  * Fadein onload
-  */
+   * Fadein onload
+   */
   link = document.createElement("link");
   link.type = "text/css";
   link.rel = "stylesheet";
@@ -1475,13 +1475,21 @@ if(isEditMode) {
   document.getElementsByTagName("head")[0].appendChild(link);
 
   /*
-  * Tooltip styling
-  */
+   * Tooltip styling
+   */
   link = document.createElement("link");
   link.type = "text/css";
   link.rel = "stylesheet";
   link.href =  chrome.runtime.getURL("css/tooltip-min.css");
   document.getElementsByTagName("head")[0].appendChild(link);
+
+  /*
+   * Code injection for Translate mode
+   */
+  script = document.createElement('script');
+  script.src = chrome.runtime.getURL("js/inject-min.js");
+  (document.head||document.documentElement).appendChild(script);
+  script.remove();
 
   /**
    * Flags in language menu
@@ -1668,9 +1676,12 @@ if(isEditMode) {
    * Dark mode
    */
   //@media (prefers-color-scheme: dark) {
-  chrome.storage.sync.get(['feature_darkmode'], function(result) {
+  chrome.storage.sync.get(['feature_darkmode','feature_toggleribbon'], function(result) {
+
+    var tabColor;
 
     if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
+    if(result.feature_toggleribbon == undefined) { result.feature_toggleribbon = true; }
 
     if(result.feature_darkmode && isRibbon || result.feature_darkmode && isDialog) {
 
@@ -1680,6 +1691,24 @@ if(isEditMode) {
       link.href =  chrome.runtime.getURL("css/dark/experience-min.css");
       document.getElementsByTagName("head")[0].appendChild(link);
 
+    }
+
+    if(result.feature_darkmode) {
+      tabColor = "dark";
+    }
+
+    /*
+     * Show/Hide EE ibbon
+     */
+    var iconEE =  chrome.runtime.getURL("images/ee.png")
+    var ribbon = document.querySelector('#scWebEditRibbon');
+    var scMessageBar = document.querySelector('.sc-messageBar');
+
+    console.log(scMessageBar);
+
+    if(result.feature_toggleribbon && ribbon) {
+      var html = '<div class="scExpTab '+ tabColor +'" onclick="toggleRibbon()">▲ Hide</div>';
+      ribbon.insertAdjacentHTML( 'afterend', html );
     }
 
   });

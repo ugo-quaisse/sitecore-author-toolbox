@@ -1562,6 +1562,7 @@ body .reEditorModes span {
     line-height: 27px;
     background: none;
     padding: 0 10px;
+    color: #cccccc !important;
 }
 
 body .Metro.RadEditor .reEditorModes a {

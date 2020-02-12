@@ -158,3 +158,27 @@ iframe.scSpeakWebEditRibbon {
 .sc {
     background-color: #222222 !important;
 }
+
+#scCrossPiece {
+    background-color: #222222 !important;
+}
+
+.scExpTab {
+    background-color: #222222 !important;
+    color: #cccccc !important;
+}
+#sxa-toolbox.sxa-mobile-toolbox .sxa-toolbox-header,
+#sxa-toolbox.sxa-mobile-toolbox .sxa-toolbox-expander {
+    background-color: #222222 !important;
+}
+#sxa-toolbox {
+    background-color: #222222 !important;
+    border-left: 4px solid #222222;
+}
+#sxa-toolbox #sxa-toolbox-root .mCSB_container>div>span.expanded {
+    border-left: 5px solid #207da2 !important;
+    background: #333333 !important;
+}
+#sxa-toolbox #sxa-toolbox-root .mCSB_container>div>span {
+    background: #333333 !important;
+}

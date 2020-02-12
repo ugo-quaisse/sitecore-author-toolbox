@@ -1698,6 +1698,7 @@ if(isEditMode) {
     /*
      * Show/Hide EE ibbon
      */
+    var iconEE =  chrome.runtime.getURL("images/ee.png")
     var ribbon = document.querySelector('#scWebEditRibbon');
     if(ribbon) {
       var html = '<div class="scExpTab '+ tabColor +'" onclick="toggleRibbon()">▲ Hide</div>';

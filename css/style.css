@@ -93,7 +93,7 @@ form#ContentEditorForm {
 .scExpTab {
     background-color: #f7f7f7;
     position: fixed;
-    z-index: 10000000000;
+    z-index: 10000;
     margin: auto;
     width: 75px;
     padding: 5px 3px 5px 3px;

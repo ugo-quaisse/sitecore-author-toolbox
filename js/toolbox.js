@@ -1257,7 +1257,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
             let newNodes = subTreeDiv.querySelectorAll(".scContentTreeNode");
             if(newNodes.length == 1) { newNodes[0].querySelector(".scContentTreeNodeGlyph").click(); }
           }
-        }, 50);
+        }, 150);
 
       }, false);
 
@@ -1635,8 +1635,9 @@ if(isEditMode) {
       controls.setAttribute('style', 'margin-left:50px');
       var scChromeCommand = controls.querySelectorAll( ".scChromeCommand" );
       var scChromeText = controls.querySelector( ".scChromeText" );
+      var scChromeCommandText = controls.querySelector( ".scChromeCommandText" );
 
-      if(scChromeText.innerText == "Copy") { scChromeText.innerText = "Text"; }
+      console.log(scChromeCommandText.innerText);
       
       for(var command of scChromeCommand) {
         var title = command.getAttribute("title");          

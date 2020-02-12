@@ -3528,7 +3528,7 @@ form[lang|='ja'] *,
   .scListControl > tbody:first-child > tr:first-child,
   .scListControl > thead,
   .scListControlHead {
-    background-color: #5E5E5E;
+    background-color: #5E5E5E !important;
     color: white;
   }
 
@@ -3538,15 +3538,15 @@ form[lang|='ja'] *,
   }
 
   .scListControl > tbody > tr:nth-child(odd) {
-    background-color: #323232;
+    background-color: #222222 !important;
   }
 
   .scListControl > tbody > tr:nth-child(even) {
-    background-color: #212121;
+    background-color: #333333 !important;
   }
 
   .scListControl > tbody > tr:hover {
-    background-color: #444444;
+    background-color: #444444 !important;
   }
 
   .scListControl > thead th,

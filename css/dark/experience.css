@@ -159,7 +159,11 @@ iframe.scSpeakWebEditRibbon {
     background-color: #222222 !important;
 }
 
-#scExpTab {
+#scCrossPiece {
+    background-color: #222222 !important;
+}
+
+.scExpTab {
     background-color: #222222 !important;
     color: #cccccc !important;
 }

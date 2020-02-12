@@ -1675,11 +1675,12 @@ if(isEditMode) {
    * Dark mode
    */
   //@media (prefers-color-scheme: dark) {
-  chrome.storage.sync.get(['feature_darkmode'], function(result) {
+  chrome.storage.sync.get(['feature_darkmode','feature_toggleribbon'], function(result) {
 
     var tabColor;
 
     if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
+    if(result.feature_toggleribbon == undefined) { result.feature_toggleribbon = true; }
 
     if(result.feature_darkmode && isRibbon || result.feature_darkmode && isDialog) {
 
@@ -1700,7 +1701,7 @@ if(isEditMode) {
      */
     var iconEE =  chrome.runtime.getURL("images/ee.png")
     var ribbon = document.querySelector('#scWebEditRibbon');
-    if(ribbon) {
+    if(result.feature_toggleribbon && ribbon) {
       var html = '<div class="scExpTab '+ tabColor +'" onclick="toggleRibbon()">▲ Hide</div>';
       ribbon.insertAdjacentHTML( 'afterend', html );
     }

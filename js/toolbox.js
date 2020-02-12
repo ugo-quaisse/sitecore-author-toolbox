@@ -1701,6 +1701,10 @@ if(isEditMode) {
      */
     var iconEE =  chrome.runtime.getURL("images/ee.png")
     var ribbon = document.querySelector('#scWebEditRibbon');
+    var scMessageBar = document.querySelector('.sc-messageBar');
+
+    console.log(scMessageBar);
+
     if(result.feature_toggleribbon && ribbon) {
       var html = '<div class="scExpTab '+ tabColor +'" onclick="toggleRibbon()">▲ Hide</div>';
       ribbon.insertAdjacentHTML( 'afterend', html );

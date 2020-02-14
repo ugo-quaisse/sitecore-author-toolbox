@@ -1310,9 +1310,10 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
       var lastTabSitecoreItemID = tabSitecoreItemID[tabSitecoreItemID.length- 2].getAttribute("value");
 
       var hasRedirection = windowLocationHref.includes("&ro=");
+      var hasRedirectionOther = windowLocationHref.includes("&sc_ce_uri=");
 
       //Add hash to URL
-      if(!hasRedirection) {
+      if(!hasRedirection && !hasRedirectionOther) {
         window.location.hash = sitecoreItemID;
       }
 
@@ -1360,8 +1361,9 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
     var scVersion;
     var hash = window.location.hash.substr(1);
     var hasRedirection = windowLocationHref.includes("&ro=");
+    var hasRedirectionOther = windowLocationHref.includes("&sc_ce_uri=");
 
-    if(!hasRedirection) {
+    if(!hasRedirection && !hasRedirectionOther) {
 
       if(hash!="") {
 
@@ -1644,8 +1646,6 @@ if(isEditMode) {
       var scChromeCommand = controls.querySelectorAll( ".scChromeCommand" );
       var scChromeText = controls.querySelector( ".scChromeText" );
       var scChromeCommandText = controls.querySelector( ".scChromeCommandText" );
-
-      console.log(scChromeCommandText.innerText);
       
       for(var command of scChromeCommand) {
         var title = command.getAttribute("title");          
@@ -1673,7 +1673,7 @@ if(isEditMode) {
   }
 
   /*
-   * Dark mode
+   * Dark mode + Toggle Ribbon
    */
   //@media (prefers-color-scheme: dark) {
   chrome.storage.sync.get(['feature_darkmode','feature_toggleribbon'], function(result) {
@@ -1700,22 +1700,49 @@ if(isEditMode) {
     /*
      * Show/Hide EE ibbon
      */
-    var iconEE =  chrome.runtime.getURL("images/ee.png")
     var ribbon = document.querySelector('#scWebEditRibbon');
     var scMessageBar = document.querySelector('.sc-messageBar');
 
-    console.log(scMessageBar);
-
     if(result.feature_toggleribbon && ribbon) {
-      var html = '<div class="scExpTab '+ tabColor +'" onclick="toggleRibbon()">▲ Hide</div>';
+      var html = '<div class="scExpTab '+ tabColor +'"><span class="tabHandle"></span><span class="tabText" onclick="toggleRibbon()">▲ Hide<span></div>';
       ribbon.insertAdjacentHTML( 'afterend', html );
+    }
+
+    /*
+     * Close Edit Mode button
+     */
+    var iconEE =  chrome.runtime.getURL("images/ee.png");
+    var pagemodeEdit = document.querySelector(".pagemode-edit");
+
+    if(pagemodeEdit) {
+      html = '<div class="scNormalModeTab '+ tabColor +'" onclick="goToNormalMode()"><span class="t-right t-sm" data-tooltip="Close Edit mode"><img src="' + iconEE + '"/></span></div>';
+      pagemodeEdit.insertAdjacentHTML( 'afterend', html );
+    }
+
+    var dataItemId = document.querySelector('[data-sc-itemid]');
+    
+    if(dataItemId) {
+      
+      var sitecoreItemID = decodeURI(dataItemId.getAttribute('data-sc-itemid'));
+      window.location.hash = sitecoreItemID;
+      console.log(sitecoreItemID);
+
+    }
+
+    /*
+     * Go to Content Editor
+     */
+    var iconCE =  chrome.runtime.getURL("images/ce.png");
+    pagemodeEdit = document.querySelector(".pagemode-edit");
+
+    if(pagemodeEdit) {
+      console.log('BUTTON');
+      html = '<div class="scContentEditorTab '+ tabColor +'" onclick="goToContentEditor()"><span class="t-right t-sm" data-tooltip="Go to Content Editor"><img src="' + iconCE + '"/></span></div>';
+      pagemodeEdit.insertAdjacentHTML( 'afterend', html );
     }
 
   });
   //}
 
 }
-
-
-
 

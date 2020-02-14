@@ -2992,6 +2992,7 @@ nobr:last-child > .scTabActive_Hover {
 a.scContentTreeNodeNormal,
 a.scContentTreeNodeActive,
 a.scContentTreeNodeStatic {
+  border-radius: 4px;
 }
 
   a.scContentTreeNodeStatic, a.scContentTreeNodeStatic:visited, a.scContentTreeNodeStatic:hover, a.scContentTreeNodeStatic:active {
@@ -4013,4 +4014,11 @@ form {
 }
 .sc-uploader-content {
   border: 1px dashed #cccccc !important;
+}
+select[disabled] > option {
+  color: #888888 !important;
+}
+#SearchResult,
+#Log {
+  color: #cccccc !important;
 }

@@ -95,6 +95,38 @@ form#ContentEditorForm {
     transition: all ease-in-out .1s !important,
 }
 
+.scContentEditorTab {
+    position: fixed;
+    top: 310px;
+    background-color: #f7f7f7;
+    padding: 10px 12px 7px 12px;
+    z-index: 10000;
+    border-radius: 0px 5px 5px 0px;
+    left: 0px;
+    filter: drop-shadow(1px 0px 4px rgba(0,0,0,0.2));
+    cursor: pointer;
+}
+
+.scContentEditorTab:hover {
+    background-color: #eeeeee !important;
+}
+
+.scNormalModeTab {
+    position: fixed;
+    top: 350px;
+    background-color: #f7f7f7;
+    padding: 10px 12px 7px 12px;
+    z-index: 10000;
+    border-radius: 0px 5px 5px 0px;
+    left: 0px;
+    filter: drop-shadow(1px 0px 4px rgba(0,0,0,0.2));
+    cursor: pointer;
+}
+
+.scNormalModeTab:hover {
+    background-color: #eeeeee !important;
+}
+
 .scExpTab {
     background-color: #f7f7f7;
     position: fixed;
@@ -113,9 +145,11 @@ form#ContentEditorForm {
     font-weight: bold;
 }
 
-.scExpTab:hover {
-    color: #222222 !important;
-    transform: translate(-50%, -1px);
+.tabHandle {
+    padding: 20px 20px;
+    margin-left: -40px;
+    background-color: transparent;
+    cursor: grab;
 }
 
 .dark {
@@ -124,5 +158,6 @@ form#ContentEditorForm {
 }
 
 .dark:hover {
+    background-color: #292929 !important;
     color: #ffffff !important;
 }

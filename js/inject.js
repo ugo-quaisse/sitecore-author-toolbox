@@ -29,25 +29,50 @@
 
  }
 
+ function goToNormalMode() {
+
+ 	var url = window.location.href.toLowerCase();
+ 	var isQuery = url.includes('?');
+ 	var isEditMode = url.includes('sc_mode=edit');
+
+ 	if(isEditMode) {
+ 		url = url.replace("sc_mode=edit","sc_mode=normal");
+ 	} else if(isQuery) {
+ 		url = url+"&sc_mode=normal";
+ 	} else {
+ 		url = url+"?sc_mode=normal";
+ 	}
+
+ 	window.location.href=url;
+
+ }
+
+  function goToContentEditor() {
+
+ 	window.location.href=window.location.origin+'/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1&sc_lang=en';
+
+ }
+
  function toggleRibbon() {
  	
-	var scCrossPiece = document.querySelectorAll("#scCrossPiece");
-	var scWebEditRibbon = document.querySelectorAll("#scWebEditRibbon"); 
-	var scExpTab = document.querySelectorAll(".scExpTab"); 
+	var scCrossPiece = document.querySelector("#scCrossPiece");
+	var scWebEditRibbon = document.querySelector("#scWebEditRibbon"); 
+	var scExpTab = document.querySelector(".scExpTab");
+	var tabText = scExpTab.querySelector(".tabText"); 
 
-	var scWebEditRibbonStatus = scWebEditRibbon[0].getAttribute("style");
+	var scWebEditRibbonStatus = scWebEditRibbon.getAttribute("style");
 
 	if(scWebEditRibbonStatus != "display:none !important") {
 
-		scCrossPiece[0].setAttribute( 'style', 'height:0px !important' );
-		scWebEditRibbon[0].setAttribute( 'style', 'display:none !important' );
-		scExpTab[0].innerText = "▼ Show";
+		scCrossPiece.setAttribute( 'style', 'height:0px !important' );
+		scWebEditRibbon.setAttribute( 'style', 'display:none !important' );
+		tabText.innerText = "▼ Show";
 
 	} else {
 
-		scCrossPiece[0].setAttribute( 'style', 'height:300px !important' );
-		scWebEditRibbon[0].setAttribute( 'style', 'display:block !important' );
-		scExpTab[0].innerText = "▲ Hide";
+		scCrossPiece.setAttribute( 'style', 'height:300px !important' );
+		scWebEditRibbon.setAttribute( 'style', 'display:block !important' );
+		tabText.innerText = "▲ Hide";
 
 	}
 

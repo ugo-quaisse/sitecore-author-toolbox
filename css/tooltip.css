@@ -8,7 +8,7 @@
   /********** Right Tooltip ********* */
   /********** Bottom Tooltip ********* */
   /********** Left Tooltip ********* */
-  z-index: -1;
+  /*z-index: -1;*/
 }
 [data-tooltip]:before, [data-tooltip]:after {
   position: absolute;

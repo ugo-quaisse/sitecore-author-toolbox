@@ -1722,10 +1722,13 @@ if(isEditMode) {
     var dataItemId = document.querySelector('[data-sc-itemid]');
     
     if(dataItemId) {
-      
+
       var sitecoreItemID = decodeURI(dataItemId.getAttribute('data-sc-itemid'));
-      window.location.hash = sitecoreItemID;
-      console.log(sitecoreItemID);
+
+      //Set ItemID (Storage)
+      chrome.storage.sync.set({"scItemID": sitecoreItemID}, function() {
+        if(debug) { console.info("%c [Storage Set] Item : " + sitecoreItemID + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+      });
 
     }
 
@@ -1736,8 +1739,7 @@ if(isEditMode) {
     pagemodeEdit = document.querySelector(".pagemode-edit");
 
     if(pagemodeEdit) {
-      console.log('BUTTON');
-      html = '<div class="scContentEditorTab '+ tabColor +'" onclick="goToContentEditor()"><span class="t-right t-sm" data-tooltip="Go to Content Editor"><img src="' + iconCE + '"/></span></div>';
+      html = '<div class="scContentEditorTab '+ tabColor +'"><span class="t-right t-sm" data-tooltip="Edit in Content Editor"><a href="' + window.location.origin+'/sitecore/shell/Applications/Content%20Editor.aspx"><img src="' + iconCE + '"/></a></span></div>';
       pagemodeEdit.insertAdjacentHTML( 'afterend', html );
     }
 

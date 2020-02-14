@@ -47,12 +47,6 @@
 
  }
 
-  function goToContentEditor() {
-
- 	window.location.href=window.location.origin+'/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1&sc_lang=en';
-
- }
-
  function toggleRibbon() {
  	
 	var scCrossPiece = document.querySelector("#scCrossPiece");

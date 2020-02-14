@@ -1714,7 +1714,7 @@ if(isEditMode) {
     var iconEE =  chrome.runtime.getURL("images/ee.png");
     var pagemodeEdit = document.querySelector(".pagemode-edit");
 
-    if(pagemodeEdit) {
+    if(result.feature_toggleribbon && pagemodeEdit) {
       html = '<div class="scNormalModeTab '+ tabColor +'" onclick="goToNormalMode()"><span class="t-right t-sm" data-tooltip="Close Edit mode"><img src="' + iconEE + '"/></span></div>';
       pagemodeEdit.insertAdjacentHTML( 'afterend', html );
     }
@@ -1738,8 +1738,8 @@ if(isEditMode) {
     var iconCE =  chrome.runtime.getURL("images/ce.png");
     pagemodeEdit = document.querySelector(".pagemode-edit");
 
-    if(pagemodeEdit) {
-      html = '<div class="scContentEditorTab '+ tabColor +'"><span class="t-right t-sm" data-tooltip="Edit in Content Editor"><a href="' + window.location.origin+'/sitecore/shell/Applications/Content%20Editor.aspx"><img src="' + iconCE + '"/></a></span></div>';
+    if(result.feature_toggleribbon && pagemodeEdit) {
+      html = '<div class="scContentEditorTab '+ tabColor +'"><span class="t-right t-sm" data-tooltip="Edit in Content Editor"><a href="' + window.location.origin+'/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1"><img src="' + iconCE + '"/></a></span></div>';
       pagemodeEdit.insertAdjacentHTML( 'afterend', html );
     }
 

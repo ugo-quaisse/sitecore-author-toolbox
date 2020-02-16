@@ -1898,7 +1898,7 @@ a.scHyperlinkButton {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: #222222;
+  background-color: #222222 !important;
 }
 
 .scStretchAbsolute .scTreeviewContainerLayout {
@@ -3826,39 +3826,39 @@ span.sc-ext-fieldSearchClear {
     padding: 5px !important;
 }
 .Row {
-  background-color: #222222;
+  background-color: #222222 !important;
 }
 .Row:nth-child(odd) {
-  background-color: #333333;
+  background-color: #333333 !important;
 }
 .Row:hover,
 .Row:nth-child(odd):hover {
-  background-color: #000000;
+  background-color: #000000 !important;
 }
 
 a.scTileItem {
-  background-color: #222222;
-  border: 1px solid #111111;
+  background-color: #222222 !important;
+  border: 1px solid #111111 !important;
   border-radius: 5px;
 }
 
 a.scTileItem:hover {
-  background-color: #333333;
+  background-color: #333333 !important;
 }
 div.content {
-  background-color: #0f0f0f;
+  background-color: #0f0f0f !important;
 }
 .search-box {
-  background-color: #212121;
-  border: 1px solid #212121;
+  background-color: #222222 !important;
+  border: 1px solid #222222  !important;
 }
 .btn-search {
-  background-color: #212121;
+  background-color: #222222 !important;
   background-image: url(../images/edition-magnifier.png);
   box-shadow: inset 0 1px transparent;
 }
 .btn-search, .btn-clear {
-  border-left: 1px solid #333333;
+  border-left: 1px solid #333333 !important;
   box-shadow: none;
 }
 .BlogPostArea:hover, .ie .BlogPostArea.hover {
@@ -3869,7 +3869,7 @@ div.content {
 }
 .filters .filter {
     border: 1px solid transparent;
-    background-color: #333333;
+    background-color: #333333 !important;
 }
 .filters .filter .icon {
   border-right: 1px solid #212121;
@@ -3878,24 +3878,24 @@ div.content {
   border-left: 1px solid #212121;
 }
 #grid-content .post_float {
-  background-color: #222222;
+  background-color: #222222 !important;
   border: 1px solid #111111;
   border-radius: 5px;
 }
 #grid-content .post_float:hover {
-  background-color: #333333;
+  background-color: #333333 !important;
 }
 .pagination li a {
-  background-color: #222222;
+  background-color: #222222 !important;
 }
 .pagination li a:hover {
-  background-color: #333333;
+  background-color: #333333 !important;
 }
 .pagination li.active a {
     background-color: #dc2a1e;
 }
 .pagination li:last-of-type a {
-    border-right: 1px solid #222222;
+    border-right: 1px solid #222222 !important;
 }
 .scFlexColumnContainer > div, .scFlexColumnContainerWithoutFlexie > div {
   /*background-color: #222222 !important;*/
@@ -3912,7 +3912,7 @@ div.content {
 }
 a.scItemThumbnailSelected,
 a.scItemThumbnail:hover {
-    background-color: #00b6ff;
+    background-color: #00b6ff !important;
     border: 1px solid #00b6ff;
     padding: 4px 11px;
     text-decoration: none;
@@ -3923,11 +3923,11 @@ a.scItemThumbnail:hover > span.scDisplayName {
 }
 
 .ff #Right {
-    background-color: #171717;
+    background-color: #171717 !important;
 }
 
 .selected .mode, .selected .mode:hover, .selected .mode:active {
-    background-color: #00b6ff;
+    background-color: #00b6ff !important;
     border: 1px solid #00b6ff;
     padding: 7px;
 }
@@ -3954,7 +3954,7 @@ a.scItemThumbnail:hover > span.scDisplayName {
 
 .scStartMenu,
 .scStartMenuPrograms {
-  background-color: #222222;
+  background-color: #222222 !important;
 }
 
 .scStartMenuRightFolder:hover,
@@ -3988,7 +3988,7 @@ a.scItemThumbnail:hover > span.scDisplayName {
   filter: invert(1);
 }
 .filters .filter .icon {
-  border-right: 1px solid #d7d7d7 !important;
+  border-right: 1px solid #222222 !important;
 }
 .filters .filter .display-name {
   color: #cccccc !important;
@@ -4018,7 +4018,15 @@ form {
 select[disabled] > option {
   color: #888888 !important;
 }
+#SearchResult {
+  background-color: #222222 !important;
+}
 #SearchResult,
 #Log {
   color: #cccccc !important;
+}
+.highlight,
+.side li a:hover,
+.side li a.facetClickSelected {
+  background-color: #2694c0 !important;
 }

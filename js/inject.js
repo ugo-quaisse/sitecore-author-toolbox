@@ -29,25 +29,7 @@
 
  }
 
- function goToNormalMode() {
-
- 	var url = window.location.href.toLowerCase();
- 	var isQuery = url.includes('?');
- 	var isEditMode = url.includes('sc_mode=edit');
-
- 	if(isEditMode) {
- 		url = url.replace("sc_mode=edit","sc_mode=normal");
- 	} else if(isQuery) {
- 		url = url+"&sc_mode=normal";
- 	} else {
- 		url = url+"?sc_mode=normal";
- 	}
-
- 	window.location.href=url;
-
- }
-
- function toggleRibbon() {
+function toggleRibbon() {
  	
 	var scCrossPiece = document.querySelector("#scCrossPiece");
 	var scWebEditRibbon = document.querySelector("#scWebEditRibbon"); 
@@ -70,7 +52,7 @@
 
 	}
 
- }
+}
 
 var contextmenu = document.querySelector('.scExpTab');
 var initX, initY, mousePressX;

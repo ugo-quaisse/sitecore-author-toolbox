@@ -1,6 +1,7 @@
 /* Sitecore EE  */
 body {
     background-color: #222222 !important;
+    color: #cccccc !important;
 }
 .selected .mode, .selected .mode:hover, .selected .mode:active {
 	background-color: #444444;
@@ -148,8 +149,8 @@ iframe.scSpeakWebEditRibbon {
 }
 
 .sc-dialogWindow-buttons {
-    background-color: #222222;
-    border-top: 1px solid #333333;
+    background-color: #1d1d1d !important;
+    border-top: 1px solid #292929 !important;
 }
 [data-sc-id="MessageBody"] {
     color: #cccccc !important;
@@ -181,4 +182,51 @@ iframe.scSpeakWebEditRibbon {
 }
 #sxa-toolbox #sxa-toolbox-root .mCSB_container>div>span {
     background: #333333 !important;
+}
+.sc-dialogWindow-header {
+  background-color: #111111 !important;
+}
+.sc-insertItem-container .sc-insertItem-displayNameContainer,
+.sc ul.dynatree-container a {
+    color: #cccccc !important;
+}
+.sc span.dynatree-expander {
+    filter:invert(1);
+}
+.sc ul.dynatree-container a:hover,
+.sc span.dynatree-active a, .sc span.dynatree-active a:hover {
+    border-radius: 4px !important;
+    background-color: #2694c0 !important;
+}
+.form-control {
+    background-color: #111111 !important;
+    border: 1px solid #111111 !important;
+    color: #cccccc !important;
+}
+.sc-insert-items {
+    background-color: #222222 !important;
+}
+.sc-insertItem-container,
+.sc-insertItem-container .sc-insertItem-imageContainer {
+    background-color: transparent !important;
+    border: 1px solid transparent !important;
+    border-radius: 4px !important;
+}
+.sc-insertItem-container.hover,
+.sc-insertItem-container.selected {
+    background-color: #6ac0e2 !important;
+    border-radius: 4px !important;
+    cursor: pointer;
+}
+[data-sc-id="ItemTreeView"] {
+    border-right-color: #111111 !important;
+}
+.btn-default:hover {
+    background-image: linear-gradient(to bottom, #289bc8 0%, #207da2 100%);
+    color: #ffffff !important;
+    text-shadow: 0 1px 0 transparent;
+    border-color: #175973;
+    -webkit-box-shadow: inset 0 1px #5dbadf;
+    box-shadow: inset 0 1px #5dbadf;
+    background-color: #289bc8;
 }

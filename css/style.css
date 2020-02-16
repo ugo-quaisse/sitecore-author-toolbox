@@ -109,7 +109,6 @@ form#ContentEditorForm {
 }
 
 .scContentEditorTab:hover {
-    background-color: #eeeeee !important;
     padding-left: 15px;
 }
 
@@ -127,7 +126,6 @@ form#ContentEditorForm {
 }
 
 .scNormalModeTab:hover {
-    background-color: #eeeeee !important;
     padding-left: 15px;
 }
 
@@ -167,6 +165,5 @@ form#ContentEditorForm {
 }
 
 .dark:hover {
-    background-color: #292929 !important;
     color: #ffffff !important;
 }

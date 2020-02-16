@@ -112,6 +112,9 @@ function setIcon(tab) {
         //chrome.browserAction.setIcon({path: 'images/icon.png'});
         chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
         chrome.browserAction.setBadgeText({text: 'ON'});
+
+
+
       } else {
         //chrome.browserAction.setIcon({path: 'images/icon_gray.png'});
         chrome.browserAction.setBadgeBackgroundColor({ color: "#777777" });

@@ -1257,7 +1257,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
             let newNodes = subTreeDiv.querySelectorAll(".scContentTreeNode");
             if(newNodes.length == 1) { newNodes[0].querySelector(".scContentTreeNodeGlyph").click(); }
           }
-        }, 150);
+        }, 175);
 
       }, false);
 
@@ -1630,6 +1630,20 @@ if(isEditMode) {
       }
     }
     rawFile.send(null);
+
+    //Store Sitecore Item ID
+    var dataItemId = document.querySelector('[data-sc-itemid]');
+   
+    if(dataItemId) {
+
+      var sitecoreItemID = decodeURI(dataItemId.getAttribute('data-sc-itemid'));
+      //Set ItemID (Storage)
+      chrome.storage.sync.set({"scItemID": sitecoreItemID}, function() {
+        if(debug) { console.info("%c [Storage Set] Item : " + sitecoreItemID + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+      });
+
+    }
+
   }
 
   /**
@@ -1678,12 +1692,21 @@ if(isEditMode) {
   //@media (prefers-color-scheme: dark) {
   chrome.storage.sync.get(['feature_darkmode','feature_toggleribbon'], function(result) {
 
+    //Variables
+    var pagemodeEdit = document.querySelector(".pagemode-edit");
+    //if(!pagemodeEdit) { pagemodeEdit = document.querySelector(".js-focus-visible"); }
+    var scCrossPiece = document.querySelector("#scCrossPiece");
+    windowLocationHref = window.location.href.toLowerCase();
+    var isQuery = windowLocationHref.includes('?');
+    var isEditMode = windowLocationHref.includes('sc_mode=edit');
+    var ribbon = document.querySelector('#scWebEditRibbon');
+    var scMessageBar = document.querySelector('.sc-messageBar');
     var tabColor;
 
     if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
     if(result.feature_toggleribbon == undefined) { result.feature_toggleribbon = true; }
 
-    if(result.feature_darkmode && isRibbon || result.feature_darkmode && isDialog) {
+    if(result.feature_darkmode && isRibbon || result.feature_darkmode && isDialog || result.feature_darkmode && isInsertPage) {
 
       var link = document.createElement("link");
       link.type = "text/css";
@@ -1700,8 +1723,6 @@ if(isEditMode) {
     /*
      * Show/Hide EE ibbon
      */
-    var ribbon = document.querySelector('#scWebEditRibbon');
-    var scMessageBar = document.querySelector('.sc-messageBar');
 
     if(result.feature_toggleribbon && ribbon) {
       var html = '<div class="scExpTab '+ tabColor +'"><span class="tabHandle"></span><span class="tabText" onclick="toggleRibbon()">▲ Hide<span></div>';
@@ -1711,35 +1732,28 @@ if(isEditMode) {
     /*
      * Close Edit Mode button
      */
-    var iconEE =  chrome.runtime.getURL("images/ee.png");
-    var pagemodeEdit = document.querySelector(".pagemode-edit");
+    var iconEE =  chrome.runtime.getURL("images/sat.png");
 
-    if(result.feature_toggleribbon && pagemodeEdit) {
-      html = '<div class="scNormalModeTab '+ tabColor +'" onclick="goToNormalMode()"><span class="t-right t-sm" data-tooltip="Close Edit mode"><img src="' + iconEE + '"/></span></div>';
-      pagemodeEdit.insertAdjacentHTML( 'afterend', html );
+    if(isEditMode) {
+      windowLocationHref = windowLocationHref.replace("sc_mode=edit","sc_mode=normal");
+    } else if(isQuery) {
+      windowLocationHref = windowLocationHref+"&sc_mode=normal";
+    } else {
+      windowLocationHref = windowLocationHref+"?sc_mode=normal";
     }
 
-    var dataItemId = document.querySelector('[data-sc-itemid]');
-    
-    if(dataItemId) {
-
-      var sitecoreItemID = decodeURI(dataItemId.getAttribute('data-sc-itemid'));
-
-      //Set ItemID (Storage)
-      chrome.storage.sync.set({"scItemID": sitecoreItemID}, function() {
-        if(debug) { console.info("%c [Storage Set] Item : " + sitecoreItemID + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
-      });
-
+    if(result.feature_toggleribbon) {
+      html = '<div class="scNormalModeTab '+ tabColor +'"><span class="t-right t-sm" data-tooltip="Open in Normal Mode"><a href="' + windowLocationHref + '"><img src="' + iconEE + '"/></a></span></div>';
+      pagemodeEdit.insertAdjacentHTML( 'afterend', html );
     }
 
     /*
      * Go to Content Editor
      */
     var iconCE =  chrome.runtime.getURL("images/ce.png");
-    pagemodeEdit = document.querySelector(".pagemode-edit");
 
-    if(result.feature_toggleribbon && pagemodeEdit) {
-      html = '<div class="scContentEditorTab '+ tabColor +'"><span class="t-right t-sm" data-tooltip="Edit in Content Editor"><a href="' + window.location.origin+'/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1"><img src="' + iconCE + '"/></a></span></div>';
+    if(result.feature_toggleribbon) {
+      html = '<div class="scContentEditorTab '+ tabColor +'"><span class="t-right t-sm" data-tooltip="Open in Content Editor"><a href="' + window.location.origin + '/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1"><img src="' + iconCE + '"/></a></span></div>';
       pagemodeEdit.insertAdjacentHTML( 'afterend', html );
     }
 

@@ -692,6 +692,8 @@ if(debug) {
 //Url variables
 var windowLocationHref = window.location.href.toLowerCase();
 var isSitecore = window.location.pathname.includes('/sitecore/');
+var isPreviewMode = document.querySelector(".pagemode-preview");
+if(!isPreviewMode) { isPreviewMode = windowLocationHref.includes('sc_mode=preview'); }
 var isEditMode = document.querySelector(".pagemode-edit");
 if(!isEditMode) { isEditMode = windowLocationHref.includes('sc_mode=edit'); }
 if(!isEditMode) { isEditMode = windowLocationHref.includes('/experienceeditor/'); }
@@ -1462,7 +1464,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
  * 2. Experience Editor *
  ************************
  */
-if(isEditMode) {
+if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
 
   if(debug) { console.info("%c 🎨 Experience Editor detected ", 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;'); }
 
@@ -1700,10 +1702,11 @@ if(isEditMode) {
     windowLocationHref = window.location.href.toLowerCase();
     var isQuery = windowLocationHref.includes('?');
     var isEditMode = windowLocationHref.includes('sc_mode=edit');
+    var isPreviewMode = windowLocationHref.includes('sc_mode=preview');
     var scCrossPiece = document.querySelector("#scCrossPiece");
     var ribbon = document.querySelector('#scWebEditRibbon');
     var scMessageBar = document.querySelector('.sc-messageBar');
-    var tabColor;
+    let tabColor;
 
     if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
     if(result.feature_toggleribbon == undefined) { result.feature_toggleribbon = true; }
@@ -1723,15 +1726,30 @@ if(isEditMode) {
     }
 
     /*
-     * Show/Hide EE ibbon
+     * Show/Hide EE ribbon
      */
 
-    //TODO Observer when scCrossPiece has height
-    
-    if(result.feature_toggleribbon && ribbon) {
-      var offsetHeight = ribbon.offsetHeight;
-      var html = '<div class="scExpTab '+ tabColor +'"><span class="tabHandle"></span><span class="tabText" onclick="toggleRibbon()">▲ Hide<span></div>';
-      ribbon.insertAdjacentHTML( 'afterend', html );
+    //TODO: calculate the height of NotificationBar and apply a negative topOffeset to the scExpTab
+
+    var observer = new MutationObserver(function(mutations) {
+
+      for(var mutation of mutations) {
+        for(var addedNode of mutation.addedNodes) {
+          if(addedNode.id == "scCrossPiece") {
+            var html = '<div class="scExpTab '+ tabColor +'"><span class="tabHandle"></span><span class="tabText" onclick="toggleRibbon()">▲ Hide<span></div>';
+            addedNode.insertAdjacentHTML( 'afterend', html );
+            observer.disconnect();
+          }
+        }
+      }
+
+    });
+    var target = document.body;
+
+    //Observer
+    if(result.feature_toggleribbon && target) {
+      var config = { attributes: false, childList: true, characterData: false };
+      observer.observe(target, config);
     }
 
     /*
@@ -1741,14 +1759,16 @@ if(isEditMode) {
 
     if(isEditMode) {
       windowLocationHref = windowLocationHref.replace("sc_mode=edit","sc_mode=normal");
+    } else if(isPreviewMode) {
+      windowLocationHref = windowLocationHref.replace("sc_mode=preview","sc_mode=normal");
     } else if(isQuery) {
       windowLocationHref = windowLocationHref+"&sc_mode=normal";
     } else {
       windowLocationHref = windowLocationHref+"?sc_mode=normal";
     }
 
-    if(result.feature_toggleribbon) {
-      html = '<div class="scNormalModeTab '+ tabColor +'"><span class="t-right t-sm" data-tooltip="Open in Normal Mode"><a href="' + windowLocationHref + '"><img src="' + iconEE + '"/></a></span></div>';
+    if(result.feature_toggleribbon && !isRibbon) {
+      var html = '<div class="scNormalModeTab '+ tabColor +'"><span class="t-right t-sm" data-tooltip="Open in Normal Mode"><a href="' + windowLocationHref + '"><img src="' + iconEE + '"/></a></span></div>';
       pagemodeEdit.insertAdjacentHTML( 'afterend', html );
     }
 
@@ -1757,7 +1777,7 @@ if(isEditMode) {
      */
     var iconCE =  chrome.runtime.getURL("images/ce.png");
 
-    if(result.feature_toggleribbon) {
+    if(result.feature_toggleribbon && !isRibbon) {
       html = '<div class="scContentEditorTab '+ tabColor +'"><span class="t-right t-sm" data-tooltip="Open in Content Editor"><a href="' + window.location.origin + '/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1"><img src="' + iconCE + '"/></a></span></div>';
       pagemodeEdit.insertAdjacentHTML( 'afterend', html );
     }

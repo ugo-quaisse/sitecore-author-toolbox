@@ -1694,11 +1694,13 @@ if(isEditMode) {
 
     //Variables
     var pagemodeEdit = document.querySelector(".pagemode-edit");
+    if(!pagemodeEdit) { pagemodeEdit = document.querySelector(".on-page-editor"); }
+    if(!pagemodeEdit) { pagemodeEdit = document.querySelector(".experience-editor"); }
     //if(!pagemodeEdit) { pagemodeEdit = document.querySelector(".js-focus-visible"); }
-    var scCrossPiece = document.querySelector("#scCrossPiece");
     windowLocationHref = window.location.href.toLowerCase();
     var isQuery = windowLocationHref.includes('?');
     var isEditMode = windowLocationHref.includes('sc_mode=edit');
+    var scCrossPiece = document.querySelector("#scCrossPiece");
     var ribbon = document.querySelector('#scWebEditRibbon');
     var scMessageBar = document.querySelector('.sc-messageBar');
     var tabColor;
@@ -1724,7 +1726,10 @@ if(isEditMode) {
      * Show/Hide EE ibbon
      */
 
+    //TODO Observer when scCrossPiece has height
+    
     if(result.feature_toggleribbon && ribbon) {
+      var offsetHeight = ribbon.offsetHeight;
       var html = '<div class="scExpTab '+ tabColor +'"><span class="tabHandle"></span><span class="tabText" onclick="toggleRibbon()">▲ Hide<span></div>';
       ribbon.insertAdjacentHTML( 'afterend', html );
     }

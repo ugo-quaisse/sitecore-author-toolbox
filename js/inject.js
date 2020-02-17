@@ -8,7 +8,7 @@
 
  /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
- function copyTranslate(leftElemId,rightElemId) {
+function copyTranslate(leftElemId,rightElemId) {
 
  	var left = document.querySelector('#'+leftElemId);
  	var right = document.querySelector('#'+rightElemId);
@@ -17,7 +17,7 @@
 
  }
 
- function copyTranslateAll() {
+function copyTranslateAll() {
 
  	var scTranslateRTL = document.querySelectorAll(".scTranslateRTL");
 

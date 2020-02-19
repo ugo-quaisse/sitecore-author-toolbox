@@ -27,6 +27,29 @@ function sendNotification(scTitle, scBody) {
   });
 }
 
+
+function repositionElement(event) {
+  this.style.left = initX + event.clientX - mousePressX + 'px';
+}
+
+function startDrag() {
+  var contextmenu = document.querySelector('.scExpTab');
+  if(contextmenu) {
+    contextmenu.addEventListener('mousedown', function(event) {
+
+      initX = this.offsetLeft;
+      mousePressX = event.clientX;
+
+      this.addEventListener('mousemove', repositionElement, false);
+
+      window.addEventListener('mouseup', function() {
+        contextmenu.removeEventListener('mousemove', repositionElement, false);
+      }, false);
+
+    }, false);
+  }
+}
+
 function cleanCountryName(name) {
 
   var temp = name;
@@ -689,7 +712,8 @@ if(debug) {
   console.info("%c "+window.location.href,'font-size:8px');
 }
 
-//Url variables
+//Variables
+var initX, initY, mousePressX;
 var windowLocationHref = window.location.href.toLowerCase();
 var isSitecore = window.location.pathname.includes('/sitecore/');
 var isPreviewMode = document.querySelector(".pagemode-preview");
@@ -1698,7 +1722,7 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
     var pagemodeEdit = document.querySelector(".pagemode-edit");
     if(!pagemodeEdit) { pagemodeEdit = document.querySelector(".on-page-editor"); }
     if(!pagemodeEdit) { pagemodeEdit = document.querySelector(".experience-editor"); }
-    //if(!pagemodeEdit) { pagemodeEdit = document.querySelector(".js-focus-visible"); }
+    if(!pagemodeEdit) { pagemodeEdit = document.querySelector(".js-focus-visible"); }
     windowLocationHref = window.location.href.toLowerCase();
     var isQuery = windowLocationHref.includes('?');
     var isEditMode = windowLocationHref.includes('sc_mode=edit');
@@ -1739,6 +1763,7 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
             var html = '<div class="scExpTab '+ tabColor +'"><span class="tabHandle"></span><span class="tabText" onclick="toggleRibbon()">▲ Hide<span></div>';
             addedNode.insertAdjacentHTML( 'afterend', html );
             observer.disconnect();
+            startDrag();
           }
         }
       }

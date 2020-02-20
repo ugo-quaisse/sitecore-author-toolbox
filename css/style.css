@@ -1,8 +1,34 @@
 /* Sitecore banner colors */
 form#ContentEditorForm {
-    filter: blur(3px) brightness(0.15) grayscale(1);
+    filter: blur(2px) brightness(0.2) grayscale(1);
     transition: 0.7s;
     transition-delay: 0.3s;
+    transform: scale(1.01);
+}
+
+body.contentEditor:after {
+    content: "Loading Sitecore...";
+    color: white;
+    font-size: 12px;
+    position: fixed;
+    top: 50%;
+    left: 50vh;
+    left: 50%;
+    opacity: 1;
+    /*transform: translate(-50%, 50%);*/
+    transition: 0.7s;
+    transition-delay: 0.3s;
+
+    height: 96px;
+    width: 96px;
+    position: absolute;
+    margin-left: -43px;
+    margin-top: -43px;
+    background: transparent url(/sitecore/shell/client/Speak/Assets/img/Speak/ProgressIndicator/sc-spinner32.gif) no-repeat center center;
+    background-color: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.175);
+    z-index: 10001;
 }
 
 #scPreloader {
@@ -166,4 +192,10 @@ form#ContentEditorForm {
 
 .dark:hover {
     color: #ffffff !important;
+}
+.scMessageBarOption {
+    /*color: #897B2F !important;*/
+}
+#sxa-toolbox~#wrapper {
+    /*zoom: 1.2 !important;*/
 }

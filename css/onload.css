@@ -1,6 +1,12 @@
 /* Sitecore transition onload */
 form#ContentEditorForm {
 	filter: blur(0px) brightness(1) grayscale(0) !important;
+	transform: scale(1)
+}
+
+body.contentEditor:after {
+    content: "";
+    opacity: 0;
 }
 
 .scMenuPanelItem, .scMenuPanelItem_Hover, .scMenuPanelItemSelected_Hover, .scMenuPanelItemSelected {

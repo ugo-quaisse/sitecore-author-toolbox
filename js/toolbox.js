@@ -926,7 +926,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
     /*
      * Enhanced Bucket List Select Box (multilist)
      */
-    var scBucketListSelectedBox = document.querySelectorAll(".scBucketListSelectedBox, .scContentControlMultilistBox");
+    var scBucketListSelectedBox = document.querySelectorAll(".scBucketListSelectedBox, .scContentControlMultilistBox, .scCombobox");
     var Section_Data = document.querySelector("#Section_Data");
 
     if(scBucketListSelectedBox[1]) {
@@ -938,12 +938,12 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
     if(scBucketListSelectedBox) {
 
       scBucketListSelectedBox.addEventListener("change", function() {
-     
+
         var itemId = scBucketListSelectedBox.value;
         var itemName = scBucketListSelectedBox[scBucketListSelectedBox.selectedIndex].text;
         var iconError = chrome.runtime.getURL("images/rocket.png");
-        var scMessageEditText = '<a class="scMessageBarOption" href="' + window.location.origin + '/sitecore/shell/Applications/Content%20Editor.aspx#' + itemId + '" target="_blank">Open it in a new tab.</a> ';
-        var scMessageEdit = '<div id="Warnings" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + iconError + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">' + itemName + '</div><span id="Information" class="scMessageBarText">To edit this item in Content Editor</span><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet">' + scMessageEditText + '</li></ul></div></div>';
+        var scMessageEditText = '<a class="scMessageBarOption" href="' + window.location.origin + '/sitecore/shell/Applications/Content%20Editor.aspx#' + itemId + '" target="_blank"><u>Click here ⧉</u></a> ';
+        var scMessageEdit = '<div id="Warnings" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + iconError + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">' + itemName + '</div><span id="Information" class="scMessageBarText"><span class="scMessageBarOptionBullet">' + scMessageEditText + '</span> to edit this item in Content Editor.</span></div></div>';
 
         //Add hash to URL
         if(!document.querySelector(".scMessageBar")) {
@@ -1366,6 +1366,9 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
         if(debug) { console.info("%c [Storage Set] Version : " + scVersion + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
       });
 
+      //Reload language
+      //scForm.invoke("item:load(id={93C2EE9B-9574-4B40-BC0D-6CFEE5104335},language=ja-JP,version=0)")
+
     }
 
 
@@ -1384,42 +1387,32 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
     //Sitecore Variables
     windowLocationHref = window.location.href.toLowerCase();
     var scLanguage = element.getAttribute("value").toLowerCase();
-    var scVersion;
     var hash = window.location.hash.substr(1);
     var hasRedirection = windowLocationHref.includes("&ro=");
     var hasRedirectionOther = windowLocationHref.includes("&sc_ce_uri=");
 
     if(!hasRedirection && !hasRedirectionOther) {
 
-      if(hash!="") {
-
         /*
-         * 9. Resume from hash value
-         */
-        var actualCode = `scForm.invoke("item:load(id=` + hash + `,language=` + scLanguage + `,version=1)");`;
-        script = document.createElement('script');
-        script.textContent = actualCode;
-        (document.head||document.documentElement).appendChild(script);
-        script.remove();
-
-        if(debug) { console.info('%c - Sitecore Hash : '+ hash + ' ', 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;'); }
-
-
-      } else {
-
-        /*
-         * 8. Resume from where you left
+         * 9. Resume from where you left or from hash value
          */
         chrome.storage.sync.get(['scItemID','scLanguage','scVersion','feature_reloadnode'], function(result) {
-
+          
           if (!chrome.runtime.error && result.scItemID != undefined) {
 
             if(result.feature_reloadnode == undefined) { result.feature_reloadnode = true; }
 
+            if(hash!="") {
+
+              result.scItemID = hash;
+              if(debug) { console.info('%c - Sitecore Hash : '+ hash + ' ', 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;'); }
+
+            }
+
             if(result.scItemID && result.feature_reloadnode == true) {
 
-              var actualCode = `scForm.invoke("item:load(id=` + result.scItemID + `,language=` + scLanguage + `,version=` + scVersion + `)");`;
-              var script = document.createElement('script');
+              var actualCode = `scForm.invoke("item:load(id=` + result.scItemID + `,language=` + result.scLanguage + `,version=` + result.scVersion + `)");`;
+              script = document.createElement('script');
               script.textContent = actualCode;
               (document.head||document.documentElement).appendChild(script);
               script.remove();
@@ -1429,11 +1422,10 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
               if(debug) { console.info("%c [Storage Get] Version : "+ result.scVersion + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
 
             }
+
           }
 
         });
-
-      }
 
     }
 

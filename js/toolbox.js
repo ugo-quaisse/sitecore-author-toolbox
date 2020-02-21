@@ -498,6 +498,23 @@ function sitecoreAuthorToolbox() {
 
       }
 
+      //Listener on tabs to check if we are in
+      // var target = document.querySelector( "#EditorTabs" );
+      // var observer = new MutationObserver(function(mutations) {
+
+      //   console.log("mutations->");
+      //   console.log(mutations);
+
+      // });
+      
+      // //Observer
+      // if(target) {
+      //   var config = { attributes: false, childList: true, characterData: true };
+      //   observer.observe(target, config);
+      //   console.log("MEDiA OBSERVER START");
+      //   console.log(target);
+      // }
+
     });
 
   }
@@ -721,7 +738,6 @@ if(!isPreviewMode) { isPreviewMode = windowLocationHref.includes('sc_mode=previe
 var isEditMode = document.querySelector(".pagemode-edit");
 if(!isEditMode) { isEditMode = windowLocationHref.includes('sc_mode=edit'); }
 if(!isEditMode) { isEditMode = windowLocationHref.includes('/experienceeditor/'); }
-
 var isGalleryLanguage = windowLocationHref.includes('gallery.language');
 var isGalleryLanguageExpEd = windowLocationHref.includes('selectlanguagegallery');
 var isGalleryFavorites = windowLocationHref.includes('gallery.favorites');
@@ -943,7 +959,8 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
         var itemName = scBucketListSelectedBox[scBucketListSelectedBox.selectedIndex].text;
         var iconError = chrome.runtime.getURL("images/rocket.png");
         var scMessageEditText = '<a class="scMessageBarOption" href="' + window.location.origin + '/sitecore/shell/Applications/Content%20Editor.aspx#' + itemId + '" target="_blank"><u>Click here ⧉</u></a> ';
-        var scMessageEdit = '<div id="Warnings" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + iconError + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">' + itemName + '</div><span id="Information" class="scMessageBarText"><span class="scMessageBarOptionBullet">' + scMessageEditText + '</span> to edit this item in Content Editor.</span></div></div>';
+        var scMessageExperienceText = '<a class="scMessageBarOption" href="' + window.location.origin + '/?sc_mode=edit&sc_itemid=' + itemId + '" target="_blank"><u>Click here ⧉</u></a> ';
+        var scMessageEdit = '<div id="Warnings" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + iconError + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">' + itemName + '</div><span id="Information" class="scMessageBarText"><span class="scMessageBarOptionBullet">' + scMessageEditText + '</span> to edit this item in <b>Content Editor</b>.</span><span id="Information" class="scMessageBarText"><br /><span class="scMessageBarOptionBulletXP">' + scMessageExperienceText + '</span> to edit this page in <b>Experience Editor</b>.</span></div></div>';
 
         //Add hash to URL
         if(!document.querySelector(".scMessageBar")) {
@@ -951,6 +968,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
         } else {
           document.querySelector(".scMessageBarTitle").innerHTML = itemName;
           document.querySelector(".scMessageBarOptionBullet").innerHTML = scMessageEditText;
+          document.querySelector(".scMessageBarOptionBulletXP").innerHTML = scMessageExperienceText;
         }
       });
     }
@@ -1220,7 +1238,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
     if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
 
-    if(result.feature_darkmode && !isExperienceEditor && !isAdminCache && !isSecurityWindow && !isContentHome && !isLoginPage && !isEditMode && !isUserManager && !isPersonalization && !isRules) {
+    if(result.feature_darkmode && !isExperienceEditor && !isAdminCache && !isSecurityWindow && !isContentHome && !isLoginPage && !isEditMode && !isUserManager && !isRules) {
 
       var link = document.createElement("link");
       link.type = "text/css";
@@ -1283,7 +1301,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
             let newNodes = subTreeDiv.querySelectorAll(".scContentTreeNode");
             if(newNodes.length == 1) { newNodes[0].querySelector(".scContentTreeNodeGlyph").click(); }
           }
-        }, 175);
+        }, 200);
 
       }, false);
 

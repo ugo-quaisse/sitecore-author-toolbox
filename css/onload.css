@@ -5,7 +5,6 @@ form#ContentEditorForm {
 }
 
 body.contentEditor:after {
-    content: "";
     opacity: 0;
 }
 

@@ -256,3 +256,17 @@ form {
 .spe-secured-app .scEditorWarningOption {
     color: #897a2e !important;
 }
+.top-row {
+    background-color: #333333 !important;
+}
+.sc-kpi {
+    background-color: #222222 !important;
+}
+.pick-button, .display-off,
+.item-picker {
+    background-color: #111111 !important;
+}
+.pick-button:hover {
+    background-color: #69a8d0 !important;
+ }
+

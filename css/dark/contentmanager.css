@@ -392,7 +392,8 @@ a.scEditorHeaderNavigatorField {
     .scEditorHeaderNavigatorField:hover,
     a.scEditorHeaderNavigatorSection:hover {
         cursor: pointer;
-        background-color: #E3E3E3;
+        background-color: #69a8d0;
+        color: #333333;
     }
 
 a.scEditorHeaderNavigatorSection {
@@ -468,7 +469,7 @@ a.scEditorHeaderNavigatorSection {
 
 .scEditorSectionCaptionExpanded,
 .scEditorSectionCaptionCollapsed {
-    background-color: #000000 !important;;
+    background-color: #000000;
     white-space: nowrap;
     line-height: 35px;
     color: #cccccc;
@@ -483,7 +484,7 @@ a.scEditorHeaderNavigatorSection {
 }
 
 .scEditorSectionCaptionExpanded {
-    border-left: 5px solid #a01d16;
+    border-left: 5px solid #a01d16 !important;
 }
 
     .scEditorSectionCaptionExpanded::selection {

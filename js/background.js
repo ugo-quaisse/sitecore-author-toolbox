@@ -155,9 +155,29 @@ chrome.tabs.onActivated.addListener(function(tabId, changeInfo, tab) {
 });
 
 // When the extension is installed or upgraded ...
-chrome.runtime.onInstalled.addListener(function(tabId) {
+chrome.runtime.onInstalled.addListener(function(details) {
 
-  console.log(">>> Extension Updated <<<")
+  if(details.reason == "install"){
+
+        console.log("This is a first install!");
+        chrome.tabs.create({url:"https://ugo-quaisse.github.io/sitecore-author-toolbox/"});
+
+  } else if(details.reason == "update"){
+        
+        var thisVersion = chrome.runtime.getManifest().version;
+
+        if(thisVersion != details.previousVersion) {
+
+          console.log("Updated from " + details.previousVersion + " to " + thisVersion);
+          chrome.tabs.create({url:"https://ugo-quaisse.github.io/sitecore-author-toolbox/?v="+thisVersion});
+
+        } else {
+
+          console.log("Just a refresh (" + thisVersion + ")");
+
+        }
+
+  }
 
   //Context menu
   chrome.contextMenus.onClicked.addListener(onClickHandler);

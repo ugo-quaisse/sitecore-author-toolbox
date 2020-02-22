@@ -1238,7 +1238,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
     if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
 
-    if(result.feature_darkmode && !isExperienceEditor && !isAdminCache && !isSecurityWindow && !isContentHome && !isLoginPage && !isEditMode && !isUserManager && !isRules) {
+    if(result.feature_darkmode && !isExperienceEditor && !isAdminCache && !isSecurityWindow && !isContentHome && !isLoginPage && !isEditMode && !isUserManager && !isRules && !isAdmin) {
 
       var link = document.createElement("link");
       link.type = "text/css";

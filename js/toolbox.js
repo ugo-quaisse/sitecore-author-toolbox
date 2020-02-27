@@ -8,7 +8,7 @@
 
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
-var debug = true;
+var debug = false;
 
 /*
  * Helper functions
@@ -467,10 +467,13 @@ function sitecoreAuthorToolbox() {
           //Variables
           scIframeSrc = scIframeSrc.split("id=%7B");
           scIframeSrc = scIframeSrc[1].split("%7B");
+          scIframeSrc = scIframeSrc[0].split("%7D");
           var scMediaID = scIframeSrc[0];
 
+          if(debug) { console.info(scMediaID); }
+
           //Prepare HTML
-          var scUploadMediaUrl = '/sitecore/client/Applications/Dialogs/UploadMediaDialog?fo=sitecore://master/{' + scMediaID + '}';
+          var scUploadMediaUrl = '/sitecore/client/Applications/Dialogs/UploadMediaDialog?ref=list&ro=sitecore://master/%7b' + scMediaID + '%7d%3flang%3den&fo=sitecore://master/%7b' + scMediaID + '%7d';
           var scUploadMedia = '<iframe id="sitecorAuthorToolbox" class="sitecorAuthorToolbox" src="' + scUploadMediaUrl + '" style="width:100%; height:500px; margin-top: -60px; resize: vertical;"></iframe>';
           scIframeMedia.setAttribute("style", "margin-top: -30px;");
           
@@ -479,7 +482,6 @@ function sitecoreAuthorToolbox() {
           if(scUploadDragDrop){
             //Delete existing Drag and Drop iFrame
             scUploadDragDrop.remove();
-            if(debug) { console.info("Remove iFrame from DOM"); }
           }    
           
           //Insert new button
@@ -493,7 +495,6 @@ function sitecoreAuthorToolbox() {
         if(scUploadDragDrop) {
           //Delete existing Drag and Drop iFrame
           scUploadDragDrop.remove();
-          if(debug) { console.info("Remove iFrame from DOM (no folder)"); }
         }
 
       }
@@ -702,6 +703,38 @@ function sitecoreAuthorToolbox() {
 
       }
     });
+
+    /*
+     * Content Editor Tabs
+     */
+    // check if CE
+    // check number of sections
+    // generate HTML tabs ul li based on total num of sescions
+    // hide existing sections
+    // inject new HTML
+    var scEditorHeader = document.querySelector(".scEditorHeader");
+    var scEditorSectionCaption = document.querySelectorAll(".scEditorSectionCaptionCollapsed, .scEditorSectionCaptionExpanded");
+    var scEditorTabs = '<div id="scEditorTabs"><ul>';
+
+    for(var section of scEditorSectionCaption) {
+
+      console.log(section.innerText);
+      console.log(section.getAttribute("id"));
+
+      var sectionTitle = section.innerText;
+      var sectionId = section.getAttribute("id");
+      scEditorTabs += '<li data-id="' + sectionId + '" onclick="javascript:scContent.toggleSection(\'' + sectionId+ '\',\'' + sectionTitle+ '\')">' + sectionTitle+ '</li>';
+
+      //Hide the section
+      section.setAttribute( 'style', 'display: none !important' );
+
+    }
+
+    scEditorTabs += '</ul></div>';
+
+    scEditorHeader.insertAdjacentHTML( 'afterend', scEditorTabs );
+    
+
 
     /*
      * Debug info

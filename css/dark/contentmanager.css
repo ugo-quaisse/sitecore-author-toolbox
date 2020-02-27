@@ -1449,7 +1449,9 @@ a.scSearchLink img {
 
 .splitter-bar {
     width: 3px;
-    background-color: #333333 !important;;
+    background-color: #333333 !important;
+    cursor: col-resize !important;
+    transition: background-color ease-in-out .1s !important;
 }
 
     .splitter-bar > a {
@@ -1464,6 +1466,10 @@ a.scSearchLink img {
         height: 100%;
         display: inline-block;
     }
+
+.splitter-bar:hover {
+    background-color: #4e82b8 !important;
+}
 
 #ContentTreePanel {
     width: 150px;

@@ -1,7 +1,4 @@
 /* Sitecore banner colors */
-html {
-    font-size: 100% !important;
-}
 form#ContentEditorForm {
     filter: blur(2px) brightness(0.1) grayscale(1);
     transition: 0.7s;

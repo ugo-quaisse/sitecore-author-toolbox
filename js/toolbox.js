@@ -942,7 +942,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
     /*
      * Enhanced Bucket List Select Box (multilist)
      */
-    var scBucketListSelectedBox = document.querySelectorAll(".scBucketListSelectedBox, .scContentControlMultilistBox, .scCombobox");
+    var scBucketListSelectedBox = document.querySelectorAll(".scBucketListSelectedBox, .scContentControlMultilistBox");
     var Section_Data = document.querySelector("#Section_Data");
 
     if(scBucketListSelectedBox[1]) {
@@ -1510,6 +1510,15 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
   link.type = "text/css";
   link.rel = "stylesheet";
   link.href =  chrome.runtime.getURL("css/onload-min.css");
+  document.getElementsByTagName("head")[0].appendChild(link);
+
+  /*
+   * Experience Editor Reset
+   */
+  link = document.createElement("link");
+  link.type = "text/css";
+  link.rel = "stylesheet";
+  link.href =  chrome.runtime.getURL("css/reset-min.css");
   document.getElementsByTagName("head")[0].appendChild(link);
 
   /*

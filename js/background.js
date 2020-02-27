@@ -27,8 +27,8 @@ function checkSiteSxa(request, sender, sendResponse){
 }
 
 function onClickHandler(info, tab) {
-    //console.info("info: " + JSON.stringify(info));
-    //console.info("tab: " + JSON.stringify(tab));
+    console.info("info: " + JSON.stringify(info));
+    console.info("tab: " + JSON.stringify(tab));
     var url = info.pageUrl.substring(0, info.pageUrl.indexOf('?'));   
     if(sxa_site != undefined) { sc_site = "&sc_site="+sxa_site } else { sc_site = ""; }
     

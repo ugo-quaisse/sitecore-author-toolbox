@@ -53,3 +53,37 @@ function toggleRibbon() {
 	}
 
 }
+
+function toggleSection(elem,name) {
+
+	//Change status of the tabs
+	var scEditorTab = document.querySelectorAll(".scEditorTab");
+
+	var scSections = document.querySelector("#scSections");
+	scSections.value = encodeURI(name+"=0");
+	
+	for(var tab of scEditorTab) {
+
+		//Get real section and panel
+		var sectionId = tab.dataset.id;
+ 		var section = document.querySelector("#"+sectionId);
+ 		var sectionPanel = section.nextSibling;
+
+		if(tab!=elem) {
+			//Other tabs not clicked
+ 			tab.classList.remove("scEditorTabSelected");
+ 			sectionPanel.setAttribute( 'style', 'display: none !important' );
+ 			section.classList.add("scEditorSectionCaptionCollapsed");
+          	section.classList.remove("scEditorSectionCaptionExpanded");
+          	scSections.value += encodeURI("&"+tab.innerText+"=1");
+ 		} else {
+ 			//Tab is clicked
+ 			tab.classList.add("scEditorTabSelected");
+ 			sectionPanel.setAttribute( 'style', 'display: table !important' );
+ 			section.classList.remove("scEditorSectionCaptionCollapsed");
+          	section.classList.add("scEditorSectionCaptionExpanded");
+ 		}
+
+ 	}
+
+}

@@ -204,34 +204,82 @@ body.contentEditor:after {
 .splitter-bar:hover {
     background-color: #4e82b8 !important;
 }
-
+.scEditorSectionPanel,
+.scEditorSections {
+    border-top: 1px solid #ccc;
+    margin-top: -1px !important;
+}
+.scEditorSectionPanel > tbody > tr > td {
+    padding-top: 20px;
+}
+.scEditorSectionPanelCell {
+    padding-top: 20px;
+}
 #scEditorTabs {
     display: flex;
     align-items: stretch;
     list-style: none;
     padding: 0;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 0px;
+    padding-top: 8px;
+    background-color: #ffffff;
 }
 #scEditorTabs > ul {
     display: -webkit-box;
-    overflow: scroll;
+    overflow: auto;
     width: 100%;
-    background-color: #ffffff;
+    background-color: transparent;
+    border-bottom: 0px;
 }
 #scEditorTabs > ul > li {
     display: block;
-    margin-bottom: -1px;
     padding: 10px 13px;
     border: 1px solid #ccc;
-    background: #eee;
+    background: #ffffff;
     color: #666;
     font-size: 12px; 
     font-weight: 600;
     text-transform: capitalize;
     cursor: pointer;    
     transition: all 0.1s;
+    border-radius: 0px 0px 0px 0px;
 }
 #scEditorTabs > ul > li:hover {
-    border-top-color: red;
+    border-top: 1px solid red;
     color: #333;
+}
+.scEditorTabEmpty {
+    padding: 0px 2px !important;
+    border-top: 0px !important;
+    border-left: 0px !important;
+    border-right: 0px !important;
+}
+.scEditorTabSelected {
+    border-top: 2px solid red !important;
+    color: #333 !important;
+    background-color: #f0f0f0 !important;
+    border-bottom: 0px solid #ccc !important;
+}
+
+@supports (-ms-accelerator:true) {
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 4px;
+    }
+     
+    /* Track */
+    ::-webkit-scrollbar-track {
+        box-shadow: inset none; 
+        border-radius: 3px;
+    }
+     
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        border-radius: 3px;
+        background: rgba(0,0,0,0.3); 
+        box-shadow: inset none; 
+    }
+    ::-webkit-scrollbar-thumb:window-inactive {
+        background: rgba(0,0,0,0.1); 
+    }
 }

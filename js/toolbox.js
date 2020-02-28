@@ -27,7 +27,6 @@ function sendNotification(scTitle, scBody) {
   });
 }
 
-
 function repositionElement(event) {
   this.style.left = initX + event.clientX - mousePressX + 'px';
 }
@@ -707,33 +706,89 @@ function sitecoreAuthorToolbox() {
     /*
      * Content Editor Tabs
      */
-    // check if CE
-    // check number of sections
-    // generate HTML tabs ul li based on total num of sescions
-    // hide existing sections
-    // inject new HTML
-    var scEditorHeader = document.querySelector(".scEditorHeader");
-    var scEditorSectionCaption = document.querySelectorAll(".scEditorSectionCaptionCollapsed, .scEditorSectionCaptionExpanded");
-    var scEditorTabs = '<div id="scEditorTabs"><ul>';
+    chrome.storage.sync.get(['feature_cetabs'], function(result) {
 
-    for(var section of scEditorSectionCaption) {
+    if(result.feature_cetabs == undefined) { result.feature_cetabs = true; }
 
-      console.log(section.innerText);
-      console.log(section.getAttribute("id"));
+      if(result.feature_cetabs) {
 
-      var sectionTitle = section.innerText;
-      var sectionId = section.getAttribute("id");
-      scEditorTabs += '<li data-id="' + sectionId + '" onclick="javascript:scContent.toggleSection(\'' + sectionId+ '\',\'' + sectionTitle+ '\')">' + sectionTitle+ '</li>';
+        var scEditorTabs = document.querySelector("#scEditorTabs");
+        var scEditorHeader = document.querySelector(".scEditorHeader");
+        var scMessageBar = document.querySelector(".scMessageBar");
+        var scEditorSectionCaption = document.querySelectorAll(".scEditorSectionCaptionCollapsed, .scEditorSectionCaptionExpanded");
+        var sectionActiveCount = 0;
 
-      //Hide the section
-      section.setAttribute( 'style', 'display: none !important' );
+        if(scEditorTabs) {
+          scEditorTabs.remove();
+        }
 
-    }
+        scEditorTabs = '<div id="scEditorTabs"><ul>';
 
-    scEditorTabs += '</ul></div>';
+        for(var section of scEditorSectionCaption) {
 
-    scEditorHeader.insertAdjacentHTML( 'afterend', scEditorTabs );
-    
+          var sectionTitle = section.innerText;
+          var sectionId = section.getAttribute("id");
+          var sectionClass = section.getAttribute("class");
+          var sectionSelected = "";
+          var sectionPanelDisplay = "";
+
+          //Detect active panel
+          if(sectionClass == "scEditorSectionCaptionExpanded" && sectionActiveCount == 0) {
+            sectionSelected = "scEditorTabSelected";
+            sectionPanelDisplay = "table";
+            sectionActiveCount++;
+          } else {
+            sectionSelected = "";
+            sectionPanelDisplay = "none";
+          }
+
+          scEditorTabs += '<li class="scEditorTabEmpty"></li>';
+          scEditorTabs += '<li data-id="' + sectionId + '" class="scEditorTab ' + sectionSelected + '" onclick="toggleSection(this,\'' + sectionTitle+ '\');">' + sectionTitle+ '</li>';
+
+          //Hide the accordion section
+          section.setAttribute( 'style', 'display: none !important' );
+
+          //Detect next scEditorSectionPanel
+          var scEditorSectionPanel = section.nextSibling;
+          scEditorSectionPanel.setAttribute( 'style', 'display: ' + sectionPanelDisplay + ' !important' );
+
+        }
+
+        scEditorTabs += '<li class="scEditorTabEmpty"></li></ul></div>';
+
+        //Add tabs to Content Editor
+        if(scMessageBar) {
+          scMessageBar.insertAdjacentHTML( 'afterend', scEditorTabs );
+        } else {
+          scEditorHeader.insertAdjacentHTML( 'afterend', scEditorTabs );
+        }
+
+        //Recalc available space for last <li> border bottom
+        // var scEditorTabLast = document.querySelector(".scEditorTabLast");
+        // var posTab = scEditorTabLast.getBoundingClientRect();
+
+        // var scBody = document.querySelector("body");
+        // var posBody = scBody.getBoundingClientRect();
+
+        // var scEditorTabLastWidth = Math.round(posBody.width-posTab.x-28);
+        // scEditorTabLast.setAttribute( 'style', 'width: ' + scEditorTabLastWidth + 'px !important');
+
+
+
+        if(sectionActiveCount == 0) {
+          var tab = document.querySelector(".scEditorTab");          
+          var tabId = tab.dataset.id;
+          var tabSection = document.querySelector("#"+tabId);
+          tabSection.classList.remove("scEditorSectionCaptionCollapsed");
+          tabSection.classList.add("scEditorSectionCaptionExpanded");
+          var tabSectionPanel = tabSection.nextSibling;
+
+          tab.classList.add("scEditorTabSelected");
+          tabSectionPanel.setAttribute( 'style', 'display: table !important' );
+        }
+
+      }
+    });
 
 
     /*

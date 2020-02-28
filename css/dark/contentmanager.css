@@ -1785,3 +1785,55 @@ body .reGrip.grip_last {
 .paddingLeft {
     padding-left: 3px;
 }
+.scEditorSectionPanel,
+.scEditorSections {
+    border-top: 1px solid #333333;
+    background-color: #222222;
+}
+#scEditorTabs {
+    background-color: #111111;
+}
+#scEditorTabs > ul > li {
+    border: 1px solid #333333;
+    background: #333333;
+    color: #888;
+}
+#scEditorTabs > ul > li:hover {
+    color: #666666;
+}
+.scEditorTabEmpty {
+    background-color: #111111 !important;
+    border-bottom: 1px solid #111111 !important;
+}
+.scEditorTabSelected {
+    color: #ffffff !important;
+    background-color: #222222 !important;
+    border-bottom: 0px solid #222222 !important;
+    border-left: 0px solid #222222 !important;
+    border-right: 0px solid #222222 !important;
+}
+
+@supports (-ms-accelerator:true) {
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 4px;
+    }
+     
+    /* Track */
+    ::-webkit-scrollbar-track {
+        box-shadow: inset none; 
+        border-radius: 3px;
+    }
+     
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        border-radius: 3px;
+        background: rgba(0,0,0,0.3); 
+        box-shadow: inset none; 
+    }
+    ::-webkit-scrollbar-thumb:window-inactive {
+        background: rgba(0,0,0,0.1); 
+    }
+}
+
+

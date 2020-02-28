@@ -195,6 +195,17 @@ document.body.onload = function() {
       document.getElementById("feature_toggleribbon").checked = true;
     }
   });
+  //CE tabs
+  chrome.storage.sync.get(['feature_cetabs'], function(result) {
+    if (!chrome.runtime.error && result.feature_cetabs != undefined) {
+      if(result.feature_cetabs) {
+        document.getElementById("feature_cetabs").checked = true;
+      }
+    } else {
+      document.getElementById("feature_cetabs").checked = true;
+    }
+  });
+  
   //Context menu
   // chrome.storage.sync.get(['feature_contextmenu'], function(result) {
   //   if (!chrome.runtime.error && result.feature_reloadnode != undefined) {
@@ -284,6 +295,10 @@ document.getElementById("set").onclick = function() {
   //Toggle Ribbon
   chrome.storage.sync.set({"feature_toggleribbon": document.getElementById('feature_toggleribbon').checked}, function() {
     console.info('--> Toggle Button: ' + document.getElementById('feature_toggleribbon').checked);
+  });
+  //CE Tabs
+  chrome.storage.sync.set({"feature_cetabs": document.getElementById('feature_cetabs').checked}, function() {
+    console.info('--> CE Tabs: ' + document.getElementById('feature_cetabs').checked);
   });
 
   //Get URL parameters

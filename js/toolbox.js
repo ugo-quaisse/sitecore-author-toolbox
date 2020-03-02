@@ -250,6 +250,11 @@ function sitecoreAuthorToolbox() {
 
     if(result.feature_flags == undefined) { result.feature_flags = true; }
 
+    //Version number
+    var scEditorHeaderVersionsVersion = document.querySelector(".scEditorHeaderVersionsVersion");
+    var scVersionTitle = scEditorHeaderVersionsVersion.getAttribute("title");
+    scEditorHeaderVersionsVersion.querySelector("span").innerText = scVersionTitle.replace("."," ▾");
+
     if(isNotRegion) {
 
       //Clean country name
@@ -762,18 +767,6 @@ function sitecoreAuthorToolbox() {
         } else {
           scEditorHeader.insertAdjacentHTML( 'afterend', scEditorTabs );
         }
-
-        //Recalc available space for last <li> border bottom
-        // var scEditorTabLast = document.querySelector(".scEditorTabLast");
-        // var posTab = scEditorTabLast.getBoundingClientRect();
-
-        // var scBody = document.querySelector("body");
-        // var posBody = scBody.getBoundingClientRect();
-
-        // var scEditorTabLastWidth = Math.round(posBody.width-posTab.x-28);
-        // scEditorTabLast.setAttribute( 'style', 'width: ' + scEditorTabLastWidth + 'px !important');
-
-
 
         if(sectionActiveCount == 0) {
           var tab = document.querySelector(".scEditorTab");          

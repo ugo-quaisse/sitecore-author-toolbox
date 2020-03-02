@@ -211,6 +211,7 @@ body.contentEditor:after {
 }
 .scEditorSectionPanel > tbody > tr > td {
     padding-top: 20px;
+    padding-bottom: 20px;
 }
 .scEditorSectionPanelCell {
     padding-top: 20px;

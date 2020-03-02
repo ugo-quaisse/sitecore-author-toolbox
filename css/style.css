@@ -262,25 +262,27 @@ body.contentEditor:after {
     border-bottom: 0px solid #ccc !important;
 }
 
-@supports (-ms-accelerator:true) {
-    ::-webkit-scrollbar {
-        width: 6px;
-        height: 4px;
-    }
-     
-    /* Track */
-    ::-webkit-scrollbar-track {
-        box-shadow: inset none; 
-        border-radius: 3px;
-    }
-     
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-        border-radius: 3px;
-        background: rgba(0,0,0,0.3); 
-        box-shadow: inset none; 
-    }
-    ::-webkit-scrollbar-thumb:window-inactive {
-        background: rgba(0,0,0,0.1); 
-    }
+
+/*
+#scEditorTabs > ul::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
 }
+ 
+#scEditorTabs > ul::-webkit-scrollbar-track {
+    box-shadow: inset none; 
+    border-radius: 4px;
+    cursor: auto;
+    background-color: #f0f0f0;
+}
+ 
+#scEditorTabs > ul::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: rgba(0,0,0,0.3); 
+    box-shadow: inset none; 
+}
+#scEditorTabs > ul::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(0,0,0,0.2); 
+}
+*/ 
+

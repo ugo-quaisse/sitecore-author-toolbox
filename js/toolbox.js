@@ -719,7 +719,8 @@ function sitecoreAuthorToolbox() {
 
         var scEditorTabs = document.querySelector("#scEditorTabs");
         var scEditorHeader = document.querySelector(".scEditorHeader");
-        var scMessageBar = document.querySelector(".scMessageBar");
+        var scMessageBar = document.querySelectorAll(".scMessageBar");
+        scMessageBar = scMessageBar[scMessageBar.length-1];
         var scEditorSectionCaption = document.querySelectorAll(".scEditorSectionCaptionCollapsed, .scEditorSectionCaptionExpanded");
         var sectionActiveCount = 0;
 

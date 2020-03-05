@@ -54,7 +54,7 @@ function toggleRibbon() {
 
 }
 
-function toggleSection(elem,name) {
+function toggleSection(elem,name,fromerror = false) {
 
 	//Change status of the tabs
 	var scEditorTab = document.querySelectorAll(".scEditorTab");

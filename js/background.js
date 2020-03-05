@@ -70,7 +70,11 @@ function showContextMenu(tab) {
 
           if(!isEditMode) {
             if(!contextMenuEE) {
-              chrome.contextMenus.create({"title": "Edit in Experience Editor (beta)", "contexts":["page"], "id": "SitecoreAuthorToolbox"});
+              try {
+                chrome.contextMenus.create({"title": "Edit in Experience Editor (beta)", "contexts":["page"], "id": "SitecoreAuthorToolbox"});
+              } catch(e) {
+                console.log(e);
+              }
               contextMenuEE = true;
               if(contextMenuCE) {
                 chrome.contextMenus.remove("SitecoreAuthorToolboxEditor");

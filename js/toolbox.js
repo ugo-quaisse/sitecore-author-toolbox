@@ -377,6 +377,12 @@ function sitecoreAuthorToolbox() {
 
       for (let item of scErrors) {
 
+          var fieldId = item.previousSibling.closest("div").getAttribute("id").replace("ValidationMarker","");
+          var sectionTitle = document.querySelector("#"+fieldId).closest("table").closest("td").closest("table").previousSibling.innerText;
+          var sectionId = document.querySelector("#"+fieldId).closest("table").closest("td").closest("table").previousSibling.getAttribute("id");
+          var tabElem = document.querySelectorAll('[data-id="' + sectionId + '"]');
+          //toggleSection(' + tabElem + ',\'' + sectionTitle+ '\')
+
           if( item.getAttribute("src") != '/sitecore/shell/themes/standard/images/bullet_square_yellow.png') {
             scMessageErrors += '<li class="scMessageBarOptionBullet" onclick="' + item.getAttribute("onclick") + '" style="cursor:pointer;">' + item.getAttribute("title") + '</li>';
             count++;
@@ -737,6 +743,8 @@ function sitecoreAuthorToolbox() {
           var sectionClass = section.getAttribute("class");
           var sectionSelected = "";
           var sectionPanelDisplay = "";
+          var sectionError = 0;
+          var sectionErrorHtml = "";
 
           //Detect active panel
           if(sectionClass == "scEditorSectionCaptionExpanded" && sectionActiveCount == 0) {
@@ -748,9 +756,6 @@ function sitecoreAuthorToolbox() {
             sectionPanelDisplay = "none";
           }
 
-          scEditorTabs += '<li class="scEditorTabEmpty"></li>';
-          scEditorTabs += '<li data-id="' + sectionId + '" class="scEditorTab ' + sectionSelected + '" onclick="toggleSection(this,\'' + sectionTitle+ '\');">' + sectionTitle+ '</li>';
-
           //Hide the accordion section
           section.setAttribute( 'style', 'display: none !important' );
 
@@ -758,6 +763,17 @@ function sitecoreAuthorToolbox() {
           var scEditorSectionPanel = section.nextSibling;
           scEditorSectionPanel.setAttribute( 'style', 'display: ' + sectionPanelDisplay + ' !important' );
 
+          //How many errors in this section
+          sectionError = scEditorSectionPanel.querySelectorAll(".scEditorFieldMarkerBarCellRed").length;
+          if(sectionError > 0) { sectionErrorHtml = "<span id='scCrossTabError'>❌ </span>"; }
+
+          //Add tabs to document
+          scEditorTabs += '<li class="scEditorTabEmpty"></li>';
+          scEditorTabs += '<li data-id="' + sectionId + '" class="scEditorTab ' + sectionSelected + '" onclick="toggleSection(this,\'' + sectionTitle+ '\');">' + sectionErrorHtml + sectionTitle+ '</li>';
+
+          //Add trigger on error click to open tab
+          //var sectionTitle = document.querySelector("#FIELD47775058").closest("table").closest("td").closest("table").previousSibling.innerText
+          //toggleSection(this,\'' + sectionTitle+ '\');
         }
 
         scEditorTabs += '<li class="scEditorTabEmpty"></li></ul></div>';
@@ -768,6 +784,7 @@ function sitecoreAuthorToolbox() {
         } else {
           scEditorHeader.insertAdjacentHTML( 'afterend', scEditorTabs );
         }
+
 
         if(sectionActiveCount == 0) {
           var tab = document.querySelector(".scEditorTab");          
@@ -1097,6 +1114,10 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
           for (let item of scErrors) {
 
               if( item.getAttribute("src") != '/sitecore/shell/themes/standard/images/bullet_square_yellow.png') {
+                //If tabs, add a second event
+                console.log(item);
+                //var sectionTitle = document.querySelector("#FIELD47775058").closest("table").closest("td").closest("table").previousSibling.innerText
+                //toggleSection(this,\'' + sectionTitle+ '\');
                 scMessageErrors += '<li class="scMessageBarOptionBullet" onclick="' + item.getAttribute("onclick") + '" style="cursor:pointer;">' + item.getAttribute("title") + '</li>';
                 count++;
               }
@@ -1110,6 +1131,9 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
             //Delete all errors
             var element = document.getElementById("scMessageBarError");
             if(element) { element.parentNode.removeChild(element); }
+            var scCrossTabError = document.querySelectorAll("#scCrossTabError");
+            scCrossTabError.forEach(e => e.parentNode.removeChild(e));
+
           }
 
           if(debug) { console.log("!! Change !!"); }
@@ -1505,6 +1529,11 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
             if(result.feature_reloadnode == undefined) { result.feature_reloadnode = true; }
 
             if(hash!="") {
+
+              //TODO: bug if stored version if > 1 and reloaded page with hash version 1
+              if(result.scItemID!=hash) {
+                result.scVersion = 1;
+              }
 
               result.scItemID = hash;
               if(debug) { console.info('%c - Sitecore Hash : '+ hash + ' ', 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;'); }

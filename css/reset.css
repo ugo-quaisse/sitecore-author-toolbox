@@ -2,6 +2,10 @@ html {
     font-size: 100% !important; 
 }
 
+body {
+    line-height: normal !important;
+}
+
 @keyframes animation {
 	0% {
 		background-position: 0% 0%;
@@ -11,7 +15,6 @@ html {
   	}
 }
 
-
 .scInsertionHandle,
 .scSortingHandle {
     left: 0px !important;
@@ -20,7 +23,7 @@ html {
 	z-index: 9050 !important;
 	background-image: linear-gradient(45deg, #f7d871 25%, #fffbe5 25%, #fffbe5 50%, #f7d871 50%, #f7d871 75%, #fffbe5 75%, #fffbe5 100%);
 	background-size: 40px 40px;
-	animation: animation 20s linear infinite;
+	/*animation: animation 20s linear infinite;*/
 	background-position: 0% 0%;
 	background-image: 0.5s ease-in-out;
  }

@@ -1377,11 +1377,13 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
         if (!event.target.matches('.scContentTreeNodeGlyph')) return;
         let glyphId = event.target.id;
 
-        setTimeout(function(){   
-          let subTreeDiv = document.querySelector("#"+glyphId).nextSibling.nextSibling.nextSibling;
-          if(subTreeDiv) {
-            let newNodes = subTreeDiv.querySelectorAll(".scContentTreeNode");
-            if(newNodes.length == 1) { newNodes[0].querySelector(".scContentTreeNodeGlyph").click(); }
+        setTimeout(function(){
+          if(document && glyphId) {   
+            let subTreeDiv = document.querySelector("#"+glyphId).nextSibling.nextSibling.nextSibling;
+            if(subTreeDiv) {
+              let newNodes = subTreeDiv.querySelectorAll(".scContentTreeNode");
+              if(newNodes.length == 1) { newNodes[0].querySelector(".scContentTreeNodeGlyph").click(); }
+            }
           }
         }, 200);
 

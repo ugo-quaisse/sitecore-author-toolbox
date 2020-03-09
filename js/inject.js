@@ -87,3 +87,29 @@ function toggleSection(elem,name,fromerror = false) {
  	}
 
 }
+
+function hideTab(title, extensionId) {
+	  var txt;
+	  var confirmation = confirm("Do you want to hide all \"" + title + "\" tabs?");
+	  if (confirmation == true) {
+	  	chrome.runtime.sendMessage(extensionId, {getTargetData: true, greeting: "hide_tab"}, function(response) {
+		  console.log(response);
+		});
+	  	//Save tab title in storage as a hidden tab
+	  	//Need to send a message to background script or toolbox
+	  	// chrome.storage.sync.get(["hidden_tabs"], function(result) {
+	   //      var array = result[hidden_tabs]?result[hidden_tabs]:[];
+	   //      array.unshift(title);
+	   //      var jsonObj = {};
+	   //      jsonObj[hidden_tabs] = array;
+	   //      chrome.storage.sync.set(jsonObj, function() {
+	   //          console.info('--> New array entry, This tab will be hidden: ' + title);
+	   //      });
+	   //  });
+	  	//Confirmation message
+	    alert("Ok, you will be able to revert from the \"🙈\" pinned tab");
+	  } else {
+	    txt = "You pressed Cancel!";
+	  }
+	  return false;
+}

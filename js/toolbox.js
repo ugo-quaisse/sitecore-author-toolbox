@@ -421,6 +421,7 @@ function sitecoreAuthorToolbox() {
           //Delete all errors
           var element = document.getElementById("scMessageBarError");
           if(element) { element.parentNode.removeChild(element); }
+          //document.querySelectorAll("#scCrossTabError").forEach(e => e.parentNode.removeChild(e));
         }
 
         if(debug) { console.log("Changement: "+document.getElementsByClassName("scValidatorPanel")); }
@@ -765,15 +766,28 @@ function sitecoreAuthorToolbox() {
 
           //How many errors in this section
           sectionError = scEditorSectionPanel.querySelectorAll(".scEditorFieldMarkerBarCellRed").length;
-          if(sectionError > 0) { sectionErrorHtml = "<span id='scCrossTabError'>❌ </span>"; }
+          if(sectionError > 0) { sectionErrorHtml = "<span id='scCrossTabError'>🛑 </span>"; }
+
+          //Add close/hide button on each tabs, on click all tabs with the current Title will be hidden in Sitecore
+          //To revert back to original state, a pinned tab will be shown to display them again
+
+          //Extension ID
+          var extensionId = chrome.runtime.getURL("something");
+          extensionId = extensionId.split("chrome-extension://");
+          extensionId = extensionId[1].split("/something");
+          extensionId = extensionId[0];
+          console.log(extensionId);
 
           //Add tabs to document
           scEditorTabs += '<li class="scEditorTabEmpty"></li>';
-          scEditorTabs += '<li data-id="' + sectionId + '" class="scEditorTab ' + sectionSelected + '" onclick="toggleSection(this,\'' + sectionTitle+ '\');">' + sectionErrorHtml + sectionTitle+ '</li>';
+          scEditorTabs += '<li data-id="' + sectionId + '" class="scEditorTab ' + sectionSelected + '" onclick="toggleSection(this,\'' + sectionTitle+ '\');">' + sectionErrorHtml + sectionTitle+ '<span class="scEditorTabClose" onclick="hideTab(\'' + sectionTitle + '\',\'' + extensionId + '\')">❎</span></li>';
 
-          //Add trigger on error click to open tab
+          //Add trigger on grouped error message click to open tab
           //var sectionTitle = document.querySelector("#FIELD47775058").closest("table").closest("td").closest("table").previousSibling.innerText
           //toggleSection(this,\'' + sectionTitle+ '\');
+
+
+
         }
 
         scEditorTabs += '<li class="scEditorTabEmpty"></li></ul></div>';
@@ -1131,8 +1145,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
             //Delete all errors
             var element = document.getElementById("scMessageBarError");
             if(element) { element.parentNode.removeChild(element); }
-            var scCrossTabError = document.querySelectorAll("#scCrossTabError");
-            scCrossTabError.forEach(e => e.parentNode.removeChild(e));
+            //document.querySelectorAll("#scCrossTabError").forEach(e => e.parentNode.removeChild(e));
 
           }
 

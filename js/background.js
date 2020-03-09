@@ -139,6 +139,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.greeting == "sxa_site"){
         checkSiteSxa(request, sender, sendResponse);
     }
+    if (request.greeting == "hide_tab"){
+        sendResponse({farewell: "Ok roger that!"});
+    }
     return true;
 });
 

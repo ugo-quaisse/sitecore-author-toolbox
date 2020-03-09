@@ -22,7 +22,7 @@ body.contentEditor:after {
     height: 56px;
     width: 96px;
     position: absolute;
-    background: transparent url(/sitecore/shell/client/Speak/Assets/img/Speak/ProgressIndicator/sc-spinner32.gif) no-repeat center center;
+    background: transparent url('chrome-extension://__MSG_@@extension_id__/images/sc-spinner32.gif') no-repeat center center;
     background-color: #ffffff;
     border-radius: 6px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.175);
@@ -248,6 +248,17 @@ body.contentEditor:after {
 #scEditorTabs > ul > li:hover {
     border-top: 1px solid red;
     color: #333;
+}
+.scEditorTab > .scEditorTabClose {
+    position: relative;
+    right: -13px;
+    top: -11px;
+    cursor: pointer;
+    opacity: 0;
+    display: none;
+}
+.scEditorTab:hover > .scEditorTabClose {
+    opacity: 1;
 }
 .scEditorTabEmpty {
     padding: 0px 2px !important;

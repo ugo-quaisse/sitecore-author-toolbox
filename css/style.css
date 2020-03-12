@@ -273,6 +273,10 @@ body.contentEditor:after {
     border-bottom: 0px solid #ccc !important;
 }
 
+.scSearchListExtra {
+    color: #ccc;
+}
+
 
 /*
 #scEditorTabs > ul::-webkit-scrollbar {

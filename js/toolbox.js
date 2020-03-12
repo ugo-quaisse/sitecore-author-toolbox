@@ -622,7 +622,7 @@ function sitecoreAuthorToolbox() {
               chars = event.target.value.length;
               if(chars > 1) { charsText = chars+" chars"; } else { charsText = chars+" char"; }
 
-              if(debug) { console.log('chars_'+event.target.id+" -> "+charsText); }
+              if(debug) { console.log('Input text: '+event.target.id+" -> "+charsText); }
 
               if(document.querySelector('#chars_'+event.target.id)) {
                 document.querySelector('#chars_'+event.target.id).innerText = charsText;
@@ -818,35 +818,32 @@ function sitecoreAuthorToolbox() {
     /*
      * Search enhancements
      */
-     //Add listener on search result list
-    target = document.querySelector( "#SearchResultHolder" );
+    //Add listener on search result list
+    target = document.querySelector( "#SearchResult" );
     observer = new MutationObserver(function(mutations) {
 
       console.log(mutations);
+      
 
-      var SearchResultHolder = document.querySelector("#SearchResultHolder");
+      var SearchResultHolder = document.querySelector("#SearchResult");
       var scSearchLink = SearchResultHolder.querySelectorAll(".scSearchLink");
-
-      console.log(scSearchLink);
+      var scSearchListExtra = document.querySelector(".scSearchListExtra");
+      console.log("EXTRA");
+      console.log(scSearchListExtra);
 
       for(var line of scSearchLink) {
-
-        console.log(line);
         
-        var getFullpath = line.getAttribute("title");
-        getFullpath = getFullpath.split(" - ");
-        getFullpath = getFullpath[1].toLowerCase();
+        var getFullpath = line.getAttribute("title").toLowerCase();
         if(getFullpath.includes("/home/")) {
           getFullpath = getFullpath.split("/home/");
           getFullpath = "/"+getFullpath[1];
         } 
 
-        console.log(getFullpath);
 
         //Inject HTML
-        var html = '<b>' + getFullpath + '</b>';
-        if(getFullpath) {
-          line.innerHTML = html;
+        var html = ' <span class="scSearchListExtra">' + getFullpath + '</span>';
+        if(getFullpath && scSearchListExtra == null) {
+          line.innerHTML += html;
         }
    
       }
@@ -855,7 +852,7 @@ function sitecoreAuthorToolbox() {
         
     //Observer
     if(target) {
-      config = { attributes: true, childList: false, characterData: false, subtree: false };
+      config = { attributes: false, childList: true, characterData: false, subtree: false };
       observer.observe(target, config);
     }
 

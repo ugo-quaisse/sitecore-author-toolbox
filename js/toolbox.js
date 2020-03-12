@@ -8,7 +8,7 @@
 
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
-var debug = false;
+var debug = true;
 
 /*
  * Helper functions
@@ -776,7 +776,6 @@ function sitecoreAuthorToolbox() {
           extensionId = extensionId.split("chrome-extension://");
           extensionId = extensionId[1].split("/something");
           extensionId = extensionId[0];
-          console.log(extensionId);
 
           //Add tabs to document
           scEditorTabs += '<li class="scEditorTabEmpty"></li>';
@@ -814,6 +813,51 @@ function sitecoreAuthorToolbox() {
 
       }
     });
+
+
+    /*
+     * Search enhancements
+     */
+     //Add listener on search result list
+    target = document.querySelector( "#SearchResultHolder" );
+    observer = new MutationObserver(function(mutations) {
+
+      console.log(mutations);
+
+      var SearchResultHolder = document.querySelector("#SearchResultHolder");
+      var scSearchLink = SearchResultHolder.querySelectorAll(".scSearchLink");
+
+      console.log(scSearchLink);
+
+      for(var line of scSearchLink) {
+
+        console.log(line);
+        
+        var getFullpath = line.getAttribute("title");
+        getFullpath = getFullpath.split(" - ");
+        getFullpath = getFullpath[1].toLowerCase();
+        if(getFullpath.includes("/home/")) {
+          getFullpath = getFullpath.split("/home/");
+          getFullpath = "/"+getFullpath[1];
+        } 
+
+        console.log(getFullpath);
+
+        //Inject HTML
+        var html = '<b>' + getFullpath + '</b>';
+        if(getFullpath) {
+          line.innerHTML = html;
+        }
+   
+      }
+
+    });
+        
+    //Observer
+    if(target) {
+      config = { attributes: true, childList: false, characterData: false, subtree: false };
+      observer.observe(target, config);
+    }
 
 
     /*
@@ -878,6 +922,7 @@ var isUserManager = windowLocationHref.includes('user%20manager.aspx');
 var isPersonalization = windowLocationHref.includes('dialogs.personalization');
 var isRules = windowLocationHref.includes('rules.aspx');
 var isCss = windowLocationHref.includes('.css');
+var isSearch = windowLocationHref.includes('showresult.aspx');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -990,6 +1035,52 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
     // script.src = chrome.runtime.getURL("js/cache.js");
     // (document.head||document.documentElement).appendChild(script);
     // script.remove();
+
+  }
+
+  if(isSearch) {
+
+    if(debug) { console.info("====================> INTERNAL SEARCH <===================="); }
+
+    //Add listener on search result list
+    target = document.querySelector( "#results" );
+    observer = new MutationObserver(function(mutations) {
+
+      var resultsDiv = document.querySelector("#results");
+      var BlogPostArea = resultsDiv.querySelectorAll(".BlogPostArea");
+
+      for(var line of BlogPostArea) {
+
+        var BlogPostFooter = line.querySelector(".BlogPostFooter");
+        
+        var getFullpath = line.querySelector(".BlogPostViews > a > img").getAttribute("title");
+        getFullpath = getFullpath.split(" - ");
+        getFullpath = getFullpath[1].toLowerCase();
+        if(getFullpath.includes("/home/")) {
+          getFullpath = getFullpath.split("/home/");
+          getFullpath = "/"+getFullpath[1];
+        }
+        var getNumLanguages = line.querySelector(".BlogPostHeader > span").getAttribute("title");     
+
+        //Inject HTML
+        var html = '<div class="BlogPostExtra BlogPostContent" style="padding: 5px 0 0px 78px; color: #4d82b8"><strong>Sitecore path:</strong> ' + getFullpath + ' <strong>Languages available:</strong> ' + getNumLanguages + '</div>';
+        if(getFullpath) {
+          BlogPostFooter.insertAdjacentHTML( 'afterend', html );
+        }
+        //TODO Buttons, open in CE and open in EE
+      }
+
+    });
+        
+    //Observer
+    if(target) {
+      config = { attributes: false, childList: true, characterData: false, subtree: false };
+      observer.observe(target, config);
+    }
+
+
+
+
 
   }
 

@@ -205,6 +205,16 @@ document.body.onload = function() {
       document.getElementById("feature_cetabs").checked = true;
     }
   });
+  //RTE color
+  chrome.storage.sync.get(['feature_rtecolor'], function(result) {
+    if (!chrome.runtime.error && result.feature_rtecolor != undefined) {
+      if(result.feature_rtecolor) {
+        document.getElementById("feature_rtecolor").checked = true;
+      }
+    } else {
+      document.getElementById("feature_rtecolor").checked = true;
+    }
+  });
   
   //Context menu
   // chrome.storage.sync.get(['feature_contextmenu'], function(result) {
@@ -299,6 +309,10 @@ document.getElementById("set").onclick = function() {
   //CE Tabs
   chrome.storage.sync.set({"feature_cetabs": document.getElementById('feature_cetabs').checked}, function() {
     console.info('--> CE Tabs: ' + document.getElementById('feature_cetabs').checked);
+  });
+  //RTE Color
+  chrome.storage.sync.set({"feature_rtecolor": document.getElementById('feature_rtecolor').checked}, function() {
+    console.info('--> RTE Color: ' + document.getElementById('feature_rtecolor').checked);
   });
 
   //Get URL parameters

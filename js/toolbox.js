@@ -8,7 +8,7 @@
 
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
-var debug = true;
+var debug = false;
 
 /*
  * Helper functions
@@ -1260,6 +1260,47 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
   }
 
+  if(isRichTextEditor) {
+
+    if(debug) { console.info("====================> RTE <===================="); }
+
+    chrome.storage.sync.get(['feature_rtecolor'], function(result) {
+
+    if(result.feature_rtecolor == undefined) { result.feature_rtecolor = true; }
+
+      if(result.feature_rtecolor) {
+
+        var myEditor;
+        var contentIframe = document.querySelector("#Editor_contentIframe");
+        
+        if(contentIframe) {
+
+          /*
+           * Codemirror css
+           */
+          link = document.createElement("link");
+          link.type = "text/css";
+          link.rel = "stylesheet";
+          link.href =  chrome.runtime.getURL("css/codemirror.css");
+          document.getElementsByTagName("head")[0].appendChild(link);
+
+          /*
+           * Codemirror librairires
+           */
+          script = document.createElement('script');
+          script.src = chrome.runtime.getURL("js/bundle.js");
+          (document.head||document.documentElement).appendChild(script);
+          script.remove();
+
+        }
+
+    }
+
+    });
+
+
+  }
+
   if(isGalleryLanguage) {
 
     if(debug) { console.info("====================> LANGUAGES <===================="); }
@@ -1955,7 +1996,6 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
     var pagemodeEdit = document.querySelector(".pagemode-edit");
     if(!pagemodeEdit) { pagemodeEdit = document.querySelector(".on-page-editor"); }
     if(!pagemodeEdit) { pagemodeEdit = document.querySelector(".experience-editor"); }
-    if(!pagemodeEdit) { pagemodeEdit = document.querySelector(".js-focus-visible"); }
     windowLocationHref = window.location.href.toLowerCase();
     var isQuery = windowLocationHref.includes('?');
     var isEditMode = windowLocationHref.includes('sc_mode=edit');

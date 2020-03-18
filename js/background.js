@@ -164,10 +164,12 @@ chrome.tabs.onActivated.addListener(function(tabId, changeInfo, tab) {
 // When the extension is installed or upgraded ...
 chrome.runtime.onInstalled.addListener(function(details) {
 
+  console.log(details.reason);
+
   if(details.reason == "install"){
 
         console.log("This is a first install!");
-        chrome.tabs.create({url:"https://ugo-quaisse.github.io/sitecore-author-toolbox/"});
+        chrome.tabs.create({url:"https://uquaisse.io/sitecore/sitecore-author-toolbox-1-7-is-there-with-a-bunch-of-new-features/?utm_source=install&utm_medium=chrome&utm_campaign=new"});
 
   } else if(details.reason == "update"){
         
@@ -176,7 +178,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
         if(thisVersion != details.previousVersion) {
 
           console.log("Updated from " + details.previousVersion + " to " + thisVersion);
-          chrome.tabs.create({url:"https://ugo-quaisse.github.io/sitecore-author-toolbox/?v="+thisVersion});
+          chrome.tabs.create({url:"https://uquaisse.io/sitecore/sitecore-author-toolbox-1-7-is-there-with-a-bunch-of-new-features/?utm_source=upgrade&utm_medium=chrome&utm_campaign="+thisVersion});
 
         } else {
 

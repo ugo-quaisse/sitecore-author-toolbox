@@ -720,7 +720,7 @@ function sitecoreAuthorToolbox() {
      */
     chrome.storage.sync.get(['feature_cetabs'], function(result) {
 
-    if(result.feature_cetabs == undefined) { result.feature_cetabs = true; }
+    if(result.feature_cetabs == undefined) { result.feature_cetabs = false; }
 
       if(result.feature_cetabs) {
 

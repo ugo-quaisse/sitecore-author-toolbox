@@ -202,7 +202,7 @@ document.body.onload = function() {
         document.getElementById("feature_cetabs").checked = true;
       }
     } else {
-      document.getElementById("feature_cetabs").checked = true;
+      document.getElementById("feature_cetabs").checked = false;
     }
   });
   //RTE color

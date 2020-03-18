@@ -1264,16 +1264,23 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
     if(debug) { console.info("====================> RTE <===================="); }
 
-    chrome.storage.sync.get(['feature_rtecolor'], function(result) {
+    chrome.storage.sync.get(['feature_rtecolor','feature_darkmode'], function(result) {
 
     if(result.feature_rtecolor == undefined) { result.feature_rtecolor = true; }
+    if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
 
       if(result.feature_rtecolor) {
 
-        var myEditor;
+        //Sitecore variable
         var contentIframe = document.querySelector("#Editor_contentIframe");
         
         if(contentIframe) {
+
+          //RTE Tabs
+          var designTab = document.querySelector("#Editor_contentIframe").contentWindow.document.body;
+          var htmlTab = document.querySelector("#EditorContentHiddenTextarea");
+          var reTextArea = document.querySelector(".reTextArea");
+          var darkModeTheme = "default" ;
 
           /*
            * Codemirror css
@@ -1283,6 +1290,20 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
           link.rel = "stylesheet";
           link.href =  chrome.runtime.getURL("css/codemirror.css");
           document.getElementsByTagName("head")[0].appendChild(link);
+
+          if(result.feature_darkmode) {
+            //Ayu-Theme
+            darkModeTheme = "ayu-dark";
+
+            link = document.createElement("link");
+            link.type = "text/css";
+            link.rel = "stylesheet";
+            link.href =  chrome.runtime.getURL("css/dark/ayu-dark.css");
+            document.getElementsByTagName("head")[0].appendChild(link);
+          }
+
+          //Extra variables
+          reTextArea.insertAdjacentHTML( 'afterend', '<input type="hidden" class="scDarkMode" value="' + darkModeTheme + '" />' );
 
           /*
            * Codemirror librairires

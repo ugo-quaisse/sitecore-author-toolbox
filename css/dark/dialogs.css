@@ -218,8 +218,7 @@ form {
 }
 
 .ui-widget-overlay {
-    background: #000000 50% 50% repeat-x !important;
-    opacity: 0.5 !important;
+    background: rgba(0,0,0,0.3) !important;
 }
 
 #SettingsPane {
@@ -270,3 +269,7 @@ form {
     background-color: #69a8d0 !important;
  }
 
+.scEditHtmlButtons {
+    background: #222;
+    border-top: #333 1px solid;
+}

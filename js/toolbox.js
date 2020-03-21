@@ -8,7 +8,7 @@
 
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
-var debug = false;
+var debug = true;
 
 /*
  * Helper functions
@@ -907,6 +907,7 @@ var isLoginPage = windowLocationHref.includes('sitecore/login');
 var isLaunchpad = windowLocationHref.includes('/client/applications/launchpad');
 var isDesktop = windowLocationHref.includes('/shell/default.aspx');
 var isRichTextEditor = windowLocationHref.includes('/controls/rich%20text%20editor/');
+var isHtmlEditor = windowLocationHref.includes('.edithtml.aspx');
 var isFieldEditor = windowLocationHref.includes('field%20editor.aspx');
 var isModalDialogs = windowLocationHref.includes('jquerymodaldialogs.html');
 var isSecurityDetails = windowLocationHref.includes('securitydetails.aspx');
@@ -1260,9 +1261,9 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
   }
 
-  if(isRichTextEditor) {
+  if(isRichTextEditor || isHtmlEditor) {
 
-    if(debug) { console.info("====================> RTE <===================="); }
+    if(debug) { console.info("====================> RTE / HTML EDITOR <===================="); }
 
     chrome.storage.sync.get(['feature_rtecolor','feature_darkmode'], function(result) {
 
@@ -1271,16 +1272,29 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
       if(result.feature_rtecolor) {
 
-        //Sitecore variable
-        var contentIframe = document.querySelector("#Editor_contentIframe");
+        var contentIframe;
+        var darkModeTheme = "default" ;
+
+        //Which HTML editor
+        if(isRichTextEditor) {
+
+          contentIframe = document.querySelector("#Editor_contentIframe");
+          console.log("richTextEditor");
+
+        } else if (isHtmlEditor) {
+
+          contentIframe = document.querySelector("#ctl00_ctl00_ctl05_Html");
+          console.log("htmlEditor");
+        }
         
         if(contentIframe) {
 
           //RTE Tabs
-          var designTab = document.querySelector("#Editor_contentIframe").contentWindow.document.body;
-          var htmlTab = document.querySelector("#EditorContentHiddenTextarea");
-          var reTextArea = document.querySelector(".reTextArea");
-          var darkModeTheme = "default" ;
+          if(isRichTextEditor) {
+            var designTab = document.querySelector("#Editor_contentIframe").contentWindow.document.body;
+            var htmlTab = document.querySelector("#EditorContentHiddenTextarea");
+            var reTextArea = document.querySelector(".reTextArea");
+          }
 
           /*
            * Codemirror css
@@ -1291,8 +1305,9 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
           link.href =  chrome.runtime.getURL("css/codemirror.css");
           document.getElementsByTagName("head")[0].appendChild(link);
 
+          //If dark mode ON
           if(result.feature_darkmode) {
-            //Ayu-Theme
+            
             darkModeTheme = "ayu-dark";
 
             link = document.createElement("link");
@@ -1303,7 +1318,13 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
           }
 
           //Extra variables
-          reTextArea.insertAdjacentHTML( 'afterend', '<input type="hidden" class="scDarkMode" value="' + darkModeTheme + '" />' );
+          if(isRichTextEditor) {
+            reTextArea.insertAdjacentHTML( 'afterend', '<input type="hidden" class="scDarkMode" value="' + darkModeTheme + '" />' );
+            reTextArea.insertAdjacentHTML( 'afterend', '<input type="hidden" class="scEditor" value="richTextEditor" />' );
+          } else if (isHtmlEditor) {
+            contentIframe.insertAdjacentHTML( 'afterend', '<input type="hidden" class="scDarkMode" value="' + darkModeTheme + '" />' );
+            contentIframe.insertAdjacentHTML( 'afterend', '<input type="hidden" class="scEditor" value="htmlEditor" />' );
+          }
 
           /*
            * Codemirror librairires

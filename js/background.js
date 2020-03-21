@@ -166,23 +166,26 @@ chrome.runtime.onInstalled.addListener(function(details) {
 
   console.log(details.reason);
 
+  var thisVersion = chrome.runtime.getManifest().version;
+  var versionIncrement = thisVersion.slice(-1);
+
+  console.log("Increment: "+versionIncrement);
+
   if(details.reason == "install"){
 
-        console.log("This is a first install!");
-        chrome.tabs.create({url:"https://uquaisse.io/sitecore/sitecore-author-toolbox-1-7-is-there-with-a-bunch-of-new-features/?utm_source=install&utm_medium=chrome&utm_campaign=new"});
+        console.log("Installation");
+        chrome.tabs.create({url:"https://uquaisse.io/extension-update/?utm_source=install&utm_medium=chrome&utm_campaign="+thisVersion});
 
   } else if(details.reason == "update"){
-        
-        var thisVersion = chrome.runtime.getManifest().version;
 
-        if(thisVersion != details.previousVersion) {
+        if(thisVersion != details.previousVersion && versionIncrement == "1") {
 
           console.log("Updated from " + details.previousVersion + " to " + thisVersion);
-          chrome.tabs.create({url:"https://uquaisse.io/sitecore/sitecore-author-toolbox-1-7-is-there-with-a-bunch-of-new-features/?utm_source=upgrade&utm_medium=chrome&utm_campaign="+thisVersion});
+          chrome.tabs.create({url:"https://uquaisse.io/extension-update/?utm_source=upgrade&utm_medium=chrome&utm_campaign="+thisVersion});
 
         } else {
 
-          console.log("Just a refresh (" + thisVersion + ")");
+          console.log("Refresh (" + thisVersion + ")");
 
         }
 

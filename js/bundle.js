@@ -11669,11 +11669,32 @@ CodeMirror.defineMode("css", function(config, parserConfig) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //EXECUTE CODE//
 
-console.log(document.querySelector(".scDarkMode").value);
+//Get Type of editor
+var scEditor = document.querySelector(".scEditor").value;
 
+//Get Dark mode value
 var cmTheme = document.querySelector(".scDarkMode").value;
 
-myEditor = CodeMirror.fromTextArea(document.querySelector(".reTextArea"), {
+console.log(scEditor);
+console.log(cmTheme);
+
+var textarea;
+
+if(scEditor == "richTextEditor") {
+
+  textarea = document.querySelector(".reTextArea");
+
+} else if(scEditor == "htmlEditor") {
+
+  textarea = document.querySelector("#ctl00_ctl00_ctl05_Html");
+  //Show hidden Sitecore fields
+  //document.querySelector("#EditorContentHiddenTextarea").setAttribute('style','display:block;');
+  textarea.setAttribute('style','display:block; visibility:visible');
+  //document.querySelector("#Editor_contentIframe").setAttribute('style','width:100%; height:50%');
+
+} 
+
+myEditor = CodeMirror.fromTextArea(textarea, {
   mode: "text/html",
   styleActiveLine: true,
   lineNumbers: true,
@@ -11683,61 +11704,85 @@ myEditor = CodeMirror.fromTextArea(document.querySelector(".reTextArea"), {
   theme: cmTheme
 });
 
+myEditor.refresh();
+
 var pending;
 myEditor.on("change", function() {
+
+  if(scEditor == "htmlEditor") {
+    document.querySelector(".CodeMirror").setAttribute('style','height:100%; line-height: 18px; font-size: 13px; top:-52px');
+    textarea.setAttribute('style','display:block; visibility:collapse');
+    myEditor.refresh();
+  }
+
   clearTimeout(pending);
-  pending = setTimeout(update(), 400);
+  pending = setTimeout(update(scEditor), 400);
 });
 
-function update() {
+function update(editor) {
+  
+  if(editor == "richTextEditor") {
+    
+    //RTE Tabs
+    var designTab = document.querySelector("#Editor_contentIframe").contentWindow.document.body;
+    var htmlTab = document.querySelector("#EditorContentHiddenTextarea");
+   
+    htmlTab.value = myEditor.getValue();
+    textarea.value = myEditor.getValue();
+    designTab.innerHTML = decodeURIComponent(htmlTab.value);
+
+  } else if(editor == "htmlEditor") {
+    
+    console.log(myEditor.getValue());
+    textarea.value = myEditor.getValue();
+
+  } 
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(scEditor == "richTextEditor") {
   
   //RTE Tabs
   var designTab = document.querySelector("#Editor_contentIframe").contentWindow.document.body;
   var htmlTab = document.querySelector("#EditorContentHiddenTextarea");
   var reTextArea = document.querySelector(".reTextArea");
- 
-  htmlTab.value = myEditor.getValue();
-  reTextArea.value = myEditor.getValue();
-  designTab.innerHTML = decodeURIComponent(htmlTab.value);
 
-}
+  //Add listener on reEditorModes and enable it
+  var target = document.querySelector( ".reEditorModes" );
+  var observer = new MutationObserver(function(mutations) {
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    for(var mutation of mutations) {
 
-//RTE Tabs
-var designTab = document.querySelector("#Editor_contentIframe").contentWindow.document.body;
-var htmlTab = document.querySelector("#EditorContentHiddenTextarea");
-var reTextArea = document.querySelector(".reTextArea");
+        //Show hidden Sitecore fields
+        //htmlTab.setAttribute('style','display:block;');
+        //reTextArea.setAttribute('style','display:block;');
+        //document.querySelector("#Editor_contentIframe").setAttribute('style','width:100%; height:50%');
 
-//Add listener on reEditorModes and enable it
-var target = document.querySelector( ".reEditorModes" );
-var observer = new MutationObserver(function(mutations) {
+        if(mutation.target.text == "Design" && mutation.target.className.includes("reMode_selected")) {
 
-  for(var mutation of mutations) {
+          //console.log("DESIGN TAB ON");
+          document.querySelector(".CodeMirror").setAttribute('style','display:none; height:100%; line-height: 18px; font-size: 13px;');             
+          designTab.innerHTML = decodeURIComponent(htmlTab.value);
 
-      //Show hidden Sitecore fields
-      //document.querySelector("#EditorContentHiddenTextarea").setAttribute('style','display:block;');
-      //document.querySelector(".reTextArea").setAttribute('style','display:block;');
-      //document.querySelector("#Editor_contentIframe").setAttribute('style','width:100%; height:50%');
+        } else if(mutation.target.text == "HTML" && mutation.target.className.includes("reMode_selected")) {
 
-      if(mutation.target.text == "Design" && mutation.target.className.includes("reMode_selected")) {
+          //console.log("HTML TAB ON");
+          document.querySelector(".CodeMirror").setAttribute('style','display:block; height:100%; line-height: 18px; font-size: 13px;');
+          htmlTab.value = designTab.innerHTML;
+          myEditor.setValue(designTab.innerHTML); //does not return /n in HTML :-(
 
-        //console.log("DESIGN TAB ON");
-        document.querySelector(".CodeMirror").setAttribute('style','display:none; height:100%; line-height: 18px; font-size: 13px;');             
-        designTab.innerHTML = decodeURIComponent(htmlTab.value);
+        }
+    
+    }
 
-      } else if(mutation.target.text == "HTML" && mutation.target.className.includes("reMode_selected")) {
+  });
 
-        //console.log("HTML TAB ON");
-        document.querySelector(".CodeMirror").setAttribute('style','display:block; height:100%; line-height: 18px; font-size: 13px;');
-        htmlTab.value = designTab.innerHTML;
-        myEditor.setValue(designTab.innerHTML);
+} else if(scEditor == "htmlEditor") {
 
-      }
-  
-  }
+  console.log('Ugo2');
 
-});
+} 
 
 //Observer
 if(target) {

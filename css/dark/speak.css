@@ -5,11 +5,8 @@
 
 /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
 
-body {
-  font-family: 'Open Sans', Arial, 'Microsoft YaHei', sans-serif;
-  font-size: 12px;
-  line-height: 1.42857143;
-  color: #121212;
+#Editor_contentIframe body {
+  color: #fff;
 }
 
 .sc-dialogHeader {

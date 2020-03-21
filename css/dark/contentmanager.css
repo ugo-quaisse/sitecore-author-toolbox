@@ -2,23 +2,6 @@
  * Sitecore Dark Mode UI, by Ugo Quaisse
  * contentmanager.css
  */
-
-body {
-    cursor: default;
-    height: 100%;
-    margin: 0;
-    font-family: 'Open Sans', Arial, sans-serif;
-}
-
-form {
-    height: 100%;
-    width: 100%;
-}
-
-button, input, optgroup, select, textarea {
-  font-family: inherit;
-}
-
 /* IE9 specific styles */
 .ie8 #ContentTreeHolder,
 .ie9 #ContentTreeHolder, .ie8 #SearchResultHolder, .ie9 #SearchResultHolder, .ie8 #SearchResult, .ie9 #SearchResult {
@@ -1836,4 +1819,8 @@ body .reGrip.grip_last {
     }
 }
 
+#ContentWrapper,
+#Editor_contentIframe > html > body {
+  color: #fff !important;
+}
 

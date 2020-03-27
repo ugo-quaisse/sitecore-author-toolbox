@@ -74,15 +74,13 @@ Sitecore.InitBucketList = function (id, clientId, pageNumber, searchHandlerUrl, 
                 folder = folder.split("/Home/");
                 folder = folder[1];
 
-                //Custom code for icon
+                //Custom code for icon (UGo Quaisse)
                 scOption = new Option((item.DisplayName || item.Name) + ' (' + item.Path + '/)', item.ItemId);
                 multilist.options[multilist.options.length] = scOption;
                 scOption.setAttribute("style","margin: 4px 0px; padding-left: 25px; background-repeat: no-repeat; background-size: contain;background-image:url(" + item.ImagePath + ")");
 
-                //multilist.options[multilist.options.length] = new Option((item.DisplayName || item.Name) + ' (' + item.TemplateName + (item.Bucket && (' - ' + item.Bucket)) + ')', item.ItemId);
-                //multilist.options[multilist.options.length] = new Option('👤' + author[1] + ' --> ' + folder[1] , item.ItemId);
+                //In second list, if item [item not found], change color to red
             }
-            // console.log(multilist.options);
             self.pageNumber = response.PageNumbers;
             self.currentPage = response.CurrentPage;
             $('pageNumber' + self.clientId).innerHTML = self.format(self.of, self.currentPage, self.pageNumber);

@@ -12,3 +12,4 @@ build/
 *.zip
 .config.codekit3
 _config.yml
+images/.DS_Store

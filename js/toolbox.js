@@ -2,13 +2,13 @@
  * Sitecore Author Toolbox
  * - A Google Chrome Extension -
  * - created by Ugo Quaisse -
- * https://twitter.com/uquaisse
+ * https://uquaisse.io
  * ugo.quaisse@gmail.com
  */ 
 
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
-var debug = true;
+var debug = false;
 
 /*
  * Helper functions
@@ -21,10 +21,14 @@ function stripHtml(html){
 }
 
 function sendNotification(scTitle, scBody) {
+  //Show notification
   new Notification(scTitle, {
       body: scBody,
       icon: chrome.runtime.getURL("images/icon.png")
   });
+  //Play sound
+  var sound = new Audio(chrome.runtime.getURL("audio/notification.mp3"));
+  sound.play();
 }
 
 function repositionElement(event) {
@@ -70,7 +74,6 @@ function cleanCountryName(name) {
   language = language.replace("UNITED_STATES","USA");
   language = language.replace("UNITED_KINGDOM","GREAT_BRITAIN");
   language = language.replace("ENGLISH","GREAT_BRITAIN");
-
   return language;
 }
 
@@ -78,10 +81,11 @@ function sitecoreAuthorToolbox() {
 
   //App settings 
   var count = 0;
-  var icon = chrome.runtime.getURL("images/rocket.png");
+  var icon = chrome.runtime.getURL("images/rocket.svg");
+  var iconLock = chrome.runtime.getURL("images/lock.svg");
   var iconError = chrome.runtime.getURL("images/error.png");
-  var iconEdit = chrome.runtime.getURL("images/edit.png");
-  var iconTranslate = chrome.runtime.getURL("images/translate.png");
+  var iconEdit = chrome.runtime.getURL("images/edit.pmg");
+  var iconTranslate = chrome.runtime.getURL("images/translate.pmg");
   var iconFlagGeneric = chrome.runtime.getURL("images/Flags/32x32/flag_generic.png");
   var jsonLanguages = chrome.runtime.getURL("data/languages.json");
   let rteLanguages = ["ARABIC", "HEBREW", "PERSIAN", "URDU", "SINDHI"];
@@ -119,6 +123,8 @@ function sitecoreAuthorToolbox() {
   let scContentTree= document.getElementById ( "ContentTreeHolder" );
   //Translation Mode
   let isTranslateMode = false;
+  //User Name
+  let userName = document.querySelector(".sc-accountInformation").querySelectorAll("li")[1].innerText;
 
   //Language name in menu
   var scEditorHeaderVersionsLanguage = document.getElementsByClassName("scEditorHeaderVersionsLanguage");
@@ -241,7 +247,6 @@ function sitecoreAuthorToolbox() {
     }
     
   }
-
 
   /*
    * 2. Insert Flag (Active Tab)
@@ -377,15 +382,18 @@ function sitecoreAuthorToolbox() {
 
       for (let item of scErrors) {
 
-          var fieldId = item.previousSibling.closest("div").getAttribute("id").replace("ValidationMarker","");
-          var sectionTitle = document.querySelector("#"+fieldId).closest("table").closest("td").closest("table").previousSibling.innerText;
-          var sectionId = document.querySelector("#"+fieldId).closest("table").closest("td").closest("table").previousSibling.getAttribute("id");
-          var tabElem = document.querySelectorAll('[data-id="' + sectionId + '"]');
-          //toggleSection(' + tabElem + ',\'' + sectionTitle+ '\')
+          var previousSibling = item.previousSibling;
+          if(previousSibling) {
+            var fieldId = previousSibling.closest("div").getAttribute("id").replace("ValidationMarker","");
+            var sectionTitle = document.querySelector("#"+fieldId).closest("table").closest("td").closest("table").previousSibling.innerText;
+            var sectionId = document.querySelector("#"+fieldId).closest("table").closest("td").closest("table").previousSibling.getAttribute("id");
+            var tabElem = document.querySelectorAll('[data-id="' + sectionId + '"]');
+            //toggleSection(' + tabElem + ',\'' + sectionTitle+ '\')
 
-          if( item.getAttribute("src") != '/sitecore/shell/themes/standard/images/bullet_square_yellow.png') {
-            scMessageErrors += '<li class="scMessageBarOptionBullet" onclick="' + item.getAttribute("onclick") + '" style="cursor:pointer;">' + item.getAttribute("title") + '</li>';
-            count++;
+            if( item.getAttribute("src") != '/sitecore/shell/themes/standard/images/bullet_square_yellow.png') {
+              scMessageErrors += '<li class="scMessageBarOptionBullet" onclick="' + item.getAttribute("onclick") + '" style="cursor:pointer;">' + item.getAttribute("title") + '</li>';
+              count++;
+            }
           }
       }
       scMessageErrors += '</ul></div></div>';
@@ -636,10 +644,8 @@ function sitecoreAuthorToolbox() {
 
     });
 
-
-
   /*
-   * Translate Mode
+   * 9. Translate Mode
    */ 
    chrome.storage.sync.get(['feature_translatemode'], function(result) {
 
@@ -716,7 +722,7 @@ function sitecoreAuthorToolbox() {
     });
 
     /*
-     * Content Editor Tabs
+     * 10. Content Editor Tabs
      */
     chrome.storage.sync.get(['feature_cetabs'], function(result) {
 
@@ -771,12 +777,6 @@ function sitecoreAuthorToolbox() {
           //Add close/hide button on each tabs, on click all tabs with the current Title will be hidden in Sitecore
           //To revert back to original state, a pinned tab will be shown to display them again
 
-          //Extension ID
-          var extensionId = chrome.runtime.getURL("something");
-          extensionId = extensionId.split("chrome-extension://");
-          extensionId = extensionId[1].split("/something");
-          extensionId = extensionId[0];
-
           //Add tabs to document
           scEditorTabs += '<li class="scEditorTabEmpty"></li>';
           scEditorTabs += '<li data-id="' + sectionId + '" class="scEditorTab ' + sectionSelected + '" onclick="toggleSection(this,\'' + sectionTitle+ '\');">' + sectionErrorHtml + sectionTitle+ '<span class="scEditorTabClose" onclick="hideTab(\'' + sectionTitle + '\',\'' + extensionId + '\')">❎</span></li>';
@@ -816,7 +816,7 @@ function sitecoreAuthorToolbox() {
 
 
     /*
-     * Search enhancements
+     * 11. Search enhancements
      */
     //Add listener on search result list
     target = document.querySelector( "#SearchResult" );
@@ -855,6 +855,39 @@ function sitecoreAuthorToolbox() {
       config = { attributes: false, childList: true, characterData: false, subtree: false };
       observer.observe(target, config);
     }
+
+    /*
+     * 12. Locked Item
+     */
+     setTimeout(function() {
+        
+        var isItemLocked = document.querySelector(".scRibbon").innerHTML.includes('Check this item in.');
+
+        if(isItemLocked) {
+          //Prepare HTML (scInformation scWarning scError)
+          scMessage = '<div id="scMessageBarUrl" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + iconLock + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">' + userName + ' you have locked this item.</div><div class="scMessageBarText">Nobody is able to edit it until you unlock it.</div><ul class="scMessageBarOptions"><li class="scMessageBarOptionBullet"><a href="#" onclick="javascript:return scForm.postEvent(this,event,\'item:checkin\')" class="scMessageBarOption">Check this item in</a></li></ul></div></div>'
+          
+          //Insert message bar into Sitecore Content Editor
+          scEditorID.insertAdjacentHTML( 'afterend', scMessage );
+         }
+
+     }, 500);
+
+
+    //Add listener on scBucketListBox + scBucketListSelectedBox TODO
+    // target = document.querySelector( ".scBucketListBox" );
+    // observer = new MutationObserver(function(mutations) {
+
+    //   console.log(mutations);
+
+    // });
+          
+    // //Observer options
+    // if(target) {
+    //   config = { attributes: false, childList: true, characterData: false, subtree: false };
+    //   observer.observe(target, config);
+    //   console.log(target);
+    // }
 
 
     /*
@@ -934,13 +967,30 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
   if(debug) { console.info("%c ✏️ Sitecore detected ", 'font-size:14px; background: #f33d35; color: white; border-radius:5px; padding 3px;'); }
 
+  var script, link;
+
   /*
   * Code injection for multilist in a Bucket (BETA)
   */
-  var script = document.createElement('script');
-  script.src = chrome.runtime.getURL("js/BucketList-min.js");
-  (document.head||document.documentElement).appendChild(script);
-  script.remove();
+  // script = document.createElement('script');
+  // script.src = chrome.runtime.getURL("js/BucketList-min.js");
+  // (document.head||document.documentElement).appendChild(script);
+  // script.remove();
+
+  //Add listener on scBucketListBox + scBucketListSelectedBox
+  // target = document.querySelector( ".scBucketListBox" );
+  // observer = new MutationObserver(function(mutations) {
+
+  //   console.log(mutations);
+
+  // });
+        
+  // //Observer options
+  // if(target) {
+  //   config = { attributes: false, childList: true, characterData: false, subtree: false };
+  //   observer.observe(target, config);
+  //   console.log(target);
+  // }
 
   /*
   * Code injection for Translate mode
@@ -953,7 +1003,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
   /*
   * Fadein onload
   */
-  var link = document.createElement("link");
+  link = document.createElement("link");
   link.type = "text/css";
   link.rel = "stylesheet";
   link.href =  chrome.runtime.getURL("css/onload-min.css");
@@ -1279,12 +1329,10 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
         if(isRichTextEditor) {
 
           contentIframe = document.querySelector("#Editor_contentIframe");
-          console.log("richTextEditor");
 
         } else if (isHtmlEditor) {
 
           contentIframe = document.querySelector("#ctl00_ctl00_ctl05_Html");
-          console.log("htmlEditor");
         }
         
         if(contentIframe) {
@@ -1580,6 +1628,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
     
     if(result.feature_autoexpand) {
 
+      //Content tree
       document.addEventListener('click', function (event) {
 
         if (!event.target.matches('.scContentTreeNodeGlyph')) return;
@@ -1597,13 +1646,28 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
       }, false);
 
+
       //Security Editor
       document.addEventListener('mousedown', function (event) {
 
         if (!event.target.matches('.glyph')) return;
         let glyphId = event.target.id;
+        let glyphSrc = event.target.src;
+        let isCollapsed = glyphSrc.includes("collapsed");
 
-        //Todo (how to detect children? +18px on margin-left cell text)
+
+        setTimeout(function(){
+          if(document && glyphId && isCollapsed) { 
+            // console.log(event.target);  
+            var subTreeDiv = document.querySelector("#"+glyphId).closest("ul").nextSibling
+            // console.log(subTreeDiv);           
+            if(subTreeDiv) {
+              var nextGlyphId = subTreeDiv.querySelector('.glyph');
+              // console.log(nextGlyphId);
+              nextGlyphId.click();
+            }
+          }
+        }, 200);
 
       }, false);
 
@@ -1700,6 +1764,49 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
     var hash = window.location.hash.substr(1);
     var hasRedirection = windowLocationHref.includes("&ro=");
     var hasRedirectionOther = windowLocationHref.includes("&sc_ce_uri=");
+
+    //Extension ID
+    var extensionId = chrome.runtime.getURL("something");
+    extensionId = extensionId.split("chrome-extension://");
+    extensionId = extensionId[1].split("/something");
+    extensionId = extensionId[0];
+
+    document.querySelector('body').insertAdjacentHTML( 'beforeend', '<input type="hidden" class="extensionId" value="' + extensionId + '" />' );
+
+
+    /*
+     * 14. Show informative Snackbar
+     */
+    var snackbarVersion = 1;
+    var snackbarHtml = "Tab sections option is enabled. If you want to switch back to normal mode, clic Edit button.";
+
+    chrome.storage.sync.get(['hideSnackbar','feature_cetabs'], function(result) {
+
+      if (!chrome.runtime.error && result.hideSnackbar != snackbarVersion && result.feature_cetabs != false) {
+
+        // console.log("Show Snackbar "+snackbarVersion);
+
+        //Show Snackbar
+        var html='<div class="snackbar"> ' + snackbarHtml + ' <button onclick="window.open(\' ' + launchpadPage + '?launchpad=true&url= ' + windowLocationHref + ' &tabs=0 \');">EDIT</button><button id="sbDismiss">DISMISS</button></div>';
+        document.querySelector('body').insertAdjacentHTML( 'beforeend', html );
+
+
+          //Add listener on click #sbDismiss
+          document.querySelector("#sbDismiss").addEventListener("click", function(){     
+            chrome.runtime.sendMessage({greeting: "hide_snackbar", version: snackbarVersion}, function(response) {
+              if(response.farewell != null) {
+                console.log(response);
+                document.querySelector('.snackbar').setAttribute('style','display: none');
+
+                //For debugging, You can  clean up this storage value by running this command in the console
+                //chrome.storage.sync.remove("hideSnackbar", function() { chrome.storage.sync.get(function(e){console.log(e)}) });
+              }
+            });
+          });
+      }
+
+    });
+
 
     if(!hasRedirection && !hasRedirectionOther) {
 

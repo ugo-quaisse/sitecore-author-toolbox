@@ -136,11 +136,19 @@ function setIcon(tab) {
 
 //When message is requested from toolbox.js
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    
+    console.log(request);
+    
     if (request.greeting == "sxa_site"){
         checkSiteSxa(request, sender, sendResponse);
     }
     if (request.greeting == "hide_tab"){
         sendResponse({farewell: "Ok roger that!"});
+    }
+    if (request.greeting == "hide_snackbar"){
+      chrome.storage.sync.set({"hideSnackbar": request.version}, function() {
+        sendResponse({farewell: "Ok roger that! I hide version "+request.version});
+      });    
     }
     return true;
 });
@@ -164,11 +172,16 @@ chrome.tabs.onActivated.addListener(function(tabId, changeInfo, tab) {
 // When the extension is installed or upgraded ...
 chrome.runtime.onInstalled.addListener(function(details) {
 
-  console.log(details.reason);
-
   var thisVersion = chrome.runtime.getManifest().version;
-  var versionIncrement = thisVersion.slice(-1);
+  var versionInfo = thisVersion.split(".");
 
+  var versionNumber = versionInfo[0];
+  var versionRelease = versionInfo[1];
+  var versionIncrement = versionInfo[2];
+
+  console.log(thisVersion);
+  console.log("Version: "+versionNumber);
+  console.log("Number: "+versionRelease);
   console.log("Increment: "+versionIncrement);
 
   if(details.reason == "install"){
@@ -180,12 +193,14 @@ chrome.runtime.onInstalled.addListener(function(details) {
 
         if(thisVersion != details.previousVersion && versionIncrement == "1") {
 
+          //if !x from previous version to last version
+
           console.log("Updated from " + details.previousVersion + " to " + thisVersion);
           chrome.tabs.create({url:"https://uquaisse.io/extension-update/?utm_source=upgrade&utm_medium=chrome&utm_campaign="+thisVersion});
 
         } else {
 
-          console.log("Refresh (" + thisVersion + ")");
+          console.log("Reload");
 
         }
 

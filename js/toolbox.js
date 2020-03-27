@@ -124,7 +124,7 @@ function sitecoreAuthorToolbox() {
   //Translation Mode
   let isTranslateMode = false;
   //User Name
-  let userName = document.querySelector(".sc-accountInformation").querySelectorAll("li")[1].innerText;
+  let userName = document.querySelector(".sc-accountInformation").querySelectorAll("li")[1].innerText.trim();
 
   //Language name in menu
   var scEditorHeaderVersionsLanguage = document.getElementsByClassName("scEditorHeaderVersionsLanguage");
@@ -865,7 +865,7 @@ function sitecoreAuthorToolbox() {
 
         if(isItemLocked) {
           //Prepare HTML (scInformation scWarning scError)
-          scMessage = '<div id="scMessageBarUrl" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + iconLock + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">' + userName + ' you have locked this item.</div><div class="scMessageBarText">Nobody is able to edit it until you unlock it.</div><ul class="scMessageBarOptions"><li class="scMessageBarOptionBullet"><a href="#" onclick="javascript:return scForm.postEvent(this,event,\'item:checkin\')" class="scMessageBarOption">Check this item in</a></li></ul></div></div>'
+          scMessage = '<div id="scMessageBarUrl" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' + iconLock + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You have locked this item.</div><div class="scMessageBarText">Nobody is able to edit it until you unlock it.</div><ul class="scMessageBarOptions"><li class="scMessageBarOptionBullet"><a href="#" onclick="javascript:return scForm.postEvent(this,event,\'item:checkin\')" class="scMessageBarOption">Unlock this item</a></li></ul></div></div>'
           
           //Insert message bar into Sitecore Content Editor
           scEditorID.insertAdjacentHTML( 'afterend', scMessage );
@@ -1647,7 +1647,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
       }, false);
 
 
-      //Security Editor
+      //Security Editor 
       document.addEventListener('mousedown', function (event) {
 
         if (!event.target.matches('.glyph')) return;
@@ -1777,7 +1777,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
     /*
      * 14. Show informative Snackbar
      */
-    var snackbarVersion = 1;
+    var snackbarVersion = 2;
     var snackbarHtml = "Tab sections option is enabled. If you want to switch back to normal mode, clic Edit button.";
 
     chrome.storage.sync.get(['hideSnackbar','feature_cetabs'], function(result) {

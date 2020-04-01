@@ -1,8 +1,7 @@
 /* Sitecore banner colors */
 form#ContentEditorForm {
-    filter: blur(2px) brightness(0.1) grayscale(1);
-    transition: 0.7s;
-    transition-delay: 0.3s;
+    filter: blur(3px) brightness(0.05) grayscale(1);
+    transition: 0.3s;
     transform: scale(1.01);
 }
 
@@ -43,30 +42,30 @@ body.contentEditor:after {
 }
 
 .scMessageBar.scGreen {
-    background-color: #76a797;
-    color: #e6eae9;
+    background-color: #76a797 !important;
+    color: #e6eae9 !important;
 }
 
     .scMessageBar.scGreen .scMessageBarIcon {
-        background-color: #0f9467;
+        background-color: #0f9467 !important;
     }
 
 .scMessageBar.scOrange {
-    background-color: #ffb888;
-    color: #AB4500;
+    background-color: rgb(227, 81, 49) !important;
+    color: rgb(255, 244, 242) !important;
 }
 
     .scMessageBar.scOrange .scMessageBarIcon {
-        background-color: #FA6400;
+        background-color: rgb(220, 42, 30) !important;
     }
 
 .scMessageBar.scGray {
-    background-color: #BCBCBC;
-    color: #676767;
+    background-color: #BCBCBC !important;
+    color: #676767 !important;
 }
 
     .scMessageBar.scGray .scMessageBarIcon {
-        background-color: #525252;
+        background-color: #525252 !important;
     }
 
 /* Table css for cache.aspx */
@@ -308,7 +307,7 @@ body.contentEditor:after {
     bottom: 45px;
     right: -800px;
     color: #fff;
-    max-width: 450px;
+    max-width: 500px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.175);
     font-family: RobotoDraft, Roboto, Helvetica Neue, Helvetica, Arial, sans-serif;
     font-size: 14px;
@@ -324,8 +323,37 @@ body.contentEditor:after {
     z-index: 99999999999;
 }
 
+.snackbar > b {
+    display: contents;
+    font-weight: bold;
+}
+
 @keyframes slide {
     100% { right: 15px; }
+}
+
+.wbNotification {
+    background-color: #dc2a1d;
+    width: fit-content;
+    height: 14px;
+    text-align: center;
+    margin-top: 4px;
+    border-radius: 100%;
+    display: grid;
+    color: #fff;
+    left: -27px;
+    position: relative;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 2px 4px 4px 2px;
+    min-width: 16px;
+    border-radius: 8px;
+    transform: scale(0);
+    animation: popup 0.1s ease-in-out forwards;
+}
+
+.wbGreen {
+    background-color: #37ab62 !important;
 }
 
 .snackbar > button {
@@ -336,4 +364,61 @@ body.contentEditor:after {
     font-size: 14px;
     padding-left: 18px;
     cursor: pointer;
+}
+
+.liveUrlBadge {
+    background-color: #897a2f;
+    color: #fce99c;
+    padding: 1px 7px;
+    border-radius: 10px;
+    font-size: 11px;
+    vertical-align: text-top;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.liveUrlBadge:hover {
+    background-color: #fce99c;
+    color: #897a2f;
+    border: 1px solid #897a2f;
+}
+
+.launchpadBadge {
+    position: absolute;
+    margin-left: 35px;
+    margin-top: -10px;
+    background-color: #dc2a1e;
+    min-width: 25px;
+    color: #fff;
+    border-radius: 15px;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    padding: 0px 4px;
+    transform: scale(0);
+    animation: popup 0.1s ease-in-out forwards;
+}
+@keyframes popup {
+    100% { transform: scale(1); }
+}
+
+.scRibbonNavigatorButtonsGroupButtons{
+    display: flex !important;
+    overflow: scroll !important;
+    width: calc(100vw - 65px) !important;
+}
+
+.liveStatusRed {
+    color: red;
+}
+
+.liveStatusGreen {
+    color: green;
+}
+
+.liveStatusRed img,
+.liveStatusGreen img {
+    width: 10px !important;
+    float: initial !important;
+    margin: unset !important;
 }

@@ -2,6 +2,10 @@
  * Sitecore Dark Mode UI, by Ugo Quaisse
  * default.css
  */
+a, a:active, a:visited {
+  color: #cccccc;
+}
+
 .ff a {
   outline: none;
 }
@@ -1811,6 +1815,7 @@ a.scHyperlinkButton {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   position: relative;
+  background-color: #111;
 }
 
 .scScroller {
@@ -3923,4 +3928,32 @@ select[disabled] > option {
 .sc span.dynatree-active a, .sc span.dynatree-active a:hover {
   background-color: #2694c0 !important;
   border-radius: 4px !important;
+}
+
+.scTitle {
+  border-bottom: 1px solid #333333;
+}
+
+.scTileItemDetailsHeader,
+a.scButton {
+  color: rgba(255,255,255,0.8);
+}
+
+.liveUrlBadge {
+    background-color: rgb(27, 104, 134);
+    color: rgb(170, 197, 209);
+}
+
+.liveUrlBadge:hover {
+    background-color: transparent;
+    color: rgb(170, 197, 209);
+    border: 1px solid rgb(27, 104, 134);
+}
+
+.liveStatusRed {
+    color: #a70202 !important;
+}
+
+.liveStatusGreen {
+    color: #66d29a !important;
 }

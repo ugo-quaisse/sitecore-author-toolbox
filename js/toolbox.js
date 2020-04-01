@@ -28,7 +28,14 @@ function sendNotification(scTitle, scBody) {
   });
   //Play sound
   var sound = new Audio(chrome.runtime.getURL("audio/notification.mp3"));
-  sound.play();
+  var play = sound.play();
+  if (play !== undefined) {
+    play.then(_ => {
+      // Autoplay started!
+    }).catch(error => {
+      // Autoplay was prevented.
+    });
+  }
 }
 
 function repositionElement(event) {
@@ -83,10 +90,17 @@ function sitecoreAuthorToolbox() {
   var count = 0;
   var icon = chrome.runtime.getURL("images/rocket.svg");
   var iconLock = chrome.runtime.getURL("images/lock.svg");
-  var iconError = chrome.runtime.getURL("images/error.png");
-  var iconEdit = chrome.runtime.getURL("images/edit.pmg");
-  var iconTranslate = chrome.runtime.getURL("images/translate.pmg");
+  var iconWorkflow = chrome.runtime.getURL("images/workflow.svg");
+  var iconPublish = chrome.runtime.getURL("images/publish.svg");
+  var iconUnicorn = chrome.runtime.getURL("images/unicorn.svg");
+  var iconUser = chrome.runtime.getURL("images/user.svg");
+  var iconError = chrome.runtime.getURL("images/error.svg");
+  var iconEdit = chrome.runtime.getURL("images/edit.svg");
+  var iconTranslate = chrome.runtime.getURL("images/translate.svg");
   var iconFlagGeneric = chrome.runtime.getURL("images/Flags/32x32/flag_generic.png");
+  var urlLoader = chrome.runtime.getURL("images/ajax-loader.gif");
+  var dotGreen = chrome.runtime.getURL("images/dot_green.svg");
+  var dotRed = chrome.runtime.getURL("images/dot_red.svg");
   var jsonLanguages = chrome.runtime.getURL("data/languages.json");
   let rteLanguages = ["ARABIC", "HEBREW", "PERSIAN", "URDU", "SINDHI"];
 
@@ -156,12 +170,12 @@ function sitecoreAuthorToolbox() {
     //Sitecore properties from Quick Info
     var temp = document.getElementsByClassName("scEditorHeaderQuickInfoInput");  
     var sitecoreItemID = temp[0].getAttribute("value");
-    var sitecoreItemPath = temp[1].getAttribute("value").toLowerCase();
-    var sitecoreItemPathOriginal = sitecoreItemPath.toLowerCase();
+    var sitecoreItemPath = temp[1].getAttribute("value").toLowerCase()+"/";
+    var sitecoreItemPathOriginal = sitecoreItemPath.toLowerCase()+"/";
     sitecoreItemPath = sitecoreItemPath.split("/home/");
-    var sitecoreSite = sitecoreItemPath[0];
+    var sitecoreSite = sitecoreItemPath[0].toLowerCase();
     sitecoreSite = sitecoreSite.split("/");
-    sitecoreSite = sitecoreSite.slice(-1)[0].toLowerCase();
+    sitecoreSite = sitecoreSite.slice(-1)[0];
     var isData = sitecoreItemPathOriginal.includes('/data/');
     var isMarketingControlPanel = sitecoreItemPathOriginal.includes('/marketing control panel/');
     var isTemplate = sitecoreItemPathOriginal.includes('/sitecore/templates');
@@ -181,16 +195,31 @@ function sitecoreAuthorToolbox() {
     if (sitecoreItemPath[1]!=undefined) {
       sitecoreItemPath = encodeURI(window.location.origin + "/" + scLanguage + "/" + sitecoreItemPath[1]+ "?sc_site=xxxsxa_sitexxx&sc_mode=normal").toLowerCase();   
     } else {
-      sitecoreItemPath = encodeURI(window.location.origin + "/" + scLanguage + "/?sc_site=xxxsxa_sitexxx").toLowerCase(); 
+      sitecoreItemPath = encodeURI(window.location.origin + "/" + scLanguage + "/?sc_site=xxxsxa_sitexxx&sc_mode=normal").toLowerCase(); 
     }
 
     //Excluding home and data
-    if(sitecoreSite!="home" && isContent && !isData) {
+    if(isContent && !isData) {
 
       //Get user preference
-      chrome.storage.sync.get(['feature_urls'], function(result) {
+      chrome.storage.sync.get(['feature_urls','domain_manager', 'feature_urlstatus'], function(result) {
 
       if(result.feature_urls == undefined) { result.feature_urls = true; }
+      if(result.feature_urlstatus == undefined) { result.feature_urlstatus = true; }
+        
+        //Stored data (Json)
+        var liveUrl = undefined;
+        var domains = result.domain_manager;
+        var envBadge = "CM server";
+        var pageError = "";
+
+        //Loop through domains, if current domain = key, then create new link for live
+        for (var domain in domains) {
+          if(window.location.origin == domain) {
+            liveUrl = domains[domain];
+            break;
+          }
+        }
         
         //If not added yet
         if(!document.getElementById("scMessageBarUrl") && result.feature_urls) {
@@ -206,21 +235,77 @@ function sitecoreAuthorToolbox() {
             if(debug) { console.log("%c - QuickInfo ("+site_quickinfo+") VS Cookie ("+site_cookie+") = "+isSameSite+" ", 'font-size:12px; background: #e3658e; color: black; border-radius:5px; padding 3px;'); }
           }
 
-            if(response.farewell != null && isSameSite) {
+          if(response.farewell != null && isSameSite && liveUrl == undefined) {
 
               sitecoreItemPath = sitecoreItemPath.replace("xxxsxa_sitexxx", response.farewell);
 
+          } else if(liveUrl == undefined) {
+
+              // sitecoreItemPath = sitecoreItemPath.replace("xxxsxa_sitexxx", sitecoreSite);
+              //sitecoreItemPath = sitecoreItemPath.replace("xxxsxa_sitexxx", "website");
+              sitecoreItemPath = sitecoreItemPath.replace("sc_site=xxxsxa_sitexxx&", "");
+
+          } else if(liveUrl != undefined) {
+
+            //Generating CD/Live URLs
+            sitecoreItemPath = sitecoreItemPath.replace("sc_site=xxxsxa_sitexxx&", "");
+            sitecoreItemPath = sitecoreItemPath.replace("?sc_mode=normal", "");
+            sitecoreItemPath = sitecoreItemPath.replace(window.location.origin,liveUrl);
+            //Generating CD?Live URLS with SitecoreID
+            scUrl = scUrl.replace(window.location.origin,liveUrl);
+            scUrl = scUrl.replace("&sc_mode=normal", "");
+            //Badge with server name
+            envBadge = "CD/Live server";
+
+          }
+
+          //Prepare HTML (scInformation scWarning scError)
+          var scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + icon + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Sitecore Live URL <span class="liveUrlBadge" onclick="location.href = \'' + launchpadPage + '?configure_domains=true&launchpad=true&url=' + windowLocationHref + '\'" title="Click to configure your domains">' + envBadge + '</span> <span class="liveUrlStatus"></span></div><div class="scMessageBarText">If you want to preview this page in <b>' + scLanguageTxtLong + '</b> (version ' + scItemVersion + ')</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + sitecoreItemPath + '" target="_blank" class="scMessageBarOption">Open this link</a> or try <a href="' + scUrl + '" target="_blank" class="scMessageBarOption">this alternative link</a></li></ul></div></div>'
+
+          //Insert message bar into Sitecore Content Editor
+          scEditorID.insertAdjacentHTML( 'afterend', scMessage );
+
+          /*
+           * Live status
+           */
+          if(result.feature_urlstatus) {
+
+            var liveUrlStatus = document.querySelector(".liveUrlStatus");
+            if(liveUrlStatus) {
+              liveUrlStatus.innerHTML = '<img src="' + urlLoader + '" style="width: 10px; float: initial; margin: unset;"/>';
+            }
+            
+            var sitecoreUrl;
+            if(liveUrl != undefined) {
+              sitecoreUrl = sitecoreItemPath;
             } else {
-
-              sitecoreItemPath = sitecoreItemPath.replace("xxxsxa_sitexxx", sitecoreSite);
-
+              sitecoreUrl = scUrl;
             }
 
-            //Prepare HTML (scInformation scWarning scError)
-            var scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + icon + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Sitecore Live URL</div><div class="scMessageBarText">If you want to preview this page in <b>' + scLanguageTxtLong + '</b> (version ' + scItemVersion + ')</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + sitecoreItemPath + '" target="_blank" class="scMessageBarOption">Open this link</a> or try <a href="' + scUrl + '" target="_blank" class="scMessageBarOption">this alternative link</a></li></ul></div></div>'
+            var url = new Request(sitecoreUrl);
+            pageError = fetch(url)
+            .then(function(response) {
 
-            //Insert message bar into Sitecore Content Editor
-            scEditorID.insertAdjacentHTML( 'afterend', scMessage );
+              // console.log(response.status);
+              
+              var liveUrlStatus = document.querySelector(".liveUrlStatus");
+
+              if(response.status == "404" ) {
+                if(liveUrlStatus) {
+                  liveUrlStatus.innerHTML = "<span class='liveStatusRed'><img src=' " + dotRed + "'/> Not available (404)</span>";
+                }
+              } else if(response.status == "500" ) {
+                if(liveUrlStatus) {
+                  liveUrlStatus.innerHTML = "<span class='liveStatusRed'><img src=' " + dotRed + "'/> Not available (500)</span>";
+                }
+              } else {
+                if(liveUrlStatus) {
+                  liveUrlStatus.innerHTML = "<span class='liveStatusGreen'><img src=' " + dotGreen + "'/> Available</span>";
+                }
+              }
+            });
+
+          }
 
           });
 
@@ -237,8 +322,8 @@ function sitecoreAuthorToolbox() {
         //If not added yet
         if(!document.getElementById("scMessageBarInfo") && result.feature_urls) {
           
-          var scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + iconEdit + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing a data source...</div><div class="scMessageBarText">To see it, you need to add/edit it to your page via the</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><span class="scMessageBarOption">Presentation Details</span> or <span class="scMessageBarOption">Experience Editor</span></li></ul></div></div>'
-          //scEditorID.insertAdjacentHTML( 'afterend', scMessage );
+          var scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + iconEdit + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing a data source...</div><div class="scMessageBarText">To see it, you need to add/edit it to any page via the</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><span class="scMessageBarOption">Presentation Details</span> or <span class="scMessageBarOption">Experience Editor</span></li></ul></div></div>'
+          scEditorID.insertAdjacentHTML( 'afterend', scMessage );
 
         }
 
@@ -257,8 +342,10 @@ function sitecoreAuthorToolbox() {
 
     //Version number
     var scEditorHeaderVersionsVersion = document.querySelector(".scEditorHeaderVersionsVersion");
-    var scVersionTitle = scEditorHeaderVersionsVersion.getAttribute("title");
-    scEditorHeaderVersionsVersion.querySelector("span").innerText = scVersionTitle.replace("."," ▾");
+    if(scEditorHeaderVersionsVersion) {
+      var scVersionTitle = scEditorHeaderVersionsVersion.getAttribute("title");
+      scEditorHeaderVersionsVersion.querySelector("span").innerText = scVersionTitle.replace("."," ▾");
+    }
 
     if(isNotRegion) {
 
@@ -820,16 +907,11 @@ function sitecoreAuthorToolbox() {
      */
     //Add listener on search result list
     target = document.querySelector( "#SearchResult" );
-    observer = new MutationObserver(function(mutations) {
-
-      console.log(mutations);
-      
+    observer = new MutationObserver(function(mutations) {      
 
       var SearchResultHolder = document.querySelector("#SearchResult");
       var scSearchLink = SearchResultHolder.querySelectorAll(".scSearchLink");
       var scSearchListExtra = document.querySelector(".scSearchListExtra");
-      console.log("EXTRA");
-      console.log(scSearchListExtra);
 
       for(var line of scSearchLink) {
         
@@ -857,21 +939,78 @@ function sitecoreAuthorToolbox() {
     }
 
     /*
-     * 12. Locked Item
+     * 12. Locked Item and fancy message bar
      */
-     setTimeout(function() {
-        
-        var isItemLocked = document.querySelector(".scRibbon").innerHTML.includes('Check this item in.');
+     chrome.storage.sync.get(['feature_messagebar'], function(result) {
 
-        if(isItemLocked) {
-          //Prepare HTML (scInformation scWarning scError)
-          scMessage = '<div id="scMessageBarUrl" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' + iconLock + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You have locked this item.</div><div class="scMessageBarText">Nobody is able to edit it until you unlock it.</div><ul class="scMessageBarOptions"><li class="scMessageBarOptionBullet"><a href="#" onclick="javascript:return scForm.postEvent(this,event,\'item:checkin\')" class="scMessageBarOption">Unlock this item</a></li></ul></div></div>'
+      if (!chrome.runtime.error && result.feature_messagebar == true) {
+         
+         setTimeout(function() {
           
-          //Insert message bar into Sitecore Content Editor
-          scEditorID.insertAdjacentHTML( 'afterend', scMessage );
-         }
+          //Check who locked the item
+          var scWarnings = document.querySelectorAll(".scWarning");
+          for(var scWarning of scWarnings) {
 
-     }, 500);
+              var scWarningText = scWarning.querySelector(".scMessageBarTitle").innerText;
+              var scWarningTextBar = scWarning.querySelector(".scMessageBarText");
+              var scWarningIcon = scWarning.querySelector(".scMessageBarIcon");
+
+              var isLockMessage = scWarningText.includes("' has locked this item.");
+              var isElevateUnlock = scWarningText.includes("Elevated Unlock");
+              var isNotFinalWorkflowStep = scWarningText.includes("is not in the final workflow step.");
+              var isUnicorned = scWarningText.includes("This item is controlled by Unicorn");
+              var isNoVersion = scWarningText.includes("The current item does not have a version");
+
+              //No version exist
+              if(isNoVersion) {
+                scWarningIcon.setAttribute("style","background-image: url(" + iconTranslate + ");");
+              }
+
+              //Not in final workflow step
+              if(isNotFinalWorkflowStep) {
+                scWarningIcon.setAttribute("style","background-image: url(" + iconWorkflow + ");");
+              }
+
+              //Locked by
+              if(isLockMessage) {
+                temp = scWarningText.split("' ");
+                var lockedBy = temp[0].replace("'", "");
+                lockedBy = lockedBy + " has"
+                scWarningIcon.setAttribute("style","background-image: url(" + iconLock + ");");
+              } else {
+                lockedBy = "You have";
+              }
+
+              //Admin, elevate unlock
+              if(isElevateUnlock) {
+                scWarningIcon.setAttribute("style","background-image: url(" + iconLock + ");");
+              }
+
+              //Unicorded
+              if(isUnicorned) {
+                scWarning.classList.add("scOrange");
+                scWarningTextBar.innerHTML = scWarningTextBar.innerHTML.replace("<br><br>","<br>").replace("<br><b>Predicate"," <b>Predicate").replace("Changes to this item will be written to disk so they can be shared with others.<br>",""); 
+                scWarningIcon.setAttribute("style","background-image: url(" + iconUnicorn + ");");
+              }
+          }  
+            
+          //Check if item is locked
+          var isItemLocked = document.querySelector(".scRibbon").innerHTML.includes('Check this item in.');
+
+          if(isItemLocked && !isElevateUnlock) {
+
+            //Prepare HTML (scInformation scWarning scError)
+            scMessage = '<div id="scMessageBarUrl" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + iconLock + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">' + lockedBy + ' locked this item.</div><div class="scMessageBarText">Nobody is able to edit it until you unlock it.</div><ul class="scMessageBarOptions"><li class="scMessageBarOptionBullet"><a href="#" onclick="javascript:return scForm.postEvent(this,event,\'item:checkin\')" class="scMessageBarOption">Unlock this item</a></li></ul></div></div>'
+          
+            //Insert message bar into Sitecore Content Editor
+            scEditorID.insertAdjacentHTML( 'afterend', scMessage );
+
+          }
+
+         }, 500);
+
+      }
+    });
 
 
     //Add listener on scBucketListBox + scBucketListSelectedBox TODO
@@ -912,8 +1051,7 @@ function sitecoreAuthorToolbox() {
  */
 
 if(debug) {
-  console.info("%c *********************************** Url Loaded *********************************** ", 'font-size:14px; background: #32ed74; color: black; border-radius:5px; padding 3px;');
-  console.info("%c "+window.location.href,'font-size:8px');
+  console.info("%c ##### " + window.location.href + " ##### ", 'font-size:10px; background: #32ed74; color: black; border-radius:5px; padding 3px;');
 }
 
 //Variables
@@ -965,7 +1103,7 @@ var isSearch = windowLocationHref.includes('showresult.aspx');
  */
 if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
-  if(debug) { console.info("%c ✏️ Sitecore detected ", 'font-size:14px; background: #f33d35; color: white; border-radius:5px; padding 3px;'); }
+  // if(debug) { console.info("%c ✏️ Sitecore detected ", 'font-size:14px; background: #f33d35; color: white; border-radius:5px; padding 3px;'); }
 
   var script, link;
 
@@ -1009,12 +1147,28 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
   link.href =  chrome.runtime.getURL("css/onload-min.css");
   document.getElementsByTagName("head")[0].appendChild(link);
 
+  /*
+  * Windows css
+  */
+  if(navigator.platform.includes("Win")) {
+
+    link = document.createElement("link");
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    link.href =  chrome.runtime.getURL("css/windows-min.css");
+    document.getElementsByTagName("head")[0].appendChild(link);
+
+  }
+
   //Launchpad icon variables
   var launchpadPage = chrome.runtime.getURL("options.html");
   var launchpadIcon = chrome.runtime.getURL("images/icon.png");
   var launchpadGroupTitle = "Sitecore Author Toolbox";
   var launchpadTitle = "Options";
   var launchpadUrl = windowLocationHref;
+
+  //Workbox variables
+  var workboxPage = "/sitecore/shell/Applications/Workbox/Default.aspx?he=Workbox&sc_bw=1";
   
   if(isDesktop) {
 
@@ -1504,7 +1658,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
    
   } else if(isPublishWindow) {
 
-    if(debug) { console.info("====================> PUBLISH WINDOW <===================="); } 
+    if(debug) { console.info("====================> PUBLISH/REBUILD WINDOW <===================="); } 
 
     chrome.storage.sync.get(['feature_flags'], function(result) {
 
@@ -1679,26 +1833,30 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
    * Chrome extention and JS Observers
    */
 
-  //On change
-  var MutationObserver = window.MutationObserver;
+  /*
+   * Update UI
+   */  
 
-  var elementObserver = new MutationObserver(function(e) {
+  var target = document.querySelector("#scLanguage, a[title='Workbox']");
+  var observer = new MutationObserver(function(mutations) {
 
     if(debug) { console.info('%c *** Update UI *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); }
 
-    /*
-     * Open in Content Tree link (Beta)
-     */  
+    //Sitecore Variables
     var scQuickInfo = document.querySelector ( ".scEditorHeaderQuickInfoInput" );
+    var windowLocationHref = window.location.href.toLowerCase();
 
+    /*
+     * Open in Content Tree link
+     */  
     if (scQuickInfo) {
-
-      var windowLocationHref = window.location.href.toLowerCase();
+    
       var sitecoreItemID = scQuickInfo.getAttribute("value");
       var scLanguage = document.getElementById("scLanguage").getAttribute("value").toLowerCase();
-      
+      var scVersion = 0;
+
       if(document.querySelector ( ".scEditorHeaderVersionsVersion > span" )) {
-        var scVersion = document.querySelector ( ".scEditorHeaderVersionsVersion > span" ).innerText;
+        scVersion = document.querySelector ( ".scEditorHeaderVersionsVersion > span" ).innerText;
       }
 
       var scEditorQuickInfo = document.querySelectorAll(".scEditorQuickInfo");
@@ -1740,81 +1898,91 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
         if(debug) { console.info("%c [Storage Set] Version : " + scVersion + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
       });
 
-      //Reload language
-      //scForm.invoke("item:load(id={93C2EE9B-9574-4B40-BC0D-6CFEE5104335},language=ja-JP,version=0)")
-
     }
 
-
-    e.forEach(function(e) {
+    //Execute a bunch of actions everytime the UI is refreshed
+    mutations.forEach(function(e) {
       "attributes" == e.type && sitecoreAuthorToolbox();
     });
   });
 
-  //Reload
-  var element = document.getElementById("scLanguage");
+  //Observer
+  if(target){
+    observer.observe(target, { attributes: true });
+  }
 
-  if(element){
+  /*
+   * Reload UI (Main execution)
+   */ 
+  if(target){
     
     if(debug) { console.info('%c *** Reload *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); }
 
     //Sitecore Variables
     windowLocationHref = window.location.href.toLowerCase();
-    var scLanguage = element.getAttribute("value").toLowerCase();
+    var scQuickInfo = document.querySelector ( ".scEditorHeaderQuickInfoInput" );
     var hash = window.location.hash.substr(1);
     var hasRedirection = windowLocationHref.includes("&ro=");
     var hasRedirectionOther = windowLocationHref.includes("&sc_ce_uri=");
+    var workboxLaunchpad = document.querySelector("a[title='Workbox']");
 
     //Extension ID
     var extensionId = chrome.runtime.getURL("something");
     extensionId = extensionId.split("chrome-extension://");
     extensionId = extensionId[1].split("/something");
     extensionId = extensionId[0];
-
     document.querySelector('body').insertAdjacentHTML( 'beforeend', '<input type="hidden" class="extensionId" value="' + extensionId + '" />' );
 
+    /*
+     * Main function execution
+     */
+    if(!isLaunchpad) {
+      sitecoreAuthorToolbox();
+    }
 
     /*
-     * 14. Show informative Snackbar
+     * 14. Show Snackbar
      */
-    var snackbarVersion = 2;
-    var snackbarHtml = "Tab sections option is enabled. If you want to switch back to normal mode, clic Edit button.";
+    if(!isLaunchpad) {
 
-    chrome.storage.sync.get(['hideSnackbar','feature_cetabs'], function(result) {
+      chrome.storage.sync.get(['hideSnackbar','feature_cetabs'], function(result) {
 
-      if (!chrome.runtime.error && result.hideSnackbar != snackbarVersion && result.feature_cetabs != false) {
+        if (!chrome.runtime.error && result.hideSnackbar != snackbarVersion && result.feature_cetabs != false) {
 
-        // console.log("Show Snackbar "+snackbarVersion);
+          //Snackbar settings
+          var snackbarVersion = 1;
+          var snackbarHtml = "<b>Live URL has been improved.</b><br />You can now setup your CM or CD/Live domains.<br />Clic the settings button.";
 
-        //Show Snackbar
-        var html='<div class="snackbar"> ' + snackbarHtml + ' <button onclick="window.open(\' ' + launchpadPage + '?launchpad=true&url= ' + windowLocationHref + ' &tabs=0 \');">EDIT</button><button id="sbDismiss">DISMISS</button></div>';
-        document.querySelector('body').insertAdjacentHTML( 'beforeend', html );
+          //Show Snackbar
+          var html='<div class="snackbar"> ' + snackbarHtml + ' <button onclick="window.location.href =\' ' + launchpadPage + '?configure_domains=true&launchpad=true&url= ' + windowLocationHref + ' &tabs=0 \'">SETTINGS</button><button id="sbDismiss">DISMISS</button></div>';
+          document.querySelector('body').insertAdjacentHTML( 'beforeend', html );
 
 
-          //Add listener on click #sbDismiss
-          document.querySelector("#sbDismiss").addEventListener("click", function(){     
-            chrome.runtime.sendMessage({greeting: "hide_snackbar", version: snackbarVersion}, function(response) {
-              if(response.farewell != null) {
-                console.log(response);
-                document.querySelector('.snackbar').setAttribute('style','display: none');
+            //Add listener on click #sbDismiss
+            document.querySelector("#sbDismiss").addEventListener("click", function(){     
+              chrome.runtime.sendMessage({greeting: "hide_snackbar", version: snackbarVersion}, function(response) {
+                if(response.farewell != null) {
+                  console.log(response);
+                  document.querySelector('.snackbar').setAttribute('style','display: none');
 
-                //For debugging, You can  clean up this storage value by running this command in the console
-                //chrome.storage.sync.remove("hideSnackbar", function() { chrome.storage.sync.get(function(e){console.log(e)}) });
-              }
+                  //For debugging, You can  clean up this storage value by running this command in the console
+                  //chrome.storage.sync.remove("hideSnackbar", function() { chrome.storage.sync.get(function(e){console.log(e)}) });
+                }
+              });
             });
-          });
-      }
+        }
 
-    });
+      });
 
+    }
 
-    if(!hasRedirection && !hasRedirectionOther) {
+    /*
+     * 9. Resume from where you left / from hash value
+     */
+    if(!hasRedirection && !hasRedirectionOther && !isLaunchpad) {
 
-        /*
-         * 9. Resume from where you left or from hash value
-         */
         chrome.storage.sync.get(['scItemID','scLanguage','scVersion','feature_reloadnode'], function(result) {
-          
+
           if (!chrome.runtime.error && result.scItemID != undefined) {
 
             if(result.feature_reloadnode == undefined) { result.feature_reloadnode = true; }
@@ -1851,45 +2019,166 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
     }
 
-    sitecoreAuthorToolbox();
+    /*
+     * 15. Workbox items
+     */
+    chrome.storage.sync.get(['feature_workbox'], function(result) {
 
-    elementObserver.observe(element, { attributes: !0 });
+      if (!chrome.runtime.error && result.feature_workbox == true) {
+
+        if(debug) { console.info('%c *** Workbox notifications *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); }
+        
+        var ajax = new XMLHttpRequest();
+        ajax.timeout = 3000; 
+        ajax.open("GET", "/sitecore/shell/default.aspx?xmlcontrol=Workbox", true);
+        ajax.onreadystatechange = function() {
+          
+          if (ajax.readyState === 4 && ajax.status == "200") {
+
+            var html = new DOMParser().parseFromString(ajax.responseText, "text/html");
+            var scWorkflows = html.querySelectorAll("#States > div");
+            var wfWorkflows = 0;
+            var wfNotification = 0;
+            var wfUnchecked = 0;
+            var wfColor = "";
+            var wfChecksum = "#checksum#";
+
+            //If any workflow unchecked?
+            var scWorkflowsPanel = html.querySelectorAll(".scWorkflowsPanel > div > span > input");
+            
+            //Loop workflows
+            for(var scWorkflowCheckbox of scWorkflowsPanel) {
+
+              if(scWorkflowCheckbox.checked) {
+                wfUnchecked++
+              }
+
+            }
+
+            if(wfUnchecked == 0) {
+              wfNotification = "?";
+            }
+
+            //Loop workflows
+            for(var scWorkflow of scWorkflows) {
+
+              var scWorkflowTitle = scWorkflow.querySelector(".scPaneHeader").innerText;
+              // console.log(scWorkflowTitle);
+              wfWorkflows += 1;
+              wfChecksum += "-workflow:" + scWorkflowTitle.replace(" ","").toLowerCase();
+
+              var wfStates = scWorkflow.querySelectorAll(".scBackground");
+              //Get last objet = final state of the workflow
+
+              for(var wfState of wfStates) {
+
+                var wfStateTitle = wfState.querySelector(".scSectionCenter").innerText;
+                var sfStateCount = wfState.querySelectorAll(".scWorkBoxData")
+                var wfStateTitleCount = wfStateTitle.split(" - (")[1].toLowerCase();
+                wfStateTitleCount = wfStateTitleCount.replace(")","").replace(" item","").replace("s","");
+                if(wfStateTitleCount == "none") { wfStateTitleCount = 0; }
+                // console.log(">>>>"+wfStateTitle+" ("+sfStateCount+")");
+                // wfNotification += sfStateCount.length;
+                wfNotification += parseInt(wfStateTitleCount)
+                wfChecksum += "-state:" + wfStateTitle.split(" - ")[0].replace(" ","").toLowerCase() + ":" + wfNotification;
+
+              }         
+
+            }
+
+            //Store Checksum
+            var storedChecksum = sessionStorage.getItem('wfChecksum');
+            sessionStorage.setItem('wfChecksum', wfChecksum);
+            
+            // console.log(wfChecksum);
+            // console.log("----------- NOTIFICATION: "+wfNotification+" ------------");
+
+            if(storedChecksum != wfChecksum && wfNotification > 0) {
+              var notificationSubTitle = "Workflow changes detected";
+              var notificationBody = "Check your workbox!";
+              sendNotification(notificationSubTitle,notificationBody);
+            }
+
+            if(isLaunchpad) {
+              //Show badge (launchpad)
+              html = '<span class="launchpadBadge">' + wfNotification + '</span>';
+              workboxLaunchpad.insertAdjacentHTML( 'afterbegin', html );
+            } else {
+              //Show badge (status bar)
+              var scDockBottomLinks = document.querySelectorAll(".scDockBottom > a");
+              for(var link of scDockBottomLinks) {
+
+                var linkTitle = link.innerText;
+                if(linkTitle == "Workbox" && wfUnchecked > 0) {
+                  // if(wfNotification == 0) { wfColor = "wbGreen"; }
+                  html = '<span class="wbNotification ' + wfColor + '">' + wfNotification + '</span>';
+                  link.setAttribute("style","padding-right:35px");
+                  link.insertAdjacentHTML( 'afterend', html );
+                }
+
+              }
+            }
+
+
+            //Snackbar data
+            // var pluralN = "";
+            // var pluralW = "";
+            // if(wfNotification>1) { pluralN = "s"; }
+            // if(wfWorkflows>1) { pluralW = "s"; }
+            // snackbarHtml = "You have " + wfNotification + " unpublished item" + pluralN + " in " + wfWorkflows + " workflow" + pluralW + ". Do you want to open your workbox?";
+            // var showSnackbar = sessionStorage.getItem('wbDismiss');
+            
+            // //Show Snackbar
+            // if(showSnackbar != 1 && wfNotification > 0 && !isLaunchpad) {
+              
+            //   html='<div class="snackbar"> ' + snackbarHtml + ' <button onclick="window.location.href = \' ' + workboxPage + ' \'">REVIEW</button><button id="wbDismiss">DISMISS</button></div>';
+            //   document.querySelector('body').insertAdjacentHTML( 'beforeend', html );
+
+            //   //Add listener on click #sbDismiss
+            //   document.querySelector("#wbDismiss").addEventListener("click", function(){     
+            //     sessionStorage.setItem('wbDismiss', 1);
+            //     document.querySelector('.snackbar').setAttribute('style','display: none');
+            //   });
+
+            // }
+
+          }
+        }
+        ajax.send(null);
+
+      }
+    });
 
   }
 
   /*
    * 10. Publish notification
    */
-  var elementObserver2 = new MutationObserver(function(e) {
+  target = document.querySelector("#LastPage");
+  observer = new MutationObserver(function(mutations) {
 
     chrome.storage.sync.get(['feature_notification'], function(result) {
 
       if(result.feature_notification == undefined) { result.feature_notification = true; }
 
       if(result.feature_notification) {
-        var notificationTitle = element2.getElementsByClassName("DialogHeader").item(0).innerHTML;
-        var notificationSubTitle = element2.getElementsByClassName("sc-text-largevalue").item(0).innerHTML;
-        var notificationBody = element2.getElementsByClassName("scFieldLabel").item(0).innerHTML
+        var notificationTitle = target.getElementsByClassName("DialogHeader").item(0).innerHTML;
+        var notificationSubTitle = target.getElementsByClassName("sc-text-largevalue").item(0).innerHTML;
+        var notificationBody = target.getElementsByClassName("scFieldLabel").item(0).innerHTML;
+        if(notificationBody == "Result:") { notificationBody = "Finished "+document.querySelector("#ResultText").value.split("Finished")[1]; }
         sendNotification(notificationSubTitle,notificationBody);
       }
 
     });
 
-    if(debug) { console.info('%c *** Publish Done *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); }
+    if(debug) { console.info('%c *** Publish/Rebuild Done *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); }
      
   });
 
   //On open Publish window
-  var element2 = document.getElementById("LastPage");
-
-  if(element2){
-    
-    if(debug) { console.info('%c *** Open Dialog *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); }
-    //sitecoreAuthorToolbox();
-    elementObserver2.observe(element2, { attributes: !0 });
-
+  if(target){      
+    observer.observe(target, { attributes: true });
   }
-
 
 }
 
@@ -2097,8 +2386,9 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
 
   /**
    * Tooltip bar
-   */  
-  var observer = new MutationObserver(function(mutations) {
+   */
+  target = document.querySelector( ".scChromeControls" );
+  observer = new MutationObserver(function(mutations) {
 
     var scChromeToolbar = document.querySelectorAll( ".scChromeToolbar" );
 
@@ -2126,8 +2416,6 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
     }
 
   });
-
-  var target = document.querySelector( ".scChromeControls" );
 
   //Observer
   if(target) {
@@ -2174,9 +2462,8 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
     /*
      * Show/Hide EE ribbon
      */
-
     //TODO: calculate the height of NotificationBar and apply a negative topOffeset to the scExpTab
-
+    var target = document.body;
     var observer = new MutationObserver(function(mutations) {
 
       for(var mutation of mutations) {
@@ -2191,8 +2478,7 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
       }
 
     });
-    var target = document.body;
-
+    
     //Observer
     if(result.feature_toggleribbon && target) {
       var config = { attributes: false, childList: true, characterData: false };

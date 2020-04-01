@@ -91,3 +91,7 @@ a.scTileItem:hover {
     left: 45px;
     top: -27px;
 }
+.scTileItemDetailsHeader {
+	float: left;
+	margin-right: 10px;
+}

@@ -34,8 +34,8 @@
 		<!-- Main panel-->
 		<div id="main">
 	
-			<h4>Choose which option you want to activate:</h4>
-			<input type="checkbox" id="feature_urls" name="feature_urls"> <label for="feature_urls">Live URL</label><br>
+			<h4>Your activated features:</h4>
+			<input type="checkbox" id="feature_urls" name="feature_urls"> <label for="feature_urls">Live URL <a id="settings">Configure domains &raquo;</a></label><br>
 			<input type="checkbox" id="feature_flags" name="feature_flags"> <label for="feature_flags">Language and versions flags</label><br>
 			<input type="checkbox" id="feature_errors" name="feature_errors"> <label for="feature_errors">Grouped error messages</label><br>
 			<input type="checkbox" id="feature_dragdrop" name="feature_dragdrop"> <label for="feature_dragdrop">Media Drag & Drop</label><br>
@@ -49,27 +49,32 @@
 			<input type="checkbox" id="feature_autoexpand" name="feature_autoexpand"> <label for="feature_autoexpand">Tree auto expand</label><br>
 			<input type="checkbox" id="feature_translatemode" name="feature_translatemode"> <label for="feature_translatemode">Translate mode copy button</label><br>
 			<input type="checkbox" id="feature_toggleribbon" name="feature_toggleribbon"> <label for="feature_toggleribbon">Experience Editor enhancements</label><br>
-			<input type="checkbox" id="feature_cetabs" name="feature_cetabs"> <label for="feature_cetabs">Tab sections<sup><a href="https://uquaisse.io/sitecore/" target="_blank">NEW</a></sup></label><br>
-			<input type="checkbox" id="feature_rtecolor" name="feature_rtecolor"> <label for="feature_rtecolor">Color Syntax (HTML Editor) <sup><a href="https://uquaisse.io/sitecore/" target="_blank">NEW</a></sup></label><br>
+			<input type="checkbox" id="feature_cetabs" name="feature_cetabs"> <label for="feature_cetabs">Tab sections</label><br>
+			<input type="checkbox" id="feature_rtecolor" name="feature_rtecolor"> <label for="feature_rtecolor">Color Syntax (HTML Editor)</label><br>
+			<input type="checkbox" id="feature_messagebar" name="feature_messagebar"> <label for="feature_messagebar">Fancy message bar <sup><a href="https://uquaisse.io/sitecore/" target="_blank">NEW</a></sup></label><br>
+			<input type="checkbox" id="feature_workbox" name="feature_workbox"> <label for="feature_workbox">Workflow badge & notifications <sup><a href="https://uquaisse.io/sitecore/" target="_blank">NEW</a></sup></label><br>
+			<input type="checkbox" id="feature_urlstatus" name="feature_urlstatus"> <label for="feature_urlstatus">Live URL status <sup><a href="https://uquaisse.io/sitecore/" target="_blank">NEW</a></sup></label><br>
 
-			<div style="display:none"><input type="checkbox" id="feature_rightclic" name="feature_rightclic"> <label for="feature_rightclic">Right click to EE <a id="settings">[URL manager]</a></label></div>
 		</div>
 
 
 		<!-- Panel domains -->
-		<div id="domains">
-			<h4>Enter your list of Sitecore domains:</h4>
+		<form id="domains">
+			
+			<h4>Your Sitecore domains for Live URL:</h4>
 
 			<div id="load">
 				<!-- Call JS to generate list -->
 			</div>
 
-  			<div id="return">
-  				<a id="back">< Back to main menu</a>
-  			</div>
+			<div id="save_domains">
+				<button id="back">&laquo; Back</button>
+				<button id="set_domains">Save your domains</button>
+			</div>	
 
 		</div>
-
+		
+		<!-- Main saving action -->
 		<div id="save">
 			<button id="set">Save and reload Sitecore</button>
 		</div>
@@ -83,7 +88,7 @@
 		</div>
 	</div>
 
-	<script type="text/javascript" src="js/options-min.js"></script>
+	<script type="text/javascript" src="js/options.js"></script>
 
 </body>
 </html>

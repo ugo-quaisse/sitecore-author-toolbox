@@ -69,6 +69,8 @@ function toggleSection(elem,name,fromerror = false) {
  		var section = document.querySelector("#"+sectionId);
  		var sectionPanel = section.nextSibling;
 
+ 		console.log("+++++++++++++++++");
+
 		if(tab!=elem) {
 			//Other tabs not clicked
  			tab.classList.remove("scEditorTabSelected");

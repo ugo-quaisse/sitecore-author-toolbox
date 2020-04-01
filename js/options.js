@@ -18,6 +18,7 @@ document.body.onload = function() {
   var url = new URL(window.location.href);
   var fromLaunchpad = url.searchParams.get("launchpad");
   var backUrl = url.searchParams.get("url");
+  var configureDomains = url.searchParams.get("configure_domains");
 
   if(fromLaunchpad) {
     document.getElementById("set").innerHTML = "Save your preferences";
@@ -29,25 +30,48 @@ document.body.onload = function() {
     document.getElementById("video").style.display = "inherit";
   }
 
-  //Generate domains
-  var html = "";
-  for (var i = 1; i <= 6; i++) {
-    console.log(html);
-    html += `<!-- loop start -->
-        <p>Domain #` + i + `</p>
-          <div class="cd_url">
-            <label for="cd_` + i + `">Live website<b>*</b>:</label>
-            <input name="cd_` + i + `" type="url" placeholder="https://example.com" pattern="https?://.*" required>
-          </div>
-          <div class="cm_url">
-          <label for="cm_` + i + `">Content manager<b>*</b>:</label>
-            <input name="cm_` + i + `" type="url" placeholder="https://example.com" pattern="https?://.*" required>
-           </div>
-        
-          <div id="clear"></div>
-          <!-- loop end -->`;
+  if(configureDomains == "true") {
+    document.querySelector("#settings").click();
+    document.querySelector("#video").setAttribute("style","display:none");
   }
-  document.getElementById("load").innerHTML = html;
+
+  //Generate domains
+  chrome.storage.sync.get(['domain_manager'], function(result) {
+    if (!chrome.runtime.error) {
+
+      //Stored data
+      var domains = Object.keys(result.domain_manager);
+
+      //Generate HTML
+      var html = "";
+      for (var i = 0; i < 3; i++) {
+
+        var domain1 = domains[i];
+        var domain2 = result.domain_manager[domain1];
+
+        if(domain1 == undefined) { domain1 = ""; }
+        if(domain2 == undefined) { domain2 = ""; }
+
+        html += `<!-- loop start -->
+              <div class="cm_url">
+                <!-- <label for="cm[` + i + `]">CM<b>*</b>:</label> -->
+                <input name="cm[` + i + `]" type="url" placeholder="CM URL" pattern="https?://.*" value="` + domain1 + `">
+              </div>
+
+              <div id="arrow">&nbsp;</div>
+
+              <div class="cd_url">
+                <!-- <label for="cd[` + i + `]">Live or CD<b>*</b>:</label> -->
+                <input name="cd[` + i + `]" type="url" placeholder="CD or Live URL" pattern="https?://.*" value="` + domain2 + `">
+              </div>
+            
+              <div id="clear"></div>
+              <!-- loop end -->`;
+      }
+      document.querySelector("#load").innerHTML = html;
+
+      }
+  });
 
   //Urls
   chrome.storage.sync.get(['feature_urls'], function(result) {
@@ -104,15 +128,16 @@ document.body.onload = function() {
     if (!chrome.runtime.error && result.feature_darkmode != undefined) {
       if(result.feature_darkmode) {
         document.getElementById("feature_darkmode").checked = true;
-        var element = document.getElementById("extensionOptions");
-        element.classList.add("dark");
+        document.querySelector("#extensionOptions").classList.add("dark");
+        document.querySelector("#save").classList.add("dark");
+        document.querySelector("#footer").classList.add("dark");
       }
     } else {
       document.getElementById("feature_darkmode").checked = false;
-      element = document.getElementById("extensionOptions");
-      element.classList.add("light");
+      document.querySelector("#extensionOptions").classList.add("light");
+      document.querySelector("#save").classList.add("light");
+      document.querySelector("#footer").classList.add("light");
     }
-    console.log("load"+result.feature_darkmode);
   });
   //Favorites bar
   chrome.storage.sync.get(['feature_favorites'], function(result) {
@@ -214,6 +239,36 @@ document.body.onload = function() {
     } else {
       document.getElementById("feature_rtecolor").checked = true;
     }
+  }); 
+  //Fancy message bar
+  chrome.storage.sync.get(['feature_messagebar'], function(result) {
+    if (!chrome.runtime.error && result.feature_messagebar != undefined) {
+      if(result.feature_messagebar) {
+        document.getElementById("feature_messagebar").checked = true;
+      }
+    } else {
+      document.getElementById("feature_messagebar").checked = true;
+    }
+  });
+  //Workflow notifications
+  chrome.storage.sync.get(['feature_workbox'], function(result) {
+    if (!chrome.runtime.error && result.feature_workbox != undefined) {
+      if(result.feature_workbox) {
+        document.getElementById("feature_workbox").checked = true;
+      }
+    } else {
+      document.getElementById("feature_workbox").checked = true;
+    }
+  });
+  //Live Urls Status
+  chrome.storage.sync.get(['feature_urlstatus'], function(result) {
+    if (!chrome.runtime.error && result.feature_urlstatus != undefined) {
+      if(result.feature_urlstatus) {
+        document.getElementById("feature_urlstatus").checked = true;
+      }
+    } else {
+      document.getElementById("feature_urlstatus").checked = true;
+    }
   });
   
   //Context menu
@@ -230,17 +285,142 @@ document.body.onload = function() {
   // });
 }
 
-document.getElementById("settings").onclick = function() {
+//Settings
+document.querySelector("#settings").onclick = function() {
   document.querySelector("#main").setAttribute( 'style', 'display:none' );
   document.querySelector("#domains").setAttribute( 'style', 'display:block' );
+  document.querySelector("#save").setAttribute( 'style', 'display:none' );
 }
 
-document.getElementById("back").onclick = function() {
-  document.querySelector("#main").setAttribute( 'style', 'display:block' );
-  document.querySelector("#domains").setAttribute( 'style', 'display:none' );
+//Back to main
+document.querySelector("#back").onclick = function() {
+  var url = new URL(window.location.href);
+  var configureDomains = url.searchParams.get("configure_domains");
+  var backUrl = url.searchParams.get("url");
+
+  if(configureDomains == "true") {
+    window.open(backUrl);
+    window.close();
+  } else {
+    document.querySelector("#main").setAttribute( 'style', 'display:block' );
+    document.querySelector("#domains").setAttribute( 'style', 'display:none' );
+    document.querySelector("#save").setAttribute( 'style', 'display:block' );
+  }
 }
 
-document.getElementById("set").onclick = function() {
+//Save domains
+document.querySelector("#set_domains").onclick = function(event) {
+
+    event.preventDefault();
+
+    //Parse form
+    var domains = document.querySelectorAll("form#domains input");
+    var count = 1;
+    var domainId;
+    var currentCM, currentCD;
+    var jsonString = "{";
+    var error = false;
+    var empty = true;
+
+    for(var domain of domains) {
+
+      //Variable
+      var url = "";
+
+      //Reset CSS
+      domain.setAttribute("style","");
+
+      //Domain
+      domainId = parseInt(domain.name.split("[")[1].replace("]",""));
+      currentCM = document.querySelector("input[name='cm[" + domainId + "]']");
+      currentCD = document.querySelector("input[name='cd[" + domainId + "]']");
+
+      if(count%2 == 1) {
+        //CM
+        if(currentCM.value!="" && currentCD.value=="") {
+
+          currentCD.setAttribute("style","border-color:red");
+          alert("CD #" + parseInt(domainId+1) + " is missing");
+          error = true;
+
+        } else if(domain.value != "") {
+          empty = false;
+          try {
+            url = new URL(domain.value);
+          } catch (e) {
+            currentCM.setAttribute("style","border-color:red");
+            alert("CM #" + parseInt(domainId+1) + " is not a valid URL");
+            error = true;
+          }
+        }
+
+        if(url.origin != undefined) {
+          currentCM.value = url.origin;
+        }
+
+      } else {
+        //CD
+        if(currentCM.value=="" && currentCD.value!="") {
+          alert("CM #" + parseInt(domainId+1) + " is missing");
+          error = true;
+        } else if(domain.value != "") {
+          empty = false;
+          try {
+            url = new URL(domain.value);
+          } catch (e) {
+            currentCD.setAttribute("style","border-color:red");
+            alert("CD #" + parseInt(domainId+1) + " is not a valid URL");
+            error = true;
+          }
+        }
+
+        if(url.origin != undefined) {
+          currentCD.value = url.origin;
+
+          if(currentCM.value == currentCD.value) {
+            alert("CM #" + parseInt(domainId+1) + " and CD #" + parseInt(domainId+1) + " are the exact same URL, please verify.");
+            error = true;
+          } else {
+            //Add domain to JsonString
+            // console.log(parseInt(domainId+1) + " ---> " +url.origin);
+            jsonString += '"' + currentCM.value + '":"' + currentCD.value + '",';
+
+          }
+        }
+
+      }
+      count++;
+
+    }
+    //End for
+
+    //Create Json object for storage
+    jsonString += "}";
+    jsonString = jsonString.replace(",}", "}").replace("{}", undefined);
+    //console.log(error);
+
+    if(jsonString!="undefined") {
+      var json = JSON.parse(jsonString);
+      //console.log(json);
+    }
+
+    if(empty == true) {
+      json = "";
+    }
+
+    if(error == false) {
+      chrome.storage.sync.set({"domain_manager": json}, function() {
+        document.querySelector("#set_domains").innerHTML = "Saving...";
+        setTimeout(function(){ document.querySelector("#set_domains").innerHTML = "OK!"; }, 1000);
+        setTimeout(function(){ document.querySelector("#set_domains").innerHTML = "Save your domains"; }, 1500);
+        console.info('--> Domain manager: Saved!');
+      });
+    }
+
+}
+
+//Save preferences
+document.querySelector("#set").onclick = function() {
   //URLs
   chrome.storage.sync.set({"feature_urls": document.getElementById('feature_urls').checked}, function() {
     console.info('--> Urls: ' + document.getElementById('feature_urls').checked);
@@ -314,6 +494,19 @@ document.getElementById("set").onclick = function() {
   chrome.storage.sync.set({"feature_rtecolor": document.getElementById('feature_rtecolor').checked}, function() {
     console.info('--> RTE Color: ' + document.getElementById('feature_rtecolor').checked);
   });
+  //Fancy message bar 
+  chrome.storage.sync.set({"feature_messagebar": document.getElementById('feature_messagebar').checked}, function() {
+    console.info('--> Fancy message bar: ' + document.getElementById('feature_messagebar').checked);
+  });
+  //Workflow notifications
+  chrome.storage.sync.set({"feature_workbox": document.getElementById('feature_workbox').checked}, function() {
+    console.info('--> Workflow notifications: ' + document.getElementById('feature_workbox').checked);
+  });
+  //Live URL Status
+  chrome.storage.sync.set({"feature_urlstatus": document.getElementById('feature_urlstatus').checked}, function() {
+    console.info('--> Live Urls Status: ' + document.getElementById('feature_urlstatus').checked);
+  });
+
 
   //Get URL parameters
   var url = new URL(window.location.href);
@@ -325,12 +518,13 @@ document.getElementById("set").onclick = function() {
     chrome.tabs.query({active: true, currentWindow: true}, function (arrayOfTabs) {
       var code = 'window.location.reload();';
       chrome.tabs.executeScript(arrayOfTabs[0].id, {code: code});
-      document.getElementById("set").innerHTML = "Saving...";
-      setTimeout(function(){ document.getElementById("set").innerHTML = "Save and reload sitecore"; }, 1000);
+      document.querySelector("#set").innerHTML = "Saving...";
+      setTimeout(function(){ document.querySelector("#set").innerHTML = "Save and reload sitecore"; }, 1000);
     });
   } else {
-    document.getElementById("set").innerHTML = "Saving...";
-    setTimeout(function(){ document.getElementById("set").innerHTML = "Save your preferences"; }, 1000);
+    document.querySelector("#set").innerHTML = "Saving...";
+    setTimeout(function(){ document.querySelector("#set").innerHTML = "OK!"; }, 1000);
+    setTimeout(function(){ document.querySelector("#set").innerHTML = "Save your preferences"; }, 1500);
   }
 
   //Reload parent

@@ -1151,7 +1151,6 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
   * Windows css
   */
   if(navigator.platform.includes("Win")) {
-
     link = document.createElement("link");
     link.type = "text/css";
     link.rel = "stylesheet";

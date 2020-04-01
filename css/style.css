@@ -404,7 +404,7 @@ body.contentEditor:after {
 
 .scRibbonNavigatorButtonsGroupButtons{
     display: flex !important;
-    overflow: scroll !important;
+    overflow-x: scroll !important; 
     width: calc(100vw - 65px) !important;
 }
 

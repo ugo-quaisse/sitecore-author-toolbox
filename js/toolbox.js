@@ -8,16 +8,68 @@
 
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
-var debug = false;
+var debug = true;
 
 /*
- * Helper functions
+ * > Helper functions
  */
-function stripHtml(html){
+function stripHtml(html) {
 
     var temporalDivElement = document.createElement("div");
     temporalDivElement.innerHTML = html;
     return temporalDivElement.textContent || temporalDivElement.innerText || "";
+}
+
+function checkUrlStatus(source = null) {
+
+  //Variables
+  var urlLoader = chrome.runtime.getURL("images/ajax-loader.gif");
+  var dotGreen = chrome.runtime.getURL("images/dot_green.svg");
+  var dotRed = chrome.runtime.getURL("images/dot_red.svg");
+  var itemUrl, liveUrlStatus, html;
+  if(source == null) {
+    itemUrl = document.querySelector(".sitecoreItemPath").href;
+    liveUrlStatus = document.querySelector(".liveUrlStatus");
+  } else {
+    itemUrl = source.querySelector(".sitecoreItemPath").href;
+    liveUrlStatus = source.querySelector(".liveUrlStatus");
+  }
+
+  //Loader
+  if(liveUrlStatus) {
+    liveUrlStatus.innerHTML = '<img src="' + urlLoader + '" style="width: 10px; float: initial; margin: unset;"/>';
+  }
+  
+  //Request
+  if(itemUrl) {
+    var url = new Request(itemUrl);
+    var request = fetch(url)
+    .then(function(response) {
+      
+      //Variables
+      if(source == null) {
+        liveUrlStatus = document.querySelector(".liveUrlStatus");
+      } else {
+        liveUrlStatus = source.querySelector(".liveUrlStatus");
+      }
+
+      //Check response
+      if(response.status == "404" || response.status == "500" ) {
+          html = "<span class='liveStatusRed'><img src=' " + dotRed + "'/> Not available (" + response.status + ")</span>";
+      } else {
+          html = "<span class='liveStatusGreen'><img src=' " + dotGreen + "'/> Available</span>";
+      }
+
+      //Update Dom
+      if(liveUrlStatus) {
+        liveUrlStatus.innerHTML = html;
+      } else {
+        liveUrlStatus.innerHTML = "";
+      }
+
+    });
+
+  }
 }
 
 function sendNotification(scTitle, scBody) {
@@ -36,6 +88,7 @@ function sendNotification(scTitle, scBody) {
       // Autoplay was prevented.
     });
   }
+  
 }
 
 function repositionElement(event) {
@@ -84,6 +137,9 @@ function cleanCountryName(name) {
   return language;
 }
 
+/*
+ * > Main function (sitecoreAuthorToolbox)
+ */
 function sitecoreAuthorToolbox() {
 
   //App settings 
@@ -227,85 +283,52 @@ function sitecoreAuthorToolbox() {
           //Get cookie sxa_site
           chrome.runtime.sendMessage({greeting: "sxa_site"}, function(response) {
 
-          //Is website in cookie different than quick info
-          if(response.farewell != null) {
-            var site_quickinfo = sitecoreSite.toLowerCase();
-            var site_cookie = response.farewell.toLowerCase();
-            var isSameSite = site_cookie.includes(site_quickinfo);         
-            if(debug) { console.log("%c - QuickInfo ("+site_quickinfo+") VS Cookie ("+site_cookie+") = "+isSameSite+" ", 'font-size:12px; background: #e3658e; color: black; border-radius:5px; padding 3px;'); }
-          }
+            //Is website in cookie different than quick info
+            if(response.farewell != null) {
+              var site_quickinfo = sitecoreSite.toLowerCase();
+              var site_cookie = response.farewell.toLowerCase();
+              var isSameSite = site_cookie.includes(site_quickinfo);         
+              if(debug) { console.log("%c - QuickInfo ("+site_quickinfo+") VS Cookie ("+site_cookie+") = "+isSameSite+" ", 'font-size:12px; background: #e3658e; color: black; border-radius:5px; padding 3px;'); }
+            }
 
-          if(response.farewell != null && isSameSite && liveUrl == undefined) {
+            if(response.farewell != null && isSameSite && liveUrl == undefined) {
 
-              sitecoreItemPath = sitecoreItemPath.replace("xxxsxa_sitexxx", response.farewell);
+                sitecoreItemPath = sitecoreItemPath.replace("xxxsxa_sitexxx", response.farewell);
 
-          } else if(liveUrl == undefined) {
+            } else if(liveUrl == undefined) {
 
-              // sitecoreItemPath = sitecoreItemPath.replace("xxxsxa_sitexxx", sitecoreSite);
-              //sitecoreItemPath = sitecoreItemPath.replace("xxxsxa_sitexxx", "website");
+                // sitecoreItemPath = sitecoreItemPath.replace("xxxsxa_sitexxx", sitecoreSite);
+                //sitecoreItemPath = sitecoreItemPath.replace("xxxsxa_sitexxx", "website");
+                sitecoreItemPath = sitecoreItemPath.replace("sc_site=xxxsxa_sitexxx&", "");
+
+            } else if(liveUrl != undefined) {
+
+              //Generating CD/Live URLs
               sitecoreItemPath = sitecoreItemPath.replace("sc_site=xxxsxa_sitexxx&", "");
+              sitecoreItemPath = sitecoreItemPath.replace("?sc_mode=normal", "");
+              sitecoreItemPath = sitecoreItemPath.replace(window.location.origin,liveUrl);
+              //Generating CD?Live URLS with SitecoreID
+              scUrl = scUrl.replace(window.location.origin,liveUrl);
+              scUrl = scUrl.replace("&sc_mode=normal", "");
+              //Badge with server name
+              envBadge = "CD/Live server";
 
-          } else if(liveUrl != undefined) {
-
-            //Generating CD/Live URLs
-            sitecoreItemPath = sitecoreItemPath.replace("sc_site=xxxsxa_sitexxx&", "");
-            sitecoreItemPath = sitecoreItemPath.replace("?sc_mode=normal", "");
-            sitecoreItemPath = sitecoreItemPath.replace(window.location.origin,liveUrl);
-            //Generating CD?Live URLS with SitecoreID
-            scUrl = scUrl.replace(window.location.origin,liveUrl);
-            scUrl = scUrl.replace("&sc_mode=normal", "");
-            //Badge with server name
-            envBadge = "CD/Live server";
-
-          }
-
-          //Prepare HTML (scInformation scWarning scError)
-          var scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + icon + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Sitecore Live URL <span class="liveUrlBadge" onclick="location.href = \'' + launchpadPage + '?configure_domains=true&launchpad=true&url=' + windowLocationHref + '\'" title="Click to configure your domains">' + envBadge + '</span> <span class="liveUrlStatus"></span></div><div class="scMessageBarText">If you want to preview this page in <b>' + scLanguageTxtLong + '</b> (version ' + scItemVersion + ')</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + sitecoreItemPath + '" target="_blank" class="scMessageBarOption">Open this link</a> or try <a href="' + scUrl + '" target="_blank" class="scMessageBarOption">this alternative link</a></li></ul></div></div>'
-
-          //Insert message bar into Sitecore Content Editor
-          scEditorID.insertAdjacentHTML( 'afterend', scMessage );
-
-          /*
-           * Live status
-           */
-          if(result.feature_urlstatus) {
-
-            var liveUrlStatus = document.querySelector(".liveUrlStatus");
-            if(liveUrlStatus) {
-              liveUrlStatus.innerHTML = '<img src="' + urlLoader + '" style="width: 10px; float: initial; margin: unset;"/>';
-            }
-            
-            var sitecoreUrl;
-            if(liveUrl != undefined) {
-              sitecoreUrl = sitecoreItemPath;
-            } else {
-              sitecoreUrl = scUrl;
             }
 
-            var url = new Request(sitecoreUrl);
-            pageError = fetch(url)
-            .then(function(response) {
+            //Prepare HTML (scInformation scWarning scError)
+            var scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + icon + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Sitecore Live URL <span class="liveUrlBadge" onclick="location.href = \'' + launchpadPage + '?configure_domains=true&launchpad=true&url=' + windowLocationHref + '\'" title="Click to configure your domains">' + envBadge + '</span> <span class="liveUrlStatus"></span></div><div class="scMessageBarText">If you want to preview this page in <b>' + scLanguageTxtLong + '</b> (version ' + scItemVersion + ')</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + sitecoreItemPath + '" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this link</a> or try <a href="' + scUrl + '" target="_blank" class="scMessageBarOption">this alternative link</a></li></ul></div></div>'
 
-              // console.log(response.status);
-              
-              var liveUrlStatus = document.querySelector(".liveUrlStatus");
+            //Insert message bar into Sitecore Content Editor
+            scEditorID.insertAdjacentHTML( 'afterend', scMessage );
 
-              if(response.status == "404" ) {
-                if(liveUrlStatus) {
-                  liveUrlStatus.innerHTML = "<span class='liveStatusRed'><img src=' " + dotRed + "'/> Not available (404)</span>";
-                }
-              } else if(response.status == "500" ) {
-                if(liveUrlStatus) {
-                  liveUrlStatus.innerHTML = "<span class='liveStatusRed'><img src=' " + dotRed + "'/> Not available (500)</span>";
-                }
-              } else {
-                if(liveUrlStatus) {
-                  liveUrlStatus.innerHTML = "<span class='liveStatusGreen'><img src=' " + dotGreen + "'/> Available</span>";
-                }
-              }
-            });
-
-          }
+            /*
+             * Live status
+             */
+            if(result.feature_urlstatus) {
+              setTimeout(function() {
+                checkUrlStatus();
+              },500);
+            }
 
           });
 
@@ -1037,7 +1060,7 @@ function sitecoreAuthorToolbox() {
       console.info("%c - Sitecore Item: " + sitecoreItemID + " ", 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;');
       console.info("%c - Sitecore Language: " + scLanguage + " ", 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;');
       console.info("%c - Sitecore Version: "+ scItemVersion + " ", 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;');
-      console.info("%c - Translation Mode: "+ isTranslateMode + " ", 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;');
+      console.info('%c - Sitecore Hash : '+ hash + ' ', 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;');
     
     }
 
@@ -1051,11 +1074,11 @@ function sitecoreAuthorToolbox() {
  */
 
 if(debug) {
-  console.info("%c ##### " + window.location.href + " ##### ", 'font-size:10px; background: #32ed74; color: black; border-radius:5px; padding 3px;');
+  console.info("%c " + window.location.href.replace("https://","").replace("http://","") + "", 'font-size:12px; background: #32ed74; color: black; border-radius:5px; padding 3px;');
 }
 
 //Variables
-var initX, initY, mousePressX;
+var initX, initY, mousePressX, target, script, link;
 var windowLocationHref = window.location.href.toLowerCase();
 var isSitecore = window.location.pathname.includes('/sitecore/');
 var isPreviewMode = document.querySelector(".pagemode-preview");
@@ -1072,6 +1095,7 @@ var isAdmin = windowLocationHref.includes('/admin/');
 var isMediaBrowser = windowLocationHref.includes('sitecore.shell.applications.media.mediabrowser');
 var isPublishWindow = windowLocationHref.includes('/shell/applications/publish.aspx');
 var isSecurityWindow = windowLocationHref.includes('/shell/applications/security/');
+var isContentEditor = document.querySelector("#scLanguage");
 var isExperienceEditor = windowLocationHref.includes('/applications/experienceeditor/');
 var isContentHome = windowLocationHref.includes('/content/');
 var isLoginPage = windowLocationHref.includes('sitecore/login');
@@ -1104,8 +1128,8 @@ var isSearch = windowLocationHref.includes('showresult.aspx');
 if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
   // if(debug) { console.info("%c ✏️ Sitecore detected ", 'font-size:14px; background: #f33d35; color: white; border-radius:5px; padding 3px;'); }
+    if(debug) { console.info('%c *** Loading *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); }
 
-  var script, link;
 
   /*
   * Code injection for multilist in a Bucket (BETA)
@@ -1122,13 +1146,6 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
   //   console.log(mutations);
 
   // });
-        
-  // //Observer options
-  // if(target) {
-  //   config = { attributes: false, childList: true, characterData: false, subtree: false };
-  //   observer.observe(target, config);
-  //   console.log(target);
-  // }
 
   /*
   * Code injection for Translate mode
@@ -1156,8 +1173,22 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
     link.rel = "stylesheet";
     link.href =  chrome.runtime.getURL("css/windows-min.css");
     document.getElementsByTagName("head")[0].appendChild(link);
-
   }
+
+  //Sitecore Variables
+  windowLocationHref = window.location.href.toLowerCase();
+  var scQuickInfo = document.querySelector ( ".scEditorHeaderQuickInfoInput" );
+  var hash = window.location.hash.substr(1);
+  var hasRedirection = windowLocationHref.includes("&ro=");
+  var hasRedirectionOther = windowLocationHref.includes("&sc_ce_uri=");
+  var workboxLaunchpad = document.querySelector("a[title='Workbox']");
+
+  //Extension ID
+  var extensionId = chrome.runtime.getURL("something");
+  extensionId = extensionId.split("chrome-extension://");
+  extensionId = extensionId[1].split("/something");
+  extensionId = extensionId[0];
+  document.querySelector('body').insertAdjacentHTML( 'beforeend', '<input type="hidden" class="extensionId" value="' + extensionId + '" />' );
 
   //Launchpad icon variables
   var launchpadPage = chrome.runtime.getURL("options.html");
@@ -1168,7 +1199,288 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
   //Workbox variables
   var workboxPage = "/sitecore/shell/Applications/Workbox/Default.aspx?he=Workbox&sc_bw=1";
+
+  /*
+   * > Content Editor
+   */
+  if(isContentEditor || isLaunchpad) { 
+
+    if(debug) { console.info("====================> CONTENT EDITOR <===================="); }
+
+    /*
+     * 9. Resume from where you left
+     */
+    if(!hasRedirection && !hasRedirectionOther && !isLaunchpad) {
+
+        chrome.storage.sync.get(['scItemID','scLanguage','scVersion','feature_reloadnode'], function(result) {
+
+          if (!chrome.runtime.error && result.scItemID != undefined) {
+
+            if(result.feature_reloadnode == undefined) { result.feature_reloadnode = true; }
+
+            if(hash!="") {
+
+              //TODO: bug if stored version if > 1 and reloaded page with hash version 1
+              if(result.scItemID!=hash) {
+                result.scVersion = 1;
+              }
+
+              result.scItemID = hash;
+
+            }
+
+            if(result.scItemID && result.feature_reloadnode == true) {
   
+                if(debug) { console.info("%c [Read] Item : "+ result.scItemID + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+                if(debug) { console.info("%c [Read] Language : "+ result.scLanguage + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+                if(debug) { console.info("%c [Read] Version : "+ result.scVersion + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+
+                if(debug) { console.info('%c *** Redirection *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); }
+
+                var actualCode = `scForm.invoke("item:load(id=` + result.scItemID + `,language=` + result.scLanguage + `,version=` + result.scVersion + `)");`;
+                script = document.createElement('script');
+                script.textContent = actualCode;
+                (document.head||document.documentElement).appendChild(script);
+                script.remove();
+
+                var stop = true;
+                ///throw new Error("Stoping code execution to redirect");
+
+            }
+
+          }
+
+        });
+
+    }
+
+    /*
+     * Content Editor functions execution
+     */
+    if(!isLaunchpad && !stop) {
+      sitecoreAuthorToolbox();
+    }
+
+    /*
+     * > 14. Show Snackbar
+     */
+    if(!isLaunchpad && !stop) {
+
+      chrome.storage.sync.get(['hideSnackbar','feature_cetabs'], function(result) {
+
+        if (!chrome.runtime.error && result.hideSnackbar != snackbarVersion && result.feature_cetabs != false) {
+
+          //Snackbar settings
+          var snackbarVersion = 1;
+          var snackbarHtml = "<b>Live URL has been improved.</b><br />You can now setup your CM or CD/Live domains.<br />Clic the settings button.";
+
+          //Show Snackbar
+          var html='<div class="snackbar"> ' + snackbarHtml + ' <button onclick="window.location.href =\' ' + launchpadPage + '?configure_domains=true&launchpad=true&url= ' + windowLocationHref + ' &tabs=0 \'">SETTINGS</button><button id="sbDismiss">DISMISS</button></div>';
+          document.querySelector('body').insertAdjacentHTML( 'beforeend', html );
+
+
+            //Add listener on click #sbDismiss
+            document.querySelector("#sbDismiss").addEventListener("click", function(){     
+              chrome.runtime.sendMessage({greeting: "hide_snackbar", version: snackbarVersion}, function(response) {
+                if(response.farewell != null) {
+
+                  document.querySelector('.snackbar').setAttribute('style','display: none');
+
+                  //For debugging, You can  clean up this storage value by running this command in the console
+                  //chrome.storage.sync.remove("hideSnackbar", function() { chrome.storage.sync.get(function(e){console.log(e)}) });
+                }
+              });
+            });
+        }
+
+      });
+
+    }
+
+    /*
+     * > 15. Workbox badge (To be moved under main function sitecoreauthortoolbox)
+     */
+    chrome.storage.sync.get(['feature_workbox'], function(result) {
+
+      if (!chrome.runtime.error && result.feature_workbox == true) {
+        
+        var ajax = new XMLHttpRequest();
+        ajax.timeout = 7000; 
+        ajax.open("GET", "/sitecore/shell/default.aspx?xmlcontrol=Workbox", true);
+        ajax.onreadystatechange = function() {
+
+          if (ajax.readyState === 4 && ajax.status == "200") {
+
+            //If success
+            var html = new DOMParser().parseFromString(ajax.responseText, "text/html");
+            var scWorkflows = html.querySelectorAll("#States > div");
+            var wfWorkflows = 0;
+            var wfNotification = 0;
+            var wfUnchecked = 0;
+            var wfColor = "";
+            var wfChecksum = "#checksum#";
+
+            //If any workflow unchecked?
+            var scWorkflowsPanel = html.querySelectorAll(".scWorkflowsPanel > div > span > input");
+            
+            //Loop workflows
+            for(var scWorkflowCheckbox of scWorkflowsPanel) {
+
+              if(scWorkflowCheckbox.checked) {
+                wfUnchecked++
+              }
+
+            }
+
+            // if(wfUnchecked == 0) {
+            //   wfNotification = "?";
+            // }
+
+            //Loop workflows
+            for(var scWorkflow of scWorkflows) {
+
+              var scWorkflowTitle = scWorkflow.querySelector(".scPaneHeader").innerText;
+              // console.log(scWorkflowTitle);
+              wfWorkflows += 1;
+              wfChecksum += "-workflow:" + scWorkflowTitle.replace(" ","").toLowerCase();
+
+              var wfStates = scWorkflow.querySelectorAll(".scBackground");
+              //Get last objet = final state of the workflow
+
+              for(var wfState of wfStates) {
+
+                var wfStateTitle = wfState.querySelector(".scSectionCenter").innerText;
+                var sfStateCount = wfState.querySelectorAll(".scWorkBoxData")
+                var wfStateTitleCount = wfStateTitle.split(" - (")[1].toLowerCase();
+                wfStateTitleCount = wfStateTitleCount.replace(")","").replace(" item","").replace("s","");
+                if(wfStateTitleCount == "none") { wfStateTitleCount = 0; }
+                // console.log(">>>>"+wfStateTitle+" ("+sfStateCount+")");
+                // wfNotification += sfStateCount.length;
+                wfNotification += parseInt(wfStateTitleCount)
+                wfChecksum += "-state:" + wfStateTitle.split(" - ")[0].replace(" ","").toLowerCase() + ":" + wfNotification;
+
+              }         
+
+            }
+
+            //Store Checksum
+            var storedChecksum = sessionStorage.getItem('wfChecksum');
+            sessionStorage.setItem('wfChecksum', wfChecksum);
+            
+            // console.log(wfChecksum);
+            // console.log("----------- NOTIFICATION: "+wfNotification+" ------------");
+
+            if(storedChecksum != wfChecksum && wfNotification > 0) {
+              var notificationSubTitle = "Workflow changes detected";
+              var notificationBody = "Check your workbox!";
+              sendNotification(notificationSubTitle,notificationBody);
+            }
+
+            if(isLaunchpad) {
+              //Show badge (launchpad)
+              html = '<span class="launchpadBadge">' + wfNotification + '</span>';
+              workboxLaunchpad.insertAdjacentHTML( 'afterbegin', html );
+            } else {
+              //Show badge (status bar)
+              var scDockBottomLinks = document.querySelectorAll(".scDockBottom > a");
+              for(var link of scDockBottomLinks) {
+
+                var linkTitle = link.innerText;
+                if(linkTitle == "Workbox") {
+                  // if(wfNotification == 0) { wfColor = "wbGreen"; }
+                  html = '<span class="wbNotification ' + wfColor + '">' + wfNotification + '</span>';
+                  link.setAttribute("style","padding-right:35px");
+                  link.insertAdjacentHTML( 'afterend', html );
+                }
+
+              }
+            }
+
+          } else if(ajax.readyState === 4 && ajax.status == "0") {
+            //If Timeout or Error
+
+            if(isLaunchpad) {
+              //Show badge (launchpad)
+              html = '<span class="launchpadBadge">?</span>';
+              workboxLaunchpad.insertAdjacentHTML( 'afterbegin', html );
+            } else {
+              //Show badge (status bar)
+              scDockBottomLinks = document.querySelectorAll(".scDockBottom > a");
+              for(link of scDockBottomLinks) {
+
+                linkTitle = link.innerText;
+                if(linkTitle == "Workbox") {
+                  // if(wfNotification == 0) { wfColor = "wbGreen"; }
+                  html = '<span class="wbNotification ' + wfColor + '">?</span>';
+                  link.setAttribute("style","padding-right:35px");
+                  link.insertAdjacentHTML( 'afterend', html );
+                }
+
+              }
+
+            }
+
+          }
+        }
+        ajax.send(null);
+
+      }
+    });
+
+  } //End CE
+
+    /*
+    * > 08. Dark mode
+    */
+    chrome.storage.sync.get(['feature_darkmode'], function(result) {
+
+    if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
+
+        if(result.feature_darkmode && !isExperienceEditor && !isAdminCache && !isSecurityWindow && !isContentHome && !isLoginPage && !isEditMode && !isUserManager && !isRules && !isAdmin) {
+
+          var link = document.createElement("link");
+          link.type = "text/css";
+          link.rel = "stylesheet";
+          link.href =  chrome.runtime.getURL("css/dark/default-min.css");
+          document.getElementsByTagName("head")[0].appendChild(link);
+
+          link = document.createElement("link");
+          link.type = "text/css";
+          link.rel = "stylesheet";
+          link.href =  chrome.runtime.getURL("css/dark/ribbon-min.css");
+          document.getElementsByTagName("head")[0].appendChild(link);
+
+          link = document.createElement("link");
+          link.type = "text/css";
+          link.rel = "stylesheet";
+          link.href =  chrome.runtime.getURL("css/dark/contentmanager-min.css");
+          document.getElementsByTagName("head")[0].appendChild(link);
+
+          link = document.createElement("link");
+          link.type = "text/css";
+          link.rel = "stylesheet";
+          link.href =  chrome.runtime.getURL("css/dark/dialogs-min.css");
+          document.getElementsByTagName("head")[0].appendChild(link);
+
+          link = document.createElement("link");
+          link.type = "text/css";
+          link.rel = "stylesheet";
+          link.href =  chrome.runtime.getURL("css/dark/gallery-min.css");
+          document.getElementsByTagName("head")[0].appendChild(link);
+
+          link = document.createElement("link");
+          link.type = "text/css";
+          link.rel = "stylesheet";
+          link.href =  chrome.runtime.getURL("css/dark/speak-min.css");
+          document.getElementsByTagName("head")[0].appendChild(link);
+
+        }
+
+  });
+
+  /*
+   * > Sitecore Pages
+   */
   if(isDesktop) {
 
     if(debug) { console.info("====================> DESKTOP SHELL <===================="); }
@@ -1239,6 +1551,10 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
   }
 
+  /*
+   * > Sitecore Iframes
+   */
+
   if(isSearch) {
 
     if(debug) { console.info("====================> INTERNAL SEARCH <===================="); }
@@ -1279,14 +1595,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
       observer.observe(target, config);
     }
 
-
-
-
-
-  }
-
-
-  if(isFieldEditor) {
+  } else if(isFieldEditor) {
 
     if(debug) { console.info("====================> FIELD EDITOR <===================="); }
 
@@ -1461,10 +1770,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
       }
     });
 
-
-  }
-
-  if(isRichTextEditor || isHtmlEditor) {
+  } else if(isRichTextEditor || isHtmlEditor) {
 
     if(debug) { console.info("====================> RTE / HTML EDITOR <===================="); }
 
@@ -1541,10 +1847,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
     });
 
-
-  }
-
-  if(isGalleryLanguage) {
+  } else if(isGalleryLanguage) {
 
     if(debug) { console.info("====================> LANGUAGES <===================="); }
 
@@ -1654,7 +1957,6 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
     });
 
-   
   } else if(isPublishWindow) {
 
     if(debug) { console.info("====================> PUBLISH/REBUILD WINDOW <===================="); } 
@@ -1722,58 +2024,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
   }
 
   /*
-   * Dark mode
-   */
-  //@media (prefers-color-scheme: dark) {
-  chrome.storage.sync.get(['feature_darkmode'], function(result) {
-
-    if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
-
-    if(result.feature_darkmode && !isExperienceEditor && !isAdminCache && !isSecurityWindow && !isContentHome && !isLoginPage && !isEditMode && !isUserManager && !isRules && !isAdmin) {
-
-      var link = document.createElement("link");
-      link.type = "text/css";
-      link.rel = "stylesheet";
-      link.href =  chrome.runtime.getURL("css/dark/default-min.css");
-      document.getElementsByTagName("head")[0].appendChild(link);
-
-      link = document.createElement("link");
-      link.type = "text/css";
-      link.rel = "stylesheet";
-      link.href =  chrome.runtime.getURL("css/dark/ribbon-min.css");
-      document.getElementsByTagName("head")[0].appendChild(link);
-
-      link = document.createElement("link");
-      link.type = "text/css";
-      link.rel = "stylesheet";
-      link.href =  chrome.runtime.getURL("css/dark/contentmanager-min.css");
-      document.getElementsByTagName("head")[0].appendChild(link);
-
-      link = document.createElement("link");
-      link.type = "text/css";
-      link.rel = "stylesheet";
-      link.href =  chrome.runtime.getURL("css/dark/dialogs-min.css");
-      document.getElementsByTagName("head")[0].appendChild(link);
-
-      link = document.createElement("link");
-      link.type = "text/css";
-      link.rel = "stylesheet";
-      link.href =  chrome.runtime.getURL("css/dark/gallery-min.css");
-      document.getElementsByTagName("head")[0].appendChild(link);
-
-      link = document.createElement("link");
-      link.type = "text/css";
-      link.rel = "stylesheet";
-      link.href =  chrome.runtime.getURL("css/dark/speak-min.css");
-      document.getElementsByTagName("head")[0].appendChild(link);
-
-    }
-
-  });
-  //}
-
-  /*
-   * Auto Expand Tree (Inspired by https://github.com/alan-null/sc_ext)
+   * > 09. Auto Expand (Inspired by https://github.com/alan-null/sc_ext)
    */
   chrome.storage.sync.get(['feature_autoexpand'], function(result) {
 
@@ -1829,29 +2080,61 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
   });
 
   /*
-   * Chrome extention and JS Observers
+   * > 10. Publish notification
    */
+  target = document.querySelector("#LastPage");
+  observer = new MutationObserver(function(mutations) {
+
+    chrome.storage.sync.get(['feature_notification'], function(result) {
+
+      if(result.feature_notification == undefined) { result.feature_notification = true; }
+
+      if(result.feature_notification) {
+        
+        //Variable
+        target = document.querySelector("#LastPage");
+
+        //Prepare notification
+        var notificationSubTitle = target.querySelector(".sc-text-largevalue").innerHTML;
+        var notificationBody = target.querySelector(".scFieldLabel").innerHTML;
+        if(notificationBody == "Result:") { notificationBody = "Finished "+document.querySelector("#ResultText").value.split("Finished")[1]; }
+        
+        //Send notification
+        sendNotification(notificationSubTitle,notificationBody);
+
+        var parentSelector = parent.parent.document.querySelector("body");
+        checkUrlStatus(parentSelector);
+
+      }
+
+    });
+
+    if(debug) { console.info('%c *** Publish/Rebuild Done *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); }     
+  }); //End publish
+
+    //Observer publish
+    if(target){
+      observer.observe(target, { attributes: true });
+    } 
 
   /*
-   * Update UI
+   * > Update UI
    */  
-
-  var target = document.querySelector("#scLanguage, a[title='Workbox']");
+  target = document.querySelector("#scLanguage");
   var observer = new MutationObserver(function(mutations) {
 
     if(debug) { console.info('%c *** Update UI *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); }
 
     //Sitecore Variables
-    var scQuickInfo = document.querySelector ( ".scEditorHeaderQuickInfoInput" );
-    var windowLocationHref = window.location.href.toLowerCase();
-
+    var scQuickInfo = document.querySelector(".scEditorHeaderQuickInfoInput" );  
     /*
-     * Open in Content Tree link
-     */  
-    if (scQuickInfo) {
+     * > 5. Open from CE ???? why we need that!!
+     */
     
+    if (scQuickInfo) {
+        
       var sitecoreItemID = scQuickInfo.getAttribute("value");
-      var scLanguage = document.getElementById("scLanguage").getAttribute("value").toLowerCase();
+      var scLanguage = document.querySelector("#scLanguage").getAttribute("value").toLowerCase();
       var scVersion = 0;
 
       if(document.querySelector ( ".scEditorHeaderVersionsVersion > span" )) {
@@ -1865,9 +2148,6 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
       var tabSitecoreItemID = document.querySelectorAll(".scEditorHeaderQuickInfoInput");
       var lastTabSitecoreItemID = tabSitecoreItemID[tabSitecoreItemID.length- 2].getAttribute("value");
-
-      var hasRedirection = windowLocationHref.includes("&ro=");
-      var hasRedirectionOther = windowLocationHref.includes("&sc_ce_uri=");
 
       //Add hash to URL
       if(!hasRedirection && !hasRedirectionOther) {
@@ -1888,13 +2168,13 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
             
       //Set ItemID (Storage)
       chrome.storage.sync.set({"scItemID": sitecoreItemID}, function() {
-        if(debug) { console.info("%c [Storage Set] Item : " + sitecoreItemID + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+        if(debug) { console.info("%c [Write] Item : " + sitecoreItemID + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
       });
       chrome.storage.sync.set({"scLanguage": scLanguage}, function() {
-        if(debug) { console.info("%c [Storage Set] Language : " + scLanguage + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+        if(debug) { console.info("%c [Write] Language : " + scLanguage + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
       });
       chrome.storage.sync.set({"scVersion": scVersion}, function() {
-        if(debug) { console.info("%c [Storage Set] Version : " + scVersion + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+        if(debug) { console.info("%c [Write] Version : " + scVersion + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
       });
 
     }
@@ -1903,281 +2183,12 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
     mutations.forEach(function(e) {
       "attributes" == e.type && sitecoreAuthorToolbox();
     });
-  });
+  }); //En UI
 
-  //Observer
-  if(target){
-    observer.observe(target, { attributes: true });
-  }
-
-  /*
-   * Reload UI (Main execution)
-   */ 
-  if(target){
-    
-    if(debug) { console.info('%c *** Reload *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); }
-
-    //Sitecore Variables
-    windowLocationHref = window.location.href.toLowerCase();
-    var scQuickInfo = document.querySelector ( ".scEditorHeaderQuickInfoInput" );
-    var hash = window.location.hash.substr(1);
-    var hasRedirection = windowLocationHref.includes("&ro=");
-    var hasRedirectionOther = windowLocationHref.includes("&sc_ce_uri=");
-    var workboxLaunchpad = document.querySelector("a[title='Workbox']");
-
-    //Extension ID
-    var extensionId = chrome.runtime.getURL("something");
-    extensionId = extensionId.split("chrome-extension://");
-    extensionId = extensionId[1].split("/something");
-    extensionId = extensionId[0];
-    document.querySelector('body').insertAdjacentHTML( 'beforeend', '<input type="hidden" class="extensionId" value="' + extensionId + '" />' );
-
-    /*
-     * Main function execution
-     */
-    if(!isLaunchpad) {
-      sitecoreAuthorToolbox();
+    //Observer UI
+    if(target){
+      observer.observe(target, { attributes: true });
     }
-
-    /*
-     * 14. Show Snackbar
-     */
-    if(!isLaunchpad) {
-
-      chrome.storage.sync.get(['hideSnackbar','feature_cetabs'], function(result) {
-
-        if (!chrome.runtime.error && result.hideSnackbar != snackbarVersion && result.feature_cetabs != false) {
-
-          //Snackbar settings
-          var snackbarVersion = 1;
-          var snackbarHtml = "<b>Live URL has been improved.</b><br />You can now setup your CM or CD/Live domains.<br />Clic the settings button.";
-
-          //Show Snackbar
-          var html='<div class="snackbar"> ' + snackbarHtml + ' <button onclick="window.location.href =\' ' + launchpadPage + '?configure_domains=true&launchpad=true&url= ' + windowLocationHref + ' &tabs=0 \'">SETTINGS</button><button id="sbDismiss">DISMISS</button></div>';
-          document.querySelector('body').insertAdjacentHTML( 'beforeend', html );
-
-
-            //Add listener on click #sbDismiss
-            document.querySelector("#sbDismiss").addEventListener("click", function(){     
-              chrome.runtime.sendMessage({greeting: "hide_snackbar", version: snackbarVersion}, function(response) {
-                if(response.farewell != null) {
-                  console.log(response);
-                  document.querySelector('.snackbar').setAttribute('style','display: none');
-
-                  //For debugging, You can  clean up this storage value by running this command in the console
-                  //chrome.storage.sync.remove("hideSnackbar", function() { chrome.storage.sync.get(function(e){console.log(e)}) });
-                }
-              });
-            });
-        }
-
-      });
-
-    }
-
-    /*
-     * 9. Resume from where you left / from hash value
-     */
-    if(!hasRedirection && !hasRedirectionOther && !isLaunchpad) {
-
-        chrome.storage.sync.get(['scItemID','scLanguage','scVersion','feature_reloadnode'], function(result) {
-
-          if (!chrome.runtime.error && result.scItemID != undefined) {
-
-            if(result.feature_reloadnode == undefined) { result.feature_reloadnode = true; }
-
-            if(hash!="") {
-
-              //TODO: bug if stored version if > 1 and reloaded page with hash version 1
-              if(result.scItemID!=hash) {
-                result.scVersion = 1;
-              }
-
-              result.scItemID = hash;
-              if(debug) { console.info('%c - Sitecore Hash : '+ hash + ' ', 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;'); }
-
-            }
-
-            if(result.scItemID && result.feature_reloadnode == true) {
-
-              var actualCode = `scForm.invoke("item:load(id=` + result.scItemID + `,language=` + result.scLanguage + `,version=` + result.scVersion + `)");`;
-              script = document.createElement('script');
-              script.textContent = actualCode;
-              (document.head||document.documentElement).appendChild(script);
-              script.remove();
-
-              if(debug) { console.info("%c [Storage Get] Item : "+ result.scItemID + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
-              if(debug) { console.info("%c [Storage Get] Language : "+ result.scLanguage + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
-              if(debug) { console.info("%c [Storage Get] Version : "+ result.scVersion + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
-
-            }
-
-          }
-
-        });
-
-    }
-
-    /*
-     * 15. Workbox items
-     */
-    chrome.storage.sync.get(['feature_workbox'], function(result) {
-
-      if (!chrome.runtime.error && result.feature_workbox == true) {
-
-        if(debug) { console.info('%c *** Workbox notifications *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); }
-        
-        var ajax = new XMLHttpRequest();
-        ajax.timeout = 3000; 
-        ajax.open("GET", "/sitecore/shell/default.aspx?xmlcontrol=Workbox", true);
-        ajax.onreadystatechange = function() {
-          
-          if (ajax.readyState === 4 && ajax.status == "200") {
-
-            var html = new DOMParser().parseFromString(ajax.responseText, "text/html");
-            var scWorkflows = html.querySelectorAll("#States > div");
-            var wfWorkflows = 0;
-            var wfNotification = 0;
-            var wfUnchecked = 0;
-            var wfColor = "";
-            var wfChecksum = "#checksum#";
-
-            //If any workflow unchecked?
-            var scWorkflowsPanel = html.querySelectorAll(".scWorkflowsPanel > div > span > input");
-            
-            //Loop workflows
-            for(var scWorkflowCheckbox of scWorkflowsPanel) {
-
-              if(scWorkflowCheckbox.checked) {
-                wfUnchecked++
-              }
-
-            }
-
-            // if(wfUnchecked == 0) {
-            //   wfNotification = "?";
-            // }
-
-            //Loop workflows
-            for(var scWorkflow of scWorkflows) {
-
-              var scWorkflowTitle = scWorkflow.querySelector(".scPaneHeader").innerText;
-              // console.log(scWorkflowTitle);
-              wfWorkflows += 1;
-              wfChecksum += "-workflow:" + scWorkflowTitle.replace(" ","").toLowerCase();
-
-              var wfStates = scWorkflow.querySelectorAll(".scBackground");
-              //Get last objet = final state of the workflow
-
-              for(var wfState of wfStates) {
-
-                var wfStateTitle = wfState.querySelector(".scSectionCenter").innerText;
-                var sfStateCount = wfState.querySelectorAll(".scWorkBoxData")
-                var wfStateTitleCount = wfStateTitle.split(" - (")[1].toLowerCase();
-                wfStateTitleCount = wfStateTitleCount.replace(")","").replace(" item","").replace("s","");
-                if(wfStateTitleCount == "none") { wfStateTitleCount = 0; }
-                // console.log(">>>>"+wfStateTitle+" ("+sfStateCount+")");
-                // wfNotification += sfStateCount.length;
-                wfNotification += parseInt(wfStateTitleCount)
-                wfChecksum += "-state:" + wfStateTitle.split(" - ")[0].replace(" ","").toLowerCase() + ":" + wfNotification;
-
-              }         
-
-            }
-
-            //Store Checksum
-            var storedChecksum = sessionStorage.getItem('wfChecksum');
-            sessionStorage.setItem('wfChecksum', wfChecksum);
-            
-            // console.log(wfChecksum);
-            // console.log("----------- NOTIFICATION: "+wfNotification+" ------------");
-
-            if(storedChecksum != wfChecksum && wfNotification > 0) {
-              var notificationSubTitle = "Workflow changes detected";
-              var notificationBody = "Check your workbox!";
-              sendNotification(notificationSubTitle,notificationBody);
-            }
-
-            if(isLaunchpad) {
-              //Show badge (launchpad)
-              html = '<span class="launchpadBadge">' + wfNotification + '</span>';
-              workboxLaunchpad.insertAdjacentHTML( 'afterbegin', html );
-            } else {
-              //Show badge (status bar)
-              var scDockBottomLinks = document.querySelectorAll(".scDockBottom > a");
-              for(var link of scDockBottomLinks) {
-
-                var linkTitle = link.innerText;
-                if(linkTitle == "Workbox" && wfUnchecked > 0) {
-                  // if(wfNotification == 0) { wfColor = "wbGreen"; }
-                  html = '<span class="wbNotification ' + wfColor + '">' + wfNotification + '</span>';
-                  link.setAttribute("style","padding-right:35px");
-                  link.insertAdjacentHTML( 'afterend', html );
-                }
-
-              }
-            }
-
-
-            //Snackbar data
-            // var pluralN = "";
-            // var pluralW = "";
-            // if(wfNotification>1) { pluralN = "s"; }
-            // if(wfWorkflows>1) { pluralW = "s"; }
-            // snackbarHtml = "You have " + wfNotification + " unpublished item" + pluralN + " in " + wfWorkflows + " workflow" + pluralW + ". Do you want to open your workbox?";
-            // var showSnackbar = sessionStorage.getItem('wbDismiss');
-            
-            // //Show Snackbar
-            // if(showSnackbar != 1 && wfNotification > 0 && !isLaunchpad) {
-              
-            //   html='<div class="snackbar"> ' + snackbarHtml + ' <button onclick="window.location.href = \' ' + workboxPage + ' \'">REVIEW</button><button id="wbDismiss">DISMISS</button></div>';
-            //   document.querySelector('body').insertAdjacentHTML( 'beforeend', html );
-
-            //   //Add listener on click #sbDismiss
-            //   document.querySelector("#wbDismiss").addEventListener("click", function(){     
-            //     sessionStorage.setItem('wbDismiss', 1);
-            //     document.querySelector('.snackbar').setAttribute('style','display: none');
-            //   });
-
-            // }
-
-          }
-        }
-        ajax.send(null);
-
-      }
-    });
-
-  }
-
-  /*
-   * 10. Publish notification
-   */
-  target = document.querySelector("#LastPage");
-  observer = new MutationObserver(function(mutations) {
-
-    chrome.storage.sync.get(['feature_notification'], function(result) {
-
-      if(result.feature_notification == undefined) { result.feature_notification = true; }
-
-      if(result.feature_notification) {
-        var notificationTitle = target.getElementsByClassName("DialogHeader").item(0).innerHTML;
-        var notificationSubTitle = target.getElementsByClassName("sc-text-largevalue").item(0).innerHTML;
-        var notificationBody = target.getElementsByClassName("scFieldLabel").item(0).innerHTML;
-        if(notificationBody == "Result:") { notificationBody = "Finished "+document.querySelector("#ResultText").value.split("Finished")[1]; }
-        sendNotification(notificationSubTitle,notificationBody);
-      }
-
-    });
-
-    if(debug) { console.info('%c *** Publish/Rebuild Done *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); }
-     
-  });
-
-  //On open Publish window
-  if(target){      
-    observer.observe(target, { attributes: true });
-  }
 
 }
 

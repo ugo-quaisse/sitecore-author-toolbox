@@ -249,6 +249,9 @@ input {
   line-height: 25px;
   display: none;
 }
+#domains > p {
+  text-align: center;
+}
 #extensionOptions > #domains > #load > p {
   border-bottom: 1px dashed rgba(0,0,0,0.2);
   font-size: 15px;

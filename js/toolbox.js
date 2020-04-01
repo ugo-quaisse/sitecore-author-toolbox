@@ -2055,9 +2055,9 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
             }
 
-            if(wfUnchecked == 0) {
-              wfNotification = "?";
-            }
+            // if(wfUnchecked == 0) {
+            //   wfNotification = "?";
+            // }
 
             //Loop workflows
             for(var scWorkflow of scWorkflows) {

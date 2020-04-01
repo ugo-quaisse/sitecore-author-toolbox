@@ -40,17 +40,22 @@ document.body.onload = function() {
     if (!chrome.runtime.error) {
 
       //Stored data
-      var domains = Object.keys(result.domain_manager);
+      if(result.domain_manager != undefined) {
+        var domains = Object.keys(result.domain_manager);
+      }
 
       //Generate HTML
       var html = "";
-      for (var i = 0; i < 3; i++) {
+      var domain1, domain2;
+      for (var i = 0; i < 6; i++) {
 
-        var domain1 = domains[i];
-        var domain2 = result.domain_manager[domain1];
+        if(result.domain_manager != undefined) {
+          domain1 = domains[i];
+          domain2 = result.domain_manager[domain1];
 
-        if(domain1 == undefined) { domain1 = ""; }
-        if(domain2 == undefined) { domain2 = ""; }
+          if(domain1 == undefined) { domain1 = ""; }
+          if(domain2 == undefined) { domain2 = ""; }
+        }
 
         html += `<!-- loop start -->
               <div class="cm_url">
@@ -401,7 +406,7 @@ document.querySelector("#set_domains").onclick = function(event) {
 
     if(jsonString!="undefined") {
       var json = JSON.parse(jsonString);
-      //console.log(json);
+      console.log(json);
     }
 
     if(empty == true) {

@@ -1,6 +1,6 @@
 /* Sitecore banner colors */
 form#ContentEditorForm {
-    filter: blur(3px) brightness(0.05) grayscale(1);
+    filter: blur(3px) brightness(0.1) grayscale(1);
     transition: 0.3s;
     transform: scale(1.01);
 }

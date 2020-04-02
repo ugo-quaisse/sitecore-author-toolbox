@@ -46,15 +46,14 @@ document.body.onload = function() {
 
       //Generate HTML
       var html = "";
-      var domain1, domain2;
+      var domain1 = "";
+      var domain2 = "";
+
       for (var i = 0; i < 6; i++) {
 
         if(result.domain_manager != undefined) {
           domain1 = domains[i];
           domain2 = result.domain_manager[domain1];
-
-          if(domain1 == undefined) { domain1 = ""; }
-          if(domain2 == undefined) { domain2 = ""; }
         }
 
         html += `<!-- loop start -->
@@ -425,7 +424,10 @@ document.querySelector("#set_domains").onclick = function(event) {
 }
 
 //Save preferences
-document.querySelector("#set").onclick = function() {
+document.querySelector("#set").onclick = function(event) {
+
+  event.preventDefault();
+  
   //URLs
   chrome.storage.sync.set({"feature_urls": document.getElementById('feature_urls').checked}, function() {
     console.info('--> Urls: ' + document.getElementById('feature_urls').checked);
@@ -520,6 +522,7 @@ document.querySelector("#set").onclick = function() {
 
   //Reload sitecore
   if(!fromLaunchpad) {
+
     chrome.tabs.query({active: true, currentWindow: true}, function (arrayOfTabs) {
       var code = 'window.location.reload();';
       chrome.tabs.executeScript(arrayOfTabs[0].id, {code: code});
@@ -531,9 +534,6 @@ document.querySelector("#set").onclick = function() {
     setTimeout(function(){ document.querySelector("#set").innerHTML = "OK!"; }, 1000);
     setTimeout(function(){ document.querySelector("#set").innerHTML = "Save your preferences"; }, 1500);
   }
-
-  //Reload parent
-  //window.opener.location.reload();
 
 }
 

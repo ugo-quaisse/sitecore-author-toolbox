@@ -116,9 +116,6 @@ function setIcon(tab) {
         //chrome.browserAction.setIcon({path: 'images/icon.png'});
         chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
         chrome.browserAction.setBadgeText({text: 'ON'});
-
-
-
       } else {
         //chrome.browserAction.setIcon({path: 'images/icon_gray.png'});
         chrome.browserAction.setBadgeBackgroundColor({ color: "#777777" });
@@ -183,6 +180,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
   console.log("Version: "+versionNumber);
   console.log("Number: "+versionRelease);
   console.log("Increment: "+versionIncrement);
+  chrome.storage.sync.get(function(e){console.log(e)});
 
   if(details.reason == "install"){
 

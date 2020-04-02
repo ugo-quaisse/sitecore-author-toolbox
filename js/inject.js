@@ -8,6 +8,22 @@
 
  /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
+// var scContentEditor, scForm, prototype;
+// scContentEditor.prototype.onTreeNodeClick = function (sender, id) {
+//     sender = $(sender);
+    
+//     document.body.style.cursor = 'wait';
+//     console.log("sdfsdsdfsdfsdfsdf");
+    
+//     setTimeout(function () {
+//         scForm.disableRequests = true;
+//         scForm.postRequest("", "", "", "LoadItem(\"" + id + "\")");
+//         $(sender.id).focus();
+//     }, 10);
+
+//     return false;
+// }
+
 function copyTranslate(leftElemId,rightElemId) {
 
  	var left = document.querySelector('#'+leftElemId);

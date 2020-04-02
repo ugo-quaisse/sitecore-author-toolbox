@@ -28,13 +28,10 @@
 				"<all_urls>"
 			],
 			"css": [
-				"css/style-min.css",
-				"css/tabulator_semantic-ui-min.css"
+				"css/style-min.css"
 			],
 			"js": [
-				"js/toolbox.js",
-				"js/tabulator-min.js",
-				"js/cache-min.js"
+				"js/toolbox.js"
 			],
 			"run_at": "document_idle",
 			"all_frames": true

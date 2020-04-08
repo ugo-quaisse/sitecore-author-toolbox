@@ -2,6 +2,9 @@
  * Sitecore Dark Mode UI, by Ugo Quaisse
  * default.css
  */
+body {
+  border: 0px !important;
+}
 a, a:active, a:visited {
   color: #cccccc;
 }

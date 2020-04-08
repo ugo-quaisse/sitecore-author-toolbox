@@ -27,19 +27,35 @@ function checkSiteSxa(request, sender, sendResponse){
 }
 
 function onClickHandler(info, tab) {
-    console.info("info: " + JSON.stringify(info));
-    console.info("tab: " + JSON.stringify(tab));
-    var url = info.pageUrl.substring(0, info.pageUrl.indexOf('?'));   
-    if(sxa_site != undefined) { sc_site = "&sc_site="+sxa_site } else { sc_site = ""; }
     
-    //If Experience Editor ON -> add Edit in Content Editor
-
+    // console.info(JSON.stringify(info));
+    
     if(info.menuItemId == "SitecoreAuthorToolbox") {
-      //Experience Editor
-      chrome.tabs.executeScript(tab.id, {code: 'window.location.href = "' + url + '?sc_mode=edit' + sc_site + '";'});
-    } else if(info.menuItemId == "SitecoreAuthorToolboxEditor") {
-      //Debug mode
-      chrome.tabs.executeScript(tab.id, {code: 'window.location.href = "' + url + '?sc_debug=1&sc_trace=1&sc_prof=1&sc_ri=1' + sc_site + '";'});
+
+      //Check if window.location.href = CD/Live server
+      chrome.storage.sync.get(['domain_manager'], function(result) {
+        var domains = result.domain_manager;
+        var cmUrl = new URL(tab.url);
+        var cd = false;
+
+        for (var domain in domains) {
+          if(cmUrl.origin == domains[domain]) {
+            cmUrl = domain+cmUrl.pathname;
+            cd = true;
+            break;
+          }
+        }
+
+        //If no CD/Live
+        if(!cd) {
+          cmUrl = cmUrl.origin+cmUrl.pathname;
+        }
+
+        //Open the Experience editor
+        chrome.tabs.executeScript(tab.id, {code: 'window.open("' + cmUrl + '?sc_mode=edit")'});
+
+      });
+
     }
 
 }
@@ -64,33 +80,17 @@ function showContextMenu(tab) {
         //Tab URL
         url = new URL(tab.url);
           
-        if(cookie && !isSitecore) {
+        if(cookie && !isSitecore && !isEditMode && !contextMenuEE) {
 
-          sxa_site = cookie.value;
-
-          if(!isEditMode) {
-            if(!contextMenuEE) {
-              try {
-                chrome.contextMenus.create({"title": "Edit in Experience Editor (beta)", "contexts":["page"], "id": "SitecoreAuthorToolbox"});
-              } catch(e) {
-                console.log(e);
-              }
-              contextMenuEE = true;
-              if(contextMenuCE) {
-                chrome.contextMenus.remove("SitecoreAuthorToolboxEditor");
-                contextMenuCE = false;
-              }
-            }
-          } else {
-            if(!contextMenuCE) {
-              chrome.contextMenus.create({"title": "Debug this page (beta)", "contexts":["page"], "id": "SitecoreAuthorToolboxEditor"});
-              contextMenuCE = true;
-              if(contextMenuEE) {
-                chrome.contextMenus.remove("SitecoreAuthorToolbox");
-                contextMenuEE = false;
-              }
-            }
-          }
+          //Store cookie value
+          sxa_site = cookie.value
+              
+          try {
+            chrome.contextMenus.create({"title": "Edit in Experience Editor", "contexts":["page"], "id": "SitecoreAuthorToolbox"});
+            contextMenuEE = true;
+          } catch(e) {
+            // console.log(e);
+          }         
 
         }  
       });
@@ -110,12 +110,23 @@ function setIcon(tab) {
   if(isUrl && !isViewSource) {
 
     chrome.cookies.get({"url": tab.url, "name": "sitecore_userticket"}, function(cookie) {
+
       chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
       //If sitecore cookie detected
       if(cookie) {
         //chrome.browserAction.setIcon({path: 'images/icon.png'});
         chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
         chrome.browserAction.setBadgeText({text: 'ON'});
+        //Context menu
+        chrome.storage.sync.get(['feature_contextmenu'], function(result) {
+          
+          if(result.feature_contextmenu == undefined) { result.feature_contextmenu = false; }
+          
+          if(result.feature_contextmenu) {
+            showContextMenu(tab);
+          }
+          
+        }); 
       } else {
         //chrome.browserAction.setIcon({path: 'images/icon_gray.png'});
         chrome.browserAction.setBadgeBackgroundColor({ color: "#777777" });
@@ -153,7 +164,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 //When a tab is updated
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
   chrome.tabs.getSelected(null, function(tab) {
-    showContextMenu(tab);
     setIcon(tab);
   });
 });
@@ -161,7 +171,6 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 //When a tab is activated (does not fired is default_popup exists)
 chrome.tabs.onActivated.addListener(function(tabId, changeInfo, tab) {
   chrome.tabs.getSelected(null, function(tab) {
-    showContextMenu(tab);
     setIcon(tab);
   });
 });
@@ -180,7 +189,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
   console.log("Version: "+versionNumber);
   console.log("Number: "+versionRelease);
   console.log("Increment: "+versionIncrement);
-  chrome.storage.sync.get(function(e){console.log(e)});
+  // chrome.storage.sync.get(function(e){console.log(e)});
 
   if(details.reason == "install"){
 

@@ -2,50 +2,42 @@
  * Sitecore Author Toolbox
  * - A Google Chrome Extension -
  * - created by Ugo Quaisse -
- * https://twitter.com/uquaisse
+ * https://uquaisse.io
  * ugo.quaisse@gmail.com
  */
 
  /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
-// var scContentEditor, scForm, prototype;
-// scContentEditor.prototype.onTreeNodeClick = function (sender, id) {
-//     sender = $(sender);
-    
-//     document.body.style.cursor = 'wait';
-//     console.log("sdfsdsdfsdfsdfsdf");
-    
-//     setTimeout(function () {
-//         scForm.disableRequests = true;
-//         scForm.postRequest("", "", "", "LoadItem(\"" + id + "\")");
-//         $(sender.id).focus();
-//     }, 10);
+//TODO: Autosave in Experience Editor
+// ((() => {
+//     const origOpen = XMLHttpRequest.prototype.open;
+//     XMLHttpRequest.prototype.open = function() {
+//         this.addEventListener('load', function() {
+//             console.log(this.responseURL);
+//             if(this.responseURL.include(".Save.CallServerSavePipeline")) {
+//             	console.log("SAVING!!!!!");
+//             }
+//             //will always be 4 (ajax is completed successfully)
+//             // console.log(this.responseText); //whatever the response was
+//         });
+//         origOpen.apply(this, arguments);
+//     };
+// }))();
 
-//     return false;
-// }
-
-function copyTranslate(leftElemId,rightElemId) {
-
+const copyTranslate = (leftElemId,rightElemId) => {
  	var left = document.querySelector('#'+leftElemId);
  	var right = document.querySelector('#'+rightElemId);
-
  	left.value = right.value;
-
  }
 
-function copyTranslateAll() {
-
+const copyTranslateAll = () => {
  	var scTranslateRTL = document.querySelectorAll(".scTranslateRTL");
-
  	for(var field of scTranslateRTL) {
-
  		field.click();
-
  	}
-
  }
 
-function toggleRibbon() {
+const toggleRibbon = () => {
  	
 	var scCrossPiece = document.querySelector("#scCrossPiece");
 	var scWebEditRibbon = document.querySelector("#scWebEditRibbon"); 
@@ -70,11 +62,10 @@ function toggleRibbon() {
 
 }
 
-function toggleSection(elem,name,fromerror = false) {
+const toggleSection = (elem,name,fromerror = false) => {
 
 	//Change status of the tabs
 	var scEditorTab = document.querySelectorAll(".scEditorTab");
-
 	var scSections = document.querySelector("#scSections");
 	scSections.value = encodeURI(name+"=0");
 	
@@ -84,8 +75,6 @@ function toggleSection(elem,name,fromerror = false) {
 		var sectionId = tab.dataset.id;
  		var section = document.querySelector("#"+sectionId);
  		var sectionPanel = section.nextSibling;
-
- 		console.log("+++++++++++++++++");
 
 		if(tab!=elem) {
 			//Other tabs not clicked
@@ -106,7 +95,7 @@ function toggleSection(elem,name,fromerror = false) {
 
 }
 
-function hideTab(title, extensionId) {
+const hideTab = (title, extensionId) => {
 	  var txt;
 	  var confirmation = confirm("Do you want to hide all \"" + title + "\" tabs?");
 	  if (confirmation == true) {

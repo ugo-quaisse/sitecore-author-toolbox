@@ -1,7 +1,12 @@
 /* Sitecore transition onload */
+/*body {
+    background-color: #ffffff !important;
+}
+*/
 form#ContentEditorForm {
 	filter: blur(0px) brightness(1) grayscale(0) !important;
-	transform: scale(1)
+    transform: scale(1);
+    opacity: 1;
 }
 
 body.contentEditor:after {

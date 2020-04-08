@@ -1,8 +1,25 @@
 /* Sitecore banner colors */
+body.contentEditor {
+    /*background-color: #f0f0f0 !important;*/
+    /*transition: 0.3s;*/
+    /*transition-delay: 0.3s;*/
+}
+
 form#ContentEditorForm {
     filter: blur(3px) brightness(0.1) grayscale(1);
+    transform: scale(1.005);
     transition: 0.3s;
-    transform: scale(1.01);
+    /*transition-delay: 0.2s;*/
+    opacity: 1;
+}
+
+#scProgress {
+    position: absolute;
+    color: rgba(255,255,255,0.3);
+    font-size: 40px;
+    font-weight: 100;
+    margin: auto;
+    right: 10px;
 }
 
 body.contentEditor:after {
@@ -28,6 +45,10 @@ body.contentEditor:after {
     z-index: auto;
 }
 
+.scWindowBorder1 {
+    border: 0px solid !important;
+}
+
 #scPreloader {
     background-color: #222222;
     width: 150px;
@@ -42,17 +63,22 @@ body.contentEditor:after {
 }
 
 .scMessageBar.scGreen {
-    background-color: #76a797 !important;
-    color: #e6eae9 !important;
+    background-color: #ecf7ee !important;
+    color: #44892f !important;
 }
 
     .scMessageBar.scGreen .scMessageBarIcon {
-        background-color: #0f9467 !important;
+        background-color: #44892f !important;
+    }
+
+    .scMessageBar.scGreen .liveUrlBadge {
+        background-color: #44892f !important;
+        color: #ecf7ee !important;
     }
 
 .scMessageBar.scOrange {
-    background-color: rgb(227, 81, 49) !important;
-    color: rgb(255, 244, 242) !important;
+    color: rgb(227, 81, 49) !important;
+    background-color: rgb(252, 220, 214) !important;
 }
 
     .scMessageBar.scOrange .scMessageBarIcon {
@@ -404,12 +430,12 @@ body.contentEditor:after {
 
 .scRibbonNavigatorButtonsGroupButtons{
     display: flex !important;
-    overflow-x: scroll !important;
+    overflow-x: scroll !important; 
     width: calc(100vw - 65px) !important;
 }
 
 .liveStatusRed {
-    color: red;
+    color: #dc291e;
 }
 
 .liveStatusGreen {

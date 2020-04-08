@@ -16,7 +16,8 @@
 /*
  * > Global variables declaration
  */
-const debug = true;
+const debug = false;
+const extensionVersion = chrome.runtime.getManifest().version;
 const icon = chrome.runtime.getURL("images/rocket.svg");
 const iconLock = chrome.runtime.getURL("images/lock.svg");
 const iconWorkflow = chrome.runtime.getURL("images/workflow.svg");
@@ -27,10 +28,12 @@ const iconError = chrome.runtime.getURL("images/error.svg");
 const iconEdit = chrome.runtime.getURL("images/edit.svg");
 const iconMedia = chrome.runtime.getURL("images/media.svg");
 const iconTranslate = chrome.runtime.getURL("images/translate.svg");
+const iconVersion = chrome.runtime.getURL("images/version.svg");
 const iconFlagGeneric = chrome.runtime.getURL("images/Flags/32x32/flag_generic.png");
 const urlLoader = chrome.runtime.getURL("images/ajax-loader.gif");
 const dotGreen = chrome.runtime.getURL("images/dot_green.svg");
 const dotRed = chrome.runtime.getURL("images/dot_red.svg");
+const iconChrome =  chrome.runtime.getURL("images/chrome.png");
 const iconEE =  chrome.runtime.getURL("images/sat.png");
 const iconCE =  chrome.runtime.getURL("images/ce.png");
 const rteLanguages = ["ARABIC", "HEBREW", "PERSIAN", "URDU", "SINDHI"];
@@ -84,22 +87,40 @@ let workboxPage = "/sitecore/shell/Applications/Workbox/Default.aspx?he=Workbox&
 let hasRedirection = windowLocationHref.includes("&ro=");
 let hasRedirectionOther = windowLocationHref.includes("&sc_ce_uri=");
 let scContentTree= document.querySelector ( "#ContentTreeHolder" );
+let scPercentLoaded = localStorage.setItem('scPercentLoaded', 0);
+var timeout;
 
 const jsonData= JSON.parse('[{"language":"Afrikaans","flag":"SOUTH_AFRICA"},{"language":"Arabic","flag":"SAUDI_ARABIA"},{"language":"Belarusian","flag":"BELARUS"},{"language":"Bulgarian","flag":"BULGARIA"},{"language":"Catalan","flag":""},{"language":"Czech","flag":"CZECH_REPUBLIC"},{"language":"Danish","flag":"DENMARK"},{"language":"German","flag":"GERMANY"},{"language":"Greek","flag":"GREECE"},{"language":"English","flag":"GREAT_BRITAIN"},{"language":"Spanish","flag":"SPAIN"},{"language":"Estonian","flag":"ESTONIA"},{"language":"Basque","flag":""},{"language":"Persian","flag":"IRAN"},{"language":"Finnish","flag":"FINLAND"},{"language":"Faroese","flag":""},{"language":"French","flag":"FRANCE"},{"language":"Galician","flag":""},{"language":"Gujarati","flag":"INDIA"},{"language":"Hebrew","flag":"ISRAEL"},{"language":"Hindi","flag":"INDIA"},{"language":"Croatian","flag":"CROATIA"},{"language":"Hungarian","flag":"HUNGARY"},{"language":"Armenian","flag":"ARMENIA"},{"language":"Indonesian","flag":"MAIN_COUNTRY"},{"language":"Icelandic","flag":"ICELAND"},{"language":"Italian","flag":"ITALY"},{"language":"Japanese","flag":"JAPAN"},{"language":"Georgian","flag":"GEORGIA"},{"language":"Kazakh","flag":"KAZAKHSTAN"},{"language":"Kannada","flag":"INDIA"},{"language":"Korean","flag":"SOUTH_KOREA"},{"language":"Kyrgyz","flag":"KYRGYZSTAN"},{"language":"Lithuanian","flag":"LITHUANIA"},{"language":"Latvian","flag":"LATVIA"},{"language":"Maori","flag":"NEW_ZEALAND"},{"language":"Macedonian","flag":"MACEDONIA"},{"language":"Mongolian","flag":"MONGOLIA"},{"language":"Marathi","flag":"INDIA"},{"language":"Malay","flag":"MALAYSIA"},{"language":"Maltese","flag":"MALTA"},{"language":"Norwegian Bokmål","flag":"NORWAY"},{"language":"Dutch","flag":"NETHERLANDS"},{"language":"Norwegian Nynorsk","flag":"NORWAY"},{"language":"Punjabi","flag":"INDIA"},{"language":"Polish","flag":"POLAND"},{"language":"Portuguese","flag":"PORTUGAL"},{"language":"Romanian","flag":"ROMANIA"},{"language":"Russian","flag":"RUSSIA"},{"language":"Sanskrit","flag":"INDIA"},{"language":"Sami, Northern","flag":""},{"language":"Slovak","flag":"SLOVAKIA"},{"language":"Slovenian","flag":"SLOVENIA"},{"language":"Albanian","flag":"ALBANIA"},{"language":"Swedish","flag":"SWEDEN"},{"language":"Kiswahili","flag":"KENYA"},{"language":"Tamil","flag":"INDIA"},{"language":"Telugu","flag":"INDIA"},{"language":"Thai","flag":"THAILAND"},{"language":"Setswana","flag":"SOUTH_AFRICA"},{"language":"Turkish","flag":"TURKEY"},{"language":"Tatar","flag":"RUSSIA"},{"language":"Ukrainian","flag":"UKRAINE"},{"language":"Urdu","flag":"PAKISTAN"},{"language":"Vietnamese","flag":"VIETNAM"},{"language":"isiXhosa","flag":"SOUTH_AFRICA"},{"language":"Chinese","flag":"CHINA"},{"language":"isiZulu","flag":"SOUTH_AFRICA"}]');
 
 /*
  * > Helper functions
  */
-function stripHtml(html) {
+const updateScPercentLoaded = () => {
+
+    let ratio = 5;
+    let currentPercent = parseInt(localStorage.getItem('scPercentLoaded'));
+    let remainingPercent = 100 - currentPercent;
+    currentPercent += Math.ceil(remainingPercent/ratio);
+    currentPercent += Math.ceil(currentPercent/20);
+    if(currentPercent>=100) { currentPercent = 100; }
+    localStorage.setItem('scPercentLoaded', currentPercent);
+
+    // if(debug) { console.log(currentPercent+'%'); }
+
+    return currentPercent;
+}
+
+const stripHtml = (html) => {
 
     var temporalDivElement = document.createElement("div");
     temporalDivElement.innerHTML = html;
     return temporalDivElement.textContent || temporalDivElement.innerText || "";
 }
 
-function showSnackbar(snackbarVersion) {
+const showSnackbar = (version) => {
+
     //Snackbar settings
-    var snackbarHtml = "<b>Live URL has been improved.</b><br />You can now setup your CM or CD/Live domains.<br />Clic the settings button.";        
+    var snackbarHtml = "<b>Sitecore Live URL has evolved!</b><br />You can now setup your CM or CD/Live domains.<br />Clic the settings button.";        
     var html='<div class="snackbar"> ' + snackbarHtml + ' <button onclick="window.location.href =\' ' + launchpadPage + '?configure_domains=true&launchpad=true&url= ' + windowLocationHref + ' &tabs=0 \'">SETTINGS</button><button id="sbDismiss">DISMISS</button></div>';
 
     //Show Snackbar
@@ -108,7 +129,7 @@ function showSnackbar(snackbarVersion) {
 
     //Add listener on click #sbDismiss
     document.querySelector("#sbDismiss").addEventListener("click", function(){     
-      chrome.runtime.sendMessage({greeting: "hide_snackbar", version: snackbarVersion}, function(response) {
+      chrome.runtime.sendMessage({greeting: "hide_snackbar", version: version}, function(response) {
         if(response.farewell != null) {
 
           document.querySelector('.snackbar').setAttribute('style','display: none');
@@ -118,126 +139,86 @@ function showSnackbar(snackbarVersion) {
     });
 }
 
-function checkWorkbox() {
+const checkWorkbox = () => {
+
+    var html;
+    var wfWorkflows = 0;
+    var wfNotification = 0;
+    var wfChecksum = "#checksum#"; 
 
     var ajax = new XMLHttpRequest();
     ajax.timeout = 7000; 
     ajax.open("GET", "/sitecore/shell/default.aspx?xmlcontrol=Workbox", true);
     ajax.onreadystatechange = function() {
 
-      if (ajax.readyState === 4 && ajax.status == "200") {
+        if (ajax.readyState === 4) {
 
-        //If success
-        var html = new DOMParser().parseFromString(ajax.responseText, "text/html");
-        var scWorkflows = html.querySelectorAll("#States > div");
-        var wfWorkflows = 0;
-        var wfNotification = 0;
-        var wfUnchecked = 0;
-        var wfColor = "";
-        var wfChecksum = "#checksum#";
+            if(ajax.status == "200") {
+                //If success
+                var html = new DOMParser().parseFromString(ajax.responseText, "text/html");
+                var scWorkflows = html.querySelectorAll("#States > div");
 
-        //If any workflow unchecked?
-        var scWorkflowsPanel = html.querySelectorAll(".scWorkflowsPanel > div > span > input");
-        
-        //Loop workflows
-        for(var scWorkflowCheckbox of scWorkflowsPanel) {
+                //Loop workflows
+                for(var scWorkflow of scWorkflows) {
 
-          if(scWorkflowCheckbox.checked) {
-            wfUnchecked++
-          }
+                  var scWorkflowTitle = scWorkflow.querySelector(".scPaneHeader").innerText;
+                  wfWorkflows += 1;
+                  wfChecksum += "-workflow:" + scWorkflowTitle.replace(" ","").toLowerCase();
 
-        }
+                  var wfStates = scWorkflow.querySelectorAll(".scBackground");
 
-        // if(wfUnchecked == 0) { wfNotification = "?"; }
+                      for(var wfState of wfStates) {
 
-        //Loop workflows
-        for(var scWorkflow of scWorkflows) {
+                        var wfStateTitle = wfState.querySelector(".scSectionCenter").innerText;
+                        var sfStateCount = wfState.querySelectorAll(".scWorkBoxData")
+                        var wfStateTitleCount = wfStateTitle.split(" - (")[1].toLowerCase();
+                        wfStateTitleCount = wfStateTitleCount.replace(")","").replace(" item","").replace("s","");
+                        if(wfStateTitleCount == "none") { wfStateTitleCount = 0; }
+                        wfNotification += parseInt(wfStateTitleCount)
+                        wfChecksum += "-state:" + wfStateTitle.split(" - ")[0].replace(" ","").toLowerCase() + ":" + wfNotification;
 
-          var scWorkflowTitle = scWorkflow.querySelector(".scPaneHeader").innerText;
-          // console.log(scWorkflowTitle);
-          wfWorkflows += 1;
-          wfChecksum += "-workflow:" + scWorkflowTitle.replace(" ","").toLowerCase();
+                      }         
 
-          var wfStates = scWorkflow.querySelectorAll(".scBackground");
-          //Get last objet = final state of the workflow
+                }
 
-          for(var wfState of wfStates) {
+                //Store Checksum
+                var storedChecksum = localStorage.getItem('wfChecksum');
+                localStorage.setItem('wfChecksum', wfChecksum);
 
-            var wfStateTitle = wfState.querySelector(".scSectionCenter").innerText;
-            var sfStateCount = wfState.querySelectorAll(".scWorkBoxData")
-            var wfStateTitleCount = wfStateTitle.split(" - (")[1].toLowerCase();
-            wfStateTitleCount = wfStateTitleCount.replace(")","").replace(" item","").replace("s","");
-            if(wfStateTitleCount == "none") { wfStateTitleCount = 0; }
-            // console.log(">>>>"+wfStateTitle+" ("+sfStateCount+")");
-            wfNotification += parseInt(wfStateTitleCount)
-            wfChecksum += "-state:" + wfStateTitle.split(" - ")[0].replace(" ","").toLowerCase() + ":" + wfNotification;
+                //Notification if changes detected
+                if(storedChecksum != wfChecksum && wfNotification > 0) {
+                  sendNotification("Workflow changes detected","Check your workbox!");
+                }
 
-          }         
-
-        }
-
-        //Store Checksum
-        var storedChecksum = sessionStorage.getItem('wfChecksum');
-        sessionStorage.setItem('wfChecksum', wfChecksum);
-        
-        // console.log(wfChecksum);
-        // console.log("----------- NOTIFICATION: "+wfNotification+" ------------");
-
-        if(storedChecksum != wfChecksum && wfNotification > 0) {
-          var notificationSubTitle = "Workflow changes detected";
-          var notificationBody = "Check your workbox!";
-          sendNotification(notificationSubTitle,notificationBody);
-        }
-
-        if(isLaunchpad) {
-          //Show badge (launchpad)
-          html = '<span class="launchpadBadge">' + wfNotification + '</span>';
-          workboxLaunchpad.insertAdjacentHTML( 'afterbegin', html );
-        } else {
-          //Show badge (status bar)
-          var scDockBottomLinks = document.querySelectorAll(".scDockBottom > a");
-          for(var link of scDockBottomLinks) {
-
-            var linkTitle = link.innerText;
-            if(linkTitle == "Workbox") {
-              html = '<span class="wbNotification">' + wfNotification + '</span>';
-              link.setAttribute("style","padding-right:35px");
-              link.insertAdjacentHTML( 'afterend', html );
+            } else if(ajax.status == "0") {
+                wfNotification = "?"
             }
 
-          }
-        }
+            if(isLaunchpad) {
 
-      } else if(ajax.readyState === 4 && ajax.status == "0") {
-        //If Timeout or Error
+                //Show badge (launchpad)
+                html = '<span class="launchpadBadge">' + wfNotification + '</span>';
+                workboxLaunchpad.insertAdjacentHTML( 'afterbegin', html );
 
-        if(isLaunchpad) {
-          //Show badge (launchpad)
-          html = '<span class="launchpadBadge">?</span>';
-          workboxLaunchpad.insertAdjacentHTML( 'afterbegin', html );
-        } else {
-          //Show badge (status bar)
-          scDockBottomLinks = document.querySelectorAll(".scDockBottom > a");
-          for(link of scDockBottomLinks) {
+            } else {
 
-            linkTitle = link.innerText;
-            if(linkTitle == "Workbox") {
-              html = '<span class="wbNotification">?</span>';
-              link.setAttribute("style","padding-right:35px");
-              link.insertAdjacentHTML( 'afterend', html );
+                //Show badge (status bar)
+                document.querySelectorAll(".scDockBottom > a").forEach((a) => { if(a.innerText=="Workbox") { 
+                        html = '<span class="wbNotification">' + wfNotification + '</span>';
+                        a.setAttribute("style","padding-right:35px");
+                        a.insertAdjacentHTML( 'afterend', html );
+                    }
+                })
             }
 
-          }
-
         }
-
-      }
+    
     }
     ajax.send(null);
 
 }
 
-function checkUrlStatus(source = null) {
+const checkUrlStatus = (source = null) => {
 
   //Variables
   var itemUrl = false;
@@ -281,18 +262,23 @@ function checkUrlStatus(source = null) {
       }
 
       //Update Dom
-      if(liveUrlStatus) {
+      if(liveUrlStatus != null) {
         liveUrlStatus.innerHTML = html;
       } else {
         liveUrlStatus.innerHTML = "";
       }
 
+    })
+    .catch(function() {
+        console.info("Sitecore Author Toolbox: Error in fetching your CD URL ("+itemUrl+"), please check your settings.");
+        if(liveUrlStatus != null) { liveUrlStatus.innerHTML = ""; }
     });
 
   }
 }
 
-function sendNotification(scTitle, scBody) {
+const sendNotification = (scTitle, scBody) => {
+
   //Show notification
   new Notification(scTitle, {
       body: scBody,
@@ -333,12 +319,11 @@ function startDrag() {
   }
 }
 
-function cleanCountryName(name) {
+const cleanCountryName = (name) => {
 
   var temp = name;
   var language;
 
-  //If language name includes ":"
   if(temp!='' && temp.includes(' :')) { temp = temp.split(" :"); temp = temp[0]; }
   temp = temp.split(" (");
   if(temp[1] == undefined) { temp = temp[0]; } else { temp = temp[1]; }
@@ -348,44 +333,45 @@ function cleanCountryName(name) {
   temp = temp.toUpperCase();
   language = temp.replace("TRADITIONAL,_","");
   language = language.replace("SIMPLIFIED,_","");
+  language = language.replace("_S.A.R.","");
   //Replace non-standard country name
   language = language.replace("U.A.E.","UNITED_ARAB_EMIRATES");
   language = language.replace("KOREA","SOUTH_KOREA");
   language = language.replace("UNITED_STATES","USA");
   language = language.replace("UNITED_KINGDOM","GREAT_BRITAIN");
   language = language.replace("ENGLISH","GREAT_BRITAIN");
-  
+
   return language;
 }
 
 /*
  * > Main function (sitecoreAuthorToolbox)
  */
-function sitecoreAuthorToolbox() {
+const sitecoreAuthorToolbox = () => {
 
-  //Variables
-  var count = 0;
-  let scEditorID = document.querySelector ( ".scEditorHeader" );
-  let scEditorTitle = document.querySelector ( ".scEditorHeaderTitle" );
-  var scEditorQuickInfo = document.querySelector ( ".scEditorQuickInfo" );
-  let scQuickInfo = document.querySelector ( ".scEditorHeaderQuickInfoInput" );
-  let scLanguageMenu = document.querySelector ( ".scEditorHeaderVersionsLanguage" );
-  let scVersion = document.querySelector ( ".scEditorHeaderVersionsVersion > span" );
-  if(scVersion) { scVersion = scVersion.innerText; }
-  let scUrlHash = window.location.hash.substr(1);
-  let scActiveTab = document.querySelector ( ".scEditorTabHeaderActive" );
-  let scNormalTab = document.querySelectorAll ( ".scRibbonEditorTabNormal" );
-  var scErrors = document.querySelectorAll (" .scValidationMarkerIcon ");
-  let scValidation = document.querySelector (" .scValidationResult ");
-  let scEditorFrames = document.querySelector ( "#EditorFrames" );
-  let scEditorSections = document.querySelector ( ".scEditorSections" );
-  let scSearchPanel = document.querySelector ( "#SearchPanel" );
-  let isTranslateMode = false;
-  var scEditorHeaderVersionsLanguage = document.querySelector(".scEditorHeaderVersionsLanguage");
-  if(scEditorHeaderVersionsLanguage) {
+    //Variables
+    var count = 0;
+    let scEditorID = document.querySelector ( ".scEditorHeader" );
+    let scEditorTitle = document.querySelector ( ".scEditorHeaderTitle" );
+    var scEditorQuickInfo = document.querySelector ( ".scEditorQuickInfo" );
+    let scQuickInfo = document.querySelector ( ".scEditorHeaderQuickInfoInput" );
+    let scLanguageMenu = document.querySelector ( ".scEditorHeaderVersionsLanguage" );
+    let scVersion = document.querySelector ( ".scEditorHeaderVersionsVersion > span" );
+    if(scVersion) { scVersion = scVersion.innerText; }
+    let scUrlHash = window.location.hash.substr(1);
+    let scActiveTab = document.querySelector ( ".scEditorTabHeaderActive" );
+    let scNormalTab = document.querySelectorAll ( ".scRibbonEditorTabNormal" );
+    var scErrors = document.querySelectorAll (" .scValidationMarkerIcon ");
+    let scValidation = document.querySelector (" .scValidationResult ");
+    let scEditorFrames = document.querySelector ( "#EditorFrames" );
+    let scEditorSections = document.querySelector ( ".scEditorSections" );
+    let scSearchPanel = document.querySelector ( "#SearchPanel" );
+    let isTranslateMode = false;
+    var scEditorHeaderVersionsLanguage = document.querySelector(".scEditorHeaderVersionsLanguage");
+    if(scEditorHeaderVersionsLanguage) {
     var scLanguageTxtLong = scEditorHeaderVersionsLanguage.getAttribute("title");
     var scLanguageTxtShort = stripHtml(scEditorHeaderVersionsLanguage.innerHTML);
-  }
+    }
 
 
   if (!scQuickInfo) {
@@ -416,15 +402,17 @@ function sitecoreAuthorToolbox() {
     var sitecoreSite = sitecoreItemPath[0].toLowerCase();
     sitecoreSite = sitecoreSite.split("/");
     sitecoreSite = sitecoreSite.slice(-1)[0];
-    var isData = sitecoreItemPathOriginal.includes('/data/');
     var isMarketingControlPanel = sitecoreItemPathOriginal.includes('/marketing control panel/');
     var isTemplate = sitecoreItemPathOriginal.includes('/sitecore/templates');
     var isSystem = sitecoreItemPathOriginal.includes('/sitecore/system');
     var isLayout = sitecoreItemPathOriginal.includes('/sitecore/layout');
     var isForms = sitecoreItemPathOriginal.includes('/sitecore/forms');
-    var isPresentation = sitecoreItemPathOriginal.includes('/presentation');
     var isContent = sitecoreItemPathOriginal.includes('/sitecore/content');
     var isMedia = sitecoreItemPathOriginal.includes('/sitecore/media library');
+    var isData = sitecoreItemPathOriginal.includes('/data/');
+    var isPage = sitecoreItemPathOriginal.includes('/home/');
+    var isSettings = sitecoreItemPathOriginal.includes('/settings/');
+    var isPresentation = sitecoreItemPathOriginal.includes('/presentation/');
     
 
     //Sitecore variables
@@ -442,7 +430,7 @@ function sitecoreAuthorToolbox() {
 
     //Excluding data, why not having it for media? (replace Media Library by -/media)
     //or link to media /sitecore/-/media/552be56d277c49a5b57846859150d531.ashx
-    if(isContent && !isData || isMedia) {
+    if(isContent && !isData && !isPresentation && !isSettings || isMedia) {
 
       //Get user preference
       chrome.storage.sync.get(['feature_urls','domain_manager', 'feature_urlstatus'], function(result) {
@@ -537,14 +525,20 @@ function sitecoreAuthorToolbox() {
 
     } else if(isData) {
       
-      chrome.storage.sync.get(['feature_urls'], function(result) {
+
+        chrome.storage.sync.get(function(e){console.log(e)});
+
+      chrome.storage.sync.get(['feature_urls', 'feature_messagebar'], function(result) {
+
+        console.log(result.feature_messagebar);
 
         if(result.feature_urls == undefined) { result.feature_urls = true; }
+        if(result.feature_messagebar == undefined) { result.feature_messagebar = true; }
 
         //If not added yet
-        if(!document.getElementById("scMessageBarInfo") && result.feature_urls) {
+        if(!document.getElementById("scMessageBarInfo") && result.feature_urls && result.feature_messagebar) {
           
-          var scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + iconEdit + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing a data source...</div><div class="scMessageBarText">To see it, you need to add/edit it to any page via the</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><span class="scMessageBarOption">Presentation Details</span> or <span class="scMessageBarOption">Experience Editor</span></li></ul></div></div>'
+          var scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + iconEdit + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing a data source</div><div class="scMessageBarText">To see it, you need to add/edit it to any page via the</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet">Presentation Details or Experience Editor</li></ul></div></div>'
           scEditorID.insertAdjacentHTML( 'afterend', scMessage );
 
         }
@@ -1061,6 +1055,86 @@ function sitecoreAuthorToolbox() {
       }
     });
 
+    /*
+     * > 12. Fancy message bar
+     */
+     chrome.storage.sync.get(['feature_messagebar'], function(result) {
+
+      if (!chrome.runtime.error && result.feature_messagebar == true) {
+         
+         setTimeout(function() {
+          
+          //Check who locked the item
+          var scWarnings = document.querySelectorAll(".scWarning");
+          for(var scWarning of scWarnings) {
+
+              var scWarningText = scWarning.querySelector(".scMessageBarTitle").innerText;
+              var scWarningTextBar = scWarning.querySelector(".scMessageBarText");
+              var scWarningIcon = scWarning.querySelector(".scMessageBarIcon");
+
+              var isLockMessage = scWarningText.includes("' has locked this item.");
+              var isElevateUnlock = scWarningText.includes("Elevated Unlock");
+              var isNotFinalWorkflowStep = scWarningText.includes("is not in the final workflow step.");
+              var isUnicorned = scWarningText.includes("This item is controlled by Unicorn");
+              var isNoVersion = scWarningText.includes("The current item does not have a version");
+              var isProtected = scWarningText.includes("You cannot edit this item because it is protected.");
+              var isWrongVersion = scWarningText.includes("it has been replaced by a newer version.");
+
+              //No version exist
+              if(isNoVersion) {
+                scWarningIcon.setAttribute("style","background-image: url(" + iconTranslate + ");");
+              }
+
+              //No version exist
+              if(isWrongVersion) {
+                scWarningIcon.setAttribute("style","background-image: url(" + iconVersion + ");");
+              }
+
+              //Not in final workflow step
+              if(isNotFinalWorkflowStep) {
+                scWarningIcon.setAttribute("style","background-image: url(" + iconWorkflow + ");");
+              }
+
+              //Locked by
+              if(isLockMessage) {
+                temp = scWarningText.split("' ");
+                var lockedBy = temp[0].replace("'", "");
+                lockedBy = lockedBy + " has"
+                scWarningIcon.setAttribute("style","background-image: url(" + iconLock + ");");
+              } else {
+                lockedBy = "You have";
+              }
+
+              //Admin, elevate unlock
+              if(isElevateUnlock || isProtected) {
+                scWarningIcon.setAttribute("style","background-image: url(" + iconLock + ");");
+              }
+
+              //Unicorded
+              if(isUnicorned) {
+                scWarning.classList.add("scOrange");
+                scWarningTextBar.innerHTML = scWarningTextBar.innerHTML.replace("<br><br>","<br>").replace("<br><b>Predicate"," <b>Predicate").replace("Changes to this item will be written to disk so they can be shared with others.<br>",""); 
+                scWarningIcon.setAttribute("style","background-image: url(" + iconUnicorn + ");");
+              }
+          }  
+            
+          //Check if item is locked
+          var isItemLocked = document.querySelector(".scRibbon").innerHTML.includes('Check this item in.');
+
+          if(isItemLocked && !isElevateUnlock && !isLockMessage) {
+
+            //Prepare HTML (scInformation scWarning scError)
+            scMessage = '<div id="scMessageBarUrl" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + iconLock + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">' + lockedBy + ' locked this item.</div><div class="scMessageBarText">Nobody can edit this page until you unlock it.</div><ul class="scMessageBarOptions"><li class="scMessageBarOptionBullet"><a href="#" onclick="javascript:return scForm.postEvent(this,event,\'item:checkin\')" class="scMessageBarOption">Unlock this item</a></li></ul></div></div>'
+          
+            //Insert message bar into Sitecore Content Editor
+            scEditorID.insertAdjacentHTML( 'afterend', scMessage );
+
+          }
+
+         }, 100);
+
+      }
+    });
 
     /*
      * > 11. Search enhancements
@@ -1098,81 +1172,6 @@ function sitecoreAuthorToolbox() {
       observer.observe(target, config);
     }
 
-    /*
-     * > 12. Fancy message bar
-     */
-     chrome.storage.sync.get(['feature_messagebar'], function(result) {
-
-      if (!chrome.runtime.error && result.feature_messagebar == true) {
-         
-         setTimeout(function() {
-          
-          //Check who locked the item
-          var scWarnings = document.querySelectorAll(".scWarning");
-          for(var scWarning of scWarnings) {
-
-              var scWarningText = scWarning.querySelector(".scMessageBarTitle").innerText;
-              var scWarningTextBar = scWarning.querySelector(".scMessageBarText");
-              var scWarningIcon = scWarning.querySelector(".scMessageBarIcon");
-
-              var isLockMessage = scWarningText.includes("' has locked this item.");
-              var isElevateUnlock = scWarningText.includes("Elevated Unlock");
-              var isNotFinalWorkflowStep = scWarningText.includes("is not in the final workflow step.");
-              var isUnicorned = scWarningText.includes("This item is controlled by Unicorn");
-              var isNoVersion = scWarningText.includes("The current item does not have a version");
-
-              //No version exist
-              if(isNoVersion) {
-                scWarningIcon.setAttribute("style","background-image: url(" + iconTranslate + ");");
-              }
-
-              //Not in final workflow step
-              if(isNotFinalWorkflowStep) {
-                scWarningIcon.setAttribute("style","background-image: url(" + iconWorkflow + ");");
-              }
-
-              //Locked by
-              if(isLockMessage) {
-                temp = scWarningText.split("' ");
-                var lockedBy = temp[0].replace("'", "");
-                lockedBy = lockedBy + " has"
-                scWarningIcon.setAttribute("style","background-image: url(" + iconLock + ");");
-              } else {
-                lockedBy = "You have";
-              }
-
-              //Admin, elevate unlock
-              if(isElevateUnlock) {
-                scWarningIcon.setAttribute("style","background-image: url(" + iconLock + ");");
-              }
-
-              //Unicorded
-              if(isUnicorned) {
-                scWarning.classList.add("scOrange");
-                scWarningTextBar.innerHTML = scWarningTextBar.innerHTML.replace("<br><br>","<br>").replace("<br><b>Predicate"," <b>Predicate").replace("Changes to this item will be written to disk so they can be shared with others.<br>",""); 
-                scWarningIcon.setAttribute("style","background-image: url(" + iconUnicorn + ");");
-              }
-          }  
-            
-          //Check if item is locked
-          var isItemLocked = document.querySelector(".scRibbon").innerHTML.includes('Check this item in.');
-
-          if(isItemLocked && !isElevateUnlock) {
-
-            //Prepare HTML (scInformation scWarning scError)
-            scMessage = '<div id="scMessageBarUrl" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + iconLock + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">' + lockedBy + ' locked this item.</div><div class="scMessageBarText">Nobody is able to edit it until you unlock it.</div><ul class="scMessageBarOptions"><li class="scMessageBarOptionBullet"><a href="#" onclick="javascript:return scForm.postEvent(this,event,\'item:checkin\')" class="scMessageBarOption">Unlock this item</a></li></ul></div></div>'
-          
-            //Insert message bar into Sitecore Content Editor
-            scEditorID.insertAdjacentHTML( 'afterend', scMessage );
-
-          }
-
-         }, 500);
-
-      }
-    });
-
-
     //Add listener on scBucketListBox + scBucketListSelectedBox TODO
     // target = document.querySelector( ".scBucketListBox" );
     // observer = new MutationObserver(function(mutations) {
@@ -1203,13 +1202,18 @@ function sitecoreAuthorToolbox() {
      * Debug info
      */
     if (debug) {
-
       console.info("%c - Sitecore Item: " + sitecoreItemID + " ", 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;');
       console.info("%c - Sitecore Language: " + scLanguage + " ", 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;');
       console.info("%c - Sitecore Version: "+ scVersion + " ", 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;');
-      console.info('%c - Sitecore Hash : '+ scUrlHash + ' ', 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;');
-    
+      console.info('%c - Sitecore Hash : '+ scUrlHash + ' ', 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;');    
     }
+
+    //UI opacity
+    clearTimeout(timeout);
+    document.querySelector("#EditorFrames").setAttribute("style","opacity:1");
+    document.querySelector(".scContentTreeContainer").setAttribute("style","opacity:1");
+    // document.querySelector(".scEditorTabHeaderActive > span").innerText = "Content";
+    updateScPercentLoaded();
 
 }
 
@@ -1320,6 +1324,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
   if(isContentEditor || isLaunchpad) { 
 
     if(debug) { console.info('%c **** Content Editor / Launchpage **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;'); }
+    updateScPercentLoaded();
 
     /*
      * 9. Resume from where you left
@@ -1331,9 +1336,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
           if (!chrome.runtime.error && result.scItemID != undefined) {
 
             if(result.feature_reloadnode == undefined) { result.feature_reloadnode = true; }
-
             if(scUrlHash!="") {
-
               //TODO: bug if stored version if > 1 and reloaded page with hash version 1
               if(result.scItemID!=scUrlHash) {
                 result.scVersion = 1;
@@ -1341,6 +1344,9 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
               result.scItemID = scUrlHash;
 
+            } else {
+                //No redirection in # url
+                //console.log(result.scItemID );
             }
 
             if(result.scItemID && result.feature_reloadnode == true) {
@@ -1348,16 +1354,14 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
                 if(debug) { console.info("%c [Read] Item : "+ result.scItemID + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
                 if(debug) { console.info("%c [Read] Language : "+ result.scLanguage + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
                 if(debug) { console.info("%c [Read] Version : "+ result.scVersion + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
-
                 if(debug) { console.info('%c *** Redirection *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); }
+                updateScPercentLoaded();
 
                 var actualCode = `scForm.invoke("item:load(id=` + result.scItemID + `,language=` + result.scLanguage + `,version=` + result.scVersion + `)");`;
                 script = document.createElement('script');
                 script.textContent = actualCode;
                 (document.head||document.documentElement).appendChild(script);
                 script.remove();
-
-                //sitecoreAuthorToolbox();
 
             } else {
 
@@ -1374,6 +1378,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
         });
 
     }
+    updateScPercentLoaded();
 
     /*
      * > 7. Favorites bar
@@ -1384,49 +1389,49 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
     if(result.feature_favorites && !isPublishWindow && scContentTree) {
 
-      var scFavoritesIframe = document.querySelector("#sitecorAuthorToolboxFav");
+          var scFavoritesIframe = document.querySelector("#sitecorAuthorToolboxFav");
 
-      //If already there
-      if(scFavoritesIframe) { scFavoritesIframe.remove(); }
-        
-        //Prepare HTML
-        var scFavoritesUrl = '../default.aspx?xmlcontrol=Gallery.Favorites&id=' + sitecoreItemID + '&la=en&vs=1';      
-        var scMyShortcut = '<iframe id="sitecorAuthorToolboxFav" class="sitecorAuthorToolboxFav" src="' + scFavoritesUrl + '" style="width:100%; height:150px; margin-top: 0px; resize: vertical;"></iframe>';
+          //If already there
+          if(scFavoritesIframe) { scFavoritesIframe.remove(); }
+            
+            //Prepare HTML
+            var scFavoritesUrl = '../default.aspx?xmlcontrol=Gallery.Favorites&id=' + sitecoreItemID + '&la=en&vs=1';      
+            var scMyShortcut = '<iframe id="sitecorAuthorToolboxFav" class="sitecorAuthorToolboxFav" src="' + scFavoritesUrl + '" style="width:100%; height:150px; margin-top: 0px; resize: vertical;"></iframe>';
 
-        //Insert HTML
-        scContentTree.insertAdjacentHTML( 'afterend', scMyShortcut );
+            //Insert HTML
+            scContentTree.insertAdjacentHTML( 'afterend', scMyShortcut );
       }
 
     });
+    updateScPercentLoaded();
 
     /*
      * > 14. Show Snackbar
      */
     if(!isLaunchpad) {
 
-      chrome.storage.sync.get(['hideSnackbar'], function(result) {
+          chrome.storage.sync.get(['hideSnackbar'], function(result) {
 
-        //Current version of the Snackbar
-        let snackbarVersion = 1;
-        if (!chrome.runtime.error && result.hideSnackbar != snackbarVersion) {
-
-          showSnackbar(snackbarVersion);
-
-        }
-      });
+            //Current version of the Snackbar
+            let snackbarVersion = extensionVersion;
+            if (!chrome.runtime.error && result.hideSnackbar != snackbarVersion) {
+                showSnackbar(snackbarVersion);
+            }
+          });
 
     }
+    updateScPercentLoaded();
 
     /*
      * > 15. Workbox badge
      */
     chrome.storage.sync.get(['feature_workbox'], function(result) {
       if (!chrome.runtime.error && result.feature_workbox == true) { 
-
         checkWorkbox();
-
       }
     });
+
+    updateScPercentLoaded();
 
   } //End CE
 
@@ -1485,6 +1490,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
   if(isDesktop && !isGalleryFavorites) {
 
     if(debug) { console.info('%c **** Desktop Shell **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;'); }
+    updateScPercentLoaded();
 
     chrome.storage.sync.get(['feature_launchpad'], function(result) {
       
@@ -1510,6 +1516,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
   } else if(isLaunchpad) {
 
     if(debug) { console.info('%c **** Launchpad **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;'); }
+    updateScPercentLoaded();
 
     chrome.storage.sync.get(['feature_launchpad'], function(result) {
 
@@ -1533,6 +1540,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
   } else if(isAdminCache) {
 
     if(debug) { console.info('%c **** Admin Cache **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;'); }
+    updateScPercentLoaded();
 
     // link = document.createElement("link");
     // link.type = "text/css";
@@ -2010,6 +2018,20 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
       //Content tree
       document.addEventListener('click', function (event) {
 
+        //Chage EditorFrames opacity on load item
+        if (event.target.offsetParent != null) {
+            if(event.target.offsetParent.matches('.scContentTreeNodeNormal')) {
+                document.querySelector("#EditorFrames").setAttribute("style","opacity:0.5");
+                document.querySelector(".scContentTreeContainer").setAttribute("style","opacity:0.5");
+                document.querySelector(".scEditorTabHeaderActive > span").innerText = "Loading...";
+                timeout = setTimeout(function() {
+                    document.querySelector("#EditorFrames").setAttribute("style","opacity:1");
+                    document.querySelector(".scContentTreeContainer").setAttribute("style","opacity:1");
+                }, 10000)
+            }
+        } 
+
+        //Open tree -> Auto expand if 1 node
         if (!event.target.matches('.scContentTreeNodeGlyph')) return;
         let glyphId = event.target.id;
 
@@ -2099,6 +2121,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
   var observer = new MutationObserver(function(mutations) {
 
     if(debug) { console.info('%c *** Update UI *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); }
+    updateScPercentLoaded();
 
     //Sitecore Variables
     var scQuickInfo = document.querySelector(".scEditorHeaderQuickInfoInput" );  
@@ -2107,17 +2130,20 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
      * > 5. Open from CE ???? why we need that!!
      */
     if (scQuickInfo) {
+
+        // Effect on CE
+        // document.querySelector("#ContentEditor").setAttribute("style","opacity:0.2");
       
-      var sitecoreItemID = scQuickInfo.getAttribute("value");
-      var scLanguage = document.querySelector("#scLanguage").getAttribute("value").toLowerCase();
+        var sitecoreItemID = scQuickInfo.getAttribute("value");
+        var scLanguage = document.querySelector("#scLanguage").getAttribute("value").toLowerCase();
 
-      var scEditorQuickInfo = document.querySelectorAll(".scEditorQuickInfo");
-      var lastScEditorQuickInfo = scEditorQuickInfo[scEditorQuickInfo.length- 1];
-      var countTab = scEditorQuickInfo.length;
-      var scEditorTitle = document.getElementsByClassName("scEditorHeaderTitle");
+        var scEditorQuickInfo = document.querySelectorAll(".scEditorQuickInfo");
+        var lastScEditorQuickInfo = scEditorQuickInfo[scEditorQuickInfo.length- 1];
+        var countTab = scEditorQuickInfo.length;
+        var scEditorTitle = document.getElementsByClassName("scEditorHeaderTitle");
 
-      var tabSitecoreItemID = document.querySelectorAll(".scEditorHeaderQuickInfoInput");
-      var lastTabSitecoreItemID = tabSitecoreItemID[tabSitecoreItemID.length- 2].getAttribute("value");
+        var tabSitecoreItemID = document.querySelectorAll(".scEditorHeaderQuickInfoInput");
+        var lastTabSitecoreItemID = tabSitecoreItemID[tabSitecoreItemID.length- 2].getAttribute("value");
 
         //Add hash to URL
         if(!hasRedirection && !hasRedirectionOther) {
@@ -2162,196 +2188,182 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
  */
 if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
 
-  if(debug) { console.info("%c 🎨 Experience Editor detected ", 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;'); }
+    if(debug) { console.info("%c 🎨 Experience Editor detected ", 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;'); }
 
-  /*
-   * Fadein onload
-   */
-  link = document.createElement("link");
-  link.type = "text/css";
-  link.rel = "stylesheet";
-  link.href =  chrome.runtime.getURL("css/onload-min.css");
-  document.getElementsByTagName("head")[0].appendChild(link);
-
-  /*
-   * Experience Editor Reset
-   */
-  link = document.createElement("link");
-  link.type = "text/css";
-  link.rel = "stylesheet";
-  link.href =  chrome.runtime.getURL("css/reset-min.css");
-  document.getElementsByTagName("head")[0].appendChild(link);
-
-  /*
-   * Tooltip styling
-   */
-  link = document.createElement("link");
-  link.type = "text/css";
-  link.rel = "stylesheet";
-  link.href =  chrome.runtime.getURL("css/tooltip-min.css");
-  document.getElementsByTagName("head")[0].appendChild(link);
-
-  /*
-   * Extra client injection scripts
-   */
-  script = document.createElement('script');
-  script.src = chrome.runtime.getURL("js/inject-min.js");
-  (document.head||document.documentElement).appendChild(script);
-  script.remove();
-
-  /**
-   * Flags in language menu
-   */
-  if(isGalleryLanguageExpEd) {
-    
-    if(debug) { console.info("====================> LANGUAGES IN EXPERIENCE EDITOR <===================="); }
-
-    chrome.storage.sync.get(['feature_flags'], function(result) {
-
-      if(result.feature_flags == undefined) { result.feature_flags = true; }
-
-      if(result.feature_flags) {
-
-        /*
-         * Load Json data for languages
-         */
-        var isRegionFrame, td, tdDiv, tdlanguage, tdversion, tdimage, temp, key;
-        var dom = document.querySelector('.sc-gallery-content');
-        var div = dom.querySelectorAll('.sc-gallery-option-content,.sc-gallery-option-content-active');
-        var divcount = 0;
-        var tdcount = 0;
-
-        for (let item of div) {
-          
-          tdDiv = item.closest('.sc-gallery-option-content,.sc-gallery-option-content-active');
-          tdlanguage = item.querySelector('.sc-gallery-option-content-header > span').innerText;
-          tdversion = item.querySelector('.sc-gallery-option-content-description > span');
-
-          temp = tdversion.innerHTML.split(" ");
-          //Check version
-          if(temp[0]!="0") {
-            tdversion.setAttribute( 'style', 'background-color: yellow; display: initial; padding: 0px 3px; color: #000000 !important' );
-          }
-
-          //Clean country name
-          tdlanguage = cleanCountryName(tdlanguage);
-
-          //Compare with Json data
-          for (key in jsonData) {
-            if (jsonData.hasOwnProperty(key)) {
-                if( tdlanguage == jsonData[key]["language"].toUpperCase()) {
-
-                  tdlanguage = jsonData[key]["flag"];
-
-                }
-            }
-          }
-
-          tdDiv.setAttribute( 'style', 'padding-left:48px; background-image: url(' + chrome.runtime.getURL("images/Flags/32x32/flag_" + tdlanguage + ".png") + '); background-repeat: no-repeat; background-position: 5px;' );
-
-        }
-
-      }
-
-    });
-
-
-  } 
-
-  /**
-   * Flags in Ribbon
-   */
-  if(isRibbon) {
-
-    if(debug) { console.info("====================> RIBBON <===================="); }
-    
-    var scRibbonFlagIcons = document.querySelectorAll( ".flag_generic_24" );
-    var tdlanguage, temp, key;
-    
     /*
-     * Load Json data for languages
-     */
-    for(var flag of scRibbonFlagIcons) {
+    * Fadein onload
+    */
+    link = document.createElement("link");
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    link.href =  chrome.runtime.getURL("css/onload-min.css");
+    document.getElementsByTagName("head")[0].appendChild(link);
 
-      tdlanguage = flag.nextSibling.innerText;
+    /*
+    * Experience Editor Reset
+    */
+    link = document.createElement("link");
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    link.href =  chrome.runtime.getURL("css/reset-min.css");
+    document.getElementsByTagName("head")[0].appendChild(link);
 
-      //Clean country name
-      tdlanguage = cleanCountryName(tdlanguage);
+    /*
+    * Tooltip styling
+    */
+    link = document.createElement("link");
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    link.href =  chrome.runtime.getURL("css/tooltip-min.css");
+    document.getElementsByTagName("head")[0].appendChild(link);
 
-      //Compare with Json data
-      for (key in jsonData) {
-        if (jsonData.hasOwnProperty(key)) {
-            if( tdlanguage == jsonData[key]["language"].toUpperCase()) {
+    /*
+    * Extra client injection scripts
+    */
+    script = document.createElement('script');
+    script.src = chrome.runtime.getURL("js/inject-min.js");
+    (document.head||document.documentElement).appendChild(script);
+    script.remove();
 
-              tdlanguage = jsonData[key]["flag"];
-
-            }
-        }
-      }
-
-      flag.setAttribute( 'style', 'background-image: url(' + chrome.runtime.getURL("images/Flags/24x24/flag_" + tdlanguage + ".png") + '); background-repeat: no-repeat; background-position: top left;' );
-
-    }
-
-    //Store Sitecore Item ID
+    /*
+    * Store Item ID
+    */
     var dataItemId = document.querySelector('[data-sc-itemid]');
-   
     if(dataItemId) {
 
-      var sitecoreItemID = decodeURI(dataItemId.getAttribute('data-sc-itemid'));
-      //Set ItemID (Storage)
-      chrome.storage.sync.set({"scItemID": sitecoreItemID}, function() {
-        if(debug) { console.info("%c [Storage Set] Item : " + sitecoreItemID + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
-      });
+        var sitecoreItemID = decodeURI(dataItemId.getAttribute('data-sc-itemid'));
+        //Set ItemID (Storage)
+        //TODO: store a json object with domain:SitecoreItemID
+        chrome.storage.sync.set({"scItemID": sitecoreItemID}, function() {
+            if(debug) { console.info("%c [Storage Set] Item : " + sitecoreItemID + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+        });
 
     }
 
-  }
+    /**
+    * Flags in language menu
+    */
+    if(isGalleryLanguageExpEd) {
 
-  /**
-   * Tooltip bar
-   */
-  target = document.querySelector( ".scChromeControls" );
-  observer = new MutationObserver(function(mutations) {
+    if(debug) { console.info("====================> LANGUAGES IN EXPERIENCE EDITOR <===================="); }
+
+        chrome.storage.sync.get(['feature_flags'], function(result) {
+
+          if(result.feature_flags == undefined) { result.feature_flags = true; }
+
+          if(result.feature_flags) {
+
+            var isRegionFrame, td, tdDiv, tdlanguage, tdversion, tdimage, temp, key;
+            var dom = document.querySelector('.sc-gallery-content');
+            var div = dom.querySelectorAll('.sc-gallery-option-content,.sc-gallery-option-content-active');
+            var divcount = 0;
+            var tdcount = 0;
+
+            for (let item of div) {
+              
+              tdDiv = item.closest('.sc-gallery-option-content,.sc-gallery-option-content-active');
+              tdlanguage = item.querySelector('.sc-gallery-option-content-header > span').innerText;
+              tdversion = item.querySelector('.sc-gallery-option-content-description > span');
+
+              temp = tdversion.innerHTML.split(" ");
+              //Check version
+              if(temp[0]!="0") {
+                tdversion.setAttribute( 'style', 'background-color: yellow; display: initial; padding: 0px 3px; color: #000000 !important' );
+              }
+
+              //Clean country name
+              tdlanguage = cleanCountryName(tdlanguage);
+
+              //Compare with Json data
+              for (key in jsonData) {
+                if (jsonData.hasOwnProperty(key)) {
+                    if( tdlanguage == jsonData[key]["language"].toUpperCase()) {
+
+                      tdlanguage = jsonData[key]["flag"];
+
+                    }
+                }
+              }
+
+              tdDiv.setAttribute( 'style', 'padding-left:48px; background-image: url(' + chrome.runtime.getURL("images/Flags/32x32/flag_" + tdlanguage + ".png") + '); background-repeat: no-repeat; background-position: 5px;' );
+
+            }
+          }
+
+        });
+    } 
+
+    /**
+    * Flags in Ribbon
+    */
+    if(isRibbon) {
+
+        if(debug) { console.info("====================> RIBBON <===================="); }
+    
+        var scRibbonFlagIcons = document.querySelectorAll( ".flag_generic_24" );
+        var tdlanguage, temp, key;
+    
+        for(var flag of scRibbonFlagIcons) {
+
+            tdlanguage = flag.nextSibling.innerText;
+            //Clean country name
+            tdlanguage = cleanCountryName(tdlanguage);
+
+            //Compare with Json data
+            for (key in jsonData) {
+                if (jsonData.hasOwnProperty(key)) {
+                    if( tdlanguage == jsonData[key]["language"].toUpperCase()) {
+                  tdlanguage = jsonData[key]["flag"];
+                    }
+                }
+            }
+
+            flag.setAttribute( 'style', 'background-image: url(' + chrome.runtime.getURL("images/Flags/24x24/flag_" + tdlanguage + ".png") + '); background-repeat: no-repeat; background-position: top left;' );
+
+        }
+    }
+
+    /**
+    * Tooltip bar
+    */
+    target = document.querySelector( ".scChromeControls" );
+    observer = new MutationObserver(function(mutations) {
 
     var scChromeToolbar = document.querySelectorAll( ".scChromeToolbar" );
 
-    //Find scChromeCommand
-    for(var controls of scChromeToolbar) {
+        //Find scChromeCommand
+        for(var controls of scChromeToolbar) {
+              
+          controls.setAttribute('style', 'margin-left:50px');
+          var scChromeCommand = controls.querySelectorAll( ".scChromeCommand" );
+          var scChromeText = controls.querySelector( ".scChromeText" );
+          var scChromeCommandText = controls.querySelector( ".scChromeCommandText" );
           
-      controls.setAttribute('style', 'margin-left:50px');
-      var scChromeCommand = controls.querySelectorAll( ".scChromeCommand" );
-      var scChromeText = controls.querySelector( ".scChromeText" );
-      var scChromeCommandText = controls.querySelector( ".scChromeCommandText" );
-      
-      for(var command of scChromeCommand) {
-        var title = command.getAttribute("title");          
-        command.setAttribute('style', 'z-index:auto');
-        
-        if(title != null) {
-          command.setAttribute('data-tooltip', title);
-          command.classList.add("t-bottom");
-          command.classList.add("t-sm");
-          command.removeAttribute("title");
+          for(var command of scChromeCommand) {
+            var title = command.getAttribute("title");          
+            command.setAttribute('style', 'z-index:auto');
+            
+            if(title != null) {
+              command.setAttribute('data-tooltip', title);
+              command.classList.add("t-bottom");
+              command.classList.add("t-sm");
+              command.removeAttribute("title");
+            }
+          }
         }
+    });
 
-      }
-
+    //Observer
+    if(target) {
+        var config = { attributes: true, childList: true, characterData: true };
+        observer.observe(target, config);
     }
 
-  });
-
-  //Observer
-  if(target) {
-    var config = { attributes: true, childList: true, characterData: true };
-    observer.observe(target, config);
-  }
-
-  /*
-   * Dark mode + Toggle Ribbon
-   */
-  //@media (prefers-color-scheme: dark) {
-  chrome.storage.sync.get(['feature_darkmode','feature_toggleribbon'], function(result) {
+    /*
+    * Dark mode + Toggle Ribbon
+    */
+    //@media (prefers-color-scheme: dark) {
+    chrome.storage.sync.get(['feature_darkmode','feature_toggleribbon'], function(result) {
 
     //Variables
     var pagemodeEdit = document.querySelector(".pagemode-edit");
@@ -2419,11 +2431,15 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
     } else if(isPreviewMode) {
       linkNormalMode = windowLocationHref.replace("sc_mode=preview","sc_mode=normal");
     } else {
-      linkNormalMode = windowLocationHref+"?sc_mode=normal";
+        if(windowLocationHref.includes("?")) {
+            linkNormalMode = windowLocationHref+"&sc_mode=normal";
+        } else {
+            linkNormalMode = windowLocationHref+"?sc_mode=normal";
+        }
     }
 
     if(result.feature_toggleribbon && !isRibbon) {
-      var html = '<div class="scNormalModeTab '+ tabColor +'"><span class="t-right t-sm" data-tooltip="Open in Normal Mode"><a href="' + linkNormalMode + '"><img src="' + iconEE + '"/></a></span></div>';
+      var html = '<div class="scNormalModeTab '+ tabColor +'"><span class="t-right t-sm" data-tooltip="Open in Normal Mode"><a href="' + linkNormalMode + '"><img src="' + iconChrome + '"/></a></span></div>';
       pagemodeEdit.insertAdjacentHTML( 'afterend', html );
     }
 

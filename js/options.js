@@ -44,16 +44,19 @@ document.body.onload = function() {
         var domains = Object.keys(result.domain_manager);
       }
 
+
       //Generate HTML
       var html = "";
-      var domain1 = "";
-      var domain2 = "";
+      var domain1, domain2 = "";
 
       for (var i = 0; i < 6; i++) {
 
-        if(result.domain_manager != undefined) {
+        if(domains[i] != undefined) {
           domain1 = domains[i];
           domain2 = result.domain_manager[domain1];
+        } else {
+          domain1 = "";
+          domain2 = "";
         }
 
         html += `<!-- loop start -->
@@ -274,19 +277,16 @@ document.body.onload = function() {
       document.getElementById("feature_urlstatus").checked = true;
     }
   });
-  
-  //Context menu
-  // chrome.storage.sync.get(['feature_contextmenu'], function(result) {
-  //   if (!chrome.runtime.error && result.feature_reloadnode != undefined) {
-  //     if(result.feature_reloadnode) {
-  //       document.getElementById("contextmenu_true").checked = true;
-  //     } else {
-  //       document.getElementById("contextmenu_false").checked = true;
-  //     }
-  //   } else {
-  //     document.getElementById("contextmenu_false").checked = true;
-  //   }
-  // });
+  //Right click menu
+  chrome.storage.sync.get(['feature_contextmenu'], function(result) {
+    if (!chrome.runtime.error && result.feature_contextmenu != undefined) {
+      if(result.feature_contextmenu) {
+        document.getElementById("feature_contextmenu").checked = true;
+      }
+    } else {
+      document.getElementById("feature_contextmenu").checked = true;
+    }
+  });
 }
 
 //Settings
@@ -427,7 +427,7 @@ document.querySelector("#set_domains").onclick = function(event) {
 document.querySelector("#set").onclick = function(event) {
 
   event.preventDefault();
-  
+
   //URLs
   chrome.storage.sync.set({"feature_urls": document.getElementById('feature_urls').checked}, function() {
     console.info('--> Urls: ' + document.getElementById('feature_urls').checked);
@@ -452,13 +452,19 @@ document.querySelector("#set").onclick = function(event) {
   chrome.storage.sync.set({"feature_darkmode": document.getElementById('feature_darkmode').checked}, function() {
     console.info('--> Dark mode:' + document.getElementById('feature_darkmode').checked);
       if(document.getElementById('feature_darkmode').checked) {
-        var element = document.getElementById("extensionOptions");
-        element.classList.remove("light");
-        element.classList.add("dark");
+        document.querySelector("#extensionOptions").classList.remove("light");
+        document.querySelector("#extensionOptions").classList.add("dark");
+        document.querySelector("#save").classList.remove("light");
+        document.querySelector("#save").classList.add("dark");
+        document.querySelector("#footer").classList.remove("light");
+        document.querySelector("#footer").classList.add("dark");
       } else {
-        element = document.getElementById("extensionOptions");
-        element.classList.remove("dark");
-        element.classList.add("light");
+        document.querySelector("#extensionOptions").classList.remove("dark");
+        document.querySelector("#extensionOptions").classList.add("light");
+        document.querySelector("#save").classList.remove("dark");
+        document.querySelector("#save").classList.add("light");
+        document.querySelector("#footer").classList.remove("dark");
+        document.querySelector("#footer").classList.add("light");
       }
   });
   //Favorites
@@ -512,6 +518,10 @@ document.querySelector("#set").onclick = function(event) {
   //Live URL Status
   chrome.storage.sync.set({"feature_urlstatus": document.getElementById('feature_urlstatus').checked}, function() {
     console.info('--> Live Urls Status: ' + document.getElementById('feature_urlstatus').checked);
+  });
+   //Live URL Status
+  chrome.storage.sync.set({"feature_contextmenu": document.getElementById('feature_contextmenu').checked}, function() {
+    console.info('--> Right click menu: ' + document.getElementById('feature_contextmenu').checked);
   });
 
 

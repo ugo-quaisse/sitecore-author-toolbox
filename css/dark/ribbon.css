@@ -1017,9 +1017,9 @@ a.scRibbonToolbarSmallButtonDown:hover > span,
     .scRibbon a.scRibbonToolbarSmallComboButtonRight:hover,
     .scRibbon a.scRibbonToolbarSmallComboButtonRight:hover,
     .scRibbonToolbarLargeComboButtonDown:hover {
-        background-color: #40a4cc !important;
-        color: #131313 !important;
-        border-radius: 2px !important;
+        background-color: var(--blue) !important;
+        color: var(--white) !important;
+        border-radius: 3px !important;
     }
 
     .scRibbonToolbarLargeButtonDown:hover > span,

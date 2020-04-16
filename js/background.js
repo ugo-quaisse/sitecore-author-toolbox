@@ -60,6 +60,20 @@ function onClickHandler(info, tab) {
 
 }
 
+function getSitecoreCookie(tab) {
+
+  chrome.cookies.get({"url": tab.url, "name": "sitecore_userticket"}, function(cookie) {
+
+    if(cookie.value) {
+
+      return cookie.value;
+
+    }
+
+  })
+
+}
+
 function showContextMenu(tab) {
 
   if(tab.url != undefined) {
@@ -80,18 +94,14 @@ function showContextMenu(tab) {
         //Tab URL
         url = new URL(tab.url);
           
-        if(cookie && !isSitecore && !isEditMode && !contextMenuEE) {
+        if(cookie && !isSitecore && !isEditMode) {
 
           //Store cookie value
-          sxa_site = cookie.value
-              
-          try {
-            chrome.contextMenus.create({"title": "Edit in Experience Editor", "contexts":["page"], "id": "SitecoreAuthorToolbox"});
-            contextMenuEE = true;
-          } catch(e) {
-            // console.log(e);
-          }         
-
+          sxa_site = cookie.value     
+          chrome.contextMenus.removeAll(function() {
+              chrome.contextMenus.create({"title": "Edit in Experience Editor", "contexts":["page"], "id": "SitecoreAuthorToolbox"});
+          });
+      
         }  
       });
     }
@@ -107,6 +117,8 @@ function setIcon(tab) {
   var isUrl = url.includes("http");
   var isViewSource = url.includes("view-source:");
 
+  //TODO: check if URL is stored in Domain Manager list
+
   if(isUrl && !isViewSource) {
 
     chrome.cookies.get({"url": tab.url, "name": "sitecore_userticket"}, function(cookie) {
@@ -120,12 +132,9 @@ function setIcon(tab) {
         //Context menu
         chrome.storage.sync.get(['feature_contextmenu'], function(result) {
           
-          if(result.feature_contextmenu == undefined) { result.feature_contextmenu = false; }
-          
-          if(result.feature_contextmenu) {
-            showContextMenu(tab);
-          }
-          
+          result.feature_contextmenu == undefined ? result.feature_contextmenu = false : false;   
+          result.feature_contextmenu ? showContextMenu(tab) : false;
+
         }); 
       } else {
         //chrome.browserAction.setIcon({path: 'images/icon_gray.png'});
@@ -144,8 +153,6 @@ function setIcon(tab) {
 
 //When message is requested from toolbox.js
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    
-    console.log(request);
     
     if (request.greeting == "sxa_site"){
         checkSiteSxa(request, sender, sendResponse);

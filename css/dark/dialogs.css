@@ -7,7 +7,7 @@ form {
     height: 100%;
     width: 100%;
     position: absolute;
-    color: #cccccc !important;
+    color: var(--text) !important;
 }
 
 .scFormDialogHeader {
@@ -102,7 +102,7 @@ form {
 
 .NoProfilesText {
     margin: 10px;
-    color: #666666;
+    color: var(--black6);
 }
 
 /*        #TextLiteral
@@ -147,13 +147,13 @@ form {
     .ui-dialog .ui-dialog-titlebar {
         padding: 0;
         position: relative;
-        background-color: #111111 !important;
+        background-color: var(--black1) !important;
     }
 
         .scFormDialogHeader .DialogHeader,
         .ui-dialog .ui-dialog-titlebar + .DialogHeader {
             height: 45px;
-            background: #111111;
+            background: var(--black1);
             color: #fff;
             padding: 0 0 0 15px;
             line-height: 28px;
@@ -163,7 +163,7 @@ form {
 .ui-widget-content {
     border: 0px;
     background-image: none;
-    background-color: #222222 !important;
+    background-color: var(--black2) !important;
 }
 
 .scFormDialogHeader,
@@ -172,8 +172,8 @@ form {
     border: 0;
     background-image: none;
     padding: 0;
-    color: #fff;
-    background-color: #111111 !important;
+    color: var(--white);
+    background-color: var(--black1) !important;
     min-height: 15px;
     position: relative;
     border-radius: 0;
@@ -218,33 +218,33 @@ form {
 }
 
 .ui-widget-overlay {
-    background: rgba(0,0,0,0.3) !important;
+    background: rgba(255,255,255,0.05) !important;
 }
 
 #SettingsPane {
-    background: #0e0e0e !important;
+    background: var(--black) !important;
     border: 0px !important;
     padding: 10px;
 }
 
 #FooterRow {
-    border-top: 1px solid #2f2f2f;
+    border-top: 1px solid var(--black2);
 }
 #Editors, #MainPanel, .scValidatorPanel, .scEditorSections {
-    background-color: #222222 !important;
+    background-color: var(--black3) !important;
 }
 
 #FooterRow {
-    background: #222222 !important;
+    background: var(--black2) !important;
 }
 #Renderings, #placeholders {
-    color: #555555;
+    color: var(--black5);
 }
 .scEditorInformation {
-    background-color: #00b6ff !important;
+    background-color: var(--lightblue) !important;
 }
 .standardWindowCaption {
-    background-color: #111111 !important;
+    background-color: var(--black1) !important;
 }
 .cmd .clipboard {
     background-color: transparent !important;
@@ -256,20 +256,20 @@ form {
     color: #897a2e !important;
 }
 .top-row {
-    background-color: #333333 !important;
+    background-color: var(--black3) !important;
 }
 .sc-kpi {
-    background-color: #222222 !important;
+    background-color: var(--black2) !important;
 }
 .pick-button, .display-off,
 .item-picker {
-    background-color: #111111 !important;
+    background-color: var(--black1) !important;
 }
 .pick-button:hover {
     background-color: #69a8d0 !important;
  }
 
 .scEditHtmlButtons {
-    background: #222;
+    background: var(--black2);
     border-top: #333 1px solid;
 }

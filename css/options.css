@@ -6,7 +6,15 @@ html, body {
   padding: 0px;
   font-size: 13px;
   height: 100%;
+  transition: color .2s ease-in-out 0s, background-color .2s ease-in-out .5s;
+}
+html.light {
+  color: #000000;
   background-color: #f0f0f0;
+}
+html.dark {
+  color: #ffffff;
+  background-color: #2b2b2b;
 }
 a {
   color: #DC291E;
@@ -14,24 +22,6 @@ a {
 input[type=checkbox] {
 	cursor: pointer;
 }
-#extensionOptions {
-	transition: background-color .2s ease-in-out, color .1s ease-in-out;
-	min-height: 100%;
-}
-#save.dark,
-#footer.dark,
-#extensionOptions.dark {
-    background-color: #2b2b2b;
-    color: #ffffff;
-}
-
-#save.light,
-#footer.light,
-#extensionOptions.light {
-    background-color: #f0f0f0;
-    color: #000000;
-}
-
 a {
 	color: #DC291E;
 }
@@ -50,7 +40,6 @@ label i {
   border-radius: 50%;
   border: 1px solid rgba(0, 0, 0, 0.5);	  
   vertical-align: middle;
-  transition: .4s;
 }
 label > input:checked + i {
   box-shadow: inset 0 0 0 0.2em #ffffff;
@@ -69,7 +58,8 @@ label:hover {
   background-color: #DC291E;
   color: #fff;
   border-radius: 10px;
-  padding: 1px 5px;
+  padding: 2px 6px;
+  cursor: pointer;
 }
 #settings:hover {
   background-color: #474747;
@@ -88,7 +78,6 @@ label:hover {
     position: relative;
     color: #fff;
     background: #DC291E;
-    transition: none;
     border: 0px;
     text-shadow: none;
     border: 0px;

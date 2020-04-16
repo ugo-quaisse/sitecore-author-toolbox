@@ -182,8 +182,8 @@ img.scEditorHeaderIcon {
 }
 
     .scEditorHeaderTitle:hover {
-        background-color: #00b6ff;
-        color: #111111 !important;
+        background-color: var(--blue);
+        color: var(--black1) !important;
         border-radius: 4px;
     }
 
@@ -304,33 +304,19 @@ a.scEditorHeaderButton {
     display: inline;
     border-radius: 0px;
     background-image: none;
-    background-color: #111111 !important;;
+    background-color: var(--black1) !important;;
 }
 
     a.scEditorHeaderButton:hover, a.scEditorHeaderButton:active {
         text-decoration: none;
-        background-color: #fff;
+        background-color: var(--text);
         background-image: none;
     }
 
     a.scEditorHeaderButton:active {
-        -webkit-box-shadow: inset 0 1px 3px #ccc;
         box-shadow: inset 0 1px 3px #ccc;
     }
 
-a.scEditorHeaderVersionsLanguage {
-}
-
-a.scEditorHeaderVersionsVersion span {
-    /*background-color: #d9eafc;
-    padding: 4px 10px;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
-    border-radius: 2px;*/
-}
-
-a.scEditorHeaderNavigator {
-}
 
 .scEditorHeaderVersionsLanguageIcon,
 .scEditorHeaderNavigatorIcon {
@@ -376,7 +362,7 @@ a.scEditorHeaderNavigatorField {
     a.scEditorHeaderNavigatorSection:hover {
         cursor: pointer;
         background-color: #69a8d0;
-        color: #333333;
+        color: var(--black3);
     }
 
 a.scEditorHeaderNavigatorSection {
@@ -452,7 +438,7 @@ a.scEditorHeaderNavigatorSection {
 
 .scEditorSectionCaptionExpanded,
 .scEditorSectionCaptionCollapsed {
-    background-color: #000000;
+    background-color: var(--black);
     white-space: nowrap;
     line-height: 35px;
     color: #cccccc;
@@ -460,9 +446,6 @@ a.scEditorHeaderNavigatorSection {
     cursor: pointer;
     border-bottom: 1px solid transparent !important;
     padding: 0 0 0 10px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
 }
 
@@ -478,9 +461,9 @@ a.scEditorHeaderNavigatorSection {
 .scEditorSectionCaptionCollapsed {
     background-color: #151515 !important;;
     cursor: pointer;
-    border-bottom: 1px solid #222222 !important;;
+    border-bottom: 1px solid var(--black2) !important;;
     padding: 0 0 0 15px;
-    color: #666666 !important;
+    color: var(--black6) !important;
 }
 
     .scEditorSectionCaptionCollapsed::selection {
@@ -532,16 +515,16 @@ div#QuickInfo + .scEditorSectionPanel {
 }
 
 .scEditorFieldLabelDisabled {
-    color: #999999;
+    color: var(--black9);
 }
 
 .scEditorFieldLabelAdministrator {
-    color: #999999;
+    color: var(--black9);
     font-weight: normal;
 }
 
 .scEditorFieldLabelLink, .scEditorFieldLabelLink:link, .scEditorFieldLabelLink:active, .scEditorFieldLabelLink:hover, .scEditorFieldLabelLink:visited {
-    color: #333333 !important;;
+    color: var(--black3) !important;;
     padding-bottom: 1px;
     text-decoration: none;
     color: #cccccc !important;
@@ -575,10 +558,8 @@ div#QuickInfo + .scEditorSectionPanel {
     z-index: -1;
     border-radius: 7px;
     background-color: transparent !important;
-    -webkit-box-shadow: transparent !important;
-    -moz-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.175);
     box-shadow: transparent !important;
-    filter: drop-shadow(2px 4px 12px #111111) !important;
+    filter: drop-shadow(2px 4px 12px var(--black1)) !important;
 }
 
 .scCombobuttonMain {
@@ -633,7 +614,7 @@ div#QuickInfo + .scEditorSectionPanel {
 }
 
 a.scContentButton {
-    color: #2694C0 !important;
+    color: var(--lightblue) !important;
     white-space: nowrap;
     display: inline-block;
     border-right: 1px solid #ccc;
@@ -656,7 +637,7 @@ a.scContentButton {
 }
 
 .scContentButtonDisabled {
-    color: #999999;
+    color: var(--black9);
     padding: 2px 6px 2px 6px;
     cursor: default;
     white-space: nowrap;
@@ -678,7 +659,7 @@ a.scContentButton {
     }
 
 .scTemplateTreeSections {
-    border: 1px solid #999999;
+    border: 1px solid var(--black9);
     padding: 2px 4px 4px 4px;
     margin: 4px 2px 2px 2px;
 }
@@ -725,7 +706,7 @@ a.scContentButton {
 }
 
 .scTemplateTreeSectionFieldDetails {
-    color: #999999;
+    color: var(--black9);
 }
 
 .scTemplateTreeSectionFieldActive, .scTemplateTreeSectionField:hover {
@@ -744,7 +725,7 @@ a.scContentButton {
     }
 
 .scTemplateTreeStandardValues {
-    border: 1px solid #999999;
+    border: 1px solid var(--black9);
     padding: 2px 4px 4px 4px;
     margin: 8px 2px 2px 2px;
 }
@@ -766,7 +747,7 @@ a.scContentButton {
     }
 
 .scTemplateTreeMasters {
-    border: 1px solid #999999;
+    border: 1px solid var(--black9);
     padding: 2px 4px 4px 4px;
     margin: 8px 2px 2px 2px;
 }
@@ -813,7 +794,7 @@ a.scContentButton {
 /* Pager */
 
 .scPager {
-    background-color: #111111 !important;;
+    background-color: var(--black1) !important;;
     height: 30px;
     border-top: 2px solid #6b120d !important;
 }
@@ -847,7 +828,7 @@ a.scPagerButtonActive {
 
 .scRibbonToolbarKeyCodeSmallButton {
     position: absolute;
-    border: 1px solid #666666;
+    border: 1px solid var(--black6);
     background: white;
     padding: 2px;
     margin: 8px 0px 0px 4px;
@@ -857,7 +838,7 @@ a.scPagerButtonActive {
 
 .scRibbonToolbarKeyCodeLargeButton {
     position: absolute;
-    border: 1px solid #666666;
+    border: 1px solid var(--black6);
     background: white;
     padding: 2px;
     margin: 8px 0px 0px 4px;
@@ -883,7 +864,7 @@ a.scPagerButtonActive {
     vertical-align: top;
     height: 56px;
     padding-left: 15px;
-    border-bottom: 1px solid #333333 !important;;
+    border-bottom: 1px solid var(--black3) !important;;
 }
 
 .scEditorTabControlsHolder {
@@ -946,20 +927,18 @@ a.scPagerButtonActive {
     top: 0;
     bottom: 0;
     margin-top: 58px;
-    background-color: #111111 !important;;
+    background-color: var(--black1) !important;;
     overflow: hidden;
 }
 
 #BTAddNewSearch {
-    background-color: #333333 !important;;
+    background-color: var(--black3) !important;;
     color: #131313;
     cursor: pointer;
-    border: 0px solid #333333 !important;
+    border: 0px solid var(--black3) !important;
     white-space: nowrap;
-    -webkit-user-select: none;
     user-select: none;
     outline: none;
-    -webkit-box-shadow: inset 0 1px transparent !important;
     box-shadow: inset 0 1px transparent !important;
     text-shadow: transparent;
     background-image: url(../images/edition-magnifier.png), linear-gradient(to bottom, transparent 0%, transparent 100%) !important;
@@ -971,14 +950,13 @@ a.scPagerButtonActive {
 }
 
 a#BTAddNewSearch:hover {
-    background-color: #111111 !important;
+    background-color: var(--black1) !important;
 }
 
 a#BTAddNewSearch:active {
     background-image: none !important;
-    background-color: #111111 !important;
+    background-color: var(--black1) !important;
     background-repeat: no-repeat;
-    -webkit-box-shadow: inset 0 3px 3px transparent !important;
     box-shadow: inset 0 3px 3px transparent !important;
     border-color: #bdbdbd;
 }
@@ -1028,7 +1006,7 @@ a.scRibbonEditorTabNormal:hover {
     height: 40px;
     line-height: 40px;
     padding: 0 15px;
-    color: #ffffff !important;
+    color: var(--text) !important;
 }
 
     .scEditorTabHeaderNormal > img,
@@ -1045,7 +1023,8 @@ a.scRibbonEditorTabNormal:hover {
 }
 
 .scEditorTabHeaderActive {
-    background-color: #333333 !important;
+    background-color: var(--black1) !important;
+    color: var(--black9) !important; 
 }
 
 #BTAddNewSearch > .scEditorTabHeaderNormal{
@@ -1053,7 +1032,7 @@ a.scRibbonEditorTabNormal:hover {
 }
 
 .scEditorTabHeaderNormal{
-    background-color: #222222 !important;
+    background-color: var(--black3) !important;
 }
 
 .scEditorTabIcon {
@@ -1079,7 +1058,7 @@ a.scRibbonEditorTabNormal:hover {
 /* Validator bar */
 
 .scValidatorPanel {
-    background: #111111 !important;;
+    background: var(--black1) !important;;
     position: absolute;
     right: 0;
     top: 0;
@@ -1126,7 +1105,7 @@ a.scRibbonEditorTabNormal:hover {
 
 #SearchPanel {
     padding: 8px 12px;
-    border-bottom: 1px solid #333333 !important;;
+    border-bottom: 1px solid var(--black3) !important;;
 }
 
 
@@ -1216,7 +1195,7 @@ a.scSearchOptionName {
 
 
 .scSearchCategory {
-    border-right: 1px solid #333333;
+    border-right: 1px solid var(--black3);
     text-align: right;
     padding-right: 5px;
     vertical-align: top;
@@ -1235,7 +1214,7 @@ a.scSearchLink {
 
 .scSearchLink:hover,
 .scSearchLink:active {
-    background-color: #111111;
+    background-color: var(--black1);
     color: #cccccc;
     text-decoration: none;
 }
@@ -1246,12 +1225,12 @@ a.scSearchLink img {
 
 .scSearchLinkDetails {
     margin: 0px 0px 0px 8px;
-    color: #999999;
+    color: var(--black9);
 }
 
 .scSearchHeader {
     font-weight: 600;
-    border-bottom: 1px solid #333333;
+    border-bottom: 1px solid var(--black3);
     padding: 15px;
 }
 
@@ -1280,7 +1259,7 @@ a.scSearchLink img {
 .scEditorFieldMarkerInputCell iframe {
     color: #cccccc !important;
     border-radius: 5px !important;
-    border: 1px solid #222222 !important;
+    border: 1px solid var(--black2) !important;
     background: #171717 !important;
 }
 
@@ -1329,7 +1308,7 @@ a.scSearchLink img {
 }
 
 .scProfileHeader .scSelectPresetLinkDisabled {
-    color: #999999;
+    color: var(--black9);
 }
 
 .scPresetCard #textContainer {
@@ -1431,8 +1410,8 @@ a.scSearchLink img {
 }
 
 .splitter-bar {
-    width: 3px;
-    background-color: #333333 !important;
+    width: 2px;
+    background-color: var(--black3) !important;
     cursor: col-resize !important;
     transition: background-color ease-in-out .1s !important;
 }
@@ -1451,12 +1430,12 @@ a.scSearchLink img {
     }
 
 .splitter-bar:hover {
-    background-color: #4e82b8 !important;
+    background-color: var(--blue) !important;
 }
 
 #ContentTreePanel {
     width: 150px;
-    background-color: #222222 !important;
+    background-color: var(--black2) !important;
 }
 
 .scContentEditorSplitter {
@@ -1556,7 +1535,7 @@ body .reEditorModes span {
 }
 
 body .Metro.RadEditor .reEditorModes a {
-    color: #fff !important;
+    color: var(--text) !important;
     background-color: #474747;
     border: 1px solid #474747;
 }
@@ -1584,7 +1563,7 @@ body .Metro.RadEditor .reEditorModes .reMode_selected {
 
 #EditorBottom, .reModule.reStatistic {
   background-color: #474747 !important;
-  color: #fff !important;
+  color: var(--text) !important;
 }
 
 
@@ -1606,7 +1585,7 @@ body div.RadWindow_Metro .rwTitlebarControls em {
 
 body .RadTabStripTop_Metro .rtsLevel1, .RadTabStrip_Metro .rtsLevel1 .rtsUL {
     background-color: #474747;
-    color: #fff;
+    color: var(--text);
 }
 
 body .RadTabStrip_Metro .rtsLevel1 .rtsLink {
@@ -1770,30 +1749,30 @@ body .reGrip.grip_last {
 }
 .scEditorSectionPanel,
 .scEditorSections {
-    border-top: 1px solid #333333;
-    background-color: #222222;
+    border-top: 1px solid var(--black3);
+    background-color: var(--black2);
 }
 #scEditorTabs {
-    background-color: #111111;
+    background-color: var(--black1);
 }
 #scEditorTabs > ul > li {
-    border: 1px solid #333333;
-    background: #333333;
-    color: #888;
+    border: 1px solid var(--black3);
+    background: var(--black3);
+    color: var(--black8);
 }
 #scEditorTabs > ul > li:hover {
-    color: #666666;
+    color: var(--black6);
 }
 .scEditorTabEmpty {
-    background-color: #111111 !important;
-    border-bottom: 1px solid #111111 !important;
+    background-color: var(--black1) !important;
+    border-bottom: 1px solid var(--black3) !important;
 }
 .scEditorTabSelected {
-    color: #ffffff !important;
-    background-color: #222222 !important;
-    border-bottom: 0px solid #222222 !important;
-    border-left: 0px solid #222222 !important;
-    border-right: 0px solid #222222 !important;
+    color: var(--text) !important;
+    background-color: var(--black2) !important;
+    border-bottom: 0px solid var(--black2) !important;
+    border-left: 0px solid var(--black2) !important;
+    border-right: 0px solid var(--black2) !important;
 }
 
 @supports (-ms-accelerator:true) {
@@ -1821,6 +1800,6 @@ body .reGrip.grip_last {
 
 #ContentWrapper,
 #Editor_contentIframe > html > body {
-  color: #fff !important;
+  color: var(--text) !important;
 }
 

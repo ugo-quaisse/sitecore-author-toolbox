@@ -17,7 +17,6 @@
 //             if(this.responseURL.include(".Save.CallServerSavePipeline")) {
 //             	console.log("SAVING!!!!!");
 //             }
-//             //will always be 4 (ajax is completed successfully)
 //             // console.log(this.responseText); //whatever the response was
 //         });
 //         origOpen.apply(this, arguments);

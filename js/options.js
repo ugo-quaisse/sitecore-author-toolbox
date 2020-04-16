@@ -8,6 +8,25 @@
 
  /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
+const preferesColorScheme = () => {
+    let color = "light";
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        color = "dark";
+    } else {
+        color = "light";
+    }
+    return color;
+}
+
+chrome.storage.sync.get(['feature_darkmode','feature_darkmode_auto'], function(result) {
+  if(result.feature_darkmode && result.feature_darkmode_auto) {
+    const scheme = window.matchMedia("(prefers-color-scheme: dark)");
+    scheme.addEventListener("change", () => {
+      window.location.reload();
+    });
+  }
+});
+
 document.body.onload = function() {
 
   //Extension version
@@ -37,13 +56,13 @@ document.body.onload = function() {
 
   //Generate domains
   chrome.storage.sync.get(['domain_manager'], function(result) {
+    var domains = undefined;
     if (!chrome.runtime.error) {
 
       //Stored data
       if(result.domain_manager != undefined) {
-        var domains = Object.keys(result.domain_manager);
+        domains = Object.keys(result.domain_manager);
       }
-
 
       //Generate HTML
       var html = "";
@@ -51,7 +70,7 @@ document.body.onload = function() {
 
       for (var i = 0; i < 6; i++) {
 
-        if(domains[i] != undefined) {
+        if(Array.isArray(domains) == true && domains[i] != undefined) {
           domain1 = domains[i];
           domain2 = result.domain_manager[domain1];
         } else {
@@ -131,19 +150,24 @@ document.body.onload = function() {
     }
   });
   //Dark Mode
-  chrome.storage.sync.get(['feature_darkmode'], function(result) {
-    if (!chrome.runtime.error && result.feature_darkmode != undefined) {
-      if(result.feature_darkmode) {
+  var scheme = preferesColorScheme();
+  chrome.storage.sync.get(['feature_darkmode', 'feature_darkmode_auto'], function(result) {
+
+    if(result.feature_darkmode && !result.feature_darkmode_auto || result.feature_darkmode && result.feature_darkmode_auto && scheme == "dark") {
         document.getElementById("feature_darkmode").checked = true;
-        document.querySelector("#extensionOptions").classList.add("dark");
-        document.querySelector("#save").classList.add("dark");
-        document.querySelector("#footer").classList.add("dark");
-      }
+        document.querySelector("html").classList.add("dark");
+    } else if(result.feature_darkmode && result.feature_darkmode_auto && scheme == "light") {
+        document.getElementById("feature_darkmode").checked = true;
+        document.querySelector("html").classList.add("light");
     } else {
-      document.getElementById("feature_darkmode").checked = false;
-      document.querySelector("#extensionOptions").classList.add("light");
-      document.querySelector("#save").classList.add("light");
-      document.querySelector("#footer").classList.add("light");
+        document.getElementById("feature_darkmode").checked = false;
+        document.getElementById("feature_darkmode_auto").disabled = true;
+    }
+  });
+  //Dark mode Auto bar
+  chrome.storage.sync.get(['feature_darkmode_auto'], function(result) {
+    if(result.feature_darkmode_auto) {
+       document.getElementById("feature_darkmode_auto").checked = true;
     }
   });
   //Favorites bar
@@ -289,6 +313,16 @@ document.body.onload = function() {
   });
 }
 
+document.getElementById("feature_darkmode").onclick = function() {
+  console.log(document.getElementById("feature_darkmode").checked);
+  if(document.getElementById("feature_darkmode").checked == false) {
+    document.getElementById("feature_darkmode_auto").disabled = true;
+    document.getElementById("feature_darkmode_auto").checked = false;
+  } else {
+    document.getElementById("feature_darkmode_auto").disabled = false;
+  }
+}
+
 //Settings
 document.querySelector("#settings").onclick = function() {
   document.querySelector("#main").setAttribute( 'style', 'display:none' );
@@ -298,12 +332,15 @@ document.querySelector("#settings").onclick = function() {
 
 //Back to main
 document.querySelector("#back").onclick = function() {
+
+  event.preventDefault();
+
   var url = new URL(window.location.href);
   var configureDomains = url.searchParams.get("configure_domains");
   var backUrl = url.searchParams.get("url");
 
   if(configureDomains == "true") {
-    window.open(backUrl);
+    window.open(backUrl+"&sc_bw=1");
     window.close();
   } else {
     document.querySelector("#main").setAttribute( 'style', 'display:block' );
@@ -452,20 +489,16 @@ document.querySelector("#set").onclick = function(event) {
   chrome.storage.sync.set({"feature_darkmode": document.getElementById('feature_darkmode').checked}, function() {
     console.info('--> Dark mode:' + document.getElementById('feature_darkmode').checked);
       if(document.getElementById('feature_darkmode').checked) {
-        document.querySelector("#extensionOptions").classList.remove("light");
-        document.querySelector("#extensionOptions").classList.add("dark");
-        document.querySelector("#save").classList.remove("light");
-        document.querySelector("#save").classList.add("dark");
-        document.querySelector("#footer").classList.remove("light");
-        document.querySelector("#footer").classList.add("dark");
+        document.querySelector("html").classList.remove("light");
+        document.querySelector("html").classList.add("dark");
       } else {
-        document.querySelector("#extensionOptions").classList.remove("dark");
-        document.querySelector("#extensionOptions").classList.add("light");
-        document.querySelector("#save").classList.remove("dark");
-        document.querySelector("#save").classList.add("light");
-        document.querySelector("#footer").classList.remove("dark");
-        document.querySelector("#footer").classList.add("light");
+        document.querySelector("html").classList.remove("dark");
+        document.querySelector("html").classList.add("light");
       }
+  });
+  //Dark mode auto
+  chrome.storage.sync.set({"feature_darkmode_auto": document.getElementById('feature_darkmode_auto').checked}, function() {
+    console.info('--> Dark Mode Auto: ' + document.getElementById('feature_darkmode_auto').checked);
   });
   //Favorites
   chrome.storage.sync.set({"feature_favorites": document.getElementById('feature_favorites').checked}, function() {

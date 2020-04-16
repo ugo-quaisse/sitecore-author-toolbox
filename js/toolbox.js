@@ -38,18 +38,26 @@ const iconEE =  chrome.runtime.getURL("images/sat.png");
 const iconCE =  chrome.runtime.getURL("images/ce.png");
 const rteLanguages = ["ARABIC", "HEBREW", "PERSIAN", "URDU", "SINDHI"];
 const windowLocationHref = window.location.href.toLowerCase();
+const queryString = window.location.search.toLowerCase();
+const urlParams = new URLSearchParams(queryString);
 const launchpadPage = chrome.runtime.getURL("options.html");
 const launchpadIcon = chrome.runtime.getURL("images/icon.png");
 const launchpadGroupTitle = "Sitecore Author Toolbox";
 const launchpadTitle = "Options";
 
 let initX, initY, mousePressX, target, script, link;
-let isSitecore = window.location.pathname.includes('/sitecore/');
+let isSitecore = windowLocationHref.includes('/sitecore/');
 let isPreviewMode = document.querySelector(".pagemode-preview");
-if(!isPreviewMode) { isPreviewMode = windowLocationHref.includes('sc_mode=preview'); }
+!isPreviewMode ? isPreviewMode = windowLocationHref.includes('sc_mode=preview') : false;
+// if(!isPreviewMode) { isPreviewMode = windowLocationHref.includes('sc_mode=preview'); }
 let isEditMode = document.querySelector(".pagemode-edit");
-if(!isEditMode) { isEditMode = windowLocationHref.includes('sc_mode=edit'); }
-if(!isEditMode) { isEditMode = windowLocationHref.includes('/experienceeditor/'); }
+// if(!isEditMode) { isEditMode = windowLocationHref.includes('sc_mode=edit'); }
+!isEditMode ? isEditMode = windowLocationHref.includes('sc_mode=edit') : false;
+!isEditMode ? isEditMode = windowLocationHref.includes('/experienceeditor/') : false;
+// if(!isEditMode) { isEditMode = windowLocationHref.includes('/experienceeditor/'); }
+
+let scDatabase = urlParams.get('sc_content');
+
 let isGalleryLanguage = windowLocationHref.includes('gallery.language');
 let isGalleryLanguageExpEd = windowLocationHref.includes('selectlanguagegallery');
 let isGalleryFavorites = windowLocationHref.includes('gallery.favorites');
@@ -87,7 +95,6 @@ let workboxPage = "/sitecore/shell/Applications/Workbox/Default.aspx?he=Workbox&
 let hasRedirection = windowLocationHref.includes("&ro=");
 let hasRedirectionOther = windowLocationHref.includes("&sc_ce_uri=");
 let scContentTree= document.querySelector ( "#ContentTreeHolder" );
-let scPercentLoaded = localStorage.setItem('scPercentLoaded', 0);
 var timeout;
 
 const jsonData= JSON.parse('[{"language":"Afrikaans","flag":"SOUTH_AFRICA"},{"language":"Arabic","flag":"SAUDI_ARABIA"},{"language":"Belarusian","flag":"BELARUS"},{"language":"Bulgarian","flag":"BULGARIA"},{"language":"Catalan","flag":""},{"language":"Czech","flag":"CZECH_REPUBLIC"},{"language":"Danish","flag":"DENMARK"},{"language":"German","flag":"GERMANY"},{"language":"Greek","flag":"GREECE"},{"language":"English","flag":"GREAT_BRITAIN"},{"language":"Spanish","flag":"SPAIN"},{"language":"Estonian","flag":"ESTONIA"},{"language":"Basque","flag":""},{"language":"Persian","flag":"IRAN"},{"language":"Finnish","flag":"FINLAND"},{"language":"Faroese","flag":""},{"language":"French","flag":"FRANCE"},{"language":"Galician","flag":""},{"language":"Gujarati","flag":"INDIA"},{"language":"Hebrew","flag":"ISRAEL"},{"language":"Hindi","flag":"INDIA"},{"language":"Croatian","flag":"CROATIA"},{"language":"Hungarian","flag":"HUNGARY"},{"language":"Armenian","flag":"ARMENIA"},{"language":"Indonesian","flag":"MAIN_COUNTRY"},{"language":"Icelandic","flag":"ICELAND"},{"language":"Italian","flag":"ITALY"},{"language":"Japanese","flag":"JAPAN"},{"language":"Georgian","flag":"GEORGIA"},{"language":"Kazakh","flag":"KAZAKHSTAN"},{"language":"Kannada","flag":"INDIA"},{"language":"Korean","flag":"SOUTH_KOREA"},{"language":"Kyrgyz","flag":"KYRGYZSTAN"},{"language":"Lithuanian","flag":"LITHUANIA"},{"language":"Latvian","flag":"LATVIA"},{"language":"Maori","flag":"NEW_ZEALAND"},{"language":"Macedonian","flag":"MACEDONIA"},{"language":"Mongolian","flag":"MONGOLIA"},{"language":"Marathi","flag":"INDIA"},{"language":"Malay","flag":"MALAYSIA"},{"language":"Maltese","flag":"MALTA"},{"language":"Norwegian Bokmål","flag":"NORWAY"},{"language":"Dutch","flag":"NETHERLANDS"},{"language":"Norwegian Nynorsk","flag":"NORWAY"},{"language":"Punjabi","flag":"INDIA"},{"language":"Polish","flag":"POLAND"},{"language":"Portuguese","flag":"PORTUGAL"},{"language":"Romanian","flag":"ROMANIA"},{"language":"Russian","flag":"RUSSIA"},{"language":"Sanskrit","flag":"INDIA"},{"language":"Sami, Northern","flag":""},{"language":"Slovak","flag":"SLOVAKIA"},{"language":"Slovenian","flag":"SLOVENIA"},{"language":"Albanian","flag":"ALBANIA"},{"language":"Swedish","flag":"SWEDEN"},{"language":"Kiswahili","flag":"KENYA"},{"language":"Tamil","flag":"INDIA"},{"language":"Telugu","flag":"INDIA"},{"language":"Thai","flag":"THAILAND"},{"language":"Setswana","flag":"SOUTH_AFRICA"},{"language":"Turkish","flag":"TURKEY"},{"language":"Tatar","flag":"RUSSIA"},{"language":"Ukrainian","flag":"UKRAINE"},{"language":"Urdu","flag":"PAKISTAN"},{"language":"Vietnamese","flag":"VIETNAM"},{"language":"isiXhosa","flag":"SOUTH_AFRICA"},{"language":"Chinese","flag":"CHINA"},{"language":"isiZulu","flag":"SOUTH_AFRICA"}]');
@@ -95,19 +102,36 @@ const jsonData= JSON.parse('[{"language":"Afrikaans","flag":"SOUTH_AFRICA"},{"la
 /*
  * > Helper functions
  */
-const updateScPercentLoaded = () => {
+const preferesColorScheme = () => {
+    let color = "light";
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        color = "dark";
+    } else {
+        color = "light";
+    }
+    return color;
+}
 
-    let ratio = 5;
-    let currentPercent = parseInt(localStorage.getItem('scPercentLoaded'));
-    let remainingPercent = 100 - currentPercent;
-    currentPercent += Math.ceil(remainingPercent/ratio);
-    currentPercent += Math.ceil(currentPercent/20);
-    if(currentPercent>=100) { currentPercent = 100; }
-    localStorage.setItem('scPercentLoaded', currentPercent);
+const sitecoreItemJson = (itemID, languageID, versionID) => {
+    //Read data
+    chrome.storage.sync.get(["scData"], function(result) {
+        let scData = new Object();
+        if(result.scData != undefined) {
+            scData = result.scData;
+            scData[window.document.location.origin] = { scItemID: itemID, scLanguage: languageID, scVersion:versionID};
+        } else {
+            scData[window.document.location.origin] = { scItemID: itemID, scLanguage: languageID, scVersion:versionID};
+        }
 
-    // if(debug) { console.log(currentPercent+'%'); }
-
-    return currentPercent;
+        //Save data
+        chrome.storage.sync.set({"scData": scData}, function() {
+            if(debug) { console.info("%c [Write] Item : " + itemID + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+            if(debug) { console.info("%c [Write] Language : " + languageID + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+            if(debug) { console.info("%c [Write] Version : " + versionID + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+            return scData;
+        });
+    });
+  
 }
 
 const stripHtml = (html) => {
@@ -120,8 +144,8 @@ const stripHtml = (html) => {
 const showSnackbar = (version) => {
 
     //Snackbar settings
-    var snackbarHtml = "<b>Sitecore Live URL has evolved!</b><br />You can now setup your CM or CD/Live domains.<br />Clic the settings button.";        
-    var html='<div class="snackbar"> ' + snackbarHtml + ' <button onclick="window.location.href =\' ' + launchpadPage + '?configure_domains=true&launchpad=true&url= ' + windowLocationHref + ' &tabs=0 \'">SETTINGS</button><button id="sbDismiss">DISMISS</button></div>';
+    var snackbarHtml = "<b>Welcome to Sitecore Author Toolbox 2.0</b><br />You can now setup your CM or CD/Live domains to get better Live URL, clic the Settings button.";        
+    var html='<div class="snackbar"> ' + snackbarHtml + ' <button onclick="window.open(\' ' + launchpadPage + '?configure_domains=false&launchpad=true&url= ' + windowLocationHref + ' &tabs=0 \')">SETTINGS</button><button id="sbDismiss">DISMISS</button></div>';
 
     //Show Snackbar
     document.querySelector('body').insertAdjacentHTML( 'beforeend', html );
@@ -147,7 +171,7 @@ const checkWorkbox = () => {
     var wfChecksum = "#checksum#"; 
 
     var ajax = new XMLHttpRequest();
-    ajax.timeout = 7000; 
+    ajax.timeout = 8000; 
     ajax.open("GET", "/sitecore/shell/default.aspx?xmlcontrol=Workbox", true);
     ajax.onreadystatechange = function() {
 
@@ -198,7 +222,7 @@ const checkWorkbox = () => {
 
                 //Show badge (launchpad)
                 html = '<span class="launchpadBadge">' + wfNotification + '</span>';
-                workboxLaunchpad.insertAdjacentHTML( 'afterbegin', html );
+                workboxLaunchpad ? workboxLaunchpad.insertAdjacentHTML( 'afterbegin', html ) : false;
 
             } else {
 
@@ -216,6 +240,15 @@ const checkWorkbox = () => {
     }
     ajax.send(null);
 
+}
+
+const fetchTimeout = (time, promise) => {
+  return new Promise(function(resolve, reject) {
+    setTimeout(() => {
+      reject(new Error('timeout'))
+    }, time);
+    promise.then(resolve, reject); 
+  });
 }
 
 const checkUrlStatus = (source = null) => {
@@ -243,8 +276,12 @@ const checkUrlStatus = (source = null) => {
   
   //Request
   if(itemUrl) {
+
+    const controller = new AbortController();
+    const signal = controller.signal;
+
     var url = new Request(itemUrl);
-    var request = fetch(url)
+    var request = fetchTimeout(10000, fetch(url))
     .then(function(response) {
       
       //Variables
@@ -269,8 +306,8 @@ const checkUrlStatus = (source = null) => {
       }
 
     })
-    .catch(function() {
-        console.info("Sitecore Author Toolbox: Error in fetching your CD URL ("+itemUrl+"), please check your settings.");
+    .catch(function(error) {
+        console.info("Sitecore Author Toolbox: Error in fetching your CD URL ("+itemUrl+"), it might be a timeout or a settings issue, please check.");
         if(liveUrlStatus != null) { liveUrlStatus.innerHTML = ""; }
     });
 
@@ -334,12 +371,14 @@ const cleanCountryName = (name) => {
   language = temp.replace("TRADITIONAL,_","");
   language = language.replace("SIMPLIFIED,_","");
   language = language.replace("_S.A.R.","");
+  language = language.replace("_PRC","");
   //Replace non-standard country name
   language = language.replace("U.A.E.","UNITED_ARAB_EMIRATES");
   language = language.replace("KOREA","SOUTH_KOREA");
   language = language.replace("UNITED_STATES","USA");
   language = language.replace("UNITED_KINGDOM","GREAT_BRITAIN");
   language = language.replace("ENGLISH","GREAT_BRITAIN");
+  language = language.replace("PRC","CHINA");
 
   return language;
 }
@@ -524,13 +563,8 @@ const sitecoreAuthorToolbox = () => {
       });
 
     } else if(isData) {
-      
-
-        chrome.storage.sync.get(function(e){console.log(e)});
 
       chrome.storage.sync.get(['feature_urls', 'feature_messagebar'], function(result) {
-
-        console.log(result.feature_messagebar);
 
         if(result.feature_urls == undefined) { result.feature_urls = true; }
         if(result.feature_messagebar == undefined) { result.feature_messagebar = true; }
@@ -657,7 +691,7 @@ const sitecoreAuthorToolbox = () => {
   });
 
   /*
-   * > 4. Dynamic Errors
+   * > 4. Grouped Errors
    */
   chrome.storage.sync.get(['feature_errors'], function(result) {
 
@@ -699,6 +733,9 @@ const sitecoreAuthorToolbox = () => {
       var observer = new MutationObserver(function(mutations) {
 
         count = 0;
+
+        //Current errors
+        scErrors = document.querySelectorAll (" .scValidationMarkerIcon ");
 
         //Prepare HTML
         var scMessageErrors = '<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' + iconError + ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">'
@@ -807,23 +844,6 @@ const sitecoreAuthorToolbox = () => {
         }
 
       }
-
-      //Listener on tabs to check if we are in
-      // var target = document.querySelector( "#EditorTabs" );
-      // var observer = new MutationObserver(function(mutations) {
-
-      //   console.log("mutations->");
-      //   console.log(mutations);
-
-      // });
-      
-      // //Observer
-      // if(target) {
-      //   var config = { attributes: false, childList: true, characterData: true };
-      //   observer.observe(target, config);
-      //   console.log("MEDiA OBSERVER START");
-      //   console.log(target);
-      // }
 
     });
 
@@ -1172,48 +1192,15 @@ const sitecoreAuthorToolbox = () => {
       observer.observe(target, config);
     }
 
-    //Add listener on scBucketListBox + scBucketListSelectedBox TODO
-    // target = document.querySelector( ".scBucketListBox" );
-    // observer = new MutationObserver(function(mutations) {
-
-    //   console.log(mutations);
-
-    // });
-          
-    // //Observer options
-    // if(target) {
-    //   config = { attributes: false, childList: true, characterData: false, subtree: false };
-    //   observer.observe(target, config);
-    //   console.log(target);
-    // }
-
     /*
      * Save data in storage
      */
-    chrome.storage.sync.set({"scItemID": sitecoreItemID, "scLanguage": scLanguage, "scVersion": scVersion}, function() {
-        if(debug) {
-            console.info("%c [Write] Item : " + sitecoreItemID + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;');
-            console.info("%c [Write] Language : " + scLanguage + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;');
-            console.info("%c [Write] Version : " + scVersion + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;');
-        }
-    });
-
-    /*
-     * Debug info
-     */
-    if (debug) {
-      console.info("%c - Sitecore Item: " + sitecoreItemID + " ", 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;');
-      console.info("%c - Sitecore Language: " + scLanguage + " ", 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;');
-      console.info("%c - Sitecore Version: "+ scVersion + " ", 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;');
-      console.info('%c - Sitecore Hash : '+ scUrlHash + ' ', 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;');    
-    }
+    sitecoreItemJson(sitecoreItemID, scLanguage, scVersion);
 
     //UI opacity
     clearTimeout(timeout);
     document.querySelector("#EditorFrames").setAttribute("style","opacity:1");
     document.querySelector(".scContentTreeContainer").setAttribute("style","opacity:1");
-    // document.querySelector(".scEditorTabHeaderActive > span").innerText = "Content";
-    updateScPercentLoaded();
 
 }
 
@@ -1240,23 +1227,6 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
     if(debug) { console.info("%c ✏️ Sitecore detected ", 'font-size:14px; background: #f33d35; color: white; border-radius:5px; padding 3px;'); }
     if(debug) { console.info('%c *** Loading *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); }
-
-
-  /*
-  * Code injection for multilist in a Bucket (BETA)
-  */
-  // script = document.createElement('script');
-  // script.src = chrome.runtime.getURL("js/BucketList-min.js");
-  // (document.head||document.documentElement).appendChild(script);
-  // script.remove();
-
-  //Add listener on scBucketListBox + scBucketListSelectedBox
-  // target = document.querySelector( ".scBucketListBox" );
-  // observer = new MutationObserver(function(mutations) {
-
-  //   console.log(mutations);
-
-  // });
 
     /*
     * Code injection for Translate mode
@@ -1324,50 +1294,83 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
   if(isContentEditor || isLaunchpad) { 
 
     if(debug) { console.info('%c **** Content Editor / Launchpage **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;'); }
-    updateScPercentLoaded();
+
+    /*
+     * 17. Auto Dark Mode
+     */
+    chrome.storage.sync.get(['feature_darkmode','feature_darkmode_auto'], function(result) {
+        if(result.feature_darkmode && result.feature_darkmode_auto) {
+            const scheme = window.matchMedia("(prefers-color-scheme: dark)");
+            scheme.addEventListener("change", () => {
+                if(debug) { console.info('%c **** ' + preferesColorScheme() + ' mode ON **** ', 'font-size:14px; background: #333333; color: white; border-radius:5px; padding 3px;'); }
+                //Save
+                var actualCode = `scForm.invoke('contenteditor:save', event)`;
+                script = document.createElement('script');
+                script.textContent = actualCode;
+                (document.head||document.documentElement).appendChild(script);
+                script.remove();
+                //reload UI
+                setTimeout(function() {
+                    window.location.reload();
+                },500)
+            });
+        }
+    });
 
     /*
      * 9. Resume from where you left
      */
     if(!hasRedirection && !hasRedirectionOther && !isLaunchpad) {
 
-        chrome.storage.sync.get(['scItemID','scLanguage','scVersion','feature_reloadnode'], function(result) {
-
-          if (!chrome.runtime.error && result.scItemID != undefined) {
+        chrome.storage.sync.get(['scData','feature_reloadnode'], function(result) {
 
             if(result.feature_reloadnode == undefined) { result.feature_reloadnode = true; }
-            if(scUrlHash!="") {
-              //TODO: bug if stored version if > 1 and reloaded page with hash version 1
-              if(result.scItemID!=scUrlHash) {
-                result.scVersion = 1;
-              }
+            if (result.scData != undefined) { 
+                
 
-              result.scItemID = scUrlHash;
+                //If Hash detected in the URL
+                if(scUrlHash!="") {         
+                    
+                    result.scItemID = scUrlHash;
+                    result.scVersion = 1;
+                    result.scLanguage = "";
+                    result.scSource = "Hash";
+                
+                } else {
 
-            } else {
-                //No redirection in # url
-                //console.log(result.scItemID );
-            }
+                    //Get scData from storage
+                    var scData = result.scData;
+                    for(var domain in scData) {
+                        if(scData.hasOwnProperty(domain) && domain == window.location.origin) {
+                            result.scItemID = scData[domain].scItemID;
+                            result.scLanguage = scData[domain].scLanguage;
+                            result.scVersion = scData[domain].scVersion;
+                            result.scSource = "Storage";
+                        }
+                    }
 
-            if(result.scItemID && result.feature_reloadnode == true) {
-  
-                if(debug) { console.info("%c [Read] Item : "+ result.scItemID + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
-                if(debug) { console.info("%c [Read] Language : "+ result.scLanguage + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
-                if(debug) { console.info("%c [Read] Version : "+ result.scVersion + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
-                if(debug) { console.info('%c *** Redirection *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); }
-                updateScPercentLoaded();
+                }
 
-                var actualCode = `scForm.invoke("item:load(id=` + result.scItemID + `,language=` + result.scLanguage + `,version=` + result.scVersion + `)");`;
-                script = document.createElement('script');
-                script.textContent = actualCode;
-                (document.head||document.documentElement).appendChild(script);
-                script.remove();
 
-            } else {
+                if(result.scItemID && result.feature_reloadnode == true) {
+      
+                    if(debug) { console.info("%c [Read " + result.scSource + "] Item : "+ result.scItemID + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+                    if(debug) { console.info("%c [Read " + result.scSource + "] Language : "+ result.scLanguage + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+                    if(debug) { console.info("%c [Read " + result.scSource + "] Version : "+ result.scVersion + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+                    if(debug) { console.info('%c *** Redirection *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); } 
 
-                sitecoreAuthorToolbox();
+                    //If scItemID is not found, it will throw an error
+                    var actualCode = `scForm.invoke("item:load(id=` + result.scItemID + `,language=` + result.scLanguage + `,version=` + result.scVersion + `)");`;
+                    script = document.createElement('script');
+                    script.textContent = actualCode;
+                    (document.head||document.documentElement).appendChild(script);
+                    script.remove();
 
-            }
+                } else {
+
+                    sitecoreAuthorToolbox();
+
+                }
 
           } else {
 
@@ -1378,7 +1381,6 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
         });
 
     }
-    updateScPercentLoaded();
 
     /*
      * > 7. Favorites bar
@@ -1403,7 +1405,6 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
       }
 
     });
-    updateScPercentLoaded();
 
     /*
      * > 14. Show Snackbar
@@ -1420,29 +1421,30 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
           });
 
     }
-    updateScPercentLoaded();
 
     /*
      * > 15. Workbox badge
      */
     chrome.storage.sync.get(['feature_workbox'], function(result) {
-      if (!chrome.runtime.error && result.feature_workbox == true) { 
-        checkWorkbox();
-      }
+        result.feature_workbox == undefined ? result.feature_workbox = true : false;
+        if (!chrome.runtime.error && result.feature_workbox == true) { 
+            checkWorkbox();
+        }
     });
-
-    updateScPercentLoaded();
 
   } //End CE
 
     /*
     * > 08. Dark mode
     */
-    chrome.storage.sync.get(['feature_darkmode'], function(result) {
+    chrome.storage.sync.get(['feature_darkmode','feature_darkmode_auto'], function(result) {
 
-    if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
+    result.feature_darkmode == undefined ? result.feature_darkmode = false : false;
+    if(result.feature_darkmode_auto == undefined) { result.feature_darkmode_auto = false; }
 
-        if(result.feature_darkmode && !isExperienceEditor && !isAdminCache && !isSecurityWindow && !isContentHome && !isLoginPage && !isEditMode && !isUserManager && !isRules && !isAdmin) {
+        var currentScheme = preferesColorScheme();
+
+        if(result.feature_darkmode && !result.feature_darkmode_auto && !isExperienceEditor && !isAdminCache && !isSecurityWindow && !isContentHome && !isLoginPage && !isEditMode && !isUserManager && !isRules && !isAdmin || result.feature_darkmode && result.feature_darkmode_auto && !isExperienceEditor && !isAdminCache && !isSecurityWindow && !isContentHome && !isLoginPage && !isEditMode && !isUserManager && !isRules && !isAdmin && currentScheme == "dark") {
 
           var link = document.createElement("link");
           link.type = "text/css";
@@ -1490,7 +1492,6 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
   if(isDesktop && !isGalleryFavorites) {
 
     if(debug) { console.info('%c **** Desktop Shell **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;'); }
-    updateScPercentLoaded();
 
     chrome.storage.sync.get(['feature_launchpad'], function(result) {
       
@@ -1516,7 +1517,6 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
   } else if(isLaunchpad) {
 
     if(debug) { console.info('%c **** Launchpad **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;'); }
-    updateScPercentLoaded();
 
     chrome.storage.sync.get(['feature_launchpad'], function(result) {
 
@@ -1540,7 +1540,6 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
   } else if(isAdminCache) {
 
     if(debug) { console.info('%c **** Admin Cache **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;'); }
-    updateScPercentLoaded();
 
     // link = document.createElement("link");
     // link.type = "text/css";
@@ -1597,7 +1596,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
         var getNumLanguages = line.querySelector(".BlogPostHeader > span").getAttribute("title");     
 
         //Inject HTML
-        var html = '<div class="BlogPostExtra BlogPostContent" style="padding: 5px 0 0px 78px; color: #4d82b8"><strong>Sitecore path:</strong> ' + getFullpath + ' <strong>Languages available:</strong> ' + getNumLanguages + '</div>';
+        var html = '<div class="BlogPostExtra BlogPostContent" style="padding: 5px 0 0px 78px; color: #0769d6"><strong>Sitecore path:</strong> ' + getFullpath + ' <strong>Languages available:</strong> ' + getNumLanguages + '</div>';
         if(getFullpath) {
           BlogPostFooter.insertAdjacentHTML( 'afterend', html );
         }
@@ -1790,10 +1789,11 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
     if(debug) { console.info('%c **** Rich text editor **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;'); }
 
-    chrome.storage.sync.get(['feature_rtecolor','feature_darkmode'], function(result) {
+    chrome.storage.sync.get(['feature_rtecolor','feature_darkmode','feature_darkmode_auto'], function(result) {
 
     if(result.feature_rtecolor == undefined) { result.feature_rtecolor = true; }
     if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
+    if(result.feature_darkmode_auto == undefined) { result.feature_darkmode_auto = false; }
 
       if(result.feature_rtecolor) {
 
@@ -1819,17 +1819,19 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
             var reTextArea = document.querySelector(".reTextArea");
           }
 
-          /*
-           * Codemirror css
-           */
-          link = document.createElement("link");
-          link.type = "text/css";
-          link.rel = "stylesheet";
-          link.href =  chrome.runtime.getURL("css/codemirror.css");
-          document.getElementsByTagName("head")[0].appendChild(link);
+            /*
+            * Codemirror css
+            */
+            link = document.createElement("link");
+            link.type = "text/css";
+            link.rel = "stylesheet";
+            link.href =  chrome.runtime.getURL("css/codemirror.css");
+            document.getElementsByTagName("head")[0].appendChild(link);
 
-          //If dark mode ON
-          if(result.feature_darkmode) {
+            //If dark mode ON
+            var currentScheme = preferesColorScheme();
+
+          if(result.feature_darkmode && !result.feature_darkmode_auto || result.feature_darkmode && result.feature_darkmode_auto && currentScheme == "dark") {
             
             darkModeTheme = "ayu-dark";
 
@@ -1876,17 +1878,28 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
       /*
        * Load Json data for languages
        */    
-          var isRegionFrame;
-          var dom = document.querySelector("#Languages");
-          var div = dom.querySelectorAll('.scMenuPanelItem,.scMenuPanelItemSelected')
-          var td;
-          var divcount = 0;
-          var tdcount = 0;
-          var tdlanguage;
-          var tdversion;
-          var tdimage;
-          var temp;
-          var key;
+        var isRegionFrame;
+        var dom = document.querySelector("#Languages");
+        var div = dom.querySelectorAll('.scMenuPanelItem,.scMenuPanelItemSelected')
+        var td;
+        var divcount = 0;
+        var tdcount = 0;
+        var tdlanguage;
+        var tdversion;
+        var tdimage;
+        var temp;
+        var key;
+
+        //Sort alphabetically or by version
+        div = [].slice.call(div).sort(function (a, b) {
+        return a.querySelector("table > tbody > tr > td > div > div:last-child").textContent > b.querySelector("table > tbody > tr > td > div > div:last-child").textContent ? -1 : 1;
+        //return a.textContent > b.textContent ? 1 : -1;
+        });
+        //Append dom
+        div.forEach(function (language) {
+        dom.appendChild(language);
+        });
+
 
           for (let item of div) {
               
@@ -2121,7 +2134,6 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
   var observer = new MutationObserver(function(mutations) {
 
     if(debug) { console.info('%c *** Update UI *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); }
-    updateScPercentLoaded();
 
     //Sitecore Variables
     var scQuickInfo = document.querySelector(".scEditorHeaderQuickInfoInput" );  
@@ -2231,12 +2243,14 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
     var dataItemId = document.querySelector('[data-sc-itemid]');
     if(dataItemId) {
 
-        var sitecoreItemID = decodeURI(dataItemId.getAttribute('data-sc-itemid'));
         //Set ItemID (Storage)
-        //TODO: store a json object with domain:SitecoreItemID
-        chrome.storage.sync.set({"scItemID": sitecoreItemID}, function() {
-            if(debug) { console.info("%c [Storage Set] Item : " + sitecoreItemID + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
-        });
+        var sitecoreItemID = decodeURI(dataItemId.getAttribute('data-sc-itemid'));
+        var scLanguage = "en";
+        var scVersion = 1;
+        sitecoreItemJson(sitecoreItemID, scLanguage, scVersion);
+        // chrome.storage.sync.set({"scItemID": sitecoreItemID}, function() {
+        //     if(debug) { console.info("%c [Storage Set] Item : " + sitecoreItemID + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+        // });
 
     }
 
@@ -2258,6 +2272,16 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
             var div = dom.querySelectorAll('.sc-gallery-option-content,.sc-gallery-option-content-active');
             var divcount = 0;
             var tdcount = 0;
+
+            //Sort alphabetically or by version
+            div = [].slice.call(div).sort(function (a, b) {
+            return a.querySelector("div > div:last-child > span").textContent > b.querySelector("div > div:last-child > span").textContent ? -1 : 1;
+            //return a.textContent > b.textContent ? 1 : -1;
+            });
+            //Append dom
+            div.forEach(function (language) {
+            dom.appendChild(language);
+            });
 
             for (let item of div) {
               
@@ -2300,12 +2324,12 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
 
         if(debug) { console.info("====================> RIBBON <===================="); }
     
-        var scRibbonFlagIcons = document.querySelectorAll( ".flag_generic_24" );
+        var scRibbonFlagIcons = document.querySelector( ".flag_generic_24" );
         var tdlanguage, temp, key;
     
-        for(var flag of scRibbonFlagIcons) {
+        // for(var flag of scRibbonFlagIcons) {
 
-            tdlanguage = flag.nextSibling.innerText;
+            tdlanguage = scRibbonFlagIcons.nextSibling.innerText;
             //Clean country name
             tdlanguage = cleanCountryName(tdlanguage);
 
@@ -2318,9 +2342,9 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
                 }
             }
 
-            flag.setAttribute( 'style', 'background-image: url(' + chrome.runtime.getURL("images/Flags/24x24/flag_" + tdlanguage + ".png") + '); background-repeat: no-repeat; background-position: top left;' );
+            scRibbonFlagIcons.setAttribute( 'style', 'background-image: url(' + chrome.runtime.getURL("images/Flags/24x24/flag_" + tdlanguage + ".png") + '); background-repeat: no-repeat; background-position: top left;' );
 
-        }
+        // }
     }
 
     /**
@@ -2362,8 +2386,9 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
     /*
     * Dark mode + Toggle Ribbon
     */
-    //@media (prefers-color-scheme: dark) {
-    chrome.storage.sync.get(['feature_darkmode','feature_toggleribbon'], function(result) {
+    var currentScheme = preferesColorScheme();
+
+    chrome.storage.sync.get(['feature_darkmode','feature_darkmode_auto','feature_toggleribbon'], function(result) {
 
     //Variables
     var pagemodeEdit = document.querySelector(".pagemode-edit");
@@ -2379,9 +2404,10 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
     let tabColor;
 
     if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
+    if(result.feature_darkmode_auto == undefined) { result.feature_darkmode_auto = false; }
     if(result.feature_toggleribbon == undefined) { result.feature_toggleribbon = true; }
 
-    if(result.feature_darkmode && isRibbon || result.feature_darkmode && isDialog || result.feature_darkmode && isInsertPage) {
+    if(result.feature_darkmode && !result.feature_darkmode_auto && isRibbon || result.feature_darkmode && !result.feature_darkmode_auto && isDialog || result.feature_darkmode && !result.feature_darkmode_auto && isInsertPage || result.feature_darkmode && result.feature_darkmode_auto && isRibbon && currentScheme == "dark" || result.feature_darkmode && result.feature_darkmode_auto && isDialog && currentScheme == "dark" || result.feature_darkmode && result.feature_darkmode_auto && isInsertPage && currentScheme == "dark" ) {
 
       var link = document.createElement("link");
       link.type = "text/css";
@@ -2391,7 +2417,7 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
 
     }
 
-    if(result.feature_darkmode) {
+    if(result.feature_darkmode && !result.feature_darkmode_auto || result.feature_darkmode && result.feature_darkmode_auto && currentScheme == "dark" ) {
       tabColor = "dark";
     }
 
@@ -2440,7 +2466,7 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
 
     if(result.feature_toggleribbon && !isRibbon) {
       var html = '<div class="scNormalModeTab '+ tabColor +'"><span class="t-right t-sm" data-tooltip="Open in Normal Mode"><a href="' + linkNormalMode + '"><img src="' + iconChrome + '"/></a></span></div>';
-      pagemodeEdit.insertAdjacentHTML( 'afterend', html );
+      pagemodeEdit ? pagemodeEdit.insertAdjacentHTML( 'afterend', html ) : false;
     }
 
     /*
@@ -2448,7 +2474,7 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
      */
     if(result.feature_toggleribbon && !isRibbon) {
       html = '<div class="scContentEditorTab '+ tabColor +'"><span class="t-right t-sm" data-tooltip="Open in Content Editor"><a href="' + window.location.origin + '/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1"><img src="' + iconCE + '"/></a></span></div>';
-      pagemodeEdit.insertAdjacentHTML( 'afterend', html );
+      pagemodeEdit ? pagemodeEdit.insertAdjacentHTML( 'afterend', html ) : false;
     }
 
   });

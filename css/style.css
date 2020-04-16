@@ -1,15 +1,7 @@
-/* Sitecore banner colors */
-body.contentEditor {
-    /*background-color: #f0f0f0 !important;*/
-    /*transition: 0.3s;*/
-    /*transition-delay: 0.3s;*/
-}
-
 form#ContentEditorForm {
     filter: blur(3px) brightness(0.1) grayscale(1);
     transform: scale(1.005);
     transition: 0.3s;
-    /*transition-delay: 0.2s;*/
     opacity: 1;
 }
 
@@ -94,16 +86,6 @@ body.contentEditor:after {
         background-color: #525252 !important;
     }
 
-/* Table css for cache.aspx */
-#Table1, .launcher-modal {
-    display: none;
-    font-family: arial verdana;
-}
-
-.tabulator-table {
-	font-family: sans-serif;
-}
-
 #c_clearAll,
 #c_refresh {
     cursor: pointer;
@@ -127,6 +109,7 @@ body.contentEditor:after {
     color: rgb(255, 255, 255);
     border: 0px; 
 }
+
 #sitecorAuthorToolboxFav {
   box-shadow: rgba(235, 235, 235, 0.5) 0px -10px 10px 0px;
 }
@@ -216,18 +199,15 @@ body.contentEditor:after {
 .dark:hover {
     color: #ffffff !important;
 }
-.scMessageBarOption {
-    /*color: #897B2F !important;*/
-}
-#sxa-toolbox~#wrapper {
-    /*zoom: 1.6 !important;*/
-}
+.splitter-bar::before,
+.splitter-bar::after,
 .splitter-bar {
     cursor: col-resize !important;
     transition: background-color ease-in-out .1s !important;
 }
+.splitter-bar:hover::before,
 .splitter-bar:hover {
-    background-color: #4e82b8 !important;
+    background-color: #1e81ef !important;
 }
 .scEditorSectionPanel,
 .scEditorSections {
@@ -302,31 +282,6 @@ body.contentEditor:after {
     color: #ccc;
 }
 
-.ui-widget-overlay {
-    background: rgba(0,0,0,0.2) !important;
-    opacity: 1 !important;
-}
-
-.ui-widget-overlay:after {
-    content: "";
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    opacity: 1 !important;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    padding-top: 40px;
-    height: 56px;
-    width: 96px;
-    position: absolute;
-    background: transparent url('chrome-extension://__MSG_@@extension_id__/images/sc-spinner32.gif') no-repeat center center;
-    background-color: #ffffff;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.175);
-    z-index: 10001;
-    visibility: visible;
-}
-
 .snackbar {
     animation: slide 0.4s forwards;
     transition: right ease-in-out 0.4s;
@@ -352,6 +307,16 @@ body.contentEditor:after {
 .snackbar > b {
     display: contents;
     font-weight: bold;
+}
+
+.snackbar > button {
+    background-color: transparent !important;
+    border: none !important;
+    color: #dc291d;
+    font-weight: bold;
+    font-size: 14px;
+    padding-left: 18px;
+    cursor: pointer;
 }
 
 @keyframes slide {
@@ -380,16 +345,6 @@ body.contentEditor:after {
 
 .wbGreen {
     background-color: #37ab62 !important;
-}
-
-.snackbar > button {
-    background-color: transparent !important;
-    border: none !important;
-    color: #dc291d;
-    font-weight: bold;
-    font-size: 14px;
-    padding-left: 18px;
-    cursor: pointer;
 }
 
 .liveUrlBadge {
@@ -426,12 +381,6 @@ body.contentEditor:after {
 }
 @keyframes popup {
     100% { transform: scale(1); }
-}
-
-.scRibbonNavigatorButtonsGroupButtons{
-    display: flex !important;
-    overflow-x: scroll !important; 
-    width: calc(100vw - 65px) !important;
 }
 
 .liveStatusRed {

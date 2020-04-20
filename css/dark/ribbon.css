@@ -21,7 +21,7 @@
     .scRibbon a {
         text-decoration: none !important;
         cursor: pointer !important;
-        color: #cccccc !important;
+        color: var(--text) !important;
     }
 
 .scRibbon select {
@@ -86,7 +86,7 @@ z-index: 1000 !important;
 .scRibbon a.scRibbonNavigatorButtonsContextualNormal,
 .scRibbon a.scRibbonNavigatorButtonsContextualActive {
     display: inline-block !important;
-    color: #cccccc !important;
+    color: var(--text) !important;
     min-height: 16px !important;
     white-space: nowrap !important;
     text-transform: uppercase !important;
@@ -101,7 +101,7 @@ z-index: 1000 !important;
 
 
 .scRibbon a.scRibbonNavigatorButtonsContextualActive {
-    color: #131313 !important;
+    color: var(--black1) !important;
     background-color: #f7f7f7 !important;
 }
 
@@ -115,7 +115,7 @@ z-index: 1000 !important;
 .contentEditor .scRibbonToolbar {
      border-top: 0px !important;
      line-height:1 !important;
-     background-color: #222222 !important;
+     background-color: var(--black2) !important;
 }
 
 .contentEditor .scRibbonToolbar:after {
@@ -126,14 +126,14 @@ display: block !important;
 
 .scRibbonToolbarStrip,
 .scRibbonToolbarContextualStrip {
-    background-color: #222222 !important;
+    background-color: var(--black2) !important;
     min-height:80px !important;
 }
 
 /* chunks */
 
 .scRibbon .chunk {
-    background-color: #222222 !important;
+    background-color: var(--black2) !important;
     border-right: 1px solid #111111 !important;
     height: 80px !important;
     display: inline-block !important;
@@ -655,7 +655,7 @@ a:hover .scRibbonToolbarSmallButtonPrefix {
 
 .scRibbonToolbarSmallInputBox,
 .scRibbonToolbarSmallInputBoxDisabled {
-    color: #cccccc !important;
+    color: var(--text) !important;
     display: block !important;
     padding: 0px 6px 2px 6px !important;
     white-space: nowrap !important;
@@ -955,8 +955,8 @@ a.scRibbonToolbarSmallButtonDown:active,
 .scRibbon a.scRibbonToolbarLargeIconButtonDown:active,
 .scRibbon a.scRibbonToolbarSmallComboButtonLeft:active,
 .scRibbon a.scRibbonToolbarSmallComboButtonRight:active {
-    background-color: #222222 !important;
-    color: #cccccc !important;
+    background-color: var(--black2) !important;
+    color: var(--text) !important;
 }
 
 
@@ -968,7 +968,7 @@ a.scRibbonToolbarSmallButtonDown:active,
 a.scRibbonToolbarSmallButtonDown,
 .scRibbonLargeImageButtonDown {
     background-color: #a2d8ef !important;
-    color: #131313 !important;
+    color: var(--black1) !important;
     border-radius: 3px !important;
 }
 
@@ -976,14 +976,14 @@ a.scRibbonToolbarSmallButtonDown,
 .scRibbonToolbarLargeComboButtonDown > span,
 a.scRibbonToolbarSmallButtonDown > span,
 .scRibbonLargeImageButtonDown > span {
-    color: #131313 !important;
+    color: var(--black1) !important;
 }
 
 .scRibbon a.scRibbonToolbarLargeButtonDown:hover > span,
 .scRibbonToolbarLargeComboButtonDown:hover > span,
 a.scRibbonToolbarSmallButtonDown:hover > span,
 .scRibbonLargeImageButtonDown:hover > span {
-    color: #131313 !important;
+    color: var(--text) !important;
 }
 
     /* hover styles*/
@@ -1030,5 +1030,5 @@ a.scRibbonToolbarSmallButtonDown:hover > span,
     .scRibbonToolbarSmallComboButtonLeft:hover > span,
     .scRibbonToolbarLargeComboButtonBottom:hover > span,
     .scRibbonToolbarLargeComboButtonDown:hover > span {
-        color: #131313 !important;
+        color: var(--text) !important;
     }

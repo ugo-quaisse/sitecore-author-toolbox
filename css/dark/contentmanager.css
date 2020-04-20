@@ -614,7 +614,7 @@ div#QuickInfo + .scEditorSectionPanel {
 }
 
 a.scContentButton {
-    color: var(--lightblue) !important;
+    color: var(--blue) !important;
     white-space: nowrap;
     display: inline-block;
     border-right: 1px solid #ccc;

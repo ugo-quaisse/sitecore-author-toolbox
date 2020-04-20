@@ -6,7 +6,7 @@
  * ugo.quaisse@gmail.com
  */ 
 
-/* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
+/* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 /* 
  * To debug Chrome Storage Sync, clear from background.js by running in the console:
@@ -77,6 +77,7 @@ let isRichTextEditor = windowLocationHref.includes('/controls/rich%20text%20edit
 let isHtmlEditor = windowLocationHref.includes('.edithtml.aspx');
 let isFieldEditor = windowLocationHref.includes('field%20editor.aspx');
 let isModalDialogs = windowLocationHref.includes('jquerymodaldialogs.html');
+let isTelerikUi = windowLocationHref.includes('telerik.web.ui');
 let isSecurityDetails = windowLocationHref.includes('securitydetails.aspx');
 let isEditorFolder = windowLocationHref.includes('editors.folder.aspx');
 let isRibbon = windowLocationHref.includes('/ribbon.aspx');
@@ -387,7 +388,6 @@ const cleanCountryName = (name) => {
  * > Main function (sitecoreAuthorToolbox)
  */
 const sitecoreAuthorToolbox = () => {
-
     //Variables
     var count = 0;
     let scEditorID = document.querySelector ( ".scEditorHeader" );
@@ -1248,13 +1248,13 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
     /*
     * Windows css
     */
-    if(navigator.platform.includes("Win")) {
-    link = document.createElement("link");
-    link.type = "text/css";
-    link.rel = "stylesheet";
-    link.href =  chrome.runtime.getURL("css/windows-min.css");
-    document.getElementsByTagName("head")[0].appendChild(link);
-    }
+    // if(navigator.platform.includes("Win")) {
+    // link = document.createElement("link");
+    // link.type = "text/css";
+    // link.rel = "stylesheet";
+    // link.href =  chrome.runtime.getURL("css/windows-min.css");
+    // document.getElementsByTagName("head")[0].appendChild(link);
+    // }
 
     /*
      * Chrome Extension ID
@@ -1264,7 +1264,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
     extensionId = extensionId[1].split("/something");
     extensionId = extensionId[0];
     //Append to HTNL
-    document.querySelector('body').insertAdjacentHTML( 'beforeend', '<input type="hidden" class="extensionId" value="' + extensionId + '" />' );
+    !isRichTextEditor ? document.querySelector('body').insertAdjacentHTML( 'beforeend', '<input type="hidden" class="extensionId" value="' + extensionId + '" />' ) : false;
 
     /*
     * Browser notifications
@@ -1444,7 +1444,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
 
         var currentScheme = preferesColorScheme();
 
-        if(result.feature_darkmode && !result.feature_darkmode_auto && !isExperienceEditor && !isAdminCache && !isSecurityWindow && !isContentHome && !isLoginPage && !isEditMode && !isUserManager && !isRules && !isAdmin || result.feature_darkmode && result.feature_darkmode_auto && !isExperienceEditor && !isAdminCache && !isSecurityWindow && !isContentHome && !isLoginPage && !isEditMode && !isUserManager && !isRules && !isAdmin && currentScheme == "dark") {
+        if(result.feature_darkmode && !result.feature_darkmode_auto && !isTelerikUi && !isExperienceEditor && !isAdminCache && !isSecurityWindow && !isContentHome && !isLoginPage && !isEditMode && !isUserManager && !isRules && !isAdmin || result.feature_darkmode && result.feature_darkmode_auto && !isTelerikUi && !isExperienceEditor && !isAdminCache && !isSecurityWindow && !isContentHome && !isLoginPage && !isEditMode && !isUserManager && !isRules && !isAdmin && currentScheme == "dark") {
 
           var link = document.createElement("link");
           link.type = "text/css";
@@ -2481,4 +2481,3 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
   //}
 
 }
-

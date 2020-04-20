@@ -11748,6 +11748,17 @@ if(scEditor == "richTextEditor") {
   var htmlTab = document.querySelector("#EditorContentHiddenTextarea");
   var reTextArea = document.querySelector(".reTextArea");
 
+  // //designTab
+  // var observer = new MutationObserver(function(mutations) {
+  //   htmlTab.value = designTab.innerHTML;
+  // });
+
+  // //Observer
+  // if(designTab) {
+  //   config = { attributes: true, childList: true, characterData: true, subtree: true };
+  //   observer.observe(designTab, config);
+  // }
+
   //Add listener on reEditorModes and enable it
   var target = document.querySelector( ".reEditorModes" );
   var observer = new MutationObserver(function(mutations) {
@@ -11755,9 +11766,9 @@ if(scEditor == "richTextEditor") {
     for(var mutation of mutations) {
 
         //Show hidden Sitecore fields
-        //htmlTab.setAttribute('style','display:block;');
-        //reTextArea.setAttribute('style','display:block;');
-        //document.querySelector("#Editor_contentIframe").setAttribute('style','width:100%; height:50%');
+        // htmlTab.setAttribute('style','display:block; height: 200px;');
+        // reTextArea.setAttribute('style','display:block; height: 300px');
+        // document.querySelector("#Editor_contentIframe").setAttribute('style','width:100%; height:50%');
 
         if(mutation.target.text == "Design" && mutation.target.className.includes("reMode_selected")) {
 

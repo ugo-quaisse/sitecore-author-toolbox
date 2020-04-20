@@ -1,4 +1,4 @@
-/* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
+/* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 "use strict";
 
@@ -192,11 +192,20 @@ chrome.runtime.onInstalled.addListener(function(details) {
   var versionRelease = versionInfo[1];
   var versionIncrement = versionInfo[2];
 
-  console.log(thisVersion);
-  console.log("Version: "+versionNumber);
-  console.log("Number: "+versionRelease);
-  console.log("Increment: "+versionIncrement);
-  // chrome.storage.sync.get(function(e){console.log(e)});
+  var extinformation = [
+    ["Extension",thisVersion],
+    ["Major",versionNumber],
+    ["Minor",versionRelease],
+    ["Increment",versionIncrement]
+  ]
+
+  console.table(extinformation);
+
+  chrome.storage.sync.get(function(e){
+    console.table(e);
+    console.table(e.scData);
+    console.table(e.domain_manager);
+  });
 
   if(details.reason == "install"){
 

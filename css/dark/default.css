@@ -17,7 +17,7 @@
   --black9: #999;
   
   --lightblue: #1e81ef;
-  --blue: #0769d6;
+  --blue: #0b84ff;
   --darkblue: #034c9e;
   --verydarkblue: #002f64;
 
@@ -255,7 +255,7 @@ input[type="submit"] {
     white-space: nowrap;
     padding: 8px 12px;
     font-size: 12px;
-    line-height: 1.42857143;
+    line-height: 1.4;
     user-select: none;
     height: 36px;
     text-shadow: none;
@@ -263,7 +263,7 @@ input[type="submit"] {
     box-shadow: inset 0 1px transparent;
     text-shadow: none;
     background-color: var(--black2) !important;
-    background: linear-gradient(to bottom, #289bc8 0%, #207da2 100%);
+    background: linear-gradient(to bottom, var(--blue) 0%, var(--blue) 100%);
     border-radius: 4px !important;
 }
 
@@ -311,7 +311,7 @@ input[type="submit"] {
     box-shadow: inset 0 1px #5dbadf;
     color: var(--text);
     background-color: #207da2;
-    background-image: linear-gradient(to bottom, #289bc8 0%, #207da2 100%);
+    background-image: linear-gradient(to bottom, var(--blue) 0%, var(--blue) 100%);
     border-radius: 4px;
   }
 
@@ -322,13 +322,13 @@ input[type="submit"] {
       border-color: #175973;
       background-color: #1d7395;
       background-position: 0 0;
-      background-image: linear-gradient(to bottom, #289bc8 0%, #289bc8 100%);
+      background-image: linear-gradient(to bottom, var(--blue) 0%, var(--blue) 100%);
     }
 
     .scButtonPrimary:active,
     input[type="submit"].scButtonPrimary:active {
       background-color: #1d7395;
-      background-image: linear-gradient(to bottom, #207da2 0%, #207da2 100%);
+      background-image: linear-gradient(to bottom, var(--blue) 0%, var(--blue) 100%);
       background-repeat: repeat-x;
       box-shadow: inset 0 3px 3px #13485e;
       background-image: none;
@@ -349,11 +349,11 @@ input[type="submit"] {
 
 
         .ie9 .scButtonPrimary:hover {
-            background: #289bc8;
+            background: var(--blue);
         }
 
         .ie9 .scButtonPrimary:active {
-            background: #207da2;
+            background: var(--blue);
         }
 
 .ie8 .scButton, .ie8 .scButton_Disabled {
@@ -454,8 +454,8 @@ input[type="submit"] {
   text-align: right;
   white-space: nowrap;
   line-height: 34px;
-  background-color: #1d1d1d !important;
-  border-top: 1px solid #292929 !important;
+  background-color: var(--black1) !important;
+  border-top: 1px solid var(--black3) !important;
 }
 
 .scWizardPageContainer {
@@ -546,7 +546,7 @@ input[type="submit"] {
   cursor: default;
   text-align: center;
   background-color: #D0EBF6;
-  color: #131313;
+  color: var(--black1);
 }
 
 .scCalendarCell, .scCalendarToday {
@@ -559,7 +559,7 @@ input[type="submit"] {
 
 td.scCalendarCell:hover, td.scCalendarToday:hover {
   background-color: #E3E3E3;
-  color: #131313;
+  color: var(--black1);
 }
     
 .scCalendarCellOtherMonth {
@@ -638,7 +638,7 @@ td.scCalendarCell:hover, td.scCalendarToday:hover {
 
   .scTimePicker a:hover {
     background-color: #E3E3E3;
-    color: #131313;
+    color: var(--black1);
     text-decoration: none;
   }
 
@@ -1638,7 +1638,7 @@ a.scHyperlinkButton {
 .scMenuItemHotkey_Hover,
 .scMenuPanelItemSelected_Hover,
 .scMenuPanelItem_Hover {
-  background-color: var(--darkblue)  !important;
+  background-color: var(--blue)  !important;
   cursor: pointer;
   color: var(--white) !important;
 }
@@ -2876,7 +2876,7 @@ a.scContentTreeNodeStatic {
   a.scContentTreeNodeNormal:hover,
   a.scContentTreeNodeActive,
   a.scContentTreeNodeNormal.scDragHover {
-    background-color: var(--darkblue) !important;
+    background-color: var(--blue) !important;
     border-radius: 4px;
   }
 
@@ -3337,7 +3337,7 @@ form[lang|='ja'] *,
 
 .sc-text-bold {
   font-weight: 600;
-  color: #131313;
+  color: var(--black1);
 }
 
 .sc-text-label {
@@ -3675,7 +3675,7 @@ span.sc-ext-fieldSearchClear {
 	color: var(--black3) !important;
 }
 .reContentCell, .reContentCell iframe {
-	background-color: #404040 !important;
+	background-color: var(--white) !important;
 }
 .RadForm.rfdTextarea textarea {
 	font-family: monospace !important;
@@ -3929,4 +3929,9 @@ a.scButton {
 }
 .wbNotification {
   background-color: var(--red);
+}
+
+a.scResult:hover {
+    background-color: var(--blue) !important;
+    text-decoration: none;
 }

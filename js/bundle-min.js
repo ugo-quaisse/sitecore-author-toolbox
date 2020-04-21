@@ -11671,13 +11671,8 @@ CodeMirror.defineMode("css", function(config, parserConfig) {
 
 //Get Type of editor
 var scEditor = document.querySelector(".scEditor").value;
-
 //Get Dark mode value
 var cmTheme = document.querySelector(".scDarkMode").value;
-
-console.log(scEditor);
-console.log(cmTheme);
-
 var textarea;
 
 if(scEditor == "richTextEditor") {
@@ -11727,13 +11722,12 @@ function update(editor) {
     var designTab = document.querySelector("#Editor_contentIframe").contentWindow.document.body;
     var htmlTab = document.querySelector("#EditorContentHiddenTextarea");
    
-    htmlTab.value = myEditor.getValue();
-    textarea.value = myEditor.getValue();
-    designTab.innerHTML = decodeURIComponent(htmlTab.value);
+    // htmlTab.value = myEditor.getValue();
+    // textarea.value = myEditor.getValue();
+    // designTab.innerHTML = decodeURIComponent(htmlTab.value);
 
   } else if(editor == "htmlEditor") {
     
-    console.log(myEditor.getValue());
     textarea.value = myEditor.getValue();
 
   } 
@@ -11748,29 +11742,19 @@ if(scEditor == "richTextEditor") {
   var htmlTab = document.querySelector("#EditorContentHiddenTextarea");
   var reTextArea = document.querySelector(".reTextArea");
 
-  // //designTab
-  // var observer = new MutationObserver(function(mutations) {
-  //   htmlTab.value = designTab.innerHTML;
-  // });
-
-  // //Observer
-  // if(designTab) {
-  //   config = { attributes: true, childList: true, characterData: true, subtree: true };
-  //   observer.observe(designTab, config);
-  // }
-
   //Add listener on reEditorModes and enable it
   var target = document.querySelector( ".reEditorModes" );
   var observer = new MutationObserver(function(mutations) {
 
     for(var mutation of mutations) {
 
-        //Show hidden Sitecore fields
+        //Show hidden Sitecore fields - Usefull for debug
         // htmlTab.setAttribute('style','display:block; height: 200px;');
         // reTextArea.setAttribute('style','display:block; height: 300px');
         // document.querySelector("#Editor_contentIframe").setAttribute('style','width:100%; height:50%');
+        // console.log(mutation.attributeName);
 
-        if(mutation.target.text == "Design" && mutation.target.className.includes("reMode_selected")) {
+        if(mutation.target.text == "Design" && mutation.target.className.includes("reMode_selected") && mutation.attributeName!="tabindex") {
 
           //console.log("DESIGN TAB ON");
           document.querySelector(".CodeMirror").setAttribute('style','display:none; height:100%; line-height: 18px; font-size: 13px;');             

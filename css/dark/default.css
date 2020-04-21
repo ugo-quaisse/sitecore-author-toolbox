@@ -37,8 +37,23 @@
 body {
   border: 0px !important;
 }
+
 a, a:active, a:visited {
+  color: var(--text);
+}
+
+a:link {
   color: var(--text) !important;
+}
+
+#Editor_contentIframe a,
+#Editor_contentIframe a:active,
+#Editor_contentIframe a:visited {
+  color: var(--blue) !important;
+}
+
+.scButtons > .scButton {
+  background-image: linear-gradient(var(--blue) 0%, var(--blue) 100%);
 }
 
 .ff a {
@@ -263,7 +278,7 @@ input[type="submit"] {
     box-shadow: inset 0 1px transparent;
     text-shadow: none;
     background-color: var(--black2) !important;
-    background: linear-gradient(to bottom, var(--blue) 0%, var(--blue) 100%);
+    background: linear-gradient(to bottom, var(--text) 0%, var(--text) 100%);
     border-radius: 4px !important;
 }
 
@@ -307,10 +322,10 @@ input[type="submit"] {
   .scButtonPrimary,
   input[type="submit"].scButtonPrimary {
     background-repeat: repeat-x;
-    border-color: #207da2;
+    border-color: var(--lightblue) !important;
     box-shadow: inset 0 1px #5dbadf;
     color: var(--text);
-    background-color: #207da2;
+    background-color: var(--blue);
     background-image: linear-gradient(to bottom, var(--blue) 0%, var(--blue) 100%);
     border-radius: 4px;
   }
@@ -319,20 +334,20 @@ input[type="submit"] {
     input[type="submit"].scButtonPrimary:hover {
       background-repeat: repeat-x;
       color: var(--text) !important;
-      border-color: #175973;
-      background-color: #1d7395;
+      border-color: var(--lightblue);
+      background-color: var(--blue);
       background-position: 0 0;
       background-image: linear-gradient(to bottom, var(--blue) 0%, var(--blue) 100%);
     }
 
     .scButtonPrimary:active,
     input[type="submit"].scButtonPrimary:active {
-      background-color: #1d7395;
+      background-color: var(--blue);
       background-image: linear-gradient(to bottom, var(--blue) 0%, var(--blue) 100%);
       background-repeat: repeat-x;
-      box-shadow: inset 0 3px 3px #13485e;
+      box-shadow: inset 0 3px 3px var(--blue);
       background-image: none;
-      border-color: #175973;
+      border-color: var(--blue);
     }
 
 
@@ -3935,3 +3950,14 @@ a.scResult:hover {
     background-color: var(--blue) !important;
     text-decoration: none;
 }
+
+.scContentControlCheckbox:checked + .scContentControlCheckboxLabel::before {
+  background-color: var(--blue) !important;
+}
+
+.scContentControlCheckboxLabel::before {
+  background-color: #666 !important;
+}
+
+
+

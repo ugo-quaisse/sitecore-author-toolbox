@@ -28,7 +28,7 @@ function checkSiteSxa(request, sender, sendResponse){
 
 function onClickHandler(info, tab) {
     
-    // console.info(JSON.stringify(info));
+    console.table(tab);
     
     if(info.menuItemId == "SitecoreAuthorToolbox") {
 
@@ -99,7 +99,7 @@ function showContextMenu(tab) {
           //Store cookie value
           sxa_site = cookie.value     
           chrome.contextMenus.removeAll(function() {
-              chrome.contextMenus.create({"title": "Edit in Experience Editor", "contexts":["page"], "id": "SitecoreAuthorToolbox"});
+              chrome.contextMenus.create({"title": "Edit in Experience Editor", "contexts":["page"], "id": "SitecoreAuthorToolbox"}, () => chrome.runtime.lastError);
           });
       
         }  
@@ -167,6 +167,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
     return true;
 });
+
+//When user righ clic
 
 //When a tab is updated
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {

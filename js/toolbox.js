@@ -172,7 +172,7 @@ const checkWorkbox = () => {
     var wfChecksum = "#checksum#"; 
 
     var ajax = new XMLHttpRequest();
-    ajax.timeout = 8000; 
+    ajax.timeout = 7000; 
     ajax.open("GET", "/sitecore/shell/default.aspx?xmlcontrol=Workbox", true);
     ajax.onreadystatechange = function() {
 
@@ -239,7 +239,9 @@ const checkWorkbox = () => {
         }
     
     }
-    ajax.send(null);
+    setTimeout(function() {
+        ajax.send(null);
+    },200);
 
 }
 
@@ -270,49 +272,51 @@ const checkUrlStatus = (source = null) => {
     }
   }
 
-  //Loader
-  if(liveUrlStatus) {
-    liveUrlStatus.innerHTML = '<img src="' + urlLoader + '" style="width: 10px; float: initial; margin: unset;"/>';
-  }
-  
+  //Preloader
+  liveUrlStatus ? liveUrlStatus.innerHTML = '<img src="' + urlLoader + '" style="width: 10px; float: initial; margin: unset;"/>' : false;
+
   //Request
-  if(itemUrl) {
+  setTimeout(function() {
 
-    const controller = new AbortController();
-    const signal = controller.signal;
+    if(itemUrl) {
 
-    var url = new Request(itemUrl);
-    var request = fetchTimeout(10000, fetch(url))
-    .then(function(response) {
-      
-      //Variables
-      if(source == null) {
-        liveUrlStatus = document.querySelector(".liveUrlStatus");
-      } else {
-        liveUrlStatus = source.querySelector(".liveUrlStatus");
-      }
+        const controller = new AbortController();
+        const signal = controller.signal;
 
-      //Check response
-      if(response.status == "404" || response.status == "500" ) {
-          html = "<span class='liveStatusRed'><img src=' " + dotRed + "'/> Not available (" + response.status + ")</span>";
-      } else {
-          html = "<span class='liveStatusGreen'><img src=' " + dotGreen + "'/> Published</span>";
-      }
+        var url = new Request(itemUrl);
+        var request = fetchTimeout(7000, fetch(url))
+        .then(function(response) {
+          
+          //Variables
+          if(source == null) {
+            liveUrlStatus = document.querySelector(".liveUrlStatus");
+          } else {
+            liveUrlStatus = source.querySelector(".liveUrlStatus");
+          }
 
-      //Update Dom
-      if(liveUrlStatus != null) {
-        liveUrlStatus.innerHTML = html;
-      } else {
-        liveUrlStatus.innerHTML = "";
-      }
+          //Check response
+          if(response.status == "404" || response.status == "500" ) {
+              html = "<span class='liveStatusRed'><img src=' " + dotRed + "'/> Not available (" + response.status + ")</span>";
+          } else {
+              html = "<span class='liveStatusGreen'><img src=' " + dotGreen + "'/> Published</span>";
+          }
 
-    })
-    .catch(function(error) {
-        console.info("Sitecore Author Toolbox: Error in fetching your CD URL ("+itemUrl+"), it might be a timeout or a settings issue, please check.");
-        if(liveUrlStatus != null) { liveUrlStatus.innerHTML = ""; }
-    });
+          //Update Dom
+          if(liveUrlStatus != null) {
+            liveUrlStatus.innerHTML = html;
+          } else {
+            liveUrlStatus.innerHTML = "";
+          }
 
-  }
+        })
+        .catch(function(error) {
+            console.info("Sitecore Author Toolbox: Error in fetching your CD URL ("+itemUrl+"), it might be a timeout or a settings issue, please check.");
+            html = "<span class='liveStatusGray'>...timeout</span>";
+            if(liveUrlStatus != null) { liveUrlStatus.innerHTML = ""; }
+        });
+
+    }
+}, 200)
 }
 
 const sendNotification = (scTitle, scBody) => {
@@ -785,19 +789,26 @@ const sitecoreAuthorToolbox = () => {
     scIframe = scIframe.querySelectorAll('iframe');
 
     //Loop all iframes and excludes existing sitecorAuthorToolbox .getAttribute("class")
-    var scIframeSrc;
-    var scIframeMedia;
-    var isMediaFolder;
+    var scIframeSrc, scIframeMedia, isMediaFolder;
 
-    count = 0;
-
-    for (let item2 of scIframe) {
-      scIframeSrc = scIframe[count].src;
-      scIframeMedia = scIframe[count];
-      isMediaFolder = scIframeSrc.includes('/Media/');
-      count++;
+    for (let iframe of scIframe) {
+      scIframeSrc = iframe.src;
+      scIframeMedia = iframe;
+      isMediaFolder = iframe.src.includes('/Media/');
       if (isMediaFolder) {
-        if(debug) { console.info("SRC of MEDIA IFRAME "+count+" - "+scIframeSrc); }
+        
+        //Add listener on the media iFrame
+        observer = new MutationObserver(function(mutations) {      
+            console.log(mutations[0].target.style.display);
+            mutations[0].target.style.display=="none" ? document.querySelector("#sitecorAuthorToolboxMedia").setAttribute("style","display:none") : document.querySelector("#sitecorAuthorToolboxMedia").setAttribute("style","display:block; width:100%; height:500px; margin-top: -60px; resize: vertical;");
+        });
+        
+        //Observer
+        if(iframe) {
+            config = { attributes: true, childList: false, characterData: false, subtree: false };
+            observer.observe(iframe, config);
+        }
+
         break;
       }
     }
@@ -820,11 +831,11 @@ const sitecoreAuthorToolbox = () => {
 
           //Prepare HTML
           var scUploadMediaUrl = '/sitecore/client/Applications/Dialogs/UploadMediaDialog?ref=list&ro=sitecore://master/%7b' + scMediaID + '%7d%3flang%3den&fo=sitecore://master/%7b' + scMediaID + '%7d';
-          var scUploadMedia = '<iframe id="sitecorAuthorToolbox" class="sitecorAuthorToolbox" src="' + scUploadMediaUrl + '" style="width:100%; height:500px; margin-top: -60px; resize: vertical;"></iframe>';
+          var scUploadMedia = '<iframe id="sitecorAuthorToolboxMedia" class="sitecorAuthorToolbox" src="' + scUploadMediaUrl + '" style="width:100%; height:500px; margin-top: -60px; resize: vertical;"></iframe>';
           scIframeMedia.setAttribute("style", "margin-top: -30px;");
           
           //Check if Drag and Drop IFrame already exists in DOM
-          var scUploadDragDrop = document.querySelector("#sitecorAuthorToolbox");
+          var scUploadDragDrop = document.querySelector("#sitecorAuthorToolboxMedia");
           if(scUploadDragDrop){
             //Delete existing Drag and Drop iFrame
             scUploadDragDrop.remove();
@@ -837,7 +848,7 @@ const sitecoreAuthorToolbox = () => {
       } else {
         
         //Remove iFrame Drang Drop if not on a Media Folder
-        var scUploadDragDrop = document.querySelector("#sitecorAuthorToolbox");
+        var scUploadDragDrop = document.querySelector("#sitecorAuthorToolboxMedia");
         if(scUploadDragDrop) {
           //Delete existing Drag and Drop iFrame
           scUploadDragDrop.remove();
@@ -859,10 +870,20 @@ const sitecoreAuthorToolbox = () => {
       if(result.feature_charscount) {
 
         /*
+        * Custom checkboxes
+        */
+        link = document.createElement("link");
+        link.type = "text/css";
+        link.rel = "stylesheet";
+        link.href =  chrome.runtime.getURL("css/checkbox-min.css");
+        document.getElementsByTagName("head")[0].appendChild(link);
+
+        /*
          * Add a characters count next to each input and textarea field
          */
         var scTextFields = document.querySelectorAll("input, textarea");
         var countHtml;
+        var labelHtml;
         var chars = 0;
         var charsText;
 
@@ -878,6 +899,12 @@ const sitecoreAuthorToolbox = () => {
             countHtml = '<div id="chars_' + field.id + '" style="position: absolute; bottom: 1px; right: 1px; padding: 6px 10px; border-radius: 4px; line-height: 20px; opacity:0.5;">' + charsText + '</div>';
             //Add div
             field.insertAdjacentHTML( 'afterend', countHtml );
+
+          } else if( field.className == "scContentControlCheckbox") {
+
+            //Add label
+            labelHtml = '<label for="' + field.id  + '" class="scContentControlCheckboxLabel"></label>';
+            field.insertAdjacentHTML( 'afterend', labelHtml );
 
           }
         
@@ -1296,6 +1323,15 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
     if(debug) { console.info('%c **** Content Editor / Launchpage **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;'); }
 
     /*
+     * Back/Previous buttons
+     */
+    //Detect if back or previous are pressed
+    // window.onpopstate = function(event) {
+    //     console.log(event);
+    // }
+
+
+    /*
      * 17. Auto Dark Mode
      */
     chrome.storage.sync.get(['feature_darkmode','feature_darkmode_auto'], function(result) {
@@ -1357,8 +1393,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
                     if(debug) { console.info("%c [Read " + result.scSource + "] Item : "+ result.scItemID + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
                     if(debug) { console.info("%c [Read " + result.scSource + "] Language : "+ result.scLanguage + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
                     if(debug) { console.info("%c [Read " + result.scSource + "] Version : "+ result.scVersion + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
-                    if(debug) { console.info('%c *** Redirection *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); } 
-
+                    if(debug) { console.info('%c *** Redirection *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); }
                     //If scItemID is not found, it will throw an error
                     var actualCode = `scForm.invoke("item:load(id=` + result.scItemID + `,language=` + result.scLanguage + `,version=` + result.scVersion + `)");`;
                     script = document.createElement('script');
@@ -1855,7 +1890,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
            * Codemirror librairires
            */
           script = document.createElement('script');
-          script.src = chrome.runtime.getURL("js/bundle.js");
+          script.src = chrome.runtime.getURL("js/bundle-min.js");
           (document.head||document.documentElement).appendChild(script);
           script.remove();
 
@@ -2034,13 +2069,13 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
         //Chage EditorFrames opacity on load item
         if (event.target.offsetParent != null) {
             if(event.target.offsetParent.matches('.scContentTreeNodeNormal')) {
-                document.querySelector("#EditorFrames").setAttribute("style","opacity:0.5");
-                document.querySelector(".scContentTreeContainer").setAttribute("style","opacity:0.5");
-                document.querySelector(".scEditorTabHeaderActive > span").innerText = "Loading...";
+                document.querySelector("#EditorFrames").setAttribute("style","opacity:0.6");
+                document.querySelector(".scContentTreeContainer").setAttribute("style","opacity:0.6");
+                document.querySelector(".scEditorTabHeaderActive > span").innerText = "Loading";
                 timeout = setTimeout(function() {
                     document.querySelector("#EditorFrames").setAttribute("style","opacity:1");
                     document.querySelector(".scContentTreeContainer").setAttribute("style","opacity:1");
-                }, 10000)
+                }, 8000)
             }
         } 
 

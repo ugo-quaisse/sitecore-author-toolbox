@@ -114,17 +114,19 @@ label:hover {
     background-repeat: repeat-x;
     top: 0px;
 }
-#banner:after {
-	position: absolute;
-    right: 0;
-    top: 0px;
-    display: block;
-    background: url(../images/logo_spiral.png) center right;
-    background-repeat: no-repeat;
-    width: 113px;
-    height: 90px;
-    content: " ";
-    opacity: 0;
+@media screen and (min-width: 450px) {
+  #banner:after {
+  	position: absolute;
+      right: 0;
+      top: 0px;
+      display: block;
+      background: url(../images/logo_spiral.png) center right;
+      background-repeat: no-repeat;
+      width: 113px;
+      height: 90px;
+      content: " ";
+      opacity: 1;
+  }
 }
 #banner > img {
 	width: 150px;

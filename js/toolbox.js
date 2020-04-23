@@ -476,8 +476,7 @@ const sitecoreAuthorToolbox = () => {
     var isPage = sitecoreItemPathOriginal.includes('/home/');
     var isSettings = sitecoreItemPathOriginal.includes('/settings/');
     var isPresentation = sitecoreItemPathOriginal.includes('/presentation/');
-    
-    console.table(ScItem);
+
     debug ? console.table(ScItem) : false;
 
     //Sitecore variables
@@ -898,11 +897,11 @@ const sitecoreAuthorToolbox = () => {
         /*
         * Custom checkboxes
         */
-        link = document.createElement("link");
-        link.type = "text/css";
-        link.rel = "stylesheet";
-        link.href =  chrome.runtime.getURL("css/checkbox-min.css");
-        document.getElementsByTagName("head")[0].appendChild(link);
+        // link = document.createElement("link");
+        // link.type = "text/css";
+        // link.rel = "stylesheet";
+        // link.href =  chrome.runtime.getURL("css/checkbox-min.css");
+        // document.getElementsByTagName("head")[0].appendChild(link);
 
         /*
          * Add a characters count next to each input and textarea field
@@ -929,8 +928,8 @@ const sitecoreAuthorToolbox = () => {
           } else if( field.className == "scContentControlCheckbox") {
 
             //Add label
-            labelHtml = '<label for="' + field.id  + '" class="scContentControlCheckboxLabel"></label>';
-            field.insertAdjacentHTML( 'afterend', labelHtml );
+            // labelHtml = '<label for="' + field.id  + '" class="scContentControlCheckboxLabel"></label>';
+            // field.insertAdjacentHTML( 'afterend', labelHtml );
 
           }
         
@@ -1486,7 +1485,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss && !isUploadManager) {
             //Current version of the Snackbar
             let snackbarVersion = extensionVersion;
             if (!chrome.runtime.error && result.hideSnackbar != snackbarVersion) {
-                showSnackbar(snackbarVersion);
+                //showSnackbar(snackbarVersion);
             }
           });
 

@@ -65,6 +65,8 @@ let isGalleryVersions = windowLocationHref.includes('gallery.versions');
 let isAdminCache = windowLocationHref.includes('/admin/cache.aspx');
 let isAdmin = windowLocationHref.includes('/admin/');
 let isMediaBrowser = windowLocationHref.includes('sitecore.shell.applications.media.mediabrowser');
+let isMediaFolder = windowLocationHref.includes('media%20folder.aspx');
+let isUploadManager = windowLocationHref.includes('/uploadmanager/');
 let isPublishWindow = windowLocationHref.includes('/shell/applications/publish.aspx');
 let isSecurityWindow = windowLocationHref.includes('/shell/applications/security/');
 let isContentEditor = document.querySelector("#scLanguage");
@@ -241,7 +243,7 @@ const checkWorkbox = () => {
     }
     setTimeout(function() {
         ajax.send(null);
-    },200);
+    },300);
 
 }
 
@@ -284,7 +286,7 @@ const checkUrlStatus = (source = null) => {
         const signal = controller.signal;
 
         var url = new Request(itemUrl);
-        var request = fetchTimeout(7000, fetch(url))
+        var request = fetchTimeout(8000, fetch(url))
         .then(function(response) {
           
           //Variables
@@ -388,6 +390,24 @@ const cleanCountryName = (name) => {
   return language;
 }
 
+const getScItemData = () => {
+
+    var scItem = new Object();
+    var dom = document.querySelectorAll(".scEditorQuickInfo  > tbody > tr");
+
+    for(var tr of dom) {
+        tr.cells[0].innerText == "Item ID:" ? scItem.id = tr.cells[1].querySelector("input").value.toLowerCase() : false;
+        tr.cells[0].innerText == "Item name:" ? scItem.name = tr.cells[1].innerText.toLowerCase() : false;
+        tr.cells[0].innerText == "Item path:" ? scItem.path = tr.cells[1].querySelector("input").value.toLowerCase() : false;
+        tr.cells[0].innerText == "Template:" ? scItem.template = tr.cells[1].querySelector("a").innerText.toLowerCase() : false;
+        // tr.cells[0].innerText == "Template:" ? scItem.templateId = tr.cells[1].querySelector("input").innerText.toLowerCase() : false;
+        tr.cells[0].innerText == "Created from:" ? scItem.from = tr.cells[1].innerText.toLowerCase() : false;
+        tr.cells[0].innerText == "Item owner:" ? scItem.owner = tr.cells[1].querySelector("input").value.toLowerCase() : false;
+    }
+
+    return scItem;
+}
+
 /*
  * > Main function (sitecoreAuthorToolbox)
  */
@@ -416,7 +436,6 @@ const sitecoreAuthorToolbox = () => {
     var scLanguageTxtShort = stripHtml(scEditorHeaderVersionsLanguage.innerHTML);
     }
 
-
   if (!scQuickInfo) {
 
     /*
@@ -424,7 +443,7 @@ const sitecoreAuthorToolbox = () => {
      */
     if(!document.querySelector("#scMessageBarUrl") && scEditorSections) {
       
-      var scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + icon + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Oh snap! 😭😭😭</div><div class="scMessageBarText">To fully enjoy Sitecore Author Toolbox, please enable <b>Title bar</b> and <b>Quick info section</b> under <b>Application Options</b>.</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="" onclick="javascript:return scForm.postEvent(this,event,\'shell:useroptions\')" class="scMessageBarOption">Open Application Options</a>.</li></ul></div></div>'
+      var scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + icon + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">😭 Oh snap, you are missing out big! 😭</div><div class="scMessageBarText">To fully enjoy Sitecore Author Toolbox, please enable <b>Title bar</b> and <b>Quick info section</b> under <b>Application Options</b>.</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="" onclick="javascript:return scForm.postEvent(this,event,\'shell:useroptions\')" class="scMessageBarOption">Open Application Options</a>.</li></ul></div></div>'
       scEditorSections.insertAdjacentHTML( 'afterbegin', scMessage );
 
     }
@@ -436,8 +455,9 @@ const sitecoreAuthorToolbox = () => {
     */
 
     //Sitecore properties from Quick Info
-    var temp = document.getElementsByClassName("scEditorHeaderQuickInfoInput");  
-    var sitecoreItemID = temp[0].getAttribute("value");
+    let ScItem = getScItemData();
+    var temp = document.getElementsByClassName("scEditorHeaderQuickInfoInput"); 
+    var sitecoreItemID = ScItem.id;
     var sitecoreItemPath = temp[1].getAttribute("value").toLowerCase()+"/";
     var sitecoreMediaPath = temp[1].getAttribute("value").toLowerCase();
     var sitecoreItemPathOriginal = sitecoreItemPath.toLowerCase()+"/";
@@ -457,6 +477,8 @@ const sitecoreAuthorToolbox = () => {
     var isSettings = sitecoreItemPathOriginal.includes('/settings/');
     var isPresentation = sitecoreItemPathOriginal.includes('/presentation/');
     
+    console.table(ScItem);
+    debug ? console.table(ScItem) : false;
 
     //Sitecore variables
     var scLanguage = document.getElementById("scLanguage").getAttribute("value").toLowerCase();
@@ -782,83 +804,87 @@ const sitecoreAuthorToolbox = () => {
   /*
    * > 5. Add native Drag and Drop
    */
-  var scIframe = document.querySelector('#EditorFrames');
+  // var scIframe = document.querySelector('#EditorFrames');
   
-  if(scIframe) {
+  // if(scIframe) {
     
-    scIframe = scIframe.querySelectorAll('iframe');
+  //   scIframe = scIframe.querySelectorAll('iframe');
 
-    //Loop all iframes and excludes existing sitecorAuthorToolbox .getAttribute("class")
-    var scIframeSrc, scIframeMedia, isMediaFolder;
+  //   //Loop all iframes and excludes existing sitecorAuthorToolbox .getAttribute("class")
+  //   var scIframeSrc, scIframeMedia, isMediaFolder;
 
-    for (let iframe of scIframe) {
-      scIframeSrc = iframe.src;
-      scIframeMedia = iframe;
-      isMediaFolder = iframe.src.includes('/Media/');
-      if (isMediaFolder) {
+  //   for (let iframe of scIframe) {
+  //     scIframeSrc = iframe.src;
+  //     scIframeMedia = iframe;
+  //     isMediaFolder = iframe.src.includes('/Media/');
+  //     if (isMediaFolder) {
         
-        //Add listener on the media iFrame
-        observer = new MutationObserver(function(mutations) {      
-            console.log(mutations[0].target.style.display);
-            mutations[0].target.style.display=="none" ? document.querySelector("#sitecorAuthorToolboxMedia").setAttribute("style","display:none") : document.querySelector("#sitecorAuthorToolboxMedia").setAttribute("style","display:block; width:100%; height:500px; margin-top: -60px; resize: vertical;");
-        });
+  //       //Add listener on the media iFrame
+  //       observer = new MutationObserver(function(mutations) {      
+  //           mutations[0].target.style.display=="none" ? document.querySelector("#sitecorAuthorToolboxMedia").setAttribute("style","display:none") : document.querySelector("#sitecorAuthorToolboxMedia").setAttribute("style","display:block; width:100%; height:450px; margin-top: -60px; resize: vertical;");
+  //       });
         
-        //Observer
-        if(iframe) {
-            config = { attributes: true, childList: false, characterData: false, subtree: false };
-            observer.observe(iframe, config);
-        }
+  //       //Observer
+  //       if(iframe) {
+  //           config = { attributes: true, childList: false, characterData: false, subtree: false };
+  //           observer.observe(iframe, config);
+  //       }
 
-        break;
-      }
-    }
+  //       break;
+  //     }
+  //   }
 
 
-    chrome.storage.sync.get(['feature_dragdrop'], function(result) {
+  //   chrome.storage.sync.get(['feature_dragdrop'], function(result) {
       
-      if(result.feature_dragdrop == undefined) { result.feature_dragdrop = true; }
+  //     if(result.feature_dragdrop == undefined) { result.feature_dragdrop = true; }
 
-      if(isMediaFolder && result.feature_dragdrop) {
-        scIframeMedia.onload = function() {
-
-          //Variables
-          scIframeSrc = scIframeSrc.split("id=%7B");
-          scIframeSrc = scIframeSrc[1].split("%7B");
-          scIframeSrc = scIframeSrc[0].split("%7D");
-          var scMediaID = scIframeSrc[0];
-
-          if(debug) { console.info(scMediaID); }
-
-          //Prepare HTML
-          var scUploadMediaUrl = '/sitecore/client/Applications/Dialogs/UploadMediaDialog?ref=list&ro=sitecore://master/%7b' + scMediaID + '%7d%3flang%3den&fo=sitecore://master/%7b' + scMediaID + '%7d';
-          var scUploadMedia = '<iframe id="sitecorAuthorToolboxMedia" class="sitecorAuthorToolbox" src="' + scUploadMediaUrl + '" style="width:100%; height:500px; margin-top: -60px; resize: vertical;"></iframe>';
-          scIframeMedia.setAttribute("style", "margin-top: -30px;");
-          
-          //Check if Drag and Drop IFrame already exists in DOM
-          var scUploadDragDrop = document.querySelector("#sitecorAuthorToolboxMedia");
-          if(scUploadDragDrop){
-            //Delete existing Drag and Drop iFrame
-            scUploadDragDrop.remove();
-          }    
-          
-          //Insert new button
-          scEditorFrames.insertAdjacentHTML( 'afterbegin', scUploadMedia );
       
-        }
-      } else {
+
+
+  //     if(isMediaFolder && result.feature_dragdrop) {
         
-        //Remove iFrame Drang Drop if not on a Media Folder
-        var scUploadDragDrop = document.querySelector("#sitecorAuthorToolboxMedia");
-        if(scUploadDragDrop) {
-          //Delete existing Drag and Drop iFrame
-          scUploadDragDrop.remove();
-        }
+  //       //Add iFrame
+  //       scIframeMedia.onload = function() {
+  //         //Variables
+  //         scIframeSrc = scIframeSrc.split("id=%7B");
+  //         scIframeSrc = scIframeSrc[1].split("%7B");
+  //         scIframeSrc = scIframeSrc[0].split("%7D");
+  //         var scMediaID = scIframeSrc[0];
 
-      }
+  //         if(debug) { console.info(scMediaID); }
 
-    });
+  //         //Prepare HTML
+  //         var scUploadMediaUrl = '/sitecore/client/Applications/Dialogs/UploadMediaDialog?ref=list&ro=sitecore://master/%7b' + scMediaID + '%7d%3flang%3den&fo=sitecore://master/%7b' + scMediaID + '%7d';
+  //         var scUploadMedia = '<iframe id="sitecorAuthorToolboxMedia" class="sitecorAuthorToolbox" src="' + scUploadMediaUrl + '" style="width:100%; height:450px; margin-top: -60px; resize: vertical;"></iframe>';
+  //         scIframeMedia.setAttribute("style", "margin-top: -30px; height: -webkit-fill-available; overflow: scroll;");
+          
+  //         //Check if Drag and Drop IFrame already exists in DOM
+  //         var scUploadDragDrop = document.querySelector("#sitecorAuthorToolboxMedia");
+  //         if(scUploadDragDrop){
+  //           //Delete existing Drag and Drop iFrame
+  //           scUploadDragDrop.remove();
+  //         }    
+          
+  //         //Insert new iframe
+  //         scEditorFrames.insertAdjacentHTML( 'afterbegin', scUploadMedia );
+      
+  //       }
+      
+  //     } else {
+        
+  //       //Remove iFrame Drang Drop if not on a Media Folder
+  //       var scUploadDragDrop = document.querySelector("#sitecorAuthorToolboxMedia");
+  //       if(scUploadDragDrop) {
+  //         //Delete existing Drag and Drop iFrame
+  //         scUploadDragDrop.remove();
+  //       }
 
-  }
+  //     }
+
+  //   });
+
+  // }
 
   /*
    * > 8. Character counter
@@ -1250,7 +1276,7 @@ if(debug) {
  * 1. Content Editor *
  ************************
  */
-if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
+if(isSitecore && !isEditMode && !isLoginPage && !isCss && !isUploadManager) {
 
     if(debug) { console.info("%c ✏️ Sitecore detected ", 'font-size:14px; background: #f33d35; color: white; border-radius:5px; padding 3px;'); }
     if(debug) { console.info('%c *** Loading *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;'); }
@@ -1326,9 +1352,18 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
      * Back/Previous buttons
      */
     //Detect if back or previous are pressed
-    // window.onpopstate = function(event) {
-    //     console.log(event);
-    // }
+    window.onpopstate = function(event) {
+        if(event.state && event.state.id!='') {
+            //Store a local value to tell toolboxscript (l.2207) we are changing item from back/previous button, so no need to add #hash as it's already done by browser
+            localStorage.setItem('scBackPrevious', true);
+            //Open item
+            var actualCode = `scForm.invoke("item:load(id=` + event.state.id + `,language=,version=1)");`;
+            script = document.createElement('script');
+            script.textContent = actualCode;
+            (document.head||document.documentElement).appendChild(script);
+            script.remove();
+        }
+    }
 
 
     /*
@@ -1820,6 +1855,35 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
       }
     });
 
+  } else if(isMediaFolder) {
+
+    console.info('%c **** Media Folder **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;');
+
+    chrome.storage.sync.get(['feature_dragdrop'], function(result) {
+        
+        result.feature_dragdrop == undefined ? result.feature_dragdrop = true : false;
+
+        if(result.feature_dragdrop) {
+            
+            var scIframeSrc = window.location.href.split("id=%7B");
+            scIframeSrc = scIframeSrc[1].split("%7B");
+            scIframeSrc = scIframeSrc[0].split("%7D");
+            var scMediaID = scIframeSrc[0];
+
+            //Prepare HTML
+            var scUploadMediaUrl = '/sitecore/client/Applications/Dialogs/UploadMediaDialog?ref=list&ro=sitecore://master/%7b' + scMediaID + '%7d%3flang%3den&fo=sitecore://master/%7b' + scMediaID + '%7d';
+
+            // //Add button
+            var scFolderButtons = document.querySelector(".scFolderButtons");
+            //scForm.invoke("item:load(id=' + lastTabSitecoreItemID + ')
+            var scButtonHtml = '<a href="#" class="scButton" onclick="javascript:scSitecore.prototype.showModalDialog(\'' + scUploadMediaUrl + '\', \'\', \'\', null, null); false"><img src=" ' + launchpadIcon + ' " width="16" height="16" class="scIcon" alt="" border="0"><div class="scHeader">Upload files (Drag and Drop)</div></a>';
+
+            // //Insert new button
+            scFolderButtons.insertAdjacentHTML( 'afterbegin', scButtonHtml );
+
+        }
+    });
+
   } else if(isRichTextEditor || isHtmlEditor) {
 
     if(debug) { console.info('%c **** Rich text editor **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;'); }
@@ -2192,9 +2256,16 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss) {
         var tabSitecoreItemID = document.querySelectorAll(".scEditorHeaderQuickInfoInput");
         var lastTabSitecoreItemID = tabSitecoreItemID[tabSitecoreItemID.length- 2].getAttribute("value");
 
+        var locaStorage = localStorage.getItem('scBackPrevious');
+
         //Add hash to URL
         if(!hasRedirection && !hasRedirectionOther) {
-            window.location.hash = sitecoreItemID;
+            if(locaStorage != "true") {
+                var state = { 'sitecore': true, 'id': sitecoreItemID }
+                history.pushState(state, undefined, "#"+sitecoreItemID);
+            } else {
+                localStorage.removeItem('scBackPrevious');
+            }     
         }
 
       //Tabs opened?

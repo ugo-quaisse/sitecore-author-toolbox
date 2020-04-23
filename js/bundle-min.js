@@ -11722,9 +11722,9 @@ function update(editor) {
     var designTab = document.querySelector("#Editor_contentIframe").contentWindow.document.body;
     var htmlTab = document.querySelector("#EditorContentHiddenTextarea");
    
-    // htmlTab.value = myEditor.getValue();
-    // textarea.value = myEditor.getValue();
-    // designTab.innerHTML = decodeURIComponent(htmlTab.value);
+    htmlTab.value = myEditor.getValue();
+    textarea.value = myEditor.getValue();
+    designTab.innerHTML = decodeURIComponent(htmlTab.value);
 
   } else if(editor == "htmlEditor") {
     

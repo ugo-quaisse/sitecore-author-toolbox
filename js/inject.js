@@ -119,3 +119,10 @@ const hideTab = (title, extensionId) => {
 	  }
 	  return false;
 }
+
+const toggleMediaIframe = (url) => {
+
+	var features = 'dialogWidth:1200px;dialogHeight:700px;help:no;scroll:auto;resizable:yes;maximizable:yes;closable:yes;center:yes;status:no;header:;autoIncreaseHeight:yes;forceDialogSize:no';	
+	scSitecore.prototype.showModalDialog(url, "", features, "", "")
+
+}

@@ -3884,7 +3884,8 @@ form {
   border: 1px solid var(--darkblue) !important;
 }
 #FileList a:hover, #FileList a:active, #FileList a.highlight {
-  background-color: var(--darkblue) !important;
+  background: var(--darkblue) !important;
+  color: var(--white) !important;
 }
 .sc-uploader-content {
   border: 1px dashed var(--text) !important;
@@ -3918,6 +3919,10 @@ select[disabled] > option {
 .scTileItemDetailsHeader,
 a.scButton {
   color: rgba(255,255,255,0.8);
+}
+
+#FileList a.scButton {
+  background: var(--blue) !important;
 }
 
 .liveUrlBadge {

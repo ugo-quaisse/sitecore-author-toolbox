@@ -2351,15 +2351,6 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
     document.getElementsByTagName("head")[0].appendChild(link);
 
     /*
-    * Experience Editor Reset
-    */
-    link = document.createElement("link");
-    link.type = "text/css";
-    link.rel = "stylesheet";
-    link.href =  chrome.runtime.getURL("css/reset-min.css");
-    document.getElementsByTagName("head")[0].appendChild(link);
-
-    /*
     * Tooltip styling
     */
     link = document.createElement("link");
@@ -2533,6 +2524,7 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
     var pagemodeEdit = document.querySelector(".pagemode-edit");
     if(!pagemodeEdit) { pagemodeEdit = document.querySelector(".on-page-editor"); }
     if(!pagemodeEdit) { pagemodeEdit = document.querySelector(".experience-editor"); }
+    if(!pagemodeEdit) { pagemodeEdit = document.querySelector(".scWebEditRibbon"); }
     var isQuery = windowLocationHref.includes('?');
     var isEditMode = windowLocationHref.includes('sc_mode=edit');
     
@@ -2546,14 +2538,23 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
     if(result.feature_darkmode_auto == undefined) { result.feature_darkmode_auto = false; }
     if(result.feature_toggleribbon == undefined) { result.feature_toggleribbon = true; }
 
+
+    if(result.feature_toggleribbon ) {      
+        //Experience Editor Reset (container, hover styles..)
+        link = document.createElement("link");
+        link.type = "text/css";
+        link.rel = "stylesheet";
+        link.href =  chrome.runtime.getURL("css/reset-min.css");
+        document.getElementsByTagName("head")[0].appendChild(link);
+    }
+
     if(result.feature_darkmode && !result.feature_darkmode_auto && isRibbon || result.feature_darkmode && !result.feature_darkmode_auto && isDialog || result.feature_darkmode && !result.feature_darkmode_auto && isInsertPage || result.feature_darkmode && result.feature_darkmode_auto && isRibbon && currentScheme == "dark" || result.feature_darkmode && result.feature_darkmode_auto && isDialog && currentScheme == "dark" || result.feature_darkmode && result.feature_darkmode_auto && isInsertPage && currentScheme == "dark" ) {
 
-      var link = document.createElement("link");
-      link.type = "text/css";
-      link.rel = "stylesheet";
-      link.href =  chrome.runtime.getURL("css/dark/experience-min.css");
-      document.getElementsByTagName("head")[0].appendChild(link);
-
+        var link = document.createElement("link");
+        link.type = "text/css";
+        link.rel = "stylesheet";
+        link.href =  chrome.runtime.getURL("css/dark/experience-min.css");
+        document.getElementsByTagName("head")[0].appendChild(link);
     }
 
     if(result.feature_darkmode && !result.feature_darkmode_auto || result.feature_darkmode && result.feature_darkmode_auto && currentScheme == "dark" ) {
@@ -2561,19 +2562,21 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
     }
 
     /*
-     * Show/Hide EE ribbon
+     * Extra buttons
      */
-    //TODO: calculate the height of NotificationBar and apply a negative topOffeset to the scExpTab
     var target = document.body;
     var observer = new MutationObserver(function(mutations) {
 
       for(var mutation of mutations) {
         for(var addedNode of mutation.addedNodes) {
           if(addedNode.id == "scCrossPiece") {
+            
+            //Show/Hide button
             var html = '<div class="scExpTab '+ tabColor +'"><span class="tabHandle"></span><span class="tabText" onclick="toggleRibbon()">▲ Hide<span></div>';
             addedNode.insertAdjacentHTML( 'afterend', html );
             observer.disconnect();
             startDrag();
+
           }
         }
       }
@@ -2592,15 +2595,11 @@ if(isEditMode && !isLoginPage || isPreviewMode && !isLoginPage) {
     var linkNormalMode;
 
     if(isEditMode) {
-      linkNormalMode = windowLocationHref.replace("sc_mode=edit","sc_mode=normal");
+        linkNormalMode = windowLocationHref.replace("sc_mode=edit","sc_mode=normal");
     } else if(isPreviewMode) {
-      linkNormalMode = windowLocationHref.replace("sc_mode=preview","sc_mode=normal");
+        linkNormalMode = windowLocationHref.replace("sc_mode=preview","sc_mode=normal");
     } else {
-        if(windowLocationHref.includes("?")) {
-            linkNormalMode = windowLocationHref+"&sc_mode=normal";
-        } else {
-            linkNormalMode = windowLocationHref+"?sc_mode=normal";
-        }
+        windowLocationHref.includes("?") ? linkNormalMode = windowLocationHref+"&sc_mode=normal" : linkNormalMode = windowLocationHref+"?sc_mode=normal";
     }
 
     if(result.feature_toggleribbon && !isRibbon) {

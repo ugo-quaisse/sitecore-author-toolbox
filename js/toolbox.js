@@ -16,7 +16,7 @@
 /*
  * > Global variables declaration
  */
-const debug = false;
+const debug = true;
 const extensionVersion = chrome.runtime.getManifest().version;
 const icon = chrome.runtime.getURL("images/rocket.svg");
 const iconLock = chrome.runtime.getURL("images/lock.svg");
@@ -68,6 +68,7 @@ let isMediaBrowser = windowLocationHref.includes('sitecore.shell.applications.me
 let isMediaFolder = windowLocationHref.includes('media%20folder.aspx');
 let isUploadManager = windowLocationHref.includes('/uploadmanager/');
 let isPublishWindow = windowLocationHref.includes('/shell/applications/publish.aspx');
+let isPublishDialog = windowLocationHref.includes('/publishing/publishdialog');
 let isSecurityWindow = windowLocationHref.includes('/shell/applications/security/');
 let isContentEditor = document.querySelector("#scLanguage");
 let isExperienceEditor = windowLocationHref.includes('/applications/experienceeditor/');
@@ -907,10 +908,8 @@ const sitecoreAuthorToolbox = () => {
          * Add a characters count next to each input and textarea field
          */
         var scTextFields = document.querySelectorAll("input, textarea");
-        var countHtml;
-        var labelHtml;
+        var countHtml, labelHtml, charsText, uploadText, scContentButtons;
         var chars = 0;
-        var charsText;
 
         //On load
         for(var field of scTextFields) {
@@ -930,6 +929,14 @@ const sitecoreAuthorToolbox = () => {
             //Add label
             labelHtml = '<label for="' + field.id  + '" class="scContentControlCheckboxLabel"></label>';
             field.insertAdjacentHTML( 'afterend', labelHtml );
+
+          } else if( field.className == "scContentControlImage") {
+
+            // scContentButtons = field.parentElement.parentElement.querySelector(".scContentButtons");
+            // var scUploadMediaUrl = '/sitecore/client/Applications/Dialogs/UploadMediaDialog?ref=list&ro=sitecore://master/%3flang%3den&fo=sitecore://master/';
+            // //Add label
+            // uploadText = '<a href="#" class="scContentButton" onclick="javascript:scSitecore.prototype.showModalDialog(\'' + scUploadMediaUrl + '\', \'\', \'\', null, null); false">Upload Image</a>';
+            // scContentButtons.insertAdjacentHTML( 'afterbegin', uploadText );
 
           }
         
@@ -2068,19 +2075,45 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss && !isUploadManager) {
 
     });
 
+  } else if(isPublishDialog) {
+
+    if(debug) { console.info('%c **** Publishing Window **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;'); }
+
+    chrome.storage.sync.get(['feature_flags'], function(result) {
+
+        result.feature_flags == undefined ? result.feature_flags = true : false;
+
+        if(result.feature_flags) {
+        
+            //Listener ScrollablePanelLanguages
+            target = document.querySelector("body");
+            observer = new MutationObserver(function(mutations) {
+                var label = document.querySelectorAll("div[data-sc-id=CheckBoxListLanguages] > table:last-child")[0].children;
+                console.log(label); //need another nutation here
+                for(var tr of label) {
+                    console.log(tr);
+                }
+            });
+
+            //Observer publish
+            target ? observer.observe(target, { attributes: true, childList: true, characterData: true }) : false;
+
+        }
+    })
+    
   } else if(isPublishWindow) {
 
     if(debug) { console.info('%c **** Publish / Rebuild **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;'); }
 
     chrome.storage.sync.get(['feature_flags'], function(result) {
 
-      if(result.feature_flags == undefined) { result.feature_flags = true; }
+      result.feature_flags == undefined ? result.feature_flags = true : false;
 
       if(result.feature_flags) {
-      
+        
         var dom = document.querySelector("#Languages");
-        var label = dom.getElementsByTagName('label');
         var temp, tdlanguage, key, scFlag;
+        var label = dom.getElementsByTagName('label') 
 
         /*
          * Load Json data for languages
@@ -2088,6 +2121,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss && !isUploadManager) {
         for (let item of label) {
 
           temp = item.innerText;
+          console.log(temp);
 
           //Clean country name
           tdlanguage = cleanCountryName(temp);

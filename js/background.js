@@ -216,7 +216,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
 
   } else if(details.reason == "update"){
 
-        if(thisVersion != details.previousVersion && versionIncrement == "1") {
+        if(thisVersion != details.previousVersion && versionIncrement == "0") {
 
           //if !x from previous version to last version
 

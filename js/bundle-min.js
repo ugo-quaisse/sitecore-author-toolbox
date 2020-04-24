@@ -11722,6 +11722,7 @@ function update(editor) {
     var designTab = document.querySelector("#Editor_contentIframe").contentWindow.document.body;
     var htmlTab = document.querySelector("#EditorContentHiddenTextarea");
    
+    //Update design tab
     htmlTab.value = myEditor.getValue();
     textarea.value = myEditor.getValue();
     designTab.innerHTML = decodeURIComponent(htmlTab.value);

@@ -16,7 +16,7 @@
 /*
  * > Global variables declaration
  */
-const debug = true;
+const debug = false;
 const extensionVersion = chrome.runtime.getManifest().version;
 const icon = chrome.runtime.getURL("images/rocket.svg");
 const iconLock = chrome.runtime.getURL("images/lock.svg");
@@ -2088,15 +2088,38 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss && !isUploadManager) {
             //Listener ScrollablePanelLanguages
             target = document.querySelector("body");
             observer = new MutationObserver(function(mutations) {
-                var label = document.querySelectorAll("div[data-sc-id=CheckBoxListLanguages] > table:last-child")[0].children;
-                console.log(label); //need another nutation here
-                for(var tr of label) {
-                    console.log(tr);
+                
+                var temp, tdlanguage, key, scFlag;
+                var label = document.querySelectorAll("div[data-sc-id=CheckBoxListLanguages] > table:last-child")[0];
+                
+                if(label != undefined && label.children[0].children.length > 1) {
+                    //Loop
+                    for(var tr of label.children[0].children) {
+                        
+                        for(var td of tr.children) {
+                            tdlanguage = cleanCountryName(td.innerText.trim());
+
+                            //Compare with Json data
+                            for (key in jsonData) {
+                                if (jsonData.hasOwnProperty(key) && tdlanguage == jsonData[key]["language"].toUpperCase()) { tdlanguage = jsonData[key]["flag"]; }
+                            }
+
+                            scFlag = tdlanguage.toLowerCase();
+                            scFlag = chrome.runtime.getURL("images/Flags/16x16/flag_" + scFlag + ".png")
+
+
+                            //Add Flag into label
+                            if(td.querySelector("#scFlag") == null) {
+                                td.querySelector("label > span").insertAdjacentHTML( 'beforebegin', ' <img id="scFlag" src="' + scFlag + '" style="display: inline; vertical-align: middle; padding-right: 2px;" onerror="this.onerror=null;this.src=\'-/icon/Flags/16x16/flag_generic.png\';"/>' );
+                            }
+                        
+                        }
+                    }
                 }
             });
 
             //Observer publish
-            target ? observer.observe(target, { attributes: true, childList: true, characterData: true }) : false;
+            target ? observer.observe(target, { attributes: false, childList: true, characterData: false, subtree: true }) : false;
 
         }
     })

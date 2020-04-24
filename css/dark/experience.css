@@ -294,3 +294,11 @@ iframe.scSpeakWebEditRibbon {
 span.scChromeCommandText {
     color: var(--text) !important;
 }
+
+.sc-dialogContent {
+  color: var(--text);
+}
+
+.sc-listcontrol-tile-content {
+  background: var(--black2) !important;
+}

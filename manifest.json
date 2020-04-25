@@ -8,7 +8,7 @@
 	},
 	"default_locale": "en",
 	"background": {
-    	"scripts": ["js/background.js"],
+    	"scripts": ["js/background-min.js"],
     	"persistent": false
   	},
 	"permissions": [
@@ -31,7 +31,7 @@
 				"css/style-min.css"
 			],
 			"js": [
-				"js/toolbox.js"
+				"js/toolbox-min.js"
 			],
 			"run_at": "document_idle",
 			"all_frames": true
@@ -51,7 +51,6 @@
 		"css/*",
 		"js/*",
 		"audio/*",
-		"options.html",
-		"data/languages.json"
+		"options.html"
 	]
 }

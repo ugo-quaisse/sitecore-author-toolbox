@@ -8,13 +8,24 @@ A google Chrome extension that brings a set of handy tools for Sitecore's author
 
 This extension will help you to save a lot of time by providing a set of handy tools into Sitecore Content Editor.
 
-* Displays Live URL of a page
-* Shows grouped error messages
-* Brings current language version flag in the active tab and the language menu
-* Adds support of native Drag and Drop upload to your media folders
-* Customizes the look and feel of admin/cache.aspx
-* Dark mode for Sitecore UI
-* Desktop notifications
+* Displays Live URLs of a page (CM or CD)
+* Shows Live Status of a page (Published/Not published) 
+* Dynamic error messages
+* Dark Mode (Manual or Automatic)
+* Language flags + version highlight
+* Workbox badge & notifications
+* Support Media upload Drag and Drop
+* Desktop notification on Publish
+* Right-to-left support (Arabic, Hebrew, Persian, Urdu, Sindhi)
+* Launchpad icon / Desktop menu
+* Favourites Bar in Content Tree
+* Resume from where you left off
+* Character counter
+* HTML editor color syntax
+* Accordion sections to Tabs
+* Auto Expand Tree
+* Translate Mode Copy Button
+* Experience Editor Quick Tabs
 
 ## Sitecore installation directory
 
@@ -30,7 +41,7 @@ Tested on Sitecore versions:
 
 ## Live version
 
-The latest version can be installed from the [Chrome Web Store here](https://chrome.google.com/webstore/detail/mckfcmcdbgkgffdknpkaihjigmcnnbco/publish-accepted?authuser=1&hl=en) 
+The latest version can be installed from the [Chrome Web Store here](https://chrome.google.com/webstore/detail/mckfcmcdbgkgffdknpkaihjigmcnnbco/) 
 
 ## Support
 

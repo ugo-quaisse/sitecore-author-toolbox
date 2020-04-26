@@ -1,4 +1,4 @@
-/*
+/**
  * Sitecore Author Toolbox
  * A Google Chrome Extension
  * - created by Ugo Quaisse -
@@ -8,13 +8,13 @@
 
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
-/* 
+/** 
  * To debug Chrome Storage Sync, clear from background.js by running in the console:
  * chrome.storage.sync.clear(function() { chrome.storage.sync.get(function(e){console.log(e)}) })
  */
 
-/*
- * > Global variables declaration
+/**
+ * Global variables declaration
  */
 const debug = false;
 const extensionVersion = chrome.runtime.getManifest().version;
@@ -45,19 +45,14 @@ const launchpadIcon = chrome.runtime.getURL("images/icon.png");
 const launchpadGroupTitle = "Sitecore Author Toolbox";
 const launchpadTitle = "Options";
 
-let initX, initY, mousePressX, target, script, link;
+let initX, initY, mousePressX, target, script, link, timeout;
 let isSitecore = windowLocationHref.includes('/sitecore/');
 let isPreviewMode = document.querySelector(".pagemode-preview");
 !isPreviewMode ? isPreviewMode = windowLocationHref.includes('sc_mode=preview') : false;
-// if(!isPreviewMode) { isPreviewMode = windowLocationHref.includes('sc_mode=preview'); }
 let isEditMode = document.querySelector(".pagemode-edit");
-// if(!isEditMode) { isEditMode = windowLocationHref.includes('sc_mode=edit'); }
 !isEditMode ? isEditMode = windowLocationHref.includes('sc_mode=edit') : false;
 !isEditMode ? isEditMode = windowLocationHref.includes('/experienceeditor/') : false;
-// if(!isEditMode) { isEditMode = windowLocationHref.includes('/experienceeditor/'); }
-
 let scDatabase = urlParams.get('sc_content');
-
 let isGalleryLanguage = windowLocationHref.includes('gallery.language');
 let isGalleryLanguageExpEd = windowLocationHref.includes('selectlanguagegallery');
 let isGalleryFavorites = windowLocationHref.includes('gallery.favorites');
@@ -99,12 +94,11 @@ let workboxPage = "/sitecore/shell/Applications/Workbox/Default.aspx?he=Workbox&
 let hasRedirection = windowLocationHref.includes("&ro=");
 let hasRedirectionOther = windowLocationHref.includes("&sc_ce_uri=");
 let scContentTree= document.querySelector ( "#ContentTreeHolder" );
-var timeout;
 
 const jsonData= JSON.parse('[{"language":"Afrikaans","flag":"SOUTH_AFRICA"},{"language":"Arabic","flag":"SAUDI_ARABIA"},{"language":"Belarusian","flag":"BELARUS"},{"language":"Bulgarian","flag":"BULGARIA"},{"language":"Catalan","flag":""},{"language":"Czech","flag":"CZECH_REPUBLIC"},{"language":"Danish","flag":"DENMARK"},{"language":"German","flag":"GERMANY"},{"language":"Greek","flag":"GREECE"},{"language":"English","flag":"GREAT_BRITAIN"},{"language":"Spanish","flag":"SPAIN"},{"language":"Estonian","flag":"ESTONIA"},{"language":"Basque","flag":""},{"language":"Persian","flag":"IRAN"},{"language":"Finnish","flag":"FINLAND"},{"language":"Faroese","flag":""},{"language":"French","flag":"FRANCE"},{"language":"Galician","flag":""},{"language":"Gujarati","flag":"INDIA"},{"language":"Hebrew","flag":"ISRAEL"},{"language":"Hindi","flag":"INDIA"},{"language":"Croatian","flag":"CROATIA"},{"language":"Hungarian","flag":"HUNGARY"},{"language":"Armenian","flag":"ARMENIA"},{"language":"Indonesian","flag":"MAIN_COUNTRY"},{"language":"Icelandic","flag":"ICELAND"},{"language":"Italian","flag":"ITALY"},{"language":"Japanese","flag":"JAPAN"},{"language":"Georgian","flag":"GEORGIA"},{"language":"Kazakh","flag":"KAZAKHSTAN"},{"language":"Kannada","flag":"INDIA"},{"language":"Korean","flag":"SOUTH_KOREA"},{"language":"Kyrgyz","flag":"KYRGYZSTAN"},{"language":"Lithuanian","flag":"LITHUANIA"},{"language":"Latvian","flag":"LATVIA"},{"language":"Maori","flag":"NEW_ZEALAND"},{"language":"Macedonian","flag":"MACEDONIA"},{"language":"Mongolian","flag":"MONGOLIA"},{"language":"Marathi","flag":"INDIA"},{"language":"Malay","flag":"MALAYSIA"},{"language":"Maltese","flag":"MALTA"},{"language":"Norwegian Bokmål","flag":"NORWAY"},{"language":"Dutch","flag":"NETHERLANDS"},{"language":"Norwegian Nynorsk","flag":"NORWAY"},{"language":"Punjabi","flag":"INDIA"},{"language":"Polish","flag":"POLAND"},{"language":"Portuguese","flag":"PORTUGAL"},{"language":"Romanian","flag":"ROMANIA"},{"language":"Russian","flag":"RUSSIA"},{"language":"Sanskrit","flag":"INDIA"},{"language":"Sami, Northern","flag":""},{"language":"Slovak","flag":"SLOVAKIA"},{"language":"Slovenian","flag":"SLOVENIA"},{"language":"Albanian","flag":"ALBANIA"},{"language":"Swedish","flag":"SWEDEN"},{"language":"Kiswahili","flag":"KENYA"},{"language":"Tamil","flag":"INDIA"},{"language":"Telugu","flag":"INDIA"},{"language":"Thai","flag":"THAILAND"},{"language":"Setswana","flag":"SOUTH_AFRICA"},{"language":"Turkish","flag":"TURKEY"},{"language":"Tatar","flag":"RUSSIA"},{"language":"Ukrainian","flag":"UKRAINE"},{"language":"Urdu","flag":"PAKISTAN"},{"language":"Vietnamese","flag":"VIETNAM"},{"language":"isiXhosa","flag":"SOUTH_AFRICA"},{"language":"Chinese","flag":"CHINA"},{"language":"isiZulu","flag":"SOUTH_AFRICA"}]');
 
-/*
- * > Helper functions
+/**
+ * Helper functions
  */
 const preferesColorScheme = () => {
     let color = "light";
@@ -1750,11 +1744,9 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss && !isUploadManager) {
     var scBucketListSelectedBox = document.querySelectorAll(".scBucketListSelectedBox, .scContentControlMultilistBox");
     var Section_Data = document.querySelector("#Section_Data");
 
-    if(scBucketListSelectedBox[1]) {
-      scBucketListSelectedBox = scBucketListSelectedBox[1];
-    } else {
-      scBucketListSelectedBox = scBucketListSelectedBox[0];
-    }
+    scBucketListSelectedBox[1] ? 
+        scBucketListSelectedBox = scBucketListSelectedBox[1] : 
+        scBucketListSelectedBox = scBucketListSelectedBox[0];
 
     if(scBucketListSelectedBox) {
 
@@ -1780,7 +1772,9 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss && !isUploadManager) {
 
     chrome.storage.sync.get(['feature_errors'], function(result) {
 
-      if(result.feature_errors == undefined) { result.feature_errors = true; }
+      result.feature_errors == undefined ?
+        result.feature_errors = true :
+        false;
 
       //Variables
       var count = 0;
@@ -1820,10 +1814,6 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss && !isUploadManager) {
           for (let item of scErrors) {
 
               if( item.getAttribute("src") != '/sitecore/shell/themes/standard/images/bullet_square_yellow.png') {
-                //If tabs, add a second event
-                console.log(item);
-                //var sectionTitle = document.querySelector("#FIELD47775058").closest("table").closest("td").closest("table").previousSibling.innerText
-                //toggleSection(this,\'' + sectionTitle+ '\');
                 scMessageErrors += '<li class="scMessageBarOptionBullet" onclick="' + item.getAttribute("onclick") + '" style="cursor:pointer;">' + item.getAttribute("title") + '</li>';
                 count++;
               }

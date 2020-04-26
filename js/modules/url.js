@@ -1,18 +1,9 @@
-/**
- * Sitecore Author Toolbox
- * A Google Chrome Extension
- * - created by Ugo Quaisse -
- * https://uquaisse.io
- * ugo.quaisse@gmail.com
- */ 
-
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from './global.js';
 import {fetchTimeout} from './helpers.js';
 
 export {checkUrlStatus};
-
 
 /**
  * Check HTTP status of a page

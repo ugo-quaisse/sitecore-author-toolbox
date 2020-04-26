@@ -1,17 +1,8 @@
-/**
- * Sitecore Author Toolbox
- * A Google Chrome Extension
- * - created by Ugo Quaisse -
- * https://uquaisse.io
- * ugo.quaisse@gmail.com
- */ 
-
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from './global.js';
 
 export {cleanCountryName};
-
 
 /**
  * Clean a Sitecore-specific country name to make it regular name

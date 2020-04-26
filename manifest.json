@@ -31,7 +31,7 @@
 				"css/style-min.css"
 			],
 			"js": [
-				"js/toolbox-min.js"
+				"js/main.js"
 			],
 			"run_at": "document_idle",
 			"all_frames": true

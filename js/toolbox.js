@@ -16,20 +16,15 @@ import {preferesColorScheme, sitecoreItemJson, fetchTimeout, getScItemData, repo
 import {showSnackbar} from './modules/snackbar.js';
 import {checkWorkbox} from './modules/workbox.js';
 import {checkUrlStatus} from './modules/url.js';
-import {sendNotification} from './modules/notification.js';
+import {checkNotification, sendNotification} from './modules/notification.js';
 import {cleanCountryName} from './modules/language.js';
 import {sitecoreAuthorToolbox} from './modules/contenteditor.js';
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/*
- * > 0. Start: Dectect which URL/Frame is loading the script
+/**
+ * Debug URL
  */
-
 global.debug ? console.info("%c " + window.location.href.replace("https://","").replace("http://","") + "", 'font-size:10px; background: #32ed74; color: black; border-radius:5px; padding 3px;') : false;
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 /*
@@ -43,15 +38,7 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
     global.debug ? console.info('%c *** Loading *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;') : false;
 
     /*
-    * Code injection for Translate mode
-    */
-    var script = document.createElement('script');
-    script.src = chrome.runtime.getURL("js/inject-min.js");
-    (document.head||document.documentElement).appendChild(script);
-    script.remove();
-
-    /*
-    * Fadein onload
+    * Fadeout UI on load
     */
     var link = document.createElement("link");
     link.type = "text/css";
@@ -60,49 +47,33 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
     document.getElementsByTagName("head")[0].appendChild(link);
 
     /*
-    * Windows css
+    * Code injection for Translate mode
     */
-    // if(navigator.platform.includes("Win")) {
-    // link = document.createElement("link");
-    // link.type = "text/css";
-    // link.rel = "stylesheet";
-    // link.href =  chrome.runtime.getURL("css/windows-min.css");
-    // document.getElementsByTagName("head")[0].appendChild(link);
-    // }
-
+    var script = document.createElement('script');
+    script.src = chrome.runtime.getURL("js/inject-min.js");
+    (document.head||document.documentElement).appendChild(script);
+    script.remove();
     
-    //Append to HTNL
+    /*
+    * Extension ID
+    */
     !global.isRichTextEditor ? document.querySelector('body').insertAdjacentHTML( 'beforeend', '<input type="hidden" class="extensionId" value="' + global.extensionId + '" />' ) : false;
 
     /*
-    * Browser notifications
+    * Browser notification
     */
-    if (Notification.permission === 'granted') {
-        // show notification here
-    } else {
-        // request permission from user
-        Notification.requestPermission().then(function(p) {
-            if(p === 'granted') {
-                // show notification here
-            } else {
-                console.info('User blocked notifications.');
-            }
-        }).catch(function(err) {
-            console.info(err);
-        });
-    }
+    checkNotification();
 
-  /*
-   * > Content Editor
-   */
-  if(global.isContentEditor || global.isLaunchpad) { 
+    /*
+    * > Content Editor
+    */
+    if(global.isContentEditor || global.isLaunchpad) { 
 
     global.debug ? console.info('%c **** Content Editor / Launchpage **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;') : false;
 
     /*
      * Back/Previous buttons
      */
-    //Detect if back or previous are pressed
     window.onpopstate = function(event) {
         if(event.state && event.state.id!='') {
             //Store a local value to tell toolboxscript (l.2207) we are changing item from back/previous button, so no need to add #hash as it's already done by browser

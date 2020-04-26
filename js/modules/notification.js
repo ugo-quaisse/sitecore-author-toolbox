@@ -2,7 +2,23 @@
 
 import * as global from './global.js';
 
-export {sendNotification};
+export {checkNotification, sendNotification};
+
+
+/**
+ * Check notification permission
+ */
+const checkNotification = () => {
+	if (Notification.permission !== 'granted') {
+        Notification.requestPermission()
+        .then(function(p) {
+            p !== 'granted' ? console.info('User blocked notifications.') : false;
+        })
+        .catch(function(e) {
+            console.info(e);
+        });
+    }
+}
 
 /**
  * Send native browser notification and play sound

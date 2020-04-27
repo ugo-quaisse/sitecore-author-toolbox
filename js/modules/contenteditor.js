@@ -34,23 +34,16 @@ const sitecoreAuthorToolbox = () => {
     var scLanguageTxtShort = scEditorHeaderVersionsLanguage.innerText;
     }
 
-  if (!scQuickInfo) {
+  	
+  	if (!scQuickInfo) {
 
-    /*
-     * 0. Fallback (no Quicl Info)
-     */
-    if(!document.querySelector("#scMessageBarUrl") && scEditorSections) {
-      
-      var scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + global.icon + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">😭 Oh snap, you are missing out big! 😭</div><div class="scMessageBarText">To fully enjoy Sitecore Author Toolbox, please enable <b>Title bar</b> and <b>Quick info section</b> under <b>Application Options</b>.</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="" onclick="javascript:return scForm.postEvent(this,event,\'shell:useroptions\')" class="scMessageBarOption">Open Application Options</a>.</li></ul></div></div>'
-      scEditorSections.insertAdjacentHTML( 'afterbegin', scMessage );
+  		//Falback if Quikinfo is not enabled
+    	if(!document.querySelector("#scMessageBarUrl") && scEditorSections) {
+      		var scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + global.icon + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">😭 Oh snap, you are missing out big! 😭</div><div class="scMessageBarText">To fully enjoy Sitecore Author Toolbox, please enable <b>Title bar</b> and <b>Quick info section</b> under <b>Application Options</b>.</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="" onclick="javascript:return scForm.postEvent(this,event,\'shell:useroptions\')" class="scMessageBarOption">Open Application Options</a>.</li></ul></div></div>'
+    		scEditorSections.insertAdjacentHTML( 'afterbegin', scMessage );
+    	}
 
-    }
-
-  } else {
-
-    /*
-    * > 1. Live URLs
-    */
+  	} else {
 
     //Sitecore properties from Quick Info
     let ScItem = getScItemData();
@@ -81,8 +74,11 @@ const sitecoreAuthorToolbox = () => {
     var scLanguage = document.getElementById("scLanguage").getAttribute("value").toLowerCase();
     var scUrl = window.location.origin + '/?sc_itemid=' + sitecoreItemID + '&sc_mode=normal&sc_lang=' + scLanguage + '&sc_version=' +scVersion;
     var isNotRegion = scLanguageTxtShort.includes('(');
-    var scFlag;  
+    var scFlag, tabbedFlag;  
 
+    /**
+    * > 1. Live URLs
+    */
     //Generating Live URLs (xxxsxa_sitexxx will be replace later by active site)
     if (sitecoreItemPath[1]!=undefined) {
       sitecoreItemPath = encodeURI(window.location.origin + "/" + scLanguage + "/" + sitecoreItemPath[1]+ "?sc_site=xxxsxa_sitexxx&sc_mode=normal").toLowerCase();   
@@ -206,6 +202,8 @@ const sitecoreAuthorToolbox = () => {
     
   }
 
+
+
   /*
    * > 2. Insert Flag (Active Tab)
    */
@@ -231,7 +229,11 @@ const sitecoreAuthorToolbox = () => {
 
       //Insert Flag into Active Tab
       if(!document.querySelector("#scFlag") && result.feature_flags && scFlag) {
-        scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + scFlag +'" style="width: 20px; vertical-align: middle; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + global.iconFlagGeneric + '\';"/>' );
+      	tabbedFlag = scFlag;
+        setTimeout(function() {
+        	scActiveTab = document.querySelector ( ".scEditorTabHeaderActive" );
+        	scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + tabbedFlag +'" style="width: 21px; vertical-align: middle; padding: 0px 4px 0px 0px;" onerror="this.onerror=null;this.src=\'' + global.iconFlagGeneric + '\';"/>' );
+        },100);
       }
 
       if(!document.querySelector("#scFlagMenu") && result.feature_flags && scFlag) {
@@ -253,7 +255,11 @@ const sitecoreAuthorToolbox = () => {
 
                   //Insert Flag into Active Tab
                   if(!document.querySelector("#scFlag") && result.feature_flags && scFlag) {
-                    scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + scFlag +'" style="width: 20px; vertical-align: middle; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + global.iconFlagGeneric + '\';"/>' );
+                  	tabbedFlag = scFlag;
+                    setTimeout(function() {
+                    	scActiveTab = document.querySelector ( ".scEditorTabHeaderActive" );
+                    	scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + tabbedFlag +'" style="width: 21px; vertical-align: middle; padding: 0px 4px 0px 0px;" onerror="this.onerror=null;this.src=\'' + global.iconFlagGeneric + '\';"/>' );
+                  	},100);
                   }
 
                   //Insert Flag into Sitecore Language selector
@@ -408,15 +414,6 @@ const sitecoreAuthorToolbox = () => {
       if(result.feature_charscount) {
 
         /*
-        * Custom checkboxes
-        */
-        var link = document.createElement("link");
-        link.type = "text/css";
-        link.rel = "stylesheet";
-        link.href =  chrome.runtime.getURL("css/checkbox-min.css");
-        document.getElementsByTagName("head")[0].appendChild(link);
-
-        /*
          * Add a characters count next to each input and textarea field
          */
         var scTextFields = document.querySelectorAll("input, textarea");
@@ -533,7 +530,6 @@ const sitecoreAuthorToolbox = () => {
                 
               }
 
-              //Counter increment
               count++;
 
             }
@@ -541,12 +537,10 @@ const sitecoreAuthorToolbox = () => {
           }
 
           //Add message bar
-          //if(fieldLeftLang != fieldRightLang) {
           if(!document.querySelector("#scMessageBarTranslation")) {
             scMessage = '<div id="scMessageBarTranslation" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + global.iconTranslate + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Translation Mode (' + fieldRightLang + ' to ' + fieldLeftLang + ')</div><div class="scMessageBarText">You are translating content. If you want, you can directly </b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><span class="scMessageBarOption" onclick="javascript:copyTranslateAll();" style="cursor:pointer">Copy existing content into '+scLanguageTxtShort+' version</span></li> or <li class="scMessageBarOptionBullet"><span class="scMessageBarOption" style="cursor:pointer !important;" onclick="window.open(\'https://translate.google.com/#view=home&op=translate&sl=' + fieldRightLang.toLowerCase() + '&tl=' + fieldLeftLang.toLowerCase() + '&text=Hello Sitecore\');">Use Google Translate</span></li></ul></div></div>';
             scEditorID.insertAdjacentHTML( 'afterend', scMessage );
           }
-          //}
 
         }
 
@@ -727,10 +721,12 @@ const sitecoreAuthorToolbox = () => {
       }
     });
 
+
+	//The below features are not managed via the Option menu, there just sit there as standard features
+
     /*
      * > 11. Search enhancements
      */
-    //Add listener on search result list
     var target = document.querySelector( "#SearchResult" );
     var observer = new MutationObserver(function(mutations) {      
 
@@ -763,12 +759,43 @@ const sitecoreAuthorToolbox = () => {
       observer.observe(target, config);
     }
 
-    /*
+
+    /**
+     * Custom checkboxes to IOS like style
+     */
+    var link = document.createElement("link");
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    link.href =  chrome.runtime.getURL("css/checkbox-min.css");
+    document.getElementsByTagName("head")[0].appendChild(link);
+
+    /**
+     * By default, select Content tab for content
+     */
+    if(!isMedia) {
+	    var EditorTabs = document.querySelectorAll("#EditorTabs > a");
+	    for(var tab of EditorTabs) {
+
+	    	if(tab.innerText.toLowerCase() == "content") {
+	    		!tab.classList.contains("scRibbonEditorTabActive") ? tab.click() : false;
+	    	}
+
+	    }
+	}
+
+
+
+
+
+
+    /**
      * Save data in storage
      */
     sitecoreItemJson(sitecoreItemID, scLanguage, scVersion);
-
-    //UI opacity
+    
+    /**
+     * Change UI opacity back to normal
+     */
     clearTimeout(global.timeout);
     document.querySelector("#EditorFrames").setAttribute("style","opacity:1");
     document.querySelector(".scContentTreeContainer").setAttribute("style","opacity:1");

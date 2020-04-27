@@ -32,6 +32,7 @@ export const launchpadPage = chrome.runtime.getURL("options.html");
 export const launchpadIcon = chrome.runtime.getURL("images/icon.png");
 export const launchpadGroupTitle = "Sitecore Author Toolbox";
 export const launchpadTitle = "Options";
+export const tabLoadingTitle = "Loading...";
 
 export let timeout;
 export let isSitecore = windowLocationHref.includes('/sitecore/');

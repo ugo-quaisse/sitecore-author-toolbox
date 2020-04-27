@@ -875,7 +875,7 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
             if(event.target.offsetParent.matches('.scContentTreeNodeNormal')) {
                 document.querySelector("#EditorFrames").setAttribute("style","opacity:0.6");
                 document.querySelector(".scContentTreeContainer").setAttribute("style","opacity:0.6");
-                document.querySelector(".scEditorTabHeaderActive > span").innerText = "Loading";
+                document.querySelector(".scEditorTabHeaderActive > span").innerText = global.tabLoadingTitle;
                 var timeout = setTimeout(function() {
                     document.querySelector("#EditorFrames").setAttribute("style","opacity:1");
                     document.querySelector(".scContentTreeContainer").setAttribute("style","opacity:1");

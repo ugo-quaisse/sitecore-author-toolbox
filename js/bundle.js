@@ -11669,9 +11669,8 @@ CodeMirror.defineMode("css", function(config, parserConfig) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //EXECUTE CODE//
 
-//Get Type of editor
+//Get and Set variables
 var scEditor = document.querySelector(".scEditor").value;
-//Get Dark mode value
 var cmTheme = document.querySelector(".scDarkMode").value;
 var textarea;
 
@@ -11705,8 +11704,8 @@ var pending;
 myEditor.on("change", function() {
 
   if(scEditor == "htmlEditor") {
-    document.querySelector(".CodeMirror").setAttribute('style','height:100%; line-height: 18px; font-size: 13px; top:-52px');
-    textarea.setAttribute('style','display:block; visibility:collapse');
+    document.querySelector(".CodeMirror").setAttribute('style','display:block; height:100%; line-height: 18px; font-size: 13px;');
+    textarea.setAttribute('style','display:none; visibility:collapse');
     myEditor.refresh();
   }
 
@@ -11738,6 +11737,9 @@ function update(editor) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(scEditor == "richTextEditor") {
   
+  //On load: hide Codemirror editor
+  document.querySelector(".CodeMirror").setAttribute('style','display:none; height:100%; line-height: 18px; font-size: 13px;');   
+
   //RTE Tabs
   var designTab = document.querySelector("#Editor_contentIframe").contentWindow.document.body;
   var htmlTab = document.querySelector("#EditorContentHiddenTextarea");
@@ -11763,6 +11765,7 @@ if(scEditor == "richTextEditor") {
 
         } else if(mutation.target.text == "HTML" && mutation.target.className.includes("reMode_selected")) {
 
+
           //console.log("HTML TAB ON");
           document.querySelector(".CodeMirror").setAttribute('style','display:block; height:100%; line-height: 18px; font-size: 13px;');
           htmlTab.value = designTab.innerHTML;
@@ -11776,7 +11779,8 @@ if(scEditor == "richTextEditor") {
 
 } else if(scEditor == "htmlEditor") {
 
-  console.log('Ugo2');
+  //On load: show Codemirror editor
+  document.querySelector(".CodeMirror").setAttribute('style','display:block; height:100%; line-height: 18px; font-size: 13px;');
 
 } 
 

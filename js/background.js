@@ -187,14 +187,14 @@ chrome.tabs.onActivated.addListener(function(tabId, changeInfo, tab) {
 // When the extension is installed or upgraded ...
 chrome.runtime.onInstalled.addListener(function(details) {
 
-  var thisVersion = chrome.runtime.getManifest().version;
-  var versionInfo = thisVersion.split(".");
+  let thisVersion = chrome.runtime.getManifest().version;
+  let versionInfo = thisVersion.split(".");
 
-  var versionNumber = versionInfo[0];
-  var versionRelease = versionInfo[1];
-  var versionIncrement = versionInfo[2];
+  let versionNumber = versionInfo[0];
+  let versionRelease = versionInfo[1];
+  let versionIncrement = versionInfo[2];
 
-  var extinformation = [
+  let extinformation = [
     ["Extension",thisVersion],
     ["Major",versionNumber],
     ["Minor",versionRelease],
@@ -211,20 +211,27 @@ chrome.runtime.onInstalled.addListener(function(details) {
 
   if(details.reason == "install"){
 
+        //Install
         console.log("Installation");
         chrome.tabs.create({url:"https://uquaisse.io/extension-update/?utm_source=install&utm_medium=chrome&utm_campaign="+thisVersion});
 
   } else if(details.reason == "update"){
 
-        if(thisVersion != details.previousVersion && versionIncrement == "1") {
+        if(thisVersion != details.previousVersion && versionIncrement == "0") {
 
-          //if !x from previous version to last version
-
+          //Major update
           console.log("Updated from " + details.previousVersion + " to " + thisVersion);
           chrome.tabs.create({url:"https://uquaisse.io/extension-update/?utm_source=upgrade&utm_medium=chrome&utm_campaign="+thisVersion});
 
+        } else if(thisVersion != details.previousVersion) {
+
+          //Minor update
+          console.log("Updated from " + details.previousVersion + " to " + thisVersion);
+          new Notification("Extension updated!", {body: "Version "+thisVersion, icon: chrome.runtime.getURL("images/icon.png") });
+
         } else {
 
+          //Reload
           console.log("Reload");
 
         }
@@ -254,5 +261,3 @@ chrome.runtime.onInstalled.addListener(function(details) {
   });
 
 });
-
-

@@ -12,7 +12,7 @@
  * Modules
  */
 import * as global from './modules/global.js';
-import {preferesColorScheme, sitecoreItemJson, fetchTimeout, getScItemData, repositionElement, startDrag} from './modules/helpers.js';
+import {consoleLog, loadCssFile, loadJsFile, exeJsCode, preferesColorScheme, sitecoreItemJson, fetchTimeout, getScItemData, repositionElement, startDrag} from './modules/helpers.js';
 import {showSnackbar} from './modules/snackbar.js';
 import {checkWorkbox} from './modules/workbox.js';
 import {checkUrlStatus} from './modules/url.js';
@@ -24,8 +24,7 @@ import {sitecoreAuthorToolbox} from './modules/contenteditor.js';
 /**
  * Debug URL
  */
-global.debug ? console.info("%c " + window.location.href.replace("https://","").replace("http://","") + "", 'font-size:10px; background: #32ed74; color: black; border-radius:5px; padding 3px;') : false;
-
+consoleLog( window.location.href.replace("https://","").replace("http://","") , "green");
 
 /*
  ************************
@@ -34,25 +33,14 @@ global.debug ? console.info("%c " + window.location.href.replace("https://","").
  */
 if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isCss && !global.isUploadManager) {
 
-    global.debug ? console.info("%c ✏️ Sitecore detected ", 'font-size:14px; background: #f33d35; color: white; border-radius:5px; padding 3px;') : false;
-    global.debug ? console.info('%c *** Loading *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;') : false;
+    consoleLog( "Content Editor detected" , "red");
+    consoleLog( "*** Loading ***" , "yellow");
 
     /*
-    * Fadeout UI on load
+    * Load extra CSS
     */
-    var link = document.createElement("link");
-    link.type = "text/css";
-    link.rel = "stylesheet";
-    link.href =  chrome.runtime.getURL("css/onload-min.css");
-    document.getElementsByTagName("head")[0].appendChild(link);
-
-    /*
-    * Code injection for Translate mode
-    */
-    var script = document.createElement('script');
-    script.src = chrome.runtime.getURL("js/inject-min.js");
-    (document.head||document.documentElement).appendChild(script);
-    script.remove();
+    loadCssFile("css/onload-min.css");
+    loadJsFile("js/inject-min.js");
     
     /*
     * Extension ID
@@ -69,157 +57,146 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
     */
     if(global.isContentEditor || global.isLaunchpad) { 
 
-    global.debug ? console.info('%c **** Content Editor / Launchpage **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;') : false;
+        consoleLog( "**** Content Editor / Launchpage ****" , "yellow");
 
-    /*
-     * Back/Previous buttons
-     */
-    window.onpopstate = function(event) {
-        if(event.state && event.state.id!='') {
-            //Store a local value to tell toolboxscript (l.2207) we are changing item from back/previous button, so no need to add #hash as it's already done by browser
-            localStorage.setItem('scBackPrevious', true);
-            //Open item
-            var actualCode = `scForm.invoke("item:load(id=` + event.state.id + `,language=,version=1)");`;
-            script = document.createElement('script');
-            script.textContent = actualCode;
-            (document.head||document.documentElement).appendChild(script);
-            script.remove();
-        }
-    }
-
-
-    /*
-     * 17. Auto Dark Mode
-     */
-    chrome.storage.sync.get(['feature_darkmode','feature_darkmode_auto'], function(result) {
-        if(result.feature_darkmode && result.feature_darkmode_auto) {
-            const scheme = window.matchMedia("(prefers-color-scheme: dark)");
-            scheme.addEventListener("change", () => {
-                if(global.debug) { console.info('%c **** ' + preferesColorScheme() + ' mode ON **** ', 'font-size:14px; background: #333333; color: white; border-radius:5px; padding 3px;'); }
-                //Save
-                var actualCode = `scForm.invoke('contenteditor:save', event)`;
-                script = document.createElement('script');
-                script.textContent = actualCode;
-                (document.head||document.documentElement).appendChild(script);
-                script.remove();
-                //reload UI
-                setTimeout(function() {
-                    window.location.reload();
-                },500)
-            });
-        }
-    });
-
-    /*
-     * 9. Resume from where you left
-     */
-    if(!global.hasRedirection && !global.hasRedirectionOther && !global.isLaunchpad) {
-
-        chrome.storage.sync.get(['scData','feature_reloadnode'], function(result) {
-
-            if(result.feature_reloadnode == undefined) { result.feature_reloadnode = true; }
-            if (result.scData != undefined) { 
+        /*
+         * Back/Previous buttons
+         */
+        window.onpopstate = function(event) {
+            if(event.state && event.state.id!='') {
+                //Store a local value to tell toolboxscript (l.2207) we are changing item from back/previous button, so no need to add #hash as it's already done by browser
+                localStorage.setItem('scBackPrevious', true);
                 
-                //If Hash detected in the URL
-                if(global.scUrlHash!="") {         
+                //Open item
+                exeJsCode(`scForm.invoke("item:load(id=` + event.state.id + `,language=,version=1)");`);
+            }
+        }
+
+
+        /*
+         * 17. Auto Dark Mode
+         */
+        chrome.storage.sync.get(['feature_darkmode','feature_darkmode_auto'], function(result) {
+            
+            if(result.feature_darkmode && result.feature_darkmode_auto) {
+                const scheme = window.matchMedia("(prefers-color-scheme: dark)");
+                scheme.addEventListener("change", () => {
+                    if(global.debug) { console.info('%c **** ' + preferesColorScheme() + ' mode ON **** ', 'font-size:14px; background: #333333; color: white; border-radius:5px; padding 3px;'); }
+                    //Save
+                    exeJsCode(`scForm.invoke('contenteditor:save', event)`);
+                    //reload UI
+                    setTimeout(function() {
+                        window.location.reload();
+                    },500)
+                });
+            }
+        });
+
+        /*
+         * 9. Resume from where you left
+         */
+        if(!global.hasRedirection && !global.hasRedirectionOther && !global.isLaunchpad) {
+
+            chrome.storage.sync.get(['scData','feature_reloadnode'], function(result) {
+
+                if(result.feature_reloadnode == undefined) { result.feature_reloadnode = true; }
+                if (result.scData != undefined) { 
                     
-                    result.scItemID = global.scUrlHash;
-                    result.scVersion = 1;
-                    result.scLanguage = "";
-                    result.scSource = "Hash";
-                
-                } else {
+                    //If Hash detected in the URL
+                    if(global.scUrlHash!="") {         
+                        
+                        result.scItemID = global.scUrlHash;
+                        result.scVersion = 1;
+                        result.scLanguage = "";
+                        result.scSource = "Hash";
+                    
+                    } else {
 
-                    //Get scData from storage
-                    var scData = result.scData;
-                    for(var domain in scData) {
-                        if(scData.hasOwnProperty(domain) && domain == window.location.origin) {
-                            result.scItemID = scData[domain].scItemID;
-                            result.scLanguage = scData[domain].scLanguage;
-                            result.scVersion = scData[domain].scVersion;
-                            result.scSource = "Storage";
+                        //Get scData from storage
+                        var scData = result.scData;
+                        for(var domain in scData) {
+                            if(scData.hasOwnProperty(domain) && domain == window.location.origin) {
+                                result.scItemID = scData[domain].scItemID;
+                                result.scLanguage = scData[domain].scLanguage;
+                                result.scVersion = scData[domain].scVersion;
+                                result.scSource = "Storage";
+                            }
                         }
+
                     }
 
-                }
 
+                    if(result.scItemID && result.feature_reloadnode == true) {
+          
+                        consoleLog("[Read " + result.scSource + "] Item : "+ result.scItemID, "beige");
+                        consoleLog("[Read " + result.scSource + "] Language : "+ result.scLanguage, "beige");
+                        consoleLog("[Read " + result.scSource + "] Version : "+ result.scVersion, "beige");
+                        consoleLog("*** Redirection ***", "yellow");
+                        exeJsCode(`scForm.invoke("item:load(id=` + result.scItemID + `,language=` + result.scLanguage + `,version=` + result.scVersion + `)");`);
 
-                if(result.scItemID && result.feature_reloadnode == true) {
-      
-                    global.debug ? console.info("%c [Read " + result.scSource + "] Item : "+ result.scItemID + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;') : false;
-                    global.debug ? console.info("%c [Read " + result.scSource + "] Language : "+ result.scLanguage + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;') : false;
-                    global.debug ? console.info("%c [Read " + result.scSource + "] Version : "+ result.scVersion + " ", 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;') : false;
-                    global.debug ? console.info('%c *** Redirection *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;') : false;
-                    //If scItemID is not found, it will throw an error
-                    var actualCode = `scForm.invoke("item:load(id=` + result.scItemID + `,language=` + result.scLanguage + `,version=` + result.scVersion + `)");`;
-                    script = document.createElement('script');
-                    script.textContent = actualCode;
-                    (document.head||document.documentElement).appendChild(script);
-                    script.remove();
+                    } else {
+                        sitecoreAuthorToolbox();
+                    }
 
-                } else {
-                    sitecoreAuthorToolbox();
-                }
+              } else {
+                sitecoreAuthorToolbox();       
+              }
 
-          } else {
-            sitecoreAuthorToolbox();       
+            });
+
+        }
+
+        /*
+         * > 7. Favorites bar
+         */
+        chrome.storage.sync.get(['feature_favorites'], function(result) {
+
+        if(result.feature_favorites == undefined) { result.feature_favorites = true; }
+
+        if(result.feature_favorites && !global.isPublishWindow && global.scContentTree) {
+
+              var scFavoritesIframe = document.querySelector("#sitecorAuthorToolboxFav");
+
+              //If already there
+              if(scFavoritesIframe) { scFavoritesIframe.remove(); }
+                
+                //Prepare HTML
+                var scFavoritesUrl = '../default.aspx?xmlcontrol=Gallery.Favorites&id=' + sitecoreItemID + '&la=en&vs=1';      
+                var scMyShortcut = '<iframe id="sitecorAuthorToolboxFav" class="sitecorAuthorToolboxFav" src="' + scFavoritesUrl + '" style="width:100%; height:150px; margin-top: 0px; resize: vertical;"></iframe>';
+
+                //Insert HTML
+                global.scContentTree.insertAdjacentHTML( 'afterend', scMyShortcut );
           }
 
         });
 
-    }
+        /*
+         * > 14. Show Snackbar
+         */
+        if(!global.isLaunchpad) {
 
-    /*
-     * > 7. Favorites bar
-     */
-    chrome.storage.sync.get(['feature_favorites'], function(result) {
+              chrome.storage.sync.get(['hideSnackbar'], function(result) {
 
-    if(result.feature_favorites == undefined) { result.feature_favorites = true; }
+                //Current version of the Snackbar
+                let snackbarVersion = global.extensionVersion;
+                if (!chrome.runtime.error && result.hideSnackbar != snackbarVersion) {
+                    showSnackbar(snackbarVersion);
+                }
+              });
 
-    if(result.feature_favorites && !global.isPublishWindow && global.scContentTree) {
-
-          var scFavoritesIframe = document.querySelector("#sitecorAuthorToolboxFav");
-
-          //If already there
-          if(scFavoritesIframe) { scFavoritesIframe.remove(); }
-            
-            //Prepare HTML
-            var scFavoritesUrl = '../default.aspx?xmlcontrol=Gallery.Favorites&id=' + sitecoreItemID + '&la=en&vs=1';      
-            var scMyShortcut = '<iframe id="sitecorAuthorToolboxFav" class="sitecorAuthorToolboxFav" src="' + scFavoritesUrl + '" style="width:100%; height:150px; margin-top: 0px; resize: vertical;"></iframe>';
-
-            //Insert HTML
-            global.scContentTree.insertAdjacentHTML( 'afterend', scMyShortcut );
-      }
-
-    });
-
-    /*
-     * > 14. Show Snackbar
-     */
-    if(!global.isLaunchpad) {
-
-          chrome.storage.sync.get(['hideSnackbar'], function(result) {
-
-            //Current version of the Snackbar
-            let snackbarVersion = global.extensionVersion;
-            if (!chrome.runtime.error && result.hideSnackbar != snackbarVersion) {
-                showSnackbar(snackbarVersion);
-            }
-          });
-
-    }
-
-    /*
-     * > 15. Workbox badge
-     */
-    chrome.storage.sync.get(['feature_workbox'], function(result) {
-        result.feature_workbox == undefined ? result.feature_workbox = true : false;
-        if (!chrome.runtime.error && result.feature_workbox == true) { 
-            checkWorkbox();
         }
-    });
 
-  } //End CE
+        /*
+         * > 15. Workbox badge
+         */
+        chrome.storage.sync.get(['feature_workbox'], function(result) {
+            result.feature_workbox == undefined ? result.feature_workbox = true : false;
+            if (!chrome.runtime.error && result.feature_workbox == true) { 
+                checkWorkbox();
+            }
+        });
+
+    }
 
     /*
     * > 08. Dark mode
@@ -227,47 +204,18 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
     chrome.storage.sync.get(['feature_darkmode','feature_darkmode_auto'], function(result) {
 
     result.feature_darkmode == undefined ? result.feature_darkmode = false : false;
-    if(result.feature_darkmode_auto == undefined) { result.feature_darkmode_auto = false; }
+    result.feature_darkmode_auto == undefined ? result.feature_darkmode_auto = false : false;
 
         var currentScheme = preferesColorScheme();
 
         if(result.feature_darkmode && !result.feature_darkmode_auto && !global.isTelerikUi && !global.isExperienceEditor && !global.isAdminCache && !global.isSecurityWindow && !global.isContentHome && !global.isLoginPage && !global.isEditMode && !global.isUserManager && !global.isRules && !global.isAdmin || result.feature_darkmode && result.feature_darkmode_auto && !global.isTelerikUi && !global.isExperienceEditor && !global.isAdminCache && !global.isSecurityWindow && !global.isContentHome && !global.isLoginPage && !global.isEditMode && !global.isUserManager && !global.isRules && !global.isAdmin && currentScheme == "dark") {
 
-          var link = document.createElement("link");
-          link.type = "text/css";
-          link.rel = "stylesheet";
-          link.href =  chrome.runtime.getURL("css/dark/default-min.css");
-          document.getElementsByTagName("head")[0].appendChild(link);
-
-          link = document.createElement("link");
-          link.type = "text/css";
-          link.rel = "stylesheet";
-          link.href =  chrome.runtime.getURL("css/dark/ribbon-min.css");
-          document.getElementsByTagName("head")[0].appendChild(link);
-
-          link = document.createElement("link");
-          link.type = "text/css";
-          link.rel = "stylesheet";
-          link.href =  chrome.runtime.getURL("css/dark/contentmanager-min.css");
-          document.getElementsByTagName("head")[0].appendChild(link);
-
-          link = document.createElement("link");
-          link.type = "text/css";
-          link.rel = "stylesheet";
-          link.href =  chrome.runtime.getURL("css/dark/dialogs-min.css");
-          document.getElementsByTagName("head")[0].appendChild(link);
-
-          link = document.createElement("link");
-          link.type = "text/css";
-          link.rel = "stylesheet";
-          link.href =  chrome.runtime.getURL("css/dark/gallery-min.css");
-          document.getElementsByTagName("head")[0].appendChild(link);
-
-          link = document.createElement("link");
-          link.type = "text/css";
-          link.rel = "stylesheet";
-          link.href =  chrome.runtime.getURL("css/dark/speak-min.css");
-          document.getElementsByTagName("head")[0].appendChild(link);
+            loadCssFile("css/dark/default-min.css");
+            loadCssFile("css/dark/ribbon-min.css");
+            loadCssFile("css/dark/contentmanager-min.css");
+            loadCssFile("css/dark/dialogs-min.css");
+            loadCssFile("css/dark/gallery-min.css");
+            loadCssFile("css/dark/speak-min.css");
 
         }
 
@@ -278,11 +226,11 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
    */
   if(global.isDesktop && !global.isGalleryFavorites) {
 
-    global.debug ? console.info('%c **** Desktop Shell **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;') : false;
+    consoleLog("**** Desktop Shell ****", "orange");
 
     chrome.storage.sync.get(['feature_launchpad'], function(result) {
       
-      if(result.feature_launchpad == undefined) { result.feature_launchpad = true; }
+      result.feature_launchpad == undefined ? result.feature_launchpad = true : false;
 
       if(result.feature_launchpad) {
 
@@ -303,7 +251,7 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
 
   } else if(global.isLaunchpad) {
 
-    global.debug ? console.info('%c **** Launchpad **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;') : false;
+    consoleLog("**** Launchpad ****", "orange");
 
     chrome.storage.sync.get(['feature_launchpad'], function(result) {
 
@@ -324,27 +272,15 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
 
     });
 
-  } else if(global.isAdminCache) {
-
-    global.debug ? console.info('%c **** Admin Cache **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;') : false;
-
-  } 
+  }
 
 /*
  * > Sitecore Iframes
  */
 
-  if(global.isGalleryFavorites) {
+  if(global.isSearch) {
 
-    global.debug ? console.info('%c **** Favorites **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;') : false;
-
-  } else if(global.isModalDialogs) {
-
-    global.debug ? console.info('%c **** Jquery Modal **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;') : false;
-
-  } else if(global.isSearch) {
-
-    global.debug ? console.info('%c **** Internal Search **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;') : false;
+    consoleLog("**** Internal Search ****", "orange");
 
     //Add listener on search result list
     var target = document.querySelector( "#results" );
@@ -384,11 +320,13 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
 
   } else if(global.isFieldEditor) {
 
-    if(global.debug) { console.info('%c **** Field editor Search **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;'); }
+
+    consoleLog("**** Field editor ****", "orange");
 
     chrome.storage.sync.get(['feature_charscount'], function(result) {
 
-    if(result.feature_charscount == undefined) { result.feature_charscount = true; }
+    result.feature_charscount == undefined ? result.feature_charscount = true : false;
+
 
       if(result.feature_charscount) {
 
@@ -470,11 +408,12 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
       });
     }
 
+    /**
+     * Grouped errors
+     */
     chrome.storage.sync.get(['feature_errors'], function(result) {
 
-      result.feature_errors == undefined ?
-        result.feature_errors = true :
-        false;
+      result.feature_errors == undefined ? result.feature_errors = true : false;
 
       //Variables
       var count = 0;
@@ -530,13 +469,6 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
 
           }
 
-          global.debug ? console.log("!! Change !!") : false;
-
-          //TODO: Show an alert when the popup is closed so the User knwo what to do
-          // var saveButton = document.querySelector(".scButtonPrimary");
-          // saveButton.onclick = function() { alert('blah'); };
-
-
         });
         
         //Observer
@@ -552,7 +484,7 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
 
   } else if(global.isMediaFolder) {
 
-    global.debug ? console.info('%c **** Media Folder **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;') : false;
+    consoleLog("**** Media Folder ****", "orange");
 
     chrome.storage.sync.get(['feature_dragdrop'], function(result) {
         
@@ -581,13 +513,13 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
 
   } else if(global.isRichTextEditor || global.isHtmlEditor) {
 
-    global.debug ? console.info('%c **** Rich text editor **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;') : false;
+    consoleLog("**** Rich Text Editor ****", "orange");
 
     chrome.storage.sync.get(['feature_rtecolor','feature_darkmode','feature_darkmode_auto'], function(result) {
 
-    if(result.feature_rtecolor == undefined) { result.feature_rtecolor = true; }
-    if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
-    if(result.feature_darkmode_auto == undefined) { result.feature_darkmode_auto = false; }
+    result.feature_rtecolor == undefined ? result.feature_rtecolor = true : false;
+    result.feature_darkmode == undefined ? result.feature_darkmode = false : false;
+    result.feature_darkmode_auto == undefined ? result.feature_darkmode_auto = false : false;
 
       if(result.feature_rtecolor) {
 
@@ -616,42 +548,27 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
             /*
             * Codemirror css
             */
-            link = document.createElement("link");
-            link.type = "text/css";
-            link.rel = "stylesheet";
-            link.href =  chrome.runtime.getURL("css/codemirror.css");
-            document.getElementsByTagName("head")[0].appendChild(link);
-
-            //If dark mode ON
+            loadCssFile("css/codemirror.css");
             var currentScheme = preferesColorScheme();
 
-          if(result.feature_darkmode && !result.feature_darkmode_auto || result.feature_darkmode && result.feature_darkmode_auto && currentScheme == "dark") {
-            
-            darkModeTheme = "ayu-dark";
+            if(result.feature_darkmode && !result.feature_darkmode_auto || result.feature_darkmode && result.feature_darkmode_auto && currentScheme == "dark") {       
+                darkModeTheme = "ayu-dark";
+                loadCssFile("css/dark/ayu-dark.css");
+            }
 
-            link = document.createElement("link");
-            link.type = "text/css";
-            link.rel = "stylesheet";
-            link.href =  chrome.runtime.getURL("css/dark/ayu-dark.css");
-            document.getElementsByTagName("head")[0].appendChild(link);
-          }
+            //Extra variables
+            if(global.isRichTextEditor) {
+                reTextArea.insertAdjacentHTML( 'afterend', '<input type="hidden" class="scDarkMode" value="' + darkModeTheme + '" />' );
+                reTextArea.insertAdjacentHTML( 'afterend', '<input type="hidden" class="scEditor" value="richTextEditor" />' );
+            } else if (global.isHtmlEditor) {
+                contentIframe.insertAdjacentHTML( 'afterend', '<input type="hidden" class="scDarkMode" value="' + darkModeTheme + '" />' );
+                contentIframe.insertAdjacentHTML( 'afterend', '<input type="hidden" class="scEditor" value="htmlEditor" />' );
+            }
 
-          //Extra variables
-          if(global.isRichTextEditor) {
-            reTextArea.insertAdjacentHTML( 'afterend', '<input type="hidden" class="scDarkMode" value="' + darkModeTheme + '" />' );
-            reTextArea.insertAdjacentHTML( 'afterend', '<input type="hidden" class="scEditor" value="richTextEditor" />' );
-          } else if (global.isHtmlEditor) {
-            contentIframe.insertAdjacentHTML( 'afterend', '<input type="hidden" class="scDarkMode" value="' + darkModeTheme + '" />' );
-            contentIframe.insertAdjacentHTML( 'afterend', '<input type="hidden" class="scEditor" value="htmlEditor" />' );
-          }
-
-          /*
-           * Codemirror librairires
-           */
-          script = document.createElement('script');
-          script.src = chrome.runtime.getURL("js/bundle-min.js");
-          (document.head||document.documentElement).appendChild(script);
-          script.remove();
+            /*
+            * Codemirror librairires
+            */
+            loadJsFile("js/bundle-min.js");
 
         }
 
@@ -661,11 +578,11 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
 
   } else if(global.isGalleryLanguage) {
 
-    global.debug ? console.info('%c **** Languages menu **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;') : false;
+    consoleLog("**** Languages menu ****", "orange");
 
     chrome.storage.sync.get(['feature_flags'], function(result) {
 
-      if(result.feature_flags == undefined) { result.feature_flags = true; }
+      result.feature_flags == undefined ? result.feature_flags = true : false;
 
       if(result.feature_flags) {
         
@@ -761,7 +678,7 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
 
   } else if(global.isPublishDialog) {
 
-    if(global.debug) { console.info('%c **** Publishing Window **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;'); }
+    consoleLog("**** Publishing window ****", "orange");
 
     chrome.storage.sync.get(['feature_flags'], function(result) {
 
@@ -810,7 +727,7 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
     
   } else if(global.isPublishWindow) {
 
-    global.debug ? console.info('%c **** Publish / Rebuild **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;') : false;
+    consoleLog("**** Publish / Rebuild / Package ****", "orange");
 
     chrome.storage.sync.get(['feature_flags'], function(result) {
 
@@ -863,7 +780,7 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
    */
   chrome.storage.sync.get(['feature_autoexpand'], function(result) {
 
-    if(result.feature_autoexpand == undefined) { result.feature_autoexpand = true; }
+    result.feature_autoexpand == undefined ? result.feature_autoexpand = true : false;
     
     if(result.feature_autoexpand) {
 
@@ -887,7 +804,7 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
         if (!event.target.matches('.scContentTreeNodeGlyph')) return;
         let glyphId = event.target.id;
 
-        setTimeout(function(){
+        setTimeout(function() {
           if(document && glyphId) {   
             let subTreeDiv = document.querySelector("#"+glyphId).nextSibling.nextSibling.nextSibling;
             if(subTreeDiv) {
@@ -909,14 +826,11 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
         let isCollapsed = glyphSrc.includes("collapsed");
 
 
-        setTimeout(function(){
+        setTimeout(function() {
           if(document && glyphId && isCollapsed) { 
-            // console.log(event.target);  
-            var subTreeDiv = document.querySelector("#"+glyphId).closest("ul").nextSibling
-            // console.log(subTreeDiv);           
+            var subTreeDiv = document.querySelector("#"+glyphId).closest("ul").nextSibling        
             if(subTreeDiv) {
               var nextGlyphId = subTreeDiv.querySelector('.glyph');
-              // console.log(nextGlyphId);
               nextGlyphId.click();
             }
           }
@@ -928,62 +842,58 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
   
   });
 
-  /*
-   * > 10. Publish notification
-   */
-  target = document.querySelector("#LastPage");
-  observer = new MutationObserver(function(mutations) {
+    /* *
+    * > 10. Publish notification
+    */
+    target = document.querySelector("#LastPage");
+    observer = new MutationObserver(function(mutations) {
 
-    chrome.storage.sync.get(['feature_notification'], function(result) {
+        chrome.storage.sync.get(['feature_notification'], function(result) {
 
-      if(result.feature_notification == undefined) { result.feature_notification = true; }
+          result.feature_notification == undefined ? result.feature_notification = true : false;
 
-      if(result.feature_notification) {
-        
-        //Variable
-        target = document.querySelector("#LastPage");
+          if(result.feature_notification) {
+            
+            //Variable
+            target = document.querySelector("#LastPage");
 
-        //Prepare notification
-        var notificationSubTitle = target.querySelector(".sc-text-largevalue").innerHTML;
-        var notificationBody = target.querySelector(".scFieldLabel").innerHTML;
-        if(notificationBody == "Result:") { notificationBody = "Finished "+document.querySelector("#ResultText").value.split("Finished")[1]; }
-        
-        //Send notification
-        sendNotification(notificationSubTitle,notificationBody);
+            var notificationSubTitle = target.querySelector(".sc-text-largevalue").innerHTML;
+            var notificationBody = target.querySelector(".scFieldLabel").innerHTML;
+            if(notificationBody == "Result:") { notificationBody = "Finished "+document.querySelector("#ResultText").value.split("Finished")[1]; }
+            
+            //Send notification
+            sendNotification(notificationSubTitle,notificationBody);
 
-        var parentSelector = parent.parent.document.querySelector("body");
-        checkUrlStatus(parentSelector);
+            //Update url Status
+            var parentSelector = parent.parent.document.querySelector("body");
+            checkUrlStatus(parentSelector);
 
-      }
+          }
+
+        });
 
     });
-
-    global.debug ? console.info('%c *** Publish/Rebuild Done *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;') : false;
-  }); //End publish
 
     //Observer publish
     if(target){
       observer.observe(target, { attributes: true });
     } 
 
-  /*
-   * > Update UI
-   */  
-  target = document.querySelector("#scLanguage");
-  var observer = new MutationObserver(function(mutations) {
+    /**
+    * > Update UI
+    */  
+    target = document.querySelector("#scLanguage");
+    var observer = new MutationObserver(function(mutations) {
 
-    global.debug ? console.info('%c *** Update UI *** ', 'font-size:14px; background: #ffce42; color: black; border-radius:5px; padding 3px;') : false;
+    consoleLog("*** Update UI ***", "yellow");
 
     //Sitecore Variables
     var scQuickInfo = document.querySelector(".scEditorHeaderQuickInfoInput" );  
 
-    /*
-     * > 5. Open from CE ???? why we need that!!
+    /**
+     * Update hash in URL, update pushsate history, update link if 2nd tab opened
      */
     if (scQuickInfo) {
-
-        // Effect on CE
-        // document.querySelector("#ContentEditor").setAttribute("style","opacity:0.2");
       
         var sitecoreItemID = scQuickInfo.getAttribute("value");
         var scLanguage = document.querySelector("#scLanguage").getAttribute("value").toLowerCase();
@@ -998,40 +908,38 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
 
         var locaStorage = localStorage.getItem('scBackPrevious');
 
-        //Add hash to URL
-        if(!global.hasRedirection && !global.hasRedirectionOther) {
-            if(locaStorage != "true") {
-                var state = { 'sitecore': true, 'id': sitecoreItemID }
-                history.pushState(state, undefined, "#"+sitecoreItemID);
-            } else {
-                localStorage.removeItem('scBackPrevious');
-            }     
+            //Add hash to URL
+            if(!global.hasRedirection && !global.hasRedirectionOther) {
+                if(locaStorage != "true") {
+                    var state = { 'sitecore': true, 'id': sitecoreItemID }
+                    history.pushState(state, undefined, "#"+sitecoreItemID);
+                } else {
+                    localStorage.removeItem('scBackPrevious');
+                }     
+            }
+
+        //Tabs opened?
+        global.debug ? console.info('%c - Tabs opened: ' + countTab + ' ', 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;') : false;
+
+            if(countTab >1 && !document.getElementById("showInContentTree"+(countTab)+"")) {
+                //Add text after title
+                var url = window.location.href;
+                url = url.split("#");
+                var javascript = 'scForm.invoke("item:load(id=' + lastTabSitecoreItemID + ',language=' + scLanguage + ',version=1)");';
+                var href = url[0]+'&reload#'+lastTabSitecoreItemID;
+                scEditorTitle[countTab-1].insertAdjacentHTML( 'afterend', '[<a id="showInContentTree' + countTab + '" href="" onclick="javascript:window.location.href=\'' + href + '\'; return false;" />Show in content tree</a>]' );
+            }
+
         }
 
-      //Tabs opened?
-      global.debug ? console.info('%c - Tabs opened: ' + countTab + ' ', 'font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;') : false;
-
-      if(countTab >1 && !document.getElementById("showInContentTree"+(countTab)+"")) {
-        //Add text after title
-        var url = window.location.href;
-        url = url.split("#");
-        var javascript = 'scForm.invoke("item:load(id=' + lastTabSitecoreItemID + ',language=' + scLanguage + ',version=1)");';
-        var href = url[0]+'&reload#'+lastTabSitecoreItemID;
-        scEditorTitle[countTab-1].insertAdjacentHTML( 'afterend', '[<a id="showInContentTree' + countTab + '" href="" onclick="javascript:window.location.href=\'' + href + '\'; return false;" />Show in content tree</a>]' );
-      }
-
-    }
-
-    //Execute a bunch of actions everytime the UI is refreshed
-    mutations.forEach(function(e) {
-      "attributes" == e.type && sitecoreAuthorToolbox();
+        //Execute a bunch of actions everytime the UI is refreshed
+        mutations.forEach(function(e) {
+          "attributes" == e.type && sitecoreAuthorToolbox();
+        });
     });
-  }); //En UI
 
     //Observer UI
-    if(target){
-      observer.observe(target, { attributes: true });
-    }
+    target ? observer.observe(target, { attributes: true }) : false;
 
 }
 
@@ -1046,33 +954,13 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
  */
 if(global.isEditMode && !global.isLoginPage || global.isPreviewMode && !global.isLoginPage) {
 
-    global.debug ? console.info("%c 🎨 Experience Editor detected ", 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;') : false;
-
+    consoleLog("Experience Editor detected", "red");
     /*
-    * Fadein onload
+    * Load extra CSS
     */
-    link = document.createElement("link");
-    link.type = "text/css";
-    link.rel = "stylesheet";
-    link.href =  chrome.runtime.getURL("css/onload-min.css");
-    document.getElementsByTagName("head")[0].appendChild(link);
-
-    /*
-    * Tooltip styling
-    */
-    link = document.createElement("link");
-    link.type = "text/css";
-    link.rel = "stylesheet";
-    link.href =  chrome.runtime.getURL("css/tooltip-min.css");
-    document.getElementsByTagName("head")[0].appendChild(link);
-
-    /*
-    * Extra client injection scripts
-    */
-    script = document.createElement('script');
-    script.src = chrome.runtime.getURL("js/inject-min.js");
-    (document.head||document.documentElement).appendChild(script);
-    script.remove();
+    loadCssFile("css/onload-min.css");
+    loadCssFile("css/tooltip-min.css");
+    loadJsFile("js/inject-min.js");
 
     /*
     * Store Item ID
@@ -1085,9 +973,6 @@ if(global.isEditMode && !global.isLoginPage || global.isPreviewMode && !global.i
         var scLanguage = "en";
         var scVersion = 1;
         sitecoreItemJson(sitecoreItemID, scLanguage, scVersion);
-        // chrome.storage.sync.set({"scItemID": sitecoreItemID}, function() {
-        //     if(global.debug) { console.info("%c [Storage Set] Item : " + sitecoreItemID + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
-        // });
 
     }
 
@@ -1096,11 +981,11 @@ if(global.isEditMode && !global.isLoginPage || global.isPreviewMode && !global.i
     */
     if(global.isGalleryLanguageExpEd) {
 
-    global.debug ? console.info('%c **** Languages **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;') : false;
+        consoleLog("**** Languages menu ****", "yellow");
 
         chrome.storage.sync.get(['feature_flags'], function(result) {
 
-          if(result.feature_flags == undefined) { result.feature_flags = true; }
+          result.feature_flags == undefined ? result.feature_flags = true : false;
 
           if(result.feature_flags) {
 
@@ -1159,12 +1044,11 @@ if(global.isEditMode && !global.isLoginPage || global.isPreviewMode && !global.i
     */
     if(global.isRibbon) {
 
-    global.debug ? console.info('%c **** Ribbon **** ', 'font-size:14px; background: #f16100; color: black; border-radius:5px; padding 3px;') : false;
-    
+        consoleLog("**** Ribbon ****", "yellow");
+
         var scRibbonFlagIcons = document.querySelector( ".flag_generic_24" );
         var tdlanguage, temp, key;
     
-        // for(var flag of scRibbonFlagIcons) {
 
             tdlanguage = scRibbonFlagIcons.nextSibling.innerText;
             //Clean country name
@@ -1181,7 +1065,6 @@ if(global.isEditMode && !global.isLoginPage || global.isPreviewMode && !global.i
 
             scRibbonFlagIcons.setAttribute( 'style', 'background-image: url(' + chrome.runtime.getURL("images/Flags/24x24/flag_" + tdlanguage + ".png") + '); background-repeat: no-repeat; background-position: top left;' );
 
-        // }
     }
 
     /**
@@ -1238,27 +1121,19 @@ if(global.isEditMode && !global.isLoginPage || global.isPreviewMode && !global.i
     var scMessageBar = document.querySelector('.sc-messageBar');
     let tabColor;
 
-    if(result.feature_darkmode == undefined) { result.feature_darkmode = false; }
-    if(result.feature_darkmode_auto == undefined) { result.feature_darkmode_auto = false; }
-    if(result.feature_toggleribbon == undefined) { result.feature_toggleribbon = true; }
+    result.feature_darkmode == undefined ? result.feature_darkmode = false : false;
+    result.feature_darkmode_auto == undefined ? result.feature_darkmode_auto = false : false;
+    result.feature_toggleribbon == undefined ? result.feature_toggleribbon = true : false;
 
 
     if(result.feature_toggleribbon ) {      
         //Experience Editor Reset (container, hover styles..)
-        link = document.createElement("link");
-        link.type = "text/css";
-        link.rel = "stylesheet";
-        link.href =  chrome.runtime.getURL("css/reset-min.css");
-        document.getElementsByTagName("head")[0].appendChild(link);
+        loadCssFile("css/reset-min.css");
     }
 
     if(result.feature_darkmode && !result.feature_darkmode_auto && global.isRibbon || result.feature_darkmode && !result.feature_darkmode_auto && global.isDialog || result.feature_darkmode && !result.feature_darkmode_auto && global.isInsertPage || result.feature_darkmode && result.feature_darkmode_auto && global.isRibbon && currentScheme == "dark" || result.feature_darkmode && result.feature_darkmode_auto && global.isDialog && currentScheme == "dark" || result.feature_darkmode && result.feature_darkmode_auto && global.isInsertPage && currentScheme == "dark" ) {
-
-        var link = document.createElement("link");
-        link.type = "text/css";
-        link.rel = "stylesheet";
-        link.href =  chrome.runtime.getURL("css/dark/experience-min.css");
-        document.getElementsByTagName("head")[0].appendChild(link);
+        //Experience Editor buttons
+        loadCssFile("css/dark/experience-min.css");
     }
 
     if(result.feature_darkmode && !result.feature_darkmode_auto || result.feature_darkmode && result.feature_darkmode_auto && currentScheme == "dark" ) {
@@ -1320,6 +1195,5 @@ if(global.isEditMode && !global.isLoginPage || global.isPreviewMode && !global.i
     }
 
   });
-  //}
 
 }

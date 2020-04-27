@@ -2,8 +2,94 @@
 
 import * as global from './global.js';
 
-export {preferesColorScheme, sitecoreItemJson, fetchTimeout, getScItemData, repositionElement, startDrag};
+export {consoleLog, loadCssFile, loadJsFile, exeJsCode, preferesColorScheme, sitecoreItemJson, fetchTimeout, getScItemData, repositionElement, startDrag};
 
+
+/**
+ * Show message in console
+ */
+const consoleLog = (message, color) => {
+
+    let bgColor, txtColor, fontSize;
+
+    switch(color) {
+        case "yellow":
+            bgColor = "#ffce42";
+            txtColor = "black";
+            fontSize = "14px";
+        break
+
+        case "red":
+            bgColor = "#f33d35";
+            txtColor = "white";
+            fontSize = "14px";
+        break;
+
+        case "green":
+            bgColor = "#32ed74";
+            txtColor = "black";
+            fontSize = "10px";
+        break;
+
+        case "orange":
+            bgColor = "#f16100";
+            txtColor = "black";
+            fontSize = "10px";
+        break;
+
+        case "purple":
+            bgColor = "#32ed74";
+            txtColor = "black";
+            fontSize = "10px";
+        break;
+
+        case "beige":
+            bgColor = "#cdc4ba";
+            txtColor = "black";
+            fontSize = "10px";
+        break;
+    }
+
+    global.debug ? console.info("%c " + message + " ", 'font-size: ' + fontSize  + '; background: ' + bgColor  + '; color: ' + txtColor  + '; border-radius:5px; padding 3px;') : false;
+
+}
+
+/**
+ * Load CSS file
+ */
+const loadCssFile = (file) => {
+
+    var link = document.createElement("link");
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    link.href =  chrome.runtime.getURL(file);
+    (document.head||document.documentElement).appendChild(link);
+
+}
+
+/**
+ * Load Javascript file
+ */
+const loadJsFile = (file) => {
+
+    var script = document.createElement('script');
+    script.src = chrome.runtime.getURL(file);
+    (document.head||document.documentElement).appendChild(script);
+    script.remove();
+
+}
+
+/**
+ * Execute Javascript code
+ */
+const exeJsCode = (code) => {
+
+    var script = document.createElement('script');
+    script.textContent = code;
+    (document.head||document.documentElement).appendChild(script);
+    script.remove();
+
+}
 
 /**
  * Get active OS color Scheme

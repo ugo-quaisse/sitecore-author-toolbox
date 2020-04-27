@@ -483,7 +483,7 @@ const sitecoreAuthorToolbox = () => {
     var scLanguage = document.getElementById("scLanguage").getAttribute("value").toLowerCase();
     var scUrl = window.location.origin + '/?sc_itemid=' + sitecoreItemID + '&sc_mode=normal&sc_lang=' + scLanguage + '&sc_version=' +scVersion;
     var isNotRegion = scLanguageTxtShort.includes('(');
-    var scFlag;  
+    var scFlag, tabbedFlag;  
 
     //Generating Live URLs (xxxsxa_sitexxx will be replace later by active site)
     if (sitecoreItemPath[1]!=undefined) {
@@ -629,11 +629,15 @@ const sitecoreAuthorToolbox = () => {
 
       //Flag images
       scFlag = scFlag.toLowerCase();
-      scFlag = chrome.runtime.getURL("images/Flags/32x32/flag_" + scFlag + ".png");
+      scFlag = chrome.runtime.getURL("images/Flags/24x24/flag_" + scFlag + ".png");
 
       //Insert Flag into Active Tab
       if(!document.querySelector("#scFlag") && result.feature_flags && scFlag) {
-        scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + scFlag +'" style="width: 20px; vertical-align: middle; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + iconFlagGeneric + '\';"/>' );
+        tabbedFlag = scFlag;
+        setTimeout(function() {
+            scActiveTab = document.querySelector ( ".scEditorTabHeaderActive" );
+            scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + tabbedFlag +'" style="width: 24px; vertical-align: middle; padding: 0px 4px 0px 0px;" onerror="this.onerror=null;this.src=\'' + iconFlagGeneric + '\';"/>' );
+        },100);
       }
 
       if(!document.querySelector("#scFlagMenu") && result.feature_flags && scFlag) {
@@ -651,11 +655,15 @@ const sitecoreAuthorToolbox = () => {
                   
                   scFlag = jsonData[key]["flag"];
                   scFlag = scFlag.toLowerCase();
-                  scFlag = chrome.runtime.getURL("images/Flags/32x32/flag_" + scFlag + ".png")
+                  scFlag = chrome.runtime.getURL("images/Flags/24x24/flag_" + scFlag + ".png")
 
                   //Insert Flag into Active Tab
                   if(!document.querySelector("#scFlag") && result.feature_flags && scFlag) {
-                    scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + scFlag +'" style="width: 20px; vertical-align: middle; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + iconFlagGeneric + '\';"/>' );
+                    tabbedFlag = scFlag;
+                    setTimeout(function() {
+                        scActiveTab = document.querySelector ( ".scEditorTabHeaderActive" );
+                        scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + tabbedFlag +'" style="width: 24px; vertical-align: middle; padding: 0px 4px 0px 0px;" onerror="this.onerror=null;this.src=\'' + iconFlagGeneric + '\';"/>' );
+                    },100);
                   }
 
                   //Insert Flag into Sitecore Language selector
@@ -1242,6 +1250,20 @@ const sitecoreAuthorToolbox = () => {
     if(target) {
       config = { attributes: false, childList: true, characterData: false, subtree: false };
       observer.observe(target, config);
+    }
+
+    /**
+     * By default, select Content tab for content
+     */
+    if(!isMedia) {
+        var EditorTabs = document.querySelectorAll("#EditorTabs > a");
+        for(var tab of EditorTabs) {
+
+            if(tab.innerText.toLowerCase() == "content") {
+                !tab.classList.contains("scRibbonEditorTabActive") ? tab.click() : false;
+            }
+
+        }
     }
 
     /*
@@ -2134,7 +2156,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss && !isUploadManager) {
             if(event.target.offsetParent.matches('.scContentTreeNodeNormal')) {
                 document.querySelector("#EditorFrames").setAttribute("style","opacity:0.6");
                 document.querySelector(".scContentTreeContainer").setAttribute("style","opacity:0.6");
-                document.querySelector(".scEditorTabHeaderActive > span").innerText = "Loading";
+                document.querySelector(".scEditorTabHeaderActive > span").innerText = "Loading...";
                 timeout = setTimeout(function() {
                     document.querySelector("#EditorFrames").setAttribute("style","opacity:1");
                     document.querySelector(".scContentTreeContainer").setAttribute("style","opacity:1");

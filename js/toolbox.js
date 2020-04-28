@@ -43,14 +43,14 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
     loadJsFile("js/inject-min.js");
     
     /*
-    * Extension ID
-    */
-    !global.isRichTextEditor ? document.querySelector('body').insertAdjacentHTML( 'beforeend', '<input type="hidden" class="extensionId" value="' + global.extensionId + '" />' ) : false;
-
-    /*
     * Browser notification
     */
     checkNotification();
+
+    /*
+    * Extension ID
+    */
+    !global.isRichTextEditor ? document.querySelector('body').insertAdjacentHTML( 'beforeend', '<input type="hidden" class="extensionId" value="' + global.extensionId + '" />' ) : false;
 
     /*
     * > Content Editor
@@ -64,14 +64,12 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
          */
         window.onpopstate = function(event) {
             if(event.state && event.state.id!='') {
-                //Store a local value to tell toolboxscript (l.2207) we are changing item from back/previous button, so no need to add #hash as it's already done by browser
+                //Store a local value to tell toolboxscript we are changing item from back/previous button, so no need to add #hash as it's already performed by the browser
                 localStorage.setItem('scBackPrevious', true);
-                
                 //Open item
                 exeJsCode(`scForm.invoke("item:load(id=` + event.state.id + `,language=,version=1)");`);
             }
         }
-
 
         /*
          * 17. Auto Dark Mode
@@ -103,15 +101,12 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
                 if (result.scData != undefined) { 
                     
                     //If Hash detected in the URL
-                    if(global.scUrlHash!="") {         
-                        
+                    if(global.scUrlHash!="") {                             
                         result.scItemID = global.scUrlHash;
                         result.scVersion = 1;
                         result.scLanguage = "";
-                        result.scSource = "Hash";
-                    
+                        result.scSource = "Hash";                  
                     } else {
-
                         //Get scData from storage
                         var scData = result.scData;
                         for(var domain in scData) {
@@ -122,28 +117,23 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
                                 result.scSource = "Storage";
                             }
                         }
-
                     }
 
-
-                    if(result.scItemID && result.feature_reloadnode == true) {
-          
+                    //Reload from where you left off
+                    if(result.scItemID && result.feature_reloadnode == true) {         
                         consoleLog("[Read " + result.scSource + "] Item : "+ result.scItemID, "beige");
                         consoleLog("[Read " + result.scSource + "] Language : "+ result.scLanguage, "beige");
                         consoleLog("[Read " + result.scSource + "] Version : "+ result.scVersion, "beige");
                         consoleLog("*** Redirection ***", "yellow");
                         exeJsCode(`scForm.invoke("item:load(id=` + result.scItemID + `,language=` + result.scLanguage + `,version=` + result.scVersion + `)");`);
-
                     } else {
-                        sitecoreAuthorToolbox();
+                    sitecoreAuthorToolbox();
                     }
 
-              } else {
+                } else {
                 sitecoreAuthorToolbox();       
-              }
-
+                }
             });
-
         }
 
         /*
@@ -151,22 +141,22 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
          */
         chrome.storage.sync.get(['feature_favorites'], function(result) {
 
-        if(result.feature_favorites == undefined) { result.feature_favorites = true; }
+            result.feature_favorites == undefined ? result.feature_favorites = true : false;
 
-        if(result.feature_favorites && !global.isPublishWindow && global.scContentTree) {
+            if(result.feature_favorites && !global.isPublishWindow && global.scContentTree) {
 
-              var scFavoritesIframe = document.querySelector("#sitecorAuthorToolboxFav");
+                  var scFavoritesIframe = document.querySelector("#sitecorAuthorToolboxFav");
 
-              //If already there
-              if(scFavoritesIframe) { scFavoritesIframe.remove(); }
-                
-                //Prepare HTML
-                var scFavoritesUrl = '../default.aspx?xmlcontrol=Gallery.Favorites&id=' + sitecoreItemID + '&la=en&vs=1';      
-                var scMyShortcut = '<iframe id="sitecorAuthorToolboxFav" class="sitecorAuthorToolboxFav" src="' + scFavoritesUrl + '" style="width:100%; height:150px; margin-top: 0px; resize: vertical;"></iframe>';
+                    //If already there
+                    scFavoritesIframe ? scFavoritesIframe.remove() : false;
+                    
+                    //Prepare HTML
+                    var scFavoritesUrl = '../default.aspx?xmlcontrol=Gallery.Favorites&id=' + sitecoreItemID + '&la=en&vs=1';      
+                    var scMyShortcut = '<iframe id="sitecorAuthorToolboxFav" class="sitecorAuthorToolboxFav" src="' + scFavoritesUrl + '" style="width:100%; height:150px; margin-top: 0px; resize: vertical;"></iframe>';
 
-                //Insert HTML
-                global.scContentTree.insertAdjacentHTML( 'afterend', scMyShortcut );
-          }
+                    //Insert HTML
+                    global.scContentTree.insertAdjacentHTML( 'afterend', scMyShortcut );
+            }
 
         });
 
@@ -175,14 +165,13 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
          */
         if(!global.isLaunchpad) {
 
-              chrome.storage.sync.get(['hideSnackbar'], function(result) {
+            chrome.storage.sync.get(['hideSnackbar'], function(result) {
 
                 //Current version of the Snackbar
                 let snackbarVersion = global.extensionVersion;
-                if (!chrome.runtime.error && result.hideSnackbar != snackbarVersion) {
-                    showSnackbar(snackbarVersion);
-                }
-              });
+                (!chrome.runtime.error && result.hideSnackbar != snackbarVersion) ? showSnackbar(snackbarVersion) : false;
+              
+            });
 
         }
 
@@ -190,10 +179,10 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
          * > 15. Workbox badge
          */
         chrome.storage.sync.get(['feature_workbox'], function(result) {
+            
             result.feature_workbox == undefined ? result.feature_workbox = true : false;
-            if (!chrome.runtime.error && result.feature_workbox == true) { 
-                checkWorkbox();
-            }
+            (!chrome.runtime.error && result.feature_workbox == true) ? checkWorkbox() : false;
+        
         });
 
     }
@@ -203,8 +192,8 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
     */
     chrome.storage.sync.get(['feature_darkmode','feature_darkmode_auto'], function(result) {
 
-    result.feature_darkmode == undefined ? result.feature_darkmode = false : false;
-    result.feature_darkmode_auto == undefined ? result.feature_darkmode_auto = false : false;
+        result.feature_darkmode == undefined ? result.feature_darkmode = false : false;
+        result.feature_darkmode_auto == undefined ? result.feature_darkmode_auto = false : false;
 
         var currentScheme = preferesColorScheme();
 
@@ -234,15 +223,14 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
 
       if(result.feature_launchpad) {
 
-        var html = '<a href="#" class="scStartMenuLeftOption" title="" onclick="window.location.href=\'' + global.launchpadPage + '?launchpad=true&url=' + global.windowLocationHref + '\'"><img src="' + global.launchpadIcon + '" class="scStartMenuLeftOptionIcon" alt="" border="0"><div class="scStartMenuLeftOptionDescription"><div class="scStartMenuLeftOptionDisplayName">' + global.launchpadGroupTitle + '</div><div class="scStartMenuLeftOptionTooltip">' + global.launchpadTitle + '</div></div></a>';
-        
+        var html = '<a href="#" class="scStartMenuLeftOption" title="" onclick="window.location.href=\'' + global.launchpadPage + '?launchpad=true&url=' + global.windowLocationHref + '\'"><img src="' + global.launchpadIcon + '" class="scStartMenuLeftOptionIcon" alt="" border="0"><div class="scStartMenuLeftOptionDescription"><div class="scStartMenuLeftOptionDisplayName">' + global.launchpadGroupTitle + '</div><div class="scStartMenuLeftOptionTooltip">' + global.launchpadTitle + '</div></div></a>';      
         // //Find last dom item
         var desktopOptionMenu = document.querySelectorAll('.scStartMenuLeftOption');
         // Loop and fin title = "Command line interface to manage content."
         for (let item of desktopOptionMenu) {
-          if(item.getAttribute("title") == "Install and maintain apps.") {
-            item.insertAdjacentHTML( 'afterend', html );
-          }
+            if(item.getAttribute("title") == "Install and maintain apps.") {
+                item.insertAdjacentHTML( 'afterend', html );
+            }
         }
 
       }
@@ -255,20 +243,18 @@ if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isC
 
     chrome.storage.sync.get(['feature_launchpad'], function(result) {
 
-      result.feature_launchpad == undefined ? result.feature_launchpad = true : false;
+        result.feature_launchpad == undefined ? result.feature_launchpad = true : false;
 
-      if(result.feature_launchpad) {
+        if(result.feature_launchpad) {
 
-      //Find last dom item
-      var launchpadCol = document.querySelectorAll('.last');
+            //Find last dom item
+            var launchpadCol = document.querySelectorAll('.last');
+            //get popup url
+            var html = '<div class="sc-launchpad-group"><header class="sc-launchpad-group-title">' + global.launchpadGroupTitle + '</header><div class="sc-launchpad-group-row"><a href="#" onclick="window.location.href=\'' + global.launchpadPage + '?launchpad=true&url=' + global.windowLocationHref + '\'" class="sc-launchpad-item" title="' + global.launchpadTitle + '"><span class="icon"><img src="' + global.launchpadIcon + '" width="48" height="48" alt="' + global.launchpadTitle + '"></span><span class="sc-launchpad-text">' + global.launchpadTitle + '</span></a></div></div>';
+            //Insert into launchpad
+            launchpadCol[0].insertAdjacentHTML( 'afterend', html );
 
-      //get popup url
-      var html = '<div class="sc-launchpad-group"><header class="sc-launchpad-group-title">' + global.launchpadGroupTitle + '</header><div class="sc-launchpad-group-row"><a href="#" onclick="window.location.href=\'' + global.launchpadPage + '?launchpad=true&url=' + global.windowLocationHref + '\'" class="sc-launchpad-item" title="' + global.launchpadTitle + '"><span class="icon"><img src="' + global.launchpadIcon + '" width="48" height="48" alt="' + global.launchpadTitle + '"></span><span class="sc-launchpad-text">' + global.launchpadTitle + '</span></a></div></div>';
-
-      //Insert into launchpad
-      launchpadCol[0].insertAdjacentHTML( 'afterend', html );
-
-      }
+        }
 
     });
 

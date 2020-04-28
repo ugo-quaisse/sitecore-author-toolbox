@@ -770,7 +770,7 @@ const sitecoreAuthorToolbox = () => {
     document.getElementsByTagName("head")[0].appendChild(link);
 
     /**
-     * By default, select Content tab for content
+     * Select Content tab for content
      */
     if(!isMedia) {
 	    var EditorTabs = document.querySelectorAll("#EditorTabs > a");
@@ -783,6 +783,12 @@ const sitecoreAuthorToolbox = () => {
 	    }
 	}
 
+	/**
+     * Update Favorite Item ID
+     */
+    let sitecorAuthorToolboxFav = document.querySelector("#sitecorAuthorToolboxFav");
+    let scFavoritesUrl = '../default.aspx?xmlcontrol=Gallery.Favorites&id=' + sitecoreItemID + '&la=en&vs=1';
+    sitecorAuthorToolboxFav ? sitecorAuthorToolboxFav.src = scFavoritesUrl : false;
 
 
 

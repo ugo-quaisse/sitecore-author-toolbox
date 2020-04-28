@@ -1266,6 +1266,15 @@ const sitecoreAuthorToolbox = () => {
         }
     }
 
+
+    /**
+     * Update Favorite Item ID
+     */
+    var sitecorAuthorToolboxFav = document.querySelector("#sitecorAuthorToolboxFav");
+    var scFavoritesUrl = '../default.aspx?xmlcontrol=Gallery.Favorites&id=' + sitecoreItemID + '&la=en&vs=1';
+    sitecorAuthorToolboxFav ? sitecorAuthorToolboxFav.src = scFavoritesUrl : false;
+
+
     /*
      * Save data in storage
      */
@@ -1476,6 +1485,7 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss && !isUploadManager) {
     /*
      * > 7. Favorites bar
      */
+
     chrome.storage.sync.get(['feature_favorites'], function(result) {
 
     if(result.feature_favorites == undefined) { result.feature_favorites = true; }
@@ -1487,8 +1497,10 @@ if(isSitecore && !isEditMode && !isLoginPage && !isCss && !isUploadManager) {
           //If already there
           if(scFavoritesIframe) { scFavoritesIframe.remove(); }
             
+            //Get current scItem
+            let ScItem = getScItemData();
             //Prepare HTML
-            var scFavoritesUrl = '../default.aspx?xmlcontrol=Gallery.Favorites&id=' + sitecoreItemID + '&la=en&vs=1';      
+            var scFavoritesUrl = '../default.aspx?xmlcontrol=Gallery.Favorites&id=' + ScItem.id + '&la=en&vs=1';      
             var scMyShortcut = '<iframe id="sitecorAuthorToolboxFav" class="sitecorAuthorToolboxFav" src="' + scFavoritesUrl + '" style="width:100%; height:150px; margin-top: 0px; resize: vertical;"></iframe>';
 
             //Insert HTML

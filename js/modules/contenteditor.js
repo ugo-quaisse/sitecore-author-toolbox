@@ -1,7 +1,7 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from './global.js';
-import {sitecoreItemJson, getScItemData} from './helpers.js';
+import {loadCssFile, sitecoreItemJson, getScItemData} from './helpers.js';
 import {checkUrlStatus} from './url.js';
 import {cleanCountryName} from './language.js';
 
@@ -282,40 +282,32 @@ const sitecoreAuthorToolbox = () => {
    */
   chrome.storage.sync.get(['feature_rtl'], function(result) {
 
-    if(result.feature_rtl == undefined) { result.feature_rtl = true; }
+    result.feature_rtl == undefined ? result.feature_rtl = true : false;
 
     if(result.feature_rtl && scLanguageTxtShort) {
       
       //Get active language
       temp = scLanguageTxtShort.split(" (");
       scFlag = temp[0].toUpperCase();
-      var iframes;
-
-      //Inject css stylesheet
-      var link = document.createElement("link");
-      link.type = "text/css";
-      link.rel = "stylesheet";
 
       if(global.rteLanguages.includes(scFlag)) {
-        //RTE
-        link.href =  chrome.runtime.getURL("css/rtl-min.css");
-
-        iframes = document.getElementsByClassName('scContentControlHtml');
-        for (let iframe of iframes) {
+        
+        //RTL
+        loadCssFile("css/rtl-min.css");
+        for (let iframe of document.getElementsByClassName('scContentControlHtml')) {
           iframe.onload= function() { iframe.contentWindow.document.getElementById('ContentWrapper').style.direction = "RTL"; };
         }
 
       } else {
+        
         //LTR
-        link.href =  chrome.runtime.getURL("css/ltr-min.css");
-       
-        iframes = document.getElementsByClassName('scContentControlHtml');
-        for (let iframe of iframes) {
+        loadCssFile("css/ltr-min.css");     
+        for (let iframe of document.getElementsByClassName('scContentControlHtml')) {
           iframe.onload= function() { iframe.contentWindow.document.getElementById('ContentWrapper').style.direction = "LTR"; };
         }
 
       }
-      document.getElementsByTagName("head")[0].appendChild(link);
+
     }
 
   });
@@ -760,39 +752,45 @@ const sitecoreAuthorToolbox = () => {
     }
 
 
-    /**
-     * Custom checkboxes to IOS like style
-     */
-    var link = document.createElement("link");
-    link.type = "text/css";
-    link.rel = "stylesheet";
-    link.href =  chrome.runtime.getURL("css/checkbox-min.css");
-    document.getElementsByTagName("head")[0].appendChild(link);
+    chrome.storage.sync.get(['feature_contenteditor'], function(result) {
 
-    /**
-     * Select Content tab for content
-     */
-    if(!isMedia) {
-	    var EditorTabs = document.querySelectorAll("#EditorTabs > a");
-	    for(var tab of EditorTabs) {
+      if (!chrome.runtime.error && result.feature_contenteditor == true) {
+    
+        /**
+         * Custom checkboxes to IOS like style
+         */
+        var link = document.createElement("link");
+        link.type = "text/css";
+        link.rel = "stylesheet";
+        link.href =  chrome.runtime.getURL("css/checkbox-min.css");
+        document.getElementsByTagName("head")[0].appendChild(link);
 
-	    	if(tab.innerText.toLowerCase() == "content") {
-	    		!tab.classList.contains("scRibbonEditorTabActive") ? tab.click() : false;
-	    	}
+        /**
+         * Select Content tab for content
+         */
+        if(!isMedia) {
+    	    var EditorTabs = document.querySelectorAll("#EditorTabs > a");
+          var CloseEditorTab = document.querySelectorAll("#EditorTabs .scEditorTabCloseContainer");
+          var count = 0;
+    	    for(var tab of EditorTabs) {
+            count++;
+    	    	if(tab.innerText.toLowerCase() == "content" && count>1 && CloseEditorTab.length == 0) {
+    	    		!tab.classList.contains("scRibbonEditorTabActive") ? tab.click() : false;
+    	    	}
+    	    }
+    	   }
 
-	    }
-	}
+      }
 
-	/**
+    });
+
+
+	   /**
      * Update Favorite Item ID
      */
     let sitecorAuthorToolboxFav = document.querySelector("#sitecorAuthorToolboxFav");
     let scFavoritesUrl = '../default.aspx?xmlcontrol=Gallery.Favorites&id=' + sitecoreItemID + '&la=en&vs=1';
     sitecorAuthorToolboxFav ? sitecorAuthorToolboxFav.src = scFavoritesUrl : false;
-
-
-
-
 
     /**
      * Save data in storage

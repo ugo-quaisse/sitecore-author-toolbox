@@ -401,3 +401,7 @@ body.contentEditor:after {
     float: initial !important;
     margin: unset !important;
 }
+
+select.scContentControl {
+    height: 30px !important;
+}

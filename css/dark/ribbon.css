@@ -194,6 +194,7 @@ display: block !important;
         cursor:pointer !important;
         margin-left:5px !important;
         vertical-align:bottom !important;
+        filter: brightness(0.5);
     }
 
     .scRibbon .chunk .caption .glyph:hover {
@@ -746,7 +747,7 @@ a:hover .scRibbonToolbarSmallButtonPrefix {
 }
 
 .scRibbon a.scRibbonToolbarSmallComboButtonLeft {
-    color: #303030 !important;
+    color: var(--text) !important;
     padding: 2px 2px 4px 6px !important;
     white-space: nowrap !important;
 }

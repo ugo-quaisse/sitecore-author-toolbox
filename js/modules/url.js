@@ -42,11 +42,7 @@ const checkUrlStatus = (source = null) => {
         .then(function(response) {
           
           //Variables
-          if(source == null) {
-            liveUrlStatus = document.querySelector(".liveUrlStatus");
-          } else {
-            liveUrlStatus = source.querySelector(".liveUrlStatus");
-          }
+          source == null ? liveUrlStatus = document.querySelector(".liveUrlStatus") : liveUrlStatus = source.querySelector(".liveUrlStatus");
 
           //Check response
           if(response.status == "404" || response.status == "500" ) {
@@ -56,17 +52,13 @@ const checkUrlStatus = (source = null) => {
           }
 
           //Update Dom
-          if(liveUrlStatus != null) {
-            liveUrlStatus.innerHTML = html;
-          } else {
-            liveUrlStatus.innerHTML = "";
-          }
+          liveUrlStatus != null ? liveUrlStatus.innerHTML = html : liveUrlStatus.innerHTML = "";
 
         })
         .catch(function(error) {
             console.info("Sitecore Author Toolbox: Error in fetching your CD URL ("+itemUrl+"), it might be a timeout or a settings issue, please check.");
             html = "<span class='liveStatusGray'>...timeout</span>";
-            if(liveUrlStatus != null) { liveUrlStatus.innerHTML = ""; }
+            liveUrlStatus != null ? liveUrlStatus.innerHTML = "" : false;
         });
 
     }

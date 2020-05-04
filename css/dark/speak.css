@@ -197,7 +197,7 @@ div[data-sc-id=OverviewBorderPadding] .row {
   border-bottom: 1px solid var(--black2);
 }
 div.sc-border[data-sc-id=InfoPhotoImageBorder] img {
-  background: var(--black3) !important;
+  background: var(--black4) !important;
   border: 15px solid var(--black3);
 }
 

@@ -120,9 +120,9 @@ const sitecoreItemJson = (itemID, languageID, versionID) => {
 
         //Save data
         chrome.storage.sync.set({"scData": scData}, function() {
-            if(global.debug) { console.info("%c [Write] Item : " + itemID + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
-            if(global.debug) { console.info("%c [Write] Language : " + languageID + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
-            if(global.debug) { console.info("%c [Write] Version : " + versionID + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;'); }
+            global.debug ? console.info("%c [Write] Item : " + itemID + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;') : false;
+            global.debug ? console.info("%c [Write] Language : " + languageID + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;') : false;
+            global.debug ? console.info("%c [Write] Version : " + versionID + ' ', 'font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;') : false;
             return scData;
         });
     });

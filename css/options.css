@@ -18,7 +18,7 @@ html.dark {
 }
 
 html.light body > div > div > fieldset {
-  border: 1px solid rgba(0,0,0,0.1);
+  border: 1px solid rgba(56, 83, 97, 0.2);
   border-radius: 1px;
 }
 html.dark body > div > div > fieldset {

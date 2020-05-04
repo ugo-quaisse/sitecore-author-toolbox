@@ -2,7 +2,7 @@
 
 import * as global from './global.js';
 
-export {cleanCountryName};
+export {cleanCountryName, findCountryName};
 
 /**
  * Clean a Sitecore-specific country name to make it regular name
@@ -12,6 +12,7 @@ const cleanCountryName = (name) => {
   var temp = name;
   var language;
 
+  if(temp!='' && temp.includes(' (region')) { temp = temp.split(" (region"); temp = temp[0]; }
   if(temp!='' && temp.includes(' :')) { temp = temp.split(" :"); temp = temp[0]; }
   temp = temp.split(" (");
   if(temp[1] == undefined) { temp = temp[0]; } else { temp = temp[1]; }
@@ -31,5 +32,24 @@ const cleanCountryName = (name) => {
   language = language.replace("ENGLISH","GREAT_BRITAIN");
   language = language.replace("PRC","CHINA");
 
-  return language;
+  return language.toLowerCase();
+}
+
+
+/**
+ * Find Sitecore Country name is Json Data list
+ */
+const findCountryName = (name) => {
+
+  var country = cleanCountryName(name);
+
+  for (var key in global.jsonData) {
+    if (global.jsonData.hasOwnProperty(key) && country.toUpperCase() == global.jsonData[key]["language"].toUpperCase()) {   
+      country = global.jsonData[key]["flag"];
+      break;
+    }
+  }
+
+  return country.toLowerCase();
+
 }

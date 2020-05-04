@@ -33,7 +33,7 @@ function onClickHandler(info, tab) {
 	if(info.menuItemId == "SitecoreAuthorToolbox") {
 
 	  //Check if window.location.href = CD/Live server
-	  chrome.storage.sync.get(['domain_manager'], function(result) {
+	  chrome.storage.sync.get(['domain_manager'], (result) => {
 		var domains = result.domain_manager;
 		var cmUrl = new URL(tab.url);
 		var cd = false;
@@ -128,7 +128,7 @@ function setIcon(tab) {
 		chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
 		chrome.browserAction.setBadgeText({text: 'ON'});
 		//Context menu
-		chrome.storage.sync.get(['feature_contextmenu'], function(result) {
+		chrome.storage.sync.get(['feature_contextmenu'], (result) => {
 		  
 		  result.feature_contextmenu == undefined ? result.feature_contextmenu = false : false;   
 		  result.feature_contextmenu ? showContextMenu(tab) : false;
@@ -207,7 +207,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
 
   console.table(extinformation);
 
-  chrome.storage.sync.get(function(e){
+  chrome.storage.sync.get((e) => {
 	console.table(e);
 	console.table(e.scData);
 	console.table(e.domain_manager);

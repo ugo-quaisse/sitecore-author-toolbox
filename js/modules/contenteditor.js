@@ -200,7 +200,12 @@ const sitecoreAuthorToolbox = () => {
     var scEditorHeaderVersionsVersion = document.querySelector(".scEditorHeaderVersionsVersion");
     if(scEditorHeaderVersionsVersion) {
         var scVersionTitle = scEditorHeaderVersionsVersion.getAttribute("title");
-        scEditorHeaderVersionsVersion.querySelector("span").innerText = scVersionTitle.replace("."," ▾");
+        temp = scVersionTitle.split("of");
+        var versionTotal = temp[1].replace(".","").trim();
+        var versionNumber = temp[0].replace("Version","").trim();
+        (versionNumber < versionTotal) ?
+            scEditorHeaderVersionsVersion.querySelector("span").innerText = scVersionTitle.replace("Version","⚠️ Version").replace("."," ▾") :
+            scEditorHeaderVersionsVersion.querySelector("span").innerText = scVersionTitle.replace("."," ▾");
     }
 
     //Flag in tab and menu
@@ -575,19 +580,13 @@ const sitecoreAuthorToolbox = () => {
             var isWrongVersion = scWarningText.includes("it has been replaced by a newer version.");
 
             //No version exist
-            if(isNoVersion) {
-                scWarningIcon.setAttribute("style","background-image: url(" + global.iconTranslate + ");");
-            }
+            isNoVersion ? scWarningIcon.setAttribute("style","background-image: url(" + global.iconTranslate + ");") : false;
 
             //No version exist
-            if(isWrongVersion) {
-                scWarningIcon.setAttribute("style","background-image: url(" + global.iconVersion + ");");
-            }
+            //isWrongVersion ? scWarningIcon.setAttribute("style","background-image: url(" + global.iconVersion + ");") : false;
 
             //Not in final workflow step
-            if(isNotFinalWorkflowStep) {
-                scWarningIcon.setAttribute("style","background-image: url(" + global.iconWorkflow + ");");
-            }
+            isNotFinalWorkflowStep ? scWarningIcon.setAttribute("style","background-image: url(" + global.iconWorkflow + ");") : false;
 
             //Locked by
             if(isLockMessage) {
@@ -600,9 +599,7 @@ const sitecoreAuthorToolbox = () => {
             }
 
             //Admin, elevate unlock
-            if(isElevateUnlock || isProtected) {
-                scWarningIcon.setAttribute("style","background-image: url(" + global.iconLock + ");");
-            }
+            (isElevateUnlock || isProtected) ? scWarningIcon.setAttribute("style","background-image: url(" + global.iconLock + ");") : false;
 
             //Unicorded
             if(isUnicorned) {

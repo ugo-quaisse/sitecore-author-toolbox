@@ -14,3 +14,4 @@ build/
 _config.yml
 images/.DS_Store
 images/.DS_Store
+js/modules/local.js

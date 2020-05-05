@@ -95,7 +95,7 @@ chrome.storage.sync.get((storage) => {
                 if(event.state && event.state.id!='') {
                     //Store a local value to tell toolboxscript we are changing item from back/previous button, so no need to add #hash as it's already performed by the browser
                     localStorage.setItem('scBackPrevious', true);
-                    exeJsCode(`scForm.invoke("item:load(id=` + event.state.id + `,language=,version=1)");`);
+                    exeJsCode(`scForm.invoke("item:load(id=` + event.state.id + `,language=` + event.state.language + `,version=` + event.state.version + `)");`);
                 }
 
             }
@@ -123,10 +123,12 @@ chrome.storage.sync.get((storage) => {
                 if(storage.scData != undefined) { 
                     
                     //If Hash detected in the URL
-                    if(global.scUrlHash!="") {                             
-                        storage.scItemID = global.scUrlHash;
-                        storage.scVersion = 1;
-                        storage.scLanguage = "";
+                    if(global.scUrlHash!="") {
+                        temp = global.scUrlHash.split("_");
+                        console.log(temp);                   
+                        storage.scItemID = temp[0];
+                        storage.scLanguage = temp[1];
+                        storage.scVersion = temp[2];
                         storage.scSource = "Hash";                  
                     } else {
                         //Get scData from storage
@@ -782,10 +784,12 @@ chrome.storage.sync.get((storage) => {
              * Update hash in URL, update pushsate history, update link if 2nd tab opened
              */
             if (scQuickInfo) {
-              
+                let ScItem = getScItemData();
                 var sitecoreItemID = scQuickInfo.getAttribute("value");
                 var scLanguage = document.querySelector("#scLanguage").getAttribute("value").toLowerCase();
 
+                let scVersion = document.querySelector ( ".scEditorHeaderVersionsVersion > span" );
+                scVersion != null ? scVersion = scVersion.innerText : scVersion = 1;
                 var scEditorQuickInfo = document.querySelectorAll(".scEditorQuickInfo");
                 var lastScEditorQuickInfo = scEditorQuickInfo[scEditorQuickInfo.length- 1];
                 var countTab = scEditorQuickInfo.length;
@@ -799,8 +803,8 @@ chrome.storage.sync.get((storage) => {
                     //Add hash to URL
                     if(!global.hasRedirection && !global.hasRedirectionOther) {
                         if(locaStorage != "true") {
-                            var state = { 'sitecore': true, 'id': sitecoreItemID }
-                            history.pushState(state, undefined, "#"+sitecoreItemID);
+                            var state = { 'sitecore': true, 'id': sitecoreItemID, 'language': scLanguage, 'version': scVersion }
+                            history.pushState(state, undefined, "#" + sitecoreItemID + "_" + scLanguage + "_" + scVersion);
                         } else {
                             localStorage.removeItem('scBackPrevious');
                         }     

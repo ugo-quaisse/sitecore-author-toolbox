@@ -25,7 +25,7 @@ const sitecoreAuthorToolbox = () => {
     let scQuickInfo = document.querySelector ( ".scEditorHeaderQuickInfoInput" );
     let scLanguageMenu = document.querySelector ( ".scEditorHeaderVersionsLanguage" );
     let scVersion = document.querySelector ( ".scEditorHeaderVersionsVersion > span" );
-    if(scVersion) { scVersion = scVersion.innerText; }
+    scVersion ? scVersion = scVersion.innerText : false;
     let scActiveTab = document.querySelector ( ".scEditorTabHeaderActive" );
     let scNormalTab = document.querySelectorAll ( ".scRibbonEditorTabNormal" );
     var scErrors = document.querySelectorAll (" .scValidationMarkerIcon ");
@@ -56,7 +56,6 @@ const sitecoreAuthorToolbox = () => {
         var temp = document.getElementsByClassName("scEditorHeaderQuickInfoInput"); 
         var sitecoreItemID = ScItem.id;
         var sitecoreItemPath = ScItem.path+"/";
-        var sitecoreMediaPath = ScItem.path;
         var sitecoreItemPathOriginal = ScItem.path+"/";
         sitecoreItemPath = sitecoreItemPath.split("/home/");
         var sitecoreSite = sitecoreItemPath[0].toLowerCase();
@@ -71,7 +70,6 @@ const sitecoreAuthorToolbox = () => {
         var isContent = sitecoreItemPathOriginal.includes('/sitecore/content/');
         var isMedia = sitecoreItemPathOriginal.includes('/sitecore/media library/');
         var isData = sitecoreItemPathOriginal.includes('/data/');
-        var isPage = sitecoreItemPathOriginal.includes('/home/');
         var isSettings = sitecoreItemPathOriginal.includes('/settings/');
         var isPresentation = sitecoreItemPathOriginal.includes('/presentation/');
         var isEmailTemplate = sitecoreItemPathOriginal.includes('/sitecore/content/email/');

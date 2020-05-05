@@ -241,14 +241,24 @@ document.body.onload = function() {
       document.getElementById("feature_translatemode").checked = true;
     }
   });
-  //EE toggle ribon button
-  chrome.storage.sync.get(['feature_toggleribbon'], function(result) {
-    if (!chrome.runtime.error && result.feature_toggleribbon != undefined) {
-      if(result.feature_toggleribbon) {
-        document.getElementById("feature_toggleribbon").checked = true;
+  //CE toggle ribon button
+  chrome.storage.sync.get(['feature_contenteditor'], function(result) {
+    if (!chrome.runtime.error && result.feature_contenteditor != undefined) {
+      if(result.feature_contenteditor) {
+        document.getElementById("feature_contenteditor").checked = true;
       }
     } else {
-      document.getElementById("feature_toggleribbon").checked = true;
+      document.getElementById("feature_contenteditor").checked = true;
+    }
+  });
+  //EE toggle ribon button
+  chrome.storage.sync.get(['feature_experienceeditor'], function(result) {
+    if (!chrome.runtime.error && result.feature_experienceeditor != undefined) {
+      if(result.feature_experienceeditor) {
+        document.getElementById("feature_experienceeditor").checked = true;
+      }
+    } else {
+      document.getElementById("feature_experienceeditor").checked = true;
     }
   });
   //CE tabs
@@ -309,6 +319,16 @@ document.body.onload = function() {
       }
     } else {
       document.getElementById("feature_contextmenu").checked = true;
+    }
+  });
+  //Experience Profile
+  chrome.storage.sync.get(['feature_gravatarimage'], function(result) {
+    if (!chrome.runtime.error && result.feature_gravatarimage != undefined) {
+      if(result.feature_gravatarimage) {
+        document.getElementById("feature_gravatarimage").checked = true;
+      }
+    } else {
+      document.getElementById("feature_gravatarimage").checked = true;
     }
   });
 }
@@ -528,9 +548,13 @@ document.querySelector("#set").onclick = function(event) {
   chrome.storage.sync.set({"feature_translatemode": document.getElementById('feature_translatemode').checked}, function() {
     console.info('--> Translation Mode: ' + document.getElementById('feature_translatemode').checked);
   });
-  //Toggle Ribbon
-  chrome.storage.sync.set({"feature_toggleribbon": document.getElementById('feature_toggleribbon').checked}, function() {
-    console.info('--> Toggle Button: ' + document.getElementById('feature_toggleribbon').checked);
+  //Content Editor
+  chrome.storage.sync.set({"feature_contenteditor": document.getElementById('feature_contenteditor').checked}, function() {
+    console.info('--> Content Editor: ' + document.getElementById('feature_contenteditor').checked);
+  });
+  //Experience Editor
+  chrome.storage.sync.set({"feature_experienceeditor": document.getElementById('feature_experienceeditor').checked}, function() {
+    console.info('--> Experience Editor ' + document.getElementById('feature_experienceeditor').checked);
   });
   //CE Tabs
   chrome.storage.sync.set({"feature_cetabs": document.getElementById('feature_cetabs').checked}, function() {
@@ -552,11 +576,14 @@ document.querySelector("#set").onclick = function(event) {
   chrome.storage.sync.set({"feature_urlstatus": document.getElementById('feature_urlstatus').checked}, function() {
     console.info('--> Live Urls Status: ' + document.getElementById('feature_urlstatus').checked);
   });
-   //Live URL Status
+   //Right click
   chrome.storage.sync.set({"feature_contextmenu": document.getElementById('feature_contextmenu').checked}, function() {
     console.info('--> Right click menu: ' + document.getElementById('feature_contextmenu').checked);
   });
-
+  //Experience Profile
+  chrome.storage.sync.set({"feature_gravatarimage": document.getElementById('feature_gravatarimage').checked}, function() {
+    console.info('--> Experience Profile: ' + document.getElementById('feature_gravatarimage').checked);
+  });
 
   //Get URL parameters
   var url = new URL(window.location.href);

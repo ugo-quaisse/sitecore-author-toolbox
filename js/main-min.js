@@ -1,1 +1,0 @@
-var debug=!0;chrome.runtime.sendMessage({greeting:"sxa_site"},(function(e){null!=e.farewell?console.info("%c Sitecore website detected. ","background: green; color: white; display: block;"):console.info("%c Sitecore website not detected. ","background: red; color: white; display: block;")}));

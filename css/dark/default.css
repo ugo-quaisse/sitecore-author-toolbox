@@ -3964,5 +3964,11 @@ a.scResult:hover {
   background-color: #666 !important;
 }
 
+.sc-dialogContent {
+  color: var(--text);
+}
 
+.sc-listcontrol-tile-content {
+  background: var(--black2) !important;
+}
 

@@ -6,7 +6,7 @@ html, body {
   padding: 0px;
   font-size: 13px;
   height: 100%;
-  transition: color .2s ease-in-out 0s, background-color .2s ease-in-out .5s;
+  /*transition: all .1s ease-in-out;*/
 }
 html.light {
   color: #000000;
@@ -15,6 +15,23 @@ html.light {
 html.dark {
   color: #ffffff;
   background-color: #2b2b2b;
+}
+
+html.light body > div > div > fieldset {
+  border: 1px solid rgba(56, 83, 97, 0.2);
+  border-radius: 1px;
+}
+html.dark body > div > div > fieldset {
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 1px;
+}
+html.light body > div > div > fieldset > legend {
+  color: #000000;
+  font-weight: bold;
+}
+html.dark body > div > div > fieldset > legend {
+  color: #ffffff;
+  font-weight: bold;
 }
 a {
   color: #DC291E;
@@ -27,7 +44,6 @@ a {
 }
 label {
   display: inline-block;
-  transition: .4s;
   margin-right: 0.5em;
 }
 label > input {

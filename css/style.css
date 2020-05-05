@@ -1,5 +1,5 @@
 form#ContentEditorForm {
-    filter: blur(5px) brightness(0.15) grayscale(1);
+    filter: blur(7px) brightness(0.15) grayscale(1);
     transition: all ease-in-out .2s;
     transition-delay: 0.2s;
 }

@@ -32,12 +32,16 @@ chrome.storage.sync.get((storage) => {
      */
     consoleLog( window.location.href.replace("https://","").replace("http://","") , "green");
 
+    /**
+     * Variables
+     */
+    let currentScheme = preferesColorScheme();
+
     /*
      ************************
      * 1. Content Editor *
      ************************
      */
-
     if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isCss && !global.isUploadManager) {
 
         consoleLog( "Content Editor detected" , "red");
@@ -54,7 +58,6 @@ chrome.storage.sync.get((storage) => {
          */
         storage.feature_darkmode == undefined ? storage.feature_darkmode = false : false;
         storage.feature_darkmode_auto == undefined ? storage.feature_darkmode_auto = false : false;
-        let currentScheme = preferesColorScheme();
 
         if(storage.feature_darkmode && !storage.feature_darkmode_auto && !global.isTelerikUi && !global.isExperienceEditor && !global.isAdminCache && !global.isSecurityWindow && !global.isContentHome && !global.isLoginPage && !global.isEditMode && !global.isUserManager && !global.isRules && !global.isAdmin || storage.feature_darkmode && storage.feature_darkmode_auto && !global.isTelerikUi && !global.isExperienceEditor && !global.isAdminCache && !global.isSecurityWindow && !global.isContentHome && !global.isLoginPage && !global.isEditMode && !global.isUserManager && !global.isRules && !global.isAdmin && currentScheme == "dark") {
 
@@ -104,7 +107,6 @@ chrome.storage.sync.get((storage) => {
 
                 const scheme = window.matchMedia("(prefers-color-scheme: dark)");
                 scheme.addEventListener("change", () => {
-                    consoleLog( "**** " + preferesColorScheme() + " mode ON ****" , "orange")
                     exeJsCode(`scForm.invoke('contenteditor:save', event)`);
                     setTimeout(function() { window.location.reload() }, 500)
                 });
@@ -146,10 +148,9 @@ chrome.storage.sync.get((storage) => {
                         consoleLog("[Read " + storage.scSource + "] Version : "+ storage.scVersion, "beige");
                         consoleLog("*** Redirection ***", "yellow");
                         exeJsCode(`scForm.invoke("item:load(id=` + storage.scItemID + `,language=` + storage.scLanguage + `,version=` + storage.scVersion + `)");`);
-                        sitecoreAuthorToolbox();
-                    } else {
-                        sitecoreAuthorToolbox();
                     }
+
+                    sitecoreAuthorToolbox();
 
                 } else {
                     sitecoreAuthorToolbox();       
@@ -531,7 +532,6 @@ chrome.storage.sync.get((storage) => {
                     * Codemirror css
                     */
                     loadCssFile("css/codemirror.css");
-                    currentScheme = preferesColorScheme();
 
                     if(storage.feature_darkmode && !storage.feature_darkmode_auto || storage.feature_darkmode && storage.feature_darkmode_auto && currentScheme == "dark") {       
                         darkModeTheme = "ayu-dark";
@@ -970,7 +970,6 @@ chrome.storage.sync.get((storage) => {
         /*
         * Dark mode + Toggle Ribbon
         */
-        var currentScheme = preferesColorScheme();
         var pagemodeEdit = document.querySelector(".pagemode-edit");
         !pagemodeEdit ? pagemodeEdit = document.querySelector(".on-page-editor") : false;
         !pagemodeEdit ? pagemodeEdit = document.querySelector(".experience-editor") : false;

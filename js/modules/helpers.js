@@ -142,7 +142,7 @@ const getScItemData = () => {
         tr.cells[0].innerText == "Item name:" ? scItem.name = tr.cells[1].innerText.toLowerCase() : false;
         tr.cells[0].innerText == "Item path:" ? scItem.path = tr.cells[1].querySelector("input").value.toLowerCase() : false;
         tr.cells[0].innerText == "Template:" ? scItem.template = tr.cells[1].querySelector("a").innerText.toLowerCase() : false;
-        // tr.cells[0].innerText == "Template:" ? scItem.templateId = tr.cells[1].querySelector("input").innerText.toLowerCase() : false;
+        tr.cells[0].innerText == "Template:" ? scItem.templateId = tr.cells[1].querySelector("input").value.toLowerCase() : false;
         tr.cells[0].innerText == "Created from:" ? scItem.from = tr.cells[1].innerText.toLowerCase() : false;
         tr.cells[0].innerText == "Item owner:" ? scItem.owner = tr.cells[1].querySelector("input").value.toLowerCase() : false;
     }

@@ -55,9 +55,9 @@ const sitecoreAuthorToolbox = () => {
         let ScItem = getScItemData();
         var temp = document.getElementsByClassName("scEditorHeaderQuickInfoInput"); 
         var sitecoreItemID = ScItem.id;
-        var sitecoreItemPath = temp[1].getAttribute("value").toLowerCase()+"/";
-        var sitecoreMediaPath = temp[1].getAttribute("value").toLowerCase();
-        var sitecoreItemPathOriginal = sitecoreItemPath.toLowerCase()+"/";
+        var sitecoreItemPath = ScItem.path+"/";
+        var sitecoreMediaPath = ScItem.path;
+        var sitecoreItemPathOriginal = ScItem.path+"/";
         sitecoreItemPath = sitecoreItemPath.split("/home/");
         var sitecoreSite = sitecoreItemPath[0].toLowerCase();
         sitecoreSite = sitecoreSite.split("/");
@@ -487,6 +487,7 @@ const sitecoreAuthorToolbox = () => {
         for(var section of scEditorSectionCaption) {
 
             sectionTitle = section.innerText;
+            sectionTitle == "Quick Info" ? sectionTitle = "📎" : false;
             sectionId = section.getAttribute("id");
             var sectionClass = section.getAttribute("class");
             var sectionSelected = "";

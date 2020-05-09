@@ -156,7 +156,7 @@ const sitecoreAuthorToolbox = () => {
                     scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + global.iconMedia + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Media Live URL</div><div class="scMessageBarText">If you want to preview this media</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + sitecoreItemPath + '" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this media</a></li></ul></div></div>'        
                 } else {
                     //Prepare HTML (scInformation scWarning scError)
-                    scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + global.icon + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Sitecore Live URL <span class="liveUrlBadge" onclick="location.href = \'' + global.launchpadPage + '?configure_domains=true&launchpad=true&url=' + global.windowLocationHref + '\'" title="Click to configure your domains">' + envBadge + '</span> <span class="liveUrlStatus"></span></div><div class="scMessageBarText">If you want to preview this page in <b>' + scLanguageTxtLong + '</b> (version ' + scVersion + ')</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + sitecoreItemPath + '" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this link</a> or try <a href="' + scUrl + '" target="_blank" class="scMessageBarOption">this alternative link</a></li></ul></div></div>'
+                    scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + global.icon + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Sitecore Live URL <span class="liveUrlBadge" onclick="location.href = \'' + global.launchpadPage + '?configure_domains=true&launchpad=true&url=' + global.windowLocationHref + '\'" title="Click to configure your domains">' + envBadge + '</span> <span class="liveUrlStatus"></span></div><div class="scMessageBarText">To preview this page in <b>"' + scLanguageTxtLong + '".</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + sitecoreItemPath + '" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this link</a> or try <a href="' + scUrl + '" target="_blank" class="scMessageBarOption">this alternative link</a></li></ul></div></div>'
                 }
 
                 //Insert message bar into Sitecore Content Editor
@@ -183,7 +183,7 @@ const sitecoreAuthorToolbox = () => {
             //If not added yet
             if(!document.getElementById("scMessageBarInfo") && storage.feature_urls && storage.feature_messagebar) {
               
-                scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + global.iconEdit + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing a data source</div><div class="scMessageBarText">To see it, you need to add/edit it to any page via the</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet">Presentation Details or Experience Editor</li></ul></div></div>'
+                scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + global.iconEdit + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing an item data</div><div class="scMessageBarText">To see it, you need to add it to a page via</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet">Presentation Details or Experience Editor</li></ul></div></div>'
                 scEditorID.insertAdjacentHTML( 'afterend', scMessage );
 
             }
@@ -217,26 +217,23 @@ const sitecoreAuthorToolbox = () => {
     //Flag in tab and menu
     if(storage.feature_flags) {
 
-        for (let key in global.jsonData) {
-            if (global.jsonData.hasOwnProperty(key) && scLanguageTxtShort && scLanguageTxtShort.toUpperCase() == global.jsonData[key]["language"].toUpperCase()) {
-                  
-                scFlag = chrome.runtime.getURL("images/Flags/32x32/flag_" + global.jsonData[key]["flag"].toLowerCase() + ".png")
+        //Flag image
+        scFlag = chrome.runtime.getURL("images/Flags/32x32/flag_" + findCountryName(scLanguageTxtShort) + ".png")
 
-                //Insert Flag into Active Tab
-                if(!document.querySelector("#scFlag")) {
-                  	tabbedFlag = scFlag;
-                    setTimeout(function() {
-                    	scActiveTab = document.querySelector ( ".scEditorTabHeaderActive" );
-                    	scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + tabbedFlag +'" style="width: 21px; vertical-align: middle; padding: 0px 4px 0px 0px;" onerror="this.onerror=null;this.src=\'' + global.iconFlagGeneric + '\';"/>' );
-                  	},100);
-                  }
-
-                  //Insert Flag into Sitecore Language selector
-                  if(!document.querySelector("#scFlagMenu")) {
-                        scLanguageMenu.insertAdjacentHTML( 'afterbegin', '<img id="scFlagMenu" src="' + scFlag +'" style="width: 15px; vertical-align: sub; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + global.iconFlagGeneric + '\';"/>' );
-                  }
-            }
+        //Insert Flag into Active Tab
+        if(!document.querySelector("#scFlag")) {
+            tabbedFlag = scFlag;
+            setTimeout(function() {
+                scActiveTab = document.querySelector ( ".scEditorTabHeaderActive" );
+                scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + tabbedFlag +'" style="width: 21px; vertical-align: middle; padding: 0px 4px 0px 0px;" onerror="this.onerror=null;this.src=\'' + global.iconFlagGeneric + '\';"/>' );
+            },100);
         }
+
+        //Insert Flag into Sitecore Language selector
+        if(!document.querySelector("#scFlagMenu")) {
+            scLanguageMenu.insertAdjacentHTML( 'afterbegin', '<img id="scFlagMenu" src="' + scFlag +'" style="width: 15px; vertical-align: sub; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + global.iconFlagGeneric + '\';"/>' );
+        }
+
     }      
 
     /**

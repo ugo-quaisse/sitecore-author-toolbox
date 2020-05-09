@@ -45,8 +45,10 @@ const checkUrlStatus = (source = null) => {
           source == null ? liveUrlStatus = document.querySelector(".liveUrlStatus") : liveUrlStatus = source.querySelector(".liveUrlStatus");
 
           //Check response
-          if(response.status == "404" || response.status == "500" ) {
-              html = "<span class='liveStatusRed'><img src=' " + global.dotRed + "'/> Not available (" + response.status + ")</span>";
+          if(response.status == "404" ) {
+              html = "<span class='liveStatusRed'><img src=' " + global.dotRed + "'/> Not published (" + response.status + ")</span>";
+          } else if(response.status == "500" ) {
+              html = "<span class='liveStatusRed'><img src=' " + global.dotRed + "'/> Server error (" + response.status + ")</span>";
           } else {
               html = "<span class='liveStatusGreen'><img src=' " + global.dotGreen + "'/> Published</span>";
           }

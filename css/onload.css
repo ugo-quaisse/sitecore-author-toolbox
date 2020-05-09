@@ -454,7 +454,7 @@ a.scTileItem:hover {
     position: relative;
     font-weight: bold;
     font-size: 12px;
-    padding: 2px 4px 4px 2px;
+    padding: 2px 3px 4px 3px;
     min-width: 16px;
     border-radius: 8px;
     transform: scale(0);

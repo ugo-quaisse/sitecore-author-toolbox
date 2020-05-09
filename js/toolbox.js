@@ -143,6 +143,9 @@ chrome.storage.sync.get((storage) => {
                         }
                     }
 
+                    //Security check
+                    storage.scLanguage == undefined ? storage.scLanguage = "en" : false;
+
                     //Reload from where you left off
                     if(storage.scItemID && storage.feature_reloadnode == true) {         
                         consoleLog("[Read " + storage.scSource + "] Item : "+ storage.scItemID, "beige");

@@ -192,6 +192,12 @@ const sitecoreAuthorToolbox = () => {
     }
 
     /**
+     * Change Title window
+     */
+    let ScItem = getScItemData();
+    window.document.title = "" + ScItem.name.capitalize() + " (" + scLanguage.toUpperCase() + ")";
+
+    /**
      * Insert Flag (In Active Tab) and Version Number
      */
     storage.feature_flags == undefined ? storage.feature_flags = true : false;

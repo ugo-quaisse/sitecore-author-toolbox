@@ -22,6 +22,7 @@ import {cleanCountryName, findCountryName} from './modules/language.js';
 import {sitecoreAuthorToolbox} from './modules/contenteditor.js';
 import {getGravatar} from './modules/users.js';
 
+
 /**
  * Get all user's settings from storage
  */
@@ -124,8 +125,7 @@ chrome.storage.sync.get((storage) => {
                     
                     //If Hash detected in the URL
                     if(global.scUrlHash!="") {
-                        temp = global.scUrlHash.split("_");
-                        console.log(temp);                   
+                        temp = global.scUrlHash.split("_");                
                         storage.scItemID = temp[0];
                         storage.scLanguage = temp[1];
                         storage.scVersion = temp[2];
@@ -661,6 +661,11 @@ chrome.storage.sync.get((storage) => {
 
             consoleLog("**** Publish / Rebuild / Package ****", "orange");
             storage.feature_flags == undefined ? storage.feature_flags = true : false;
+
+            //Get ID of the item to be published
+            let form = document.querySelector("form").getAttribute("action").split("id=");
+            let publishedItemId = form[1].replace("%7B","{").replace("%7D","}");
+            //fetch "sitecore/admin/dbbrowser.aspx?db=master&lang=en&id="+publishedItemId
 
             if(storage.feature_flags) {
                 

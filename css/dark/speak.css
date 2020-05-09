@@ -34,7 +34,7 @@
   border-bottom: 1px solid var(--black4);
 }
 .sc-controlpanel-box-header h4 {
-  color: var(--black4) !important;
+  color: var(--text) !important;
 }
 .sc-dialogFooter {
   background-color: var(--black1) !important;

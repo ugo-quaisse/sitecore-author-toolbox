@@ -5,7 +5,7 @@
 /*
  * Helpers and variables
  */
-let sxa_site;
+let sxa_site; 
 let sc_site;
 let contextMenuEE = false;
 let contextMenuCE = false;

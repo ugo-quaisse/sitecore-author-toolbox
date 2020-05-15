@@ -144,6 +144,11 @@ label:hover {
       opacity: 1;
   }
 }
+@media screen and (max-width: 450px) {
+  #back {
+    margin: 0px 0px 20px 0px;
+  }
+}
 #banner > img {
 	width: 150px;
 	transform: scale(1);

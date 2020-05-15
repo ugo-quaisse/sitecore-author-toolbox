@@ -3551,7 +3551,7 @@ form[lang|='ja'] *,
     }
 
         .scMessageBar.scInformation .scMessageBarIcon {
-            background-color: var(--blue) !important;
+            background-color: var(--darkblue) !important; 
         }
 
     .scMessageBar.scError {

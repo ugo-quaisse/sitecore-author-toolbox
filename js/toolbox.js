@@ -10,7 +10,7 @@
 
 /**
  * Modules
- */
+ */ 
 import * as global from './modules/global.js';
 import * as local from './modules/local.js'; //This file is missing on Github, you should create yours with all your private local API keys
 import {consoleLog, loadCssFile, loadJsFile, exeJsCode, preferesColorScheme, sitecoreItemJson, fetchTimeout, getScItemData, repositionElement, startDrag} from './modules/helpers.js';
@@ -21,6 +21,7 @@ import {checkNotification, sendNotification} from './modules/notification.js';
 import {cleanCountryName, findCountryName} from './modules/language.js';
 import {sitecoreAuthorToolbox} from './modules/contenteditor.js';
 import {getGravatar} from './modules/users.js';
+import {instantSearch} from './modules/instantsearch.js';
 
 
 /**
@@ -37,6 +38,7 @@ chrome.storage.sync.get((storage) => {
      * Variables
      */
     let currentScheme = preferesColorScheme();
+    let darkMode = false;
 
     /*
      ************************
@@ -62,12 +64,14 @@ chrome.storage.sync.get((storage) => {
 
         if(storage.feature_darkmode && !storage.feature_darkmode_auto && !global.isTelerikUi && !global.isExperienceEditor && !global.isAdminCache && !global.isSecurityWindow && !global.isContentHome && !global.isLoginPage && !global.isEditMode && !global.isUserManager && !global.isRules && !global.isAdmin || storage.feature_darkmode && storage.feature_darkmode_auto && !global.isTelerikUi && !global.isExperienceEditor && !global.isAdminCache && !global.isSecurityWindow && !global.isContentHome && !global.isLoginPage && !global.isEditMode && !global.isUserManager && !global.isRules && !global.isAdmin && currentScheme == "dark") {
 
+            darkMode = true;
             loadCssFile("css/dark/default-min.css");
             loadCssFile("css/dark/ribbon-min.css");
             loadCssFile("css/dark/contentmanager-min.css");
             loadCssFile("css/dark/dialogs-min.css");
             loadCssFile("css/dark/gallery-min.css");
             loadCssFile("css/dark/speak-min.css");
+            
 
         }
 
@@ -81,12 +85,27 @@ chrome.storage.sync.get((storage) => {
          */
         !global.isRichTextEditor ? document.querySelector('body').insertAdjacentHTML( 'beforeend', '<input type="hidden" class="extensionId" value="' + global.extensionId + '" />' ) : false;
 
+
         /**
          * Content Editor application
          */
         if(global.isContentEditor || global.isLaunchpad) { 
 
             consoleLog( "**** Content Editor / Launchpage ****" , "yellow");
+
+            if(!global.isLaunchpad) {
+                /**
+                 * Instant Search
+                 */
+                let globalHeader = document.querySelector(".sc-globalHeader");
+                let dbName = document.querySelector(".sc-ext-dbName");
+                dbName ? dbName.innerText = "" : false;
+                let html = '<input type="text" class="scInstantSearch scIgnoreModified" placeholder="Search in content or media" tabindex="0" accesskey="f" />';
+                let htmlResult = '<div class="scInstantSearchResults"></div>';
+                globalHeader.insertAdjacentHTML( 'afterbegin', htmlResult );
+                globalHeader.insertAdjacentHTML( 'afterbegin', html );
+                instantSearch();
+            }
 
             /**
              * Back/Previous buttons
@@ -613,7 +632,7 @@ chrome.storage.sync.get((storage) => {
                                 tdlanguage = findCountryName(tdlanguage);
                                 tdimage[0].onerror = function() { this.src = chrome.runtime.getURL("images/Flags/32x32/flag_generic.png"); }
                                 tdimage[0].src = chrome.runtime.getURL("images/Flags/32x32/flag_" + tdlanguage + ".png");
-                            
+                          
                             }
 
                         tdcount++;
@@ -647,7 +666,7 @@ chrome.storage.sync.get((storage) => {
                                 
                                 tdlanguage = findCountryName(td.innerText.trim());
                                 if(td.querySelector("#scFlag") == null) {
-                                    td.querySelector("label > span").insertAdjacentHTML( 'beforebegin', ' <img id="scFlag" src="' + chrome.runtime.getURL("images/Flags/16x16/flag_" + tdlanguage + ".png") + '" style="display: inline; vertical-align: middle; padding-right: 2px;" onerror="this.onerror=null;this.src=\'-/icon/Flags/16x16/flag_generic.png\';"/>' );
+                                    td.querySelector("label > span").insertAdjacentHTML( 'beforebegin', ' <img id="scFlag" src="' + chrome.runtime.getURL("images/Flags/16x16/flag_" + tdlanguage + ".png") + '" style="display: inline; vertical-align: middle; padding-right: 2px;" onerror="this.onerror=null;this.src=\'' + global.iconFlagGeneric + '\';"/>' );
                                 }
                             
                             }
@@ -678,7 +697,7 @@ chrome.storage.sync.get((storage) => {
                 for (let item of label) {
 
                     tdlanguage = findCountryName(item.innerText.trim());
-                    item.insertAdjacentHTML( 'beforebegin', ' <img id="scFlag" src="' + chrome.runtime.getURL("images/Flags/16x16/flag_" + tdlanguage + ".png") + '" style="display: inline; vertical-align: middle; padding-right: 2px;" onerror="this.onerror=null;this.src=\'-/icon/Flags/16x16/flag_generic.png\';"/>' );
+                    item.insertAdjacentHTML( 'beforebegin', ' <img id="scFlag" src="' + chrome.runtime.getURL("images/Flags/16x16/flag_" + tdlanguage + ".png") + '" style="display: inline; vertical-align: middle; padding-right: 2px;" onerror="this.onerror=null;this.src=\'' + global.iconFlagGeneric + '\';"/>' );
 
                 }
             }
@@ -767,9 +786,12 @@ chrome.storage.sync.get((storage) => {
                 //Send notification
                 sendNotification(notificationSubTitle,notificationBody);
 
+                //Is dark mode on?
+                (storage.feature_darkmode && !storage.feature_darkmode_auto || storage.feature_darkmode && storage.feature_darkmode_auto && currentScheme == "dark") ? darkMode = true : false;
+
                 //Update url Status
                 var parentSelector = parent.parent.document.querySelector("body");
-                checkUrlStatus(parentSelector);
+                checkUrlStatus(parentSelector, darkMode);
 
             }
         });

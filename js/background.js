@@ -1,6 +1,12 @@
-/* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
+/**
+ * Sitecore Author Toolbox
+ * A Google Chrome Extension
+ * - created by Ugo Quaisse -
+ * https://uquaisse.io
+ * ugo.quaisse@gmail.com
+ */ 
 
-"use strict";
+/* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 /*
  * Helpers and variables
@@ -158,6 +164,24 @@ function setIcon(tab) {
 //When message is requested from toolbox.js
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	
+	if (request.greeting == "get_pagespeed") {
+		console.log(request);
+
+		async function runPagespeed (url, apiKey) {
+
+			url = new URL(url);
+	  		url = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=" + url.href + "&screenshot=true&key="+apiKey
+
+	  		let request = await fetch(url)
+	  		let data = await request.json();
+	  		console.log(data);
+
+			await sendResponse({farewell: "screenshot", screenshot: data.lighthouseResult});
+		}
+		//Execute
+		runPagespeed(request.url, request.apiKey);
+
+	}
 	if (request.greeting == "sxa_site"){
 		checkSiteSxa(request, sender, sendResponse);
 	}
@@ -170,9 +194,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	  });    
 	}
 	return true;
+	
 });
-
-//When user righ clic
 
 //When a tab is updated
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {

@@ -8,11 +8,11 @@ export {checkUrlStatus};
 /**
  * Check HTTP status of a page
  */
-const checkUrlStatus = (source = null) => {
+const checkUrlStatus = (source = null, dark) => {
 
   //Variables
   var itemUrl = false;
-  var liveUrlStatus, html;
+  var liveUrlStatus, html, urlLoader;
 
   if(source == null) {
     if(document.querySelector(".sitecoreItemPath")) {
@@ -26,8 +26,11 @@ const checkUrlStatus = (source = null) => {
     }
   }
 
+
+  dark ? urlLoader = global.urlLoaderDark : urlLoader = global.urlLoader;
+
   //Preloader
-  liveUrlStatus ? liveUrlStatus.innerHTML = '<img src="' + global.urlLoader + '" style="width: 10px; float: initial; margin: unset;"/>' : false;
+  liveUrlStatus ? liveUrlStatus.innerHTML = '<img src="' + urlLoader + '" style="width: 10px; float: initial; margin: unset;"/>' : false;
 
   //Request
   setTimeout(function() {
@@ -37,8 +40,13 @@ const checkUrlStatus = (source = null) => {
         const controller = new AbortController();
         const signal = controller.signal;
 
-        var url = new Request(itemUrl);
-        var request = fetchTimeout(8000, fetch(url))
+        try {
+          var url = new Request(itemUrl);
+        } catch(error) {
+          console.log(error);
+        }
+        
+        var request = fetchTimeout(7500, fetch(url))
         .then(function(response) {
           
           //Variables
@@ -58,10 +66,13 @@ const checkUrlStatus = (source = null) => {
 
         })
         .catch(function(error) {
-            console.info("Sitecore Author Toolbox: Error in fetching your CD URL ("+itemUrl+"), it might be a timeout or a settings issue, please check.");
+            console.info("Sitecore Author Toolbox:", "Error in fetching your CD URL ("+itemUrl+"), it might be a timeout, a mixed content error (if you are over https) or a settings issue, please check or log a ticket at https://github.com/ugo-quaisse/sitecore-author-toolbox/issues/new/choose");
             html = "<span class='liveStatusGray'>...timeout</span>";
             liveUrlStatus != null ? liveUrlStatus.innerHTML = "" : false;
         });
+
+        // Abort request
+        controller.abort();
 
     }
 }, 200)

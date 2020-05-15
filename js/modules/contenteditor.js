@@ -1,8 +1,10 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from './global.js';
-import {loadCssFile, sitecoreItemJson, getScItemData} from './helpers.js';
+import * as local from './local.js'; //This file is missing on Github, you should create yours with all your private local API keys
+import {loadCssFile, sitecoreItemJson, getScItemData, preferesColorScheme} from './helpers.js';
 import {checkUrlStatus} from './url.js';
+import {checkHelpLink} from './help.js';
 import {cleanCountryName, findCountryName} from './language.js';
 
 export {sitecoreAuthorToolbox};
@@ -35,6 +37,8 @@ const sitecoreAuthorToolbox = () => {
     let scSearchPanel = document.querySelector ( "#SearchPanel" );
     let isTranslateMode = false;
     var scEditorHeaderVersionsLanguage = document.querySelector(".scEditorHeaderVersionsLanguage");
+    let currentScheme = preferesColorScheme();
+    let darkMode = false;
     
     if(scEditorHeaderVersionsLanguage) {
         var scLanguageTxtLong = scEditorHeaderVersionsLanguage.getAttribute("title"); //French : framçais
@@ -79,7 +83,7 @@ const sitecoreAuthorToolbox = () => {
         //Sitecore variables
         var scLanguage = document.querySelector("#scLanguage").value.toLowerCase();
         var scUrl = window.location.origin + '/?sc_itemid=' + sitecoreItemID + '&sc_mode=normal&sc_lang=' + scLanguage + '&sc_version=' +scVersion;
-        var scFlag, tabbedFlag; 
+        var scFlag, tabbedFlag;
 
         /**
         * > 1. Live URLs
@@ -153,7 +157,7 @@ const sitecoreAuthorToolbox = () => {
                     var imageId = sitecoreItemID.replace(/-/g, '').replace('{','').replace('}','');
                     sitecoreItemPath = window.location.origin + '/sitecore/shell/Applications/-/media/' + imageId + '.ashx?vs=' + scVersion + '&ts=' + Math.round(Math.random() * 100000);
                     //Prepare HTML (scInformation scWarning scError)
-                    scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + global.iconMedia + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Media Live URL</div><div class="scMessageBarText">If you want to preview this media</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + sitecoreItemPath + '" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this media</a></li></ul></div></div>'        
+                    scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + global.iconMedia + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Media Live URL</div><div class="scMessageBarText">If you want to preview this media</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + sitecoreItemPath + '" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this media</a> or <a href="' + sitecoreItemPath + '" download class="scMessageBarOption sitecoreItemPath">download it</a></li></ul></div></div>'        
                 } else {
                     //Prepare HTML (scInformation scWarning scError)
                     scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + global.icon + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Sitecore Live URL <span class="liveUrlBadge" onclick="location.href = \'' + global.launchpadPage + '?configure_domains=true&launchpad=true&url=' + global.windowLocationHref + '\'" title="Click to configure your domains">' + envBadge + '</span> <span class="liveUrlStatus"></span></div><div class="scMessageBarText">To preview this page in <b>"' + scLanguageTxtLong + '".</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + sitecoreItemPath + '" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this link</a> or try <a href="' + scUrl + '" target="_blank" class="scMessageBarOption">this alternative link</a></li></ul></div></div>'
@@ -162,14 +166,32 @@ const sitecoreAuthorToolbox = () => {
                 //Insert message bar into Sitecore Content Editor
                 scEditorID.insertAdjacentHTML( 'afterend', scMessage );
 
+                //Is dark mode on?
+                (storage.feature_darkmode && !storage.feature_darkmode_auto || storage.feature_darkmode && storage.feature_darkmode_auto && currentScheme == "dark") ? darkMode = true : false;
+
                 /**
                  * Live status
                  */
                 if(storage.feature_urlstatus && !isMedia) {
                   setTimeout(function() {
-                    checkUrlStatus();
+                    checkUrlStatus(null, darkMode);
                   },500);
                 }
+
+                /**
+                 * Check Page Speed (BETA)
+                 */
+                // chrome.runtime.sendMessage({greeting: "get_pagespeed", url: sitecoreItemPath, apiKey: local.googleApiKey}, response => {
+
+                //     console.log(response);
+
+                //     if(response.audits['final-screenshot']) {
+                //         var html = '<div style="position:absolute; right:40px;"><img src="' + response.audits['final-screenshot'].details.data.screenshot + '" style="width: 300px; border: 2px solid #fff; box-shadow: 1px 1px 10px rgba(0,0,0,0.2);"/></div>';
+                //         scEditorQuickInfo.insertAdjacentHTML( 'afterbegin', html );
+                //     } else {
+                //         console.info("Sitecore Author Toolbox:", "Error in fetching "+sitecoreItemPath+"'s screenshot, please check or log a ticket at https://github.com/ugo-quaisse/sitecore-author-toolbox/issues/new/choose");
+                //     }
+                // });
 
               }); // End cookie
 
@@ -183,13 +205,19 @@ const sitecoreAuthorToolbox = () => {
             //If not added yet
             if(!document.getElementById("scMessageBarInfo") && storage.feature_urls && storage.feature_messagebar) {
               
-                scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + global.iconEdit + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing an item data</div><div class="scMessageBarText">To see it, you need to add it to a page via</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet">Presentation Details or Experience Editor</li></ul></div></div>'
+                scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + global.iconEdit + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing an datasource</div><div class="scMessageBarText">To see it, you have to attach it to a component in your page via</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet">Presentation Details or Experience Editor</li></ul></div></div>'
                 scEditorID.insertAdjacentHTML( 'afterend', scMessage );
 
             }
 
         }      
     }
+
+    /**
+     * Help link banner
+     */
+    storage.feature_helplink == undefined ? storage.feature_helplink = true : false;
+    storage.feature_helplink ? checkHelpLink(sitecoreItemID, scLanguage, scVersion, storage.feature_helplink) : false;
 
     /**
      * Change Title window
@@ -278,18 +306,9 @@ const sitecoreAuthorToolbox = () => {
 
         for (let item of scErrors) {
 
-            var previousSibling = item.previousSibling;
-            if(previousSibling) {
-                var fieldId = previousSibling.closest("div").getAttribute("id").replace("ValidationMarker","");
-                var sectionTitle = document.querySelector("#"+fieldId).closest("table").closest("td").closest("table").previousSibling.innerText;
-                var sectionId = document.querySelector("#"+fieldId).closest("table").closest("td").closest("table").previousSibling.getAttribute("id");
-                var tabElem = document.querySelectorAll('[data-id="' + sectionId + '"]');
-                //toggleSection(' + tabElem + ',\'' + sectionTitle+ '\')
-
-                if( item.getAttribute("src") != '/sitecore/shell/themes/standard/images/bullet_square_yellow.png') {
-                  scMessageErrors += '<li class="scMessageBarOptionBullet" onclick="' + item.getAttribute("onclick") + '" style="cursor:pointer;">' + item.getAttribute("title") + '</li>';
-                  count++;
-                }
+            if( item.getAttribute("src") != '/sitecore/shell/themes/standard/images/bullet_square_yellow.png') {
+                scMessageErrors += '<li class="scMessageBarOptionBullet" onclick="' + item.getAttribute("onclick") + '" style="cursor:pointer;">' + item.getAttribute("title") + '</li>';
+                count++;
             }
 
         }
@@ -492,9 +511,9 @@ const sitecoreAuthorToolbox = () => {
 
         for(var section of scEditorSectionCaption) {
 
-            sectionTitle = section.innerText;
+            var sectionTitle = section.innerText;
             sectionTitle == "Quick Info" ? sectionTitle = "📎" : false;
-            sectionId = section.getAttribute("id");
+            var sectionId = section.getAttribute("id");
             var sectionClass = section.getAttribute("class");
             var sectionSelected = "";
             var sectionPanelDisplay = "";

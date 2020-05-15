@@ -331,6 +331,16 @@ document.body.onload = function() {
       document.getElementById("feature_gravatarimage").checked = true;
     }
   });
+  //Show help text
+  chrome.storage.sync.get(['feature_helplink'], function(result) {
+    if (!chrome.runtime.error && result.feature_helplink != undefined) {
+      if(result.feature_helplink) {
+        document.getElementById("feature_helplink").checked = true;
+      }
+    } else {
+      document.getElementById("feature_helplink").checked = true;
+    }
+  });
 }
 
 document.getElementById("feature_darkmode").onclick = function() {
@@ -438,7 +448,13 @@ document.querySelector("#set_domains").onclick = function(event) {
         if(url.origin != undefined) {
           currentCD.value = url.origin;
 
-          if(currentCM.value == currentCD.value) {
+          let cmUrl = new URL(currentCM.value);
+          let cdUrl = new URL(currentCD.value);
+
+          if(cmUrl.protocol == "https:" && cdUrl.protocol == "http:") {
+            alert("Warning!\nLive status might not work as expected. You will probably face a mixed-content issue as your CM and CD are using a different protocol (https vs http) \n\n" + cmUrl.origin + "\n" + cdUrl.origin);
+            error = true;
+          } else if(currentCM.value == currentCD.value) {
             alert("CM #" + parseInt(domainId+1) + " and CD #" + parseInt(domainId+1) + " are the exact same URL, please verify.");
             error = true;
           } else {
@@ -584,6 +600,11 @@ document.querySelector("#set").onclick = function(event) {
   chrome.storage.sync.set({"feature_gravatarimage": document.getElementById('feature_gravatarimage').checked}, function() {
     console.info('--> Experience Profile: ' + document.getElementById('feature_gravatarimage').checked);
   });
+    //Experience Profile
+  chrome.storage.sync.set({"feature_helplink": document.getElementById('feature_helplink').checked}, function() {
+    console.info('--> Help link: ' + document.getElementById('feature_helplink').checked);
+  });
+
 
   //Get URL parameters
   var url = new URL(window.location.href);

@@ -6,22 +6,9 @@
  * ugo.quaisse@gmail.com
  */
 
+ /* global scSitecore */
  /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
-//TODO: Autosave in Experience Editor
-// ((() => {
-//     const origOpen = XMLHttpRequest.prototype.open;
-//     XMLHttpRequest.prototype.open = function() {
-//         this.addEventListener('load', function() {
-//             console.log(this.responseURL);
-//             if(this.responseURL.include(".Save.CallServerSavePipeline")) {
-//             	console.log("SAVING!!!!!");
-//             }
-//             // console.log(this.responseText); //whatever the response was
-//         });
-//         origOpen.apply(this, arguments);
-//     };
-// }))();
 
 const copyTranslate = (leftElemId,rightElemId) => {
  	var left = document.querySelector('#'+leftElemId);
@@ -56,7 +43,7 @@ const toggleRibbon = () => {
 		scCrossPiece.setAttribute( 'style', 'height:300px !important' );
 		scWebEditRibbon.setAttribute( 'style', 'display:block !important' );
 		tabText.innerText = "▲ Hide";
-
+ 
 	}
 
 }
@@ -92,7 +79,7 @@ const toggleSection = (elem,name,fromerror = false) => {
 
  	}
 
-}
+} 
 
 const hideTab = (title, extensionId) => {
 	  var txt;
@@ -120,9 +107,20 @@ const hideTab = (title, extensionId) => {
 	  return false;
 }
 
+
 const toggleMediaIframe = (url) => {
 
 	var features = 'dialogWidth:1200px;dialogHeight:700px;help:no;scroll:auto;resizable:yes;maximizable:yes;closable:yes;center:yes;status:no;header:;autoIncreaseHeight:yes;forceDialogSize:no';	
 	scSitecore.prototype.showModalDialog(url, "", features, "", "")
 
+}
+
+const fadeEditorFrames = () => { 
+	document.querySelector("#EditorFrames").setAttribute("style","opacity:0.6");
+    document.querySelector(".scContentTreeContainer").setAttribute("style","opacity:0.6");
+    document.querySelector(".scEditorTabHeaderActive > span").innerText = "Loading...";
+    var timeout = setTimeout(function() {
+        document.querySelector("#EditorFrames").setAttribute("style","opacity:1");
+        document.querySelector(".scContentTreeContainer").setAttribute("style","opacity:1");
+    }, 8000)
 }

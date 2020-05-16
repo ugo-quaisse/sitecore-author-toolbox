@@ -1,9 +1,10 @@
 /**
  * Sitecore Author Toolbox
- * A Google Chrome Extension
- * - created by Ugo Quaisse -
+ * A Chrome/Edge Extension
+ * by Ugo Quaisse
  * https://uquaisse.io
  * ugo.quaisse@gmail.com
+ * Made with vanillaJS :-)
  */ 
 
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
@@ -71,7 +72,8 @@ chrome.storage.sync.get((storage) => {
             loadCssFile("css/dark/dialogs-min.css");
             loadCssFile("css/dark/gallery-min.css");
             loadCssFile("css/dark/speak-min.css");
-            
+
+            (navigator.platform.indexOf('Win') == 0) ? loadCssFile("css/dark/scrollbars-min.css") : false;
 
         }
 
@@ -93,18 +95,20 @@ chrome.storage.sync.get((storage) => {
 
             consoleLog( "**** Content Editor / Launchpage ****" , "yellow");
 
-            if(!global.isLaunchpad) {
-                /**
-                 * Instant Search
-                 */
+            /**
+             * Instant Search
+             */
+            storage.feature_instantsearch == undefined ? storage.feature_instantsearch = true : false;
+            
+            if(!global.isLaunchpad && storage.feature_instantsearch) {
+                           
                 let globalHeader = document.querySelector(".sc-globalHeader");
-                let dbName = document.querySelector(".sc-ext-dbName");
-                dbName ? dbName.innerText = "" : false;
-                let html = '<input type="text" class="scInstantSearch scIgnoreModified" placeholder="Search in content or media" tabindex="0" accesskey="f" />';
+                let html = '<input type="text" class="scInstantSearch scIgnoreModified" placeholder="Search for content or media" tabindex="0" accesskey="f" />';
                 let htmlResult = '<div class="scInstantSearchResults"></div>';
-                globalHeader.insertAdjacentHTML( 'afterbegin', htmlResult );
-                globalHeader.insertAdjacentHTML( 'afterbegin', html );
-                instantSearch();
+                globalHeader ? globalHeader.insertAdjacentHTML( 'afterbegin', htmlResult ) : false;
+                globalHeader ? globalHeader.insertAdjacentHTML( 'afterbegin', html ) : false;
+                globalHeader ? instantSearch() : false;
+
             }
 
             /**

@@ -341,6 +341,16 @@ document.body.onload = function() {
       document.getElementById("feature_helplink").checked = true;
     }
   });
+  //Instant Search
+  chrome.storage.sync.get(['feature_instantsearch'], function(result) {
+    if (!chrome.runtime.error && result.feature_instantsearch != undefined) {
+      if(result.feature_instantsearch) {
+        document.getElementById("feature_instantsearch").checked = true;
+      }
+    } else {
+      document.getElementById("feature_instantsearch").checked = true;
+    }
+  });
 }
 
 document.getElementById("feature_darkmode").onclick = function() {
@@ -600,11 +610,14 @@ document.querySelector("#set").onclick = function(event) {
   chrome.storage.sync.set({"feature_gravatarimage": document.getElementById('feature_gravatarimage').checked}, function() {
     console.info('--> Experience Profile: ' + document.getElementById('feature_gravatarimage').checked);
   });
-    //Experience Profile
+  //Help link
   chrome.storage.sync.set({"feature_helplink": document.getElementById('feature_helplink').checked}, function() {
     console.info('--> Help link: ' + document.getElementById('feature_helplink').checked);
   });
-
+  //Instant Search
+  chrome.storage.sync.set({"feature_instantsearch": document.getElementById('feature_instantsearch').checked}, function() {
+    console.info('--> Instant Search: ' + document.getElementById('feature_instantsearch').checked);
+  });
 
   //Get URL parameters
   var url = new URL(window.location.href);

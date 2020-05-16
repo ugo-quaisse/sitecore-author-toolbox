@@ -89,7 +89,7 @@ a.scSystemMenu {
 /* Caption */
 
 .scCaption {
-    background-color: #474747;
+    background-color: var(--black3);
     position: relative;
 }
 

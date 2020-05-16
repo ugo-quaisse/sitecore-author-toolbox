@@ -2842,10 +2842,6 @@ nobr:last-child > .scTabActive_Hover {
 
 .scContentTree {
   background: var(--black1) !important;
-  height: 100%;
-  overflow: auto;
-  position: relative;
-  padding-left: 10px;
 }
 
 #ContentTreeActualSize {

@@ -1,5 +1,5 @@
-# Sitecore Author Toolbox (Chrome extension)
-A google Chrome extension that brings a set of handy tools for Sitecore's authors.
+# Sitecore Author Toolbox (Chrome/Edge extension)
+A google Chrome/Edge extension that brings a set of handy tools for Sitecore's authors.
 
 [![Sitecore Author Toolbox Video](http://img.youtube.com/vi/f-IT1sLyl44/0.jpg)](http://www.youtube.com/watch?v=f-IT1sLyl44)
 
@@ -47,7 +47,7 @@ The latest version can be installed from the [Chrome Web Store here](https://chr
 
 The official support Twitter account for the library is at <https://twitter.com/uquaisse>.
 
-## Other extension for Sitecore developers
+## Other extensions
 
 If you are a Sitecore developer and you looking for more advanced features, I highly recommend Alan Null's extension available here https://github.com/alan-null/sc_ext or on Web Store under "Sitecore Extensions"
 

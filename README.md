@@ -47,3 +47,7 @@ The latest version can be installed from the [Chrome Web Store here](https://chr
 
 The official support Twitter account for the library is at <https://twitter.com/uquaisse>.
 
+## Other extension for Sitecore developers
+
+If you are a Sitecore developer and you looking for more advanced features, I highly recommend Alan Null's extension available here https://github.com/alan-null/sc_ext or on Web Store under "Sitecore Extensions"
+

@@ -5,6 +5,8 @@ A google Chrome/Edge extension that brings a set of handy tools for Sitecore's a
 ![Js](https://img.shields.io/github/languages/top/ugo-quaisse/sitecore-author-toolbox)
 ![Count](https://img.shields.io/github/languages/count/ugo-quaisse/sitecore-author-toolbox)
 
+![Size](https://img.shields.io/github/repo-size/ugo-quaisse/sitecore-author-toolbox)
+
 
 
 

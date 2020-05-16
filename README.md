@@ -2,7 +2,7 @@
 A google Chrome/Edge extension that brings a set of handy tools for Sitecore's authors.
 
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/mckfcmcdbgkgffdknpkaihjigmcnnbco)](https://chrome.google.com/webstore/detail/mckfcmcdbgkgffdknpkaihjigmcnnbco/)
-[![Js](https://img.shields.io/github/languages/top/ugo-quaisse/sitecore-author-toolbox)]
+![Js](https://img.shields.io/github/languages/top/ugo-quaisse/sitecore-author-toolbox)
 
 
 

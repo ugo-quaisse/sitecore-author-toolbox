@@ -37,6 +37,7 @@ This extension will help you to save a lot of time by providing a set of handy t
 * Auto Expand Tree
 * Translate Mode Copy Button
 * Experience Editor Quick Tabs
+* Experience Profile Gravatar image
 
 ## Sitecore installation directory
 
@@ -60,7 +61,13 @@ The official support Twitter account for the library is at <https://twitter.com/
 
 ![Licence](https://img.shields.io/github/license/ugo-quaisse/sitecore-author-toolbox)
 
-## Other extensions
+## Credits
 
-If you are a Sitecore developer and you looking for more advanced features, I highly recommend Alan Null's extension available here https://github.com/alan-null/sc_ext or on Web Store under "Sitecore Extensions"
+* Experience Profile Gravatar Image inspired by https://github.com/coreyasmith/sitecore-experience-profile-gravatar
+* Html Syntax highlight by Codemirror library https://github.com/codemirror/CodeMirror
+* Auto Expand tree inspired by https://github.com/alan-null/sc_ext
+
+## Other Sitecore extensions
+
+If you are a Sitecore developer and you looking for more advanced features, I recommend Alan Null's extension available at https://github.com/alan-null/sc_ext
 

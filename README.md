@@ -48,6 +48,7 @@ Requires that Sitecore is installed to the default directory of /sitecore/.
 ## Supported Sitecore version
 
 Tested on Sitecore versions:
+* 9.3.0
 * 9.2.0 (rev. 002893)
 * 8.2 (rev. 180406)
 

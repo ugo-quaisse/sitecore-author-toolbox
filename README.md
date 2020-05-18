@@ -53,17 +53,15 @@ Tested on Sitecore versions:
 * 8.2 (rev. 180406)
 
 ## How to install
-- Download repo and zip it
-- Go to chrome://extensions/ or edge://extensions/
-- Activate "Developer Mode"
-- Clic "Load Unpacked"
-- Choose zip file
-
-![Dev mode](https://uquaisse.io/wp-content/uploads/2020/05/devmode.png)]
+* Download repo and zip it
+* Go to chrome://extensions/ or edge://extensions/
+* Activate "Developer Mode"
+* Clic "Load Unpacked"
+* Choose zip file
 
 ## Live version
 
-The latest version can be installed from the [Chrome Web Store here](https://chrome.google.com/webstore/detail/mckfcmcdbgkgffdknpkaihjigmcnnbco/) 
+The latest stable version can be installed from the [Chrome Web Store here](https://chrome.google.com/webstore/detail/mckfcmcdbgkgffdknpkaihjigmcnnbco/) 
 
 ## Support
 

@@ -177,7 +177,7 @@ input[disabled], select[disabled] {
 }
 
   .scFormTable > tbody > tr > td:first-child {
-    color: #5E5E5E;
+    color: var(--text);
     vertical-align: top;
     padding-top: 14px;
     padding-left: 0;
@@ -316,7 +316,7 @@ input[type="submit"] {
     }
 
     .scButton:first-of-type, input[type="submit"]:first-of-type {
-        margin-left: 0;
+        margin-left: 5px;
     }
 
   .scButtonPrimary,
@@ -1812,10 +1812,40 @@ a.scHyperlinkButton {
 }
 
 .scMarginAbsolute {
-    top: 15px;
-    right: 15px;
-    bottom: 15px;
-    left: 15px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    padding: 15px;
+}
+
+.Row td.DataCell {
+  border: 1px solid var(--black2);
+}
+
+#Roles_searchBox,
+#Users_searchBox {
+  display: initial;
+}
+.scAccessViewerRight > img,
+.scSecurityItem > img,
+.scAccessRights > img {
+  filter: invert(1);
+}
+.scTreeview .scTreeItem, .scTreeview .scTreeItem_Hover {
+  padding: 3px;
+}
+.scTreeview .nodeSelected, .scTreeview .nodeSelected_Hover {
+  background-color: var(--blue) !important;
+  border-radius: 3px;
+  padding: 3px;
+}
+.scTreeview .header,
+.scTreeview .scTreeHeader {
+  background-color: var(--black2) !important;
+}
+.scTreeview .scTreeItem.hover {
+  background-color: var(--black4) !important;
 }
 
 .scStretch {
@@ -3884,7 +3914,7 @@ form {
   color: var(--white) !important;
 }
 .sc-uploader-content {
-  border: 1px dashed var(--text) !important;
+  border: 0px dashed var(--blue) !important;
 }
 select[disabled] > option {
   color: var(--black8) !important;

@@ -574,18 +574,18 @@ textarea:focus {
   color: #777;
 }
 
-.scInstansSeachLoading {
+.scInstantSeachLoading {
     padding-top: 11vh;
     color: #999999;
     font-size: 14px;
 }
 
-.scInstansSeachLoading > a {
+.scInstantSeachLoading > a {
     text-decoration: underline;
     color: #cccccc !important;
 }
 
-.scInstansSeachLoading > span {
+.scInstantSeachLoading > span {
     display: block;
     margin-top: -30px;
 }
@@ -603,7 +603,7 @@ textarea:focus {
 .scInstantSearchResults {
     position: absolute;
     width: 600px;
-    padding: 20px;
+    padding: 0px;
     height: 0px;
     visibility: hidden;
     opacity: 0;
@@ -635,14 +635,36 @@ textarea:focus {
     padding: 0px 0px 5px 0px;
     border-bottom: 1px solid #555555 !important;
     text-align: left;
+    margin: 20px;
 }
 
-.scInstantSearchResults > h2 {
+.scInstantSearchResults > li {
+    border: 1px solid transparent !important;
+    padding: 7px 30px 0px 30px;
+    transition: all ease-out .1s;
+}
+.scInstantSearchResults > li:focus,
+.scInstantSearchResults > li:hover {
+    background-color: rgba(11,132,255,1);
+    cursor: pointer !important;
+    outline: 0px !important;
+}
+.scInstantSearchResults > li:focus > p,
+.scInstantSearchResults > li:hover > p {
+    color: #ffffff !important;
+}
+
+/*.scInstantSearchResults > li:focus {
+    border: 1px solid rgba(14, 99, 156, 1) !important;
+    outline: 1px !important;
+    box-shadow: 0 0 6px rgba(14, 99, 156, 0.6) !important;
+}*/
+
+.scInstantSearchResults > li > h2 {
     font-weight: normal;
     font-size: 16px;
     color: #fff !important;
     line-height: normal;
-    text-indent: 20px;
     text-overflow: ellipsis;
     width: 100%;
     overflow: hidden;
@@ -652,18 +674,17 @@ textarea:focus {
     text-align: left;
 }
 
-.scInstantSearchResults > h2 > a {
+.scInstantSearchResults > li > h2 > a {
     cursor: pointer;
     color: #fff !important;
     text-align: left;
 }
 
-.scInstantSearchResults > p {
+.scInstantSearchResults > li > p {
     font-weight: normal;
     font-size: 13px;
     color: #999999 !important;
     line-height: normal;
-    text-indent: 20px;
     text-overflow: ellipsis;
     width: 100%;
     overflow: hidden;
@@ -672,7 +693,122 @@ textarea:focus {
     text-align: left;
 }
 
-.scInstantSearchResults > p > img {
-    vertical-align: bottom;
-    margin-right: 3px;
+.scInstantSearchResults > li > p > img {
+    vertical-align: text-top;
+    margin-right: 2px;
+}
+
+.scCountNodes {
+    opacity: 1;
+    background-color: #e0b407;
+    color: #fff;
+    padding: 2px 4px;
+    border-radius: 20px;
+    font-size: 9px;
+    font-size: 10px;
+    min-width: 10px;
+    min-height: 10px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: text-bottom;
+    transition: all ease-out .1s;
+}
+
+.scIconMenu {
+    width: 16px;
+    padding: 0px 9px;
+    cursor: pointer;
+    vertical-align: middle;
+    opacity: 1;  
+}
+
+.scIconMenu:hover {
+    opacity: 0.5;   
+}
+
+.sc-globalHeader-startButton {
+    float: left !important;
+}
+
+.sc-globalheader-appName {
+    color: #cccccc;
+    float: left;
+    font-size: 1.167em;
+    font-weight: normal;
+    margin-left: 15px;
+}
+
+ul.sc-accountInformation {
+    opacity: 1;
+}
+
+ul.sc-accountInformation li:last-child:after {
+    content: "" !important;
+    padding-left: 5px !important;
+    padding-right: 20px;
+    display: inherit !important;
+    cursor: pointer !important;
+}
+
+#globalHeaderUserPortrait {
+    border: 3px solid transparent;
+    margin-right: 2px;
+}
+
+#globalHeaderUserPortrait:hover {
+    border: 3px solid rgba(255,255,255,0.5);
+    transition: all ease-out .2s;
+}
+
+.sc-accountMenu {
+    position: absolute;
+    right: 5px;
+    top: 40px;
+    text-align: left;
+    width: fit-content;
+    min-width: 245px;
+    background-color: hsla(0, 0%, 7%, 0.7);
+    z-index: 100 !important;
+    border-radius: 5px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0px 5px 40px rgba(0,0,0,0.2);
+    visibility: hidden;
+    opacity: 0;
+    transition: all ease-in-out .2s;
+    padding: 0px !important;
+}
+
+#scRibbonToggle {
+    z-index: 1 !important;
+}
+
+ul.sc-accountMenu li {
+    display: inherit !important;
+    padding: 15px 30px !important;
+    line-height: normal !important;
+    cursor: pointer !important;
+}
+ul.sc-accountMenu li:first-child {
+    /*padding-top: 10px !important;*/
+}
+ul.sc-accountMenu li:last-child {
+    border-top: 0.5px solid rgba(255,255,255,0.2);
+}
+
+ul.sc-accountMenu li:hover {
+    background-color: #0b84ff;
+    cursor: pointer !important;
+}
+
+ul.sc-accountMenu li:hover:first-child {
+    border-radius: 5px 5px 0px 0px;
+}
+ul.sc-accountMenu li:hover:last-child {
+    border-radius: 0px 0px 5px 5px;
+}
+
+ul.sc-accountMenu li:last-child:after,
+ul.sc-accountMenu li:after {
+    content: "" !important;
+    display: none !important;
 }

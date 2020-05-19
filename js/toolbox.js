@@ -63,7 +63,7 @@ chrome.storage.sync.get((storage) => {
         storage.feature_darkmode == undefined ? storage.feature_darkmode = false : false;
         storage.feature_darkmode_auto == undefined ? storage.feature_darkmode_auto = false : false;
 
-        if(storage.feature_darkmode && !storage.feature_darkmode_auto && !global.isTelerikUi && !global.isExperienceEditor && !global.isAdminCache && !global.isSecurityWindow && !global.isContentHome && !global.isLoginPage && !global.isEditMode && !global.isUserManager && !global.isRules && !global.isAdmin || storage.feature_darkmode && storage.feature_darkmode_auto && !global.isTelerikUi && !global.isExperienceEditor && !global.isAdminCache && !global.isSecurityWindow && !global.isContentHome && !global.isLoginPage && !global.isEditMode && !global.isUserManager && !global.isRules && !global.isAdmin && currentScheme == "dark") {
+        if(storage.feature_darkmode && !storage.feature_darkmode_auto && !global.isTelerikUi && !global.isExperienceEditor && !global.isAdminCache && !global.isContentHome && !global.isLoginPage && !global.isEditMode && !global.isRules && !global.isAdmin || storage.feature_darkmode && storage.feature_darkmode_auto && !global.isTelerikUi && !global.isExperienceEditor && !global.isAdminCache && !global.isContentHome && !global.isLoginPage && !global.isEditMode && !global.isRules && !global.isAdmin && currentScheme == "dark") {
 
             darkMode = true;
             loadCssFile("css/dark/default-min.css");
@@ -87,7 +87,6 @@ chrome.storage.sync.get((storage) => {
          */
         !global.isRichTextEditor ? document.querySelector('body').insertAdjacentHTML( 'beforeend', '<input type="hidden" class="extensionId" value="' + global.extensionId + '" />' ) : false;
 
-
         /**
          * Content Editor application
          */
@@ -103,12 +102,58 @@ chrome.storage.sync.get((storage) => {
             if(!global.isLaunchpad && storage.feature_instantsearch) {
                            
                 let globalHeader = document.querySelector(".sc-globalHeader");
-                let html = '<input type="text" class="scInstantSearch scIgnoreModified" placeholder="Search for content or media" tabindex="0" accesskey="f" />';
-                let htmlResult = '<div class="scInstantSearchResults"></div>';
+                let html = '<input type="text" class="scInstantSearch scIgnoreModified" placeholder="Search for content or media" tabindex="1" accesskey="f">';
+                let htmlResult = '<ul class="scInstantSearchResults"></ul>';
                 globalHeader ? globalHeader.insertAdjacentHTML( 'afterbegin', htmlResult ) : false;
                 globalHeader ? globalHeader.insertAdjacentHTML( 'afterbegin', html ) : false;
                 globalHeader ? instantSearch() : false;
 
+            }
+
+            /**
+             * User menu
+             */
+            if(!global.isLaunchpad) {
+                let accountInformation = document.querySelector(".sc-accountInformation");
+                let startButton = document.querySelector(".sc-globalHeader-startButton");
+                if(accountInformation) {
+
+                    //Variables
+                    let scUploadMediaUrl = '/sitecore/client/Applications/Dialogs/UploadMediaDialog?ref=list';
+                    let scInsertPageUrl = '/sitecore/shell/default.aspx?xmlcontrol=Gallery.New&id=%7B9320D5B7-64AF-4C15-9357-FD8B0DE1C0DF%7D&la=en&vs=2&db=master';
+                    
+                    //Add app name
+                    let htmlApp = '<div class="sc-globalheader-appName">Content Editor</div>';
+                    startButton ? startButton.insertAdjacentHTML( 'afterend', htmlApp ) : false;
+
+                    //Add icons
+                    let htmlIcon = '<img title="Insert a new page" onclick="javascript:scSitecore.prototype.showModalDialog(\'' + scInsertPageUrl + '\', \'\', \'\', null, null); false" src="' + global.iconAdd + '" class="scIconMenu"/>';
+                    htmlIcon += '<img title="Upload Media" onclick="javascript:scSitecore.prototype.showModalDialog(\'' + scUploadMediaUrl + '\', \'\', \'\', null, null); false" src="' + global.iconUpload + '" class="scIconMenu"/>';
+                    htmlIcon += '<img title="Open Workbox" onclick="javascript:scSitecore.prototype.showModalDialog(\'' + global.workboxPage.replace("&sc_bw=1","&sc_bw=0") + '\', \'\', \'\', null, null); false" src="' + global.iconBell + '" class="scIconMenu"/>';
+                    accountInformation.insertAdjacentHTML( 'afterbegin', htmlIcon );
+
+                    let accountUser = accountInformation.querySelectorAll("li")[1].innerText;
+                    accountInformation.querySelector("li").remove();
+                    accountInformation.querySelector("li").innerHTML = accountInformation.querySelector("li > img").outerHTML;
+                    accountInformation.querySelector("li > img").setAttribute("id","globalHeaderUserPortrait");
+
+                    //Generate menu
+                    let htmlMenu = '<ul class="sc-accountMenu">';
+                    htmlMenu += '<li onclick="javascript:return scForm.invoke(\'preferences:changeuserinformation\', event)">My account (' + accountUser + ')</li>';
+                    htmlMenu += '<li onclick="javascript:return scForm.invoke(\'security:changepassword\', event)">Change Password</li>';
+                    htmlMenu += '<li onclick="javascript:return scForm.invoke(\'shell:useroptions\', event)">Application Options</li>';
+                    htmlMenu += '<li onclick="window.open(\'' + global.launchpadPage + '\')">Sitecore Author Toolbox Options</li>';
+                    htmlMenu += '<li onclick="javascript:return scForm.invoke(\'preferences:changeregionalsettings\', event)">Region and Languages</li>';
+                    htmlMenu += '<li onclick="javascript:return scForm.invoke(\'contenteditor:close\', event)">Logout</li>';
+                    htmlMenu += '</ul>';
+                    accountInformation.insertAdjacentHTML( 'afterbegin', htmlMenu );
+
+                    document.addEventListener('click', (event) => {
+                        event.srcElement.id == "globalHeaderUserPortrait"
+                        ? document.querySelector(".sc-accountMenu").setAttribute("style","visibility: visible; top: 50px; opacity: 1;")
+                        : document.querySelector(".sc-accountMenu").setAttribute("style","visibility: hidden; top: 40px; opacity: 0;");
+                    });
+                }
             }
 
             /**
@@ -708,10 +753,12 @@ chrome.storage.sync.get((storage) => {
         }
 
 
-        /*
-        * > 09. Auto Expand (Inspired by https://github.com/alan-null/sc_ext)
-        */
-        storage.feature_autoexpand == undefined ? storage.feature_autoexpand = true : false;    
+        /**
+         * Auto Expand (Inspired by https://github.com/alan-null/sc_ext)
+         */
+        storage.feature_autoexpand == undefined ? storage.feature_autoexpand = true : false;
+        storage.feature_autoexpandcount == undefined ? storage.feature_autoexpandcount = false : false;
+
         if(storage.feature_autoexpand) {
 
             //Content tree
@@ -730,22 +777,57 @@ chrome.storage.sync.get((storage) => {
                     }
                 } 
 
-                //Open tree -> Auto expand if 1 node
-                if (!event.target.matches('.scContentTreeNodeGlyph')) return;
-                let glyphId = event.target.id;
+                //Content Tree
+                if (event.target.matches('.scContentTreeNodeGlyph')) {
+                
+                    let glyphId = event.target.id;
 
-                setTimeout(function() {
-                  if(document && glyphId) {   
-                    let subTreeDiv = document.querySelector("#"+glyphId).nextSibling.nextSibling.nextSibling;
-                    if(subTreeDiv) {
-                      let newNodes = subTreeDiv.querySelectorAll(".scContentTreeNode");
-                      if(newNodes.length == 1) { newNodes[0].querySelector(".scContentTreeNodeGlyph").click(); }
-                    }
-                  }
-                }, 200);
+                    setTimeout(function() {
+                      if(document && glyphId) {   
+                        let subTreeDiv = document.querySelector("#"+glyphId).nextSibling.nextSibling.nextSibling                 
+                        if(subTreeDiv) {
+                            let newNodes = subTreeDiv.querySelectorAll(".scContentTreeNode");
+                            newNodes.length == 1 ? newNodes[0].querySelector(".scContentTreeNodeGlyph").click() : false;
+
+                            if(storage.feature_autoexpandcount) {
+                                let subTreeMain = document.querySelector("#"+glyphId).nextSibling.nextSibling;
+                                let subTreeMainImg = subTreeMain.querySelector(".scContentTreeNodeIcon");
+                                let subTreeMainText = subTreeMain.innerText;
+                                document.querySelectorAll(".scCountNodes").forEach(function(element) { element.setAttribute("style","display:none") })
+                                subTreeMain.innerHTML = "<span>" + subTreeMainImg.outerHTML + subTreeMainText + " <span class='scCountNodes'>" + newNodes.length + "</span> </span>";
+                            }
+
+                        } else {
+
+                            let subTreeMain = document.querySelector("#"+glyphId).nextSibling.nextSibling;
+                            subTreeMain.querySelector(".scCountNodes") ? subTreeMain.querySelector(".scCountNodes").remove() : false;
+
+                        }
+                      }
+                    }, 200);
+
+                }
+
+                //Media Upload
+                if (event.target.matches('.dynatree-expander')) {
+                    
+                    let glyphId = event.path[1];
+
+                    setTimeout(function() {
+                      if(document && glyphId) {
+                        let subTreeDiv = glyphId.nextSibling
+                        console.log(subTreeDiv);              
+                        if(subTreeDiv) {
+                            let newNodes = subTreeDiv.querySelectorAll(".dynatree-has-children");
+                            newNodes.length == 1 ? newNodes[0].querySelector(".dynatree-expander").click() : false;
+                            console.log(newNodes);   
+                        }
+                      }
+                    }, 200);
+
+                }
 
             }, false);
-
 
             //Security Editor 
             document.addEventListener('mousedown', function (event) {

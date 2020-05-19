@@ -38,3 +38,8 @@ body.contentEditor:after {
 .scWindowBorder1 {
     border: 0px solid !important;
 }
+
+ul.sc-accountInformation {
+    opacity: 0;
+    transition: all ease-in-out .1s;
+}

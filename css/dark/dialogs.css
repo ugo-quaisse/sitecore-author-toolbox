@@ -89,7 +89,9 @@ form {
 }
 
 .DialogHeaderDescription {
-    padding: 0 75px 15px 15px;
+    padding: 10px 75px 10px 15px;
+    background-color: var(--black2);
+    color: var(--black9);
 }
 
 

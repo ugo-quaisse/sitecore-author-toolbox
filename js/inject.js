@@ -115,7 +115,11 @@ const toggleMediaIframe = (url) => {
 
 }
 
-const fadeEditorFrames = () => { 
+const fadeEditorFrames = () => {
+	
+	let divResults = document.querySelector('.scInstantSearchResults');
+	divResults.setAttribute('style', 'height:0px; opacity: 0; visibility: hidden; top: 43px;');
+
 	document.querySelector("#EditorFrames").setAttribute("style","opacity:0.6");
     document.querySelector(".scContentTreeContainer").setAttribute("style","opacity:0.6");
     document.querySelector(".scEditorTabHeaderActive > span").innerText = "Loading...";

@@ -105,6 +105,8 @@
 
 form.sc-uploader {
   background-color: var(--black2) !important;
+  border: 2px dashed var(--black6);
+  border-radius:5px;
 }
 
 .sc .sc-smartpanel {

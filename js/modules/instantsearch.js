@@ -2,6 +2,7 @@
 
 import * as global from './global.js'
 import {exeJsCode} from './helpers.js';
+import {pathToBreadcrumb} from './experimentation.js';
 
 export { instantSearch }
 
@@ -31,15 +32,15 @@ const instantSearch = () => {
     //Tab index
 	divResults.addEventListener('keyup', (event) => {
 
-		let ref = event.target != null ? event.target : event.srcElement;
-		
+		console.log(event.key);
+
 		if (event.key === 'ArrowUp') {
 			
-			document.activeElement.previousElementSibling.focus();
+			document.activeElement.nextElementSibling ? document.activeElement.previousElementSibling.focus() : false;
 
 		} else if (event.key === 'ArrowDown') {
 			
-			document.activeElement.nextElementSibling.focus();
+			document.activeElement.nextElementSibling ? document.activeElement.nextElementSibling.focus() : false;
 
 		} else if (event.key === 'Enter') {
 			
@@ -47,6 +48,15 @@ const instantSearch = () => {
 	        ref ? exeJsCode(`fadeEditorFrames(); setTimeout(function() { scForm.invoke("item:load(id=` + ref.getAttribute('data-scitem') + `,language=` + ref.getAttribute('data-language') + `,version=` + ref.getAttribute('data-version') + `)") }, 150)`) : false;
 	    
 	    } else if (event.key === 'Escape') {
+			
+	        divResults.setAttribute('style', 'height:0px; opacity: 0; visibility: hidden; top: 43px;');
+
+	    }
+	});
+
+	//Document
+	document.addEventListener('keyup', (event) => {
+		if (event.key === 'Escape') {
 			
 	        divResults.setAttribute('style', 'height:0px; opacity: 0; visibility: hidden; top: 43px;');
 
@@ -82,20 +92,24 @@ const instantSearch = () => {
          		globalTimeout = null
          		// Preload results
             	divResults.setAttribute('style', 'opacity: 1; visibility: visible; top: 48px;')
-            	divResults.innerHTML = '<div class="scInstantSeachLoading"><img class="pulseAnimate" src="' + global.iconInstantSearch + '" /><span class="textLoading"><span></div>'
+            	divResults.innerHTML = '<div class="scInstantSeachLoading"><img loading="lazy" class="pulseAnimate" src="' + global.iconInstantSearch + '" /><span class="textLoading"><span></div>'
 
             	if (divResults.querySelector('.textLoading')) {
 	            	var loadingTimeout1 = setTimeout(function () {
-	            		divResults.querySelector('.textLoading').innerText = 'Hang tight, Sitecore is processing your request ...'
+	            		divResults.querySelector('.textLoading').innerText = 'Sitecore is processing your request ...'
 	            	}, 6000)
 
 	            	var loadingTimeout2 = setTimeout(function () {
-	            		divResults.querySelector('.textLoading').innerText = '... it takes a little longer than expected, bear with us...'
+	            		divResults.querySelector('.textLoading').innerText = '... Hang tight, it takes a little longer than expected...'
 	            	}, 11000)
+
+	            	var loadingTimeout3 = setTimeout(function () {
+	            		divResults.querySelector('.textLoading').innerText = '... server is warming up, bear with us :-)'
+	            	}, 16000)
             	}
 
 			    var ajax = new XMLHttpRequest()
-			    ajax.timeout = 17000
+			    ajax.timeout = 20000
 			    ajax.open('GET', '/sitecore/shell/applications/search/instant/instantsearch.aspx?q=' + event.target.value + '&v=1', true)
 			    ajax.onreadystatechange = function () {
 			        if (ajax.readyState === 4 && ajax.status == '200') {
@@ -151,9 +165,9 @@ const instantSearch = () => {
             				// Append
             				if (category.toLowerCase() == 'content' || category.toLowerCase() == 'media library' || category.toLowerCase() == 'direct hit') {
             					showCat ? html += '<h1>' + category + '</h1>' : false
-            					html += '<li class="scInstantRow" tabindex="0" role="link" data-scitem="' + scItem + '" data-language="' + scLanguage + '" data-version="' + scVersion + '">';
-            					html += '<h2 title="' + title + '"><a onclick=\'fadeEditorFrames(); setTimeout(function() { scForm.invoke("item:load(id=' + scItem + ',language=' + scLanguage + ',version=' + scVersion + ')") }, 150)\'>' + text + '</a></h2>'
-            					html += '<p title="' + title + '"><img src="' + img + '" onerror="this.onerror=null;this.src=\'' + global.iconInstantSearchGeneric + '\';"/> ' + title + '</p>'
+            					html += '<li onclick=\'fadeEditorFrames(); setTimeout(function() { scForm.invoke("item:load(id=' + scItem + ',language=' + scLanguage + ',version=' + scVersion + ')") }, 150)\' class="scInstantRow" tabindex="0" role="link" data-scitem="' + scItem + '" data-language="' + scLanguage + '" data-version="' + scVersion + '">';
+            					html += '<h2 title="' + title + '">' + text + '</h2>'
+            					html += '<p title="' + title + '"><img loading="lazy" src="' + img + '" onerror="this.onerror=null;this.src=\'' + global.iconInstantSearchGeneric + '\';"/> ' + pathToBreadcrumb(title, ">", false) + '</p>'
             					html += '</li>';
             					count++
             				}
@@ -187,10 +201,11 @@ const instantSearch = () => {
 
 		            (loadingTimeout1 != null) ? clearTimeout(loadingTimeout1) : false;
 		            (loadingTimeout2 != null) ? clearTimeout(loadingTimeout2) : false;
+		            (loadingTimeout3 != null) ? clearTimeout(loadingTimeout3) : false;
 			    }
 			    ajax.send(null)
          	}
-        }, 500)
+        }, 1000)
     }, false)
   }
 }

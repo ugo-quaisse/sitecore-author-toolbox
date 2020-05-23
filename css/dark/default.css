@@ -3754,7 +3754,7 @@ div.content {
 }
 .btn-search {
   background-color: var(--black2) !important;
-  background-image: url(../images/edition-magnifier.png);
+  background-image: url('chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.png');
   box-shadow: inset 0 1px transparent;
 }
 .btn-search, .btn-clear {
@@ -3998,3 +3998,17 @@ a.scResult:hover {
   background: var(--black2) !important;
 }
 
+#scModal {
+    color: var(--text) !important;
+    background-color: hsla(0, 0%, 7%, 0.7) !important;
+}
+
+#scModal .item:hover {
+    background-color: var(--black5);
+}
+
+#scModal .footer {
+    background-color: var(--black1) !important;
+    color: var(--text) !important;
+    border-top: 1px solid var(--black2) !important;
+}

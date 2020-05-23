@@ -2,7 +2,7 @@
 
 import * as global from './global.js';
 
-export {consoleLog, loadCssFile, loadJsFile, exeJsCode, preferesColorScheme, sitecoreItemJson, fetchTimeout, getScItemData, repositionElement, startDrag, calcMD5};
+export {consoleLog, loadCssFile, loadJsFile, exeJsCode, preferesColorScheme, sitecoreItemJson, fetchTimeout, getScItemData, setPlural, setTextColour, repositionElement, startDrag, calcMD5};
 
 
 /**
@@ -151,6 +151,13 @@ const getScItemData = () => {
 }
 
 /**
+ * Plural english
+ */
+const setPlural = (int) => {
+    return int > 1 ? "s" : "";
+}
+
+/**
  * Used with Fetch as a timout event
  */
 const fetchTimeout = (time, promise) => {
@@ -165,7 +172,7 @@ const fetchTimeout = (time, promise) => {
 /**
  * Reposition element when dragged
  */
-function repositionElement(event) {
+const repositionElement = (event) => {
     var initX, mousePressX;
     this.style.left = initX + event.clientX - mousePressX + 'px';
 }
@@ -173,7 +180,7 @@ function repositionElement(event) {
 /**
  * Make an element draggable
  */
-function startDrag() {
+const startDrag = () => {
     var initX, mousePressX;
     var contextmenu = document.querySelector('.scExpTab');
     if(contextmenu) {
@@ -190,6 +197,26 @@ function startDrag() {
 
     }, false);
     }
+}
+
+const setTextColour = (hex) => {
+
+    hex = hex.replace("#","");
+    let rgb = [];
+
+    //Convert hex to RGB
+    let bigint = parseInt(hex, 16);
+    rgb[0] = (bigint >> 16) & 255;
+    rgb[1] = (bigint >> 8) & 255;
+    rgb[2] = bigint & 255;
+
+    // http://www.w3.org/TR/AERT#color-contrast
+    const brightness = Math.round(((parseInt(rgb[0]) * 299) +
+                          (parseInt(rgb[1]) * 587) +
+                          (parseInt(rgb[2]) * 114)) / 1000);
+    const textColour = (brightness > 170) ? '#111111' : '#ffffff';
+
+    return textColour;
 }
 
 /*

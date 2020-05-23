@@ -40,6 +40,41 @@ body.contentEditor:after {
     visibility: visible;
 }
 
+.scOverlay {
+    background: rgba(0,0,0,0.2);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9;
+    visibility: hidden;
+}
+
+.scSystemButtons {
+    visibility: hidden !important;
+}
+
+#BTAddNewSearch {
+    background-color: transparent;
+    cursor: pointer;
+    border: 0px solid #bdbdbd; 
+    box-shadow: inset 0 0px #ffffff; 
+    background-image: url('chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+    margin: 16px 0px;
+}
+
+#BTAddNewSearch:hover {
+    opacity: 0.7;
+}
+
 .scMenuPanelItem, .scMenuPanelItem_Hover, .scMenuPanelItemSelected_Hover, .scMenuPanelItemSelected {
     padding-left: 0;
     padding-right: 0;
@@ -357,7 +392,7 @@ a.scTileItem:hover {
 }
 #scEditorTabs > ul {
     display: -webkit-box;
-    overflow: auto;
+    overflow-x: scroll;
     width: 100%;
     background-color: transparent;
     border-bottom: 0px;
@@ -446,6 +481,16 @@ a.scTileItem:hover {
 
 @keyframes slide {
     100% { right: 15px; }
+}
+
+.wbNotificationMenu {
+    position: absolute;
+    background-color: #dc2a1d;
+    width: 6px;
+    height: 6px;
+    top: 30px;
+    right: 80px;
+    border-radius: 10px;
 }
 
 .wbNotification {
@@ -553,13 +598,13 @@ textarea:focus {
 .scInstantSearch  {
     margin: auto !important;
     position: absolute  !important;
-    width: 370px  !important;
-    left: calc(50% - 370px/2)  !important;
+    width: 450px  !important;
+    left: calc(50% - 450px/2)  !important;
     padding: 8px 12px  !important;
     top: 6px  !important;
-    background: #171717 url('chrome-extension://__MSG_@@extension_id__/images/magnifier.svg') no-repeat center right 10px !important;
+    background: #111111 url('chrome-extension://__MSG_@@extension_id__/images/magnifier.svg') no-repeat center right 10px !important;
     z-index: 10000 !important;
-    font-size: 14px !important;
+    font-size: 15px !important;
     box-sizing: border-box;
     display: block;
     line-height: 1.42857143;
@@ -567,9 +612,12 @@ textarea:focus {
     border: 1px solid #222222 !important;
     border-radius: 4px !important;
     box-shadow: inset 0 0px 4px transparent !important;
-    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: all ease-in-out .15s !important;
 }
-
+.scInstantSearch:focus  {
+    background: #ffffff url('chrome-extension://__MSG_@@extension_id__/images/magnifier.svg') no-repeat center right 10px !important;
+    color: #333333 !important;
+}
 .scInstantSearch::placeholder {
   color: #777;
 }
@@ -602,8 +650,9 @@ textarea:focus {
 
 .scInstantSearchResults {
     position: absolute;
-    width: 600px;
+    width: 620px;
     padding: 0px;
+    padding-bottom: 20px;
     height: 0px;
     visibility: hidden;
     opacity: 0;
@@ -628,7 +677,7 @@ textarea:focus {
     color: #999999 !important;
     line-height: normal;
     text-overflow: ellipsis;
-    width: 100%;
+    width: calc(100% - 40px);
     overflow: hidden;
     white-space: nowrap;
     margin: 5px 0px 15px 0px;
@@ -719,7 +768,8 @@ textarea:focus {
     padding: 0px 9px;
     cursor: pointer;
     vertical-align: middle;
-    opacity: 1;  
+    opacity: 1;
+    transition: all ease-out .1s;
 }
 
 .scIconMenu:hover {
@@ -811,4 +861,125 @@ ul.sc-accountMenu li:last-child:after,
 ul.sc-accountMenu li:after {
     content: "" !important;
     display: none !important;
+}
+
+.scCaption {
+    background-color: #2b2b2b !important;
+}
+
+#scModal {
+    position: absolute;
+    width: 720px;
+    height: 400px;
+    padding: 0px;
+    visibility: hidden;
+    z-index: 10;
+    left: calc(50% - 720px/2);
+    top: calc(50% - (400px/2) - 10px);
+    opacity: 0;
+    color: #000000;
+    background-color: hsla(240, 240, 240, 0.9);
+    border-radius: 5px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0px 5px 40px rgba(0,0,0,0.2);
+    transition: all ease-in-out .2s;
+}
+
+#scModal .header {
+    width: calc(100% - 54px);
+    background-color: #111111;
+    padding: 25px 27px 10px 27px;
+    color: #fff;
+    font-family: 'Open Sans', Arial, 'Microsoft YaHei', sans-serif;
+    font-size: 18px;
+    line-height: 40px;
+}
+
+#scModal .header .close {
+    position: absolute;
+    right: 17px;
+    top: 22px;
+    opacity: 0.9;
+    width: 16px;
+    height: 16px;
+    background: url('chrome-extension://__MSG_@@extension_id__/images/dialog_close.png') no-repeat center center;
+    z-index: 100;
+    cursor: pointer;
+}
+
+#scModal .header .maximize {
+    position: absolute;
+    right: 51px;
+    top: 22px;
+    opacity: 0.9;
+    width: 16px;
+    height: 16px;
+    background: url('chrome-extension://__MSG_@@extension_id__/images/dialog_maximize.png') no-repeat center center;
+    z-index: 100;
+    cursor: pointer;
+}
+
+#scModal .header .close:hover,
+#scModal .header .maximize:hover {
+    opacity: 1;
+}
+
+#scModal .main {
+    height: calc(100% - 75px);
+    overflow: scroll;
+}
+
+#scModal .noResult {
+    margin:auto;
+    font-size: 18px;
+    font-family: 'Open Sans', Arial, 'Microsoft YaHei', sans-serif;
+    padding-top: 20%;
+    text-align: center;
+    color: #666666;
+}
+
+#scModal .item {
+    float: left;
+    width: 140px;
+    padding: 20px;
+    cursor: pointer;
+    text-align: center;
+    background-color: transparent;
+    border-radius: 5px;
+    font-size: 12px;
+    font-family: 'Open Sans', Arial, 'Microsoft YaHei', sans-serif;
+    transition: all ease-in-out .1s;
+}
+
+#scModal .item a {
+    font-size: 12px;
+}
+
+#scModal .item:hover {
+    background-color: #dddddd;
+    border-radius: 5px;
+}
+
+#scModal .footer {
+    width: calc(100% - 54px);
+    background-color: #e3e3e3;
+    padding: 20px 27px;
+    font-family: 'Open Sans', Arial, 'Microsoft YaHei', sans-serif;
+    color: #777;
+    font-size: 12px;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    border-top: 1px solid #cccccc !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#scModal .footer b {
+    font-weight: normal;
+    background-color: #1e8aff;
+    color: #fff;
+    padding: 2px 4px;
+    border-radius: 3px;
 }

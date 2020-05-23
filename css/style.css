@@ -35,6 +35,7 @@ body.contentEditor:after {
     transition-delay: 0.2s;
 }
 
+.scWorkboxPanel,
 .scWindowBorder1 {
     border: 0px solid !important;
 }
@@ -42,4 +43,14 @@ body.contentEditor:after {
 ul.sc-accountInformation {
     opacity: 0;
     transition: all ease-in-out .1s;
+}
+
+#scCreatePlus {
+    visibility: hidden;
+}
+
+#scModal {
+    visibility: hidden;
+    opacity: 0;
+    transition: all ease-in-out .2s;
 }

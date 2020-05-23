@@ -9,7 +9,6 @@
  /* global scSitecore */
  /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
-
 const copyTranslate = (leftElemId,rightElemId) => {
  	var left = document.querySelector('#'+leftElemId);
  	var right = document.querySelector('#'+rightElemId);
@@ -49,7 +48,7 @@ const toggleRibbon = () => {
 }
 
 const toggleSection = (elem,name,fromerror = false) => {
-
+	
 	//Change status of the tabs
 	var scEditorTab = document.querySelectorAll(".scEditorTab");
 	var scSections = document.querySelector("#scSections");
@@ -75,6 +74,10 @@ const toggleSection = (elem,name,fromerror = false) => {
  			sectionPanel.setAttribute( 'style', 'display: table !important' );
  			section.classList.remove("scEditorSectionCaptionCollapsed");
           	section.classList.add("scEditorSectionCaptionExpanded");
+
+          	//Scroll
+          	let tabPosition = tab.getBoundingClientRect();
+          	console.log(tabPosition);
  		}
 
  	}
@@ -127,4 +130,33 @@ const fadeEditorFrames = () => {
         document.querySelector("#EditorFrames").setAttribute("style","opacity:1");
         document.querySelector(".scContentTreeContainer").setAttribute("style","opacity:1");
     }, 8000)
+}
+
+const insertPage = (scItem, scItemName) => {
+	document.querySelector(".scOverlay").setAttribute("style","visibility:visible")
+	document.querySelector("#scModal").setAttribute("data-scItem",scItem);
+	document.querySelector("#scModal").setAttribute("data-scItemName",scItemName);
+	scItem != undefined ? document.querySelector("#scModal > .main").innerHTML = '<div class="noResult">Loading...<div>' : false;
+	scItemName != undefined ? document.querySelector("#scModal > .header > .title").innerHTML = 'Insert' : false;
+	document.querySelector("#scModal").setAttribute("style","opacity:1; visibility:visible; top: calc(50% - 400px/2)")
+}
+
+const insertPageClose = () => {
+	setTimeout(function() {
+		document.querySelector(".scOverlay").setAttribute("style","visibility:hidden")
+		document.querySelector("#scModal").setAttribute("style","opacity:0; visibility:hidden; top: calc(50% - 540px/2 - 10px)")
+	},10);
+}
+
+const showSitecoreMenu = () => {
+	let dock = document.querySelector(".scDockTop");
+	dock.classList.toggle("showSitecoreMenu");
+	let icon = document.querySelector("#scSitecoreMenu");
+	icon.classList.toggle("scSitecoreMenu");
+
+	dock.classList.contains("showSitecoreMenu") ? localStorage.setItem('scSitecoreMenu', true) : localStorage.setItem('scSitecoreMenu', false);
+}
+
+const showPublishMenu = () => {
+	document.querySelector(".scPublishMenu").setAttribute("style","visibility:visible; opacity:1")
 }

@@ -65,7 +65,7 @@ const checkHelpLink = (item, language, version)  => {
                     let scEditorID = document.querySelector ( ".scEditorHeader" );
                     let service = checkUrlType(url.host);
                     let icon = checkIconType(url.host);
-                    let scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + icon + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Documentation and help available</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + url.href  + '" target="_blank" class="scMessageBarOption">Open ' + service + ' page</a></li></ul></div></div>'
+                    let scMessage = '<div id="scMessageBarUrl" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + icon + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Documentation and help available</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + url.href  + '" target="_blank" class="scMessageBarOption">Open ' + service + ' page</a></li></ul></div></div>'
                     scEditorID.insertAdjacentHTML( 'afterend', scMessage );
                 } catch(error) {
                     //error

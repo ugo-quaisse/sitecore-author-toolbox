@@ -6,6 +6,7 @@ import {loadCssFile, sitecoreItemJson, getScItemData, preferesColorScheme} from 
 import {checkUrlStatus} from './url.js';
 import {checkHelpLink} from './help.js';
 import {cleanCountryName, findCountryName} from './language.js';
+import {insertBreadcrumb} from './experimentation.js';
 
 export {sitecoreAuthorToolbox};
 
@@ -79,11 +80,29 @@ const sitecoreAuthorToolbox = () => {
         var isEmailTemplate = sitecoreItemPathOriginal.includes('/sitecore/content/email/');
         
         global.debug ? console.table(ScItem) : false;
+        
 
         //Sitecore variables
         var scLanguage = document.querySelector("#scLanguage").value.toLowerCase();
         var scUrl = window.location.origin + '/?sc_itemid=' + sitecoreItemID + '&sc_mode=normal&sc_lang=' + scLanguage + '&sc_version=' +scVersion;
         var scFlag, tabbedFlag;
+
+        /**
+         * Experimentations
+         */
+        //Experimentation
+        storage.feature_experimentalui == undefined ? storage.feature_experimentalui = false : false;
+        if(storage.feature_experimentalui) {
+            
+            insertBreadcrumb(ScItem.path);
+            if(ScItem.id == "{11111111-1111-1111-1111-111111111111}") {
+
+                scEditorPanel = document.querySelector(".scEditorPanel");
+                scEditorPanel.insertAdjacentHTML( 'afterbegin', '<h1>Welcome to Sitecore!</h1>' );
+
+            }
+
+        }
 
         /**
         * > 1. Live URLs
@@ -108,6 +127,7 @@ const sitecoreAuthorToolbox = () => {
             var domains = storage.domain_manager;
             var envBadge = "CM server";
             var pageError = "";
+            var barStyle = "scWarning";
 
             //Loop through domains, if current domain = key, then create new link for live
             for (var domain in domains) {
@@ -153,18 +173,36 @@ const sitecoreAuthorToolbox = () => {
 
                 }
 
+                //Experimentation
+                storage.feature_experimentalui == undefined ? storage.feature_experimentalui = false : false;
+                if(storage.feature_experimentalui) {
+                    barStyle = "scSuccess";
+                }
+
                 if(isMedia) {
                     var imageId = sitecoreItemID.replace(/-/g, '').replace('{','').replace('}','');
                     sitecoreItemPath = window.location.origin + '/sitecore/shell/Applications/-/media/' + imageId + '.ashx?vs=' + scVersion + '&ts=' + Math.round(Math.random() * 100000);
                     //Prepare HTML (scInformation scWarning scError)
-                    scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + global.iconMedia + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Media Live URL</div><div class="scMessageBarText">If you want to preview this media</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + sitecoreItemPath + '" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this media</a> or <a href="' + sitecoreItemPath + '" download class="scMessageBarOption sitecoreItemPath">download it</a></li></ul></div></div>'        
+                    scMessage = '<div id="scMessageBarLiveUrl" class="scMessageBar ' + barStyle + '"><div class="scMessageBarIcon" style="background-image:url(' + global.iconMedia + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Media Live URL</div><div class="scMessageBarText">If you want to preview this media</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + sitecoreItemPath + '" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this media</a> or <a href="' + sitecoreItemPath + '" download class="scMessageBarOption sitecoreItemPath">download it</a></li></ul></div></div>'        
                 } else {
                     //Prepare HTML (scInformation scWarning scError)
-                    scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + global.icon + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Sitecore Live URL <span class="liveUrlBadge" onclick="location.href = \'' + global.launchpadPage + '?configure_domains=true&launchpad=true&url=' + global.windowLocationHref + '\'" title="Click to configure your domains">' + envBadge + '</span> <span class="liveUrlStatus"></span></div><div class="scMessageBarText">To preview this page in <b>"' + scLanguageTxtLong + '".</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + sitecoreItemPath + '" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this link</a> or try <a href="' + scUrl + '" target="_blank" class="scMessageBarOption">this alternative link</a></li></ul></div></div>'
+                    scMessage = '<div id="scMessageBarLiveUrl" class="scMessageBar ' + barStyle + '"><div class="scMessageBarIcon" style="background-image:url(' + global.icon + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Sitecore Live URL <span class="liveUrlBadge" onclick="location.href = \'' + global.launchpadPage + '?configure_domains=true&launchpad=true&url=' + global.windowLocationHref + '\'" title="Click to configure your domains">' + envBadge + '</span> <span class="liveUrlStatus"></span></div><div class="scMessageBarText">To preview this page in <b>"' + scLanguageTxtLong + '".</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' + sitecoreItemPath + '" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this link</a> or try <a href="' + scUrl + '" target="_blank" class="scMessageBarOption">this alternative link</a></li></ul></div></div>'
                 }
 
                 //Insert message bar into Sitecore Content Editor
                 scEditorID.insertAdjacentHTML( 'afterend', scMessage );
+
+                //Insert link into Quickinfo table
+                var table = document.querySelector(".scEditorQuickInfo");
+                var row = table.insertRow(-1);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var url = new URL(sitecoreItemPath);
+                cell1.innerHTML = 'Live URL';
+                cell2.innerHTML = '<a href="' + sitecoreItemPath + '" target="_blank">' + url.origin + url.pathname + ' <img src="' + global.iconExternalLink + '" /></a>';
+
+                //Experimental mode
+                document.querySelector(".scPreviewButton") ? document.querySelector(".scPreviewButton").setAttribute("onclick","window.open('" + sitecoreItemPath + "'); return false;") : false;
 
                 //Is dark mode on?
                 (storage.feature_darkmode && !storage.feature_darkmode_auto || storage.feature_darkmode && storage.feature_darkmode_auto && currentScheme == "dark") ? darkMode = true : false;
@@ -173,9 +211,11 @@ const sitecoreAuthorToolbox = () => {
                  * Live status
                  */
                 if(storage.feature_urlstatus && !isMedia) {
-                  setTimeout(function() {
-                    checkUrlStatus(null, darkMode);
-                  },500);
+                    if(storage.feature_experimentalui) {
+                        setTimeout(() => { checkUrlStatus(null, darkMode, true) },500);
+                    } else {
+                        setTimeout(() => { checkUrlStatus(null, darkMode) },500);
+                    }
                 }
 
                 /**
@@ -186,7 +226,7 @@ const sitecoreAuthorToolbox = () => {
                 //     console.log(response);
 
                 //     if(response.audits['final-screenshot']) {
-                //         var html = '<div style="position:absolute; right:40px;"><img src="' + response.audits['final-screenshot'].details.data.screenshot + '" style="width: 300px; border: 2px solid #fff; box-shadow: 1px 1px 10px rgba(0,0,0,0.2);"/></div>';
+                //         var html = '<div style="position:absolute; right:40px;"><img loading="lazy" src="' + response.audits['final-screenshot'].details.data.screenshot + '" style="width: 300px; border: 2px solid #fff; box-shadow: 1px 1px 10px rgba(0,0,0,0.2);"/></div>';
                 //         scEditorQuickInfo.insertAdjacentHTML( 'afterbegin', html );
                 //     } else {
                 //         console.info("Sitecore Author Toolbox:", "Error in fetching "+sitecoreItemPath+"'s screenshot, please check or log a ticket at https://github.com/ugo-quaisse/sitecore-author-toolbox/issues/new/choose");
@@ -249,17 +289,17 @@ const sitecoreAuthorToolbox = () => {
         scFlag = chrome.runtime.getURL("images/Flags/32x32/flag_" + findCountryName(scLanguageTxtShort) + ".png")
 
         //Insert Flag into Active Tab
-        if(!document.querySelector("#scFlag")) {
-            tabbedFlag = scFlag;
-            setTimeout(function() {
+        tabbedFlag = scFlag;
+        setTimeout(function() {        
+            if(!document.querySelector("#scFlag")) {
                 scActiveTab = document.querySelector ( ".scEditorTabHeaderActive" );
-                scActiveTab.insertAdjacentHTML( 'afterbegin', '<img id="scFlag" src="' + tabbedFlag +'" style="width: 21px; vertical-align: middle; padding: 0px 4px 0px 0px;" onerror="this.onerror=null;this.src=\'' + global.iconFlagGeneric + '\';"/>' );
-            },100);
-        }
+                scActiveTab.insertAdjacentHTML( 'afterbegin', '<img loading="lazy" id="scFlag" src="' + tabbedFlag +'" style="width: 21px; vertical-align: middle; padding: 0px 4px 0px 0px;" onerror="this.onerror=null;this.src=\'' + global.iconFlagGeneric + '\';"/>' );
+            }
+        },100);
 
         //Insert Flag into Sitecore Language selector
         if(!document.querySelector("#scFlagMenu")) {
-            scLanguageMenu.insertAdjacentHTML( 'afterbegin', '<img id="scFlagMenu" src="' + scFlag +'" style="width: 15px; vertical-align: sub; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + global.iconFlagGeneric + '\';"/>' );
+            scLanguageMenu.insertAdjacentHTML( 'afterbegin', '<img loading="lazy" id="scFlagMenu" src="' + scFlag +'" style="width: 15px; vertical-align: sub; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + global.iconFlagGeneric + '\';"/>' );
         }
 
     }      
@@ -315,7 +355,7 @@ const sitecoreAuthorToolbox = () => {
         scMessageErrors += '</ul></div></div>';
    
         //Insert message bar into Sitecore Content Editor
-        if(count>0) {
+        if(!document.querySelector("#scMessageBarError") && count>0) {
             scEditorID.insertAdjacentHTML( 'afterend', scMessageErrors );
         }
 
@@ -471,7 +511,7 @@ const sitecoreAuthorToolbox = () => {
 
                     //Add images
                     if(tdMiddle != null) {
-                      tdMiddle.innerHTML = '<a class="scTranslateRTL" href="javascript:copyTranslate(\'' + fieldLeft.id + '\',\'' + fieldRight.id + '\',\'RTL\');" title="Copy ' + fieldRightLang + ' to ' + fieldLeftLang + '"><img src="' + chrome.runtime.getURL("images/navigate_left.png") + '" style="padding: 0px 2px 0px 0px; vertical-align: bottom; width: 20px;" alt="Copy"></a>';
+                      tdMiddle.innerHTML = '<a class="scTranslateRTL" href="javascript:copyTranslate(\'' + fieldLeft.id + '\',\'' + fieldRight.id + '\',\'RTL\');" title="Copy ' + fieldRightLang + ' to ' + fieldLeftLang + '"><img loading="lazy" src="' + chrome.runtime.getURL("images/navigate_left.png") + '" style="padding: 0px 2px 0px 0px; vertical-align: bottom; width: 20px;" alt="Copy"></a>';
                     }  
                 }
 
@@ -512,13 +552,14 @@ const sitecoreAuthorToolbox = () => {
         for(var section of scEditorSectionCaption) {
 
             var sectionTitle = section.innerText;
-            sectionTitle == "Quick Info" ? sectionTitle = "📎" : false;
+            sectionTitle == "Quick Info" ? sectionTitle = "Info" : false;
             var sectionId = section.getAttribute("id");
             var sectionClass = section.getAttribute("class");
             var sectionSelected = "";
             var sectionPanelDisplay = "";
             var sectionError = 0;
             var sectionErrorHtml = "";
+            var sectionErrorClass = "";
 
             //Detect active panel
             if(sectionClass == "scEditorSectionCaptionExpanded" && sectionActiveCount == 0) {
@@ -536,17 +577,18 @@ const sitecoreAuthorToolbox = () => {
             //Detect next scEditorSectionPanel
             scEditorSectionPanel = section.nextSibling;
             scEditorSectionPanel.setAttribute( 'style', 'display: ' + sectionPanelDisplay + ' !important' );
+            scEditorSectionPanel.classList.add("scTabsRounded")
 
             //How many errors in this section
             sectionError = scEditorSectionPanel.querySelectorAll(".scEditorFieldMarkerBarCellRed").length;
-            if(sectionError > 0) { sectionErrorHtml = "<span id='scCrossTabError'>🛑 </span>"; }
+            if(sectionError > 0) { sectionErrorHtml = "<span id='scCrossTabError'></span>"; sectionErrorClass = "scTabsError"; }
 
             //Add close/hide button on each tabs, on click all tabs with the current Title will be hidden in Sitecore
             //To revert back to original state, a pinned tab will be shown to display them again
 
             //Add tabs to document
             scEditorTabs += '<li class="scEditorTabEmpty"></li>';
-            scEditorTabs += '<li data-id="' + sectionId + '" class="scEditorTab ' + sectionSelected + '" onclick="toggleSection(this,\'' + sectionTitle+ '\');">' + sectionErrorHtml + sectionTitle+ '<span class="scEditorTabClose" onclick="hideTab(\'' + sectionTitle + '\',\'' + global.extensionId + '\')">❎</span></li>';
+            scEditorTabs += '<li data-id="' + sectionId + '" class="scEditorTab ' + sectionSelected + ' ' + sectionErrorClass + '" onclick="toggleSection(this,\'' + sectionTitle+ '\');">' + sectionErrorHtml + sectionTitle+ '<span class="scEditorTabClose" onclick="hideTab(\'' + sectionTitle + '\',\'' + global.extensionId + '\')">❎</span></li>';
 
             //Add trigger on grouped error message click to open tab
             //var sectionTitle = document.querySelector("#FIELD47775058").closest("table").closest("td").closest("table").previousSibling.innerText
@@ -558,11 +600,10 @@ const sitecoreAuthorToolbox = () => {
 
         //Add tabs to Content Editor
         if(scMessageBar) {
-             scMessageBar.insertAdjacentHTML( 'afterend', scEditorTabs );
+            scMessageBar.insertAdjacentHTML( 'afterend', scEditorTabs );
         } else {
             scEditorHeader.insertAdjacentHTML( 'afterend', scEditorTabs );
         }
-
 
         if(sectionActiveCount == 0) {
             var tab = document.querySelector(".scEditorTab");          
@@ -625,7 +666,7 @@ const sitecoreAuthorToolbox = () => {
 
             //Unicorded
             if(isUnicorned) {
-                scWarning.classList.add("scOrange");
+                scWarning.classList.add("scInformation");
                 scWarningTextBar.innerHTML = scWarningTextBar.innerHTML.replace("<br><br>","<br>").replace("<br><b>Predicate"," <b>Predicate").replace("Changes to this item will be written to disk so they can be shared with others.<br>",""); 
                 scWarningIcon.setAttribute("style","background-image: url(" + global.iconUnicorn + ");");
             }

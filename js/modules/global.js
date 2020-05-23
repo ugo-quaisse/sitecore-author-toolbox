@@ -7,6 +7,7 @@ export const debug = false
 export const extensionVersion = chrome.runtime.getManifest().version
 export const extensionId = chrome.runtime.getURL('something').split('chrome-extension://')[1].split('/something')[0]
 export const icon = chrome.runtime.getURL('images/rocket.svg')
+export const iconRocket = chrome.runtime.getURL('images/warning-rocket.svg')
 export const iconInstantSearch = chrome.runtime.getURL('images/search.svg')
 export const iconInstantSearchGeneric = chrome.runtime.getURL('images/document_text.png')
 export const iconLock = chrome.runtime.getURL('images/lock.svg')
@@ -26,7 +27,10 @@ export const iconConfluence = chrome.runtime.getURL('images/confluence.svg')
 export const iconFlagGeneric = chrome.runtime.getURL('images/Flags/32x32/flag_generic.png')
 export const iconBell = chrome.runtime.getURL('images/bell.svg')
 export const iconUpload = chrome.runtime.getURL('images/upload.svg')
+export const uconPublish = chrome.runtime.getURL('images/publish.svg')
 export const iconAdd = chrome.runtime.getURL('images/add.svg')
+export const iconDownArrow = chrome.runtime.getURL('images/down-arrow.svg')
+export const iconExternalLink = chrome.runtime.getURL('images/external-link.svg')
 export const urlLoader = chrome.runtime.getURL('images/ajax-loader.gif')
 export const urlLoaderDark = chrome.runtime.getURL('images/ajax-loader-dark.gif')
 export const dotGreen = chrome.runtime.getURL('images/dot_green.svg')
@@ -43,6 +47,7 @@ export const launchpadIcon = chrome.runtime.getURL('images/icon.png')
 export const launchpadGroupTitle = 'Sitecore Author Toolbox'
 export const launchpadTitle = 'Options'
 export const tabLoadingTitle = 'Loading...'
+export const squareLogo = chrome.runtime.getURL('images/square-logo.png')
 
 export let timeout
 export const isSitecore = windowLocationHref.includes('/sitecore/')
@@ -58,6 +63,7 @@ export const isGalleryFavorites = windowLocationHref.includes('gallery.favorites
 export const isGalleryVersions = windowLocationHref.includes('gallery.versions')
 export const isAdminCache = windowLocationHref.includes('/admin/cache.aspx')
 export const isAdmin = windowLocationHref.includes('/admin/')
+export const isMediaLibrary = windowLocationHref.includes('he=media+library')
 export const isMediaBrowser = windowLocationHref.includes('sitecore.shell.applications.media.mediabrowser')
 export const isMediaFolder = windowLocationHref.includes('media%20folder.aspx')
 export const isMediaUpload = windowLocationHref.includes('/applications/dialogs/uploadmediadialog')

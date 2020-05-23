@@ -361,7 +361,18 @@ document.body.onload = function() {
       document.getElementById("feature_instantsearch").checked = true;
     }
   });
+  //Experimental UI
+  chrome.storage.sync.get(['feature_experimentalui'], function(result) {
+    if (!chrome.runtime.error && result.feature_experimentalui != undefined) {
+      if(result.feature_experimentalui) {
+        document.getElementById("feature_experimentalui").checked = true;
+      }
+    } else {
+      document.getElementById("feature_experimentalui").checked = false;
+    }
+  });
 }
+
 
 document.getElementById("feature_darkmode").onclick = function() {
   if(document.getElementById("feature_darkmode").checked == false) {
@@ -632,7 +643,11 @@ document.querySelector("#set").onclick = function(event) {
   chrome.storage.sync.set({"feature_instantsearch": document.getElementById('feature_instantsearch').checked}, function() {
     console.info('--> Instant Search: ' + document.getElementById('feature_instantsearch').checked);
   });
-
+  //Experimental UI
+  chrome.storage.sync.set({"feature_experimentalui": document.getElementById('feature_experimentalui').checked}, function() {
+    console.info('--> Experimental UI: ' + document.getElementById('feature_experimentalui').checked);
+  });
+  
   //Get URL parameters
   var url = new URL(window.location.href);
   var fromLaunchpad = url.searchParams.get("launchpad");

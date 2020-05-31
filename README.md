@@ -29,7 +29,7 @@ This extension will help you to save a lot of time by providing a set of handy t
 
 ## How to install
 
-* Clode or download this repo
+* Clone or download the repo
 * Open chrome://extensions/ or edge://extensions/
 * Make sure "Developer mode" toggle is switched on (Top right corner)
 * Clic "Load Unpacked"

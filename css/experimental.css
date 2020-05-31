@@ -2,67 +2,6 @@
  * Sitecore Expeimental Mode UI, by Ugo Quaisse
  * experimental.css
  */
-:root
-{
-  --black: #000;
-  --black1: #111;
-  --black2: #222;
-  --black3: #333;
-  --black4: #444;
-  --black5: #555;
-  --black6: #666;
-  --black7: #777;
-  --black8: #888;
-  --black9: #999;
-
-  --grey: #ccc;
-  --grey2: #2b2b2b;
-  --grey3: #f0f0f0;
-  --grey4: #d6d6d6;
-  --grey5: #e8e6e6;
-  --grey6: #E3E3E3;
-  --grey7: #495057;
-  
-  --lightblue: #1e81ef;
-  --blue: #0b84ff;
-  --darkblue: #034c9e;
-  --verydarkblue: #002f64;
-
-  --lightgreen: #8ce99a;
-  --green: #2bc37c;
-  --accent: #2bc37c;
-  --accentText: #ffffff;
-  --accentBrightness: 10;
-
-  --messageSuccessBgIcon: #8ce99a;
-  --messageSuccessIcon: #40c057;
-  --messageSuccessBar: #ebfbee;
-  --messageSuccessLink: #40c057;
-
-  --messageWarningBgIcon: #ffe066;
-  --messageWarningIcon: #fab005;
-  --messageWarningBar: #fff9db;
-  --messageWarningLink: #fab005;
-
-  --messageDangerBgIcon: #ffa8a8;
-  --messageDangerIcon: #fa5252;
-  --messageDangerBar: #fff5f5;
-  --messageDangerLink: #fa5252;
-
-  --messageInfoBgIcon: #74c0fc;
-  --messageInfoIcon: #228be6;
-  --messageInfoBar: #e7f5ff;
-  --messageInfoLink: #228be6;
-  
-
-  --lightred: #ee4546;
-  --red: #a11d16;
-  --darkred: #6B120F;
-
-  --white: #fff;
-  --text: #ccc;
-
-}
 
 html, body {
 	-webkit-font-smoothing: antialiased;
@@ -74,6 +13,22 @@ h1 {
 	font-weight: 700;
 	color: var(--accent);
 	padding: 20px;
+	margin: auto;
+}
+
+h2 {
+	font-size: 150%;
+    font-weight: 700;
+    color: var(--grey0);
+    padding: 10px 0px;
+    text-transform: uppercase;
+}
+
+h3 {
+	font-size: 110%;
+	font-weight: 700;
+	color: var(--accent);
+	padding: 10px 0px;
 	margin: auto;
 }
 
@@ -90,7 +45,7 @@ h1 {
 #globalLogo {
 	background: url(chrome-extension://__MSG_@@extension_id__/images/square-logo.svg) center center no-repeat;
 	background-color: var(--accent);
-    background-size: contain;
+    background-size: 105%;
 }
 
 #ContentEditor {
@@ -119,6 +74,10 @@ h1 {
     border-bottom: 1px solid #cccccc;
 }
 
+#ContentTreeHolder {
+	/*border-top: 2px solid transparent;*/
+}
+
 input[type="color"] {
     outline: none;
     background-color: #2b2b2b;
@@ -129,6 +88,7 @@ input[type="color"] {
     vertical-align: middle;
     border: 1px solid #2b2b2b;
     box-shadow: inset 0 0 1px 7px #2b2b2b;
+    cursor: pointer;
 }
 input[type="color"]::-webkit-color-swatch-wrapper {
 	padding: 0;
@@ -140,6 +100,7 @@ input[type="color"]::-webkit-color-swatch {
 
 .wbNotificationMenu {
 	background-color: var(--accent);
+	right: 117px;
 }
 
 #scFlag,
@@ -178,6 +139,90 @@ a.scContentButton {
 	transform: rotate(180deg);
 }
 
+ul.scAccountMenu li:hover {
+	background-color: var(--accent);
+	color: var(--accentText);
+}
+
+.scEditorFieldMarker {
+	margin: 0 0 40px 0;
+}
+
+.scLanguageIcon,
+.scVersionIcon {
+	width: 16px;
+    height: 16px;
+    vertical-align: sub;
+}
+
+.scEditorQuickInfo {
+    margin: 0px;
+    border-spacing: 10px;
+    border-collapse: separate;
+}
+
+.splitter-bar:hover::before, .splitter-bar:hover {
+	background-color: var(--accent) !important;
+}
+
+.liveUrlDot {
+	vertical-align: inherit;
+    width: 10px;
+    height: 10px;
+    margin-left: 2px;
+}
+
+.scContentTreeContainer,
+#EditorFrames {
+	/*transition: opacity ease-out 0s;*/
+}
+
+.scNoResult,
+.scNoVersion {
+	margin: auto;
+    padding: 50px;
+    text-align: center;
+    font-size: 15px;
+    color: var(--grey7);
+    font-weight: 800;
+}
+
+.scNoResult > img,
+.scNoVersion > img {
+	width: 256px;
+    opacity: 0.15;
+    padding: 20px;
+}
+
+.scNoVersion > p {
+    padding: 0px 0px 10px 0px;
+}
+
+.scNoVersion > button {
+	font-size: 12px;
+    padding: 9px 14px;
+    position: relative;
+    border-radius: 3px;
+    border: 0px;
+    background-color: var(--accent);
+    color: var(--accentText);
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0px 5px;
+    box-shadow: none;
+    cursor: pointer;
+ }
+
+.scNoVersion > button:hover {
+	filter: brightness(0.95);
+}
+
+.scEditorTabHeaderNormal > span.scEditorTabHeaderModified:after,
+.scEditorTabHeaderActive > span.scEditorTabHeaderModified:after {
+	color: var(--accent);
+	padding-left: 2px;
+}
+
 /*Forms*/
 
 #Editors input:not([type]),
@@ -194,10 +239,14 @@ a.scContentButton {
     box-sizing: border-box;
 }
 
-#Editors select {
-	height: 34px !important;
+#Editors select:not([multiple]) {
+	min-height: 34px !important;
     border-radius: 0px !important;
     /*-webkit-appearance: initial;*/
+}
+
+.scContentControlSelectedList {
+	bottom: 1px;
 }
 
 .scContentControlCheckbox:checked+.scContentControlCheckboxLabel::before {
@@ -220,13 +269,15 @@ a.scContentButton {
     font-size: 14px;
  }
 
- #scModal .item > a > img {
- 	filter: grayscale(1);
- }
+.scTreeview .icon,
+.scTreeview .icon_Hover,
+#scModal .item > a > img {
+ 	filter: grayscale(1) brightness(0.5) contrast(2);
+}
 
- #scModal .item:hover > a > img {
+#scModal .item:hover > a > img {
 	filter: unset;
- }
+}
 
 /* Content Tree */
 
@@ -238,6 +289,7 @@ a.scContentButton {
 .scContentTreeNodeGlyph {
 	width: 20px !important;
 	vertical-align: middle !important;
+	filter: grayscale(1);
 }
 
 div.scContentTreeNode {
@@ -281,7 +333,7 @@ a.scContentTreeNodeActive > span {
 	color: var(--white) !important;
 }
 a.scContentTreeNodeNormal > span {
-	color: #47474E !important;
+	color: var(--text) !important;
 }
 
 .scContentTreeNodeGlyph:hover + a > span,
@@ -324,12 +376,6 @@ a.scContentTreeNodeActive > span > img {
 
 /* Content Editor Header */
 
- .scEditorHeader {
-    padding: 20px 15px;
-    height: 35px;
-    background-color: var(--grey2);
-}
-
 .scEditorHeaderIcon {
 	filter: brightness(10);
 }
@@ -346,8 +392,15 @@ a.scContentTreeNodeActive > span > img {
 	color: var(--grey);
 }
 
+.scEditorTabControlsHolder {
+	margin: 11px 13px;
+    height: auto;
+}
+
+button.scEditorHeaderButton,
 a.scEditorHeaderButton {
-    padding: 10px 15px;
+	font-size: 12px;
+    padding: 9px 14px;
     position: relative;
     border-radius: 3px;
     border: 0px;
@@ -355,24 +408,44 @@ a.scEditorHeaderButton {
     color: var(--black6);
     font-weight: bold;
     text-transform: uppercase;
-    top: -6px;
-    right: 3px;
+    margin: 0px 5px;
     box-shadow: none;
+    cursor: pointer;
  }
 
- a.scEditorHeaderButton:hover {
-	background-color: var(--grey5);
- }
+button.scEditorHeaderButton:hover,
+a.scEditorHeaderButton:hover {
+	filter: brightness(0.95);
+}
+
+/*Iframe */
+
+#scLanguageIframe,
+#scVersionIframe {
+	position: fixed;
+	background-color: var(--white);
+	top: 0px !important;
+	right: -420px !important;
+	left: unset !important;
+	width: 400px !important;
+	height: 100% !important;
+	border-radius: 2px;
+    box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: right ease-out .2s;
+}
 
 /* Content Editor Tabs */
 
 #scEditorTabs {
     background-color: transparent;
     margin: 20px 20px 0px 20px;
+    overflow-x: hidden;
 }
 
 #scEditorTabs > ul {
 	overflow-x: hidden;
+	transition: margin-left ease-out .2s !important;
+	width: auto !important;
 }
 
 #scEditorTabs > ul > li {
@@ -429,11 +502,30 @@ a.scRibbonEditorTabNormal {
 	margin-top: 13px;
 	font-weight: normal;
 	text-transform: uppercase;
+	cursor: pointer;
 }
 
 a.scRibbonEditorTabNormal:hover {
 	background-color: transparent;
 	border-bottom: 3px solid var(--grey2);
+	font-weight: 600;
+}
+
+#BTAddNewSearch {
+	margin: 13px 0px 0px 0px;
+	border-bottom: 3px solid transparent;
+	background-image: url('chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.svg'), none !important;
+	background-size: 16px 16px;
+}
+
+#BTAddNewSearch:active,
+#BTAddNewSearch:hover {
+	background-color: transparent !important;
+	border-bottom: 3px solid var(--grey2);
+	background-image: url('chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.svg'), none !important;
+	background-size: 16px 16px;
+	box-shadow: none !important;
+	opacity: 1 !important;
 }
 
  /* Message bar */
@@ -547,6 +639,7 @@ a.scRibbonEditorTabNormal:hover {
  /* Sections */
 
 .scEditorHeader {
+	opacity: 0;
 	display: none;
 }
 
@@ -575,7 +668,7 @@ a.scRibbonEditorTabNormal:hover {
     margin-top: 0px !important;
     padding: 15px;
     width: calc(100% - 40px);
-    background-color: #fff;
+    background-color: var(--white);
     box-shadow: 0px 1px 2px rgba(0,0,0,0.1);
 }
 
@@ -629,24 +722,25 @@ a.scRibbonEditorTabNormal:hover {
 
 .scEditorFieldLabel {
 	font-size: 14px;
-	font-weight: bold;
+	font-weight: 600;
 }
 
 .scContentButton {
-	font-size: 11px;
-	font-weight: normal;
+	font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 .scEditorFieldLabelAdministrator {
 	font-size: 11px;
-	font-weight: normal;
+	font-weight: 600;
     border-radius: 3px;
     padding: 2px 5px;
     margin: 3px;
     background-color: var(--accent);
     color: var(--accentText);
     white-space: nowrap;
-    display: inline-block;
+    display: inline;
 }
 
  /* Splitter bar */
@@ -666,7 +760,7 @@ a.scRibbonEditorTabNormal:hover {
  /* Content Editor buttons */
 
 .scSaveBar {
-	background-color: var(--grey5);
+	background-color: var(--grey5) !important;
     height: 30px;
     border-bottom: 1px solid var(--grey);
     border-left: 0px;
@@ -680,7 +774,7 @@ a.scRibbonEditorTabNormal:hover {
     padding: 8px;
     text-indent: 0px;
     font-size: 13px;
-    color: #515054;
+    color: var(--text);
     max-width: 60%;
     white-space: nowrap;
     overflow: hidden;
@@ -695,10 +789,10 @@ a.scRibbonEditorTabNormal:hover {
     vertical-align: middle;
  }
 
- .scSaveBar > .scPublishMenu {
+ .scSaveBar > .scActions > .scPublishMenu {
  	width: 240px;
     height: fit-content;
-    background-color: #ffffff;
+    background-color: var(--white);
     position: absolute;
     z-index: 100;
     right: 12px;
@@ -709,7 +803,7 @@ a.scRibbonEditorTabNormal:hover {
     box-shadow: 0 5px 20px rgba(0,0,0,.3);
  }
 
-.scSaveBar > .scPublishMenu > li {
+.scSaveBar > .scActions > .scPublishMenu > li {
     background: 0 0;
     border: 0;
     display: block;
@@ -724,44 +818,59 @@ a.scRibbonEditorTabNormal:hover {
     padding: 8px 20px;
 }
 
-.scSaveBar > .scPublishMenu > li:hover {
+.scSaveBar > .scActions > .scPublishMenu > li:hover {
 	background-color: var(--grey5);
 }
 
-.scSaveBar > button {
+.scSaveBar > .scActions > button {
 	float: right;
     background-color: var(--grey);
     color: var(--black1);
     font-size: 15px;
-    padding: 6px 14px;
+    padding: 7px 14px 8px 14px;
     margin: 0px 5px;
     border: 0px;
     border-radius: 3px;
     cursor: pointer;
+    margin-top: -2px;
  }
 
-.scSaveBar > button:hover {
-	filter: brightness(1.1);
+.scButton {
+ 	background-color: var(--accent);
+ 	color: var(--accentText);
+ 	font-size: 15px;
+    background-image: none;
+    padding: 7px 14px 8px 14px;
+    border: 0px;
+    border-radius: 3px;
+    cursor: pointer;
 }
 
-.scSaveBar > button.scPreviewButton:disabled {
+.scButton:hover,
+.scSaveBar > .scActions > button:hover {
+	filter: brightness(1.07);
+}
+
+.scSaveBar > .scActions > button:disabled {
 	opacity: 0.5;
 }
 
-.scSaveBar > button.primary {
+.scSaveBar > .scActions > button.primary {
 	background-color: var(--accent);
 	color: var(--accentText);
 }
 
-.scSaveBar > button.primaryGrouped {
+.scSaveBar > .scActions > button.primaryGrouped {
 	border-radius: 3px 0px 0px 3px;
 	border-right: 1px solid rgba(0,0,0,0.2);
 	margin-right: 0px;
 }
 
-.scSaveBar > button.grouped {
+.scSaveBar > .scActions > button.grouped {
 	margin: 0px;
-    padding: 6px 10px;
+	margin-top: -2px;
+    padding: 7px 10px 8px 10px;
+    margin-right: 5px;
     background-color: var(--accent);
     color: var(--accentText);
     border-radius: 0px 3px 3px 0px;
@@ -770,13 +879,36 @@ a.scRibbonEditorTabNormal:hover {
 /* Gallery Frame */
 
 .scGalleryFrame {
-    position: fixed;
-    border: none;
-    height: -webkit-fill-available;
-    right: 0px !important;
-    left: unset !important;
-    right: 0px !important;
-    top: 163px !important;
     border-radius: 2px;
     box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1);
+ }
+
+ .versionNumSelected,
+ .scMenuItemIcon_Hover,
+ .scMenuItemCaption_Hover,
+ .scMenuItemHotkey_Hover,
+ .scMenuPanelItemSelected,
+ .scMenuPanelItemSelected_Hover,
+ .scMenuPanelItem_Hover {
+ 	background-color: var(--accent);
+ 	color: var(--accentText);
+ }
+
+ .scMenuPanelItem_Hover > table > tbody > tr > td:last-child > div > div {
+ 	color: var(--accentText) !important;
+ }
+
+ /*Hack for SC extention links */
+
+ .sc-ext-gotofield,
+ .sc-ext-resetfield,
+ .scEditorFieldLabelAdministrator {
+ 	display: none !important;
+ 	transition: ease-out 0.1s;
+ }
+
+ .scEditorFieldLabel:hover .sc-ext-gotofield,
+ .scEditorFieldLabel:hover .sc-ext-resetfield,
+ .scEditorFieldLabel:hover .scEditorFieldLabelAdministrator {
+ 	display: inline !important;
  }

@@ -120,6 +120,7 @@ body.contentEditor:after {
 
 div#Languages img {
 	display: block;
+    width: 32px;
 }
 
 .sc-ribbon .sc-chunk-datepanel .sc-chunk-datepanel-day {
@@ -601,7 +602,7 @@ textarea:focus {
     width: 450px  !important;
     left: calc(50% - 450px/2)  !important;
     padding: 8px 12px  !important;
-    top: 6px  !important;
+    top: 5px  !important;
     background: #111111 url('chrome-extension://__MSG_@@extension_id__/images/magnifier.svg') no-repeat center right 10px !important;
     z-index: 10000 !important;
     font-size: 15px !important;
@@ -747,6 +748,15 @@ textarea:focus {
     margin-right: 2px;
 }
 
+.textLoading,
+.scInstansSeachLoading {
+    font-size: 12px;
+    color: #fff;
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+}
+
 .scCountNodes {
     opacity: 1;
     background-color: #e0b407;
@@ -810,7 +820,7 @@ ul.sc-accountInformation li:last-child:after {
     transition: all ease-out .2s;
 }
 
-.sc-accountMenu {
+.scAccountMenu {
     position: absolute;
     right: 5px;
     top: 40px;
@@ -832,33 +842,35 @@ ul.sc-accountInformation li:last-child:after {
     z-index: 1 !important;
 }
 
-ul.sc-accountMenu li {
+ul.scAccountMenu li {
     display: inherit !important;
     padding: 15px 30px !important;
     line-height: normal !important;
     cursor: pointer !important;
+    font-weight: 600;
+    font-size: 14px;
 }
-ul.sc-accountMenu li:first-child {
+ul.scAccountMenu li:first-child {
     /*padding-top: 10px !important;*/
 }
-ul.sc-accountMenu li:last-child {
+ul.scAccountMenu li:last-child {
     border-top: 0.5px solid rgba(255,255,255,0.2);
 }
 
-ul.sc-accountMenu li:hover {
+ul.scAccountMenu li:hover {
     background-color: #0b84ff;
     cursor: pointer !important;
 }
 
-ul.sc-accountMenu li:hover:first-child {
+ul.scAccountMenu li:hover:first-child {
     border-radius: 5px 5px 0px 0px;
 }
-ul.sc-accountMenu li:hover:last-child {
+ul.scAccountMenu li:hover:last-child {
     border-radius: 0px 0px 5px 5px;
 }
 
-ul.sc-accountMenu li:last-child:after,
-ul.sc-accountMenu li:after {
+ul.scAccountMenu li:last-child:after,
+ul.scAccountMenu li:after {
     content: "" !important;
     display: none !important;
 }
@@ -870,15 +882,14 @@ ul.sc-accountMenu li:after {
 #scModal {
     position: absolute;
     width: 720px;
-    height: 400px;
+    height: 550px;
     padding: 0px;
     visibility: hidden;
     z-index: 10;
     left: calc(50% - 720px/2);
-    top: calc(50% - (400px/2) - 10px);
+    top: calc(50% - (550px/2) - 20px);
     opacity: 0;
-    color: #000000;
-    background-color: hsla(240, 240, 240, 0.9);
+    background-color: var(--white);
     border-radius: 5px;
     backdrop-filter: blur(20px);
     box-shadow: 0px 5px 40px rgba(0,0,0,0.2);
@@ -941,6 +952,7 @@ ul.sc-accountMenu li:after {
 #scModal .item {
     float: left;
     width: 140px;
+    height: 90px;
     padding: 20px;
     cursor: pointer;
     text-align: center;
@@ -982,4 +994,65 @@ ul.sc-accountMenu li:after {
     color: #fff;
     padding: 2px 4px;
     border-radius: 3px;
+}
+
+.scInstantSearchResults > .preload,
+#scPanel > .preload,
+#scModal > .preload,
+#svgAnimation {
+    width: 100px;
+    height: 24px;
+    top: calc(50% - 10px);
+    left: calc(50% - 50px);
+    opacity: 0;
+    display: inline-block;
+    position: absolute;
+    transform: scale(0.5);
+    z-index: 10;
+    color: #999999;
+    font-size: 14px;
+}
+
+#scPanel {
+    position: fixed;
+    background-color: var(--white);
+    top: 0px !important;
+    right: -420px !important;
+    left: unset !important;
+    width: 400px !important;
+    height: -webkit-fill-available !important;
+    border-radius: 2px;
+    box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: right ease-out .2s;
+}
+
+#scPanel > .content {
+    padding: 0px 20px 20px 20px;
+    font-size: 15px;
+    overflow: scroll;
+    word-break: break-all;
+    white-space: nowrap;
+}
+
+#scPanel > .content > ul > li {
+    list-style: inside;
+    list-style-type: square;
+    margin: 5px 0px;
+}
+
+#scPanel > .content > ul > li > b {
+    color: var(--accent);
+}
+
+#scPanel > .preload {
+    top: calc(50% - 100px);
+}
+
+.scPanelOpen {
+    right: 0px !important;
+}
+
+.CodeMirror {
+    height: 500px !important;
+    border: 1px solid #cccccc !important;
 }

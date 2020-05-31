@@ -5,13 +5,16 @@
  * https://uquaisse.io
  * ugo.quaisse@gmail.com
  * Made with vanillaJS :-)
- */ 
+ */
+if(!window.location.href.toLowerCase().includes("jquerymodaldialogs.html")) {
 
-(async () => {
-  const contentScript = await import(chrome.extension.getURL('js/toolbox-min.js'));
-  try {
-  	contentScript.main();
-  } catch(e) {
-  	//e
-  }
-})();
+	(async () => {
+	  const contentScript = await import(chrome.extension.getURL('js/toolbox-min.js'));
+	  try {
+	  	contentScript.main();
+	  } catch(e) {
+	  	//e
+	  }
+	})();
+
+}

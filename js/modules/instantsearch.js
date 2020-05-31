@@ -32,8 +32,6 @@ const instantSearch = () => {
     //Tab index
 	divResults.addEventListener('keyup', (event) => {
 
-		console.log(event.key);
-
 		if (event.key === 'ArrowUp') {
 			
 			document.activeElement.nextElementSibling ? document.activeElement.previousElementSibling.focus() : false;
@@ -79,7 +77,6 @@ const instantSearch = () => {
 
     	if (event.key === 'ArrowDown') {
 			
-			console.log("key down");
 			divResults.querySelector(".scInstantRow").focus();
 
 		}
@@ -92,7 +89,9 @@ const instantSearch = () => {
          		globalTimeout = null
          		// Preload results
             	divResults.setAttribute('style', 'opacity: 1; visibility: visible; top: 48px;')
-            	divResults.innerHTML = '<div class="scInstantSeachLoading"><img loading="lazy" class="pulseAnimate" src="' + global.iconInstantSearch + '" /><span class="textLoading"><span></div>'
+            	//divResults.innerHTML = '<div class="scInstantSeachLoading"><img loading="lazy" class="pulseAnimate" src="' + global.iconInstantSearch + '" /><span class="textLoading"><span></div>'
+                divResults.innerHTML = '<div class="preload">' + global.svgAnimation + '<span class="textLoading"><span></div>';
+                document.querySelector(".scInstantSearchResults > .preload").setAttribute("style","opacity:1 !important");
 
             	if (divResults.querySelector('.textLoading')) {
 	            	var loadingTimeout1 = setTimeout(function () {
@@ -195,7 +194,7 @@ const instantSearch = () => {
 		              	
 		              	// Populate result
             			divResults.innerHTML = ''
-            			divResults.insertAdjacentHTML('afterbegin', '<div class="scInstansSeachLoading">Sitecore timeout. Try again...</div>')
+            			divResults.insertAdjacentHTML('afterbegin', '<div class="scInstansSeachLoading"><img src="' + global.iconTimeout + '" width="128px" /> Sitecore timeout. Try again...</div>')
 		            
 		            }
 

@@ -55,17 +55,17 @@ const checkUrlStatus = (source = null, dark, experimental = false) => {
           //Check response
           if(response.status == "404" ) {
               html = "<span class='liveStatusRed'><img loading='lazy' src=' " + global.dotRed + "'/> Not published (" + response.status + ")</span>";
-              preview = "Page not availalbe (404)";
+              preview = "Page not availalbe (404) <img loading='lazy' src=' " + global.dotRed + "' class='liveUrlDot' />";
               disable = true;
-              barStyle = "scWarning";
+              barStyle = "scError";
           } else if(response.status == "500" ) {
               html = "<span class='liveStatusRed'><img loading='lazy' src=' " + global.dotRed + "'/> Server error (" + response.status + ")</span>";
-              preview = "Page not availalbe (500)";
+              preview = "Page not availalbe (500) <img loading='lazy' src=' " + global.dotRed + "'class='liveUrlDot' />";
               disable = true;
               barStyle = "scError";
           } else {
               html = "<span class='liveStatusGreen'><img loading='lazy' src=' " + global.dotGreen + "'/> Published</span>";
-              preview = "Preview";
+              preview = "Preview this page <img loading='lazy' src=' " + global.dotGreen + "'class='liveUrlDot' />";
               disable = false;
               barStyle = "scSuccess";
           }
@@ -76,9 +76,7 @@ const checkUrlStatus = (source = null, dark, experimental = false) => {
           if(experimental) {
             //Update bar color
             var scMessageBarLiveUrl = document.querySelector("#scMessageBarLiveUrl");
-            console.log(scMessageBarLiveUrl);
             scMessageBarLiveUrl.setAttribute("class","scMessageBar " + barStyle);
-            console.log(scMessageBarLiveUrl);
 
             //Experimental mode ON
             let scPreviewButton = document.querySelector(".scPreviewButton");
@@ -97,7 +95,7 @@ const checkUrlStatus = (source = null, dark, experimental = false) => {
             //Experimental mode ON
             let scPreviewButton = document.querySelector(".scPreviewButton");
             if(scPreviewButton) {
-                    scPreviewButton.innerHTML = "Preview";
+                    scPreviewButton.innerHTML = "Preview this page";
                     scPreviewButton.disabled = false;
             }
         });

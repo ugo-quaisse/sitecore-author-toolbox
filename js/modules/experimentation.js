@@ -3,7 +3,35 @@
 import * as global from './global.js';
 import {getScItemData, setTextColour} from './helpers.js';
 
-export {insertBreadcrumb, pathToBreadcrumb, initIcon, initColorPicker, initSitecoreMenu };
+export {insertSavebar, insertBreadcrumb, insertLanguageButton, insertVersionButton, insertMoreButton, insertNavigatorButton, insertLockButton, pathToBreadcrumb, initInsertIcon, getAccentColor, initColorPicker, initSitecoreMenu };
+
+
+/**
+ * Insert Save bar
+ */
+const insertSavebar = () => {
+
+	//Save Bar
+    let scSaveBar = `
+    <div class="scSaveBar">
+        <div class="scActions">
+            <button id="scPublishMenuMore" class="grouped" type="button">▾</button>
+            <ul class="scPublishMenu">
+                <li onclick="javascript:return scForm.postEvent(this,event,'item:publish(id=)')">Publish with subitems...</li>
+                <li onclick="javascript:return scForm.invoke('item:setpublishing', event)">Unpublish...</li>
+                <li onclick="javascript:return scForm.postEvent(this,event,'item:publishingviewer(id=)')">Scheduler...</li>
+            </ul>
+            <button class="primary primaryGrouped" onclick="javascript:return scForm.postEvent(this,event,'item:publish(id=)')">Save and Publish</button>
+            <button onclick="javascript:return scForm.invoke('contenteditor:save', event)">Save...</button>
+            <button class="scPreviewButton" disabled>Checking url...</button>
+        </div>
+        <div class="scBreadcrumb"></div>
+    </div>`;
+    let contentEditor = document.querySelector("#ContentEditor");
+    document.querySelector(".scSaveBar") ? document.querySelector(".scSaveBar").remove() : false;
+    contentEditor ? contentEditor.insertAdjacentHTML( 'afterbegin', scSaveBar ) : false;
+
+}
 
 /**
  * Path to Breadcrumb
@@ -17,16 +45,16 @@ const pathToBreadcrumb = (path, delimiter = "/", underline = true) => {
 		path = path.split("/home/");
 		if(path[1] != undefined) {
 			path = path[1].split("/");
-			underline ? breadcrumb += '<u class="home" onclick="javascript:return scForm.invoke(\'contenteditor:home\', event)">Home</u>' : breadcrumb += 'Home';
+			underline ? breadcrumb += '<u class="home" onclick="javascript:return scForm.invoke(\'contenteditor:home\', event)">Home</u> ' : breadcrumb += 'Home ';
 		} else {
 			path = path[0].split("/");
 		}
 
 		for(let level of path) {
 			if(underline) {
-				level != "" ? breadcrumb += '<i>' + delimiter + '</i> <u>' + level.toLowerCase().capitalize() + '</u> ' : false;
+				level != "" ? breadcrumb += '<i>' + delimiter + '</i> <u>' + level.toLowerCase().capitalize().replace("Loreal","uquaisse,io") + '</u> ' : false;
 			} else {
-				level != "" ? breadcrumb += '<i>' + delimiter + '</i> ' + level.toLowerCase().capitalize() + ' ' : false;
+				level != "" ? breadcrumb += '<i>' + delimiter + '</i> ' + level.toLowerCase().capitalize().replace("Loreal","uquaisse,io")  + ' ' : false;
 			}
 		}
 	}
@@ -37,7 +65,7 @@ const pathToBreadcrumb = (path, delimiter = "/", underline = true) => {
 }
 
 /**
- * Get insert menu for an item
+ * Insert Breadcrumb
  */
 const insertBreadcrumb = (path) => {
 
@@ -47,6 +75,192 @@ const insertBreadcrumb = (path) => {
 
 }
 
+/**
+ * Insert Language button
+ */
+const insertLanguageButton = (scItemId, scLanguage = "EN", scVersion = 1) => {
+
+	//Button
+	let container = document.querySelector(".scEditorTabControlsHolder");
+	let button = `<button class="scEditorHeaderButton" id="scLanguageButton" type="button"><img src="` + global.iconLanguage + `" class="scLanguageIcon"> ` + scLanguage + ` ▾</button>`;
+	container ? container.insertAdjacentHTML( 'afterbegin', button) : false;
+
+	//Iframe
+	document.querySelector("#scLanguageIframe") ? document.querySelector("#scLanguageIframe").remove() : false;
+	let body = document.querySelector("body");
+	let iframe = `<iframe loading="lazy" id="scLanguageIframe" src="/sitecore/shell/default.aspx?xmlcontrol=Gallery.Languages&id=` + scItemId + `&la=` + scLanguage + `&vs=` + scVersion + `&db=master"></iframe>`
+	body ? body.insertAdjacentHTML( 'beforeend', iframe) : false;
+	
+	//Scroll position
+	//document.querySelector("#scLanguageIframe").contentWindow.document.body.querySelector(".scGalleryContent13").scrollTop = 0;
+	
+	//Hide old button
+	document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;
+
+}
+
+/**
+ * Insert More button
+ */
+const insertMoreButton = (locked = false) => {
+
+	let container = document.querySelector(".scEditorTabControlsHolder");
+	let button = `<button class="scEditorHeaderButton" id="scMoreButton" title="More actions" type="button"><img src="` + global.iconMore + `" class="scLanguageIcon"></button>`;
+	container ? container.insertAdjacentHTML( 'afterbegin', button) : false;
+
+	let ScItem = getScItemData();
+	let panel = document.querySelector("#scPanel");
+	let html = `
+	<div class="content">
+		<h2>Quick info</h2>
+		<h3>Item ID:</h3>
+		` + ScItem.id + `
+		<h3>Name:</h3>
+		` + ScItem.name + `
+		<h3>Path:</h3>
+		` + ScItem.path + `
+		<h3>Template:</h3>
+		` + ScItem.template + `
+		<h3>Template ID:</h3>
+		` + ScItem.templateId + `
+		<h3>From:</h3>
+		` + ScItem.from + `
+		<h3>Owner:</h3>
+		` + ScItem.owner + `
+		<h3>Language:</h3>
+		` + ScItem.language + `
+		<h3>Version:</h3>
+		` + ScItem.version + `
+	</div>`;
+	panel ? panel.innerHTML = html : false;
+
+	document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;
+
+}
+
+/**
+ * Insert Version button
+ */
+const insertVersionButton = (scItemId, scLanguage = "EN", scVersion = 1) => {
+
+	let container = document.querySelector(".scEditorTabControlsHolder");
+	let button = `<button class="scEditorHeaderButton" id="scVersionButton" type="button"><img src="` + global.iconVersion + `" class="scLanguageIcon"> ` + scVersion + ` ▾</button>`;
+	container && scVersion != null ? container.insertAdjacentHTML( 'afterbegin', button) : false;
+
+	//Iframe
+	document.querySelector("#scVersionIframe") ? document.querySelector("#scVersionIframe").remove() : false;
+	let body = document.querySelector("body");
+	let iframe = `<iframe loading="lazy" id="scVersionIframe" src="/sitecore/shell/default.aspx?xmlcontrol=Gallery.Versions&id=` + scItemId + `&la=` + scLanguage + `&vs=` + scVersion + `&db=master"></iframe>`
+	body ? body.insertAdjacentHTML( 'beforeend', iframe) : false;
+
+	document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;
+
+}
+
+/**
+ * Insert Navigator button
+ */
+const insertNavigatorButton = () => {
+
+	let container = document.querySelector(".scEditorTabControlsHolder");
+	let button = `<button class="scEditorHeaderButton" id="scNavigatorButton" type="button"><img src="` + global.iconNotebook + `" class="scLanguageIcon"> ▾</button>`;
+	container ? container.insertAdjacentHTML( 'afterbegin', button) : false;
+
+	document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;
+
+}
+
+/**
+ * Insert Lock button
+ */
+const insertLockButton = (locked = false) => {
+
+	let icon = locked == false ? global.iconUnlocked : global.iconLocked;
+	let container = document.querySelector(".scEditorTabControlsHolder");
+	let button = `<button onclick="javascript:return scForm.postEvent(this,event,'item:checkout')" class="scEditorHeaderButton" id="scLockButton" title="Lock this item" type="button"><img src="` + icon + `" class="scLanguageIcon"></button>`;
+	container ? container.insertAdjacentHTML( 'afterbegin', button) : false;
+
+	document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;
+
+}
+
+/**
+ * Init Sitecore ribbon
+ */
+const initSitecoreMenu = () => {
+	let storage = localStorage.getItem('scSitecoreMenu');
+	let dock = document.querySelector(".scDockTop");
+	let icon = document.querySelector("#scSitecoreMenu");
+	if(storage == "true") {
+		dock.classList.add("showSitecoreMenu");
+		icon.classList.add("scSitecoreMenu");
+	} else {
+		dock.classList.remove("showSitecoreMenu");
+		icon.classList.remove("scSitecoreMenu");
+	}
+
+}
+
+/**
+ * Get Accent Color 
+ */
+const getAccentColor = () => {
+
+	let color, text, brightness;
+	let storage = localStorage.getItem('scColorPicker');
+	if(storage) {
+		color = storage;
+		text = setTextColour(color);
+		(text == "#ffffff") ? brightness = 10 : brightness = 0;
+
+		let root = document.documentElement;
+		root.style.setProperty('--accent', color);
+		root.style.setProperty('--accentText', text);
+		root.style.setProperty('--accentBrightness', brightness);
+	} else {
+		color = "#ee3524"; //red
+	}
+
+	return color;
+
+}
+
+/**
+ * Init Color Picker
+ */
+const initColorPicker = () => {
+
+	let color, text, brightness;
+	
+	let input = '<input type="color" id="scAccentColor" name="scAccentColor" value="' + getAccentColor() + '" title="Choose your accent color">';
+	let menu = document.querySelector(".sc-accountInformation");
+	menu.insertAdjacentHTML( 'afterbegin', input);
+
+
+	//Listenenr on change
+	//To change text color based on BG light -> https://css-tricks.com/switch-font-color-for-different-backgrounds-with-css/
+	let colorPicker = document.querySelector("#scAccentColor");
+	colorPicker.addEventListener('change', (event) => {
+
+		color = colorPicker.value;
+		text = setTextColour(color);
+		(text == "#ffffff") ? brightness = 10 : brightness = 0;
+
+		//need to add iframes?
+
+		let root = document.documentElement;
+		root.style.setProperty('--accent', color);
+		root.style.setProperty('--accentText', text);
+		root.style.setProperty('--accentBrightness', brightness);
+
+		localStorage.setItem('scColorPicker', color);
+	});
+
+}
+
+/**
+ * Set Insert + Icon in Content Tree
+ */
 const setInsertIcon = (id) => {
 	
 	id = id.replace("Tree_Node_","");
@@ -62,67 +276,16 @@ const setInsertIcon = (id) => {
 	//Remove existing Insert Icons
 	document.querySelectorAll(".scInsertItemIcon").forEach((el) => { el.remove() });
     //Add Insert Icon
-    a.insertAdjacentHTML( 'afterend', '<span id="scIcon' + id + '" title="Insert under this node" class="scInsertItemIcon ' + activeClass + '" onclick="insertPage(\'' + id + '\', \'' + itemName + '\')"></span>' );
+    a.insertAdjacentHTML( 'afterend', `<span id="scIcon` + id + `" title="Insert under this node" class="scInsertItemIcon ` + activeClass + `" onclick="insertPage('` + id + `', '` + itemName + `')"></span>` );
     let target = document.querySelector('#scIcon' + id);
 	target ? target.setAttribute("style","opacity:1") : false;
 
 }
 
-const initSitecoreMenu = () => {
-	let storage = localStorage.getItem('scSitecoreMenu');
-	let dock = document.querySelector(".scDockTop");
-	let icon = document.querySelector("#scSitecoreMenu");
-	if(storage == "true") {
-		dock.classList.add("showSitecoreMenu");
-		icon.classList.add("scSitecoreMenu");
-	} else {
-		dock.classList.remove("showSitecoreMenu");
-		icon.classList.remove("scSitecoreMenu");
-	}
-
-}
-
-const initColorPicker = () => {
-
-	let color, text, brightness;
-	let storage = localStorage.getItem('scColorPicker');
-	if(storage) {
-		color = storage;
-		text = setTextColour(color);
-		(text == "#ffffff") ? brightness = 10 : brightness = 0;
-
-		let root = document.documentElement;
-		root.style.setProperty('--accent', color);
-		root.style.setProperty('--accentText', text);
-		root.style.setProperty('--accentBrightness', brightness);
-	} else {
-		color = "#2bc37c";
-	}
-	let input = '<input type="color" id="scAccentColor" name="scAccentColor" value="' + color + '">';
-	let menu = document.querySelector(".sc-accountInformation");
-	menu.insertAdjacentHTML( 'afterbegin', input);
-
-
-	//Listenenr on change
-	//To change text color based on BG light -> https://css-tricks.com/switch-font-color-for-different-backgrounds-with-css/
-	let colorPicker = document.querySelector("#scAccentColor");
-	colorPicker.addEventListener('change', (event) => {
-
-		color = colorPicker.value;
-		text = setTextColour(color);
-		(text == "#ffffff") ? brightness = 10 : brightness = 0;
-
-		let root = document.documentElement;
-		root.style.setProperty('--accent', color);
-		root.style.setProperty('--accentText', text);
-		root.style.setProperty('--accentBrightness', brightness);
-
-		localStorage.setItem('scColorPicker', color);
-	});
-
-}
-
-const initIcon = () => {
+/**
+ * Init Insert Icon
+ */
+const initInsertIcon = () => {
 
 	let contentTree = document.querySelector(".scContentTree");
 	let treeNode = document.querySelector(".scContentTreeContainer");

@@ -2,11 +2,12 @@
 
 import * as global from './global.js';
 import * as local from './local.js'; //This file is missing on Github, you should create yours with all your private local API keys
-import {loadCssFile, sitecoreItemJson, getScItemData, preferesColorScheme} from './helpers.js';
+import {loadCssFile, loadJsFile, sitecoreItemJson, getScItemData, preferesColorScheme} from './helpers.js';
 import {checkUrlStatus} from './url.js';
 import {checkHelpLink} from './help.js';
 import {cleanCountryName, findCountryName} from './language.js';
-import {insertBreadcrumb} from './experimentation.js';
+import {insertSavebar, insertBreadcrumb, insertLanguageButton, insertNavigatorButton, insertLockButton, insertVersionButton, insertMoreButton} from './experimentation.js';
+import {getRelatedMedia} from './menu.js';
 
 export {sitecoreAuthorToolbox};
 
@@ -79,8 +80,7 @@ const sitecoreAuthorToolbox = () => {
         var isPresentation = sitecoreItemPathOriginal.includes('/presentation/');
         var isEmailTemplate = sitecoreItemPathOriginal.includes('/sitecore/content/email/');
         
-        global.debug ? console.table(ScItem) : false;
-        
+        //global.debug ? console.table(ScItem) : false;
 
         //Sitecore variables
         var scLanguage = document.querySelector("#scLanguage").value.toLowerCase();
@@ -94,13 +94,43 @@ const sitecoreAuthorToolbox = () => {
         storage.feature_experimentalui == undefined ? storage.feature_experimentalui = false : false;
         if(storage.feature_experimentalui) {
             
+            //Savebar
+            insertSavebar();
+
+            //Breadcrumb
             insertBreadcrumb(ScItem.path);
+
+            //More menu
+            insertMoreButton();
+
+            //Version menu
+            insertVersionButton(ScItem.id, ScItem.language, ScItem.version);
+
+            //Language menu
+            insertLanguageButton(ScItem.id, ScItem.language, ScItem.version);
+
+            //Navigator menu
+            insertNavigatorButton();
+
+            //Lock buttom
+            // insertLockButton(false);
+
+            //Upload media
+            let searchTab = document.querySelector("#BTAddNewSearch");
+            //searchTab.insertAdjacentHTML( 'beforebegin', '<a onclick="javascript:scSitecore.prototype.showModalDialog(\'/sitecore/client/Applications/Dialogs/UploadMediaDialog?ref=list\', \'\', \'\', null, null); false" class="scRibbonEditorTabNormal"><span class="scEditorTabHeaderNormal"><img loading="lazy" title="Upload in Media Library" id="scMediaUpload" src="' + global.iconUpload + '" class="scIconMenu" accesskey="m"/></span></a>' );
+            // searchTab.insertAdjacentHTML( 'beforebegin', '<a onclick="javascript:scSitecore.prototype.showModalDialog(\'/sitecore/client/Applications/Dialogs/UploadMediaDialog?ref=list\', \'\', \'\', null, null); false" class="scRibbonEditorTabNormal"><span class="scEditorTabHeaderNormal">Upload Media</span></a>' );
+
+            //Get related medias
+            //getRelatedMedia(sitecoreItemID, scLanguage, scVersion);
+
+            //Welcome to Sitecore
             if(ScItem.id == "{11111111-1111-1111-1111-111111111111}") {
 
                 scEditorPanel = document.querySelector(".scEditorPanel");
                 scEditorPanel.insertAdjacentHTML( 'afterbegin', '<h1>Welcome to Sitecore!</h1>' );
 
             }
+
 
         }
 
@@ -148,7 +178,6 @@ const sitecoreAuthorToolbox = () => {
                   var site_quickinfo = sitecoreSite.toLowerCase();
                   var site_cookie = response.farewell.toLowerCase();
                   var isSameSite = site_cookie.includes(site_quickinfo);         
-                  if(global.debug) { console.log("%c - QuickInfo ("+site_quickinfo+") VS Cookie ("+site_cookie+") = "+isSameSite+" ", 'font-size:12px; background: #e3658e; color: black; border-radius:5px; padding 3px;'); }
                 }
 
                 if(response.farewell != null && isSameSite && liveUrl == undefined) {
@@ -175,9 +204,8 @@ const sitecoreAuthorToolbox = () => {
 
                 //Experimentation
                 storage.feature_experimentalui == undefined ? storage.feature_experimentalui = false : false;
-                if(storage.feature_experimentalui) {
-                    barStyle = "scSuccess";
-                }
+                storage.feature_experimentalui ? barStyle = "scSuccess" : false;
+                document.querySelector(".scPreviewButton") ? document.querySelector(".scPreviewButton").setAttribute("style","display: block") : false;
 
                 if(isMedia) {
                     var imageId = sitecoreItemID.replace(/-/g, '').replace('{','').replace('}','');
@@ -190,7 +218,7 @@ const sitecoreAuthorToolbox = () => {
                 }
 
                 //Insert message bar into Sitecore Content Editor
-                scEditorID.insertAdjacentHTML( 'afterend', scMessage );
+                !document.querySelector("#scMessageBarLiveUrl") ? scEditorID.insertAdjacentHTML( 'afterend', scMessage ) : false;
 
                 //Insert link into Quickinfo table
                 var table = document.querySelector(".scEditorQuickInfo");
@@ -248,6 +276,10 @@ const sitecoreAuthorToolbox = () => {
                 scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + global.iconEdit + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing an datasource</div><div class="scMessageBarText">To see it, you have to attach it to a component in your page via</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet">Presentation Details or Experience Editor</li></ul></div></div>'
                 scEditorID.insertAdjacentHTML( 'afterend', scMessage );
 
+                //Experimental mode
+                document.querySelector(".scPreviewButton") ? document.querySelector(".scPreviewButton").setAttribute("style","display: none") : false;
+
+
             }
 
         }      
@@ -266,9 +298,10 @@ const sitecoreAuthorToolbox = () => {
     window.document.title = "" + ScItem.name.capitalize() + " (" + scLanguage.toUpperCase() + ")";
 
     /**
-     * Insert Flag (In Active Tab) and Version Number
+     * Insert Flag (In Active Tab) + Version Number
      */
     storage.feature_flags == undefined ? storage.feature_flags = true : false;
+    storage.feature_experimentalui == undefined ? storage.feature_experimentalui = false : false;
 
     //Version number
     var scEditorHeaderVersionsVersion = document.querySelector(".scEditorHeaderVersionsVersion");
@@ -280,7 +313,14 @@ const sitecoreAuthorToolbox = () => {
         (versionNumber < versionTotal) ?
             scEditorHeaderVersionsVersion.querySelector("span").innerText = scVersionTitle.replace("Version","⚠️ Version").replace("."," ▾") :
             scEditorHeaderVersionsVersion.querySelector("span").innerText = scVersionTitle.replace("."," ▾");
+
+        //Experimental
+        storage.feature_experimentalui ? scEditorHeaderVersionsVersion.querySelector("span").innerHTML = scEditorHeaderVersionsVersion.querySelector("span").innerHTML.replace("Version","<img src='" + global.iconVersion + "' class='scVersionIcon' />") : false;
+        //storage.feature_experimentalui ? document.querySelector(".scEditorHeaderNavigator").setAttribute("style","display:none") : false;
+
     }
+
+    
 
     //Flag in tab and menu
     if(storage.feature_flags) {
@@ -302,6 +342,10 @@ const sitecoreAuthorToolbox = () => {
             scLanguageMenu.insertAdjacentHTML( 'afterbegin', '<img loading="lazy" id="scFlagMenu" src="' + scFlag +'" style="width: 15px; vertical-align: sub; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' + global.iconFlagGeneric + '\';"/>' );
         }
 
+        //Experimental
+        if(!document.querySelector(".scLanguageIcon")) {
+            storage.feature_experimentalui ? scLanguageMenu.insertAdjacentHTML( 'afterbegin', "<img src='" + global.iconLanguage + "' class='scLanguageIcon' /> " ) : false;
+        }
     }      
 
     /**
@@ -418,7 +462,7 @@ const sitecoreAuthorToolbox = () => {
                 field.parentElement.setAttribute( 'style', 'position:relative !important' );
                 chars = field.value.length;
                 if(chars > 1) { charsText = chars+" chars"; } else { charsText = chars+" char"; }
-                countHtml = '<div id="chars_' + field.id + '" style="position: absolute; bottom: 1px; right: 1px; padding: 6px 10px; border-radius: 4px; line-height: 20px; opacity:0.5;">' + charsText + '</div>';
+                countHtml = '<div id="chars_' + field.id + '" class="scCharCount" style="position: absolute; bottom: 1px; right: 1px; padding: 6px 10px; border-radius: 4px; line-height: 20px; opacity:0.5;">' + charsText + '</div>';
                 //Add div
                 field.insertAdjacentHTML( 'afterend', countHtml );
 
@@ -552,6 +596,7 @@ const sitecoreAuthorToolbox = () => {
         for(var section of scEditorSectionCaption) {
 
             var sectionTitle = section.innerText;
+            var sectionVisible = sectionTitle != "Quick Info" ? true : false;
             sectionTitle == "Quick Info" ? sectionTitle = "Info" : false;
             var sectionId = section.getAttribute("id");
             var sectionClass = section.getAttribute("class");
@@ -561,8 +606,9 @@ const sitecoreAuthorToolbox = () => {
             var sectionErrorHtml = "";
             var sectionErrorClass = "";
 
+
             //Detect active panel
-            if(sectionClass == "scEditorSectionCaptionExpanded" && sectionActiveCount == 0) {
+            if(sectionClass == "scEditorSectionCaptionExpanded" && sectionActiveCount == 0 && sectionVisible == true) {
                 sectionSelected = "scEditorTabSelected";
                 sectionPanelDisplay = "table";
                 sectionActiveCount++;
@@ -583,13 +629,11 @@ const sitecoreAuthorToolbox = () => {
             sectionError = scEditorSectionPanel.querySelectorAll(".scEditorFieldMarkerBarCellRed").length;
             if(sectionError > 0) { sectionErrorHtml = "<span id='scCrossTabError'></span>"; sectionErrorClass = "scTabsError"; }
 
-            //Add close/hide button on each tabs, on click all tabs with the current Title will be hidden in Sitecore
-            //To revert back to original state, a pinned tab will be shown to display them again
-
             //Add tabs to document
-            scEditorTabs += '<li class="scEditorTabEmpty"></li>';
-            scEditorTabs += '<li data-id="' + sectionId + '" class="scEditorTab ' + sectionSelected + ' ' + sectionErrorClass + '" onclick="toggleSection(this,\'' + sectionTitle+ '\');">' + sectionErrorHtml + sectionTitle+ '<span class="scEditorTabClose" onclick="hideTab(\'' + sectionTitle + '\',\'' + global.extensionId + '\')">❎</span></li>';
-
+            if(sectionVisible == true) {
+                scEditorTabs += '<li class="scEditorTabEmpty"></li>';
+                scEditorTabs += '<li data-id="' + sectionId + '" class="scEditorTab ' + sectionSelected + ' ' + sectionErrorClass + '" onclick="toggleSection(this,\'' + sectionTitle+ '\');">' + sectionErrorHtml + sectionTitle+ '</li>';
+            }
             //Add trigger on grouped error message click to open tab
             //var sectionTitle = document.querySelector("#FIELD47775058").closest("table").closest("td").closest("table").previousSibling.innerText
             //toggleSection(this,\'' + sectionTitle+ '\');
@@ -605,8 +649,9 @@ const sitecoreAuthorToolbox = () => {
             scEditorHeader.insertAdjacentHTML( 'afterend', scEditorTabs );
         }
 
-        if(sectionActiveCount == 0) {
-            var tab = document.querySelector(".scEditorTab");          
+        //If there is no active tab
+        var tab = document.querySelector(".scEditorTab");  
+        if(sectionActiveCount == 0 && tab != null) {      
             var tabId = tab.dataset.id;
             var tabSection = document.querySelector("#"+tabId);
             tabSection.classList.remove("scEditorSectionCaptionCollapsed");
@@ -641,9 +686,45 @@ const sitecoreAuthorToolbox = () => {
             var isNoVersion = scWarningText.includes("The current item does not have a version");
             var isProtected = scWarningText.includes("You cannot edit this item because it is protected.");
             var isWrongVersion = scWarningText.includes("it has been replaced by a newer version.");
+            var isNoFields = scWarningText.includes("The current item does not contain any fields.");            
+
+            //No fields
+            isNoFields && document.querySelector(".scSaveBar > .scActions") ? document.querySelectorAll(".scSaveBar > .scActions > button").forEach(function(e) { e.disabled = true; }) : false;
 
             //No version exist
             isNoVersion ? scWarningIcon.setAttribute("style","background-image: url(" + global.iconTranslate + ");") : false;
+            
+            isNoVersion && document.querySelector(".scSaveBar > .scActions")
+                ? document.querySelector(".scSaveBar > .scActions").innerHTML = `<button class="primary" onclick="javascript:return scForm.postEvent(this,event,'item:addversion')">Add new version</button>`
+                : false;
+
+            if(isProtected) {
+                document.querySelector(".scEditorPanel").innerHTML = `
+                <div class="scNoVersion">
+                    <img src='` + global.iconLocked + `' width="128" /><br />
+                    <p>` + scWarningText + `</p><br />
+                    <button id="scMoreButton" type="button">Unprotect this item</button>
+                </div>`
+            }
+
+            if(isNoFields) {
+                document.querySelector(".scEditorPanel").innerHTML = `
+                <div class="scNoVersion">
+                    <img src='` + global.iconFields + `' width="128" /><br />
+                    <p>` + scWarningText + `</p><br />
+                    <button id="scMoreButton" type="button">Show Item info</button>
+                </div>`
+            }
+
+            if(isNoVersion) {
+                document.querySelector(".scEditorPanel").innerHTML = `
+                <div class="scNoVersion">
+                    <img src='` + global.iconLanguage + `' width="128" /><br />
+                    <p>` + scWarningText + `</p><br />
+                    <button onclick="javascript:return scForm.postEvent(this,event,'item:addversion')" type="button">Add new version</button>
+                </div>`
+            }
+
 
             //No version exist
             //isWrongVersion ? scWarningIcon.setAttribute("style","background-image: url(" + global.iconVersion + ");") : false;
@@ -680,6 +761,11 @@ const sitecoreAuthorToolbox = () => {
             //Prepare HTML (scInformation scWarning scError)
             scMessage = '<div id="scMessageBarUrl" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + global.iconLock + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">' + lockedBy + ' locked this item.</div><div class="scMessageBarText">Nobody can edit this page until you unlock it.</div><ul class="scMessageBarOptions"><li class="scMessageBarOptionBullet"><a href="#" onclick="javascript:return scForm.postEvent(this,event,\'item:checkin\')" class="scMessageBarOption">Unlock this item</a></li></ul></div></div>'
             scEditorID.insertAdjacentHTML( 'afterend', scMessage );
+
+            //Experimental
+            document.querySelector("#scLockButton") ? document.querySelector("#scLockButton > img").setAttribute("src", global.iconLocked) : false;
+            document.querySelector("#scLockButton") ? document.querySelector("#scLockButton").setAttribute("title", `Unlock this item`) : false;
+            document.querySelector("#scLockButton") ? document.querySelector("#scLockButton").setAttribute("onclick", `javascript:return scForm.postEvent(this,event,'item:checkin')`) : false;
 
             }
 
@@ -750,6 +836,43 @@ const sitecoreAuthorToolbox = () => {
 
     }
 
+    /**
+     * Scriban syntax highlighter
+     */
+    if(ScItem.template.includes("/experience accelerator/scriban")) {
+        
+        storage.feature_rtecolor == undefined ? storage.feature_rtecolor = true : false;
+
+        if(storage.feature_rtecolor) {
+            
+            //Variables
+            let darkModeTheme = "default";
+
+            //Get Scriban template field
+            let scribanTemplate = document.querySelector("textarea");
+            scribanTemplate.setAttribute("style","min-height: 300px; resize: vertical; overflow: auto; margin: 0px; padding-right: 0px !important; font-family: monospace;");
+            
+            //delete scCharCount
+            let charCount = document.querySelector("textarea").nextSibling;
+            charCount.getAttribute("class") == "scCharCount" ? charCount.remove() : false;
+            
+            //Inject codemirror
+            loadCssFile("css/codemirror.css");
+
+            if(storage.feature_darkmode && !storage.feature_darkmode_auto || storage.feature_darkmode && storage.feature_darkmode_auto && currentScheme == "dark") {       
+                darkModeTheme = "ayu-dark";
+                loadCssFile("css/dark/ayu-dark.css");
+            }
+
+            scribanTemplate.insertAdjacentHTML( 'afterend', '<input type="hidden" class="scDarkMode" value="' + darkModeTheme + '" />' );
+            scribanTemplate.insertAdjacentHTML( 'afterend', '<input type="hidden" class="scEditor" value="scribanTemplate" />' );
+
+            loadJsFile("js/bundle-min.js");
+
+        }
+      
+    }
+
 	/**
      * Update Favorite Item ID
      */
@@ -766,8 +889,11 @@ const sitecoreAuthorToolbox = () => {
      * Change UI opacity back to normal
      */
     clearTimeout(global.timeout);
-    document.querySelector("#EditorFrames").setAttribute("style","opacity:1");
-    document.querySelector(".scContentTreeContainer").setAttribute("style","opacity:1");
+    setTimeout(function() {
+        document.querySelector("#svgAnimation").setAttribute("style","opacity:0");
+        document.querySelector("#EditorFrames").setAttribute("style","opacity:1");
+        document.querySelector(".scContentTreeContainer").setAttribute("style","opacity:1");
+    },100)
 
     }); //end of Chrome.Storage
 

@@ -9,14 +9,19 @@ export {checkNotification, sendNotification};
  * Check notification permission
  */
 const checkNotification = () => {
-	if (Notification.permission !== 'granted') {
-        Notification.requestPermission()
-        .then(function(p) {
+    let url = window.location.href;
+    if(url.proticol =="https") {
+        if (Notification.permission !== 'granted') {
+            Notification.requestPermission()
+            .then(function(p) {
             p !== 'granted' ? console.info('User blocked notifications.') : false;
-        })
-        .catch(function(e) {
+            })
+            .catch(function(e) {
             console.info(e);
-        });
+            });
+        }
+    } else {
+        console.info("Sitecore Author Toolbox: Notification only works over https protocol.");
     }
 }
 

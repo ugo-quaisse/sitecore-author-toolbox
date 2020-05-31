@@ -1,5 +1,67 @@
+:root {
+  --black: #000;
+  --black1: #111;
+  --black2: #222;
+  --black3: #333;
+  --black4: #444;
+  --black5: #555;
+  --black6: #666;
+  --black7: #777;
+  --black8: #888;
+  --black9: #999;
+
+  --grey: #ccc;
+  --grey2: #2b2b2b;
+  --grey3: #f0f0f0;
+  --grey4: #d6d6d6;
+  --grey5: #e8e6e6;
+  --grey6: #E3E3E3;
+  --grey7: #495057;
+  --grey8: #f8f9fa;
+  
+  --lightblue: #1e81ef;
+  --blue: #0b84ff;
+  --darkblue: #034c9e;
+  --verydarkblue: #002f64;
+
+  --lightgreen: #8ce99a;
+  --green: #2bc37c;
+
+  --accent: #ee3524;
+  --accentText: #ffffff;
+  --accentBrightness: 50;
+
+  --messageSuccessBgIcon: #8ce99a;
+  --messageSuccessIcon: #40c057;
+  --messageSuccessBar: #ebfbee;
+  --messageSuccessLink: #40c057;
+
+  --messageWarningBgIcon: #ffe066;
+  --messageWarningIcon: #fab005;
+  --messageWarningBar: #fff9db;
+  --messageWarningLink: #fab005;
+
+  --messageDangerBgIcon: #ffa8a8;
+  --messageDangerIcon: #fa5252;
+  --messageDangerBar: #fff5f5;
+  --messageDangerLink: #fa5252;
+
+  --messageInfoBgIcon: #74c0fc;
+  --messageInfoIcon: #228be6;
+  --messageInfoBar: #e7f5ff;
+  --messageInfoLink: #228be6;
+  
+
+  --lightred: #ee4546;
+  --red: #a11d16;
+  --darkred: #6B120F;
+
+  --white: #fff;
+  --text: #47474E;
+}
+
 form#ContentEditorForm {
-    filter: blur(7px) brightness(0.15) grayscale(1);
+    filter: blur(7px) brightness(0.1) grayscale(1);
     transition: all ease-in-out .2s;
     transition-delay: 0.2s;
 }
@@ -45,6 +107,15 @@ ul.sc-accountInformation {
     transition: all ease-in-out .1s;
 }
 
+div.scSaveBar {
+    background-color: #fff;
+}
+
+#svgAnimation,
+#EditorFrames {
+    opacity: 0;
+}
+
 #scCreatePlus {
     visibility: hidden;
 }
@@ -53,4 +124,9 @@ ul.sc-accountInformation {
     visibility: hidden;
     opacity: 0;
     transition: all ease-in-out .2s;
+}
+
+div#Languages img {
+    display: block !important;
+    width: 32px;
 }

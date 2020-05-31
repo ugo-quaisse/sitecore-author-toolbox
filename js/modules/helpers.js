@@ -145,6 +145,8 @@ const getScItemData = () => {
         tr.cells[0].innerText == "Template:" ? scItem.templateId = tr.cells[1].querySelector("input").value.toLowerCase() : false;
         tr.cells[0].innerText == "Created from:" ? scItem.from = tr.cells[1].innerText.toLowerCase() : false;
         tr.cells[0].innerText == "Item owner:" ? scItem.owner = tr.cells[1].querySelector("input").value.toLowerCase() : false;
+        scItem.language = document.querySelector("#scLanguage") ? document.querySelector("#scLanguage").value.toLowerCase() : "en";
+        scItem.version = document.querySelector (".scEditorHeaderVersionsVersion > span") ? document.querySelector( ".scEditorHeaderVersionsVersion > span" ).innerText : "1";
     }
 
     return scItem;

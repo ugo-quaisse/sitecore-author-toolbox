@@ -6,8 +6,14 @@
  * ugo.quaisse@gmail.com
  */
 
- /* global scSitecore */
  /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
+
+scContentEditor.prototype.onTreeNodeClick = function (sender, id) {
+    setTimeout(function () {
+        scForm.postRequest("", "", "", "LoadItem(\"" + id + "\")");
+    }, 1000);
+    return false;
+}
 
 const copyTranslate = (leftElemId,rightElemId) => {
  	var left = document.querySelector('#'+leftElemId);
@@ -60,56 +66,60 @@ const toggleSection = (elem,name,fromerror = false) => {
 		var sectionId = tab.dataset.id;
  		var section = document.querySelector("#"+sectionId);
  		var sectionPanel = section.nextSibling;
+ 		var calc;
 
 		if(tab!=elem) {
-			//Other tabs not clicked
+
+			//Inactive tab
  			tab.classList.remove("scEditorTabSelected");
  			sectionPanel.setAttribute( 'style', 'display: none !important' );
  			section.classList.add("scEditorSectionCaptionCollapsed");
           	section.classList.remove("scEditorSectionCaptionExpanded");
           	scSections.value += encodeURI("&"+tab.innerText+"=1");
+
  		} else {
- 			//Tab is clicked
+
+ 			//Active tab
  			tab.classList.add("scEditorTabSelected");
  			sectionPanel.setAttribute( 'style', 'display: table !important' );
  			section.classList.remove("scEditorSectionCaptionCollapsed");
           	section.classList.add("scEditorSectionCaptionExpanded");
 
-          	//Scroll
-          	let tabPosition = tab.getBoundingClientRect();
-          	console.log(tabPosition);
+          	//X Scroll to
+          	let container = document.querySelector("#scEditorTabs").getBoundingClientRect();
+          	let x1 = container.left;
+          	let x2 = container.right;
+          	let m = (container.width/2) + x1;
+
+          	//Clicked tab
+          	let clicked = tab.getBoundingClientRect();
+          	
+          	//Tabs to be scrolled
+          	let tabsSection = document.querySelector("#scEditorTabs > ul");
+          	let currentOffset = tabsSection.currentStyle || window.getComputedStyle(tabsSection);
+          	currentOffset = parseFloat(currentOffset.marginLeft.replace("px",""));	    	
+          	let tabs = tabsSection.getBoundingClientRect();
+          	let tabsWidth = tabsSection.scrollWidth;
+
+          	//Calculation
+          	let calc = Math.round(currentOffset + (m - clicked.left));
+          	let calcPos = Math.round(tabs.left + tabsWidth + (m - clicked.left));
+
+          	//Detect boundaries
+          	calcPos < x2 ? calc = Math.round(calc + (x2 - calcPos)) : false;
+          	calc > 0 ? calc = 0 : false;
+
+          	// console.log(calcPos)
+          	// console.log("Margin-left: "+calc);
+
+          	//Scroll to position
+          	tabsSection.setAttribute("style","margin-left: "+calc+"px");
+
  		}
 
  	}
 
 } 
-
-const hideTab = (title, extensionId) => {
-	  var txt;
-	  var confirmation = confirm("Do you want to hide all \"" + title + "\" tabs?");
-	  if (confirmation == true) {
-	  	chrome.runtime.sendMessage(extensionId, {getTargetData: true, greeting: "hide_tab"}, function(response) {
-		  console.log(response);
-		});
-	  	//Save tab title in storage as a hidden tab
-	  	//Need to send a message to background script or toolbox
-	  	// chrome.storage.sync.get(["hidden_tabs"], function(result) {
-	   //      var array = result[hidden_tabs]?result[hidden_tabs]:[];
-	   //      array.unshift(title);
-	   //      var jsonObj = {};
-	   //      jsonObj[hidden_tabs] = array;
-	   //      chrome.storage.sync.set(jsonObj, function() {
-	   //          console.info('--> New array entry, This tab will be hidden: ' + title);
-	   //      });
-	   //  });
-	  	//Confirmation message
-	    alert("Ok, you will be able to revert from the \"🙈\" pinned tab");
-	  } else {
-	    txt = "You pressed Cancel!";
-	  }
-	  return false;
-}
-
 
 const toggleMediaIframe = (url) => {
 
@@ -136,15 +146,16 @@ const insertPage = (scItem, scItemName) => {
 	document.querySelector(".scOverlay").setAttribute("style","visibility:visible")
 	document.querySelector("#scModal").setAttribute("data-scItem",scItem);
 	document.querySelector("#scModal").setAttribute("data-scItemName",scItemName);
-	scItem != undefined ? document.querySelector("#scModal > .main").innerHTML = '<div class="noResult">Loading...<div>' : false;
 	scItemName != undefined ? document.querySelector("#scModal > .header > .title").innerHTML = 'Insert' : false;
-	document.querySelector("#scModal").setAttribute("style","opacity:1; visibility:visible; top: calc(50% - 400px/2)")
+	document.querySelector("#scModal").setAttribute("style","opacity:1; visibility:visible; top: calc(50% - 550px/2)");
+	document.querySelector("#scModal > .main").innerHTML = "";
+	document.querySelector("#scModal > .preload").setAttribute("style","opacity:1");
 }
 
 const insertPageClose = () => {
 	setTimeout(function() {
 		document.querySelector(".scOverlay").setAttribute("style","visibility:hidden")
-		document.querySelector("#scModal").setAttribute("style","opacity:0; visibility:hidden; top: calc(50% - 540px/2 - 10px)")
+		document.querySelector("#scModal").setAttribute("style","opacity:0; visibility:hidden; top: calc(50% - 550px/2 - 20px)")
 	},10);
 }
 
@@ -157,6 +168,7 @@ const showSitecoreMenu = () => {
 	dock.classList.contains("showSitecoreMenu") ? localStorage.setItem('scSitecoreMenu', true) : localStorage.setItem('scSitecoreMenu', false);
 }
 
-const showPublishMenu = () => {
-	document.querySelector(".scPublishMenu").setAttribute("style","visibility:visible; opacity:1")
+const showLanguageMenu = () => {
+	console.log("Languages");
 }
+

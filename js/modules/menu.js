@@ -1,8 +1,56 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
+import * as global from './global.js';
 import {getScItemData} from './helpers.js';
 
-export {insertModal};
+export {insertModal, insertPanel, getRelatedMedia};
+
+/**
+ * Get related medias
+ */
+const getRelatedMedia = (sitecoreItemID, scLanguage, scVersion) => {
+
+	var ajax = new XMLHttpRequest();
+    ajax.timeout = 7000; 
+    ajax.open("GET", "/sitecore/shell/default.aspx?xmlcontrol=Gallery.Links&id=" + sitecoreItemID + "&la=" + scLanguage + "&vs=" + scVersion + "&db=master", true);
+    ajax.onreadystatechange = function() {
+
+        if (ajax.readyState === 4 && ajax.status == "200") {
+
+        	let html = new DOMParser().parseFromString(ajax.responseText, "text/html");
+        	let count = 0;
+
+        	let dom = html.querySelectorAll("#Links > .scLink").forEach((el) => { 
+
+        		let path = el.innerText.toLowerCase();
+        		let isMediaPath = path.includes("/sitecore/media library/")
+        		if(isMediaPath) {
+        			//get onclick
+        			//split "- [" to get File name
+        			//get > img.src 
+        			console.log(el);
+        			count++;
+        		}
+
+        	})	
+
+        }
+
+    }
+    sitecoreItemID ? ajax.send(null) : false;
+
+}
+
+/**
+ * Get insert menu for an item
+ */
+const insertPanel = () => {
+
+    let htmlPanel = '<div id="scPanel"><div class="preload">' + global.svgAnimation + ' </div></div>';         
+    document.querySelector("body") ? document.querySelector("body").insertAdjacentHTML( 'beforeend', htmlPanel ) : false;
+
+}
+
 
 /**
  * Get insert menu for an item
@@ -14,7 +62,17 @@ const insertModal = (sitecoreItemID, scLanguage, scVersion, scItemName = "", mut
     ajax.open("GET", "/sitecore/shell/default.aspx?xmlcontrol=Gallery.New&id=" + sitecoreItemID + "&la=" + scLanguage + "&vs=" + scVersion + "&db=master", true);
     ajax.onreadystatechange = function() {
 
-        if (ajax.readyState === 4 && ajax.status == "200") {
+        if (ajax.readyState === 4 && ajax.status == "401") {
+
+            let ScItem = getScItemData();
+            let scModal = document.querySelector( "#scModal" );
+            let menuTiles = '<div class="noResult">Your Sitecore session is expired, please reconnect.</div>'
+            let htmlMenuInner = '<div class="header"><span class="title">Insert under ' + ScItem.name.capitalize() + '</span> <span class="maximize"></span> <span class="close"></span></div><div class="main"> ' + menuTiles + ' </div><div class="preload"> ' + global.svgAnimation + ' </div>';
+            let htmlMenu = '<div class="scOverlay"></div><div id="scModal">' + htmlMenuInner + '</div>';
+
+            scModal ? scModal.innerHTML = htmlMenuInner : document.querySelector("body").insertAdjacentHTML( 'beforeend', htmlMenu );
+
+        } else if (ajax.readyState === 4 && ajax.status == "200") {
 
         	let html = new DOMParser().parseFromString(ajax.responseText, "text/html");
         	let jsonOptions = [];
@@ -60,18 +118,18 @@ const insertModal = (sitecoreItemID, scLanguage, scVersion, scItemName = "", mut
 
 	        	//If empty
 	        	jsonOptions["subitems"].length == 0
-	        	? menuTiles = '<div class="noResult">Nothing to insert under <u>' + ScItem.name.capitalize() + '</u> node.</div>'
+	        	? menuTiles = '<div class="scNoResult"><img src=" ' + global.iconForbidden + ' " style="width:128px; opacity:0.5;" /><br />Nothing to insert under "' + ScItem.name.capitalize() + '" node.</div>'
 	        	: false;
 
 	        	for (var options of jsonOptions["subitems"]) {
-	       	 		menuTiles += '<div class="item"><a href="#" onclick="insertPageClose(); ' + options[2] + '"><img loading="lazy" src="' + options[1] + '" /><br />' + options[0] + '</a></div>';
+	       	 		menuTiles += '<div class="item"><a href="#" onclick="insertPageClose(); ' + options[2] + '"><img loading="lazy" src="' + options[1] + '" onerror="this.onerror=null;this.src=\'' + global.iconDocument + '\';"/><br />' + options[0] + '</a></div>';
 	       	 	}
 
        	 	}
-       	 	let htmlMenuInner = '<div class="header"><span class="title">Insert under ' + ScItem.name.capitalize() + '</span> <span class="maximize"></span> <span class="close"></span></div><div class="main"> ' + menuTiles + ' </div>';
+       	 	let htmlMenuInner = '<div class="header"><span class="title">Insert under ' + ScItem.name.capitalize() + '</span> <span class="maximize"></span> <span class="close"></span></div><div class="main"> ' + menuTiles + ' </div><div class="preload"> ' + global.svgAnimation + ' </div>';
        	 	let htmlMenu = '<div class="scOverlay"></div><div id="scModal">' + htmlMenuInner + '</div>';
        	 	
-       	 	scModal ? scModal.innerHTML = htmlMenuInner : document.querySelector("body").insertAdjacentHTML( 'afterend', htmlMenu );
+       	 	scModal ? scModal.innerHTML = htmlMenuInner : document.querySelector("body").insertAdjacentHTML( 'beforeend', htmlMenu );
         	
        	 	//Section below will be executed on load only (true)
        	 	if(mutationObserver) {
@@ -98,17 +156,19 @@ const insertModal = (sitecoreItemID, scLanguage, scVersion, scItemName = "", mut
 				if (event.key === 'Escape') {
 
 					document.querySelector(".scOverlay").setAttribute('style', 'visibility: hidden');
-	       	 		document.querySelector("#scModal").setAttribute('style', 'opacity:0; visibility: hidden; top: calc(50% - 540px/2 - 10px)');
-	       	 		document.querySelector(".scPublishMenu").setAttribute("style","visibility:hidden; opacity:0")
+	       	 		document.querySelector("#scModal").setAttribute('style', 'opacity:0; visibility: hidden; top: calc(50% - 550px/2 - 10px)');
+	       	 		
 	       	 	}
 
        	 	});
+
+
 
         	//Clic close button
        	 	document.querySelector("#scModal > .header > .close").addEventListener('click', (event) => {
 
        	 		document.querySelector(".scOverlay").setAttribute('style', 'visibility: hidden');
-	       	 	document.querySelector("#scModal").setAttribute('style', 'opacity:0; visibility: hidden; top: calc(50% - 540px/2 - 10px)');
+	       	 	document.querySelector("#scModal").setAttribute('style', 'opacity:0; visibility: hidden; top: calc(50% - 550px/2 - 10px)');
 
        	 	});
 

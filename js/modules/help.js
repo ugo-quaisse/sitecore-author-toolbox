@@ -69,7 +69,7 @@ const checkHelpLink = (item, language, version)  => {
                     scEditorID.insertAdjacentHTML( 'afterend', scMessage );
                 } catch(error) {
                     //error
-                    console.info("Sitecore Author Toolbox:", "The url " + link + " is not a valid  link.");
+                    console.info("Sitecore Author Toolbox:", "The url " + link + " is not a valid link.");
                 }
 
                 return link;
@@ -79,6 +79,6 @@ const checkHelpLink = (item, language, version)  => {
 
     setTimeout(function() {
         ajax.send(null);
-    },300);
+    },1000);
 
 }

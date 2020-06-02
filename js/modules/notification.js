@@ -9,8 +9,8 @@ export {checkNotification, sendNotification};
  * Check notification permission
  */
 const checkNotification = () => {
-    let url = window.location.href;
-    if(url.proticol =="https") {
+    let url = new URL(window.location.href);
+    if(url.protocol =="https:") {
         if (Notification.permission !== 'granted') {
             Notification.requestPermission()
             .then(function(p) {

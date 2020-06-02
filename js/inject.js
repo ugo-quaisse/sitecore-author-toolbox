@@ -8,13 +8,6 @@
 
  /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
-scContentEditor.prototype.onTreeNodeClick = function (sender, id) {
-    setTimeout(function () {
-        scForm.postRequest("", "", "", "LoadItem(\"" + id + "\")");
-    }, 1000);
-    return false;
-}
-
 const copyTranslate = (leftElemId,rightElemId) => {
  	var left = document.querySelector('#'+leftElemId);
  	var right = document.querySelector('#'+rightElemId);

@@ -47,9 +47,11 @@ const sitecoreAuthorToolbox = () => {
         var scLanguageTxtShort = scEditorHeaderVersionsLanguage.innerText; //French
     }
 
+    /*
+     * If no Quick info displayed, fallback message
+     */
   	if (!scQuickInfo) {
 
-  		//Fallback if Quikinfo is not enabled
     	if(!document.querySelector("#scMessageBarUrl") && scEditorSections) {
       		var scMessage = '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + global.icon + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">😭 Oh snap, you are missing out big! 😭</div><div class="scMessageBarText">To fully enjoy Sitecore Author Toolbox, please enable <b>Title bar</b> and <b>Quick info section</b> under <b>Application Options</b>.</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="" onclick="javascript:return scForm.postEvent(this,event,\'shell:useroptions\')" class="scMessageBarOption">Open Application Options</a>.</li></ul></div></div>'
     		scEditorSections.insertAdjacentHTML( 'afterbegin', scMessage );
@@ -57,7 +59,7 @@ const sitecoreAuthorToolbox = () => {
 
   	} else {
 
-        //Sitecore properties from Quick Info
+        //Variables
         let ScItem = getScItemData();
         var temp = document.getElementsByClassName("scEditorHeaderQuickInfoInput"); 
         var sitecoreItemID = ScItem.id;
@@ -82,7 +84,6 @@ const sitecoreAuthorToolbox = () => {
         
         //global.debug ? console.table(ScItem) : false;
 
-        //Sitecore variables
         var scLanguage = document.querySelector("#scLanguage").value.toLowerCase();
         var scUrl = window.location.origin + '/?sc_itemid=' + sitecoreItemID + '&sc_mode=normal&sc_lang=' + scLanguage + '&sc_version=' +scVersion;
         var scFlag, tabbedFlag;
@@ -884,7 +885,7 @@ const sitecoreAuthorToolbox = () => {
      * Save data in storage
      */
     sitecoreItemJson(sitecoreItemID, scLanguage, scVersion);
-    
+
     /**
      * Change UI opacity back to normal
      */

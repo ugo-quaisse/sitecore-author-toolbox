@@ -50,6 +50,12 @@ chrome.storage.sync.get((storage) => {
     if(global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isCss && !global.isUploadManager) {
 
         /**
+         * Load extra JS and CSS
+         */
+        loadCssFile("css/onload-min.css");
+        loadJsFile("js/inject.js");
+
+        /**
          * Dark mode
          */
         storage.feature_darkmode == undefined ? storage.feature_darkmode = false : false;
@@ -85,12 +91,6 @@ chrome.storage.sync.get((storage) => {
         if(global.isContentEditor || global.isLaunchpad) { 
 
             consoleLog( "**** Content Editor / Launchpage ****" , "yellow");
-
-            /**
-            * Load extra JS and CSS
-            */
-            loadJsFile("js/inject.js");
-            loadCssFile("css/onload-min.css");
 
             /**
              * Experimental UI
@@ -1015,6 +1015,16 @@ chrome.storage.sync.get((storage) => {
 
         //Observer publish
         target ? observer.observe(target, { attributes: true }) : false;
+
+        /**
+         * Scroll content tree to active element
+         */
+        setTimeout(function() {
+            let windowHeight = document.querySelector("body").getBoundingClientRect().height;
+            let activeNodePos = document.querySelector(".scContentTreeNodeActive > span") ? document.querySelector(".scContentTreeNodeActive > span").getBoundingClientRect().top : false;
+            let scrollOffset = activeNodePos > windowHeight ? activeNodePos-windowHeight+(windowHeight/2) : 0;
+            document.querySelector(".scContentTree") ? document.querySelector(".scContentTree").scrollTop = scrollOffset : false;
+        },1000)
 
         /**
          * Update UI

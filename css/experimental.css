@@ -272,7 +272,7 @@ ul.scAccountMenu li:hover {
 .scTreeview .icon,
 .scTreeview .icon_Hover,
 #scModal .item > a > img {
- 	filter: grayscale(1) brightness(0.5) contrast(2);
+ 	filter: grayscale(1) brightness(0.4) contrast(2);
 }
 
 #scModal .item:hover > a > img {

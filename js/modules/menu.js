@@ -122,7 +122,8 @@ const insertModal = (sitecoreItemID, scLanguage, scVersion, scItemName = "", mut
 	        	: false;
 
 	        	for (var options of jsonOptions["subitems"]) {
-	       	 		menuTiles += '<div class="item"><a href="#" onclick="insertPageClose(); ' + options[2] + '"><img loading="lazy" src="' + options[1] + '" onerror="this.onerror=null;this.src=\'' + global.iconDocument + '\';"/><br />' + options[0] + '</a></div>';
+                    let iconTemp = options[1].replace("/temp/iconcache/","~/icon/");
+	       	 		menuTiles += '<div class="item"><a href="#" onclick="insertPageClose(); ' + options[2] + '"><img loading="lazy" src="' + iconTemp+ '" onerror="this.onerror=null;this.src=\'' + global.iconDocument + '\'"/><br />' + options[0] + '</a></div>';
 	       	 	}
 
        	 	}

@@ -10,7 +10,6 @@ export {insertSavebar, insertBreadcrumb, insertLanguageButton, insertVersionButt
  * Insert Save bar
  */
 const insertSavebar = () => {
-
 	//Save Bar
     let scSaveBar = `
     <div class="scSaveBar">
@@ -246,7 +245,10 @@ const initColorPicker = () => {
 		text = setTextColour(color);
 		(text == "#ffffff") ? brightness = 10 : brightness = 0;
 
-		//need to add iframes?
+		//Reload all Gallery iframes
+		let allIframes = document.querySelectorAll("iframe").forEach(function(e) {
+			e.src.includes("xmlcontrol=Gallery") ? e.contentWindow.location.reload() : false;
+		});
 
 		let root = document.documentElement;
 		root.style.setProperty('--accent', color);

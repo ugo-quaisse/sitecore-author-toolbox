@@ -91,6 +91,7 @@ const sitecoreAuthorToolbox = () => {
         /**
          * Experimentations
          */
+        console.log("test");
         //Experimentation
         storage.feature_experimentalui == undefined ? storage.feature_experimentalui = false : false;
         if(storage.feature_experimentalui) {

@@ -24,7 +24,7 @@ import {sitecoreAuthorToolbox} from './modules/contenteditor.js';
 import {getGravatar} from './modules/users.js';
 import {instantSearch} from './modules/instantsearch.js';
 import {insertModal, insertPanel} from './modules/menu.js';
-import {insertBreadcrumb, initInsertIcon, getAccentColor, initColorPicker, initSitecoreMenu} from './modules/experimentation.js';
+import {insertSavebar, insertBreadcrumb, initInsertIcon, getAccentColor, initColorPicker, initSitecoreMenu} from './modules/experimentation.js';
 
 /**
  * Get all user's settings from storage
@@ -113,6 +113,9 @@ chrome.storage.sync.get((storage) => {
 
                 //Content and Media Library links
                 ///shell/Applications/Media/MediaShop.aspx?sc_bw=1
+                
+                //Savebar
+                insertSavebar(); 
                 
                 //Insert Modal
                 insertModal(ScItem.id, ScItem.language, ScItem.version);
@@ -319,6 +322,7 @@ chrome.storage.sync.get((storage) => {
                     sitecoreAuthorToolbox();
 
                 } else {
+
                     sitecoreAuthorToolbox();       
                 }
 

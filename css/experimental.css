@@ -508,7 +508,6 @@ a.scRibbonEditorTabNormal {
 a.scRibbonEditorTabNormal:hover {
 	background-color: transparent;
 	border-bottom: 3px solid var(--grey2);
-	font-weight: 600;
 }
 
 #BTAddNewSearch {

@@ -6,7 +6,7 @@ import {loadCssFile, loadJsFile, sitecoreItemJson, getScItemData, preferesColorS
 import {checkUrlStatus} from './url.js';
 import {checkHelpLink} from './help.js';
 import {cleanCountryName, findCountryName} from './language.js';
-import {insertSavebar, insertBreadcrumb, insertLanguageButton, insertNavigatorButton, insertLockButton, insertVersionButton, insertMoreButton} from './experimentation.js';
+import {insertSavebar, insertBreadcrumb, insertLanguageButton, insertNavigatorButton, insertLockButton, insertVersionButton, insertMoreButton} from './experimentalui.js';
 import {getRelatedMedia} from './menu.js';
 
 export {sitecoreAuthorToolbox};
@@ -91,8 +91,6 @@ const sitecoreAuthorToolbox = () => {
         /**
          * Experimentations
          */
-        console.log("test");
-        //Experimentation
         storage.feature_experimentalui == undefined ? storage.feature_experimentalui = false : false;
         if(storage.feature_experimentalui) {
             
@@ -714,7 +712,7 @@ const sitecoreAuthorToolbox = () => {
                 <div class="scNoVersion">
                     <img src='` + global.iconFields + `' width="128" /><br />
                     <p>` + scWarningText + `</p><br />
-                    <button id="scMoreButton" type="button">Show Item info</button>
+                    <button id="scMoreButton" type="button">Show Item details</button>
                 </div>`
             }
 

@@ -111,7 +111,7 @@ const insertMoreButton = (locked = false) => {
 	let panel = document.querySelector("#scPanel");
 	let html = `
 	<div class="content">
-		<h2>Quick info</h2>
+		<h2>Item details</h2>
 		<h3>Item ID:</h3>
 		` + ScItem.id + `
 		<h3>Name:</h3>
@@ -190,12 +190,17 @@ const initSitecoreMenu = () => {
 	let storage = localStorage.getItem('scSitecoreMenu');
 	let dock = document.querySelector(".scDockTop");
 	let icon = document.querySelector("#scSitecoreMenu");
+	// let button = document.querySelector("#scSitecoreRibbon > span");
+	
+
 	if(storage == "true") {
 		dock.classList.add("showSitecoreMenu");
 		icon.classList.add("scSitecoreMenu");
+		// button.classList.add("active");
 	} else {
 		dock.classList.remove("showSitecoreMenu");
 		icon.classList.remove("scSitecoreMenu");
+		// button.classList.remove("active");
 	}
 
 }

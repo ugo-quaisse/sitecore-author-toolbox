@@ -2,7 +2,7 @@
 
 import * as global from './global.js'
 import {exeJsCode} from './helpers.js';
-import {pathToBreadcrumb} from './experimentation.js';
+import {pathToBreadcrumb} from './experimentalui.js';
 
 export { instantSearch }
 
@@ -172,7 +172,7 @@ const instantSearch = () => {
             				}
             			}
 
-            			count == 0 ? html = '<div class="scInstansSeachLoading">No result for \"<u>' + event.target.value + '\</u>", try something else.</div>' : false
+            			count == 0 ? html = '<div class="scInstantSeachLoading">No result for \"<u>' + event.target.value + '\</u>", try something else.</div>' : false
 
             			// Populate result
             			divResults.innerHTML = ''

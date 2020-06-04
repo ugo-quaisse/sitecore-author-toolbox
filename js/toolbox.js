@@ -24,7 +24,7 @@ import {sitecoreAuthorToolbox} from './modules/contenteditor.js';
 import {getGravatar} from './modules/users.js';
 import {instantSearch} from './modules/instantsearch.js';
 import {insertModal, insertPanel} from './modules/menu.js';
-import {insertSavebar, insertBreadcrumb, initInsertIcon, getAccentColor, initColorPicker, initSitecoreMenu} from './modules/experimentation.js';
+import {insertSavebar, insertBreadcrumb, initInsertIcon, getAccentColor, initColorPicker, initSitecoreMenu} from './modules/experimentalui.js';
 
 /**
  * Get all user's settings from storage
@@ -60,6 +60,7 @@ chrome.storage.sync.get((storage) => {
          */
         storage.feature_darkmode == undefined ? storage.feature_darkmode = false : false;
         storage.feature_darkmode_auto == undefined ? storage.feature_darkmode_auto = false : false;
+        storage.feature_experimentalui == undefined ? storage.feature_experimentalui = false : false;
 
         if(storage.feature_darkmode && !storage.feature_darkmode_auto && !global.isTelerikUi && !global.isExperienceEditor && !global.isAdminCache && !global.isContentHome && !global.isLoginPage && !global.isEditMode && !global.isRules && !global.isAdmin || storage.feature_darkmode && storage.feature_darkmode_auto && !global.isTelerikUi && !global.isExperienceEditor && !global.isAdminCache && !global.isContentHome && !global.isLoginPage && !global.isEditMode && !global.isRules && !global.isAdmin && currentScheme == "dark") {
 
@@ -71,7 +72,7 @@ chrome.storage.sync.get((storage) => {
             loadCssFile("css/dark/gallery-min.css");
             loadCssFile("css/dark/speak-min.css");
 
-            (navigator.platform.indexOf('Win') == 0) ? loadCssFile("css/dark/scrollbars-min.css") : false;
+            navigator.platform.indexOf('Win') == 0 ? loadCssFile("css/dark/scrollbars-min.css") : false;
 
         }
 
@@ -103,7 +104,11 @@ chrome.storage.sync.get((storage) => {
                 let ScItem = getScItemData();
 
                 //Load extra CSS
-                loadCssFile("css/experimental.css");
+                loadCssFile("css/experimentalui.css");
+
+                if(storage.feature_darkmode && !storage.feature_darkmode_auto && !global.isTelerikUi && !global.isExperienceEditor && !global.isAdminCache && !global.isContentHome && !global.isLoginPage && !global.isEditMode && !global.isRules && !global.isAdmin || storage.feature_darkmode && storage.feature_darkmode_auto && !global.isTelerikUi && !global.isExperienceEditor && !global.isAdminCache && !global.isContentHome && !global.isLoginPage && !global.isEditMode && !global.isRules && !global.isAdmin && currentScheme == "dark") {
+                    loadCssFile("css/dark/experimentalui-min.css")
+                }
 
                 //document.querySelector("#PublishChildren").checked = true;
 
@@ -145,7 +150,7 @@ chrome.storage.sync.get((storage) => {
                     //Add icons
                     // htmlIcon += '<img loading="lazy" title="Upload in Media Library" id="scMediaUpload"  onclick="javascript:scSitecore.prototype.showModalDialog(\'' + scUploadMediaUrl + '\', \'\', \'\', null, null); false" src="' + global.iconUpload + '" class="scIconMenu" accesskey="m"/>';
                     let htmlIcon = `<img loading="lazy" title="No notification in your workbox" id="scNotificationBell" onclick="javascript:scSitecore.prototype.showModalDialog('` + global.workboxPage.replace("&sc_bw=1","&sc_bw=0") + `', '', '` + dialogParamsLarge + `Workbox', null, null); false" src="` + global.iconBell + `" class="scIconMenu" accesskey="w"/>
-                                    <img loading="lazy" title="Show traditional Sitecore ribbon" id="scSitecoreMenu" onclick="showSitecoreMenu()" src="` + global.iconDownArrow + `" class="scIconMenu" accesskey="a" />`;
+                                    <img loading="lazy" title="Show ribbon" id="scSitecoreMenu" onclick="showSitecoreMenu()" src="` + global.iconDownArrow + `" class="scIconMenu" accesskey="a" />`;
                     accountInformation.insertAdjacentHTML( 'afterbegin', htmlIcon );
 
                     //Color picker and Sitecore Menu - Experimental
@@ -357,7 +362,7 @@ chrome.storage.sync.get((storage) => {
 
                 //Current version of the Snackbar
                 let snackbarVersion = global.extensionVersion;
-                (!chrome.runtime.error && storage.hideSnackbar != snackbarVersion) ? showSnackbar(snackbarVersion) : false; 
+                localStorage.getItem('sbDismiss') != snackbarVersion ? showSnackbar(snackbarVersion) : false; 
 
             }
 
@@ -730,7 +735,7 @@ chrome.storage.sync.get((storage) => {
 
             consoleLog("**** Editors folder ****", "orange");
 
-            loadCssFile("css/experimental.css");
+            loadCssFile("css/experimentalui.css");
             getAccentColor();
             
         }   
@@ -739,7 +744,7 @@ chrome.storage.sync.get((storage) => {
 
             consoleLog("**** Versions menu ****", "orange");
 
-            loadCssFile("css/experimental.css");
+            loadCssFile("css/experimentalui.css");
             getAccentColor();
 
         }
@@ -751,7 +756,7 @@ chrome.storage.sync.get((storage) => {
 
             if(storage.feature_flags) {
 
-                loadCssFile("css/experimental.css");
+                loadCssFile("css/experimentalui.css");
                 getAccentColor();
                  
                 var dom = document.querySelector("#Languages");

@@ -17,18 +17,19 @@ h1 {
 }
 
 h2 {
-	font-size: 150%;
+	font-size: 125%;
+    border-bottom: 1px solid var(--text);
     font-weight: 700;
-    color: var(--grey0);
-    padding: 10px 0px;
+    color: var(--text);
+    padding: 15px 0px;
     text-transform: uppercase;
 }
 
 h3 {
-	font-size: 110%;
+	font-size: 100%;
 	font-weight: 700;
 	color: var(--accent);
-	padding: 10px 0px;
+	padding: 10px 0px 2px 0px;
 	margin: auto;
 }
 
@@ -101,6 +102,39 @@ input[type="color"]::-webkit-color-swatch {
 .wbNotificationMenu {
 	background-color: var(--accent);
 	right: 117px;
+}
+
+#scSitecoreRibbon {
+	width: 40px;
+    height: 20px;
+    cursor: pointer;
+    position: relative;
+    top: 5px;
+    border-radius: 20px;
+    transition: all 0.1s ease 0s;
+    background: var(--white);
+    border: 1px solid var(--white);
+    outline:0;
+}
+
+#scSitecoreRibbon:focus {
+	outline:0;
+}
+
+#scSitecoreRibbon > span {
+	width: 12px;
+    height: 12px;
+    background-color: var(--grey2);
+	margin-left: 0px;
+    border-radius: 12px;
+    transition: all 0.1s ease 0s;
+    display: block;
+    
+}
+
+#scSitecoreRibbon > span.active {
+	background-color: var(--accent);
+	margin-left: 14px;
 }
 
 #scFlag,
@@ -251,6 +285,13 @@ ul.scAccountMenu li:hover {
 
 .scContentControlCheckbox:checked+.scContentControlCheckboxLabel::before {
 	background-color: var(--accent) !important;
+}
+
+select option:focus, 
+select option:active, 
+select option:checked {
+	background-color: var(--accent) !important;
+	color: var(--accentText) !important;
 }
 
 /* Icons */

@@ -616,7 +616,7 @@ textarea:focus {
     transition: all ease-in-out .15s !important;
 }
 .scInstantSearch:focus  {
-    background: #ffffff url('chrome-extension://__MSG_@@extension_id__/images/magnifier.svg') no-repeat center right 10px !important;
+    background: var(--white) url('chrome-extension://__MSG_@@extension_id__/images/magnifier.svg') no-repeat center right 10px !important;
     color: #333333 !important;
 }
 .scInstantSearch::placeholder {
@@ -624,9 +624,10 @@ textarea:focus {
 }
 
 .scInstantSeachLoading {
-    padding-top: 11vh;
-    color: #999999;
+    padding-top: 100px;
+    color: var(--white);
     font-size: 14px;
+    line-height: 20px;
 }
 
 .scInstantSeachLoading > a {
@@ -683,9 +684,10 @@ textarea:focus {
     white-space: nowrap;
     margin: 5px 0px 15px 0px;
     padding: 0px 0px 5px 0px;
-    border-bottom: 1px solid #555555 !important;
+    border-bottom: 1px solid #777 !important;
     text-align: left;
     margin: 20px;
+    text-transform: uppercase;
 }
 
 .scInstantSearchResults > li {
@@ -711,7 +713,7 @@ textarea:focus {
 }*/
 
 .scInstantSearchResults > li > h2 {
-    font-weight: normal;
+    font-weight: 600;
     font-size: 16px;
     color: #fff !important;
     line-height: normal;
@@ -722,6 +724,8 @@ textarea:focus {
     padding: 0px 0px 5px 0px;
     cursor: pointer;
     text-align: left;
+    border: none;
+    text-transform: capitalize;
 }
 
 .scInstantSearchResults > li > h2 > a {

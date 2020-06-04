@@ -211,6 +211,26 @@
 		"oF": 1,
 		"oS": 3
 		},
+	"/css/dark/experimentalui-min.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "/css/dark/experimentalui-min-min.css",
+		"oF": 0,
+		"oS": 3
+		},
+	"/css/dark/experimentalui.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "/css/dark/experimentalui-min.css",
+		"oF": 0,
+		"oS": 3
+		},
 	"/css/dark/gallery-min.css": {
 		"aP": 1,
 		"bl": 0,
@@ -291,23 +311,23 @@
 		"oF": 1,
 		"oS": 3
 		},
-	"/css/experimental-min.css": {
+	"/css/experimentalui-min.css": {
 		"aP": 1,
 		"bl": 0,
 		"ft": 16,
 		"ma": 0,
 		"oA": 0,
-		"oAP": "/css/experimental-min-min.css",
+		"oAP": "/css/experimentalui-min-min.css",
 		"oF": 0,
 		"oS": 3
 		},
-	"/css/experimental.css": {
+	"/css/experimentalui.css": {
 		"aP": 1,
 		"bl": 0,
 		"ft": 16,
 		"ma": 0,
 		"oA": 0,
-		"oAP": "/css/experimental-min.css",
+		"oAP": "/css/experimentalui-min.css",
 		"oF": 0,
 		"oS": 3
 		},
@@ -16288,6 +16308,17 @@
 		"oT": 1,
 		"q": 100
 		},
+	"/images/icon_small.png": {
+		"ft": 32768,
+		"iS": 7043,
+		"oA": 0,
+		"oAP": "/images/icon_small.png",
+		"oF": 0,
+		"oIPL": 1,
+		"opt": 1,
+		"oT": 1,
+		"q": 100
+		},
 	"/images/jira.svg": {
 		"ft": 2097152,
 		"miP": 0,
@@ -16711,13 +16742,13 @@
 		"sC": 3,
 		"tS": 0
 		},
-	"/js/modules/experimentation.js": {
+	"/js/modules/experimentalui.js": {
 		"bF": 0,
 		"ft": 64,
 		"ma": 0,
 		"mi": 1,
 		"oA": 1,
-		"oAP": "/js/modules/experimentation-min.js",
+		"oAP": "/js/modules/experimentalui-min.js",
 		"oF": 0,
 		"sC": 3,
 		"tS": 0

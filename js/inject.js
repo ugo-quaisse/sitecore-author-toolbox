@@ -155,8 +155,12 @@ const insertPageClose = () => {
 const showSitecoreMenu = () => {
 	let dock = document.querySelector(".scDockTop");
 	dock.classList.toggle("showSitecoreMenu");
+
 	let icon = document.querySelector("#scSitecoreMenu");
 	icon.classList.toggle("scSitecoreMenu");
+
+	// let button = document.querySelector("#scSitecoreRibbon > span");
+	// button.classList.toggle("active");
 
 	dock.classList.contains("showSitecoreMenu") ? localStorage.setItem('scSitecoreMenu', true) : localStorage.setItem('scSitecoreMenu', false);
 }

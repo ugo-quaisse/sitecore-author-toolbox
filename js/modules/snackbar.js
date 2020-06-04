@@ -10,21 +10,18 @@ export {showSnackbar};
 const showSnackbar = (version) => {
 
     //Snackbar settings
-    var snackbarHtml = "<b>Welcome to Sitecore Author Toolbox 2.1</b><br />You've got upgrated to the latest version. If you like it, please take time to rate it on Chrome Web Store.";        
-    var html='<div class="snackbar"> ' + snackbarHtml + ' <button onclick="window.open(\' https://chrome.google.com/webstore/detail/sitecore-author-toolbox/mckfcmcdbgkgffdknpkaihjigmcnnbco \')">REVIEW</button><button id="sbDismiss">DISMISS</button></div>';
+    let snackbarHtml = `
+    <b>Welcome to Sitecore Author Toolbox 2.2</b><br />
+    You've got upgrated to the latest version. Give a try to our new settings UI by activing it in your options.`;
+    let html=`<div class="snackbar">` + snackbarHtml + `<button onclick="window.open('` + global.launchpadPage + `')">SETTINGS</button><button id="sbDismiss">DISMISS</button></div>`;
 
     //Show Snackbar
     document.querySelector('body').insertAdjacentHTML( 'beforeend', html );
 
 
     //Add listener on click #sbDismiss
-    document.querySelector("#sbDismiss").addEventListener("click", function(){     
-      chrome.runtime.sendMessage({greeting: "hide_snackbar", version: version}, function(response) {
-        if(response.farewell != null) {
-
-          document.querySelector('.snackbar').setAttribute('style','display: none');
-
-        }
-      });
+    document.querySelector("#sbDismiss").addEventListener("click", function() {
+        localStorage.setItem("sbDismiss", version);
+        document.querySelector('.snackbar').setAttribute('style','display: none');
     });
 }

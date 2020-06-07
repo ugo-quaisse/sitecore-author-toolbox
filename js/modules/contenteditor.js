@@ -110,7 +110,7 @@ const sitecoreAuthorToolbox = () => {
             insertLanguageButton(ScItem.id, ScItem.language, ScItem.version);
 
             //Navigator menu
-            insertNavigatorButton();
+            //insertNavigatorButton();
 
             //Lock buttom
             // insertLockButton(false);
@@ -273,7 +273,7 @@ const sitecoreAuthorToolbox = () => {
             //If not added yet
             if(!document.getElementById("scMessageBarInfo") && storage.feature_urls && storage.feature_messagebar) {
               
-                scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + global.iconEdit + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing an datasource</div><div class="scMessageBarText">To see it, you have to attach it to a component in your page via</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet">Presentation Details or Experience Editor</li></ul></div></div>'
+                scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + global.iconData + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing a datasource</div><div class="scMessageBarText">To see it, you have to attach it to a component in a page via</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet">Presentation Details <span>or</span> Experience Editor</li></ul></div></div>'
                 scEditorID.insertAdjacentHTML( 'afterend', scMessage );
 
                 //Experimental mode

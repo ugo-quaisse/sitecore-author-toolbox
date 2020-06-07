@@ -574,6 +574,10 @@ a.scRibbonEditorTabNormal:hover {
 	padding: 7px !important;
 }
 
+.scMessageBar > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet > span {
+	color: var(--text);
+}
+
 .scMessageBar.scWarning {
 	margin: 20px;
 	border-radius: 0px 3px 3px 0px;
@@ -717,7 +721,7 @@ a.scRibbonEditorTabNormal:hover {
 }
 
 .scEditorTab.scTabsError {
-	border-top: 3px solid var(--messageDangerLink) !important;
+	border-top: 2px solid var(--messageDangerLink) !important;
 }
 
 .scEditorSectionPanel.scCrossTabError

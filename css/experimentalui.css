@@ -570,7 +570,7 @@ a.scRibbonEditorTabNormal:hover {
 
  /* Message bar */
 .scMessageBar .scMessageBarIcon {
-	background-position: center 20px !important;
+	background-position: center 22px !important;
 	padding: 7px !important;
 }
 
@@ -879,15 +879,28 @@ a.scRibbonEditorTabNormal:hover {
     margin-top: -2px;
  }
 
+ .scFormDialogHeader,
+ .scDialogHeader,
+ .ui-widget-header {
+ 	/*background-color: var(--accent);
+ 	color: var(--accentText);*/
+ }
+
 .scButton {
- 	background-color: var(--accent);
- 	color: var(--accentText);
+ 	background-color: var(--grey4);
+ 	color: var(--text);
  	font-size: 15px;
     background-image: none;
     padding: 7px 14px 8px 14px;
     border: 0px;
     border-radius: 3px;
     cursor: pointer;
+    box-shadow: none;
+}
+
+.scButtonPrimary {
+	background-color: var(--accent);
+ 	color: var(--accentText);
 }
 
 .scButton:hover,

@@ -174,15 +174,14 @@ const fetchTimeout = (time, promise) => {
 /**
  * Reposition element when dragged
  */
-const repositionElement = (event) => {
-    var initX, mousePressX;
-    this.style.left = initX + event.clientX - mousePressX + 'px';
+function repositionElement(event) {
+    this.setAttribute("style", "left:" + (event.clientX + 37) + "px");
 }
 
 /**
  * Make an element draggable
  */
-const startDrag = () => {
+function startDrag() {
     var initX, mousePressX;
     var contextmenu = document.querySelector('.scExpTab');
     if(contextmenu) {

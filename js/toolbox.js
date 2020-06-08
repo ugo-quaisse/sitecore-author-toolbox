@@ -62,18 +62,20 @@ chrome.storage.sync.get((storage) => {
         storage.feature_darkmode_auto == undefined ? storage.feature_darkmode_auto = false : false;
         storage.feature_experimentalui == undefined ? storage.feature_experimentalui = false : false;
 
-        if(storage.feature_darkmode && !storage.feature_darkmode_auto && !global.isTelerikUi && !global.isExperienceEditor && !global.isAdminCache && !global.isContentHome && !global.isLoginPage && !global.isEditMode && !global.isRules && !global.isAdmin || storage.feature_darkmode && storage.feature_darkmode_auto && !global.isTelerikUi && !global.isExperienceEditor && !global.isAdminCache && !global.isContentHome && !global.isLoginPage && !global.isEditMode && !global.isRules && !global.isAdmin && currentScheme == "dark") {
+        if(storage.feature_experimentalui != true) {
+            if(storage.feature_darkmode && !storage.feature_darkmode_auto && !global.isTelerikUi && !global.isExperienceEditor && !global.isAdminCache && !global.isContentHome && !global.isLoginPage && !global.isEditMode && !global.isRules && !global.isAdmin || storage.feature_darkmode && storage.feature_darkmode_auto && !global.isTelerikUi && !global.isExperienceEditor && !global.isAdminCache && !global.isContentHome && !global.isLoginPage && !global.isEditMode && !global.isRules && !global.isAdmin && currentScheme == "dark") {
 
-            darkMode = true;
-            loadCssFile("css/dark/default-min.css");
-            loadCssFile("css/dark/ribbon-min.css");
-            loadCssFile("css/dark/contentmanager-min.css");
-            loadCssFile("css/dark/dialogs-min.css");
-            loadCssFile("css/dark/gallery-min.css");
-            loadCssFile("css/dark/speak-min.css");
+                darkMode = true;
+                loadCssFile("css/dark/default-min.css");
+                loadCssFile("css/dark/ribbon-min.css");
+                loadCssFile("css/dark/contentmanager-min.css");
+                loadCssFile("css/dark/dialogs-min.css");
+                loadCssFile("css/dark/gallery-min.css");
+                loadCssFile("css/dark/speak-min.css");
 
-            navigator.platform.indexOf('Win') == 0 ? loadCssFile("css/dark/scrollbars-min.css") : false;
+                navigator.platform.indexOf('Win') == 0 ? loadCssFile("css/dark/scrollbars-min.css") : false;
 
+            }
         }
 
         /**
@@ -107,7 +109,7 @@ chrome.storage.sync.get((storage) => {
                 loadCssFile("css/experimentalui.css");
 
                 if(storage.feature_darkmode && !storage.feature_darkmode_auto && !global.isTelerikUi && !global.isExperienceEditor && !global.isAdminCache && !global.isContentHome && !global.isLoginPage && !global.isEditMode && !global.isRules && !global.isAdmin || storage.feature_darkmode && storage.feature_darkmode_auto && !global.isTelerikUi && !global.isExperienceEditor && !global.isAdminCache && !global.isContentHome && !global.isLoginPage && !global.isEditMode && !global.isRules && !global.isAdmin && currentScheme == "dark") {
-                    loadCssFile("css/dark/experimentalui-min.css")
+                    //loadCssFile("css/dark/experimentalui-min.css")
                 }
 
                 //document.querySelector("#PublishChildren").checked = true;
@@ -157,7 +159,7 @@ chrome.storage.sync.get((storage) => {
                     initColorPicker();
                     initSitecoreMenu();
 
-                    let accountUser = accountInformation.querySelectorAll("li")[1].innerText;
+                    let accountUser = accountInformation.querySelectorAll("li")[1].innerText.trim();
                     accountInformation.querySelector("li").remove();
                     accountInformation.querySelector("li").innerHTML = accountInformation.querySelector("li > img").outerHTML;
                     accountInformation.querySelector("li > img").setAttribute("id","globalHeaderUserPortrait");
@@ -165,8 +167,8 @@ chrome.storage.sync.get((storage) => {
                     //Generate menu
                     let htmlMenu = `
                     <ul class="scAccountMenu">
-                        <li onclick="javascript:return scForm.invoke('preferences:changeuserinformation', event)">My account (' + accountUser + ')</li>
-                        <li onclick="javascript:return scForm.invoke('security:changepasswor', event)">Change Password</li>
+                        <li onclick="javascript:return scForm.invoke('preferences:changeuserinformation', event)">My account (` + accountUser + `)</li>
+                        <li onclick="javascript:return scForm.invoke('security:changepassword', event) ">Change Password</li>
                         <li onclick="javascript:return scForm.invoke('shell:useroptions', event)">Application Options</li>
                         <li onclick="window.open('` + global.launchpadPage + `')">Sitecore Author Toolbox Options</li>
                         <li onclick="javascript:return scForm.invoke('preferences:changeregionalsettings', event)">Region and Languages</li>
@@ -185,6 +187,15 @@ chrome.storage.sync.get((storage) => {
 
                     //Menus position
                     let topPos = document.querySelector("#EditorTabs").getBoundingClientRect().bottom;
+                    let scPanel = document.querySelector("#scPanel");
+                    let scLanguageIframe = document.querySelector("#scLanguageIframe");
+                    let scVersionIframe = document.querySelector("#scVersionIframe");
+                    scVersionIframe
+                    
+                    //Panel position
+                    scPanel.setAttribute("style","top: " + topPos + "px !important");
+                    scLanguageIframe.setAttribute("style","top: " + topPos + "px !important");
+                    scVersionIframe.setAttribute("style","top: " + topPos + "px !important");
 
                     //User's menu
                     if(document.querySelector(".scAccountMenu")) {
@@ -201,29 +212,19 @@ chrome.storage.sync.get((storage) => {
                     }
 
                     //More menu
-                    if(document.querySelector("#scPanel")) {
-                        if(event.srcElement.id == "scMoreButton" || event.path[1].id == "scMoreButton" || event.srcElement.id == "scPanel" || event.path[0].className == "content") {
-                            document.querySelector("#scPanel").setAttribute("style","right: 0 !important; top: " + topPos + "px !important");
-                            // document.querySelector("#scPanel > .preload").setAttribute("style","opacity: 1 !important");
-                        } else {
-                            document.querySelector("#scPanel").setAttribute("style","right: -420px !important; top: " + topPos + "px !important");
-                            // document.querySelector("#scPanel > .preload").setAttribute("style","opacity: 0 !important");
-                        }
-                    }
+                    event.srcElement.id == "scMoreButton" || event.path[1].id == "scMoreButton" || event.srcElement.id == "scPanel" || event.path[0].className == "content"
+                    ? scPanel.classList.toggle("open")
+                    : scPanel.classList.remove("open");
 
                     //Language menu
-                    if(document.querySelector("#scLanguageIframe")) {
-                        event.srcElement.id == "scLanguageButton" || event.path[1].id == "scLanguageButton"
-                        ? document.querySelector("#scLanguageIframe").setAttribute("style","right: 0 !important; top: " + topPos + "px !important")
-                        : document.querySelector("#scLanguageIframe").setAttribute("style","right: -420px !important; top: " + topPos + "px !important");
-                    }
+                    event.srcElement.id == "scLanguageButton" || event.path[1].id == "scLanguageButton"
+                    ? scLanguageIframe.classList.toggle("open")
+                    : scLanguageIframe.classList.remove("open");
 
                     //Version menu
-                    if(document.querySelector("#scVersionIframe")) {
-                        event.srcElement.id == "scVersionButton" || event.path[1].id == "scVersionButton"
-                        ? document.querySelector("#scVersionIframe").setAttribute("style","right: 0 !important; top: " + topPos + "px !important")
-                        : document.querySelector("#scVersionIframe").setAttribute("style","right: -420px !important; top: " + topPos + "px !important");
-                    }
+                    event.srcElement.id == "scVersionButton" || event.path[1].id == "scVersionButton"
+                    ? scVersionIframe.classList.toggle("open")
+                    : scVersionIframe.classList.remove("open");
 
                     //Navigator menu
                     if(document.querySelector(".scPublishMenu")) {
@@ -735,17 +736,27 @@ chrome.storage.sync.get((storage) => {
 
             consoleLog("**** Editors folder ****", "orange");
 
-            loadCssFile("css/experimentalui.css");
-            getAccentColor();
+            if(storage.feature_experimentalui) {
+                loadCssFile("css/experimentalui.css");
+                getAccentColor();
+            }
             
         }   
+
+        if(global.isXmlControl) {
+
+            consoleLog("**** XML Control (Window) ****", "orange");
+
+            if(storage.feature_experimentalui) {
+                loadCssFile("css/experimentalui.css");
+                getAccentColor();
+            }
+
+        }
 
         if(global.isGalleryVersion) {
 
             consoleLog("**** Versions menu ****", "orange");
-
-            loadCssFile("css/experimentalui.css");
-            getAccentColor();
 
         }
 
@@ -755,9 +766,6 @@ chrome.storage.sync.get((storage) => {
             storage.feature_flags == undefined ? storage.feature_flags = true : false;
 
             if(storage.feature_flags) {
-
-                loadCssFile("css/experimentalui.css");
-                getAccentColor();
                  
                 var dom = document.querySelector("#Languages");
                 var div = dom.querySelectorAll('.scMenuPanelItem,.scMenuPanelItemSelected')

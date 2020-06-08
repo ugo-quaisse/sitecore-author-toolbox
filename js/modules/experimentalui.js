@@ -16,7 +16,6 @@ const insertSavebar = () => {
         <div class="scActions">
             <button id="scPublishMenuMore" class="grouped" type="button">▾</button>
             <ul class="scPublishMenu">
-                <li onclick="javascript:return scForm.postEvent(this,event,'item:publish(id=)')">Publish with subitems...</li>
                 <li onclick="javascript:return scForm.invoke('item:setpublishing', event)">Unpublish...</li>
                 <li onclick="javascript:return scForm.postEvent(this,event,'item:publishingviewer(id=)')">Scheduler...</li>
             </ul>

@@ -632,7 +632,7 @@ const sitecoreAuthorToolbox = () => {
             //Add tabs to document
             if(sectionVisible == true) {
                 scEditorTabs += '<li class="scEditorTabEmpty"></li>';
-                scEditorTabs += '<li data-id="' + sectionId + '" class="scEditorTab ' + sectionSelected + ' ' + sectionErrorClass + '" onclick="toggleSection(this,\'' + sectionTitle+ '\');">' + sectionErrorHtml + sectionTitle+ '</li>';
+                scEditorTabs += '<li data-id="' + sectionId + '" class="scEditorTab ' + sectionSelected + ' ' + sectionErrorClass + '" onclick="toggleSection(this,\'' + sectionTitle+ '\', false, \'' + storage.feature_experimentalui + '\');">' + sectionErrorHtml + sectionTitle+ '</li>';
             }
             //Add trigger on grouped error message click to open tab
             //var sectionTitle = document.querySelector("#FIELD47775058").closest("table").closest("td").closest("table").previousSibling.innerText
@@ -694,35 +694,39 @@ const sitecoreAuthorToolbox = () => {
             //No version exist
             isNoVersion ? scWarningIcon.setAttribute("style","background-image: url(" + global.iconTranslate + ");") : false;
             
-            isNoVersion && document.querySelector(".scSaveBar > .scActions")
+            if(storage.feature_experimentalui) {
+                
+                isNoVersion && document.querySelector(".scSaveBar > .scActions")
                 ? document.querySelector(".scSaveBar > .scActions").innerHTML = `<button class="primary" onclick="javascript:return scForm.postEvent(this,event,'item:addversion')">Add new version</button>`
                 : false;
+            
+                if(isProtected) {
+                    document.querySelector(".scEditorPanel").innerHTML = `
+                    <div class="scNoVersion">
+                        <img src='` + global.iconLocked + `' width="128" /><br />
+                        <p>` + scWarningText + `</p><br />
+                        <button id="scMoreButton" type="button">Unprotect this item</button>
+                    </div>`
+                }
 
-            if(isProtected) {
-                document.querySelector(".scEditorPanel").innerHTML = `
-                <div class="scNoVersion">
-                    <img src='` + global.iconLocked + `' width="128" /><br />
-                    <p>` + scWarningText + `</p><br />
-                    <button id="scMoreButton" type="button">Unprotect this item</button>
-                </div>`
-            }
+            
+                if(isNoFields) {
+                    document.querySelector(".scEditorPanel").innerHTML = `
+                    <div class="scNoVersion">
+                        <img src='` + global.iconFields + `' width="128" /><br />
+                        <p>` + scWarningText + `</p><br />
+                        <button id="scMoreButton" type="button">Show Item details</button>
+                    </div>`
+                }
 
-            if(isNoFields) {
-                document.querySelector(".scEditorPanel").innerHTML = `
-                <div class="scNoVersion">
-                    <img src='` + global.iconFields + `' width="128" /><br />
-                    <p>` + scWarningText + `</p><br />
-                    <button id="scMoreButton" type="button">Show Item details</button>
-                </div>`
-            }
-
-            if(isNoVersion) {
-                document.querySelector(".scEditorPanel").innerHTML = `
-                <div class="scNoVersion">
-                    <img src='` + global.iconLanguage + `' width="128" /><br />
-                    <p>` + scWarningText + `</p><br />
-                    <button onclick="javascript:return scForm.postEvent(this,event,'item:addversion')" type="button">Add new version</button>
-                </div>`
+                if(isNoVersion) {
+                    document.querySelector(".scEditorPanel").innerHTML = `
+                    <div class="scNoVersion">
+                        <img src='` + global.iconLanguage + `' width="128" /><br />
+                        <p>` + scWarningText + `</p><br />
+                        <button onclick="javascript:return scForm.postEvent(this,event,'item:addversion')" type="button">Add new version</button>
+                    </div>`
+                }
             }
 
 

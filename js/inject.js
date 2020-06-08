@@ -46,9 +46,10 @@ const toggleRibbon = () => {
 
 }
 
-const toggleSection = (elem,name,fromerror = false) => {
+const toggleSection = (elem, name, fromerror = false, experimental = false) => {
 	
 	//Change status of the tabs
+	var isExperimental = (experimental == 'true');
 	var scEditorTab = document.querySelectorAll(".scEditorTab");
 	var scSections = document.querySelector("#scSections");
 	scSections.value = encodeURI(name+"=0");
@@ -78,41 +79,59 @@ const toggleSection = (elem,name,fromerror = false) => {
  			section.classList.remove("scEditorSectionCaptionCollapsed");
           	section.classList.add("scEditorSectionCaptionExpanded");
 
-          	//X Scroll to
-          	let container = document.querySelector("#scEditorTabs").getBoundingClientRect();
-          	let x1 = container.left;
-          	let x2 = container.right;
-          	let m = (container.width/2) + x1;
+          	if(isExperimental) {
+	          	//X Scroll to
+	          	let container = document.querySelector("#scEditorTabs").getBoundingClientRect();
+	          	let x1 = container.left;
+	          	let x2 = container.right;
+	          	let m = (container.width/2) + x1;
 
-          	//Clicked tab
-          	let clicked = tab.getBoundingClientRect();
-          	
-          	//Tabs to be scrolled
-          	let tabsSection = document.querySelector("#scEditorTabs > ul");
-          	let currentOffset = tabsSection.currentStyle || window.getComputedStyle(tabsSection);
-          	currentOffset = parseFloat(currentOffset.marginLeft.replace("px",""));	    	
-          	let tabs = tabsSection.getBoundingClientRect();
-          	let tabsWidth = tabsSection.scrollWidth;
+	          	//Clicked tab
+	          	let clicked = tab.getBoundingClientRect();
+	          	
+	          	//Tabs to be scrolled
+	          	let tabsSection = document.querySelector("#scEditorTabs > ul");
+	          	let currentOffset = tabsSection.currentStyle || window.getComputedStyle(tabsSection);
+	          	currentOffset = parseFloat(currentOffset.marginLeft.replace("px",""));	    	
+	          	let tabs = tabsSection.getBoundingClientRect();
+	          	let tabsWidth = tabsSection.scrollWidth;
 
-          	//Calculation
-          	let calc = Math.round(currentOffset + (m - clicked.left));
-          	let calcPos = Math.round(tabs.left + tabsWidth + (m - clicked.left));
+	          	//Calculation
+	          	let calc = Math.round(currentOffset + (m - clicked.left));
+	          	let calcPos = Math.round(tabs.left + tabsWidth + (m - clicked.left));
 
-          	//Detect boundaries
-          	calcPos < x2 ? calc = Math.round(calc + (x2 - calcPos)) : false;
-          	calc > 0 ? calc = 0 : false;
+	          	//Detect boundaries
+	          	calcPos < x2 ? calc = Math.round(calc + (x2 - calcPos)) : false;
+	          	calc > 0 ? calc = 0 : false;
 
-          	// console.log(calcPos)
-          	// console.log("Margin-left: "+calc);
+	          	// console.log(calcPos)
+	          	// console.log("Margin-left: "+calc);
 
-          	//Scroll to position
-          	tabsSection.setAttribute("style","margin-left: "+calc+"px");
+	          	//Scroll to position
+	          	tabsSection.setAttribute("style","margin-left: "+calc+"px");
+          	}
 
  		}
 
  	}
 
 } 
+
+const togglePip = (video) => {
+
+  	try {
+    	if (video !== document.pictureInPictureElement) {
+      		video.requestPictureInPicture();
+    	} else {
+      		document.exitPictureInPicture();
+    	}
+  	} catch(error) {
+    	//console.warn(`Picture in Picture! ${error}`);
+  	} finally {
+    	//togglePipButton.disabled = false;
+  	}
+
+};
 
 const toggleMediaIframe = (url) => {
 

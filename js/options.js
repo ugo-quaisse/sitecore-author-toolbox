@@ -231,16 +231,6 @@ document.body.onload = function() {
       document.getElementById("feature_autoexpand").checked = false;
     }
   });
-  //Child Iten Counter
-  chrome.storage.sync.get(['feature_autoexpandcount'], function(result) {
-    if (!chrome.runtime.error && result.feature_autoexpandcount != undefined) {
-      if(result.feature_autoexpandcount) {
-        document.getElementById("feature_autoexpandcount").checked = true;
-      }
-    } else {
-      document.getElementById("feature_autoexpandcount").checked = true;
-    }
-  });
   //Translation mode
   chrome.storage.sync.get(['feature_translatemode'], function(result) {
     if (!chrome.runtime.error && result.feature_translatemode != undefined) {
@@ -590,10 +580,6 @@ document.querySelector("#set").onclick = function(event) {
   //Auto Expand
   chrome.storage.sync.set({"feature_autoexpand": document.getElementById('feature_autoexpand').checked}, function() {
     console.info('--> Auto Expand: ' + document.getElementById('feature_autoexpand').checked);
-  });
-  //Child items counter
-  chrome.storage.sync.set({"feature_autoexpandcount": document.getElementById('feature_autoexpandcount').checked}, function() {
-    console.info('--> Child items Counter: ' + document.getElementById('feature_autoexpandcount').checked);
   });
   //Translation mode
   chrome.storage.sync.set({"feature_translatemode": document.getElementById('feature_translatemode').checked}, function() {

@@ -12,7 +12,7 @@ const showSnackbar = (version) => {
     //Snackbar settings
     let snackbarHtml = `
     <b>Welcome to Sitecore Author Toolbox 2.2</b><br />
-    You've got upgrated to the latest version. Give a try to our new settings UI by activing it in your options.`;
+    Give a try to the new Sitecore Experimental Interface by activing it under settings.`;
     let html=`<div class="snackbar">` + snackbarHtml + `<button onclick="window.open('` + global.launchpadPage + `')">SETTINGS</button><button id="sbDismiss">DISMISS</button></div>`;
 
     //Show Snackbar

@@ -15,6 +15,7 @@
   --black7: #777;
   --black8: #888;
   --black9: #999;
+  --grey1: #171717;
   
   --lightblue: #1e81ef;
   --blue: #0b84ff;
@@ -3716,7 +3717,8 @@ span.sc-ext-fieldSearchClear {
 	color: var(--black3) !important;
 }
 .reContentCell, .reContentCell iframe {
-	background-color: var(--white) !important;
+	background-color: var(--grey1) !important;
+  color: var(--white) !important;
 }
 .RadForm.rfdTextarea textarea {
 	font-family: monospace !important;

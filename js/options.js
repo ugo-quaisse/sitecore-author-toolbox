@@ -228,7 +228,7 @@ document.body.onload = function() {
         document.getElementById("feature_autoexpand").checked = true;
       }
     } else {
-      document.getElementById("feature_autoexpand").checked = false;
+      document.getElementById("feature_autoexpand").checked = true;
     }
   });
   //Translation mode

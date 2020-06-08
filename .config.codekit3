@@ -55,6 +55,14 @@
 		"oAP": "/.gitignore",
 		"oF": 1
 		},
+	"/2.2.0.zip": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/2.2.0.zip",
+		"oF": 0
+		},
 	"/_locales/en/messages.json": {
 		"ft": 524288,
 		"oA": 0,

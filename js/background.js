@@ -249,7 +249,8 @@ chrome.runtime.onInstalled.addListener(function(details) {
 
 		  //Major update
 		  console.log("Updated from " + details.previousVersion + " to " + thisVersion);
-		  chrome.tabs.create({url:"https://uquaisse.io/extension-update/?utm_source=upgrade&utm_medium=chrome&utm_campaign="+thisVersion});
+		  //chrome.tabs.create({url:"https://uquaisse.io/extension-update/?utm_source=upgrade&utm_medium=chrome&utm_campaign="+thisVersion});
+		  new Notification("Extension updated!", {body: "Version "+thisVersion, icon: chrome.runtime.getURL("images/icon.png") });
 
 		} else if(thisVersion != details.previousVersion) {
 

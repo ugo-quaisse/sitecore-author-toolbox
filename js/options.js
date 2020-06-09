@@ -363,6 +363,12 @@ document.body.onload = function() {
   });
 }
 
+document.getElementById("feature_experimentalui").onclick = function() {
+  if(document.getElementById("feature_experimentalui").checked == true) {
+    document.getElementById("feature_cetabs").checked = true;
+  }
+}
+
 
 document.getElementById("feature_darkmode").onclick = function() {
   if(document.getElementById("feature_darkmode").checked == false) {

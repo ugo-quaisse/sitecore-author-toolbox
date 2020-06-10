@@ -2,6 +2,10 @@
  * Sitecore Expeimental LaunchPad by Saad Ansari
  * experimentalui-launchpad.css
  */
+.sc-launchpad {
+	margin: 0 0 40px;
+
+}
 
 .sc-launchpad-group {
 	display: block;
@@ -9,14 +13,22 @@
 }
 
 .sc-launchpad-group-row {
-overflow: hidden;
-display: block;
-width: 25%;
-height: auto;
-margin: 0;
-padding: 0 10px 0 0;
-flex-direction: column;
-float: left;
+
+	overflow: hidden;
+
+	display: block;
+
+	width: 25%;
+
+	height: auto;
+
+	margin: 0;
+
+	padding: 0 10px 0 0;
+
+	flex-direction: column;
+
+	float: left;
 }
 
 .sc-launchpad-item {
@@ -30,6 +42,7 @@
 	border: 2px solid #fff;
 	height: auto;
 	min-height: auto;
+	transition: all 0.5s ease;
 }
 
 .sc-launchpad-group {

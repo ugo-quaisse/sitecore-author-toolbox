@@ -1439,6 +1439,11 @@ chrome.storage.sync.get((storage) => {
      ************************
      */
     if (global.isSitecore && global.isLaunchpad && storage.feature_experimentalui) {
-        loadCssFile("css/experimentalui-launchpad.css");
+
+        if (storage.feature_darkmode == true) {
+            loadCssFile("css/dark/experimentalui-launchpad.css");
+        } else {
+            loadCssFile("css/experimentalui-launchpad.css");
+        }
     }
 }); //End chrome.storage

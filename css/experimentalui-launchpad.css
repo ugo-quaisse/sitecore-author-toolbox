@@ -13,7 +13,6 @@
 }
 
 .sc-launchpad-group-row {
-
 	overflow: hidden;
 
 	display: block;
@@ -36,13 +35,13 @@
 	align-items: center;
 	background: #fff;
 	text-align: left;
-	min-width: 250px;
 	width: 100%;
 	margin: 0 0 10px;
 	border: 2px solid #fff;
 	height: auto;
 	min-height: auto;
 	transition: all 0.5s ease;
+
 }
 
 .sc-launchpad-group {
@@ -59,6 +58,7 @@
 	padding: 0;
 	margin: 0;
 	box-shadow: none;
+
 }
 
 .sc-launchpad-group-title {
@@ -81,6 +81,9 @@
 	width: auto;
 	/* text-decoration: none !important; */
 	font-size: 14px;
+	padding: 0px 10px 0 0;
+	display: block;
+	max-width: inherit;
 }
 
 .sc-launchpad-item .sc-launchpad-text:hover {
@@ -106,4 +109,23 @@
 
 .sc-launchpad-item .icon {
 	box-shadow: none !important;
+	background: none !important;
+}
+
+@media screen and (max-width:1200px) {
+	.sc-launchpad-group-row {
+		width: 33.3%;
+	}
+}
+
+@media screen and (max-width:992px) {
+	.sc-launchpad-group-row {
+		width: 50%;
+	}
+}
+
+@media screen and (max-width:650px) {
+	.sc-launchpad-group-row {
+		width: 100%;
+	}
 }

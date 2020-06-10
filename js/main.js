@@ -6,15 +6,15 @@
  * ugo.quaisse@gmail.com
  * Made with vanillaJS :-)
  */
-if(!window.location.href.toLowerCase().includes("jquerymodaldialogs.html")) {
+if (!window.location.href.toLowerCase().includes("jquerymodaldialogs.html")) {
 
 	(async () => {
-	  const contentScript = await import(chrome.extension.getURL('js/toolbox-min.js'));
-	  try {
-	  	contentScript.main();
-	  } catch(e) {
-	  	//e
-	  }
+		const contentScript = await import(chrome.extension.getURL('js/toolbox.js'));
+		try {
+			contentScript.main();
+		} catch (e) {
+			//e
+		}
 	})();
 
 }

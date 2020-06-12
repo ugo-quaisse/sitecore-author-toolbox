@@ -77,5 +77,5 @@ The official support Twitter account for the library is at <https://twitter.com/
 
 ## Other Sitecore extensions
 
-If you are a Sitecore developer and you looking for more advanced features, I recommend Alan Null's extension available at https://github.com/alan-null/sc_ext
+If you are a Sitecore developer and are looking for more advanced features for dev, I recommend Alan Null's extension available at https://github.com/alan-null/sc_ext
 

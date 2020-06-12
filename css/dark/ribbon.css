@@ -2,7 +2,6 @@
  * Sitecore Dark Mode UI, by Ugo Quaisse
  * ribbon.css
  */
-
 #RibbonPanel {
     border-bottom: 1px solid #333333 !important;
 }
@@ -78,7 +77,7 @@ right: 10px !important;
 bottom: 0px !important;
 background-repeat:no-repeat !important;
 background-position:center !important;
-z-index: 1000 !important;
+z-index: 1 !important;
 }
 
 .scRibbon a.scRibbonNavigatorButtonsNormal,
@@ -968,7 +967,7 @@ a.scRibbonToolbarSmallButtonDown:active,
 .scRibbonToolbarLargeComboButtonDown,
 a.scRibbonToolbarSmallButtonDown,
 .scRibbonLargeImageButtonDown {
-    background-color: #a2d8ef !important;
+    background-color: var(--blue) !important;
     color: var(--black1) !important;
     border-radius: 3px !important;
 }

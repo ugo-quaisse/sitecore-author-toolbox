@@ -15,6 +15,7 @@
   --black7: #777;
   --black8: #888;
   --black9: #999;
+  --grey1: #171717;
   
   --lightblue: #1e81ef;
   --blue: #0b84ff;
@@ -177,7 +178,7 @@ input[disabled], select[disabled] {
 }
 
   .scFormTable > tbody > tr > td:first-child {
-    color: #5E5E5E;
+    color: var(--text);
     vertical-align: top;
     padding-top: 14px;
     padding-left: 0;
@@ -316,7 +317,7 @@ input[type="submit"] {
     }
 
     .scButton:first-of-type, input[type="submit"]:first-of-type {
-        margin-left: 0;
+        margin-left: 5px;
     }
 
   .scButtonPrimary,
@@ -1812,10 +1813,40 @@ a.scHyperlinkButton {
 }
 
 .scMarginAbsolute {
-    top: 15px;
-    right: 15px;
-    bottom: 15px;
-    left: 15px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    padding: 15px;
+}
+
+.Row td.DataCell {
+  border: 1px solid var(--black2);
+}
+
+#Roles_searchBox,
+#Users_searchBox {
+  display: initial;
+}
+.scAccessViewerRight > img,
+.scSecurityItem > img,
+.scAccessRights > img {
+  filter: invert(1);
+}
+.scTreeview .scTreeItem, .scTreeview .scTreeItem_Hover {
+  padding: 3px;
+}
+.scTreeview .nodeSelected, .scTreeview .nodeSelected_Hover {
+  background-color: var(--blue) !important;
+  border-radius: 3px;
+  padding: 3px;
+}
+.scTreeview .header,
+.scTreeview .scTreeHeader {
+  background-color: var(--black2) !important;
+}
+.scTreeview .scTreeItem.hover {
+  background-color: var(--black4) !important;
 }
 
 .scStretch {
@@ -2842,10 +2873,6 @@ nobr:last-child > .scTabActive_Hover {
 
 .scContentTree {
   background: var(--black1) !important;
-  height: 100%;
-  overflow: auto;
-  position: relative;
-  padding-left: 10px;
 }
 
 #ContentTreeActualSize {
@@ -3551,7 +3578,7 @@ form[lang|='ja'] *,
     }
 
         .scMessageBar.scInformation .scMessageBarIcon {
-            background-color: var(--blue) !important;
+            background-color: var(--darkblue) !important; 
         }
 
     .scMessageBar.scError {
@@ -3690,7 +3717,8 @@ span.sc-ext-fieldSearchClear {
 	color: var(--black3) !important;
 }
 .reContentCell, .reContentCell iframe {
-	background-color: var(--white) !important;
+	background-color: var(--grey1) !important;
+  color: var(--white) !important;
 }
 .RadForm.rfdTextarea textarea {
 	font-family: monospace !important;
@@ -3728,7 +3756,7 @@ div.content {
 }
 .btn-search {
   background-color: var(--black2) !important;
-  background-image: url(../images/edition-magnifier.png);
+  background-image: url('chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.png');
   box-shadow: inset 0 1px transparent;
 }
 .btn-search, .btn-clear {
@@ -3888,7 +3916,7 @@ form {
   color: var(--white) !important;
 }
 .sc-uploader-content {
-  border: 1px dashed var(--text) !important;
+  border: 0px dashed var(--blue) !important;
 }
 select[disabled] > option {
   color: var(--black8) !important;
@@ -3972,3 +4000,17 @@ a.scResult:hover {
   background: var(--black2) !important;
 }
 
+#scModal {
+    color: var(--text) !important;
+    background-color: hsla(0, 0%, 7%, 0.7) !important;
+}
+
+#scModal .item:hover {
+    background-color: var(--black5);
+}
+
+#scModal .footer {
+    background-color: var(--black1) !important;
+    color: var(--text) !important;
+    border-top: 1px solid var(--black2) !important;
+}

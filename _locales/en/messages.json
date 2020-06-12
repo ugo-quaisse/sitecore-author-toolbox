@@ -1,10 +1,10 @@
 {
   "appName": {
-    "message": "Sitecore Live URL",
-    "description": "Preview Sitecore URL in Content Editor"
+    "message": "Sitecore Author Toolbox",
+    "description": "A set of handy tools for Sitecore Authors: Live URL, Grouped errors, Flags, Dark mode, Notifications, Media drag & drop..."
   },
   "appDescription": {
-    "message": "Preview Sitecore URL in Content Editor",
-    "description": "Sitecore Live URL Chrome Extension"
+    "message": "Sitecore Author Toolbox",
+    "description": "A set of handy tools for Sitecore Authors: Live URL, Grouped errors, Flags, Dark mode, Notifications, Media drag & drop..."
   }
 }

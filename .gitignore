@@ -1,11 +1,6 @@
-css/.DS_Store
-.DS_Store
 config.codekit3
-.DS_Store
-build 0.3.8.zip
 build/
 *.zip
-.config.codekit3
 _config.yml
-images/.DS_Store
+*.DS_Store
 js/modules/local.js

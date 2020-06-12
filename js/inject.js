@@ -8,21 +8,6 @@
 
  /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
-//TODO: Autosave in Experience Editor
-// ((() => {
-//     const origOpen = XMLHttpRequest.prototype.open;
-//     XMLHttpRequest.prototype.open = function() {
-//         this.addEventListener('load', function() {
-//             console.log(this.responseURL);
-//             if(this.responseURL.include(".Save.CallServerSavePipeline")) {
-//             	console.log("SAVING!!!!!");
-//             }
-//             // console.log(this.responseText); //whatever the response was
-//         });
-//         origOpen.apply(this, arguments);
-//     };
-// }))();
-
 const copyTranslate = (leftElemId,rightElemId) => {
  	var left = document.querySelector('#'+leftElemId);
  	var right = document.querySelector('#'+rightElemId);
@@ -56,14 +41,15 @@ const toggleRibbon = () => {
 		scCrossPiece.setAttribute( 'style', 'height:300px !important' );
 		scWebEditRibbon.setAttribute( 'style', 'display:block !important' );
 		tabText.innerText = "▲ Hide";
-
+ 
 	}
 
 }
 
-const toggleSection = (elem,name,fromerror = false) => {
-
+const toggleSection = (elem, name, fromerror = false, experimental = false) => {
+	
 	//Change status of the tabs
+	var isExperimental = (experimental == 'true');
 	var scEditorTab = document.querySelectorAll(".scEditorTab");
 	var scSections = document.querySelector("#scSections");
 	scSections.value = encodeURI(name+"=0");
@@ -74,51 +60,78 @@ const toggleSection = (elem,name,fromerror = false) => {
 		var sectionId = tab.dataset.id;
  		var section = document.querySelector("#"+sectionId);
  		var sectionPanel = section.nextSibling;
+ 		var calc;
 
 		if(tab!=elem) {
-			//Other tabs not clicked
+
+			//Inactive tab
  			tab.classList.remove("scEditorTabSelected");
  			sectionPanel.setAttribute( 'style', 'display: none !important' );
  			section.classList.add("scEditorSectionCaptionCollapsed");
           	section.classList.remove("scEditorSectionCaptionExpanded");
           	scSections.value += encodeURI("&"+tab.innerText+"=1");
+
  		} else {
- 			//Tab is clicked
+
+ 			//Active tab
  			tab.classList.add("scEditorTabSelected");
  			sectionPanel.setAttribute( 'style', 'display: table !important' );
  			section.classList.remove("scEditorSectionCaptionCollapsed");
           	section.classList.add("scEditorSectionCaptionExpanded");
+
+          	if(isExperimental) {
+	          	//X Scroll to
+	          	let container = document.querySelector("#scEditorTabs").getBoundingClientRect();
+	          	let x1 = container.left;
+	          	let x2 = container.right;
+	          	let m = (container.width/2) + x1;
+
+	          	//Clicked tab
+	          	let clicked = tab.getBoundingClientRect();
+	          	
+	          	//Tabs to be scrolled
+	          	let tabsSection = document.querySelector("#scEditorTabs > ul");
+	          	let currentOffset = tabsSection.currentStyle || window.getComputedStyle(tabsSection);
+	          	currentOffset = parseFloat(currentOffset.marginLeft.replace("px",""));	    	
+	          	let tabs = tabsSection.getBoundingClientRect();
+	          	let tabsWidth = tabsSection.scrollWidth;
+
+	          	//Calculation
+	          	let calc = Math.round(currentOffset + (m - clicked.left));
+	          	let calcPos = Math.round(tabs.left + tabsWidth + (m - clicked.left));
+
+	          	//Detect boundaries
+	          	calcPos < x2 ? calc = Math.round(calc + (x2 - calcPos)) : false;
+	          	calc > 0 ? calc = 0 : false;
+
+	          	// console.log(calcPos)
+	          	// console.log("Margin-left: "+calc);
+
+	          	//Scroll to position
+	          	tabsSection.setAttribute("style","margin-left: "+calc+"px");
+          	}
+
  		}
 
  	}
 
-}
+} 
 
-const hideTab = (title, extensionId) => {
-	  var txt;
-	  var confirmation = confirm("Do you want to hide all \"" + title + "\" tabs?");
-	  if (confirmation == true) {
-	  	chrome.runtime.sendMessage(extensionId, {getTargetData: true, greeting: "hide_tab"}, function(response) {
-		  console.log(response);
-		});
-	  	//Save tab title in storage as a hidden tab
-	  	//Need to send a message to background script or toolbox
-	  	// chrome.storage.sync.get(["hidden_tabs"], function(result) {
-	   //      var array = result[hidden_tabs]?result[hidden_tabs]:[];
-	   //      array.unshift(title);
-	   //      var jsonObj = {};
-	   //      jsonObj[hidden_tabs] = array;
-	   //      chrome.storage.sync.set(jsonObj, function() {
-	   //          console.info('--> New array entry, This tab will be hidden: ' + title);
-	   //      });
-	   //  });
-	  	//Confirmation message
-	    alert("Ok, you will be able to revert from the \"🙈\" pinned tab");
-	  } else {
-	    txt = "You pressed Cancel!";
-	  }
-	  return false;
-}
+const togglePip = (video) => {
+
+  	try {
+    	if (video !== document.pictureInPictureElement) {
+      		video.requestPictureInPicture();
+    	} else {
+      		document.exitPictureInPicture();
+    	}
+  	} catch(error) {
+    	//console.warn(`Picture in Picture! ${error}`);
+  	} finally {
+    	//togglePipButton.disabled = false;
+  	}
+
+};
 
 const toggleMediaIframe = (url) => {
 
@@ -126,3 +139,52 @@ const toggleMediaIframe = (url) => {
 	scSitecore.prototype.showModalDialog(url, "", features, "", "")
 
 }
+
+const fadeEditorFrames = () => {
+	
+	let divResults = document.querySelector('.scInstantSearchResults');
+	divResults.setAttribute('style', 'height:0px; opacity: 0; visibility: hidden; top: 43px;');
+
+	document.querySelector("#EditorFrames").setAttribute("style","opacity:0.6");
+    document.querySelector(".scContentTreeContainer").setAttribute("style","opacity:0.6");
+    document.querySelector(".scEditorTabHeaderActive > span").innerText = "Loading...";
+    var timeout = setTimeout(function() {
+        document.querySelector("#EditorFrames").setAttribute("style","opacity:1");
+        document.querySelector(".scContentTreeContainer").setAttribute("style","opacity:1");
+    }, 8000)
+}
+
+const insertPage = (scItem, scItemName) => {
+	document.querySelector(".scOverlay").setAttribute("style","visibility:visible")
+	document.querySelector("#scModal").setAttribute("data-scItem",scItem);
+	document.querySelector("#scModal").setAttribute("data-scItemName",scItemName);
+	scItemName != undefined ? document.querySelector("#scModal > .header > .title").innerHTML = 'Insert' : false;
+	document.querySelector("#scModal").setAttribute("style","opacity:1; visibility:visible; top: calc(50% - 550px/2)");
+	document.querySelector("#scModal > .main").innerHTML = "";
+	document.querySelector("#scModal > .preload").setAttribute("style","opacity:1");
+}
+
+const insertPageClose = () => {
+	setTimeout(function() {
+		document.querySelector(".scOverlay").setAttribute("style","visibility:hidden")
+		document.querySelector("#scModal").setAttribute("style","opacity:0; visibility:hidden; top: calc(50% - 550px/2 - 20px)")
+	},10);
+}
+
+const showSitecoreMenu = () => {
+	let dock = document.querySelector(".scDockTop");
+	dock.classList.toggle("showSitecoreMenu");
+
+	let icon = document.querySelector("#scSitecoreMenu");
+	icon.classList.toggle("scSitecoreMenu");
+
+	// let button = document.querySelector("#scSitecoreRibbon > span");
+	// button.classList.toggle("active");
+
+	dock.classList.contains("showSitecoreMenu") ? localStorage.setItem('scSitecoreMenu', true) : localStorage.setItem('scSitecoreMenu', false);
+}
+
+const showLanguageMenu = () => {
+	console.log("Languages");
+}
+

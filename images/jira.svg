@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="33px" height="33px" viewBox="0 0 33 33" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon</title>
+    <defs>
+        <linearGradient x1="44.2581275%" y1="25.7931437%" x2="60.5937658%" y2="53.9179104%" id="linearGradient-1">
+            <stop stop-color="#FFFFFF" stop-opacity="0.504835009" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Jira-Core-blue" transform="translate(4.000000, 2.000000)" fill-rule="nonzero">
+            <path d="M15,19.4645522 C15,24.7308346 19.4771525,29 25,29 L25,29 L25,10 L15,16.53125 L15,19.4645522 Z" id="Path" fill="url(#linearGradient-1)"></path>
+            <path d="M25,9.96113237 L25,1.37716756 C24.999032,0.866478445 24.700453,0.398069991 24.2238965,0.15962257 C23.7473401,-0.0788248511 23.1707701,-0.0483016317 22.7252047,0.238962284 L0,14.9407805 C3.04107973,19.1756952 9.12840961,20.2738347 13.5987261,17.3939578 L25,9.96113237 Z" id="Path" fill="#FFFFFF"></path>
+        </g>
+    </g>
+</svg>

@@ -1,22 +1,20 @@
 /**
  * Sitecore Author Toolbox
- * A Google Chrome Extension
- * - created by Ugo Quaisse -
+ * A Chrome/Edge Extension
+ * by Ugo Quaisse
  * https://uquaisse.io
  * ugo.quaisse@gmail.com
- */ 
-
-/** 
- * To global.debug Chrome Storage Sync, clear from background.js by running in the console:
- * chrome.storage.sync.clear(function() { chrome.storage.sync.get(function(e){console.log(e)}) })
+ * Made with vanillaJS :-)
  */
+if(!window.location.href.toLowerCase().includes("jquerymodaldialogs.html")) {
 
-(async () => {
-  const src = chrome.extension.getURL('js/toolbox-min.js');
-  const contentScript = await import(src);
-  try {
-  	contentScript.main();
-  } catch(e) {
-  	//e
-  }
-})();
+	(async () => {
+	  const contentScript = await import(chrome.extension.getURL('js/toolbox-min.js'));
+	  try {
+	  	contentScript.main();
+	  } catch(e) {
+	  	//e
+	  }
+	})();
+
+}

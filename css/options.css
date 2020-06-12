@@ -17,6 +17,10 @@ html.dark {
   background-color: #2b2b2b;
 }
 
+html.dark body {
+  color: #fff;
+}
+
 html.light body > div > div > fieldset {
   border: 1px solid rgba(56, 83, 97, 0.2);
   border-radius: 1px;
@@ -32,6 +36,9 @@ html.light body > div > div > fieldset > legend {
 html.dark body > div > div > fieldset > legend {
   color: #ffffff;
   font-weight: bold;
+}
+html.dark body > div > div > fieldset > label {
+  color: #ccc;
 }
 a {
   color: #DC291E;
@@ -142,6 +149,11 @@ label:hover {
       height: 90px;
       content: " ";
       opacity: 1;
+  }
+}
+@media screen and (max-width: 450px) {
+  #back {
+    margin: 0px 0px 20px 0px;
   }
 }
 #banner > img {

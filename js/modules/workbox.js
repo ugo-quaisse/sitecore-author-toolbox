@@ -2,6 +2,7 @@
 
 import * as global from './global.js';
 import {sendNotification} from './notification.js';
+import {setPlural} from './helpers.js';
 
 export {checkWorkbox};
 
@@ -10,7 +11,6 @@ export {checkWorkbox};
  */
 const checkWorkbox = () => {
 
-    var html;
     var wfWorkflows = 0;
     var wfNotification = 0;
     var wfChecksum = "#checksum#"; 
@@ -72,12 +72,21 @@ const checkWorkbox = () => {
             } else {
 
                 //Show badge (status bar)
-                document.querySelectorAll(".scDockBottom > a").forEach((a) => { if(a.innerText=="Workbox") { 
+                document.querySelectorAll(".scDockBottom > a").forEach((a) => { 
+                    if(a.innerText=="Workbox") { 
                         html = '<span class="wbNotification">' + wfNotification + '</span>';
                         a.setAttribute("style","padding-right:35px");
                         a.insertAdjacentHTML( 'afterend', html );
                     }
                 })
+
+                //Show badge menu
+                let scNotificationBell = document.querySelector("#scNotificationBell");
+                if(scNotificationBell && wfNotification > 0) {
+                    html = '<span class="wbNotificationMenu"></span>';
+                    scNotificationBell.setAttribute("title","You have " + wfNotification + " notification" + setPlural(wfNotification) + " in your workbox");
+                    scNotificationBell.insertAdjacentHTML( 'afterend', html );
+                }
             }
 
         }
@@ -85,6 +94,6 @@ const checkWorkbox = () => {
     }
     setTimeout(function() {
         ajax.send(null);
-    },300);
+    },1000);
 
 }

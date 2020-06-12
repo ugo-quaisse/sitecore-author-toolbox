@@ -88,8 +88,11 @@ a.scSystemMenu {
 
 /* Caption */
 
+.scWindowBorder3 {
+    background-color: var(--black2) !important;
+}
 .scCaption {
-    background-color: #474747;
+    background-color: var(--black2) !important;
     position: relative;
 }
 
@@ -1700,7 +1703,7 @@ body .reGrip.grip_last {
 }
 
 .scElementHover:hover {
-    background: #E3E3E3;
+    background: var(--blue);
     text-decoration: none;
 }
 

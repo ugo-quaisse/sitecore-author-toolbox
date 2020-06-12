@@ -39,6 +39,14 @@ This extension will help you to save a lot of time by providing a set of handy t
 * Experience Editor Quick Tabs
 * Experience Profile Gravatar image
 
+## How to install
+
+* Clone or download the repo
+* Open chrome://extensions/ or edge://extensions/
+* Make sure "Developer mode" toggle is switched on (Top right corner)
+* Clic "Load Unpacked"
+* Select Repo folder
+
 ## Sitecore installation directory
 
 If your Sitecore install is highly customised or not one of the tested versions, then certain features might not work.

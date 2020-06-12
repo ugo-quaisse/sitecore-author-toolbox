@@ -11670,8 +11670,8 @@ CodeMirror.defineMode("css", function(config, parserConfig) {
 //EXECUTE CODE//
 
 //Get and Set variables
-var scEditor = document.querySelector(".scEditor").value;
-var cmTheme = document.querySelector(".scDarkMode").value;
+var scEditor = document.querySelector("input.scEditor").value;
+var cmTheme = document.querySelector("input.scDarkMode").value;
 var textarea;
 
 if(scEditor == "richTextEditor") {
@@ -11686,7 +11686,11 @@ if(scEditor == "richTextEditor") {
   textarea.setAttribute('style','display:block; visibility:visible');
   //document.querySelector("#Editor_contentIframe").setAttribute('style','width:100%; height:50%');
 
-} 
+} else if(scEditor == "scribanTemplate") {
+
+  textarea = document.querySelector("textarea");
+
+}
 
 myEditor = CodeMirror.fromTextArea(textarea, {
   mode: "text/html",
@@ -11730,7 +11734,11 @@ function update(editor) {
     
     textarea.value = myEditor.getValue();
 
-  } 
+  } else if(scEditor == "scribanTemplate") {
+
+    textarea.value = myEditor.getValue();
+
+  }
 
 }
 

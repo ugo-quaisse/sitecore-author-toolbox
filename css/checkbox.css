@@ -45,7 +45,7 @@
   cursor: pointer !important;
 }
 .scContentControlCheckbox:checked + .scContentControlCheckboxLabel::before {
-  background-color: #dc291e;
+  background-color: #6edc60;
 }
 .scContentControlCheckbox:checked + .scContentControlCheckboxLabel::after {
   left: 24px;

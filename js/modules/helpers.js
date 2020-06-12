@@ -2,7 +2,7 @@
 
 import * as global from './global.js';
 
-export {consoleLog, loadCssFile, loadJsFile, exeJsCode, preferesColorScheme, sitecoreItemJson, fetchTimeout, getScItemData, repositionElement, startDrag, calcMD5};
+export {consoleLog, loadCssFile, loadJsFile, exeJsCode, preferesColorScheme, sitecoreItemJson, fetchTimeout, getScItemData, setPlural, setTextColour, repositionElement, startDrag, calcMD5};
 
 
 /**
@@ -145,9 +145,18 @@ const getScItemData = () => {
         tr.cells[0].innerText == "Template:" ? scItem.templateId = tr.cells[1].querySelector("input").value.toLowerCase() : false;
         tr.cells[0].innerText == "Created from:" ? scItem.from = tr.cells[1].innerText.toLowerCase() : false;
         tr.cells[0].innerText == "Item owner:" ? scItem.owner = tr.cells[1].querySelector("input").value.toLowerCase() : false;
+        scItem.language = document.querySelector("#scLanguage") ? document.querySelector("#scLanguage").value.toLowerCase() : "en";
+        scItem.version = document.querySelector (".scEditorHeaderVersionsVersion > span") ? document.querySelector( ".scEditorHeaderVersionsVersion > span" ).innerText : "1";
     }
 
     return scItem;
+}
+
+/**
+ * Plural english
+ */
+const setPlural = (int) => {
+    return int > 1 ? "s" : "";
 }
 
 /**
@@ -166,8 +175,7 @@ const fetchTimeout = (time, promise) => {
  * Reposition element when dragged
  */
 function repositionElement(event) {
-    var initX, mousePressX;
-    this.style.left = initX + event.clientX - mousePressX + 'px';
+    this.setAttribute("style", "left:" + (event.clientX + 37) + "px");
 }
 
 /**
@@ -190,6 +198,26 @@ function startDrag() {
 
     }, false);
     }
+}
+
+const setTextColour = (hex) => {
+
+    hex = hex.replace("#","");
+    let rgb = [];
+
+    //Convert hex to RGB
+    let bigint = parseInt(hex, 16);
+    rgb[0] = (bigint >> 16) & 255;
+    rgb[1] = (bigint >> 8) & 255;
+    rgb[2] = bigint & 255;
+
+    // http://www.w3.org/TR/AERT#color-contrast
+    const brightness = Math.round(((parseInt(rgb[0]) * 299) +
+                          (parseInt(rgb[1]) * 587) +
+                          (parseInt(rgb[2]) * 114)) / 1000);
+    const textColour = (brightness > 170) ? '#111111' : '#ffffff';
+
+    return textColour;
 }
 
 /*

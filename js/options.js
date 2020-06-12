@@ -331,15 +331,52 @@ document.body.onload = function() {
       document.getElementById("feature_gravatarimage").checked = true;
     }
   });
+  //Show help text
+  chrome.storage.sync.get(['feature_helplink'], function(result) {
+    if (!chrome.runtime.error && result.feature_helplink != undefined) {
+      if(result.feature_helplink) {
+        document.getElementById("feature_helplink").checked = true;
+      }
+    } else {
+      document.getElementById("feature_helplink").checked = true;
+    }
+  });
+  //Instant Search
+  chrome.storage.sync.get(['feature_instantsearch'], function(result) {
+    if (!chrome.runtime.error && result.feature_instantsearch != undefined) {
+      if(result.feature_instantsearch) {
+        document.getElementById("feature_instantsearch").checked = true;
+      }
+    } else {
+      document.getElementById("feature_instantsearch").checked = true;
+    }
+  });
+  //Experimental UI
+  chrome.storage.sync.get(['feature_experimentalui'], function(result) {
+    if (!chrome.runtime.error && result.feature_experimentalui != undefined) {
+      if(result.feature_experimentalui) {
+        document.getElementById("feature_experimentalui").checked = true;
+      }
+    } else {
+      document.getElementById("feature_experimentalui").checked = false;
+    }
+  });
 }
 
+document.getElementById("feature_experimentalui").onclick = function() {
+  if(document.getElementById("feature_experimentalui").checked == true) {
+    document.getElementById("feature_cetabs").checked = true;
+  }
+}
+
+
 document.getElementById("feature_darkmode").onclick = function() {
-  console.log(document.getElementById("feature_darkmode").checked);
   if(document.getElementById("feature_darkmode").checked == false) {
     document.getElementById("feature_darkmode_auto").disabled = true;
     document.getElementById("feature_darkmode_auto").checked = false;
   } else {
     document.getElementById("feature_darkmode_auto").disabled = false;
+    document.getElementById("feature_darkmode_auto").checked = false;
   }
 }
 
@@ -438,7 +475,13 @@ document.querySelector("#set_domains").onclick = function(event) {
         if(url.origin != undefined) {
           currentCD.value = url.origin;
 
-          if(currentCM.value == currentCD.value) {
+          let cmUrl = new URL(currentCM.value);
+          let cdUrl = new URL(currentCD.value);
+
+          if(cmUrl.protocol == "https:" && cdUrl.protocol == "http:") {
+            alert("Warning!\nLive status might not work as expected. You will probably face a mixed-content issue as your CM and CD are using a different protocol (https vs http) \n\n" + cmUrl.origin + "\n" + cdUrl.origin);
+            error = true;
+          } else if(currentCM.value == currentCD.value) {
             alert("CM #" + parseInt(domainId+1) + " and CD #" + parseInt(domainId+1) + " are the exact same URL, please verify.");
             error = true;
           } else {
@@ -584,7 +627,19 @@ document.querySelector("#set").onclick = function(event) {
   chrome.storage.sync.set({"feature_gravatarimage": document.getElementById('feature_gravatarimage').checked}, function() {
     console.info('--> Experience Profile: ' + document.getElementById('feature_gravatarimage').checked);
   });
-
+  //Help link
+  chrome.storage.sync.set({"feature_helplink": document.getElementById('feature_helplink').checked}, function() {
+    console.info('--> Help link: ' + document.getElementById('feature_helplink').checked);
+  });
+  //Instant Search
+  chrome.storage.sync.set({"feature_instantsearch": document.getElementById('feature_instantsearch').checked}, function() {
+    console.info('--> Instant Search: ' + document.getElementById('feature_instantsearch').checked);
+  });
+  //Experimental UI
+  chrome.storage.sync.set({"feature_experimentalui": document.getElementById('feature_experimentalui').checked}, function() {
+    console.info('--> Experimental UI: ' + document.getElementById('feature_experimentalui').checked);
+  });
+  
   //Get URL parameters
   var url = new URL(window.location.href);
   var fromLaunchpad = url.searchParams.get("launchpad");

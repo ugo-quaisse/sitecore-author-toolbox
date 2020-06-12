@@ -44,7 +44,7 @@
   bottom: 0;
   width: 100%;
   display: block;
-  border-bottom: 1px solid var(--black3) !important;
+  border-bottom: 1px solid var(--black1) !important;
   border-left: 0;
   border-right: 0;
   border-top: 0px solid var(--black3) !important;
@@ -105,6 +105,8 @@
 
 form.sc-uploader {
   background-color: var(--black2) !important;
+  border: 2px dashed var(--black6);
+  border-radius:5px;
 }
 
 .sc .sc-smartpanel {

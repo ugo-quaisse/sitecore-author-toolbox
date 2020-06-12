@@ -1,11 +1,17 @@
-/* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
+/**
+ * Sitecore Author Toolbox
+ * A Google Chrome Extension
+ * - created by Ugo Quaisse -
+ * https://uquaisse.io
+ * ugo.quaisse@gmail.com
+ */ 
 
-"use strict";
+/* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 /*
  * Helpers and variables
  */
-let sxa_site;
+let sxa_site; 
 let sc_site;
 let contextMenuEE = false;
 let contextMenuCE = false;
@@ -158,21 +164,33 @@ function setIcon(tab) {
 //When message is requested from toolbox.js
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	
+	if (request.greeting == "get_pagespeed") {
+		console.log(request);
+
+		async function runPagespeed (url, apiKey) {
+
+			url = new URL(url);
+	  		url = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=" + url.href + "&screenshot=true&key="+apiKey
+
+	  		let request = await fetch(url)
+	  		let data = await request.json();
+	  		console.log(data);
+
+			await sendResponse({farewell: "screenshot", screenshot: data.lighthouseResult});
+		}
+		//Execute
+		runPagespeed(request.url, request.apiKey);
+
+	}
 	if (request.greeting == "sxa_site"){
 		checkSiteSxa(request, sender, sendResponse);
 	}
 	if (request.greeting == "hide_tab"){
 		sendResponse({farewell: "Ok roger that!"});
 	}
-	if (request.greeting == "hide_snackbar"){
-	  chrome.storage.sync.set({"hideSnackbar": request.version}, function() {
-		sendResponse({farewell: "Ok roger that! I hide version "+request.version});
-	  });    
-	}
 	return true;
+	
 });
-
-//When user righ clic
 
 //When a tab is updated
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
@@ -187,6 +205,12 @@ chrome.tabs.onActivated.addListener(function(tabId, changeInfo, tab) {
 	setIcon(tab);
   });
 });
+
+// This event is fired with the user accepts the input in the omnibox.
+// chrome.omnibox.onInputEntered.addListener( function(text) {
+//     var newURL = 'https://doc.sitecore.com/#?cludoquery=' + encodeURIComponent(text);
+//     chrome.tabs.create({ url: newURL });
+// });
 
 // When the extension is installed or upgraded ...
 chrome.runtime.onInstalled.addListener(function(details) {
@@ -225,7 +249,8 @@ chrome.runtime.onInstalled.addListener(function(details) {
 
 		  //Major update
 		  console.log("Updated from " + details.previousVersion + " to " + thisVersion);
-		  chrome.tabs.create({url:"https://uquaisse.io/extension-update/?utm_source=upgrade&utm_medium=chrome&utm_campaign="+thisVersion});
+		  //chrome.tabs.create({url:"https://uquaisse.io/extension-update/?utm_source=upgrade&utm_medium=chrome&utm_campaign="+thisVersion});
+		  new Notification("Extension updated!", {body: "Version "+thisVersion, icon: chrome.runtime.getURL("images/icon.png") });
 
 		} else if(thisVersion != details.previousVersion) {
 

@@ -59,6 +59,8 @@
 
   --white: #fff;
   --text: #47474E;
+
+  --iconBrightness: 0;
 }
 
 form#ContentEditorForm {

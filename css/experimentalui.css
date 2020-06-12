@@ -301,7 +301,7 @@ select option:checked {
 .elementImgAlignment,
 .scEditorHeaderNavigatorIcon,
 .scContentTreeNodeIcon {
-	filter: brightness(0);
+	filter: brightness(var(--iconBrightness));
 }
 
 .scMenuItemCaption,
@@ -705,8 +705,13 @@ a.scRibbonEditorTabNormal:hover {
     border-left: 0px solid #DC291E;
 }
 
+.scEditorSectionCaptionCollapsed {
+	background-color: var(--black6);
+	border-radius: 0px;
+}
+
 .scEditorSectionPanel {
-	display: table !important;
+	display: table;
     border-radius: 0px 0px 3px 3px;
     margin: 20px;
     margin-top: 0px !important;
@@ -959,6 +964,7 @@ a.scRibbonEditorTabNormal:hover {
 
  .sc-ext-gotofield,
  .sc-ext-resetfield,
+ .sc-ext-goToDatasource-button,
  .scEditorFieldLabelAdministrator {
  	display: none !important;
  	transition: ease-out 0.1s;
@@ -966,6 +972,7 @@ a.scRibbonEditorTabNormal:hover {
 
  .scEditorFieldLabel:hover .sc-ext-gotofield,
  .scEditorFieldLabel:hover .sc-ext-resetfield,
+ .scEditorFieldLabel:hover .sc-ext-goToDatasource-button,
  .scEditorFieldLabel:hover .scEditorFieldLabelAdministrator {
  	display: inline !important;
  }

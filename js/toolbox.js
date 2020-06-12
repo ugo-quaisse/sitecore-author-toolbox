@@ -1433,17 +1433,5 @@ chrome.storage.sync.get((storage) => {
         }
 
     }
-    /*
-     ************************
-     * 3. Cool Launchpad *
-     ************************
-     */
-    if (global.isSitecore && global.isLaunchpad && storage.feature_experimentalui) {
 
-        if (storage.feature_darkmode == true) {
-            loadCssFile("css/dark/experimentalui-launchpad.css");
-        } else {
-            loadCssFile("css/experimentalui-launchpad.css");
-        }
-    }
 }); //End chrome.storage

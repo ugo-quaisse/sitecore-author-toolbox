@@ -11,7 +11,6 @@ export {checkWorkbox};
  */
 const checkWorkbox = () => {
 
-    var html;
     var wfWorkflows = 0;
     var wfNotification = 0;
     var wfChecksum = "#checksum#"; 

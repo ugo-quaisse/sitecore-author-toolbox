@@ -622,11 +622,13 @@ const sitecoreAuthorToolbox = () => {
 
             //Detect next scEditorSectionPanel
             scEditorSectionPanel = section.nextSibling;
-            scEditorSectionPanel.setAttribute( 'style', 'display: ' + sectionPanelDisplay + ' !important' );
-            scEditorSectionPanel.classList.add("scTabsRounded")
+            if(scEditorSectionPanel) {
+                scEditorSectionPanel.setAttribute( 'style', 'display: ' + sectionPanelDisplay + ' !important' );
+                scEditorSectionPanel.classList.add("scTabsRounded");
+            }
 
             //How many errors in this section
-            sectionError = scEditorSectionPanel.querySelectorAll(".scEditorFieldMarkerBarCellRed").length;
+            sectionError = scEditorSectionPanel ? scEditorSectionPanel.querySelectorAll(".scEditorFieldMarkerBarCellRed").length : 0;
             if(sectionError > 0) { sectionErrorHtml = "<span id='scCrossTabError'></span>"; sectionErrorClass = "scTabsError"; }
 
             //Add tabs to document
@@ -894,7 +896,7 @@ const sitecoreAuthorToolbox = () => {
      */
     clearTimeout(global.timeout);
     setTimeout(function() {
-        document.querySelector("#svgAnimation").setAttribute("style","opacity:0");
+        storage.feature_experimentalui ? document.querySelector("#svgAnimation").setAttribute("style","opacity:0") : false;
         document.querySelector("#EditorFrames").setAttribute("style","opacity:1");
         document.querySelector(".scContentTreeContainer").setAttribute("style","opacity:1");
     },100)

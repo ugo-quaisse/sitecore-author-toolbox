@@ -113,6 +113,8 @@ chrome.storage.sync.get((storage) => {
                 }
 
                 //document.querySelector("#PublishChildren").checked = true;
+                let svgAnimation = `<div id="svgAnimation">` + global.svgAnimation + `</div>`;
+                document.querySelector("#EditorFrames") ? document.querySelector("#EditorFrames").insertAdjacentHTML( 'beforebegin', svgAnimation) : false;
 
                 //Hide search
                 let SearchPanel = document.querySelector("#SearchPanel")
@@ -884,9 +886,6 @@ chrome.storage.sync.get((storage) => {
             }
         }
 
-        let svgAnimation = `<div id="svgAnimation">` + global.svgAnimation + `</div>`;
-        document.querySelector("#EditorFrames") ? document.querySelector("#EditorFrames").insertAdjacentHTML( 'beforebegin', svgAnimation) : false;
-
 
         /**
          * Auto Expand (Inspired by https://github.com/alan-null/sc_ext)
@@ -902,8 +901,8 @@ chrome.storage.sync.get((storage) => {
                 //Chage EditorFrames opacity on load item
                 if (event.target.offsetParent != null) {
                     if(event.target.offsetParent.matches('.scContentTreeNodeNormal')) {
-                        document.querySelector("#svgAnimation").setAttribute("style","opacity:1");
-                        document.querySelector("#EditorFrames").setAttribute("style","opacity:0");
+                        storage.feature_experimentalui ? document.querySelector("#svgAnimation").setAttribute("style","opacity:1") : false;
+                        storage.feature_experimentalui ? document.querySelector("#EditorFrames").setAttribute("style","opacity:0") : document.querySelector("#EditorFrames").setAttribute("style","opacity:0.5");
                         document.querySelector(".scContentTreeContainer").setAttribute("style","opacity:0.5");
                         document.querySelector(".scEditorTabHeaderActive > span").innerText = global.tabLoadingTitle;
 
@@ -914,7 +913,7 @@ chrome.storage.sync.get((storage) => {
                         }   
 
                         var timeout = setTimeout(function() {
-                            document.querySelector("#svgAnimation").setAttribute("style","opacity:0");
+                            document.querySelector("#svgAnimation") ? document.querySelector("#svgAnimation").setAttribute("style","opacity:0") : false;
                             document.querySelector("#EditorFrames").setAttribute("style","opacity:1");
                             document.querySelector(".scContentTreeContainer").setAttribute("style","opacity:1");
                         }, 8000)

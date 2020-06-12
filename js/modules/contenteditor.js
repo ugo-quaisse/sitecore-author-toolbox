@@ -595,9 +595,8 @@ const sitecoreAuthorToolbox = () => {
 
         for(var section of scEditorSectionCaption) {
 
+            var sectionVisible;
             var sectionTitle = section.innerText;
-            var sectionVisible = sectionTitle != "Quick Info" ? true : false;
-            sectionTitle == "Quick Info" ? sectionTitle = "Info" : false;
             var sectionId = section.getAttribute("id");
             var sectionClass = section.getAttribute("class");
             var sectionSelected = "";
@@ -605,6 +604,13 @@ const sitecoreAuthorToolbox = () => {
             var sectionError = 0;
             var sectionErrorHtml = "";
             var sectionErrorClass = "";
+
+            //Hide Quick Info section in experimental UI
+            if(storage.feature_experimentalui == true) {
+                sectionVisible = sectionTitle != "Quick Info" ? true : false;
+            } else {
+                sectionVisible = true;
+            }
 
 
             //Detect active panel

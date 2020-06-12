@@ -363,6 +363,31 @@ document.body.onload = function() {
   });
 }
 
+//Experimental UI contrasted icons
+chrome.storage.sync.get(['feature_contrast_icons'], function(result) {
+    if (result.feature_contrast_icons != undefined) {
+        result.feature_contrast_icons ? document.querySelector("#feature_contrast_icons").checked = true : false;
+    } else {
+        document.querySelector("#feature_contrast_icons").checked = true;
+    }
+});
+
+
+//Launchpad tiles
+chrome.storage.sync.get(['feature_launchpad_tiles'], function(result) {
+    if (result.feature_contrast_icons != undefined) {
+        result.feature_contrast_icons ? document.querySelector("#feature_launchpad_tiles").checked = true : false;
+    } else {
+        document.querySelector("#feature_launchpad_tiles").checked = false;
+    }
+});
+
+
+
+
+
+
+
 document.getElementById("feature_experimentalui").onclick = function() {
   if(document.getElementById("feature_experimentalui").checked == true) {
     document.getElementById("feature_cetabs").checked = true;
@@ -379,6 +404,16 @@ document.getElementById("feature_darkmode").onclick = function() {
     document.getElementById("feature_darkmode_auto").checked = false;
   }
 }
+
+
+
+
+
+
+
+
+
+
 
 //Settings
 document.querySelector("#settings").onclick = function() {
@@ -635,9 +670,17 @@ document.querySelector("#set").onclick = function(event) {
   chrome.storage.sync.set({"feature_instantsearch": document.getElementById('feature_instantsearch').checked}, function() {
     console.info('--> Instant Search: ' + document.getElementById('feature_instantsearch').checked);
   });
+  //Launchpad tiles
+  chrome.storage.sync.set({"feature_launchpad_tiles": document.getElementById('feature_launchpad_tiles').checked}, function() {
+    console.info('--> Launchpad tiles: ' + document.getElementById('feature_launchpad_tiles').checked);
+  });
   //Experimental UI
   chrome.storage.sync.set({"feature_experimentalui": document.getElementById('feature_experimentalui').checked}, function() {
     console.info('--> Experimental UI: ' + document.getElementById('feature_experimentalui').checked);
+  });
+  //Contrasted icons
+  chrome.storage.sync.set({"feature_contrast_icons": document.getElementById('feature_contrast_icons').checked}, function() {
+    console.info('--> Contrasted icons: ' + document.getElementById('feature_contrast_icons').checked);
   });
   
   //Get URL parameters

@@ -99,6 +99,7 @@ chrome.storage.sync.get((storage) => {
              * Experimental UI
              */
             storage.feature_experimentalui == undefined ? storage.feature_experimentalui = false : false;
+            storage.feature_contrast_icons == undefined ? storage.feature_contrast_icons = true : false;
             
             if(!global.isLaunchpad && storage.feature_experimentalui) {
 
@@ -122,6 +123,10 @@ chrome.storage.sync.get((storage) => {
 
                 //Content and Media Library links
                 ///shell/Applications/Media/MediaShop.aspx?sc_bw=1
+
+                //Icon contrasted
+                console.log(storage.feature_contrast_icons);
+                storage.feature_contrast_icons == false ? document.documentElement.style.setProperty('--iconBrightness', 1) : false;
                 
                 //Savebar
                 insertSavebar(); 

@@ -8,10 +8,10 @@ export {showSnackbar};
  * Show Materialize-style message bar from bottom-right
  */
 const showSnackbar = (version) => {
-
+    
     //Snackbar settings
     let snackbarHtml = `
-    <b>Welcome to Sitecore Author Toolbox 2.2</b><br />
+    <b>Welcome to Sitecore Author Toolbox ` + global.extensionVersion + `</b><br />
     Give a try to the new Sitecore Experimental Interface by activing it under settings.`;
     let html=`<div class="snackbar">` + snackbarHtml + `<button onclick="window.open('` + global.launchpadPage + `')">SETTINGS</button><button id="sbDismiss">DISMISS</button></div>`;
 

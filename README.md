@@ -1,5 +1,16 @@
-# Sitecore Author Toolbox (Chrome extension)
-A google Chrome extension that brings a set of handy tools for Sitecore's authors.
+# Sitecore Author Toolbox (Chrome/Edge extension)
+A google Chrome/Edge extension that brings a set of handy tools for Sitecore's authors.
+
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/mckfcmcdbgkgffdknpkaihjigmcnnbco)](https://chrome.google.com/webstore/detail/mckfcmcdbgkgffdknpkaihjigmcnnbco/)
+![Rating](https://img.shields.io/chrome-web-store/rating/mckfcmcdbgkgffdknpkaihjigmcnnbco)
+![Users](https://img.shields.io/chrome-web-store/users/mckfcmcdbgkgffdknpkaihjigmcnnbco)
+
+![Js](https://img.shields.io/github/languages/top/ugo-quaisse/sitecore-author-toolbox)
+![Count](https://img.shields.io/github/languages/count/ugo-quaisse/sitecore-author-toolbox)
+![Size](https://img.shields.io/github/repo-size/ugo-quaisse/sitecore-author-toolbox)
+![Issues](https://img.shields.io/github/issues-raw/ugo-quaisse/sitecore-author-toolbox)
+
+
 
 [![Sitecore Author Toolbox Video](http://img.youtube.com/vi/f-IT1sLyl44/0.jpg)](http://www.youtube.com/watch?v=f-IT1sLyl44)
 
@@ -26,6 +37,7 @@ This extension will help you to save a lot of time by providing a set of handy t
 * Auto Expand Tree
 * Translate Mode Copy Button
 * Experience Editor Quick Tabs
+* Experience Profile Gravatar image
 
 ## How to install
 
@@ -44,14 +56,34 @@ Requires that Sitecore is installed to the default directory of /sitecore/.
 ## Supported Sitecore version
 
 Tested on Sitecore versions:
+* 9.3.0 (rev. 003498)
 * 9.2.0 (rev. 002893)
 * 8.2 (rev. 180406)
 
+## How to install
+* Download repo and zip it
+* Go to chrome://extensions/ or edge://extensions/
+* Activate "Developer Mode"
+* Clic "Load Unpacked"
+* Choose zip file
+
 ## Live version
 
-The latest version can be installed from the [Chrome Web Store here](https://chrome.google.com/webstore/detail/mckfcmcdbgkgffdknpkaihjigmcnnbco/) 
+The latest stable version can be installed from the [Chrome Web Store here](https://chrome.google.com/webstore/detail/mckfcmcdbgkgffdknpkaihjigmcnnbco/) 
 
 ## Support
 
 The official support Twitter account for the library is at <https://twitter.com/uquaisse>.
+
+![Licence](https://img.shields.io/github/license/ugo-quaisse/sitecore-author-toolbox)
+
+## Credits
+
+* Experience Profile Gravatar Image inspired by https://github.com/coreyasmith/sitecore-experience-profile-gravatar
+* Html Syntax highlight by Codemirror library https://github.com/codemirror/CodeMirror
+* Auto Expand tree inspired by https://github.com/alan-null/sc_ext
+
+## Other Sitecore extensions
+
+If you are a Sitecore developer and are looking for more advanced features for dev, I recommend Alan Null's extension available at https://github.com/alan-null/sc_ext
 

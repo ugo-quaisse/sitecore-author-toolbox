@@ -103,12 +103,12 @@ const insertLanguageButton = (scItemId, scLanguage = "EN", scVersion = 1) => {
 const insertMoreButton = (locked = false) => {
 
 	let container = document.querySelector(".scEditorTabControlsHolder");
-	let button = `
-	<button class="scEditorHeaderButton" id="scInfoButton" title="Quick Info" type="button">
-	<img src="` + global.iconInfo + `" class="scLanguageIcon">
-	</button>
+	// let button = `
+	// <button class="scEditorHeaderButton" id="scInfoButton" title="Quick Info" type="button">
+	// <img src="` + global.iconInfo + `" class="scLanguageIcon">
+	// </button>`;
 
-	<button class="scEditorHeaderButton" id="scMoreButton" title="More actions" type="button">
+	let button = `<button class="scEditorHeaderButton" id="scMoreButton" title="More actions" type="button">
 	<img src="` + global.iconMore + `" class="scLanguageIcon">
 	</button>
 	<ul class="scMoreMenu">
@@ -118,6 +118,8 @@ const insertMoreButton = (locked = false) => {
        	<li onclick="javascript:return scForm.invoke('item:duplicate')">Duplicate item</li>
         <li onclick="javascript:return scForm.postEvent(this,event,'item:rename')">Rename item</li>
         <li onclick="javascript:return scForm.postEvent(this,event,'item:sethelp')">Help texts</li>
+        <li id="scInfoButton">Item details</li>
+        <li onclick="javascript:return scForm.postEvent(this,event,'item:executescript(id={13166782-908D-41A6-BBB2-346BAF7F70F3},db=master,script={1876D433-4FAE-46B2-B2EF-AAA0FDA110E7},scriptDb=master)')">Statistics</li>
         <li onclick="javascript:return scForm.invoke('item:delete(id={E5B3214B-16F5-405A-8E88-AB7084D23E36})', event)" class="danger">Delete</li>
     </ul>`;
 	container ? container.insertAdjacentHTML( 'afterbegin', button) : false;
@@ -126,7 +128,7 @@ const insertMoreButton = (locked = false) => {
 	let panel = document.querySelector("#scPanel");
 	let html = `
 	<div class="content">
-		<h2>Quick info</h2>
+		<h2>Item details</h2>
 		<h3>Item ID:</h3>
 		` + ScItem.id + `
 		<h3>Name:</h3>

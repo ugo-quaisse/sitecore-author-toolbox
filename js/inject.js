@@ -8,6 +8,20 @@
 
  /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
+function scSaveAnimation(id) {
+  var indicator = document.createElement('div');
+  indicator.id = 'saveAnimation';
+  document.body.appendChild(indicator);
+  console.log("SAVE ANIMATION #saveAnimation");
+
+  if(document.querySelector(".scSaveButton")) {
+  	document.querySelector(".scSaveButton").innerText = "Saving...";
+  	setTimeout(function() { document.querySelector(".scSaveButton").innerText = "Save"; }, 2000);
+  }
+
+  setTimeout(function() { indicator.remove(); }, 2000);
+}
+
 const copyTranslate = (leftElemId,rightElemId) => {
  	var left = document.querySelector('#'+leftElemId);
  	var right = document.querySelector('#'+rightElemId);

@@ -944,6 +944,47 @@ a.scRibbonEditorTabNormal:hover {
     border-radius: 0px 3px 3px 0px;
 }
 
+ .scEditorTabControlsHolder > .scMoreMenu {
+ 	width: 240px;
+    height: fit-content;
+    background-color: var(--white);
+    position: absolute;
+    z-index: 100;
+    right: 12px;
+    top: 45px;
+    visibility: hidden;
+    opacity: 0;
+    border-radius: 3px;
+    box-shadow: 0 5px 20px rgba(0,0,0,.3);
+ }
+
+.scEditorTabControlsHolder > .scMoreMenu > li {
+    background: 0 0;
+    border: 0;
+    display: block;
+    clear: both;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    white-space: nowrap;
+    cursor: pointer;
+    width: calc(100% - 40px);
+    text-align: left;
+    padding: 8px 20px;
+}
+
+.scEditorTabControlsHolder > .scMoreMenu > li:hover {
+	background-color: var(--grey5);
+}
+
+.scEditorTabControlsHolder > .scMoreMenu > li.danger {
+	color: var(--accent);
+}
+
+.scEditorTabControlsHolder > .scMoreMenu > li.danger:hover {
+	background-color: var(--accent);
+	color: var(--accentText);
+}
 /* Gallery Frame */
 
 .scGalleryFrame {

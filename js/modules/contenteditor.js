@@ -273,7 +273,7 @@ const sitecoreAuthorToolbox = () => {
             //If not added yet
             if(!document.getElementById("scMessageBarInfo") && storage.feature_urls && storage.feature_messagebar) {
               
-                scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + global.iconData + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing a datasource</div><div class="scMessageBarText">To see it, you have to attach it to a component in a page via</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet">Presentation Details <span>or</span> Experience Editor</li></ul></div></div>'
+                scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + global.iconData + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing a datasource</div><div class="scMessageBarText">To see it, you have to attach it to a component via the Experience Editor.</b></div></div></div>'
                 scEditorID.insertAdjacentHTML( 'afterend', scMessage );
 
                 //Experimental mode
@@ -603,7 +603,7 @@ const sitecoreAuthorToolbox = () => {
             var sectionPanelDisplay = "";
             var sectionError = 0;
             var sectionErrorHtml = "";
-            var sectionErrorClass = ""; 
+            var sectionErrorClass = "";
 
             //Hide Quick Info section in experimental UI
             if(storage.feature_experimentalui == true) {
@@ -744,16 +744,6 @@ const sitecoreAuthorToolbox = () => {
             //Not in final workflow step
             isNotFinalWorkflowStep ? scWarningIcon.setAttribute("style","background-image: url(" + global.iconWorkflow + ");") : false;
 
-            //Locked by
-            if(isLockMessage) {
-                temp = scWarningText.split("' ");
-                var lockedBy = temp[0].replace("'", "");
-                lockedBy = lockedBy + " has"
-                scWarningIcon.setAttribute("style","background-image: url(" + global.iconLock + ");");
-            } else {
-                lockedBy = "You have";
-            }
-
             //Admin, elevate unlock
             (isElevateUnlock || isProtected) ? scWarningIcon.setAttribute("style","background-image: url(" + global.iconLock + ");") : false;
 
@@ -769,15 +759,25 @@ const sitecoreAuthorToolbox = () => {
         var isItemLocked = document.querySelector(".scRibbon").innerHTML.includes('Check this item in.');
 
             if(isItemLocked && !isElevateUnlock && !isLockMessage) {
+            
+                if(isLockMessage) {
+                    temp = scWarningText.split("' ");
+                    var lockedBy = temp[0].replace("'", "");
+                    lockedBy = lockedBy + " has"
+                } else {
+                    lockedBy = "You have";
+                }
 
-            //Prepare HTML (scInformation scWarning scError)
-            scMessage = '<div id="scMessageBarUrl" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + global.iconLock + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">' + lockedBy + ' locked this item.</div><div class="scMessageBarText">Nobody can edit this page until you unlock it.</div><ul class="scMessageBarOptions"><li class="scMessageBarOptionBullet"><a href="#" onclick="javascript:return scForm.postEvent(this,event,\'item:checkin\')" class="scMessageBarOption">Unlock this item</a></li></ul></div></div>'
-            scEditorID.insertAdjacentHTML( 'afterend', scMessage );
+                document.querySelector("#scLockMenuText").innerText = "Unlock item...";
 
-            //Experimental
-            document.querySelector("#scLockButton") ? document.querySelector("#scLockButton > img").setAttribute("src", global.iconLocked) : false;
-            document.querySelector("#scLockButton") ? document.querySelector("#scLockButton").setAttribute("title", `Unlock this item`) : false;
-            document.querySelector("#scLockButton") ? document.querySelector("#scLockButton").setAttribute("onclick", `javascript:return scForm.postEvent(this,event,'item:checkin')`) : false;
+                //Prepare HTML (scInformation scWarning scError)
+                scMessage = '<div id="scMessageBarUrl" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + global.iconLock + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">' + lockedBy + ' locked this item.</div><div class="scMessageBarText">Nobody can edit this page until you unlock it.</div><ul class="scMessageBarOptions"><li class="scMessageBarOptionBullet"><a href="#" onclick="javascript:return scForm.postEvent(this,event,\'item:checkin\')" class="scMessageBarOption">Unlock this item</a></li></ul></div></div>'
+                scEditorID.insertAdjacentHTML( 'afterend', scMessage );
+
+                //Experimental
+                document.querySelector("#scLockButton") ? document.querySelector("#scLockButton > img").setAttribute("src", global.iconLocked) : false;
+                document.querySelector("#scLockButton") ? document.querySelector("#scLockButton").setAttribute("title", `Unlock this item`) : false;
+                document.querySelector("#scLockButton") ? document.querySelector("#scLockButton").setAttribute("onclick", `javascript:return scForm.postEvent(this,event,'item:checkin')`) : false;
 
             }
 

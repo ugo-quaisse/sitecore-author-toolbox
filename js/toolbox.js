@@ -224,7 +224,14 @@ chrome.storage.sync.get((storage) => {
                     }
 
                     //More menu
-                    event.srcElement.id == "scMoreButton" || event.path[1].id == "scMoreButton" || event.srcElement.id == "scPanel" || event.path[0].className == "content"
+                    if(document.querySelector(".scMoreMenu")) {
+                        event.srcElement.id == "scMoreButton" || event.path[1].id == "scMoreButton"
+                        ? document.querySelector(".scMoreMenu").setAttribute("style","visibility: visible; opacity: 1;")
+                        : document.querySelector(".scMoreMenu").setAttribute("style","visibility: hidden; opacity: 0;");
+                    }
+
+                    //More menu
+                    event.srcElement.id == "scInfoButton" || event.path[1].id == "scInfoButton" || event.srcElement.id == "scPanel" || event.path[0].className == "content"
                     ? scPanel.classList.toggle("open")
                     : scPanel.classList.remove("open");
 

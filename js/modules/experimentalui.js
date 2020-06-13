@@ -20,7 +20,7 @@ const insertSavebar = () => {
                 <li onclick="javascript:return scForm.postEvent(this,event,'item:publishingviewer(id=)')">Scheduler...</li>
             </ul>
             <button class="primary primaryGrouped" onclick="javascript:return scForm.postEvent(this,event,'item:publish(id=)')">Save and Publish</button>
-            <button onclick="javascript:return scForm.invoke('contenteditor:save', event)">Save...</button>
+            <button class="scSaveButton" onclick="javascript:return scForm.invoke('contenteditor:save', event)">Save</button>
             <button class="scPreviewButton" disabled>Checking url...</button>
         </div>
         <div class="scBreadcrumb"></div>
@@ -103,14 +103,30 @@ const insertLanguageButton = (scItemId, scLanguage = "EN", scVersion = 1) => {
 const insertMoreButton = (locked = false) => {
 
 	let container = document.querySelector(".scEditorTabControlsHolder");
-	let button = `<button class="scEditorHeaderButton" id="scMoreButton" title="More actions" type="button"><img src="` + global.iconMore + `" class="scLanguageIcon"></button>`;
+	let button = `
+	<button class="scEditorHeaderButton" id="scInfoButton" title="Quick Info" type="button">
+	<img src="` + global.iconInfo + `" class="scLanguageIcon">
+	</button>
+
+	<button class="scEditorHeaderButton" id="scMoreButton" title="More actions" type="button">
+	<img src="` + global.iconMore + `" class="scLanguageIcon">
+	</button>
+	<ul class="scMoreMenu">
+        <li onclick="javascript:return scForm.postEvent(this,event,'item:addversion(id=)')">Add new version</li>
+ 		<li onclick="javascript:return scForm.invoke('contenteditor:edit')" id="scLockMenuText">Lock item</li>
+        <li onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor')">Open in Experience Editor</li>
+       	<li onclick="javascript:return scForm.invoke('item:duplicate')">Duplicate item</li>
+        <li onclick="javascript:return scForm.postEvent(this,event,'item:rename')">Rename item</li>
+        <li onclick="javascript:return scForm.postEvent(this,event,'item:sethelp')">Help texts</li>
+        <li onclick="javascript:return scForm.invoke('item:delete(id={E5B3214B-16F5-405A-8E88-AB7084D23E36})', event)" class="danger">Delete</li>
+    </ul>`;
 	container ? container.insertAdjacentHTML( 'afterbegin', button) : false;
 
 	let ScItem = getScItemData();
 	let panel = document.querySelector("#scPanel");
 	let html = `
 	<div class="content">
-		<h2>Item details</h2>
+		<h2>Quick info</h2>
 		<h3>Item ID:</h3>
 		` + ScItem.id + `
 		<h3>Name:</h3>

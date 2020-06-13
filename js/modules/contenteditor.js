@@ -603,7 +603,7 @@ const sitecoreAuthorToolbox = () => {
             var sectionPanelDisplay = "";
             var sectionError = 0;
             var sectionErrorHtml = "";
-            var sectionErrorClass = "";
+            var sectionErrorClass = ""; 
 
             //Hide Quick Info section in experimental UI
             if(storage.feature_experimentalui == true) {

@@ -3,7 +3,7 @@
 import * as global from './global.js';
 import {getScItemData, setTextColour} from './helpers.js';
 
-export {insertSavebar, insertBreadcrumb, insertLanguageButton, insertVersionButton, insertMoreButton, insertNavigatorButton, insertLockButton, pathToBreadcrumb, initInsertIcon, getAccentColor, initColorPicker, initSitecoreMenu };
+export {insertSavebar, insertBreadcrumb, insertLanguageButton, insertVersionButton, insertMoreButton, insertNavigatorButton, insertLockButton, pathToBreadcrumb, initInsertIcon, getAccentColor, initColorPicker, initSitecoreMenu, initGutter };
 
 
 /**
@@ -317,5 +317,16 @@ const initInsertIcon = () => {
 			}
 		});
 	}
+
+}
+
+/**
+ * Insert Gutter
+ */
+const initGutter = () => {
+
+	let treeNode = document.querySelector(".scContentTreeContainer");
+	let html = `<div class="scGutter" onclick="javascript:if (window.scGeckoActivate) window.scGeckoActivate(); return scContent.onTreeClick(this, event)" oncontextmenu="javascript:return scContent.onTreeContextMenu(this, event)" onkeydown="javascript:return scContent.onTreeKeyDown(this, event)"></div>`;
+	treeNode ? treeNode.insertAdjacentHTML( 'afterbegin', html) : false;
 
 }

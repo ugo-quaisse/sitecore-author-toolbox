@@ -313,7 +313,7 @@ select option:checked {
 .scTreeview .icon,
 .scTreeview .icon_Hover,
 #scModal .item > a > img {
- 	filter: grayscale(1) brightness(0.4) contrast(2);
+ 	filter: brightness(var(--iconBrightness)) contrast(var(--iconContrast));
 }
 
 #scModal .item:hover > a > img {
@@ -393,7 +393,13 @@ a.scContentTreeNodeActive > span > img {
 	max-width: 16px;
 }
 
-
+.scGutter {
+    z-index: 100000000000;
+    top: 0;
+    width: 20px;
+    height: 100%;
+    position: absolute;
+}
 
 .scInsertItemIcon {
 	position: relative;

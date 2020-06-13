@@ -24,7 +24,7 @@ import {sitecoreAuthorToolbox} from './modules/contenteditor.js';
 import {getGravatar} from './modules/users.js';
 import {instantSearch} from './modules/instantsearch.js';
 import {insertModal, insertPanel} from './modules/menu.js';
-import {insertSavebar, insertBreadcrumb, initInsertIcon, getAccentColor, initColorPicker, initSitecoreMenu} from './modules/experimentalui.js';
+import {insertSavebar, insertBreadcrumb, initInsertIcon, initGutter, getAccentColor, initColorPicker, initSitecoreMenu} from './modules/experimentalui.js';
 
 /**
  * Get all user's settings from storage
@@ -125,8 +125,10 @@ chrome.storage.sync.get((storage) => {
                 ///shell/Applications/Media/MediaShop.aspx?sc_bw=1
 
                 //Icon contrasted
-                console.log(storage.feature_contrast_icons);
-                storage.feature_contrast_icons == false ? document.documentElement.style.setProperty('--iconBrightness', 1) : false;
+                if(storage.feature_contrast_icons == false) {
+                    document.documentElement.style.setProperty('--iconBrightness', 1);
+                    document.documentElement.style.setProperty('--iconContrast', 1);
+                }
                 
                 //Savebar
                 insertSavebar(); 
@@ -139,6 +141,9 @@ chrome.storage.sync.get((storage) => {
 
                 //Tree action
                 initInsertIcon();
+
+                //insert Gutter
+                initGutter();
 
                 /**
                 * User menu

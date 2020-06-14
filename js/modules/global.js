@@ -64,11 +64,11 @@ export const squareLogo = chrome.runtime.getURL('images/square-logo.png')
 
 export let timeout
 export const isSitecore = windowLocationHref.includes('/sitecore/')
-export let isPreviewMode = document.querySelector('.pagemode-preview')
-!isPreviewMode ? isPreviewMode = windowLocationHref.includes('sc_mode=preview') : false
-export let isEditMode = document.querySelector('.pagemode-edit')
-!isEditMode ? isEditMode = windowLocationHref.includes('sc_mode=edit') : false
-!isEditMode ? isEditMode = windowLocationHref.includes('/experienceeditor/') : false
+export let isPreviewMode = document.querySelector('.pagemode-preview');
+!isPreviewMode ? isPreviewMode = windowLocationHref.includes('sc_mode=preview') : false;
+export let isEditMode = document.querySelector('.pagemode-edit');
+!isEditMode ? isEditMode = windowLocationHref.includes('sc_mode=edit') : false;
+!isEditMode ? isEditMode = windowLocationHref.includes('/experienceeditor/') : false;
 export const isXmlControl = windowLocationHref.includes('default.aspx?xmlcontrol=')
 export const scDatabase = urlParams.get('sc_content')
 export const isGalleryLanguage = windowLocationHref.includes('gallery.language')

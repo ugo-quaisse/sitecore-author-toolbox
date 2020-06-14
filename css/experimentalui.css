@@ -3,21 +3,22 @@
  * experimental.css
  */
 
-html, body {
-	-webkit-font-smoothing: antialiased;
-	font-size: 12px;
+html,
+body {
+    -webkit-font-smoothing: antialiased;
+    font-size: 12px;
 }
 
 h1 {
-	font-size: 250%;
-	font-weight: 700;
-	color: var(--accent);
-	padding: 20px;
-	margin: auto;
+    font-size: 250%;
+    font-weight: 700;
+    color: var(--accent);
+    padding: 20px;
+    margin: auto;
 }
 
 h2 {
-	font-size: 125%;
+    font-size: 125%;
     border-bottom: 1px solid var(--text);
     font-weight: 700;
     color: var(--text);
@@ -26,11 +27,37 @@ h2 {
 }
 
 h3 {
-	font-size: 100%;
-	font-weight: 700;
-	color: var(--accent);
-	padding: 10px 0px 2px 0px;
-	margin: auto;
+    font-size: 100%;
+    font-weight: 700;
+    color: var(--accent);
+    padding: 10px 0px 2px 0px;
+    margin: auto;
+}
+
+.visible {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.saveMessage {
+    position: fixed;
+    margin: auto;
+    top: -50px;
+    z-index: 10000000000;
+    background-color: var(--messageSuccessLink);
+    color: var(--messageSuccessBar);
+    font-weight: normal;
+    font-size: 14px;
+    text-align: center;
+    padding: 10px 15px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    transition: all cubic-bezier(0.68, -0.55, 0.265, 1.55) .4s;
+    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
+}
+
+.saveMessage.visible {
+    top: 30px;
 }
 
 /* Sitecore hide */
@@ -38,33 +65,33 @@ h3 {
 .scValidatorPanel,
 .scDockTop,
 .scDockBottom {
-	display: none;
+    display: none;
 }
 
 /* Global containers */
 
 #globalLogo {
-	background: url(chrome-extension://__MSG_@@extension_id__/images/square-logo.svg) center center no-repeat;
-	background-color: var(--accent);
+    background: url(chrome-extension://__MSG_@@extension_id__/images/square-logo.svg) center center no-repeat;
+    background-color: var(--accent);
     background-size: 105%;
 }
 
 #ContentEditor {
-	margin-left: -1px;
+    margin-left: -1px;
 }
 
 #EditorTabs {
-	position: absolute;
+    position: absolute;
     width: -webkit-fill-available;
-	background-color: var(--white);
-	border-bottom: 0px solid #ffffff;
-	box-shadow: 0px 3px 5px rgba(0,0,0,0.1);
-	z-index: 10;
+    background-color: var(--white);
+    border-bottom: 0px solid #ffffff;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
+    z-index: 10;
 }
 
 #EditorFrames {
-	margin-top:56px;
-	height: calc(100% - 115px);
+    margin-top: 56px;
+    height: calc(100% - 115px);
 }
 
 #SearchPanel {
@@ -76,7 +103,7 @@ h3 {
 }
 
 #ContentTreeHolder {
-	/*border-top: 2px solid transparent;*/
+    /*border-top: 2px solid transparent;*/
 }
 
 input[type="color"] {
@@ -91,21 +118,23 @@ input[type="color"] {
     box-shadow: inset 0 0 1px 7px #2b2b2b;
     cursor: pointer;
 }
+
 input[type="color"]::-webkit-color-swatch-wrapper {
-	padding: 0;
-	color: transparent;
+    padding: 0;
+    color: transparent;
 }
+
 input[type="color"]::-webkit-color-swatch {
-	border: none;
+    border: none;
 }
 
 .wbNotificationMenu {
-	background-color: var(--accent);
-	right: 117px;
+    background-color: var(--accent);
+    right: 117px;
 }
 
 #scSitecoreRibbon {
-	width: 40px;
+    width: 40px;
     height: 20px;
     cursor: pointer;
     position: relative;
@@ -114,77 +143,77 @@ input[type="color"]::-webkit-color-swatch {
     transition: all 0.1s ease 0s;
     background: var(--white);
     border: 1px solid var(--white);
-    outline:0;
+    outline: 0;
 }
 
 #scSitecoreRibbon:focus {
-	outline:0;
+    outline: 0;
 }
 
-#scSitecoreRibbon > span {
-	width: 12px;
+#scSitecoreRibbon>span {
+    width: 12px;
     height: 12px;
     background-color: var(--grey2);
-	margin-left: 0px;
+    margin-left: 0px;
     border-radius: 12px;
     transition: all 0.1s ease 0s;
     display: block;
-    
+
 }
 
-#scSitecoreRibbon > span.active {
-	background-color: var(--accent);
-	margin-left: 14px;
+#scSitecoreRibbon>span.active {
+    background-color: var(--accent);
+    margin-left: 14px;
 }
 
 #scFlag,
 #scFlagMenu,
 .liveUrlStatus {
-	visibility: hidden;
-	display: none;
+    visibility: hidden;
+    display: none;
 }
 
 .scEditorPanel {
-	margin-right: 0px;
+    margin-right: 0px;
 }
 
 a.scContentButton {
-	color: var(--accent);
+    color: var(--accent);
 }
 
 #scModal .header {
-	background-color: var(--accent);
-	color: var(--accentText);
+    background-color: var(--accent);
+    color: var(--accentText);
 }
 
 #scModal .header .maximize {
-	filter: brightness(var(--accentBrightness));
+    filter: brightness(var(--accentBrightness));
 }
 
 #scModal .header .close {
-	filter: brightness(var(--accentBrightness));
+    filter: brightness(var(--accentBrightness));
 }
 
 .showSitecoreMenu {
-	display: block !important;
+    display: block !important;
 }
 
 .scSitecoreMenu {
-	transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 
 ul.scAccountMenu li:hover {
-	background-color: var(--accent);
-	color: var(--accentText);
+    background-color: var(--accent);
+    color: var(--accentText);
 }
 
 .scEditorFieldMarker {
-	margin: 0 0 40px 0;
+    margin: 0 0 40px 0;
 }
 
 .scLanguageIcon,
 .scVersionIcon {
-	width: 16px;
+    width: 16px;
     height: 16px;
     vertical-align: sub;
 }
@@ -195,12 +224,13 @@ ul.scAccountMenu li:hover {
     border-collapse: separate;
 }
 
-.splitter-bar:hover::before, .splitter-bar:hover {
-	background-color: var(--accent) !important;
+.splitter-bar:hover::before,
+.splitter-bar:hover {
+    background-color: var(--accent) !important;
 }
 
 .liveUrlDot {
-	vertical-align: inherit;
+    vertical-align: inherit;
     width: 10px;
     height: 10px;
     margin-left: 2px;
@@ -208,12 +238,12 @@ ul.scAccountMenu li:hover {
 
 .scContentTreeContainer,
 #EditorFrames {
-	/*transition: opacity ease-out 0s;*/
+    /*transition: opacity ease-out 0s;*/
 }
 
 .scNoResult,
 .scNoVersion {
-	margin: auto;
+    margin: auto;
     padding: 50px;
     text-align: center;
     font-size: 15px;
@@ -221,19 +251,19 @@ ul.scAccountMenu li:hover {
     font-weight: 800;
 }
 
-.scNoResult > img,
-.scNoVersion > img {
-	width: 256px;
+.scNoResult>img,
+.scNoVersion>img {
+    width: 256px;
     opacity: 0.15;
     padding: 20px;
 }
 
-.scNoVersion > p {
+.scNoVersion>p {
     padding: 0px 0px 10px 0px;
 }
 
-.scNoVersion > button {
-	font-size: 12px;
+.scNoVersion>button {
+    font-size: 12px;
     padding: 9px 14px;
     position: relative;
     border-radius: 3px;
@@ -245,16 +275,16 @@ ul.scAccountMenu li:hover {
     margin: 0px 5px;
     box-shadow: none;
     cursor: pointer;
- }
-
-.scNoVersion > button:hover {
-	filter: brightness(0.95);
 }
 
-.scEditorTabHeaderNormal > span.scEditorTabHeaderModified:after,
-.scEditorTabHeaderActive > span.scEditorTabHeaderModified:after {
-	color: var(--accent);
-	padding-left: 2px;
+.scNoVersion>button:hover {
+    filter: brightness(0.95);
+}
+
+.scEditorTabHeaderNormal>span.scEditorTabHeaderModified:after,
+.scEditorTabHeaderActive>span.scEditorTabHeaderModified:after {
+    color: var(--accent);
+    padding-left: 2px;
 }
 
 /*Forms*/
@@ -265,33 +295,33 @@ ul.scAccountMenu li:hover {
 #Editors select,
 #Editors textarea,
 #ContentWrapper {
-	font-size: 15px;
-	line-height: 20px;
-	border-radius: none;
-	box-shadow: none;
+    font-size: 15px;
+    line-height: 20px;
+    border-radius: none;
+    box-shadow: none;
     padding: 4px 6px;
     box-sizing: border-box;
 }
 
 #Editors select:not([multiple]) {
-	min-height: 34px !important;
+    min-height: 34px !important;
     border-radius: 0px !important;
     /*-webkit-appearance: initial;*/
 }
 
 .scContentControlSelectedList {
-	bottom: 1px;
+    bottom: 1px;
 }
 
 .scContentControlCheckbox:checked+.scContentControlCheckboxLabel::before {
-	background-color: var(--accent) !important;
+    background-color: var(--accent) !important;
 }
 
-select option:focus, 
-select option:active, 
+select option:focus,
+select option:active,
 select option:checked {
-	background-color: var(--accent) !important;
-	color: var(--accentText) !important;
+    background-color: var(--accent) !important;
+    color: var(--accentText) !important;
 }
 
 /* Icons */
@@ -301,54 +331,54 @@ select option:checked {
 .elementImgAlignment,
 .scEditorHeaderNavigatorIcon,
 .scContentTreeNodeIcon {
-	filter: brightness(var(--iconBrightness));
+    filter: brightness(var(--iconBrightness));
 }
 
 .scMenuItemCaption,
 .scMenuItemCaption_Hover {
     padding: 0 10px;
     font-size: 14px;
- }
+}
 
 .scTreeview .icon,
 .scTreeview .icon_Hover,
-#scModal .item > a > img {
- 	filter: brightness(var(--iconBrightness)) contrast(var(--iconContrast));
+#scModal .item>a>img {
+    filter: brightness(var(--iconBrightness)) contrast(var(--iconContrast));
 }
 
-#scModal .item:hover > a > img {
-	filter: unset;
+#scModal .item:hover>a>img {
+    filter: unset;
 }
 
 /* Content Tree */
 
 .scContentTree {
-	overflow-x: hidden;
-	z-index: 100;
+    overflow-x: hidden;
+    z-index: 100;
 }
 
 .scContentTreeNodeGlyph {
-	width: 20px !important;
-	vertical-align: middle !important;
-	filter: grayscale(1);
+    width: 20px !important;
+    vertical-align: middle !important;
+    filter: grayscale(1);
 }
 
 div.scContentTreeNode {
     padding: 2px 0px 1px 15px;
     font-size: 14px;
- }
+}
 
-div.scContentTreeNode > img {
- 	position: relative;
- 	z-index: 10;
- 	margin-top: 0px;
+div.scContentTreeNode>img {
+    position: relative;
+    z-index: 10;
+    margin-top: 0px;
     padding-bottom: 8px;
     cursor: pointer;
- }
+}
 
- div.scContentTreeNode > img:hover {
-	background-color: transparent;
- }
+div.scContentTreeNode>img:hover {
+    background-color: transparent;
+}
 
 a.scContentTreeNodeActive,
 a.scContentTreeNodeNormal,
@@ -357,9 +387,9 @@ a.scContentTreeNodeNormal.scDragHover {
     width: -webkit-fill-available;
 }
 
-a.scContentTreeNodeActive > span,
-a.scContentTreeNodeNormal > span {
-	background-color: transparent;
+a.scContentTreeNodeActive>span,
+a.scContentTreeNodeNormal>span {
+    background-color: transparent;
     padding: 10px 0px;
     height: 20px;
     position: absolute;
@@ -370,27 +400,28 @@ a.scContentTreeNodeNormal > span {
     z-index: 1;
 }
 
-a.scContentTreeNodeActive > span {
-	color: var(--white) !important;
-}
-a.scContentTreeNodeNormal > span {
-	color: var(--text) !important;
+a.scContentTreeNodeActive>span {
+    color: var(--white) !important;
 }
 
-.scContentTreeNodeGlyph:hover + a > span,
-div.scContentTreeNode > img:hover + a > span,
-a.scContentTreeNodeNormal:hover > span {
-	background-color: var(--grey5);
+a.scContentTreeNodeNormal>span {
+    color: var(--text) !important;
 }
 
-a.scContentTreeNodeActive > span {
-	background-color: var(--accent) !important;
+.scContentTreeNodeGlyph:hover+a>span,
+div.scContentTreeNode>img:hover+a>span,
+a.scContentTreeNodeNormal:hover>span {
+    background-color: var(--grey5);
+}
+
+a.scContentTreeNodeActive>span {
+    background-color: var(--accent) !important;
     color: var(--accentText) !important;
 }
 
-a.scContentTreeNodeActive > span > img {
-	filter: brightness(var(--accentBrightness));
-	max-width: 16px;
+a.scContentTreeNodeActive>span>img {
+    filter: brightness(var(--accentBrightness));
+    max-width: 16px;
 }
 
 .scGutter {
@@ -402,7 +433,7 @@ a.scContentTreeNodeActive > span > img {
 }
 
 .scInsertItemIcon {
-	position: relative;
+    position: relative;
     color: var(--black1);
     z-index: 101;
     text-align: center;
@@ -418,35 +449,35 @@ a.scContentTreeNodeActive > span > img {
 }
 
 .scInsertItemIconInverted {
-	filter: invert(0);
+    filter: invert(0);
 }
 
 /* Content Editor Header */
 
 .scEditorHeaderIcon {
-	filter: brightness(10);
+    filter: brightness(10);
 }
 
 .scEditorHeaderTitle {
-	color: var(--white) !important;
+    color: var(--white) !important;
 }
 
 .scEditorHeaderTitleHelp {
-	margin-top:-5px;
+    margin-top: -5px;
 }
 
-.scEditorHeaderTitleHelp > a {
-	color: var(--grey);
+.scEditorHeaderTitleHelp>a {
+    color: var(--grey);
 }
 
 .scEditorTabControlsHolder {
-	margin: 11px 13px;
+    margin: 11px 13px;
     height: auto;
 }
 
 button.scEditorHeaderButton,
 a.scEditorHeaderButton {
-	font-size: 12px;
+    font-size: 12px;
     padding: 9px 14px;
     position: relative;
     border-radius: 3px;
@@ -458,25 +489,25 @@ a.scEditorHeaderButton {
     margin: 0px 5px;
     box-shadow: none;
     cursor: pointer;
- }
+}
 
 button.scEditorHeaderButton:hover,
 a.scEditorHeaderButton:hover {
-	filter: brightness(0.95);
+    filter: brightness(0.95);
 }
 
 /*Iframe */
 
 #scLanguageIframe,
 #scVersionIframe {
-	position: fixed;
-	background-color: var(--white);
-	top: 0px !important;
-	right: -420px !important;
-	left: unset !important;
-	width: 400px !important;
-	height: 100% !important;
-	border-radius: 2px;
+    position: fixed;
+    background-color: var(--white);
+    top: 0px !important;
+    right: -420px !important;
+    left: unset !important;
+    width: 400px !important;
+    height: 100% !important;
+    border-radius: 2px;
     box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1);
     transition: right ease-out .2s;
 }
@@ -489,28 +520,28 @@ a.scEditorHeaderButton:hover {
     overflow-x: hidden;
 }
 
-#scEditorTabs > ul {
-	overflow-x: hidden;
-	transition: margin-left ease-out .2s !important;
-	width: auto !important;
+#scEditorTabs>ul {
+    overflow-x: hidden;
+    transition: margin-left ease-out .2s !important;
+    width: auto !important;
 }
 
-#scEditorTabs > ul > li {
-	background-color: transparent;
-	border: 1px solid #e2e2e2;
-	border-bottom: 0px solid #e2e2e2;
-	padding: 7px 12px 7px 12px;
-	font-size: 14px;
+#scEditorTabs>ul>li {
+    background-color: transparent;
+    border: 1px solid #e2e2e2;
+    border-bottom: 0px solid #e2e2e2;
+    padding: 7px 12px 7px 12px;
+    font-size: 14px;
     font-weight: 400;
 }
 
 .scEditorTab {
-	background-color: var(--grey5) !important;
+    background-color: var(--grey5) !important;
 }
 
 .scEditorTab:hover {
-	border-top: 2px solid var(--grey2) !important;
-	border-bottom: 1px solid transparent !important;
+    border-top: 2px solid var(--grey2) !important;
+    border-bottom: 1px solid transparent !important;
 }
 
 .scEditorTabSelected {
@@ -519,14 +550,14 @@ a.scEditorHeaderButton:hover {
 }
 
 .scEditorTabSelected:hover {
-	background-color: var(--white) !important;
+    background-color: var(--white) !important;
     border-top: 3px solid var(--accent) !important;
     border-bottom: none !important;
- }
+}
 
 .scEditorTabEmpty {
     padding: 0px 3px !important;
- }
+}
 
 a.scRibbonEditorTabActive {
     color: var(--grey2);
@@ -536,166 +567,166 @@ a.scRibbonEditorTabActive {
     margin-top: 13px;
     font-weight: bold;
     text-transform: uppercase;
- }
+}
 
-  a.scRibbonEditorTabActive > span > img {
-  	display: none;
-  }
+a.scRibbonEditorTabActive>span>img {
+    display: none;
+}
 
 a.scRibbonEditorTabNormal {
-	background-color: transparent;
-	border: 0px;
-	border-bottom: 3px solid transparent;
-	margin-top: 13px;
-	font-weight: normal;
-	text-transform: uppercase;
-	cursor: pointer;
+    background-color: transparent;
+    border: 0px;
+    border-bottom: 3px solid transparent;
+    margin-top: 13px;
+    font-weight: normal;
+    text-transform: uppercase;
+    cursor: pointer;
 }
 
 a.scRibbonEditorTabNormal:hover {
-	background-color: transparent;
-	border-bottom: 3px solid var(--grey2);
+    background-color: transparent;
+    border-bottom: 3px solid var(--grey2);
 }
 
 #BTAddNewSearch {
-	margin: 13px 0px 0px 0px;
-	border-bottom: 3px solid transparent;
-	background-image: url('chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.svg'), none !important;
-	background-size: 16px 16px;
+    margin: 13px 0px 0px 0px;
+    border-bottom: 3px solid transparent;
+    background-image: url('chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.svg'), none !important;
+    background-size: 16px 16px;
 }
 
 #BTAddNewSearch:active,
 #BTAddNewSearch:hover {
-	background-color: transparent !important;
-	border-bottom: 3px solid var(--grey2);
-	background-image: url('chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.svg'), none !important;
-	background-size: 16px 16px;
-	box-shadow: none !important;
-	opacity: 1 !important;
+    background-color: transparent !important;
+    border-bottom: 3px solid var(--grey2);
+    background-image: url('chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.svg'), none !important;
+    background-size: 16px 16px;
+    box-shadow: none !important;
+    opacity: 1 !important;
 }
 
- /* Message bar */
+/* Message bar */
 .scMessageBar .scMessageBarIcon {
-	background-position: center 22px !important;
-	padding: 7px !important;
+    background-position: center 22px !important;
+    padding: 7px !important;
 }
 
-.scMessageBar > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet > span {
-	color: var(--text);
+.scMessageBar>.scMessageBarTextContainer>.scMessageBarOptions>.scMessageBarOptionBullet>span {
+    color: var(--text);
 }
 
 .scMessageBar.scWarning {
-	margin: 20px;
-	border-radius: 0px 3px 3px 0px;
-	background-color: var(--messageWarningBar) !important;
-	color: var(--grey7) !important;
-	font-size: 14px;
+    margin: 20px;
+    border-radius: 0px 3px 3px 0px;
+    background-color: var(--messageWarningBar) !important;
+    color: var(--grey7) !important;
+    font-size: 14px;
 }
 
-	.scWarning > .scMessageBarIcon {
-		border-radius: 3px 0px 0px 3px;
-		background-color: var(--messageWarningBgIcon) !important;
-	}
+.scWarning>.scMessageBarIcon {
+    border-radius: 3px 0px 0px 3px;
+    background-color: var(--messageWarningBgIcon) !important;
+}
 
-	.scWarning > .scMessageBarTextContainer > .scMessageBar a,
-	.scWarning > .scMessageBarTextContainer > .scMessageBarOption,
-	.scWarning > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet {
-		color: var(--messageWarningLink) !important;
-		text-decoration-color: rgba(0,0,0,0.15) !important;
-	}
+.scWarning>.scMessageBarTextContainer>.scMessageBar a,
+.scWarning>.scMessageBarTextContainer>.scMessageBarOption,
+.scWarning>.scMessageBarTextContainer>.scMessageBarOptions>.scMessageBarOptionBullet {
+    color: var(--messageWarningLink) !important;
+    text-decoration-color: rgba(0, 0, 0, 0.15) !important;
+}
 
 .scMessageBar.scError {
-	margin: 20px;
-	border-radius: 0px 3px 3px 0px;
-	background-color: var(--messageDangerBar) !important;
-	color: var(--grey7) !important;
-	font-size: 14px;
+    margin: 20px;
+    border-radius: 0px 3px 3px 0px;
+    background-color: var(--messageDangerBar) !important;
+    color: var(--grey7) !important;
+    font-size: 14px;
 }
 
-	.scError > .scMessageBarIcon {
-		border-radius: 3px 0px 0px 3px;
-		background-color: var(--messageDangerBgIcon) !important;
-	}
+.scError>.scMessageBarIcon {
+    border-radius: 3px 0px 0px 3px;
+    background-color: var(--messageDangerBgIcon) !important;
+}
 
-	.scError > .scMessageBarTextContainer > .scMessageBar a,
-	.scError > .scMessageBarTextContainer > .scMessageBarOption,
-	.scError > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet {
-		color: var(--messageDangerLink) !important;
-		text-decoration-color: rgba(0,0,0,0.15) !important;
-	}
+.scError>.scMessageBarTextContainer>.scMessageBar a,
+.scError>.scMessageBarTextContainer>.scMessageBarOption,
+.scError>.scMessageBarTextContainer>.scMessageBarOptions>.scMessageBarOptionBullet {
+    color: var(--messageDangerLink) !important;
+    text-decoration-color: rgba(0, 0, 0, 0.15) !important;
+}
 
 .scMessageBar.scInformation {
-	margin: 20px;
-	border-radius: 0px 3px 3px 0px;
-	background-color: var(--messageInfoBar) !important;
-	color: var(--grey7) !important;
-	font-size: 14px;
+    margin: 20px;
+    border-radius: 0px 3px 3px 0px;
+    background-color: var(--messageInfoBar) !important;
+    color: var(--grey7) !important;
+    font-size: 14px;
 }
 
-	.scInformation > .scMessageBarIcon {
-		border-radius: 3px 0px 0px 3px;
-		background-color: var(--messageInfoBgIcon) !important;
-	}
+.scInformation>.scMessageBarIcon {
+    border-radius: 3px 0px 0px 3px;
+    background-color: var(--messageInfoBgIcon) !important;
+}
 
-	.scInformation > .scMessageBarTextContainer > .scMessageBar a,
-	.scInformation > .scMessageBarTextContainer > .scMessageBarOption,
-	.scInformation > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet {
-		color: var(--messageInfoLink) !important;
-		text-decoration-color: rgba(0,0,0,0.15) !important;
-	}
+.scInformation>.scMessageBarTextContainer>.scMessageBar a,
+.scInformation>.scMessageBarTextContainer>.scMessageBarOption,
+.scInformation>.scMessageBarTextContainer>.scMessageBarOptions>.scMessageBarOptionBullet {
+    color: var(--messageInfoLink) !important;
+    text-decoration-color: rgba(0, 0, 0, 0.15) !important;
+}
 
 .scMessageBar.scSuccess {
-	margin: 20px;
-	border-radius: 0px 3px 3px 0px;
-	background-color: var(--messageSuccessBar) !important;
-	color: var(--grey7) !important;
-	font-size: 14px;
+    margin: 20px;
+    border-radius: 0px 3px 3px 0px;
+    background-color: var(--messageSuccessBar) !important;
+    color: var(--grey7) !important;
+    font-size: 14px;
 }
 
-	.scSuccess > .scMessageBarIcon {
-		border-radius: 3px 0px 0px 3px;
-		background-color: var(--messageSuccessBgIcon) !important;
-	}
+.scSuccess>.scMessageBarIcon {
+    border-radius: 3px 0px 0px 3px;
+    background-color: var(--messageSuccessBgIcon) !important;
+}
 
-	.scSuccess > .scMessageBarTextContainer > .scMessageBar a,
-	.scSuccess > .scMessageBarTextContainer > .scMessageBarOption,
-	.scSuccess > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet {
-		color: var(--messageSuccessLink) !important;
-		text-decoration-color: rgba(0,0,0,0.15) !important;
-	}
+.scSuccess>.scMessageBarTextContainer>.scMessageBar a,
+.scSuccess>.scMessageBarTextContainer>.scMessageBarOption,
+.scSuccess>.scMessageBarTextContainer>.scMessageBarOptions>.scMessageBarOptionBullet {
+    color: var(--messageSuccessLink) !important;
+    text-decoration-color: rgba(0, 0, 0, 0.15) !important;
+}
 
 .liveUrlBadge {
-	background-color: var(--accent) !important;
-	color: var(--messageWarningBar) !important;
-	font-size: 10px;
-	padding: 1px 5px;
-	visibility: hidden;
-	display: none;
+    background-color: var(--accent) !important;
+    color: var(--messageWarningBar) !important;
+    font-size: 10px;
+    padding: 1px 5px;
+    visibility: hidden;
+    display: none;
 }
 
 .scMessageBarTextContainer {
-	line-height: 20px !important;
-	padding: 15px 25px !important;
+    line-height: 20px !important;
+    padding: 15px 25px !important;
 }
 
 .scMessageBarOptions {
-	margin: 5px 0px 0px 0px !important;
+    margin: 5px 0px 0px 0px !important;
 }
 
 .scMessageBar a:hover {
-	filter: brightness(0.8);
+    filter: brightness(0.8);
 }
 
- /* Sections */
+/* Sections */
 
 .scEditorHeader {
-	opacity: 0;
-	display: none;
+    opacity: 0;
+    display: none;
 }
 
 .scEditorSections {
-	border: 0px;
-	margin: 0px !important;
+    border: 0px;
+    margin: 0px !important;
 }
 
 .scEditorSectionCaptionCollapsed,
@@ -712,83 +743,81 @@ a.scRibbonEditorTabNormal:hover {
 }
 
 .scEditorSectionCaptionCollapsed {
-	background-color: var(--black6);
-	border-radius: 0px;
+    background-color: var(--black6);
+    border-radius: 0px;
 }
 
 .scEditorSectionPanel {
-	display: table;
+    display: table;
     border-radius: 0px 0px 3px 3px;
     margin: 20px;
     margin-top: 0px !important;
     padding: 15px;
     width: calc(100% - 40px);
     background-color: var(--white);
-    box-shadow: 0px 1px 2px rgba(0,0,0,0.1);
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .scEditorSectionPanel.scTabsRounded {
-	border-radius: 3px;
+    border-radius: 3px;
 }
 
 .scEditorTab.scTabsError {
-	border-top: 2px solid var(--messageDangerLink) !important;
+    border-top: 2px solid var(--messageDangerLink) !important;
 }
 
-.scEditorSectionPanel.scCrossTabError
-
-.scEditorSectionCaptionGlyph {
-	display: none;
+.scEditorSectionPanel.scCrossTabError .scEditorSectionCaptionGlyph {
+    display: none;
 }
 
 .scEditorSectionPanelCell {
-	padding: 20px 20px 20px 15px;
-	font-size: 14px;
+    padding: 20px 20px 20px 15px;
+    font-size: 14px;
 }
 
 /*Instant Search */
 .scInstantSearchResults>li:focus,
 .scInstantSearchResults>li:hover {
-	background-color: var(--accent);
-	color: var(--accentText);
+    background-color: var(--accent);
+    color: var(--accentText);
 }
 
-.scInstantSearchResults>li:focus > h2,
-.scInstantSearchResults>li:hover > h2 {
-	color: var(--accentText) !important;
+.scInstantSearchResults>li:focus>h2,
+.scInstantSearchResults>li:hover>h2 {
+    color: var(--accentText) !important;
 }
 
-.scInstantSearchResults>li:focus > p,
-.scInstantSearchResults>li:hover > p {
-	color: var(--accentText) !important;
+.scInstantSearchResults>li:focus>p,
+.scInstantSearchResults>li:hover>p {
+    color: var(--accentText) !important;
 }
 
-.scInstantSearchResults>li > p > img,
-.scInstantSearchResults>li > p > img {
-	filter: brightness(10);
+.scInstantSearchResults>li>p>img,
+.scInstantSearchResults>li>p>img {
+    filter: brightness(10);
 }
 
-.scInstantSearchResults>li:focus > p > img,
-.scInstantSearchResults>li:hover > p > img {
-	filter: brightness(var(--accentBrightness));
+.scInstantSearchResults>li:focus>p>img,
+.scInstantSearchResults>li:hover>p>img {
+    filter: brightness(var(--accentBrightness));
 }
 
 /*Forms in section*/
 
 .scEditorFieldLabel {
-	font-size: 14px;
-	font-weight: 600;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .scContentButton {
-	font-size: 12px;
+    font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
 }
 
 .scEditorFieldLabelAdministrator {
-	font-size: 11px;
-	font-weight: 600;
+    font-size: 11px;
+    font-weight: 600;
     border-radius: 3px;
     padding: 2px 5px;
     margin: 3px;
@@ -798,33 +827,34 @@ a.scRibbonEditorTabNormal:hover {
     display: inline;
 }
 
- /* Splitter bar */
+/* Splitter bar */
 
- .splitter-bar {
- 	width: 2px;
+.splitter-bar {
+    width: 2px;
     margin-left: 0px;
     background-color: var(--grey4);
     z-index: 100 !important;
- }
+}
 
- .splitter-bar:before, .splitter-bar:after {
- 	background-color: var(--grey4);
- 	z-index: 100 !important;
- }
+.splitter-bar:before,
+.splitter-bar:after {
+    background-color: var(--grey4);
+    z-index: 100 !important;
+}
 
- /* Content Editor buttons */
+/* Content Editor buttons */
 
 .scSaveBar {
-	background-color: var(--grey5) !important;
+    background-color: var(--grey5) !important;
     height: 30px;
     border-bottom: 1px solid var(--grey);
     border-left: 0px;
     z-index: 1000;
     padding: 13px;
- }
+}
 
- .scSaveBar > .scBreadcrumb {
- 	float: left;
+.scSaveBar>.scBreadcrumb {
+    float: left;
     font-size: 12px;
     padding: 8px;
     text-indent: 0px;
@@ -834,18 +864,18 @@ a.scRibbonEditorTabNormal:hover {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
- }
+}
 
- .scSaveBar > .scBreadcrumb > i {
-	font-style: initial;
-	color: #a5a5a5;
-	margin: 1px;
-	font-size: 16px;
+.scSaveBar>.scBreadcrumb>i {
+    font-style: initial;
+    color: #a5a5a5;
+    margin: 1px;
+    font-size: 16px;
     vertical-align: middle;
- }
+}
 
- .scSaveBar > .scActions > .scPublishMenu {
- 	width: 240px;
+.scSaveBar>.scActions>.scPublishMenu {
+    width: 240px;
     height: fit-content;
     background-color: var(--white);
     position: absolute;
@@ -855,10 +885,10 @@ a.scRibbonEditorTabNormal:hover {
     visibility: hidden;
     opacity: 0;
     border-radius: 3px;
-    box-shadow: 0 5px 20px rgba(0,0,0,.3);
- }
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .3);
+}
 
-.scSaveBar > .scActions > .scPublishMenu > li {
+.scSaveBar>.scActions>.scPublishMenu>li {
     background: 0 0;
     border: 0;
     display: block;
@@ -873,12 +903,12 @@ a.scRibbonEditorTabNormal:hover {
     padding: 8px 20px;
 }
 
-.scSaveBar > .scActions > .scPublishMenu > li:hover {
-	background-color: var(--grey5);
+.scSaveBar>.scActions>.scPublishMenu>li:hover {
+    background-color: var(--grey5);
 }
 
-.scSaveBar > .scActions > button {
-	float: right;
+.scSaveBar>.scActions>button {
+    float: right;
     background-color: var(--grey);
     color: var(--black1);
     font-size: 15px;
@@ -888,19 +918,19 @@ a.scRibbonEditorTabNormal:hover {
     border-radius: 3px;
     cursor: pointer;
     margin-top: -2px;
- }
+}
 
- .scFormDialogHeader,
- .scDialogHeader,
- .ui-widget-header {
- 	/*background-color: var(--accent);
- 	color: var(--accentText);*/
- }
+.scFormDialogHeader,
+.scDialogHeader,
+.ui-widget-header {
+    /*background-color: var(--accent);
+    color: var(--accentText);*/
+}
 
 .scButton {
- 	background-color: var(--grey4);
- 	color: var(--text);
- 	font-size: 15px;
+    background-color: var(--grey4);
+    color: var(--text);
+    font-size: 15px;
     background-image: none;
     padding: 7px 14px 8px 14px;
     border: 0px;
@@ -910,33 +940,39 @@ a.scRibbonEditorTabNormal:hover {
 }
 
 .scButtonPrimary {
-	background-color: var(--accent);
- 	color: var(--accentText);
+    background-color: var(--accent);
+    color: var(--accentText);
+}
+
+.scButtonPrimary:hover {
+    filter: brightness(1.1);
+    background-color: var(--accent);
+    color: var(--accentText);
 }
 
 .scButton:hover,
-.scSaveBar > .scActions > button:hover {
-	filter: brightness(1.07);
+.scSaveBar>.scActions>button:hover {
+    filter: brightness(1.07);
 }
 
-.scSaveBar > .scActions > button:disabled {
-	opacity: 0.5;
+.scSaveBar>.scActions>button:disabled {
+    opacity: 0.5;
 }
 
-.scSaveBar > .scActions > button.primary {
-	background-color: var(--accent);
-	color: var(--accentText);
+.scSaveBar>.scActions>button.primary {
+    background-color: var(--accent);
+    color: var(--accentText);
 }
 
-.scSaveBar > .scActions > button.primaryGrouped {
-	border-radius: 3px 0px 0px 3px;
-	border-right: 1px solid rgba(0,0,0,0.2);
-	margin-right: 0px;
+.scSaveBar>.scActions>button.primaryGrouped {
+    border-radius: 3px 0px 0px 3px;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    margin-right: 0px;
 }
 
-.scSaveBar > .scActions > button.grouped {
-	margin: 0px;
-	margin-top: -2px;
+.scSaveBar>.scActions>button.grouped {
+    margin: 0px;
+    margin-top: -2px;
     padding: 7px 10px 8px 10px;
     margin-right: 5px;
     background-color: var(--accent);
@@ -944,8 +980,8 @@ a.scRibbonEditorTabNormal:hover {
     border-radius: 0px 3px 3px 0px;
 }
 
- .scEditorTabControlsHolder > .scMoreMenu {
- 	width: 240px;
+.scEditorTabControlsHolder>.scMoreMenu {
+    width: 240px;
     height: fit-content;
     background-color: var(--white);
     position: absolute;
@@ -955,10 +991,10 @@ a.scRibbonEditorTabNormal:hover {
     visibility: hidden;
     opacity: 0;
     border-radius: 3px;
-    box-shadow: 0 5px 20px rgba(0,0,0,.3);
- }
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .3);
+}
 
-.scEditorTabControlsHolder > .scMoreMenu > li {
+.scEditorTabControlsHolder>.scMoreMenu>li {
     background: 0 0;
     border: 0;
     display: block;
@@ -973,53 +1009,58 @@ a.scRibbonEditorTabNormal:hover {
     padding: 8px 20px;
 }
 
-.scEditorTabControlsHolder > .scMoreMenu > li:hover {
-	background-color: var(--grey5);
+.scEditorTabControlsHolder>.scMoreMenu>li:hover {
+    background-color: var(--grey5);
 }
 
-.scEditorTabControlsHolder > .scMoreMenu > li.danger {
-	color: var(--accent);
+.scEditorTabControlsHolder>.scMoreMenu>li.separator {
+    border-top: 1px solid var(--grey3);
 }
 
-.scEditorTabControlsHolder > .scMoreMenu > li.danger:hover {
-	background-color: var(--accent);
-	color: var(--accentText);
+.scEditorTabControlsHolder>.scMoreMenu>li.danger {
+    color: var(--accent);
 }
+
+.scEditorTabControlsHolder>.scMoreMenu>li.danger:hover {
+    background-color: var(--accent);
+    color: var(--accentText);
+}
+
 /* Gallery Frame */
 
 .scGalleryFrame {
     border-radius: 2px;
     box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1);
- }
+}
 
- .versionNumSelected,
- .scMenuItemIcon_Hover,
- .scMenuItemCaption_Hover,
- .scMenuItemHotkey_Hover,
- .scMenuPanelItemSelected,
- .scMenuPanelItemSelected_Hover,
- .scMenuPanelItem_Hover {
- 	background-color: var(--accent);
- 	color: var(--accentText);
- }
+.versionNumSelected,
+.scMenuItemIcon_Hover,
+.scMenuItemCaption_Hover,
+.scMenuItemHotkey_Hover,
+.scMenuPanelItemSelected,
+.scMenuPanelItemSelected_Hover,
+.scMenuPanelItem_Hover {
+    background-color: var(--accent);
+    color: var(--accentText);
+}
 
- .scMenuPanelItem_Hover > table > tbody > tr > td:last-child > div > div {
- 	color: var(--accentText) !important;
- }
+.scMenuPanelItem_Hover>table>tbody>tr>td:last-child>div>div {
+    color: var(--accentText) !important;
+}
 
- /*Hack for SC extention links */
+/*Hack for SC extention links */
 
- .sc-ext-gotofield,
- .sc-ext-resetfield,
- .sc-ext-goToDatasource-button,
- .scEditorFieldLabelAdministrator {
- 	display: none !important;
- 	transition: ease-out 0.1s;
- }
+.sc-ext-gotofield,
+.sc-ext-resetfield,
+.sc-ext-goToDatasource-button,
+.scEditorFieldLabelAdministrator {
+    display: none !important;
+    transition: ease-out 0.1s;
+}
 
- .scEditorFieldLabel:hover .sc-ext-gotofield,
- .scEditorFieldLabel:hover .sc-ext-resetfield,
- .scEditorFieldLabel:hover .sc-ext-goToDatasource-button,
- .scEditorFieldLabel:hover .scEditorFieldLabelAdministrator {
- 	display: inline !important;
- }
+.scEditorFieldLabel:hover .sc-ext-gotofield,
+.scEditorFieldLabel:hover .sc-ext-resetfield,
+.scEditorFieldLabel:hover .sc-ext-goToDatasource-button,
+.scEditorFieldLabel:hover .scEditorFieldLabelAdministrator {
+    display: inline !important;
+}

@@ -32,7 +32,7 @@
   --accentText: #ffffff;
   --accentBrightness: 50;
 
-  --messageSuccessBgIcon: #8ce99a;
+  --messageSuccessBgIcon: #8ce99a; 
   --messageSuccessIcon: #40c057;
   --messageSuccessBar: #ebfbee;
   --messageSuccessLink: #40c057;
@@ -104,6 +104,10 @@ body.contentEditor:after {
 .scWorkboxPanel,
 .scWindowBorder1 {
     border: 0px solid !important;
+}
+
+.ui-widget-overlay {
+    background: var(--black) !important;
 }
 
 ul.sc-accountInformation {

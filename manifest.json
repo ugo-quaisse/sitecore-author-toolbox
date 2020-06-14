@@ -1,57 +1,60 @@
 {
-	"name": "Sitecore Author Toolbox",
-	"version": "2.3.0",
-	"manifest_version": 2,
-	"description": "A set of handy tools for Sitecore Authors: Live URL, Grouped errors, Flags, Dark mode, Notifications, Media drag & drop...",
-	"icons": {
-		"128": "images/icon_big.png",
-		"16": "images/icon_small.png"
-	},
-	"default_locale": "en",
-	"background": {
-    	"scripts": ["js/background.js"],
-    	"persistent": false
-  	},
-	"permissions": [
-		"activeTab",
-		"tabs",
-	    "storage",
-	    "notifications",
-	    "declarativeContent",
-	    "contextMenus",
-	    "cookies",
-	    "http://*/*",
-	    "https://*/*"
-	],
-	"content_scripts": [
-		{
-			"matches": [
-				"<all_urls>"
-			],
-			"css": [
-				"css/style-min.css"
-			],
-			"js": [
-				"js/main.js"
-			],
-			"run_at": "document_idle",
-			"all_frames": true
-		}
-	],
-	"options_ui": {
-    	"page": "options.html",
-    	"chrome_style": false
-  	},	
-	"browser_action": {
-		"default_popup": "options.html",
-		"default_title": "Sitecore Author Toolbox (options)", 
-		"default_icon": "images/icon.png"
-	},
-	"web_accessible_resources": [
-		"images/*",
-		"css/*",
-		"js/*",
-		"audio/*",
-		"options.html"
-	]
+    "name": "Sitecore Author Toolbox",
+    "version": "2.3.0",
+    "manifest_version": 2,
+    "description": "A set of handy tools for Sitecore Authors: Live URL, Grouped errors, Flags, Dark mode, Notifications, Media drag & drop...",
+    "icons":
+    {
+        "128": "images/icon_big.png",
+        "16": "images/icon_small.png"
+    },
+    "default_locale": "en",
+    "background":
+    {
+        "scripts": ["js/background.js"],
+        "persistent": false
+    },
+    "permissions": [
+        "activeTab",
+        "tabs",
+        "storage",
+        "notifications",
+        "declarativeContent",
+        "contextMenus",
+        "cookies",
+        "http://*/*",
+        "https://*/*"
+    ],
+    "content_scripts": [
+    {
+        "matches": [
+            "<all_urls>"
+        ],
+        "css": [
+            "css/style-min.css"
+        ],
+        "js": [
+            "js/main.js"
+        ],
+        "run_at": "document_idle",
+        "all_frames": true
+    }],
+    "options_ui":
+    {
+        "page": "options.html",
+        "chrome_style": false
+    },
+    "browser_action":
+    {
+        "default_popup": "options.html",
+        "default_title": "Sitecore Author Toolbox (options)",
+        "default_icon": "images/icon.png"
+    },
+    "web_accessible_resources": [
+        "images/*",
+        "css/*",
+        "js/*",
+        "audio/*",
+        "options.html"
+    ]
 }

@@ -1,125 +1,105 @@
 <!DOCTYPE html>
 <html class="light">
+
 <head>
-	<meta charset="UTF-8">
-	<title>Sitecore Author Toolbox</title>
-
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="css/options-min.css">
-
+    <meta charset="UTF-8">
+    <title>Sitecore Author Toolbox</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/options-min.css">
 </head>
+
 <body>
-	
-	<div id="extensionOptions" class="wrapper">
-
-		<!-- Header -->
-		<header class="sc-globalHeader" id="scHeader">
-			<a href="" id="scBack">
-				<img class="sc-global-logo" src="../images/global_logo.png" />
-			</a>
-		</header>
-		<div id="banner">
-			<h3 id="bannerTitle">Sitecore Author Toolbox</h3>
-			<img src="images/icon_round.png">
-		</div>
-		<div id="intro">
-			<h2>Hello, I am<br />Sitecore Author Toolbox</h2>
-		</div>
-
-		<!-- Video-->
-		<div id="video">
-			<!-- <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/f-IT1sLyl44" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
-		</div>
-
-		<!-- Main panel-->
-		<div id="main">
-	
-			<h4>Features available:</h4>
-
-			<fieldset>
-				<legend>Experimental feature</legend>
-				<input type="checkbox" id="feature_experimentalui" name="feature_experimentalui"> <label for="feature_experimentalui">Sitecore Experimental Interface</label><br>
-				<input type="checkbox" id="feature_contrast_icons" name="feature_contrast_icons"> <label for="feature_contrast_icons">Contrasted icons<sup><a href="https://uquaisse.io/extension-update/" target="_blank">NEW</a></sup></label><br>
-				<input type="checkbox" id="feature_cetabs" name="feature_cetabs"> <label for="feature_cetabs">Tab sections</label><br>
-			</fieldset>
-		
-			<fieldset>
-  			<legend>Content Editor</legend>
-				<input type="checkbox" id="feature_urls" name="feature_urls"> <label for="feature_urls">Live URL</label> <a id="settings">Configure domains &raquo;</a><br>
-				<input type="checkbox" id="feature_urlstatus" name="feature_urlstatus"> <label for="feature_urlstatus">URL status</label><br>
-				<input type="checkbox" id="feature_instantsearch" name="feature_instantsearch"> <label for="feature_instantsearch">Search box</label><br>
-				<input type="checkbox" id="feature_flags" name="feature_flags"> <label for="feature_flags">Language and versions flags</label><br>
-				<input type="checkbox" id="feature_errors" name="feature_errors"> <label for="feature_errors">Grouped error messages</label><br>
-				<input type="checkbox" id="feature_dragdrop" name="feature_dragdrop"> <label for="feature_dragdrop">Media drag & drop</label><br>
-				<input type="checkbox" id="feature_reloadnode" name="feature_reloadnode"> <label for="feature_reloadnode">Reload from where you left off</label><br>		
-				<input type="checkbox" id="feature_favorites" name="feature_favorites"> <label for="feature_favorites">Favorites sidebar</label><br>
-				<input type="checkbox" id="feature_charscount" name="feature_charscount"> <label for="feature_charscount">Character counter</label><br>
-				<input type="checkbox" id="feature_rtl" name="feature_rtl"> <label for="feature_rtl">RTL (Arabic, Hebrew, Persian, Urdu, Sindhi)</label><br>
-				<input type="checkbox" id="feature_helplink" name="feature_helplink"> <label for="feature_helplink">Help links display</label><br>
-				<input type="checkbox" id="feature_autoexpand" name="feature_autoexpand"> <label for="feature_autoexpand">Tree auto expand</label><br>
-				<input type="checkbox" id="feature_translatemode" name="feature_translatemode"> <label for="feature_translatemode">Translate mode copy button</label><br>			
-				<input type="checkbox" id="feature_messagebar" name="feature_messagebar"> <label for="feature_messagebar">Custom message bars</label><br>
-				<input type="checkbox" id="feature_contenteditor" name="feature_contenteditor"> <label for="feature_contenteditor">Content editor enhancements</label><br>
-			</fieldset>
-			
-			<fieldset>
-  			<legend>Experience Editor</legend>
-				<input type="checkbox" id="feature_contextmenu" name="feature_contextmenu"> <label for="feature_contextmenu">Right click to open in EE</label><br>
-				<input type="checkbox" id="feature_experienceeditor" name="feature_experienceeditor"> <label for="feature_experienceeditor">Experience editor enhancements</label><br>
-			</fieldset>
-			
-			<fieldset>
-			<legend>Experience Profile</legend>
-				<input type="checkbox" id="feature_gravatarimage" name="feature_gravatarimage"> <label for="feature_gravatarimage">Gravatar image</label><br>
-				<!-- <input type="checkbox" id="feature_profileenrichment" name="feature_profileenrichment"> <label for="feature_profileenrichment">Profile Enrichment</label><br> -->
-			</fieldset>
-
-			<fieldset>
-  			<legend>General</legend>
-				<input type="checkbox" id="feature_darkmode" name="feature_darkmode"> <label for="feature_darkmode">Dark mode</label>
-				<input type="checkbox" id="feature_darkmode_auto" name="feature_darkmode_auto"> <label for="feature_darkmode_auto">🌗 auto mode</label><br>
-				<input type="checkbox" id="feature_notification" name="feature_notification"> <label for="feature_notification">Browser notifications (publish, rebuild, package)</label><br>
-				<input type="checkbox" id="feature_rtecolor" name="feature_rtecolor"> <label for="feature_rtecolor">Syntax highlighter (HTML / Scriban) </label><br>
-				<input type="checkbox" id="feature_launchpad" name="feature_launchpad"> <label for="feature_launchpad">Launchpad icon</label><br>
-				<input type="checkbox" id="feature_launchpad_tiles" name="feature_launchpad_tiles"> <label for="feature_launchpad_tiles">Launchpad tiles <sup><a href="https://uquaisse.io/extension-update/" target="_blank">NEW</a></sup></label><br>	
-				<input type="checkbox" id="feature_workbox" name="feature_workbox"> <label for="feature_workbox">Workbox badge</label><br>		
-			</fieldset>
-					
-		</div>
-
-
-		<!-- Panel domains -->
-		<form id="domains">
-			
-			<h4>Your Sitecore domains:</h4>
-			<p><a href="https://uquaisse.io/sat_domains" target="_blank">How to configure your domains?</a></p>
-
-			<div id="load">
-				<!-- Call JS to generate list -->
-			</div>
-
-			<div id="save_domains">
-				<button id="back">&laquo; Back</button>
-				<button id="set_domains">Save your domains</button>
-			</div>	
-
-		</div>
-		
-		<!-- Main saving action -->
-		<div id="save">
-			<button id="set">Save and reload Sitecore</button>
-		</div>
-
-		<!-- Footer-->
-		<div id="footer">
-			<p>Crafted with ❤️ by <b>Ugo Quaisse</b> (Paris, France)<br>
-				Follow me at <a href="https://twitter.com/uquaisse" target="_blank">https://twitter.com/uquaisse</a> or <a href="https://uquaisse.io/?utm_source=browseraction&utm_medium=chrome" target="_blank">https://uquaisse.io</a><br><br>
-			</p>
-			<p>Version <span id="scVersion"></span> - Post a review <a href="https://chrome.google.com/webstore/detail/mckfcmcdbgkgffdknpkaihjigmcnnbco/publish-accepted?authuser=0&hl=en" target="_blank">here</a>.</p>
-		</div>
-	</div>
-
-	<script type="text/javascript" src="js/options.js"></script>
-
+    <div id="extensionOptions" class="wrapper">
+        <!-- Header -->
+        <header class="sc-globalHeader" id="scHeader">
+            <a href="" id="scBack">
+                <img class="sc-global-logo" src="../images/global_logo.png" />
+            </a>
+        </header>
+        <div id="banner">
+            <h3 id="bannerTitle">Sitecore Author Toolbox</h3>
+            <img src="images/icon_round.png">
+        </div>
+        <div id="intro">
+            <h2>Hello, I am<br />Sitecore Author Toolbox</h2>
+        </div>
+        <!-- Video-->
+        <div id="video">
+            <!-- <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/f-IT1sLyl44" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+        </div>
+        <!-- Main panel-->
+        <div id="main">
+            <h4>Features available:</h4>
+            <fieldset>
+                <legend>Experimental feature</legend>
+                <input type="checkbox" id="feature_experimentalui" name="feature_experimentalui"> <label for="feature_experimentalui">Sitecore Experimental Interface</label><br>
+                <input type="checkbox" id="feature_contrast_icons" name="feature_contrast_icons"> <label for="feature_contrast_icons">Contrasted icons<sup><a href="https://uquaisse.io/extension-update/" target="_blank">NEW</a></sup></label><br>
+                <input type="checkbox" id="feature_cetabs" name="feature_cetabs"> <label for="feature_cetabs">Tab sections</label><br>
+            </fieldset>
+            <fieldset>
+                <legend>Content Editor</legend>
+                <input type="checkbox" id="feature_urls" name="feature_urls"> <label for="feature_urls">Live URL</label> <a id="settings">Configure domains &raquo;</a><br>
+                <input type="checkbox" id="feature_urlstatus" name="feature_urlstatus"> <label for="feature_urlstatus">URL status</label><br>
+                <input type="checkbox" id="feature_instantsearch" name="feature_instantsearch"> <label for="feature_instantsearch">Search box</label><br>
+                <input type="checkbox" id="feature_flags" name="feature_flags"> <label for="feature_flags">Language and versions flags</label><br>
+                <input type="checkbox" id="feature_errors" name="feature_errors"> <label for="feature_errors">Grouped error messages</label><br>
+                <input type="checkbox" id="feature_dragdrop" name="feature_dragdrop"> <label for="feature_dragdrop">Media drag & drop</label><br>
+                <input type="checkbox" id="feature_reloadnode" name="feature_reloadnode"> <label for="feature_reloadnode">Reload from where you left off</label><br>
+                <input type="checkbox" id="feature_favorites" name="feature_favorites"> <label for="feature_favorites">Favorites sidebar</label><br>
+                <input type="checkbox" id="feature_charscount" name="feature_charscount"> <label for="feature_charscount">Character counter</label><br>
+                <input type="checkbox" id="feature_rtl" name="feature_rtl"> <label for="feature_rtl">RTL (Arabic, Hebrew, Persian, Urdu, Sindhi)</label><br>
+                <input type="checkbox" id="feature_helplink" name="feature_helplink"> <label for="feature_helplink">Help links display</label><br>
+                <input type="checkbox" id="feature_autoexpand" name="feature_autoexpand"> <label for="feature_autoexpand">Tree auto expand</label><br>
+                <input type="checkbox" id="feature_translatemode" name="feature_translatemode"> <label for="feature_translatemode">Translate mode copy button</label><br>
+                <input type="checkbox" id="feature_messagebar" name="feature_messagebar"> <label for="feature_messagebar">Custom message bars</label><br>
+                <input type="checkbox" id="feature_contenteditor" name="feature_contenteditor"> <label for="feature_contenteditor">Content editor enhancements</label><br>
+            </fieldset>
+            <fieldset>
+                <legend>Experience Editor</legend>
+                <input type="checkbox" id="feature_contextmenu" name="feature_contextmenu"> <label for="feature_contextmenu">Right click to open in EE</label><br>
+                <input type="checkbox" id="feature_experienceeditor" name="feature_experienceeditor"> <label for="feature_experienceeditor">Experience editor enhancements</label><br>
+            </fieldset>
+            <fieldset>
+                <legend>Experience Profile</legend>
+                <input type="checkbox" id="feature_gravatarimage" name="feature_gravatarimage"> <label for="feature_gravatarimage">Gravatar image</label><br>
+                <!-- <input type="checkbox" id="feature_profileenrichment" name="feature_profileenrichment"> <label for="feature_profileenrichment">Profile Enrichment</label><br> -->
+            </fieldset>
+            <fieldset>
+                <legend>General</legend>
+                <input type="checkbox" id="feature_darkmode" name="feature_darkmode"> <label for="feature_darkmode">Dark mode</label>
+                <input type="checkbox" id="feature_darkmode_auto" name="feature_darkmode_auto"> <label for="feature_darkmode_auto">🌗 auto mode</label><br>
+                <input type="checkbox" id="feature_notification" name="feature_notification"> <label for="feature_notification">Browser notifications (publish, rebuild, package)</label><br>
+                <input type="checkbox" id="feature_rtecolor" name="feature_rtecolor"> <label for="feature_rtecolor">Syntax highlighter (HTML / Scriban) </label><br>
+                <input type="checkbox" id="feature_launchpad" name="feature_launchpad"> <label for="feature_launchpad">Launchpad icon</label><br>
+                <input type="checkbox" id="feature_launchpad_tiles" name="feature_launchpad_tiles"> <label for="feature_launchpad_tiles">Launchpad tiles <sup><a href="https://uquaisse.io/extension-update/" target="_blank">NEW</a></sup></label><br>
+                <input type="checkbox" id="feature_workbox" name="feature_workbox"> <label for="feature_workbox">Workbox badge</label><br>
+            </fieldset>
+        </div>
+        <!-- Panel domains -->
+        <form id="domains">
+            <h4>Your Sitecore domains:</h4>
+            <p><a href="https://uquaisse.io/sat_domains" target="_blank">How to configure your domains?</a></p>
+            <div id="load">
+                <!-- Call JS to generate list -->
+            </div>
+            <div id="save_domains">
+                <button id="back">&laquo; Back</button>
+                <button id="set_domains">Save your domains</button>
+            </div>
+    </div>
+    <!-- Main saving action -->
+    <div id="save">
+        <button id="set">Save and reload Sitecore</button>
+    </div>
+    <!-- Footer-->
+    <div id="footer">
+        <p>Crafted with ❤️ by <b>Ugo Quaisse</b> (Paris, France)<br>
+            Follow me at <a href="https://twitter.com/uquaisse" target="_blank">https://twitter.com/uquaisse</a> or <a href="https://uquaisse.io/?utm_source=browseraction&utm_medium=chrome" target="_blank">https://uquaisse.io</a><br><br>
+        </p>
+        <p>Version <span id="scVersion"></span> - Post a review <a href="https://chrome.google.com/webstore/detail/mckfcmcdbgkgffdknpkaihjigmcnnbco/publish-accepted?authuser=0&hl=en" target="_blank">here</a>.</p>
+    </div>
+    </div>
+    <script type="text/javascript" src="js/options.js"></script>
 </body>
+
 </html>

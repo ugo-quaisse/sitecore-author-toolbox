@@ -927,6 +927,14 @@ a.scRibbonEditorTabNormal:hover {
     color: var(--accentText);*/
 }
 
+.scTitle {
+    padding: 20px 20px 0px 20px;
+    border-bottom: none; 
+    clear: left;
+    font-size: 20px;
+}
+
+input[type="submit"],
 .scButton {
     background-color: var(--grey4);
     color: var(--text);

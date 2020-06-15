@@ -638,6 +638,12 @@ chrome.storage.sync.get((storage) => {
             consoleLog("**** Media Folder ****", "orange");
             storage.feature_dragdrop == undefined ? storage.feature_dragdrop = true : false;
 
+            if (storage.feature_experimentalui) {
+
+                loadCssFile("css/experimentalui.css");
+                
+            }
+
             if (storage.feature_dragdrop) {
 
                 var scIframeSrc = window.location.href.split("id=%7B");

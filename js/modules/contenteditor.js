@@ -244,6 +244,10 @@ const sitecoreAuthorToolbox = () => {
                             } else {
                                 setTimeout(() => { checkUrlStatus(null, darkMode) }, 500);
                             }
+                        } else {
+                            if (storage.feature_experimentalui) {
+                                document.querySelector(".scPreviewButton").innerText = "No preview available";
+                            }
                         }
 
                         /**
@@ -711,30 +715,30 @@ const sitecoreAuthorToolbox = () => {
 
                         if (isProtected) {
                             document.querySelector(".scEditorPanel").innerHTML = `
-                    <div class="scNoVersion">
-                        <img src='` + global.iconLocked + `' width="128" /><br />
-                        <p>` + scWarningText + `</p><br />
-                        <button id="scMoreButton" type="button">Unprotect this item</button>
-                    </div>`
+                            <div class="scNoVersion">
+                                <img src='` + global.iconLocked + `' width="128" /><br />
+                                <p>` + scWarningText + `</p><br />
+                                <button onclick="javascript:return scForm.postEvent(this,event,'item:togglereadonly')" type="button">Unprotect this item</button>
+                            </div>`
                         }
 
 
                         if (isNoFields) {
                             document.querySelector(".scEditorPanel").innerHTML = `
-                    <div class="scNoVersion">
-                        <img src='` + global.iconFields + `' width="128" /><br />
-                        <p>` + scWarningText + `</p><br />
-                        <button id="scMoreButton" type="button">Show Item details</button>
-                    </div>`
+                            <div class="scNoVersion">
+                                <img src='` + global.iconFields + `' width="128" /><br />
+                                <p>` + scWarningText + `</p><br />
+                                <button id="scInfoButton" type="button">Show Item details</button>
+                            </div>`
                         }
 
                         if (isNoVersion) {
                             document.querySelector(".scEditorPanel").innerHTML = `
-                    <div class="scNoVersion">
-                        <img src='` + global.iconLanguage + `' width="128" /><br />
-                        <p>` + scWarningText + `</p><br />
-                        <button onclick="javascript:return scForm.postEvent(this,event,'item:addversion')" type="button">Add new version</button>
-                    </div>`
+                            <div class="scNoVersion">
+                                <img src='` + global.iconLanguage + `' width="128" /><br />
+                                <p>` + scWarningText + `</p><br />
+                                <button onclick="javascript:return scForm.postEvent(this,event,'item:addversion')" type="button">Add new version</button>
+                            </div>`
                         }
                     }
 

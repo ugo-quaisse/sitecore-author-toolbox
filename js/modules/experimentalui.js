@@ -31,7 +31,7 @@ const insertSavebar = () => {
 
     //Save mesasge
     let scSaveMessage = `<div class="saveMessage">Your changes have been saved successfully!</div>`;
-    document.querySelector("body").insertAdjacentHTML('afterbegin', scSaveMessage);
+    !document.querySelector(".saveMessage") ? document.querySelector("body").insertAdjacentHTML('afterbegin', scSaveMessage) : false;
 
 }
 

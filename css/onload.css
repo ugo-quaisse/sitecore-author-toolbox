@@ -108,16 +108,6 @@ body.contentEditor:after {
     width: fit-content;*/
 }
 
-/* Table css for cache.aspx */
-#Table1, .launcher-modal {
-    display: none;
-    font-family: arial verdana;
-}
-
-.tabulator-table {
-    font-family: sans-serif;
-}
-
 div#Languages img {
 	display: block;
     width: 32px;

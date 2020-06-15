@@ -10,8 +10,8 @@
 
 function scSaveAnimation(id) {
 
-    var indicator = document.createElement('div');
-    indicator.id = 'saveAnimation';
+    //var indicator = document.createElement('div');
+    //indicator.id = 'saveAnimation';
     //document.body.appendChild(indicator);
     //setTimeout(function() { indicator.remove(); }, 2000);
 

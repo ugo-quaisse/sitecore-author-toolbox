@@ -420,6 +420,7 @@ chrome.storage.sync.get((storage) => {
 
             consoleLog("**** Launchpad ****", "orange");
             storage.feature_launchpad == undefined ? storage.feature_launchpad = true : false;
+            storage.feature_launchpad_tiles == undefined ? storage.feature_launchpad_tiles = true : false;
 
             if (storage.feature_launchpad) {
 
@@ -429,6 +430,17 @@ chrome.storage.sync.get((storage) => {
                 html = '<div class="sc-launchpad-group"><header class="sc-launchpad-group-title">' + global.launchpadGroupTitle + '</header><div class="sc-launchpad-group-row"><a href="#" onclick="window.location.href=\'' + global.launchpadPage + '?launchpad=true&url=' + global.windowLocationHref + '\'" class="sc-launchpad-item" title="' + global.launchpadTitle + '"><span class="icon"><img loading="lazy" src="' + global.launchpadIcon + '" width="48" height="48" alt="' + global.launchpadTitle + '"></span><span class="sc-launchpad-text">' + global.launchpadTitle + '</span></a></div></div>';
                 //Insert into launchpad
                 launchpadCol[0].insertAdjacentHTML('afterend', html);
+
+            }
+
+            if (storage.feature_launchpad_tiles) {
+
+                //Inject CSS
+                if (storage.feature_darkmode && !storage.feature_darkmode_auto || storage.feature_darkmode && storage.feature_darkmode_auto && currentScheme == "dark") {
+                    loadCssFile("css/dark/experimentalui-launchpad-min.css");
+                } else {
+                    loadCssFile("css/experimentalui-launchpad-min.css");
+                }
 
             }
 

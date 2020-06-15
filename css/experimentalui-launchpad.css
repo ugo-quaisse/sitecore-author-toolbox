@@ -3,134 +3,126 @@
  * experimentalui-launchpad.css
  */
 .sc-launchpad {
-	margin: 0 0 40px;
+    margin: 0 0 40px;
 
 }
 
 .sc-launchpad-group {
-	display: block;
-	width: 100%;
+    display: block;
+    width: 100%;
 }
 
 .sc-launchpad-group-row {
-	overflow: hidden;
-
-	display: block;
-
-	width: 25%;
-
-	height: auto;
-
-	margin: 0;
-
-	padding: 0 10px 0 0;
-
-	flex-direction: column;
-
-	float: left;
+    overflow: hidden;
+    display: block;
+    width: 25%;
+    height: auto;
+    margin: 0;
+    padding: 0 10px 0 0;
+    flex-direction: column;
+    float: left;
 }
 
 .sc-launchpad-item {
-	display: flex;
-	align-items: center;
-	background: #fff;
-	text-align: left;
-	width: 100%;
-	margin: 0 0 10px;
-	border: 2px solid #fff;
-	height: auto;
-	min-height: auto;
-	transition: all 0.5s ease;
-
+    display: flex;
+    align-items: center;
+    background: var(--white);
+    text-align: left;
+    width: 100%;
+    margin: 0 0 10px;
+    border: 2px solid var(--white);
+    height: auto;
+    min-height: auto;
+    /*transition: background 0.2s ease-in-out;*/
 }
 
 .sc-launchpad-group {
-	display: flex;
-	width: 100%;
+    display: flex;
+    width: 100%;
 }
 
 .sc-launchpad-item .icon,
 .sc-launchpad-item .icon:hover,
 .sc-launchpad-item .icon:focus,
 .sc-launchpad-item .icon:active {
-	background: none !important;
-	border: none !important;
-	padding: 0;
-	margin: 0;
-	box-shadow: none;
+    background: none !important;
+    border: none !important;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
 
 }
 
 .sc-launchpad-group-title {
-	font-size: 16px;
-	font-weight: 400;
-	color: #969696;
-	margin-top: 15px;
-	display: block;
+    font-size: 16px;
+    font-weight: 400;
+    color: #969696;
+    margin-top: 15px;
+    display: block;
 }
 
 .sc-launchpad-group {
-	/* display: flex; */
-	width: 100%;
-	display: block;
+    /* display: flex; */
+    width: 100%;
+    display: block;
 }
 
 .sc-launchpad-item .sc-launchpad-text {
-	padding: 10px;
-	display: contents;
-	width: auto;
-	/* text-decoration: none !important; */
-	font-size: 14px;
-	padding: 0px 10px 0 0;
-	display: block;
-	max-width: inherit;
+    padding: 10px;
+    display: contents;
+    width: auto;
+    /* text-decoration: none !important; */
+    font-size: 14px;
+    padding: 0px 10px 0 0;
+    display: block;
+    max-width: inherit;
 }
 
 .sc-launchpad-item .sc-launchpad-text:hover {
-	text-decoration: none;
+    text-decoration: none;
 }
 
 .sc-launchpad-group-title {
-	display: block;
-	width: 100%;
-	clear: both;
-	font-size: 20px;
-	/* color: #000; */
-	margin-bottom: 20px;
+    display: block;
+    width: 100%;
+    clear: both;
+    font-size: 20px;
+    /* color: #000; */
+    margin-bottom: 20px;
 }
 
 .sc-launchpad-item:hover,
 .sc-launchpad-item:focus,
 .sc-launchpad-item:active {
-	background: #f5f5f5;
-	border-color: #eae9e9;
-	text-decoration: none;
+    background: #f5f5f5;
+    border-color: #eae9e9;
+    text-decoration: none;
 }
 
 .sc-launchpad-item .icon {
-	box-shadow: none !important;
-	background: none !important;
+    box-shadow: none !important;
+    background: none !important;
 }
 
 @media screen and (max-width:1200px) {
-	.sc-launchpad-group-row {
-		width: 33.3%;
-	}
+    .sc-launchpad-group-row {
+        width: 33.3%;
+    }
 }
 
 @media screen and (max-width:992px) {
-	.sc-launchpad-group-row {
-		width: 50%;
-	}
+    .sc-launchpad-group-row {
+        width: 50%;
+    }
 }
 
 @media screen and (max-width:650px) {
-	.sc-launchpad-group-row {
-		width: 100%;
-	}
+    .sc-launchpad-group-row {
+        width: 100%;
+    }
 }
 
 .sc-launchpad-item .launchpadBadge {
-	margin-left: 60px;
-	margin-top: -15px;
+    margin-left: 60px;
+    margin-top: -15px;
 }

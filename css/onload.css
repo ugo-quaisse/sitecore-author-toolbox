@@ -745,10 +745,12 @@ textarea:focus {
 .textLoading,
 .scInstansSeachLoading {
     font-size: 12px;
-    color: #fff;
+    color: var(--white);
     padding: 0px;
     margin: 0px;
     text-align: center;
+    top: 120px;
+    position: relative;
 }
 
 .scCountNodes {

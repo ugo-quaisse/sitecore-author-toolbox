@@ -91,7 +91,7 @@ const instantSearch = () => {
                     // Preload results
                     divResults.setAttribute('style', 'opacity: 1; visibility: visible; top: 48px;')
                     //divResults.innerHTML = '<div class="scInstantSeachLoading"><img loading="lazy" class="pulseAnimate" src="' + global.iconInstantSearch + '" /><span class="textLoading"><span></div>'
-                    divResults.innerHTML = '<div class="preload">' + global.svgAnimation + '<span class="textLoading"><span></div>';
+                    divResults.innerHTML = '<div class="preload">' + global.svgAnimation + '</div><span class="textLoading"><span>';
                     document.querySelector(".scInstantSearchResults > .preload").setAttribute("style", "opacity:1 !important");
 
                     if (divResults.querySelector('.textLoading')) {

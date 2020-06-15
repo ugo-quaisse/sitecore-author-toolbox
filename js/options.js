@@ -375,8 +375,8 @@ chrome.storage.sync.get(['feature_contrast_icons'], function(result) {
 
 //Launchpad tiles
 chrome.storage.sync.get(['feature_launchpad_tiles'], function(result) {
-    if (result.feature_contrast_icons != undefined) {
-        result.feature_contrast_icons ? document.querySelector("#feature_launchpad_tiles").checked = true : false;
+    if (result.feature_launchpad_tiles != undefined) {
+        result.feature_launchpad_tiles ? document.querySelector("#feature_launchpad_tiles").checked = true : false;
     } else {
         document.querySelector("#feature_launchpad_tiles").checked = false;
     }

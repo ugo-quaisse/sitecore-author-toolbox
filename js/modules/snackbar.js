@@ -11,9 +11,9 @@ const showSnackbar = (version) => {
 
     //Snackbar settings
     let snackbarHtml = `
-    <b>Welcome to Sitecore Author Toolbox ` + global.extensionVersion + `</b><br />
-    Give a try to the new Sitecore Experimental Interface by activing it under settings.`;
-    let html = `<div class="snackbar">` + snackbarHtml + `<button onclick="window.open('` + global.launchpadPage + `')">SETTINGS</button><button id="sbDismiss">DISMISS</button></div>`;
+    <b>Sitecore Author Toolbox ` + global.extensionVersion + `</b><br />
+    Have you tried the new Experimental UI?<br />Click "Feedback" and tell me how it was.`;
+    let html = `<div class="snackbar">` + snackbarHtml + `<button onclick="window.open('https://forms.gle/vWbp8w9Z1zETyvKd9')">FEEDBACK</button><button id="sbDismiss">DISMISS</button></div>`;
 
     //Show Snackbar
     document.querySelector('body').insertAdjacentHTML('beforeend', html);

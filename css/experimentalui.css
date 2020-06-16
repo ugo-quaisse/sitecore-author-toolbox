@@ -927,11 +927,21 @@ a.scRibbonEditorTabNormal:hover {
     color: var(--accentText);*/
 }
 
+.scBackground {
+    background: var(--grey3);
+}
+
 .scTitle {
     padding: 20px 20px 0px 20px;
     border-bottom: none; 
     clear: left;
-    font-size: 20px;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--grey7);
+}
+
+#FileList a:hover, #FileList a:active, #FileList a.highlight {
+    /*border-color: var(--accent);*/
 }
 
 input[type="submit"],

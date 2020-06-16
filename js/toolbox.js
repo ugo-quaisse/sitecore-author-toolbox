@@ -245,6 +245,11 @@ chrome.storage.sync.get((storage) => {
                         scVersionIframe.classList.toggle("open") :
                         scVersionIframe.classList.remove("open");
 
+                    //Message bars
+                    // event.srcElement.className.includes("scMessageBar") ?
+                    // event.target.setAttribute("style","display:none") :
+                    // false;
+
                     //Navigator menu
                     if (document.querySelector(".scPublishMenu")) {
                         // event.srcElement.id == "scNavigatorButton" || event.path[1].id == "scNavigatorButton"
@@ -641,7 +646,7 @@ chrome.storage.sync.get((storage) => {
             if (storage.feature_experimentalui) {
 
                 loadCssFile("css/experimentalui.css");
-                
+
             }
 
             if (storage.feature_dragdrop) {

@@ -119,8 +119,8 @@ const insertMoreButton = (locked = false) => {
 	<ul class="scMoreMenu">
  		<li onclick="javascript:return scForm.invoke('contenteditor:edit')" id="scLockMenuText">Lock item</li>
        	<li onclick="javascript:if(confirm('Do you really want to create a new version for this item?')) { return scForm.postEvent(this,event,'item:addversion(id=)') }">Add new version</li>
-       	<li onclick="javascript:return scForm.invoke('item:duplicate')">Duplicate item</li>
         <li onclick="javascript:return scForm.postEvent(this,event,'item:rename')">Rename item</li>
+        <li onclick="javascript:return scForm.invoke('item:duplicate')">Duplicate</li>
         <li class="separator" onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor')">Open in Experience Editor</li>
        	<li class="separator"  onclick="javascript:return scForm.postEvent(this,event,'item:sethelp')">Help texts</li>
         <li id="scInfoButton">Item details</li>

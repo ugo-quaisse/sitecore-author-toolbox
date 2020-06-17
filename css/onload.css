@@ -1054,3 +1054,7 @@ ul.scAccountMenu li:after {
     height: 500px !important;
     border: 1px solid #cccccc !important;
 }
+
+.hideDesktopHeader {
+    margin-top: 0px !important;
+}

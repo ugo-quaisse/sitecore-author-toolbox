@@ -150,6 +150,7 @@ chrome.storage.sync.get((storage) => {
                  */
                 let accountInformation = document.querySelector(".sc-accountInformation");
                 let startButton = document.querySelector(".sc-globalHeader-startButton");
+
                 if (accountInformation) {
 
                     //Variables
@@ -772,6 +773,50 @@ chrome.storage.sync.get((storage) => {
 
                 }
             }
+        }
+
+        //Change logo href target on Desktop mode if
+        if(global.isContentEditorApp && storage.feature_experimentalui || global.isContentEditorApp && storage.feature_instantsearch) {
+            let globalLogo = document.querySelector("#globalLogo");
+            globalLogo.setAttribute('target', '_parent');
+        }
+
+        //Hide header ob Desktop mode if
+        if(global.isDesktop && storage.feature_experimentalui || global.isDesktop && storage.feature_instantsearch) {
+
+            target = document.querySelector("body");
+            observer = new MutationObserver(function(mutations) { 
+
+                let globalHeader = document.querySelector("#globalHeader");             
+                let desktop = document.querySelector("#Desktop");
+
+                for(let mutation of mutations) {
+                    if(mutation.type == "attributes" && mutation.target.localName == "iframe") {
+                        let src = mutation.target.src ? mutation.target.src.toLowerCase() : "nosrc";
+                        if(src.includes("/shell/applications/content-editor")) {
+                            if(mutation.target.style.display == "") {
+                                // console.log("SHOW CONTENT EDITOR");
+                                globalHeader.setAttribute("style","visibility:hidden");
+                                desktop.classList.add("hideDesktopHeader");
+                            } else if(mutation.target.style.display == "none") {
+                                // console.log("HIDE CONTENT EDITOR");
+                                globalHeader.setAttribute("style","visibility:visible");
+                                desktop.classList.remove("hideDesktopHeader");
+                            }
+                        }
+                    }
+
+                    for(let node of mutation.addedNodes) {
+                        let src = node.src ? node.src.toLowerCase() : "nosrc";
+                        if(node.nodeName.toLowerCase() == "iframe" || src.includes("/shell/applications/content-editor")) {
+                            node.src = "/sitecore/shell/Applications/Content-Editor?sc_bw=1";
+                        }
+
+                    }
+                }
+            });
+            //Observer UI
+            target ? observer.observe(target, { attributes: true, childList: true, characterData: true, subtree: true }) : false;
         }
 
         if (global.isEditorFolder) {

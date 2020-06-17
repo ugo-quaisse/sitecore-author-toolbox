@@ -295,7 +295,7 @@ const setInsertIcon = (id) => {
     let item = document.querySelector("#Tree_Glyph_" + id);
     let a = document.querySelector("#Tree_Node_" + id);
     let itemName = a.querySelector("span").innerText;
-    let active = document.querySelector(".scContentTreeNodeActive").id.replace("Tree_Node_", "");
+    let active = document.querySelector(".scContentTreeNodeActive") ? document.querySelector(".scContentTreeNodeActive").id.replace("Tree_Node_", "") : false;
     let rect = item.getBoundingClientRect();
     let left = document.querySelector(".splitter-bar").style.left.replace("px", "");
     let activeClass = "";

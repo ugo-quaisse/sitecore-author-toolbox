@@ -54,9 +54,9 @@ const pathToBreadcrumb = (path, delimiter = "/", underline = true) => {
 
         for (let level of path) {
             if (underline) {
-                level != "" ? breadcrumb += '<i>' + delimiter + '</i> <u>' + level.toLowerCase().capitalize().replace("Loreal", "uquaisse,io") + '</u> ' : false;
+                level != "" ? breadcrumb += '<i>' + delimiter + '</i> <u>' + level.toLowerCase().capitalize() + '</u> ' : false;
             } else {
-                level != "" ? breadcrumb += '<i>' + delimiter + '</i> ' + level.toLowerCase().capitalize().replace("Loreal", "uquaisse,io") + ' ' : false;
+                level != "" ? breadcrumb += '<i>' + delimiter + '</i> ' + level.toLowerCase().capitalize() + ' ' : false;
             }
         }
     }

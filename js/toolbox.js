@@ -187,7 +187,7 @@ chrome.storage.sync.get((storage) => {
                         <li onclick="javascript:return scForm.invoke('preferences:changeregionalsettings', event)">Region and Languages</li>
                         <li onclick="javascript:return scForm.invoke('system:showlicenses', event)">Licences</li>
                         <li onclick="javascript:return scForm.invoke('system:showabout', event)">Licence details</li>
-                        <li onclick="javascript:return scForm.invoke('contenteditor:close', event)">Logout</li>
+                        <li onclick="javascript:return scForm.invoke('contenteditor:close', event)">Log out</li>
                     </ul>`;
                     accountInformation.insertAdjacentHTML('afterbegin', htmlMenu);
 
@@ -809,7 +809,7 @@ chrome.storage.sync.get((storage) => {
                     for(let node of mutation.addedNodes) {
                         let src = node.src ? node.src.toLowerCase() : "nosrc";
                         if(node.nodeName.toLowerCase() == "iframe" || src.includes("/shell/applications/content-editor")) {
-                            node.src = "/sitecore/shell/Applications/Content-Editor?sc_bw=1";
+                            node.src = "/sitecore/shell/Applications/Content-Editor?ic=Apps%2F48x48%2FPencil.png&sc_bw=1";
                         }
 
                     }

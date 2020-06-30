@@ -177,7 +177,7 @@ document.body.onload = function() {
                 document.getElementById("feature_favorites").checked = true;
             }
         } else {
-            document.getElementById("feature_favorites").checked = true;
+            document.getElementById("feature_favorites").checked = false;
         }
     });
     //reload from where you left
@@ -238,7 +238,7 @@ document.body.onload = function() {
                 document.getElementById("feature_translatemode").checked = true;
             }
         } else {
-            document.getElementById("feature_translatemode").checked = true;
+            document.getElementById("feature_translatemode").checked = false;
         }
     });
     //CE toggle ribon button
@@ -375,6 +375,7 @@ chrome.storage.sync.get(['feature_contrast_icons'], function(result) {
 
 //Launchpad tiles
 chrome.storage.sync.get(['feature_launchpad_tiles'], function(result) {
+
     if (result.feature_launchpad_tiles != undefined) {
         result.feature_launchpad_tiles ? document.querySelector("#feature_launchpad_tiles").checked = true : false;
     } else {

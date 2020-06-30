@@ -362,7 +362,7 @@ chrome.storage.sync.get((storage) => {
             /**
              * Favorites bar
              */
-            storage.feature_favorites == undefined ? storage.feature_favorites = true : false;
+            storage.feature_favorites == undefined ? storage.feature_favorites = false : false;
 
             if (storage.feature_favorites && !global.isPublishWindow && global.scContentTree) {
 
@@ -423,10 +423,11 @@ chrome.storage.sync.get((storage) => {
         }
 
         if (global.isLaunchpad) {
-
+            
             consoleLog("**** Launchpad ****", "orange");
             storage.feature_launchpad == undefined ? storage.feature_launchpad = true : false;
-            storage.feature_launchpad_tiles == undefined ? storage.feature_launchpad_tiles = true : false;
+            storage.feature_launchpad_tiles == undefined ? storage.feature_launchpad_tiles = false : false;
+
 
             if (storage.feature_launchpad) {
 
@@ -438,9 +439,8 @@ chrome.storage.sync.get((storage) => {
                 launchpadCol[0].insertAdjacentHTML('afterend', html);
 
             }
-
             if (storage.feature_launchpad_tiles) {
-
+                
                 //Inject CSS
                 if (storage.feature_darkmode && !storage.feature_darkmode_auto || storage.feature_darkmode && storage.feature_darkmode_auto && currentScheme == "dark") {
                     loadCssFile("css/dark/experimentalui-launchpad-min.css");

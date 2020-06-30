@@ -511,7 +511,7 @@ const sitecoreAuthorToolbox = () => {
         /**
          * Translate Mode
          */
-        storage.feature_translatemode == undefined ? storage.feature_translatemode = true : false;
+        storage.feature_translatemode == undefined ? storage.feature_translatemode = false : false;
 
         if (storage.feature_translatemode) {
 

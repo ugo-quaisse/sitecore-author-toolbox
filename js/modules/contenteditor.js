@@ -679,8 +679,8 @@ const sitecoreAuthorToolbox = () => {
         /**
          * Fancy message bars
          */
-        storage.feature_messagebar == undefined ? storage.feature_messagebar = true : false;
-        if (storage.feature_messagebar == true) {
+        storage.feature_messagebar == undefined ? storage.feature_messagebar = false : false;
+        if (storage.feature_messagebar) {
 
             setTimeout(function() {
 

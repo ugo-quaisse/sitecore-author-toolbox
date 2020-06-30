@@ -288,7 +288,7 @@ document.body.onload = function() {
                 document.getElementById("feature_messagebar").checked = true;
             }
         } else {
-            document.getElementById("feature_messagebar").checked = true;
+            document.getElementById("feature_messagebar").checked = false;
         }
     });
     //Workflow notifications

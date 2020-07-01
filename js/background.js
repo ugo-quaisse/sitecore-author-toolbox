@@ -233,29 +233,15 @@ chrome.runtime.onInstalled.addListener(function(details) {
 
     if (details.reason == "install") {
 
-        //Install
-        chrome.tabs.create({ url: "https://uquaisse.io/extension-update/?utm_source=install&utm_medium=chrome&utm_campaign=" + thisVersion });
+        //chrome.tabs.create({ url: "https://uquaisse.io/extension-update/?utm_source=install&utm_medium=chrome&utm_campaign=" + thisVersion });
 
     } else if (details.reason == "update") {
 
-        if (thisVersion != details.previousVersion && versionIncrement == "0") {
-
-            //Major update
-            console.log("Updated from " + details.previousVersion + " to " + thisVersion);
-            //chrome.tabs.create({url:"https://uquaisse.io/extension-update/?utm_source=upgrade&utm_medium=chrome&utm_campaign="+thisVersion});
-            new Notification("Extension updated!", { body: "Version " + thisVersion, icon: chrome.runtime.getURL("images/icon.png") });
-
-        } else if (thisVersion != details.previousVersion) {
-
-            //Minor update
+        if (thisVersion != details.previousVersion) {
             console.log("Updated from " + details.previousVersion + " to " + thisVersion);
             new Notification("Extension updated!", { body: "Version " + thisVersion, icon: chrome.runtime.getURL("images/icon.png") });
-
         } else {
-
-            //Reload
             console.log("Reload");
-
         }
 
     }

@@ -226,8 +226,8 @@ const sitecoreAuthorToolbox = () => {
                         var cell1 = row.insertCell(0);
                         var cell2 = row.insertCell(1);
                         var url = new URL(sitecoreItemPath);
-                        cell1.innerHTML = 'Live URL';
-                        cell2.innerHTML = '<a href="' + sitecoreItemPath + '" target="_blank">' + url.origin + url.pathname + ' <img src="' + global.iconExternalLink + '" /></a>';
+                        cell1.innerHTML = 'Live URL:';
+                        cell2.innerHTML = '<a href="' + sitecoreItemPath + '" target="_blank">' + url.origin + url.pathname + ' <img src="' + global.iconExternalLink + '" style="width: 14px" /></a>';
 
                         //Experimental mode
                         document.querySelector(".scPreviewButton") ? document.querySelector(".scPreviewButton").setAttribute("onclick", "window.open('" + sitecoreItemPath + "'); return false;") : false;

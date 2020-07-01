@@ -11,8 +11,8 @@ const showSnackbar = (version) => {
 
     //Snackbar settings
     let snackbarHtml = `
-    <b>Sitecore Author Toolbox ` + global.extensionVersion + `</b><br />
-    Have you tried the new Experimental UI?<br />Click "Feedback" and tell me how it was.`;
+    <b>Sitecore Author Toolbox has been updated!</b><br />
+    Do you want to share something with us?<br />Click the "Feedback" button`;
     let html = `<div class="snackbar">` + snackbarHtml + `<button onclick="window.open('https://forms.gle/vWbp8w9Z1zETyvKd9')">FEEDBACK</button><button id="sbDismiss">DISMISS</button></div>`;
 
     //Show Snackbar

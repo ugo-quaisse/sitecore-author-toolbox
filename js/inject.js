@@ -10,10 +10,10 @@
 
 function scSaveAnimation(id) {
 
-    //var indicator = document.createElement('div');
-    //indicator.id = 'saveAnimation';
-    //document.body.appendChild(indicator);
-    //setTimeout(function() { indicator.remove(); }, 2000);
+    var indicator = document.createElement('div');
+    indicator.id = 'saveAnimation';
+    document.body.appendChild(indicator);
+    setTimeout(function() { indicator.remove(); }, 2000);
 
     if (document.querySelector(".scSaveButton")) {
         let saveMessage = document.querySelector(".saveMessage");
@@ -28,7 +28,7 @@ function scSaveAnimation(id) {
             document.querySelector(".scSaveButton").innerText = "Save";
             document.querySelector(".scSaveButton").removeAttribute("disabled");
             saveMessage.classList.remove("visible");
-        }, 2500);
+        }, 2000);
     }
 
 }

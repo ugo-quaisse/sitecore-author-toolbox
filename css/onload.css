@@ -54,10 +54,6 @@ body.contentEditor:after {
     visibility: hidden;
 }
 
-.scSystemButtons {
-    visibility: hidden !important;
-}
-
 #BTAddNewSearch {
     background-color: transparent;
     cursor: pointer;

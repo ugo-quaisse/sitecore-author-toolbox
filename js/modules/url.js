@@ -55,17 +55,17 @@ const checkUrlStatus = (source = null, dark, experimental = false) => {
           //Check response
           if(response.status == "404" ) {
               html = "<span class='liveStatusRed'><img loading='lazy' src=' " + global.dotRed + "'/> Not published (" + response.status + ")</span>";
-              preview = "Preview (404) <img loading='lazy' src=' " + global.dotRed + "' class='liveUrlDot' />";
+              preview = "Live URL (404) <img loading='lazy' src=' " + global.dotRed + "' class='liveUrlDot' />";
               disable = true;
               barStyle = "scError";
           } else if(response.status == "500" ) {
               html = "<span class='liveStatusRed'><img loading='lazy' src=' " + global.dotRed + "'/> Server error (" + response.status + ")</span>";
-              preview = "Preview (500) <img loading='lazy' src=' " + global.dotRed + "'class='liveUrlDot' />";
+              preview = "Live URL (500) <img loading='lazy' src=' " + global.dotRed + "'class='liveUrlDot' />";
               disable = true;
               barStyle = "scError";
           } else {
               html = "<span class='liveStatusGreen'><img loading='lazy' src=' " + global.dotGreen + "'/> Published</span>";
-              preview = "Preview <img loading='lazy' src=' " + global.dotGreen + "'class='liveUrlDot' />";
+              preview = "Live URL <img loading='lazy' src=' " + global.dotGreen + "'class='liveUrlDot' />";
               disable = false;
               barStyle = "scSuccess";
           }

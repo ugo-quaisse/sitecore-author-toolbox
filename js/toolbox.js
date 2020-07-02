@@ -782,7 +782,8 @@ chrome.storage.sync.get((storage) => {
         }
 
         //Hide header ob Desktop mode if
-        if(global.isDesktop && storage.feature_experimentalui || global.isDesktop && storage.feature_instantsearch) {
+        //Todo: issue with search (to be hidden on desktop mode)
+        if(global.isDesktop && storage.feature_experimentalui) {
 
             target = document.querySelector("body");
             observer = new MutationObserver(function(mutations) { 

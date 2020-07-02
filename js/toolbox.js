@@ -107,7 +107,7 @@ chrome.storage.sync.get((storage) => {
                 let ScItem = getScItemData();
 
                 //Load extra CSS
-                loadCssFile("css/experimentalui.css");
+                loadCssFile("css/experimentalui-min.css");
 
                 if (storage.feature_darkmode && !storage.feature_darkmode_auto && !global.isTelerikUi && !global.isExperienceEditor && !global.isAdminCache && !global.isContentHome && !global.isLoginPage && !global.isEditMode && !global.isRules && !global.isAdmin || storage.feature_darkmode && storage.feature_darkmode_auto && !global.isTelerikUi && !global.isExperienceEditor && !global.isAdminCache && !global.isContentHome && !global.isLoginPage && !global.isEditMode && !global.isRules && !global.isAdmin && currentScheme == "dark") {
                     //loadCssFile("css/dark/experimentalui-min.css")
@@ -388,7 +388,7 @@ chrome.storage.sync.get((storage) => {
 
                 //Current version of the Snackbar
                 let snackbarVersion = global.extensionVersion;
-                localStorage.getItem('sbDismiss') != snackbarVersion ? showSnackbar(snackbarVersion) : false;
+                //localStorage.getItem('sbDismiss') != snackbarVersion ? showSnackbar(snackbarVersion) : false;
 
             }
 
@@ -646,7 +646,7 @@ chrome.storage.sync.get((storage) => {
 
             if (storage.feature_experimentalui) {
 
-                loadCssFile("css/experimentalui.css");
+                loadCssFile("css/experimentalui-min.css");
 
             }
 
@@ -824,7 +824,7 @@ chrome.storage.sync.get((storage) => {
             consoleLog("**** Editors folder ****", "orange");
 
             if (storage.feature_experimentalui) {
-                loadCssFile("css/experimentalui.css");
+                loadCssFile("css/experimentalui-min.css");
                 getAccentColor();
             }
 
@@ -835,7 +835,7 @@ chrome.storage.sync.get((storage) => {
             consoleLog("**** XML Control (Window) ****", "orange");
 
             if (storage.feature_experimentalui) {
-                loadCssFile("css/experimentalui.css");
+                loadCssFile("css/experimentalui-min.css");
                 getAccentColor();
             }
 

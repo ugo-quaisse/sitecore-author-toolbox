@@ -1048,7 +1048,7 @@ ul.scAccountMenu li:after {
 
 .CodeMirror {
     height: 500px !important;
-    border: 1px solid #cccccc !important;
+    border: 0px solid #cccccc !important;
 }
 
 .hideDesktopHeader {

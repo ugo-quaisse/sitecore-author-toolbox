@@ -197,16 +197,15 @@ const insertPageClose = () => {
 }
 
 const showSitecoreMenu = () => {
-    let dock = document.querySelector(".scDockTop");
-    dock.classList.toggle("showSitecoreMenu");
+    let dock = document.querySelector(".scDockTop") ? document.querySelector(".scDockTop") : document.querySelector("iframe").contentWindow.document.querySelector(".scDockTop");
+    dock ? dock.classList.toggle("showSitecoreMenu") : false;
 
-    let icon = document.querySelector("#scSitecoreMenu");
-    icon.classList.toggle("scSitecoreMenu");
+    let icon = document.querySelector("#scSitecoreMenu") ? document.querySelector("#scSitecoreMenu") : document.querySelector("iframe").contentWindow.document.querySelector("#scSitecoreMenu");
+    icon ? icon.classList.toggle("scSitecoreMenu") : false;
 
-    // let button = document.querySelector("#scSitecoreRibbon > span");
-    // button.classList.toggle("active");
-
-    dock.classList.contains("showSitecoreMenu") ? localStorage.setItem('scSitecoreMenu', true) : localStorage.setItem('scSitecoreMenu', false);
+    if(dock) {
+        dock.classList.contains("showSitecoreMenu") ? localStorage.setItem('scSitecoreMenu', true) : localStorage.setItem('scSitecoreMenu', false);
+    }
 }
 
 const showLanguageMenu = () => {

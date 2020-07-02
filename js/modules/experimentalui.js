@@ -3,7 +3,7 @@
 import * as global from './global.js';
 import { getScItemData, setTextColour } from './helpers.js';
 
-export { insertSavebar, insertBreadcrumb, insertLanguageButton, insertVersionButton, insertMoreButton, insertNavigatorButton, insertLockButton, pathToBreadcrumb, initInsertIcon, getAccentColor, initColorPicker, initSitecoreMenu, initGutter };
+export { insertSavebar, insertBreadcrumb, insertLanguageButton, insertVersionButton, insertMoreButton, insertNavigatorButton, insertLockButton, pathToBreadcrumb, initInsertIcon, getAccentColor, initColorPicker, initSitecoreMenu, initUserMenu, initGutter };
 
 
 /**
@@ -211,17 +211,13 @@ const initSitecoreMenu = () => {
     let storage = localStorage.getItem('scSitecoreMenu');
     let dock = document.querySelector(".scDockTop");
     let icon = document.querySelector("#scSitecoreMenu");
-    // let button = document.querySelector("#scSitecoreRibbon > span");
-
 
     if (storage == "true") {
-        dock.classList.add("showSitecoreMenu");
-        icon.classList.add("scSitecoreMenu");
-        // button.classList.add("active");
+        dock ? dock.classList.add("showSitecoreMenu") : false;
+        icon ? icon.classList.add("scSitecoreMenu") : false;
     } else {
-        dock.classList.remove("showSitecoreMenu");
-        icon.classList.remove("scSitecoreMenu");
-        // button.classList.remove("active");
+        dock ? dock.classList.remove("showSitecoreMenu") : false;
+        icon ? icon.classList.remove("scSitecoreMenu") : false;
     }
 
 }
@@ -259,30 +255,95 @@ const initColorPicker = () => {
 
     let input = '<input type="color" id="scAccentColor" name="scAccentColor" value="' + getAccentColor() + '" title="Choose your accent color">';
     let menu = document.querySelector(".sc-accountInformation");
-    menu.insertAdjacentHTML('afterbegin', input);
-
+    menu ? menu.insertAdjacentHTML('afterbegin', input) : false;
 
     //Listenenr on change
-    //To change text color based on BG light -> https://css-tricks.com/switch-font-color-for-different-backgrounds-with-css/
     let colorPicker = document.querySelector("#scAccentColor");
-    colorPicker.addEventListener('change', (event) => {
+    if(colorPicker) {
+        colorPicker.addEventListener('change', (event) => {
 
-        color = colorPicker.value;
-        text = setTextColour(color);
-        (text == "#ffffff") ? brightness = 10: brightness = 0;
+            color = colorPicker.value;
+            text = setTextColour(color);
+            (text == "#ffffff") ? brightness = 10: brightness = 0;
 
-        //Reload all Gallery iframes
-        let allIframes = document.querySelectorAll("iframe").forEach(function(e) {
-            e.src.includes("xmlcontrol=Gallery") ? e.contentWindow.location.reload() : false;
+            //Root
+            let root = document.documentElement;
+            root.style.setProperty('--accent', color);
+            root.style.setProperty('--accentText', text);
+            root.style.setProperty('--accentBrightness', brightness);
+
+            //Iframes
+            let allIframes = document.querySelectorAll("iframe").forEach(function(e) {
+                let iframe = e.contentWindow.document.documentElement;
+                iframe.style.setProperty('--accent', color);
+                iframe.style.setProperty('--accentText', text);
+                iframe.style.setProperty('--accentBrightness', brightness);
+            });
+
+            localStorage.setItem('scColorPicker', color);
+        
         });
+    }
 
-        let root = document.documentElement;
-        root.style.setProperty('--accent', color);
-        root.style.setProperty('--accentText', text);
-        root.style.setProperty('--accentBrightness', brightness);
+}
 
-        localStorage.setItem('scColorPicker', color);
-    });
+/**
+ * Init Sitecore User Menu
+ */
+const initUserMenu = () => {
+
+    let accountInformation = document.querySelector(".sc-accountInformation");
+    let startButton = document.querySelector(".sc-globalHeader-startButton");
+
+    if (accountInformation) {
+
+        let dialogParamsLarge = "center:yes; help:no; resizable:yes; scroll:yes; status:no; dialogMinHeight:200; dialogMinWidth:300; dialogWidth:1100; dialogHeight:700; header:";
+
+        //Add app name
+        let htmlApp = `<div class="sc-globalheader-appName">Content Editor</div>`;
+        startButton ? startButton.insertAdjacentHTML('afterend', htmlApp) : false;
+
+        //Add Notification and arrow icons
+        let htmlIcon = `<img loading="lazy" title="No notification in your workbox" id="scNotificationBell" onclick="javascript:scSitecore.prototype.showModalDialog('` + global.workboxPage.replace("&sc_bw=1", "&sc_bw=0") + `', '', '` + dialogParamsLarge + `Workbox', null, null); false" src="` + global.iconBell + `" class="scIconMenu" accesskey="w"/>
+        <img loading="lazy" title="Show ribbon" id="scSitecoreMenu" onclick="showSitecoreMenu()" src="` + global.iconDownArrow + `" class="scIconMenu" accesskey="a" />`;
+        accountInformation.insertAdjacentHTML('afterbegin', htmlIcon);
+
+        //Get User Name and add extra id to avatar
+        let accountUser = accountInformation.querySelectorAll("li")[1].innerText.trim();
+        accountInformation.querySelector("li").remove();
+        accountInformation.querySelector("li").innerHTML = accountInformation.querySelector("li > img").outerHTML;
+        accountInformation.querySelector("li > img").setAttribute("id", "globalHeaderUserPortrait");
+
+        //Generate menu
+        let htmlMenu = `
+        <ul class="scAccountMenu">
+            <li onclick="javascript:return scForm.invoke('preferences:changeuserinformation', event)">My account (` + accountUser + `)</li>
+            <li onclick="javascript:return scForm.invoke('security:changepassword', event) ">Change Password</li>
+            <li onclick="javascript:return scForm.invoke('shell:useroptions', event)">Application Options</li>
+            <li onclick="window.open('` + global.launchpadPage + `')">Sitecore Author Toolbox Options</li>
+            <li onclick="javascript:return scForm.invoke('preferences:changeregionalsettings', event)">Region and Languages</li>
+            <li onclick="javascript:return scForm.invoke('system:showlicenses', event)">Licences</li>
+            <li onclick="javascript:return scForm.invoke('system:showabout', event)">Licence details</li>
+            <li onclick="javascript:return scForm.invoke('contenteditor:close', event)">Log out</li>
+        </ul>`;
+        accountInformation.insertAdjacentHTML('afterbegin', htmlMenu);
+
+        //Events   
+        if (document.querySelector(".scAccountMenu")) {
+            document.addEventListener('click', (event) => {
+                event.srcElement.id == "globalHeaderUserPortrait" ?
+                    document.querySelector(".scAccountMenu").setAttribute("style", "visibility: visible; top: 50px; opacity: 1;") :
+                    document.querySelector(".scAccountMenu").setAttribute("style", "visibility: hidden; top: 40px; opacity: 0;");
+            });
+        }
+
+        if(document.querySelector("#DesktopLinks")) {
+            document.querySelector("#DesktopLinks").addEventListener('click', (event) => {
+                document.querySelector(".scAccountMenu").setAttribute("style", "visibility: hidden; top: 40px; opacity: 0;");
+            });
+        }
+
+    }
 
 }
 

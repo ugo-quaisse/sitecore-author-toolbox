@@ -109,7 +109,7 @@ const insertModal = (sitecoreItemID, scLanguage, scVersion, scItemName = "", mut
 	        //Item name
 	        scItemName != "" ? ScItem.name = scItemName.toLowerCase() : false;
 
-        	if(jsonOptions["subitems"]) {
+        	if(jsonOptions["subitems"] && document.querySelector("#scSitecoreMenu")) {
 	        	
 	        	//If empty
 	        	jsonOptions["subitems"].length == 0

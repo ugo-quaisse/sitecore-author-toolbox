@@ -24,7 +24,7 @@ import { sitecoreAuthorToolbox } from './modules/contenteditor.js';
 import { getGravatar } from './modules/users.js';
 import { instantSearch } from './modules/instantsearch.js';
 import { insertModal, insertPanel } from './modules/menu.js';
-import { insertSavebar, insertBreadcrumb, initInsertIcon, initGutter, getAccentColor, initColorPicker, initSitecoreMenu } from './modules/experimentalui.js';
+import { insertSavebar, insertBreadcrumb, initInsertIcon, initGutter, getAccentColor, initColorPicker, initSitecoreMenu, initUserMenu } from './modules/experimentalui.js';
 
 /**
  * Get all user's settings from storage
@@ -101,6 +101,7 @@ chrome.storage.sync.get((storage) => {
             storage.feature_experimentalui == undefined ? storage.feature_experimentalui = false : false;
             storage.feature_contrast_icons == undefined ? storage.feature_contrast_icons = true : false;
 
+
             if (!global.isLaunchpad && storage.feature_experimentalui) {
 
                 //Variables
@@ -121,77 +122,20 @@ chrome.storage.sync.get((storage) => {
                 let SearchPanel = document.querySelector("#SearchPanel")
                 SearchPanel ? SearchPanel.innerHTML = "Content" : false;
 
-                //Content and Media Library links
-                ///shell/Applications/Media/MediaShop.aspx?sc_bw=1
-
                 //Icon contrasted
                 if (storage.feature_contrast_icons == false) {
                     document.documentElement.style.setProperty('--iconBrightness', 1);
                     document.documentElement.style.setProperty('--iconContrast', 1);
                 }
 
-                //Savebar
                 insertSavebar();
-
-                //Insert Modal
                 insertModal(ScItem.id, ScItem.language, ScItem.version);
-
-                //Insert Panel
                 insertPanel();
-
-                //Tree action
                 initInsertIcon();
-
-                //insert Gutter
                 initGutter();
-
-                /**
-                 * User menu
-                 */
-                let accountInformation = document.querySelector(".sc-accountInformation");
-                let startButton = document.querySelector(".sc-globalHeader-startButton");
-
-                if (accountInformation) {
-
-                    //Variables
-                    // let scUploadMediaUrl = '/sitecore/client/Applications/Dialogs/UploadMediaDialog?ref=list';
-                    //let dialogParams = "center:yes; help:no; resizable:yes; scroll:yes; status:no; dialogMinHeight:200; dialogMinWidth:300; dialogWidth:600; dialogHeight:500; header:";
-                    let dialogParamsLarge = "center:yes; help:no; resizable:yes; scroll:yes; status:no; dialogMinHeight:200; dialogMinWidth:300; dialogWidth:1100; dialogHeight:700; header:";
-
-                    //Add app name
-                    let htmlApp = `<div class="sc-globalheader-appName">Content Editor</div>`;
-                    startButton ? startButton.insertAdjacentHTML('afterend', htmlApp) : false;
-
-                    //Add icons
-                    // htmlIcon += '<img loading="lazy" title="Upload in Media Library" id="scMediaUpload"  onclick="javascript:scSitecore.prototype.showModalDialog(\'' + scUploadMediaUrl + '\', \'\', \'\', null, null); false" src="' + global.iconUpload + '" class="scIconMenu" accesskey="m"/>';
-                    let htmlIcon = `<img loading="lazy" title="No notification in your workbox" id="scNotificationBell" onclick="javascript:scSitecore.prototype.showModalDialog('` + global.workboxPage.replace("&sc_bw=1", "&sc_bw=0") + `', '', '` + dialogParamsLarge + `Workbox', null, null); false" src="` + global.iconBell + `" class="scIconMenu" accesskey="w"/>
-                                    <img loading="lazy" title="Show ribbon" id="scSitecoreMenu" onclick="showSitecoreMenu()" src="` + global.iconDownArrow + `" class="scIconMenu" accesskey="a" />`;
-                    accountInformation.insertAdjacentHTML('afterbegin', htmlIcon);
-
-                    //Color picker and Sitecore Menu - Experimental
-                    initColorPicker();
-                    initSitecoreMenu();
-
-                    let accountUser = accountInformation.querySelectorAll("li")[1].innerText.trim();
-                    accountInformation.querySelector("li").remove();
-                    accountInformation.querySelector("li").innerHTML = accountInformation.querySelector("li > img").outerHTML;
-                    accountInformation.querySelector("li > img").setAttribute("id", "globalHeaderUserPortrait");
-
-                    //Generate menu
-                    let htmlMenu = `
-                    <ul class="scAccountMenu">
-                        <li onclick="javascript:return scForm.invoke('preferences:changeuserinformation', event)">My account (` + accountUser + `)</li>
-                        <li onclick="javascript:return scForm.invoke('security:changepassword', event) ">Change Password</li>
-                        <li onclick="javascript:return scForm.invoke('shell:useroptions', event)">Application Options</li>
-                        <li onclick="window.open('` + global.launchpadPage + `')">Sitecore Author Toolbox Options</li>
-                        <li onclick="javascript:return scForm.invoke('preferences:changeregionalsettings', event)">Region and Languages</li>
-                        <li onclick="javascript:return scForm.invoke('system:showlicenses', event)">Licences</li>
-                        <li onclick="javascript:return scForm.invoke('system:showabout', event)">Licence details</li>
-                        <li onclick="javascript:return scForm.invoke('contenteditor:close', event)">Log out</li>
-                    </ul>`;
-                    accountInformation.insertAdjacentHTML('afterbegin', htmlMenu);
-
-                }
+                initUserMenu();
+                initColorPicker();
+                initSitecoreMenu();
 
                 /**
                  * Event listeners
@@ -209,13 +153,6 @@ chrome.storage.sync.get((storage) => {
                     scPanel.setAttribute("style", "top: " + topPos + "px !important");
                     scLanguageIframe.setAttribute("style", "top: " + topPos + "px !important");
                     scVersionIframe.setAttribute("style", "top: " + topPos + "px !important");
-
-                    //User's menu
-                    if (document.querySelector(".scAccountMenu")) {
-                        event.srcElement.id == "globalHeaderUserPortrait" ?
-                            document.querySelector(".scAccountMenu").setAttribute("style", "visibility: visible; top: 50px; opacity: 1;") :
-                            document.querySelector(".scAccountMenu").setAttribute("style", "visibility: hidden; top: 40px; opacity: 0;");
-                    }
 
                     //Publish menu
                     if (document.querySelector(".scPublishMenu")) {
@@ -388,7 +325,7 @@ chrome.storage.sync.get((storage) => {
 
                 //Current version of the Snackbar
                 let snackbarVersion = global.extensionVersion;
-                //localStorage.getItem('sbDismiss') != snackbarVersion ? showSnackbar(snackbarVersion) : false;
+                localStorage.getItem('sbDismiss') != snackbarVersion ? showSnackbar(snackbarVersion) : false;
 
             }
 
@@ -407,6 +344,17 @@ chrome.storage.sync.get((storage) => {
 
             consoleLog("**** Desktop Shell ****", "orange");
             storage.feature_launchpad == undefined ? storage.feature_launchpad = true : false;
+
+            
+
+            if (storage.feature_experimentalui) {
+
+                loadCssFile("css/experimentalui-min.css");
+                initUserMenu();
+                initColorPicker();
+                initSitecoreMenu();
+
+            }
 
             if (storage.feature_launchpad) {
 
@@ -778,46 +726,7 @@ chrome.storage.sync.get((storage) => {
         //Change logo href target on Desktop mode if
         if(global.isContentEditorApp && storage.feature_experimentalui || global.isContentEditorApp && storage.feature_instantsearch) {
             let globalLogo = document.querySelector("#globalLogo");
-            globalLogo.setAttribute('target', '_parent');
-        }
-
-        //Hide header ob Desktop mode if
-        //Todo: issue with search (to be hidden on desktop mode)
-        if(global.isDesktop && storage.feature_experimentalui) {
-
-            target = document.querySelector("body");
-            observer = new MutationObserver(function(mutations) { 
-
-                let globalHeader = document.querySelector("#globalHeader");             
-                let desktop = document.querySelector("#Desktop");
-
-                for(let mutation of mutations) {
-                    if(mutation.type == "attributes" && mutation.target.localName == "iframe") {
-                        let src = mutation.target.src ? mutation.target.src.toLowerCase() : "nosrc";
-                        if(src.includes("/shell/applications/content-editor")) {
-                            if(mutation.target.style.display == "") {
-                                // console.log("SHOW CONTENT EDITOR");
-                                globalHeader.setAttribute("style","visibility:hidden");
-                                desktop.classList.add("hideDesktopHeader");
-                            } else if(mutation.target.style.display == "none") {
-                                // console.log("HIDE CONTENT EDITOR");
-                                globalHeader.setAttribute("style","visibility:visible");
-                                desktop.classList.remove("hideDesktopHeader");
-                            }
-                        }
-                    }
-
-                    for(let node of mutation.addedNodes) {
-                        let src = node.src ? node.src.toLowerCase() : "nosrc";
-                        if(node.nodeName.toLowerCase() == "iframe" || src.includes("/shell/applications/content-editor")) {
-                            node.src = "/sitecore/shell/Applications/Content-Editor?ic=Apps%2F48x48%2FPencil.png&sc_bw=1";
-                        }
-
-                    }
-                }
-            });
-            //Observer UI
-            target ? observer.observe(target, { attributes: true, childList: true, characterData: true, subtree: true }) : false;
+            globalLogo ? globalLogo.setAttribute('target', '_parent') : false;
         }
 
         if (global.isEditorFolder) {

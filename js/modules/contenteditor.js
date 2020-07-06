@@ -227,7 +227,7 @@ const sitecoreAuthorToolbox = () => {
                         var cell2 = row.insertCell(1);
                         var url = new URL(sitecoreItemPath);
                         cell1.innerHTML = 'Live URL:';
-                        cell2.innerHTML = '<a href="' + sitecoreItemPath + '" target="_blank">' + url.origin + url.pathname + ' <img src="' + global.iconExternalLink + '" style="width: 14px" /></a>';
+                        cell2.innerHTML = '<a href="' + sitecoreItemPath + '" target="_blank">' + url.origin + url.pathname + ' <img src="' + global.iconExternalLink + '" style="width: 14px; vertical-align: text-top;" /></a>';
 
                         //Experimental mode
                         document.querySelector(".scPreviewButton") ? document.querySelector(".scPreviewButton").setAttribute("onclick", "window.open('" + sitecoreItemPath + "'); return false;") : false;
@@ -445,21 +445,32 @@ const sitecoreAuthorToolbox = () => {
         }
 
         /**
-         * Character counter
+         * Character counter and Copy to clipboard
          */
         storage.feature_charscount == undefined ? storage.feature_charscount = true : false;
         if (storage.feature_charscount) {
 
-            /*
-             * Add a characters count next to each input and textarea field
-             */
             var scTextFields = document.querySelectorAll("input, textarea");
-            var countHtml, labelHtml, charsText, uploadText, scContentButtons;
-            var chars = 0;
+            var countHtml, labelHtml, copyHtml, charsText, uploadText, scContentButtons;
+            var chars, copyCount = 0;
+
+            loadCssFile("css/tooltip-min.css");
 
             //On load
             for (var field of scTextFields) {
 
+                //Copy to clipboard
+                if (field.className == "scEditorHeaderQuickInfoInput" || field.className == "scEditorHeaderQuickInfoInputID") {
+
+                    field.setAttribute('style', 'width: calc(100%-16px); margin-left:2px');
+                    field.classList.add("copyCount_"+copyCount);
+                    copyHtml = `<a class="t-top t-sm" data-tooltip="Copy" onclick="copyContent('` + field.value + `', 'copyCount_` + copyCount + `')"><img src="` + global.iconCopy + `" class="scIconCopy" /></a>`
+                    field.insertAdjacentHTML('beforebegin', copyHtml);
+                    copyCount++;
+
+                }
+
+                //Character counter
                 if (field.className == "scContentControl" || field.className == "scContentControlMemo") {
 
                     field.setAttribute('style', 'padding-right: 70px !important');
@@ -611,7 +622,8 @@ const sitecoreAuthorToolbox = () => {
 
                 //Hide Quick Info section in experimental UI
                 if (storage.feature_experimentalui == true) {
-                    sectionVisible = sectionTitle != "Quick Info" ? true : false;
+                    //sectionVisible = sectionTitle != "Quick Info" ? true : false;
+                    sectionVisible = true;
                 } else {
                     sectionVisible = true;
                 }

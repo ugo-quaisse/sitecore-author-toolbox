@@ -17,18 +17,19 @@ function scSaveAnimation(id) {
 
     if (document.querySelector(".scSaveButton")) {
         let saveMessage = document.querySelector(".saveMessage");
+        saveMessage.innerHTML = "Your changes have been saved successfully!";
         document.querySelector(".scSaveButton").innerText = "Saving...";
         document.querySelector(".scSaveButton").setAttribute("disabled", true);
 
         setTimeout(function() {
-            saveMessage.classList.add("visible");
-        }, 500);
-
-        setTimeout(function() {
             document.querySelector(".scSaveButton").innerText = "Save";
             document.querySelector(".scSaveButton").removeAttribute("disabled");
+            saveMessage.classList.add("visible");
+        }, 1500);
+
+        setTimeout(function() {
             saveMessage.classList.remove("visible");
-        }, 2000);
+        }, 3000);
     }
 
 }
@@ -210,4 +211,19 @@ const showSitecoreMenu = () => {
 
 const showLanguageMenu = () => {
     console.log("Languages");
+}
+
+const copyContent = (value, targetClass) => {
+    navigator.clipboard.writeText(value).then(function() {
+        let target = document.querySelector("."+targetClass);
+        console.log(target);
+        let saveMessage = document.querySelector(".saveMessage");
+        saveMessage ? saveMessage.innerHTML = "Copied" : target.value = "Copied!";
+        saveMessage ? saveMessage.classList.add("visible") : false;
+        setTimeout(function() {
+            saveMessage ? saveMessage.classList.remove("visible") : target.value = value;
+        }, 1800);
+    }, function(err) {
+        console.error('Async: Could not copy text: ', err);
+    });
 }

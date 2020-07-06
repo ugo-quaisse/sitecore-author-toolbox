@@ -337,15 +337,15 @@ chrome.storage.sync.get((storage) => {
 
         }
 
+
+
         /*
          * Sitecore Pages
          */
-        if (global.isDesktop && !global.isGalleryFavorites) {
+        if (global.isDesktop && !global.isGalleryFavorites && !global.isXmlControl) {
 
             consoleLog("**** Desktop Shell ****", "orange");
             storage.feature_launchpad == undefined ? storage.feature_launchpad = true : false;
-
-            
 
             if (storage.feature_experimentalui) {
 
@@ -740,7 +740,7 @@ chrome.storage.sync.get((storage) => {
 
         }
 
-        if (global.isXmlControl) {
+        if (global.isXmlControl && !global.isRichText) {
 
             consoleLog("**** XML Control (Window) ****", "orange");
 
@@ -1231,7 +1231,7 @@ chrome.storage.sync.get((storage) => {
                     if (title != null) {
                         command.setAttribute('data-tooltip', title);
                         command.classList.add("t-bottom");
-                        command.classList.add("t-sm");
+                        command.classList.add("t-md");
                         command.removeAttribute("title");
                     }
                 }

@@ -122,7 +122,7 @@ function setIcon(tab) {
             chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
 
             for (var i in cookies) {
-                if (cookies[i].name == "sitecore_userticket" || cookies[i].name.includes("#lang")) {
+                if (cookies[i].name == "sitecore_userticket" || cookies[i].name.includes("#lang") || cookies[i].name.includes("#sc_mode")) {
                     cookie = true;
                     break;
                 }
@@ -130,31 +130,22 @@ function setIcon(tab) {
 
             //If sitecore cookie is there
             if (cookie) {
-                //chrome.browserAction.setIcon({path: 'images/icon.png'});
                 chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
                 chrome.browserAction.setBadgeText({ text: 'ON' });
+                
                 //Context menu
                 chrome.storage.sync.get(['feature_contextmenu'], (result) => {
-
                     result.feature_contextmenu == undefined ? result.feature_contextmenu = false : false;
                     result.feature_contextmenu ? showContextMenu(tab) : false;
-
                 });
             } else {
-                //chrome.browserAction.setIcon({path: 'images/icon_gray.png'});
                 chrome.browserAction.setBadgeBackgroundColor({ color: "#777777" });
                 chrome.browserAction.setBadgeText({ text: 'OFF' });
             }
 
         });
 
-        chrome.cookies.get({ "url": tab.url, "name": "sitecore_userticket" }, function(cookie) {
-
-
-        });
-
     } else if (isSitecore) {
-        //chrome.browserAction.setIcon({path: 'images/icon.png'});
         chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
         chrome.browserAction.setBadgeText({ text: 'ON' });
     }

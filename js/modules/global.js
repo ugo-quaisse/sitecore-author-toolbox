@@ -4,6 +4,7 @@
  * Global variables declaration
  */
 export const debug = false
+export const showSnackbar = true
 export const extensionVersion = chrome.runtime.getManifest().version
 export const extensionId = chrome.runtime.getURL('something').split('chrome-extension://')[1].split('/something')[0]
 export const iconPreload = chrome.runtime.getURL('images/preload.svg');
@@ -27,6 +28,7 @@ export const iconVersion = chrome.runtime.getURL('images/version.svg')
 export const iconLanguage = chrome.runtime.getURL('images/language.svg')
 export const iconMore = chrome.runtime.getURL('images/more.svg')
 export const iconInfo = chrome.runtime.getURL('images/info.svg')
+export const iconCopy = chrome.runtime.getURL('images/copy.svg')
 export const iconEmpty = chrome.runtime.getURL('images/empty.svg')
 export const iconForbidden = chrome.runtime.getURL('images/forbidden.svg')
 export const iconFields = chrome.runtime.getURL('images/fields.svg')
@@ -73,6 +75,7 @@ export const isXmlControl = windowLocationHref.includes('default.aspx?xmlcontrol
 export const scDatabase = urlParams.get('sc_content')
 export const isGalleryLanguage = windowLocationHref.includes('gallery.language')
 export const isGalleryVersion = windowLocationHref.includes('gallery.version')
+export const isRichText = windowLocationHref.includes('richtext.')
 export const isGalleryLanguageExpEd = windowLocationHref.includes('selectlanguagegallery')
 export const isGalleryFavorites = windowLocationHref.includes('gallery.favorites')
 export const isGalleryVersions = windowLocationHref.includes('gallery.versions')

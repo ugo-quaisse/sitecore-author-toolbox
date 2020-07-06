@@ -334,6 +334,11 @@ select option:checked {
     filter: brightness(var(--iconBrightness));
 }
 
+.scContentTreeNodeIcon {
+    margin: 0 8px 0 0;
+    transform: scale(1.1);
+}
+
 .scMenuItemCaption,
 .scMenuItemCaption_Hover {
     padding: 0 10px;

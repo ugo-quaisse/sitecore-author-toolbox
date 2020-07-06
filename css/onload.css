@@ -1054,3 +1054,11 @@ ul.scAccountMenu li:after {
 .hideDesktopHeader {
     margin-top: 0px !important;
 }
+
+.scIconCopy {
+    vertical-align: middle;
+    cursor: pointer;
+}
+.scIconCopy:hover {
+    filter: brightness(1.5);
+}

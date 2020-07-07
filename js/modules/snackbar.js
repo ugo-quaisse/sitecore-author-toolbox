@@ -16,12 +16,13 @@ const showSnackbar = (version) => {
     let html = `<div class="snackbar">` + snackbarHtml + `<button onclick="window.open('https://forms.gle/vWbp8w9Z1zETyvKd9')">FEEDBACK</button><button id="sbDismiss">DISMISS</button></div>`;
 
     //Show Snackbar
-    document.querySelector('body').insertAdjacentHTML('beforeend', html);
+    if(global.showSnackbar) {
+        document.querySelector('body').insertAdjacentHTML('beforeend', html);
 
-
-    //Add listener on click #sbDismiss
-    document.querySelector("#sbDismiss").addEventListener("click", function() {
-        localStorage.setItem("sbDismiss", version);
-        document.querySelector('.snackbar').setAttribute('style', 'display: none');
-    });
+        //Add listener on click #sbDismiss
+        document.querySelector("#sbDismiss").addEventListener("click", function() {
+            localStorage.setItem("sbDismiss", version);
+            document.querySelector('.snackbar').setAttribute('style', 'display: none');
+        });
+    }
 }

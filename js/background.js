@@ -112,10 +112,15 @@ function setIcon(tab) {
     url = url[0];
     var isSitecore = url.includes("/sitecore/");
     var isUrl = url.includes("http");
+    var isLocalhost = url.includes("localhost:")
     var isViewSource = url.includes("view-source:");
     var cookie = false;
 
-    if (isUrl && !isViewSource && tabUrl) {
+    console.log(tab.url);
+
+    if (isUrl && !isViewSource && tabUrl && !isLocalhost) {
+
+        console.log("Live");
 
         chrome.cookies.getAll({ url: tabUrl.origin }, function(cookies) {
 
@@ -146,8 +151,11 @@ function setIcon(tab) {
         });
 
     } else if (isSitecore) {
+
+        console.log("Local");
         chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
         chrome.browserAction.setBadgeText({ text: 'ON' });
+
     }
 
 }

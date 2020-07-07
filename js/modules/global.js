@@ -4,7 +4,7 @@
  * Global variables declaration
  */
 export const debug = false
-export const showSnackbar = true
+export const showSnackbar = false
 export const extensionVersion = chrome.runtime.getManifest().version
 export const extensionId = chrome.runtime.getURL('something').split('chrome-extension://')[1].split('/something')[0]
 export const iconPreload = chrome.runtime.getURL('images/preload.svg');

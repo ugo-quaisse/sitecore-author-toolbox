@@ -216,13 +216,14 @@ const showLanguageMenu = () => {
 const copyContent = (value, targetClass) => {
     navigator.clipboard.writeText(value).then(function() {
         let target = document.querySelector("."+targetClass);
+        let targetMessage = document.querySelector(".sc_copyMessage");
         console.log(target);
         let saveMessage = document.querySelector(".saveMessage");
-        saveMessage ? saveMessage.innerHTML = "Copied" : target.value = "Copied!";
+        saveMessage ? saveMessage.innerHTML = "Copied" : targetMessage.innerHTML = "Copied!";
         saveMessage ? saveMessage.classList.add("visible") : false;
         setTimeout(function() {
-            saveMessage ? saveMessage.classList.remove("visible") : target.value = value;
-        }, 1800);
+            saveMessage ? saveMessage.classList.remove("visible") : targetMessage.innerHTML = "";
+        }, 1000);
     }, function(err) {
         console.error('Async: Could not copy text: ', err);
     });

@@ -462,10 +462,10 @@ const sitecoreAuthorToolbox = () => {
                 //Copy to clipboard
                 if (field.className == "scEditorHeaderQuickInfoInput" || field.className == "scEditorHeaderQuickInfoInputID") {
 
-                    field.setAttribute('style', 'width: calc(100%-16px); margin-left:2px');
+                    field.setAttribute('style', 'width: calc(100%-16px); margin-left:2px; display: none');
                     field.classList.add("copyCount_"+copyCount);
-                    copyHtml = `<a class="t-top t-sm" data-tooltip="Copy" onclick="copyContent('` + field.value + `', 'copyCount_` + copyCount + `')"><img src="` + global.iconCopy + `" class="scIconCopy" /></a>`
-                    field.insertAdjacentHTML('beforebegin', copyHtml);
+                    copyHtml = `<span class="copyCountSpan_` + copyCount + `">` + field.value + `</span> <a class="t-top t-sm" data-tooltip="Copy" onclick="copyContent('` + field.value + `', 'copyCount_` + copyCount + `')"><img src="` + global.iconCopy + `" class="scIconCopy" /></a> <span class="sc_copyMessage"></span>`
+                    field.value != "[unknown]" ? field.insertAdjacentHTML('beforebegin', copyHtml) : field.insertAdjacentHTML('beforebegin', `<span>` + field.value + `</span>`);
                     copyCount++;
 
                 }

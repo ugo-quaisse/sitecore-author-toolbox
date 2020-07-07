@@ -215,8 +215,8 @@ const showLanguageMenu = () => {
 
 const copyContent = (value, targetClass) => {
     navigator.clipboard.writeText(value).then(function() {
-        let target = document.querySelector("."+targetClass);
-        let targetMessage = document.querySelector(".sc_copyMessage");
+        let target = document.querySelector(".copyCount_"+targetClass);
+        let targetMessage = document.querySelector(".copyCountMessage_"+targetClass);
         console.log(target);
         let saveMessage = document.querySelector(".saveMessage");
         saveMessage ? saveMessage.innerHTML = "Copied" : targetMessage.innerHTML = "Copied!";

@@ -1,5 +1,5 @@
 html {
-    font-size: 100% !important; 
+    font-size: 100% !important;
 }
 
 body {
@@ -7,41 +7,43 @@ body {
 }
 
 @keyframes animation {
-	0% {
-		background-position: 0% 0%;
-	}
-	100% {
-    	background-position: 100% 100%;
-  	}
+    0% {
+        background-position: 0% 0%;
+    }
+
+    100% {
+        background-position: 100% 100%;
+    }
 }
 
 .scInsertionHandle,
 .scSortingHandle {
     left: 0px !important;
     width: 100%;
-    padding: 10px 0px 32px 0px;
-	z-index: 9050 !important;
-	background-image: linear-gradient(45deg, #f7d871 25%, #fffbe5 25%, #fffbe5 50%, #f7d871 50%, #f7d871 75%, #fffbe5 75%, #fffbe5 100%);
-	background-size: 40px 40px;
-	/*animation: animation 20s linear infinite;*/
-	background-position: 0% 0%;
-	background-image: 0.5s ease-in-out;
- }
+    padding: 9px 0px 29px 0px;
+    z-index: 9050 !important;
+    background-image: linear-gradient(45deg, #f7d871 25%, #fffbe5 25%, #fffbe5 50%, #f7d871 50%, #f7d871 75%, #fffbe5 75%, #fffbe5 100%);
+    background-size: 40px 40px;
+    /*animation: animation 20s linear infinite;*/
+    background-position: 0% 0%;
+    background-image: 0.5s ease-in-out;
+    opacity: 0.9;
+}
 
 .scInsertionHandle:hover,
 .scSortingHandle:hover {
-	background-image: linear-gradient(45deg, #52cc7e 25%, #EEFFF4 25%, #EEFFF4 50%, #52cc7e 50%, #52cc7e 75%, #EEFFF4 75%, #EEFFF4 100%);
-	/*cursor: copy !important;*/
+    background-image: linear-gradient(45deg, #52cc7e 25%, #EEFFF4 25%, #EEFFF4 50%, #52cc7e 50%, #52cc7e 75%, #EEFFF4 75%, #EEFFF4 100%);
+    /*cursor: copy !important;*/
 }
 
 .scInsertionHandle:hover::after,
 .scSortingHandle:hover::after {
-	color: #000000;
-	/*cursor: copy !important;*/
+    color: #000000;
+    /*cursor: copy !important;*/
 }
 
 .scInsertionHandle::after {
-	content: "Add component here";
+    content: "Add component here";
     position: absolute;
     left: calc(50% - 100px);
     font-size: 18px;
@@ -53,8 +55,8 @@ body {
 }
 
 .scSortingHandle::after {
-	content: "Move here";
-	position: absolute;
+    content: "Move here";
+    position: absolute;
     left: calc(50% - 30px);
     font-size: 18px;
     font-weight: bold;
@@ -67,7 +69,7 @@ body {
 .scInsertionHandleLeft,
 .scInsertionHandleCenter,
 .scInsertionHandleRight {
-	display: none !important;
+    display: none !important;
 }
 
 .view-render-exception {
@@ -77,4 +79,20 @@ body {
     font-size: 12px;
     color: red;
     padding: 50px;
+}
+
+.zg-variant-switcher {
+    zoom: 1.1;
+    background-color: #fbd951;
+    padding: 4px !important;
+    margin: 0px !important;
+    height: 30px !important;
+}
+
+.zg-variant-switcher .zg-variant-list li.selected {
+    font-weight: bold !important;
+}
+
+.zg-variant-toggle-dropdown {
+    right: 5px !important;
 }

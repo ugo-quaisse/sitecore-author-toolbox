@@ -273,9 +273,30 @@ a.scTileItem:hover {
     transition: all ease-in-out .1s !important;
 }
 
+.grayscaleClass {
+    filter: grayscale(1);
+}
+
+.scEditableTab {
+    position: fixed;
+    top: 270px;
+    background-color: #f7f7f7;
+    padding: 10px 12px 7px 12px;
+    z-index: 10000;
+    border-radius: 0px 5px 5px 0px;
+    left: 0px;
+    filter: drop-shadow(1px 0px 4px rgba(0,0,0,0.2));
+    cursor: pointer !important;
+    transition: padding-left ease-in-out .1s !important;
+}
+
+.scEditableTab:hover {
+    padding-left: 15px;
+}
+
 .scContentEditorTab {
     position: fixed;
-    top: 307px;
+    top: 314px;
     background-color: #f7f7f7;
     padding: 10px 12px 7px 12px;
     z-index: 10000;
@@ -292,7 +313,7 @@ a.scTileItem:hover {
 
 .scNormalModeTab {
     position: fixed;
-    top: 350px;
+    top: 360px;
     background-color: #f7f7f7;
     padding: 10px 12px 7px 12px;
     z-index: 10000;

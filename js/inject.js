@@ -228,3 +228,8 @@ const copyContent = (value, targetClass) => {
         console.error('Async: Could not copy text: ', err);
     });
 }
+
+const showEditableContent = () => {
+    document.querySelectorAll("[contenteditable]").forEach( function(e) { e.classList.toggle("scFrameYellow"); })
+    document.querySelector("#scEditableImg").classList.toggle("grayscaleClass");
+}

@@ -745,8 +745,8 @@ chrome.storage.sync.get((storage) => {
             consoleLog("**** XML Control (Window) ****", "orange");
 
             if (storage.feature_experimentalui) {
-                loadCssFile("css/experimentalui-min.css");
-                getAccentColor();
+                //loadCssFile("css/experimentalui-min.css");
+                //getAccentColor();
             }
 
         }
@@ -1190,21 +1190,14 @@ chrome.storage.sync.get((storage) => {
 
             var scRibbonFlagIcons = document.querySelector(".flag_generic_24");
 
-            tdlanguage = scRibbonFlagIcons.nextSibling.innerText;
+            scRibbonFlagIcons ? tdlanguage = scRibbonFlagIcons.nextSibling.innerText : false;
+
             //Clean country name
-            tdlanguage = cleanCountryName(tdlanguage);
-
-            //Compare with Json data
-            for (key in global.jsonData) {
-                if (global.jsonData.hasOwnProperty(key)) {
-                    if (tdlanguage == global.jsonData[key]["language"].toUpperCase()) {
-                        tdlanguage = global.jsonData[key]["flag"];
-                    }
-                }
+            if(tdlanguage) {
+                tdlanguage = findCountryName(tdlanguage);
+                let flag = storage.feature_experimentalui ? chrome.runtime.getURL("images/Flags/svg/" + tdlanguage + ".svg") : chrome.runtime.getURL("images/Flags/24x24/flag_" + tdlanguage + ".png");
+                scRibbonFlagIcons.setAttribute('style', 'background-image: url(' + flag + '); background-repeat: no-repeat; background-position: top left;');
             }
-
-            let flag = storage.feature_experimentalui ? chrome.runtime.getURL("images/Flags/svg/" + tdlanguage + ".svg") : chrome.runtime.getURL("images/Flags/24x24/flag_" + tdlanguage + ".png");
-            scRibbonFlagIcons.setAttribute('style', 'background-image: url(' + flag + '); background-repeat: no-repeat; background-position: top left;');
 
         }
 
@@ -1223,10 +1216,20 @@ chrome.storage.sync.get((storage) => {
                 var scChromeCommand = controls.querySelectorAll(".scChromeCommand");
                 var scChromeText = controls.querySelector(".scChromeText");
                 var scChromeCommandText = controls.querySelector(".scChromeCommandText");
+                var changeColor = false;
 
                 for (var command of scChromeCommand) {
                     var title = command.getAttribute("title");
                     command.setAttribute('style', 'z-index:auto');
+
+                    if(!changeColor && title) {
+                        if (title.toLowerCase().includes("move component") || title.toLowerCase().includes("remove component") ) {
+                            let selector = document.querySelectorAll(".scFrameSideHorizontal, .scFrameSideVertical").forEach( function(e) { e.classList.remove("scFrameYellow"); });
+                            changeColor = true;
+                        } else {
+                            let selector = document.querySelectorAll(".scFrameSideHorizontal, .scFrameSideVertical").forEach( function(e) { e.classList.add("scFrameYellow"); });   
+                        }
+                    }
 
                     if (title != null) {
                         command.setAttribute('data-tooltip', title);
@@ -1283,7 +1286,10 @@ chrome.storage.sync.get((storage) => {
                     if (addedNode.id == "scCrossPiece") {
 
                         //Show/Hide button
-                        var html = '<div class="scExpTab ' + tabColor + '"><span class="tabHandle"></span><span class="tabText" onclick="toggleRibbon()">▲ Hide<span></div>';
+                        var html = `<div class="scExpTab ` + tabColor + `">
+                        <span class="tabHandle"></span>
+                        <span class="tabText" onclick="toggleRibbon()">▲ Hide<span>
+                        </div>`;
                         addedNode.insertAdjacentHTML('afterend', html);
                         observer.disconnect();
                         startDrag();
@@ -1311,7 +1317,7 @@ chrome.storage.sync.get((storage) => {
         }
 
         if (storage.feature_experienceeditor && !global.isRibbon) {
-            html = '<div class="scNormalModeTab ' + tabColor + '"><span class="t-right t-sm" data-tooltip="Open in Normal Mode"><a href="' + linkNormalMode + '"><img loading="lazy" src="' + global.iconChrome + '"/></a></span></div>';
+            html = '<div class="scNormalModeTab ' + tabColor + '"><span class="t-right t-sm" data-tooltip="Open in Normal Mode"><a href="' + linkNormalMode + '" target="_blank"><img loading="lazy" src="' + global.iconChrome + '"/></a></span></div>';
             pagemodeEdit ? pagemodeEdit.insertAdjacentHTML('afterend', html) : false;
         }
 
@@ -1322,6 +1328,15 @@ chrome.storage.sync.get((storage) => {
             html = '<div class="scContentEditorTab ' + tabColor + '"><span class="t-right t-sm" data-tooltip="Open in Content Editor"><a href="' + window.location.origin + '/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1"><img loading="lazy" src="' + global.iconCE + '"/></a></span></div>';
             pagemodeEdit ? pagemodeEdit.insertAdjacentHTML('afterend', html) : false;
         }
+
+        /*
+         * Show editable content
+         */
+        if (storage.feature_experienceeditor && !global.isRibbon) {
+            html = '<div class="scEditableTab ' + tabColor + '"><span class="t-right t-sm" data-tooltip="Show/hide editable content"><a onclick="showEditableContent()"><img loading="lazy" src="' + global.iconED + '" id="scEditableImg" class="grayscaleClass"/></a></span></div>';
+            pagemodeEdit ? pagemodeEdit.insertAdjacentHTML('afterend', html) : false;
+        }
+        //document.querySelectorAll("[contenteditable]").forEach( function(e) { e.classList.add("scFrameYellow"); })
 
     }
 

@@ -123,7 +123,9 @@ export const workboxLaunchpad = document.querySelector("a[title='Workbox']")
 export const workboxPage = '/sitecore/shell/Applications/Workbox/Default.aspx?he=Workbox&sc_bw=1'
 export const hasRedirection = windowLocationHref.includes('&ro=')
 export const hasRedirectionOther = windowLocationHref.includes('&sc_ce_uri=')
+export const hasModePreview = windowLocationHref.includes('&mo=preview')
 export const scContentTree = document.querySelector('#ContentTreeHolder')
+
 
 export const svgAnimation = `
 <svg version="1.1" id="L4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 52 12" enable-background="new 0 0 0 0" xml:space="preserve">

@@ -11,8 +11,12 @@ body.contentEditor:after {
     opacity: 0;
 }
 
+#scPageExtendersForm {
+    border-bottom: 1px solid #666;
+}
+
 /**
- * Cusom CSS
+ * Custom CSS
  */
 
 .ui-widget-overlay {

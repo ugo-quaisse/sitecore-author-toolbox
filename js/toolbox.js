@@ -250,10 +250,12 @@ chrome.storage.sync.get((storage) => {
             /**
              * Resume from where you left
              */
-            if (!global.hasRedirection && !global.hasRedirectionOther && !global.isLaunchpad) {
+            if (!global.hasRedirectionOther && !global.isLaunchpad) {
+
+                //fo parameters is the default Sitecore behaviour to open a specific item
 
                 storage.feature_reloadnode == undefined ? storage.feature_reloadnode = true : false;
-                if (storage.scData != undefined) {
+                if (storage.scData != undefined && !global.urlParams.get("fo") && !global.urlParams.get("ro")) {
 
                     //If Hash detected in the URL
                     if (global.scUrlHash != "") {
@@ -504,10 +506,14 @@ chrome.storage.sync.get((storage) => {
                 scBucketListSelectedBox.addEventListener("change", function() {
 
                     var itemId = scBucketListSelectedBox.value;
+                    itemId = itemId.includes("|") ? itemId.split("|")[1] : itemId;
                     var itemName = scBucketListSelectedBox[scBucketListSelectedBox.selectedIndex].text;
                     var scMessageEditText = '<a class="scMessageBarOption" href="' + window.location.origin + '/sitecore/shell/Applications/Content%20Editor.aspx#' + itemId + '" target="_blank"><u>Click here ⧉</u></a> ';
-                    var scMessageExperienceText = '<a class="scMessageBarOption" href="' + window.location.origin + '/?sc_mode=edit&sc_itemid=' + itemId + '" target="_blank"><u>Click here ⧉</u></a> ';
-                    var scMessageEdit = '<div id="Warnings" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' + global.icon + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">' + itemName + '</div><span id="Information" class="scMessageBarText"><span class="scMessageBarOptionBullet">' + scMessageEditText + '</span> to edit this item in <b>Content Editor</b>.</span><span id="Information" class="scMessageBarText"><br /><span class="scMessageBarOptionBulletXP">' + scMessageExperienceText + '</span> to edit this page in <b>Experience Editor</b>.</span></div></div>';
+                    //var scMessageExperienceText = '<a class="scMessageBarOption" href="' + window.location.origin + '/?sc_mode=edit&sc_itemid=' + itemId + '" target="_blank"><u>Click here ⧉</u></a> ';
+                    var scMessageEdit = `<div id="Warnings" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(` + global.icon + `)"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">` + itemName + `</div>`
+                    scMessageEdit += `<span id="Information" class="scMessageBarText"><span class="scMessageBarOptionBullet">` + scMessageEditText + `</span> to edit this datasource in <b>Content Editor</b>.</span>`;
+                   //scMessageEdit += `<span id="Information" class="scMessageBarText"><br /><span class="scMessageBarOptionBulletXP">` + scMessageExperienceText + `</span> to edit this datasource in <b>Experience Editor</b>.</span>`
+                    scMessageEdit += `</div></div>`;
 
                     //Add hash to URL
                     if (!document.querySelector(".scMessageBar")) {
@@ -515,7 +521,6 @@ chrome.storage.sync.get((storage) => {
                     } else {
                         document.querySelector(".scMessageBarTitle").innerHTML = itemName;
                         document.querySelector(".scMessageBarOptionBullet").innerHTML = scMessageEditText;
-                        document.querySelector(".scMessageBarOptionBulletXP").innerHTML = scMessageExperienceText;
                     }
 
                 });
@@ -1069,7 +1074,7 @@ chrome.storage.sync.get((storage) => {
                 var locaStorage = localStorage.getItem('scBackPrevious');
 
                 //Add hash to URL
-                if (!global.hasRedirection && !global.hasRedirectionOther) {
+                if (!global.hasRedirection && !global.hasRedirectionOther && !global.hasModePreview) {
                     if (locaStorage != "true") {
                         var state = { 'sitecore': true, 'id': sitecoreItemID, 'language': scLanguage, 'version': scVersion }
                         history.pushState(state, undefined, "#" + sitecoreItemID + "_" + scLanguage + "_" + scVersion);
@@ -1231,7 +1236,7 @@ chrome.storage.sync.get((storage) => {
                         }
                     }
 
-                    if (title != null) {
+                    if (title != null && title != "") {
                         command.setAttribute('data-tooltip', title);
                         command.classList.add("t-bottom");
                         command.classList.add("t-md");

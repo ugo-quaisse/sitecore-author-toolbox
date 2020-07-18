@@ -10,21 +10,33 @@ export { insertSavebar, insertBreadcrumb, insertLanguageButton, insertVersionBut
  * Insert Save bar
  */
 const insertSavebar = () => {
-    //Save Bar
-    let scSaveBar = `
-    <div class="scSaveBar">
-        <div class="scActions">
-            <button id="scPublishMenuMore" class="grouped" type="button">▾</button>
+
+    //If preview mode
+    let scPrimaryBtn = global.hasModePreview
+    ? `<button class="primary scExitButton" onclick="javascript:return scForm.invoke('contenteditor:closepreview', event)">Close Panel</button>`
+    : `<button id="scPublishMenuMore" class="grouped" type="button">▾</button>
             <ul class="scPublishMenu">
                 <li onclick="javascript:return scForm.invoke('item:setpublishing', event)">Unpublish...</li>
                 <li onclick="javascript:return scForm.postEvent(this,event,'item:publishingviewer(id=)')">Scheduler...</li>
             </ul>
-            <button class="primary primaryGrouped" onclick="javascript:return scForm.postEvent(this,event,'item:publish(id=)')">Save and Publish</button>
+            <button class="primary primaryGrouped" onclick="javascript:return scForm.postEvent(this,event,'item:publish(id=)')">Save and Publish</button>`;
+
+    let scLiveyBtn = !global.hasModePreview
+    ? `<button class="scPreviewButton" disabled>Checking url...</button>`
+    : ``;
+
+    //Save Bar
+    let scSaveBar = `
+    <div class="scSaveBar">
+        <div class="scActions">
+            ` + scPrimaryBtn + `
             <button class="scSaveButton" onclick="javascript:return scForm.invoke('contenteditor:save', event)">Save</button>
-            <button class="scPreviewButton" disabled>Checking url...</button>
+            ` + scLiveyBtn + `
         </div>
         <div class="scBreadcrumb"></div>
     </div>`;
+
+
     let contentEditor = document.querySelector("#ContentEditor");
     document.querySelector(".scSaveBar") ? document.querySelector(".scSaveBar").remove() : false;
     contentEditor ? contentEditor.insertAdjacentHTML('afterbegin', scSaveBar) : false;

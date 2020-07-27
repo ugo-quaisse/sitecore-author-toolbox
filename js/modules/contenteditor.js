@@ -80,13 +80,20 @@ const sitecoreAuthorToolbox = () => {
             var isData = sitecoreItemPathOriginal.includes('/data/');
             var isSettings = sitecoreItemPathOriginal.includes('/settings/');
             var isPresentation = sitecoreItemPathOriginal.includes('/presentation/');
-            var isEmailTemplate = sitecoreItemPathOriginal.includes('/sitecore/content/email/');
-
-            //global.debug ? console.table(ScItem) : false;
+            var isEmailTemplate = sitecoreItemPathOriginal.includes('/sitecore/content/email/');    
 
             var scLanguage = document.querySelector("#scLanguage").value.toLowerCase();
             var scUrl = window.location.origin + '/?sc_itemid=' + sitecoreItemID + '&sc_mode=normal&sc_lang=' + scLanguage + '&sc_version=' + scVersion;
             var scFlag, tabbedFlag;
+
+            /**
+             * Detect homepage
+             */
+            global.debug ? console.table(ScItem) : false;
+
+            // if(ScItem.path.includes("/sitecore/content/sitecore/styleguide/home")) {
+            //     ScItem.baseUrl = "https://vps.uquaisse.io/styleguide";
+            // }
 
             /**
              * Experimentations
@@ -139,9 +146,13 @@ const sitecoreAuthorToolbox = () => {
              */
             //Generating Live URLs (xxxsxa_sitexxx will be replace later by active site)
             if (sitecoreItemPath[1] != undefined) {
+
                 sitecoreItemPath = encodeURI(window.location.origin + "/" + scLanguage + "/" + sitecoreItemPath[1] + "?sc_site=xxxsxa_sitexxx&sc_mode=normal").toLowerCase();
+
             } else {
+
                 sitecoreItemPath = encodeURI(window.location.origin + "/" + scLanguage + "/?sc_site=xxxsxa_sitexxx&sc_mode=normal").toLowerCase();
+
             }
 
             //Excluding data, why not having it for media? (replace Media Library by -/media)
@@ -180,6 +191,19 @@ const sitecoreAuthorToolbox = () => {
                             var isSameSite = site_cookie.includes(site_quickinfo);
                         }
 
+                        // if(ScItem.baseUrl != undefined) {
+
+                        //     console.log(sitecoreItemPath);
+
+                        //     sitecoreItemPath = sitecoreItemPath.replace("sc_site=xxxsxa_sitexxx&", "");
+                        //     sitecoreItemPath = sitecoreItemPath.replace("?sc_mode=normal", "");
+                        //     sitecoreItemPath = sitecoreItemPath.replace("&sc_mode=normal", "");
+                        //     sitecoreItemPath = sitecoreItemPath.replace(window.location.origin, ScItem.baseUrl);
+                        //     scUrl = scUrl.replace(window.location.origin, ScItem.baseUrl);
+                        //     console.log(ScItem.baseUrl);
+
+                        // }
+                         
                         if (response.farewell != null && isSameSite && liveUrl == undefined) {
 
                             sitecoreItemPath = sitecoreItemPath.replace("xxxsxa_sitexxx", response.farewell);
@@ -868,7 +892,7 @@ const sitecoreAuthorToolbox = () => {
         /**
          * Scriban syntax highlighter
          */
-        if (ScItem.template.includes("/experience accelerator/scriban")) {
+        if (ScItem.template.includes("/experience accelerator/scriban") || ScItem.template.includes("/experience accelerator/generic meta rendering/html snippet")) {
 
             storage.feature_rtecolor == undefined ? storage.feature_rtecolor = true : false;
 

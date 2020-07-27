@@ -54,7 +54,7 @@ document.body.onload = function() {
         document.querySelector("#video").setAttribute("style", "display:none");
     }
 
-    //Generate domains
+    //Generate domains form
     chrome.storage.sync.get(['domain_manager'], function(result) {
         var domains = undefined;
         if (!chrome.runtime.error) {

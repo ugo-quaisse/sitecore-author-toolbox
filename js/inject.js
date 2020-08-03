@@ -181,7 +181,7 @@ const fadeEditorFrames = () => {
 }
 
 const insertPage = (scItem, scItemName) => {
-    document.querySelector(".scOverlay").setAttribute("style", "visibility:visible")
+    document.querySelector(".scOverlay") ? document.querySelector(".scOverlay").setAttribute("style", "visibility:visible") : false;
     document.querySelector("#scModal").setAttribute("data-scItem", scItem);
     document.querySelector("#scModal").setAttribute("data-scItemName", scItemName);
     scItemName != undefined ? document.querySelector("#scModal > .header > .title").innerHTML = 'Insert' : false;

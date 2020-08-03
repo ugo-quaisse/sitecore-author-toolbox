@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>edit</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="edit" fill="#FFFFFF" fill-rule="nonzero">
+            <polygon id="Path" points="1.6 11.04 0 16 4.96 14.4"></polygon>
+            <rect id="Rectangle" transform="translate(8.323909, 7.684255) rotate(-45.000000) translate(-8.323909, -7.684255) " x="2.80400861" y="5.28429329" width="11.0398004" height="4.79992272"></rect>
+            <path d="M15.76,2.48 L13.52,0.24 C13.2,-0.08 12.72,-0.08 12.4,0.24 L11.68,0.96 L15.04,4.32 L15.76,3.6 C16.08,3.28 16.08,2.8 15.76,2.48 Z" id="Path"></path>
+        </g>
+    </g>
+</svg>

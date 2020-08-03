@@ -183,7 +183,7 @@ function repositionElement(event) {
  */
 function startDrag() {
     var initX, mousePressX;
-    var contextmenu = document.querySelector('.scExpTab');
+    var contextmenu = document.querySelector('.tabHandle');
     if(contextmenu) {
     contextmenu.addEventListener('mousedown', function(event) {
 

@@ -9,7 +9,7 @@ body {
     font-size: 12px;
 }
 
-h1 {
+#scPanel h1 {
     font-size: 250%;
     font-weight: 700;
     color: var(--accent);
@@ -17,7 +17,7 @@ h1 {
     margin: auto;
 }
 
-h2 {
+#scPanel h2 {
     font-size: 125%;
     border-bottom: 1px solid var(--text);
     font-weight: 700;
@@ -26,7 +26,7 @@ h2 {
     text-transform: uppercase;
 }
 
-h3 {
+#scPanel h3 {
     font-size: 100%;
     font-weight: 700;
     color: var(--accent);
@@ -340,7 +340,10 @@ select option:checked {
 
 .scContentTreeNodeIcon {
     margin: 0 8px 0 0;
-    transform: scale(1.1);
+    transform: scale(1.15);
+    position: relative;
+    z-index: 10;
+    image-rendering: pixelated;
 }
 
 .scMenuItemCaption,
@@ -373,7 +376,7 @@ select option:checked {
 }
 
 div.scContentTreeNode {
-    padding: 2px 0px 1px 15px;
+    padding: 2px 0px 1px 17px;
     font-size: 14px;
 }
 
@@ -389,11 +392,40 @@ div.scContentTreeNode>img:hover {
     background-color: transparent;
 }
 
+.scDragHover {
+    /*background-color: var(--accent) !important;*/
+    border: 2px dashed var(--black1) !important;
+}
+
+.scDragHover>span {
+    /*color: var(--accentText) !important;*/
+}
+
+.scContentDragMarker {
+    background-color: var(--accent) !important;
+    color: var(--accent) !important;
+    height: 4px;
+    margin-top: 3px;
+    margin-left: -15px;
+    border-radius: 2px;
+}
+
+img.scContentTreeNodeGlyph:hover[src="/sitecore/shell/themes/standard/images/noexpand15x15.gif"] {
+    background-color: transparent;
+}
+
 a.scContentTreeNodeActive,
-a.scContentTreeNodeNormal,
-a.scContentTreeNodeNormal.scDragHover {
+a.scContentTreeNodeNormal {
     background-color: transparent;
     width: -webkit-fill-available;
+    padding: 1px 0px 5px 5px;
+    vertical-align: sub;
+    border: 2px solid transparent;
+}
+
+.scContentControlTree a.scContentTreeNodeActive,
+.scContentControlTree a.scContentTreeNodeNormal {
+    vertical-align: super;
 }
 
 a.scContentTreeNodeActive>span,
@@ -414,7 +446,7 @@ a.scContentTreeNodeActive>span {
 }
 
 a.scContentTreeNodeNormal>span {
-    color: var(--text) !important;
+    color: var(--text);
 }
 
 .scContentTreeNodeGlyph:hover+a>span,
@@ -457,9 +489,26 @@ a.scContentTreeNodeActive>span>img {
     filter: invert(1);
 }
 
+.scEditItemIcon {
+    position: relative;
+    color: var(--black1);
+    z-index: 101;
+    text-align: center;
+    opacity: 0;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    float: right;
+    margin-top: -31px;
+    margin-right: 40px;
+    background: url(chrome-extension://__MSG_@@extension_id__/images/edit2.svg) center center transparent no-repeat;
+    filter: invert(1);
+}
+
 .scInsertItemIconInverted {
     filter: invert(0);
 }
+
 
 /* Content Editor Header */
 
@@ -616,7 +665,7 @@ a.scRibbonEditorTabNormal:hover {
 
 /* Message bar */
 .scMessageBar .scMessageBarIcon {
-    background-position: center 22px !important;
+    background-position: center 19px !important;
     padding: 7px !important;
 }
 
@@ -752,8 +801,16 @@ a.scRibbonEditorTabNormal:hover {
 }
 
 .scEditorSectionCaptionCollapsed {
-    background-color: var(--black6);
-    border-radius: 0px;
+    background-color: var(--black9);
+    border-radius: 3px;
+}
+
+.scEditorSectionCaptionCollapsed:hover {
+    background-color: var(--black8);
+}
+
+.scEditorSectionCaptionGlyph {
+    margin: 11px 0px 0 0;
 }
 
 .scEditorSectionPanel {
@@ -1007,6 +1064,17 @@ input[type="submit"],
     border-radius: 0px 3px 3px 0px;
 }
 
+.scPopup {
+    background-color: var(--white);
+    border-radius: 3px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .3);
+}
+
+.scPopup > table > tbody > tr[id^=ContextMenu_] > td {
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+
 .scEditorTabControlsHolder>.scMoreMenu {
     width: 240px;
     height: fit-content;
@@ -1041,7 +1109,7 @@ input[type="submit"],
 }
 
 .scEditorTabControlsHolder>.scMoreMenu>li.separator {
-    border-top: 1px solid var(--grey3);
+    border-top: 1px solid var(--grey9);
 }
 
 .scEditorTabControlsHolder>.scMoreMenu>li.danger {

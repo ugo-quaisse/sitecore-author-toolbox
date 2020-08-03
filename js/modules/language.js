@@ -27,10 +27,13 @@ const cleanCountryName = (name) => {
   //Replace non-standard country name
   language = language.replace("U.A.E.","UNITED_ARAB_EMIRATES");
   language = language.replace("KOREA","SOUTH_KOREA");
+  language = language.replace("KOREAN","KOREA");
   language = language.replace("UNITED_STATES","USA");
   language = language.replace("UNITED_KINGDOM","GREAT_BRITAIN");
   language = language.replace("ENGLISH","GREAT_BRITAIN");
   language = language.replace("PRC","CHINA");
+  language = language.replace("SIMPLIFIED","CHINA");
+  language = language.replace("TRADITIONAL","CHINA");
 
   return language.toLowerCase();
 }

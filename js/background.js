@@ -116,11 +116,7 @@ function setIcon(tab) {
     var isViewSource = url.includes("view-source:");
     var cookie = false;
 
-    console.log(tab.url);
-
     if (isUrl && !isViewSource && tabUrl && !isLocalhost) {
-
-        console.log("Live");
 
         chrome.cookies.getAll({ url: tabUrl.origin }, function(cookies) {
 
@@ -152,7 +148,6 @@ function setIcon(tab) {
 
     } else if (isSitecore) {
 
-        console.log("Local");
         chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
         chrome.browserAction.setBadgeText({ text: 'ON' });
 
@@ -162,6 +157,22 @@ function setIcon(tab) {
 
 //When message is requested from toolbox.js
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+
+    console.log(request);
+
+    if (request.greeting == "get_pagestatus") {
+        
+        
+        fetch(request.url)
+        .then(function(response) {
+            console.log(response);
+            sendResponse({ status: response.status, redirected: response.redirected });
+        })
+        .catch(function(error) {
+            console.log(error);
+            sendResponse({ error: error });
+        })
+    }
 
     if (request.greeting == "get_pagespeed") {
         // console.log(request);
@@ -184,9 +195,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.greeting == "sxa_site") {
         checkSiteSxa(request, sender, sendResponse);
     }
-    if (request.greeting == "hide_tab") {
-        sendResponse({ farewell: "Ok roger that!" });
-    }
+
     return true;
 
 });

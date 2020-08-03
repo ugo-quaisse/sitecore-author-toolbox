@@ -1,7 +1,7 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from './global.js';
-import { getScItemData, setTextColour } from './helpers.js';
+import { exeJsCode, getScItemData, setTextColour } from './helpers.js';
 
 export { insertSavebar, insertBreadcrumb, insertLanguageButton, insertVersionButton, insertMoreButton, insertNavigatorButton, insertLockButton, pathToBreadcrumb, initInsertIcon, getAccentColor, initColorPicker, initSitecoreMenu, initUserMenu, initGutter };
 
@@ -16,13 +16,14 @@ const insertSavebar = () => {
     ? `<button class="primary scExitButton" onclick="javascript:return scForm.invoke('contenteditor:closepreview', event)">Close Panel</button>`
     : `<button id="scPublishMenuMore" class="grouped" type="button">▾</button>
             <ul class="scPublishMenu">
+                <li onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor')">Edit in Experience Editor...</li>
                 <li onclick="javascript:return scForm.invoke('item:setpublishing', event)">Unpublish...</li>
                 <li onclick="javascript:return scForm.postEvent(this,event,'item:publishingviewer(id=)')">Scheduler...</li>
             </ul>
             <button class="primary primaryGrouped" onclick="javascript:return scForm.postEvent(this,event,'item:publish(id=)')">Save and Publish</button>`;
 
     let scLiveyBtn = !global.hasModePreview
-    ? `<button class="scPreviewButton" disabled>Checking url...</button>`
+    ? `<button class="scPreviewButton" disabled>...</button>`
     : ``;
 
     //Save Bar
@@ -133,7 +134,7 @@ const insertMoreButton = (locked = false) => {
        	<li onclick="javascript:if(confirm('Do you really want to create a new version for this item?')) { return scForm.postEvent(this,event,'item:addversion(id=)') }">Add new version</li>
         <li onclick="javascript:return scForm.postEvent(this,event,'item:rename')">Rename item</li>
         <li onclick="javascript:return scForm.invoke('item:duplicate')">Duplicate</li>
-        <li class="separator" onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor')">Open in Experience Editor</li>
+        <li class="separator" onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor')">Edit in Experience Editor...</li>
        	<li class="separator"  onclick="javascript:return scForm.postEvent(this,event,'item:sethelp')">Help texts</li>
         <li id="scInfoButton">Item details</li>
         <li onclick="javascript:return scForm.postEvent(this,event,'item:executescript(id=` + ScItem.id + `,db=master,script={1876D433-4FAE-46B2-B2EF-AAA0FDA110E7},scriptDb=master)')">Author statistics</li>
@@ -340,6 +341,17 @@ const initUserMenu = () => {
         </ul>`;
         accountInformation.insertAdjacentHTML('afterbegin', htmlMenu);
 
+        //Listeners
+        document.addEventListener('keydown', (event) => {
+
+            if (event.key === 'Shift') {
+                exeJsCode(`showSitecoreMenu()`);
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
+        });
+
         //Events   
         if (document.querySelector(".scAccountMenu")) {
             document.addEventListener('click', (event) => {
@@ -380,6 +392,13 @@ const setInsertIcon = (id) => {
     a.insertAdjacentHTML('afterend', `<span id="scIcon` + id + `" title="Insert under this node" class="scInsertItemIcon ` + activeClass + `" onclick="insertPage('` + id + `', '` + itemName + `')"></span>`);
     let target = document.querySelector('#scIcon' + id);
     target ? target.setAttribute("style", "opacity:1") : false;
+    
+    //Remove existing Edit Icons
+    // document.querySelectorAll(".scEditItemIcon").forEach((el) => { el.remove() });
+    // //Add EE icon
+    // a.insertAdjacentHTML('afterend', `<span id="scIconEE` + id + `" title="Edit in Experience Editor" class="scEditItemIcon ` + activeClass + `" onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor(id=` + id + `)')"></span>`);
+    // target = document.querySelector('#scIconEE' + id);
+    // target ? target.setAttribute("style", "opacity:1") : false;
 
 }
 

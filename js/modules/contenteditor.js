@@ -263,11 +263,12 @@ const sitecoreAuthorToolbox = () => {
                          * Live status
                          */
                         if (storage.feature_urlstatus && !isMedia) {
-                            if (storage.feature_experimentalui) {
-                                setTimeout(() => { checkUrlStatus(null, darkMode, true) }, 500);
-                            } else {
-                                setTimeout(() => { checkUrlStatus(null, darkMode) }, 500);
-                            }
+
+                            chrome.runtime.sendMessage({greeting: "get_pagestatus", url: sitecoreItemPath, source: null, dark:darkMode, experimental:true }, response => {
+                                console.log(response);
+                                checkUrlStatus(response.status, null, darkMode, storage.feature_experimentalui)
+                            });
+
                         } else {
                             if (storage.feature_experimentalui) {
                                 document.querySelector(".scPreviewButton").innerText = "No preview available";
@@ -301,8 +302,8 @@ const sitecoreAuthorToolbox = () => {
                 //If not added yet
                 if (!document.getElementById("scMessageBarInfo") && storage.feature_urls && storage.feature_messagebar) {
 
-                    scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + global.iconData + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing a datasource</div><div class="scMessageBarText">To see it, you have to attach it to a component via the Experience Editor.</b></div></div></div>'
-                    scEditorID.insertAdjacentHTML('afterend', scMessage);
+                    //scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + global.iconData + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing a datasource</div><div class="scMessageBarText">To see it, you have to attach it to a component via the Experience Editor.</b></div></div></div>'
+                    //scEditorID.insertAdjacentHTML('afterend', scMessage);
 
                     //Experimental mode
                     document.querySelector(".scPreviewButton") ? document.querySelector(".scPreviewButton").setAttribute("style", "display: none") : false;

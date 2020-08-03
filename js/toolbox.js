@@ -1020,12 +1020,7 @@ chrome.storage.sync.get((storage) => {
 
                 //Update url Status
                 var parentSelector = parent.parent.document.querySelector("body");
-                if (storage.feature_experimentalui) {
-                    checkUrlStatus(parentSelector, darkMode, true);
-                } else {
-                    checkUrlStatus(parentSelector, darkMode);
-                }
-
+                checkUrlStatus(parentSelector.querySelector(".liveUrlStatus"), parentSelector, darkMode, storage.feature_experimentalui);
             }
         });
 
@@ -1107,7 +1102,6 @@ chrome.storage.sync.get((storage) => {
 
     }
 
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -1119,6 +1113,7 @@ chrome.storage.sync.get((storage) => {
     if (global.isEditMode && !global.isLoginPage || global.isPreviewMode && !global.isLoginPage) {
 
         consoleLog("Experience Editor detected", "red");
+        
         /*
          * Load extra CSS
          */
@@ -1129,13 +1124,16 @@ chrome.storage.sync.get((storage) => {
         /*
          * Store Item ID
          */
-        var dataItemId = document.querySelector('[data-sc-itemid]');
-        if (dataItemId) {
+        let dataItemId = document.querySelector('[data-sc-itemid]');
+        let dataItemLanguage = document.querySelector('[data-sc-language]');
+        let dataItemVersion = document.querySelector('[data-sc-version]');
+
+        if (dataItemId && dataItemVersion) {
 
             //Set ItemID (Storage)
             var sitecoreItemID = decodeURI(dataItemId.getAttribute('data-sc-itemid'));
-            var scLanguage = "en";
-            var scVersion = 1;
+            var scLanguage = decodeURI(dataItemLanguage.getAttribute('data-sc-language'));
+            var scVersion = decodeURI(dataItemVersion.getAttribute('data-sc-version'));
             sitecoreItemJson(sitecoreItemID, scLanguage, scVersion);
 
         }
@@ -1207,7 +1205,7 @@ chrome.storage.sync.get((storage) => {
         }
 
         /**
-         * Tooltip bar
+         * Tooltip bar 
          */
         target = document.querySelector(".scChromeControls");
         observer = new MutationObserver(function(mutations) {
@@ -1298,6 +1296,15 @@ chrome.storage.sync.get((storage) => {
                         addedNode.insertAdjacentHTML('afterend', html);
                         observer.disconnect();
                         startDrag();
+
+                        //Listeners
+                        document.addEventListener('keydown', (event) => {
+                            if (event.key === 'Shift') {
+                                exeJsCode(`toggleRibbon()`);
+                                event.preventDefault();
+                                event.stopPropagation();
+                            }
+                        });
 
                     }
                 }

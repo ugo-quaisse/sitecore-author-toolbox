@@ -1134,9 +1134,10 @@ input[type="submit"],
 .scMenuItemHotkey_Hover,
 .scMenuPanelItemSelected,
 .scMenuPanelItemSelected_Hover,
-.scMenuPanelItem_Hover {
-    background-color: var(--accent);
-    color: var(--accentText);
+.scMenuPanelItem_Hover,
+.sc-gallery-option-content-active {
+    background-color: var(--accent) !important;
+    color: var(--accentText) !important;
 }
 
 .scMenuPanelItem_Hover>table>tbody>tr>td:last-child>div>div {

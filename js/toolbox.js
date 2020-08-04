@@ -750,8 +750,8 @@ chrome.storage.sync.get((storage) => {
             consoleLog("**** XML Control (Window) ****", "orange");
 
             if (storage.feature_experimentalui) {
-                //loadCssFile("css/experimentalui-min.css");
-                //getAccentColor();
+                loadCssFile("css/experimentalui-min.css");
+                getAccentColor();
             }
 
         }
@@ -765,6 +765,12 @@ chrome.storage.sync.get((storage) => {
         if (global.isGalleryLanguage) {
 
             consoleLog("**** Languages menu ****", "orange");
+
+            if (storage.feature_experimentalui) {
+                loadCssFile("css/experimentalui-min.css");
+                getAccentColor();
+            }
+
             storage.feature_flags == undefined ? storage.feature_flags = true : false;
 
             if (storage.feature_flags) {
@@ -1146,19 +1152,25 @@ chrome.storage.sync.get((storage) => {
         if (global.isGalleryLanguageExpEd) {
 
             consoleLog("**** Languages menu ****", "yellow");
+
+            if (storage.feature_experimentalui) {
+                loadCssFile("css/experimentalui-min.css");
+                getAccentColor();
+            }
+
             storage.feature_flags == undefined ? storage.feature_flags = true : false;
 
             if (storage.feature_flags) {
 
                 var tdDiv;
                 dom = document.querySelector('.sc-gallery-content');
-                div = dom.querySelectorAll('.sc-gallery-option-content,.sc-gallery-option-content-active');
+                div = dom.querySelectorAll('a[data-sc-argument]');
                 divcount = 0;
                 tdcount = 0;
 
                 //Sort alphabetically or by version
                 div = [].slice.call(div).sort(function(a, b) {
-                    return a.querySelector("div > div:last-child > span").textContent > b.querySelector("div > div:last-child > span").textContent ? -1 : 1;
+                    return a.querySelector("a > div > div:last-child > span").textContent > b.querySelector("a > div > div:last-child > span").textContent ? -1 : 1;
                     //return a.textContent > b.textContent ? 1 : -1;
                 });
                 //Append dom
@@ -1167,8 +1179,7 @@ chrome.storage.sync.get((storage) => {
                 });
 
                 for (let item of div) {
-
-                    tdDiv = item.closest('.sc-gallery-option-content,.sc-gallery-option-content-active');
+                    tdDiv = item.querySelector('.sc-gallery-option-content,.sc-gallery-option-content-active');
                     tdlanguage = item.querySelector('.sc-gallery-option-content-header > span').innerText;
                     tdversion = item.querySelector('.sc-gallery-option-content-description > span');
 
@@ -1180,7 +1191,7 @@ chrome.storage.sync.get((storage) => {
 
                     tdlanguage = findCountryName(tdlanguage);
                     let flag = storage.feature_experimentalui ? chrome.runtime.getURL("images/Flags/svg/" + tdlanguage + ".svg") : chrome.runtime.getURL("images/Flags/32x32/flag_" + tdlanguage + ".png");
-                    tdDiv.setAttribute('style', 'padding-left:48px; background-image: url(' + flag + '); background-repeat: no-repeat; background-position: 5px;');
+                    tdDiv.setAttribute('style', 'padding-left:48px; background-image: url(' + flag + '); background-repeat: no-repeat; background-position: 5px; background-size: 32px');
 
                 }
             }

@@ -83,10 +83,22 @@ body {
 
 .zg-variant-switcher {
     zoom: 1.1;
-    background-color: #fbd951;
+    background-color: #F1D500 !important;
     padding: 4px !important;
     margin: 0px !important;
     height: 30px !important;
+}
+
+.zg-variant-switcher .zg-variant-list:hover {
+    background-color: #F1D500 !important;
+}
+
+.zg-variant-switcher .zg-variant-list li {
+
+}
+
+.zg-variant-switcher.expanded li:hover {
+    background-color: rgba(241, 213, 0,0.2) !important;
 }
 
 .zg-variant-switcher .zg-variant-list li.selected {
@@ -95,4 +107,51 @@ body {
 
 .zg-variant-toggle-dropdown {
     right: 5px !important;
+}
+
+.scChromeToolbar { 
+  box-shadow: none !important;
+}
+.scChromeControls, .scChromeDropDown {
+  box-shadow: 0px 4px 17px 9px rgba(0, 0, 0, 0.3) !important;
+  border-radius: 6px !important;
+}
+.scChromeName {
+  border-radius: 4px 4px 0px 0px !important;
+}
+.scFrameSideHorizontal {
+  box-shadow: 0px 0px 10px 1px rgba(40, 155, 200,0.7);
+  height: 2px !important;
+  background-color: #289bc8 !important;
+  transform: translateY(-15%);
+}
+.scFrameSideVertical {
+  box-shadow: 0px 0px 10px 1px rgba(40, 155, 200,0.7);
+  width: 2px !important;
+  background-color: #289bc8 !important;
+  transform: translateX(-15%);
+}
+.scFrameYellow {
+  box-shadow: 0px 0px 10px 1px rgba(241, 213, 0,0.7);
+  background-color: #F1D500 !important;
+}
+.chromeWithDatasource {
+  transition: all .1s ease-in-out;
+}
+.chromeWithDatasource:hover {
+  outline-color: #289bc8;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0px 0px 10px 1px rgba(40, 155, 200,0.7);
+}
+
+.scEnabledChrome,
+.scEmptyPlaceholder {
+    border: 1px solid transparent;
+}
+
+.scEnabledChrome:hover,
+.scEmptyPlaceholder:hover {
+    box-shadow: 0px 0px 10px 1px rgba(241, 213, 0,0.7);
+    border: 1px solid #F1D500 !important;
 }

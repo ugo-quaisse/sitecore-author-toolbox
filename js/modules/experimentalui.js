@@ -12,11 +12,11 @@ export { insertSavebar, insertBreadcrumb, insertLanguageButton, insertVersionBut
 const insertSavebar = () => {
 
     //If preview mode
+    //<li onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor')">Edit in Experience Editor...</li>
     let scPrimaryBtn = global.hasModePreview
     ? `<button class="primary scExitButton" onclick="javascript:return scForm.invoke('contenteditor:closepreview', event)">Close Panel</button>`
     : `<button id="scPublishMenuMore" class="grouped" type="button">▾</button>
-            <ul class="scPublishMenu">
-                <li onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor')">Edit in Experience Editor...</li>
+            <ul class="scPublishMenu">            
                 <li onclick="javascript:return scForm.invoke('item:setpublishing', event)">Unpublish...</li>
                 <li onclick="javascript:return scForm.postEvent(this,event,'item:publishingviewer(id=)')">Scheduler...</li>
             </ul>

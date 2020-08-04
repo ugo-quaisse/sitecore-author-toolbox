@@ -26,7 +26,7 @@ const checkUrlStatus = (status, source = null, dark, experimental = false) => {
   }
 
   //Preloader
-  liveUrlStatus.innerHTML = '<img loading="lazy" src="' + urlLoader + '" style="width: 10px; float: initial; margin: unset;"/>';
+  liveUrlStatus ? liveUrlStatus.innerHTML = '<img loading="lazy" src="' + urlLoader + '" style="width: 10px; float: initial; margin: unset;"/>' : false;
 
   //Check response
   if(status == "404" ) {

@@ -265,7 +265,7 @@ const sitecoreAuthorToolbox = () => {
                         if (storage.feature_urlstatus && !isMedia) {
 
                             chrome.runtime.sendMessage({greeting: "get_pagestatus", url: sitecoreItemPath, source: null, dark:darkMode, experimental:true }, response => {
-                                console.log(response);
+                                global.debug ? console.log(response) : false;
                                 checkUrlStatus(response.status, null, darkMode, storage.feature_experimentalui)
                             });
 

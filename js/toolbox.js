@@ -1031,10 +1031,12 @@ chrome.storage.sync.get((storage) => {
          * Scroll content tree to active element
          */
         setTimeout(function() {
-            let windowHeight = document.querySelector("body").getBoundingClientRect().height;
-            let activeNodePos = document.querySelector(".scContentTreeNodeActive > span") ? document.querySelector(".scContentTreeNodeActive > span").getBoundingClientRect().top : false;
-            let scrollOffset = activeNodePos > windowHeight ? activeNodePos - windowHeight + (windowHeight / 2) : 0;
-            document.querySelector(".scContentTree") ? document.querySelector(".scContentTree").scrollTop = scrollOffset : false;
+            if(document.querySelector("body")) {
+                let windowHeight = document.querySelector("body").getBoundingClientRect().height;
+                let activeNodePos = document.querySelector(".scContentTreeNodeActive > span") ? document.querySelector(".scContentTreeNodeActive > span").getBoundingClientRect().top : false;
+                let scrollOffset = activeNodePos > windowHeight ? activeNodePos - windowHeight + (windowHeight / 2) : 0;
+                document.querySelector(".scContentTree") ? document.querySelector(".scContentTree").scrollTop = scrollOffset : false;
+            }
         }, 1000)
 
         /**

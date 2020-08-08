@@ -344,7 +344,7 @@ const initUserMenu = () => {
         //Listeners
         document.addEventListener('keydown', (event) => {
 
-            if (event.key === 'Shift') {
+            if (event.ctrlKey && event.key === 'Shift') {
                 exeJsCode(`showSitecoreMenu()`);
                 event.preventDefault();
                 event.stopPropagation();
@@ -380,11 +380,15 @@ const setInsertIcon = (id) => {
     let item = document.querySelector("#Tree_Glyph_" + id);
     let a = document.querySelector("#Tree_Node_" + id);
     let itemName = a.querySelector("span").innerText;
+    let itemIcon = a.querySelector("span > img");
     let active = document.querySelector(".scContentTreeNodeActive") ? document.querySelector(".scContentTreeNodeActive").id.replace("Tree_Node_", "") : false;
     let rect = item.getBoundingClientRect();
     let left = document.querySelector(".splitter-bar").style.left.replace("px", "");
     let activeClass = "";
     id == active ? activeClass = "scInsertItemIconInverted" : false;
+
+    //Span text around a div to support text-overflow elipsis
+    //a.querySelector("span").innerHTML = itemIcon.outerHTML + `<div class="scItemName">` + itemName + `</div>`;
 
     //Remove existing Insert Icons
     document.querySelectorAll(".scInsertItemIcon").forEach((el) => { el.remove() });
@@ -393,12 +397,33 @@ const setInsertIcon = (id) => {
     let target = document.querySelector('#scIcon' + id);
     target ? target.setAttribute("style", "opacity:1") : false;
     
+    //Listener when hover scInsertItemIcon
+    document.querySelector(".scInsertItemIcon").addEventListener("mouseenter", function( event ) {
+        let parent = document.querySelector(".scInsertItemIcon").parentNode.querySelector("a > span");
+        parent.setAttribute("style","background-color: var(--grey5)")
+    })
+    document.querySelector(".scInsertItemIcon").addEventListener("mouseleave", function( event ) {
+        let parent = document.querySelector(".scInsertItemIcon").parentNode.querySelector("a > span");
+        parent.setAttribute("style","")
+    })
+
     //Remove existing Edit Icons
-    // document.querySelectorAll(".scEditItemIcon").forEach((el) => { el.remove() });
-    // //Add EE icon
-    // a.insertAdjacentHTML('afterend', `<span id="scIconEE` + id + `" title="Edit in Experience Editor" class="scEditItemIcon ` + activeClass + `" onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor(id=` + id + `)')"></span>`);
-    // target = document.querySelector('#scIconEE' + id);
-    // target ? target.setAttribute("style", "opacity:1") : false;
+    document.querySelectorAll(".scEditItemIcon").forEach((el) => { el.remove() });
+    //Add Edit icon
+    a.insertAdjacentHTML('afterend', `<span id="scIconEE` + id + `" title="Edit in Experience Editor" class="scEditItemIcon ` + activeClass + `" onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor(id={` + id.replace(/([0-z]{8})([0-z]{4})([0-z]{4})([0-z]{4})([0-z]{12})/,"$1-$2-$3-$4-$5") + `})')"></span>`);
+    target = document.querySelector('#scIconEE' + id);
+    target ? target.setAttribute("style", "opacity:1") : false;
+
+    //Listener when hover scEditItemIcon
+    document.querySelector(".scEditItemIcon").addEventListener("mouseenter", function( event ) {
+        let parent = document.querySelector(".scEditItemIcon").parentNode.querySelector("a > span");
+        parent.setAttribute("style","background-color: var(--grey5)")
+    })
+    document.querySelector(".scEditItemIcon").addEventListener("mouseleave", function( event ) {
+        let parent = document.querySelector(".scEditItemIcon").parentNode.querySelector("a > span");
+        parent.setAttribute("style","")
+    })
+
 
 }
 
@@ -411,17 +436,6 @@ const initInsertIcon = () => {
     let treeNode = document.querySelector(".scContentTreeContainer");
     if (treeNode) {
 
-        // let observer = new MutationObserver((mutations) => {
-        // 	console.log(mutations);
-        // 	contentTree.innerHTML = contentTree.innerHTML.replace('style="color:green"','');
-        // });
-        // //Observer
-        // contentTree ? observer.observe(contentTree, { attributes: false, childList: true, characterData: false, subtree: false }) : false;
-
-        contentTree.addEventListener('mouseleave', (event) => {
-            document.querySelector(".scInsertItemIcon") ? document.querySelector(".scInsertItemIcon").setAttribute("style", "opacity:0") : false;
-        });
-
         treeNode.addEventListener('mouseover', (event) => {
             if (event.path[1].className == "scContentTreeNodeNormal" || event.path[1].className == "scContentTreeNodeActive") {
                 setInsertIcon(event.path[1].getAttribute("id"));
@@ -429,6 +443,11 @@ const initInsertIcon = () => {
             if (event.path[2].className == "scContentTreeNodeNormal" || event.path[2].className == "scContentTreeNodeActive") {
                 setInsertIcon(event.path[2].getAttribute("id"));
             }
+        });
+
+        contentTree.addEventListener('mouseleave', (event) => {
+            document.querySelector(".scInsertItemIcon") ? document.querySelector(".scInsertItemIcon").setAttribute("style", "opacity:0") : false;
+            document.querySelector(".scEditItemIcon") ? document.querySelector(".scEditItemIcon").setAttribute("style", "opacity:0") : false;
         });
     }
 

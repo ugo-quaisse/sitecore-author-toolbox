@@ -392,7 +392,7 @@ const sitecoreAuthorToolbox = () => {
                 //RTL
                 loadCssFile("css/rtl-min.css");
                 for (let iframe of document.getElementsByClassName('scContentControlHtml')) {
-                    iframe.onload = function() { iframe.contentWindow.document.getElementById('ContentWrapper').style.direction = "RTL"; };
+                    iframe.onload = function() { iframe.contentWindow.document.getElementById('ContentWrapper') ? iframe.contentWindow.document.getElementById('ContentWrapper').style.direction = "RTL" : false; };
                 }
 
             } else {
@@ -400,7 +400,7 @@ const sitecoreAuthorToolbox = () => {
                 //LTR
                 loadCssFile("css/ltr-min.css");
                 for (let iframe of document.getElementsByClassName('scContentControlHtml')) {
-                    iframe.onload = function() { iframe.contentWindow.document.getElementById('ContentWrapper').style.direction = "LTR"; };
+                    iframe.onload = function() { iframe.contentWindow.document.getElementById('ContentWrapper') ? iframe.contentWindow.document.getElementById('ContentWrapper').style.direction = "LTR" : false; };
                 }
 
             }
@@ -433,35 +433,36 @@ const sitecoreAuthorToolbox = () => {
             }
 
             //Update on change/unblur
+            let timer, element;
             var target = document.querySelector(".scValidatorPanel");
             var observer = new MutationObserver(function(mutations) {
 
-                count = 0;
-                //Current errors
-                scErrors = document.querySelectorAll(" .scValidationMarkerIcon ");
+                timer ? clearTimeout(timer) : false;
+                timer = setTimeout(function() {
 
-                //Prepare HTML
-                var scMessageErrors = '<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' + global.iconError + ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">'
-
-                for (let item of scErrors) {
-                    if (item.getAttribute("src") != '/sitecore/shell/themes/standard/images/bullet_square_yellow.png') {
-                        scMessageErrors += '<li class="scMessageBarOptionBullet" onclick="' + item.getAttribute("onclick") + '" style="cursor:pointer;">' + item.getAttribute("title") + '</li>';
-                        count++;
-                    }
-                }
-                scMessageErrors += '</ul></div></div>';
-
-                if (count > 0) {
-                    //Insert message bar into Sitecore Content Editor
-                    scEditorID.insertAdjacentHTML('afterend', scMessageErrors);
-                } else {
                     //Delete all errors
-                    var element = document.querySelector("#scMessageBarError");
+                    element = document.querySelector("#scMessageBarError");
                     element ? element.parentNode.removeChild(element) : false;
-                }
 
-                if (global.debug) { console.log("Changement: " + document.querySelector(".scValidatorPanel")); }
+                    count = 0;
+                    //Current errors
+                    scErrors = document.querySelectorAll(" .scValidationMarkerIcon ");
 
+                    //Prepare HTML
+                    var scMessageErrors = '<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' + global.iconError + ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">'
+
+                    for (let item of scErrors) {
+                        if (item.getAttribute("src") != '/sitecore/shell/themes/standard/images/bullet_square_yellow.png') {
+                            scMessageErrors += '<li class="scMessageBarOptionBullet" onclick="' + item.getAttribute("onclick") + '" style="cursor:pointer;">' + item.getAttribute("title") + '</li>';
+                            count++;
+                        }
+                    }
+                    scMessageErrors += '</ul></div></div>';
+
+                    //Add errors
+                    count > 0 ? scEditorID.insertAdjacentHTML('afterend', scMessageErrors) : false;
+
+                },1500);
             });
 
             //Observer
@@ -737,9 +738,6 @@ const sitecoreAuthorToolbox = () => {
                     var isProtected = scWarningText.includes("You cannot edit this item because it is protected.");
                     var isWrongVersion = scWarningText.includes("it has been replaced by a newer version.");
                     var isNoFields = scWarningText.includes("The current item does not contain any fields.");
-
-                    //No fields
-                    isNoFields && document.querySelector(".scSaveBar > .scActions") ? document.querySelectorAll(".scSaveBar > .scActions > button").forEach(function(e) { e.disabled = true; }) : false;
 
                     //No version exist
                     isNoVersion ? scWarningIcon.setAttribute("style", "background-image: url(" + global.iconTranslate + ");") : false;

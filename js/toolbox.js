@@ -338,6 +338,7 @@ chrome.storage.sync.get((storage) => {
             (!chrome.runtime.error && storage.feature_workbox == true) ? checkWorkbox(): false;
 
         }
+        //End CE
 
 
 
@@ -445,6 +446,20 @@ chrome.storage.sync.get((storage) => {
         if (global.isFieldEditor) {
 
             consoleLog("**** Field editor ****", "orange");
+            storage.feature_contenteditor == undefined ? storage.feature_contenteditor = true : false;
+            if (storage.feature_contenteditor == true) {
+
+                /**
+                 * Custom checkboxes to IOS like style
+                 */
+                var link = document.createElement("link");
+                link.type = "text/css";
+                link.rel = "stylesheet";
+                link.href = chrome.runtime.getURL("css/checkbox-min.css");
+                document.getElementsByTagName("head")[0].appendChild(link);
+
+            }
+
             storage.feature_charscount == undefined ? storage.feature_charscount = true : false;
 
             if (storage.feature_charscount) {
@@ -452,8 +467,8 @@ chrome.storage.sync.get((storage) => {
                 /*
                  * Add a characters count next to each input and textarea field
                  */
-                var scTextFields = document.querySelectorAll("input, textarea");
-                var countHtml;
+                var scTextFields = document.querySelectorAll("input, textarea, checkbox");
+                var countHtml, labelHtml;
                 var chars = 0;
                 var charsText;
 
@@ -469,9 +484,24 @@ chrome.storage.sync.get((storage) => {
                         countHtml = '<div id="chars_' + field.id + '" style="position: absolute; bottom: 1px; right: 1px; padding: 6px 10px; border-radius: 4px; line-height: 20px; opacity:0.5;">' + charsText + '</div>';
                         field.insertAdjacentHTML('afterend', countHtml);
 
+                    } else if (field.className == "scContentControlCheckbox") {
+
+                        //Add label
+                        labelHtml = '<label for="' + field.id + '" class="scContentControlCheckboxLabel"></label>';
+                        field.insertAdjacentHTML('afterend', labelHtml);
+
                     }
 
                 }
+
+                // var scStylesList = document.querySelectorAll(".styles-list input[type=checkbox]");
+                
+                // //On load
+                // for (var checkbox of scStylesList) {
+                //     //Add label
+                //     labelHtml = '<label for="' + field.id + '" class="scContentControlCheckboxLabel"></label>';
+                //     checkbox.insertAdjacentHTML('afterend', labelHtml);
+                // }
 
                 //On keyup
                 document.addEventListener('keyup', function(event) {
@@ -508,7 +538,7 @@ chrome.storage.sync.get((storage) => {
                     var itemId = scBucketListSelectedBox.value;
                     itemId = itemId.includes("|") ? itemId.split("|")[1] : itemId;
                     var itemName = scBucketListSelectedBox[scBucketListSelectedBox.selectedIndex].text;
-                    var scMessageEditText = '<a class="scMessageBarOption" href="' + window.location.origin + '/sitecore/shell/Applications/Content%20Editor.aspx#' + itemId + '" target="_blank"><u>Click here ⧉</u></a> ';
+                    var scMessageEditText = '<a class="scMessageBarOption" href="' + window.location.origin + '/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#' + itemId + '" target="_blank"><u>Click here ⧉</u></a> ';
                     //var scMessageExperienceText = '<a class="scMessageBarOption" href="' + window.location.origin + '/?sc_mode=edit&sc_itemid=' + itemId + '" target="_blank"><u>Click here ⧉</u></a> ';
                     var scMessageEdit = `<div id="Warnings" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(` + global.icon + `)"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">` + itemName + `</div>`
                     scMessageEdit += `<span id="Information" class="scMessageBarText"><span class="scMessageBarOptionBullet">` + scMessageEditText + `</span> to edit this datasource in <b>Content Editor</b>.</span>`;
@@ -539,7 +569,7 @@ chrome.storage.sync.get((storage) => {
             if (storage.feature_errors) {
 
                 //Prepare HTML
-                var scMessageErrors = '<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' + global.icon + ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">';
+                var scMessageErrors = '<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' + global.iconError + ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">';
 
                 for (let item of scErrors) {
 
@@ -556,34 +586,38 @@ chrome.storage.sync.get((storage) => {
                 }
 
                 //Update on change/unblur
+                let timer, element;
                 target = document.querySelector(".scValidatorPanel");
                 observer = new MutationObserver(function(mutations) {
 
-                    //Variables
-                    count = 0;
+                    timer ? clearTimeout(timer) : false;
+                    timer = setTimeout(function() {
 
-                    //Prepare HTML
-                    var scMessageErrors = '<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' + global.iconError + ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">'
-
-                    for (let item of scErrors) {
-
-                        if (item.getAttribute("src") != '/sitecore/shell/themes/standard/images/bullet_square_yellow.png') {
-                            scMessageErrors += '<li class="scMessageBarOptionBullet" onclick="' + item.getAttribute("onclick") + '" style="cursor:pointer;">' + item.getAttribute("title") + '</li>';
-                            count++;
-                        }
-                    }
-                    scMessageErrors += '</ul></div></div>';
-
-                    if (count > 0) {
-                        //Insert message bar into Sitecore Content Editor
-                        scEditorID.insertAdjacentHTML('beforebegin', scMessageErrors);
-                    } else {
                         //Delete all errors
-                        var element = document.getElementById("scMessageBarError");
-                        if (element) { element.parentNode.removeChild(element); }
-                        //document.querySelectorAll("#scCrossTabError").forEach(e => e.parentNode.removeChild(e));
-                    }
+                        element = document.querySelector("#scMessageBarError");
+                        element ? element.parentNode.removeChild(element) : false;
 
+                        count = 0;
+                        //Current errors
+                        scErrors = document.querySelectorAll(" .scValidationMarkerIcon ");
+
+                        //Prepare HTML
+                        var scMessageErrors = '<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' + global.iconError + ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">'
+
+                        for (let item of scErrors) {
+
+                            if (item.getAttribute("src") != '/sitecore/shell/themes/standard/images/bullet_square_yellow.png') {
+                                scMessageErrors += '<li class="scMessageBarOptionBullet" onclick="' + item.getAttribute("onclick") + '" style="cursor:pointer;">' + item.getAttribute("title") + '</li>';
+                                count++;
+                            }
+                        }
+                        scMessageErrors += '</ul></div></div>';
+
+                        //Add errors
+                        count > 0 ? scEditorID.insertAdjacentHTML('beforebegin', scMessageErrors) : false;
+
+
+                    }, 1500);
                 });
 
                 //Observer
@@ -749,16 +783,16 @@ chrome.storage.sync.get((storage) => {
 
             consoleLog("**** XML Control (Window) ****", "orange");
 
-            if (storage.feature_experimentalui) {
-                loadCssFile("css/experimentalui-min.css");
-                getAccentColor();
-            }
-
         }
 
         if (global.isGalleryVersion) {
 
             consoleLog("**** Versions menu ****", "orange");
+
+            if (storage.feature_experimentalui) {
+                loadCssFile("css/experimentalui-min.css");
+                getAccentColor();
+            }
 
         }
 
@@ -1034,18 +1068,6 @@ chrome.storage.sync.get((storage) => {
         target ? observer.observe(target, { attributes: true }) : false;
 
         /**
-         * Scroll content tree to active element
-         */
-        setTimeout(function() {
-            if(document.querySelector("body")) {
-                let windowHeight = document.querySelector("body").getBoundingClientRect().height;
-                let activeNodePos = document.querySelector(".scContentTreeNodeActive > span") ? document.querySelector(".scContentTreeNodeActive > span").getBoundingClientRect().top : false;
-                let scrollOffset = activeNodePos > windowHeight ? activeNodePos - windowHeight + (windowHeight / 2) : 0;
-                document.querySelector(".scContentTree") ? document.querySelector(".scContentTree").scrollTop = scrollOffset : false;
-            }
-        }, 1000)
-
-        /**
          * Update UI
          */
         target = document.querySelector("#scLanguage");
@@ -1204,7 +1226,7 @@ chrome.storage.sync.get((storage) => {
 
             consoleLog("**** Ribbon ****", "yellow");
 
-            var scRibbonFlagIcons = document.querySelector(".flag_generic_24");
+            let scRibbonFlagIcons = document.querySelector(".flag_generic_24");
 
             scRibbonFlagIcons ? tdlanguage = scRibbonFlagIcons.nextSibling.innerText : false;
 
@@ -1212,7 +1234,7 @@ chrome.storage.sync.get((storage) => {
             if(tdlanguage) {
                 tdlanguage = findCountryName(tdlanguage);
                 let flag = storage.feature_experimentalui ? chrome.runtime.getURL("images/Flags/svg/" + tdlanguage + ".svg") : chrome.runtime.getURL("images/Flags/24x24/flag_" + tdlanguage + ".png");
-                scRibbonFlagIcons.setAttribute('style', 'background-image: url(' + flag + '); background-repeat: no-repeat; background-position: top left;');
+                scRibbonFlagIcons.setAttribute('style', 'background-image: url(' + flag + '); background-repeat: no-repeat; background-position: top left;');            
             }
 
         }

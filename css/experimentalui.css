@@ -441,6 +441,14 @@ a.scContentTreeNodeNormal>span {
     z-index: 1;
 }
 
+a.scContentTreeNodeActive>span>div.scItemName,
+a.scContentTreeNodeNormal>span>div.scItemName {
+    display: inline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: calc(100% - 80px);
+}
+
 a.scContentTreeNodeActive>span {
     color: var(--white) !important;
 }
@@ -452,7 +460,7 @@ a.scContentTreeNodeNormal>span {
 .scContentTreeNodeGlyph:hover+a>span,
 div.scContentTreeNode>img:hover+a>span,
 a.scContentTreeNodeNormal:hover>span {
-    background-color: var(--grey5);
+    background-color: var(--grey5) !important;
 }
 
 a.scContentTreeNodeActive>span {
@@ -579,9 +587,16 @@ a.scEditorHeaderButton:hover {
 }
 
 #scEditorTabs>ul {
-    overflow-x: hidden;
+    overflow-x: scroll;
     transition: margin-left ease-out .2s !important;
     width: auto !important;
+}
+
+#scEditorTabs>ul::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    background: var(--white);
+    border-radius: 3px;
 }
 
 #scEditorTabs>ul>li {

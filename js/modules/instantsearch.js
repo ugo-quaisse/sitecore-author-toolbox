@@ -18,8 +18,10 @@ const instantSearch = () => {
         // On blur
         scInstantSearch.addEventListener('blur', (event) => {
             setTimeout(function() {
+                if(document.activeElement.getAttribute("class")) {
                 if (!document.activeElement.getAttribute("class").includes("scInstantRow")) {
                     divResults.setAttribute('style', 'height:0px; opacity: 0; visibility: hidden; top: 43px;');
+                }
                 }
             }, 200)
         })
@@ -63,7 +65,7 @@ const instantSearch = () => {
         });
 
         //Key in search box
-        scInstantSearch.addEventListener('keyup', (event) => {
+        scInstantSearch.addEventListener('keydown', (event) => {
 
             // Stop if special key pressed
             let specialKey = false
@@ -79,6 +81,12 @@ const instantSearch = () => {
             if (event.key === 'ArrowDown') {
 
                 divResults.querySelector(".scInstantRow").focus();
+
+            }
+
+            if (event.key === 'Enter') {
+
+                event.preventDefault();
 
             }
 
@@ -205,7 +213,7 @@ const instantSearch = () => {
                     }
                     ajax.send(null)
                 }
-            }, 1000)
+            }, 750)
         }, false)
     }
 }

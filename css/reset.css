@@ -16,6 +16,16 @@ body {
     }
 }
 
+roller::before,
+media::before {
+    content: "[Press save to see this component]";
+    color: var(--lightred);
+}
+
+media {
+    padding: 15px 1px;
+}
+
 .scInsertionHandle,
 .scSortingHandle {
     left: 0px !important;
@@ -28,6 +38,7 @@ body {
     background-position: 0% 0%;
     background-image: 0.5s ease-in-out;
     opacity: 0.9;
+    display:block;
 }
 
 .scInsertionHandle:hover,

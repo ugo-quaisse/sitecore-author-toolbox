@@ -47,7 +47,7 @@ const checkUrlStatus = (status, source = null, dark, experimental = false) => {
   }
 
   //Update Dom
-  liveUrlStatus != null ? liveUrlStatus.innerHTML = html : liveUrlStatus.innerHTML = "";
+  liveUrlStatus ? liveUrlStatus.innerHTML = html : liveUrlStatus.innerHTML = "";
 
   if(experimental) {
     //Update bar color

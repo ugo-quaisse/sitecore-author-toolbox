@@ -1,3 +1,5 @@
+/* eslint-disable func-style */
+/* eslint-disable no-unused-vars */
 /*
  * Sitecore Author Toolbox
  * - A Google Chrome Extension -
@@ -8,6 +10,9 @@
 
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 
+/**
+ * Overwrtting Sitecore scSaveAnimation function
+ */
 function scSaveAnimation(id) {
 
     var indicator = document.createElement('div');
@@ -72,7 +77,7 @@ const toggleRibbon = () => {
 
 }
 
-const toggleSection = (elem, name, fromerror = false, experimental = false) => {
+const toggleSection = (elem, name, experimental = false) => {
 
     //Change status of the tabs
     var isExperimental = (experimental == 'true');
@@ -162,6 +167,7 @@ const togglePip = (video) => {
 const toggleMediaIframe = (url) => {
 
     var features = 'dialogWidth:1200px;dialogHeight:700px;help:no;scroll:auto;resizable:yes;maximizable:yes;closable:yes;center:yes;status:no;header:;autoIncreaseHeight:yes;forceDialogSize:no';
+    // eslint-disable-next-line no-undef
     scSitecore.prototype.showModalDialog(url, "", features, "", "")
 
 }

@@ -1,6 +1,6 @@
 config.codekit3
 build/
 *.zip
-_config.yml
 *.DS_Store
 js/modules/local.js
+node_modules/

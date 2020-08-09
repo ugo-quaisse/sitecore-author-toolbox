@@ -1,0 +1,36 @@
+{
+  "name": "sitecore-author-toolbox",
+  "version": "2.7.0",
+  "description": "A set of handy tools for Sitecore Authors: Live URL, Grouped errors, Flags, Dark mode, Notifications, Media drag & drop...",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "main": "js/main.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ugo-quaisse/sitecore-author-toolbox.git"
+  },
+  "keywords": [
+    "sitecore",
+    "extension",
+    "chrome",
+    "edge"
+  ],
+  "author": "Ugo Quaisse",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ugo-quaisse/sitecore-author-toolbox/issues"
+  },
+  "homepage": "https://github.com/ugo-quaisse/sitecore-author-toolbox#readme",
+  "devDependencies": {
+    "eslint": "^7.6.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1"
+  }
+}

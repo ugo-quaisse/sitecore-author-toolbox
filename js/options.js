@@ -1,3 +1,6 @@
+/* eslint-disable require-jsdoc */
+/* eslint-disable radix */
+/* eslint-disable no-alert */
 /*
  * Sitecore Author Toolbox
  * - A Google Chrome Extension -
@@ -15,10 +18,14 @@ const preferesColorScheme = () => {
     } else {
         color = "light";
     }
+    
     return color;
 }
 
-chrome.storage.sync.get(['feature_darkmode', 'feature_darkmode_auto'], function(result) {
+chrome.storage.sync.get([
+    'feature_darkmode',
+    'feature_darkmode_auto'
+], function(result) {
     if (result.feature_darkmode && result.feature_darkmode_auto) {
         const scheme = window.matchMedia("(prefers-color-scheme: dark)");
         scheme.addEventListener("change", () => {
@@ -56,7 +63,7 @@ document.body.onload = function() {
 
     //Generate domains form
     chrome.storage.sync.get(['domain_manager'], function(result) {
-        var domains = undefined;
+        var domains;
         if (!chrome.runtime.error) {
 
             //Stored data
@@ -66,7 +73,8 @@ document.body.onload = function() {
 
             //Generate HTML
             var html = "";
-            var domain1, domain2 = "";
+            var domain1;
+            var domain2 = "";
 
             for (var i = 0; i < 6; i++) {
 
@@ -151,7 +159,10 @@ document.body.onload = function() {
     });
     //Dark Mode
     var scheme = preferesColorScheme();
-    chrome.storage.sync.get(['feature_darkmode', 'feature_darkmode_auto'], function(result) {
+    chrome.storage.sync.get([
+        'feature_darkmode',
+        'feature_darkmode_auto'
+    ], function(result) {
 
         if (result.feature_darkmode && !result.feature_darkmode_auto || result.feature_darkmode && result.feature_darkmode_auto && scheme == "dark") {
             document.getElementById("feature_darkmode").checked = true;
@@ -368,7 +379,7 @@ chrome.storage.sync.get(['feature_contrast_icons'], function(result) {
     if (result.feature_contrast_icons != undefined) {
         result.feature_contrast_icons ? document.querySelector("#feature_contrast_icons").checked = true : false;
     } else {
-        document.querySelector("#feature_contrast_icons").checked = true;
+        document.querySelector("#feature_contrast_icons").checked = false;
     }
 });
 
@@ -694,7 +705,7 @@ document.querySelector("#set").onclick = function(event) {
 
         chrome.tabs.query({ active: true, currentWindow: true }, function(arrayOfTabs) {
             var code = 'window.location.reload();';
-            chrome.tabs.executeScript(arrayOfTabs[0].id, { code: code });
+            chrome.tabs.executeScript(arrayOfTabs[0].id, { code });
             document.querySelector("#set").innerHTML = "Saving...";
             setTimeout(function() { document.querySelector("#set").innerHTML = "Save and reload sitecore"; }, 1000);
         });
@@ -710,6 +721,10 @@ document.querySelector("#set").onclick = function(event) {
 let last_known_scroll_position = 0;
 let ticking = false;
 
+/**
+ * Scroll to
+ */
+// eslint-disable-next-line func-style
 function doSomething(scroll_pos) {
     var element = document.getElementById("banner");
     if (scroll_pos >= 90) {
@@ -719,7 +734,7 @@ function doSomething(scroll_pos) {
     }
 }
 
-window.addEventListener('scroll', function(e) {
+window.addEventListener('scroll', function() {
     last_known_scroll_position = window.scrollY;
 
     //Get URL parameters

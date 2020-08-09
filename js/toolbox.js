@@ -4,7 +4,6 @@
  * by Ugo Quaisse
  * https://uquaisse.io
  * ugo.quaisse@gmail.com
- * Made with vanillaJS :-)
  */
 
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
@@ -12,19 +11,19 @@
 /**
  * Modules
  */
-import * as global from './modules/global.js';
-import * as local from './modules/local.js'; //This file is missing on Github, you should create yours with all your private local API keys
-import { consoleLog, loadCssFile, loadJsFile, exeJsCode, preferesColorScheme, sitecoreItemJson, fetchTimeout, getScItemData, repositionElement, startDrag } from './modules/helpers.js';
-import { showSnackbar } from './modules/snackbar.js';
-import { checkWorkbox } from './modules/workbox.js';
-import { checkUrlStatus } from './modules/url.js';
-import { checkNotification, sendNotification } from './modules/notification.js';
-import { cleanCountryName, findCountryName } from './modules/language.js';
-import { sitecoreAuthorToolbox } from './modules/contenteditor.js';
-import { getGravatar } from './modules/users.js';
-import { instantSearch } from './modules/instantsearch.js';
-import { insertModal, insertPanel } from './modules/menu.js';
-import { insertSavebar, insertBreadcrumb, initInsertIcon, initGutter, getAccentColor, initColorPicker, initSitecoreMenu, initUserMenu } from './modules/experimentalui.js';
+import * as global from './modules/global.js'
+// import * as local from './modules/local.js' // This file is missing on Github, you should create yours with all your private local API keys
+import { consoleLog, loadCssFile, loadJsFile, exeJsCode, preferesColorScheme, sitecoreItemJson, getScItemData, startDrag } from './modules/helpers.js'
+import { showSnackbar } from './modules/snackbar.js'
+import { checkWorkbox } from './modules/workbox.js'
+import { checkUrlStatus } from './modules/url.js'
+import { checkNotification, sendNotification } from './modules/notification.js'
+import { findCountryName } from './modules/language.js'
+import { sitecoreAuthorToolbox } from './modules/contenteditor.js'
+import { getGravatar } from './modules/users.js'
+import { instantSearch } from './modules/instantsearch.js'
+import { insertModal, insertPanel } from './modules/menu.js'
+import { insertSavebar, initInsertIcon, initGutter, getAccentColor, initColorPicker, initSitecoreMenu, initUserMenu } from './modules/experimentalui.js'
 
 /**
  * Get all user's settings from storage
@@ -53,12 +52,12 @@ chrome.storage.sync.get((storage) => {
          * Load extra JS and CSS
          */
         loadCssFile("css/onload-min.css");
-        loadJsFile("js/inject.js");
+        loadJsFile("js/inject.min.js");
 
         /**
          * Dark mode
          */
-        storage.feature_darkmode == undefined ? storage.feature_darkmode = false : false;
+        storage.feature_darkmode = storage.feature_darkmode == undefined ? storage.feature_darkmode = false : false;
         storage.feature_darkmode_auto == undefined ? storage.feature_darkmode_auto = false : false;
         storage.feature_experimentalui == undefined ? storage.feature_experimentalui = false : false;
 
@@ -99,7 +98,7 @@ chrome.storage.sync.get((storage) => {
              * Experimental UI
              */
             storage.feature_experimentalui == undefined ? storage.feature_experimentalui = false : false;
-            storage.feature_contrast_icons == undefined ? storage.feature_contrast_icons = true : false;
+            storage.feature_contrast_icons == undefined ? storage.feature_contrast_icons = false : false;
 
 
             if (!global.isLaunchpad && storage.feature_experimentalui) {
@@ -268,6 +267,7 @@ chrome.storage.sync.get((storage) => {
                         //Get scData from storage
                         var scData = storage.scData;
                         for (var domain in scData) {
+                            // eslint-disable-next-line no-prototype-builtins
                             if (scData.hasOwnProperty(domain) && domain == window.location.origin) {
                                 storage.scItemID = scData[domain].scItemID;
                                 storage.scLanguage = scData[domain].scLanguage;
@@ -412,7 +412,7 @@ chrome.storage.sync.get((storage) => {
 
             //Add listener on search result list
             var target = document.querySelector("#results");
-            var observer = new MutationObserver(function(mutations) {
+            var observer = new MutationObserver(function() {
 
                 var resultsDiv = document.querySelector("#results");
                 var BlogPostArea = resultsDiv.querySelectorAll(".BlogPostArea");
@@ -588,7 +588,7 @@ chrome.storage.sync.get((storage) => {
                 //Update on change/unblur
                 let timer, element;
                 target = document.querySelector(".scValidatorPanel");
-                observer = new MutationObserver(function(mutations) {
+                observer = new MutationObserver(function() {
 
                     timer ? clearTimeout(timer) : false;
                     timer = setTimeout(function() {
@@ -667,7 +667,7 @@ chrome.storage.sync.get((storage) => {
 
                 //Listener 
                 target = document.querySelector("body");
-                observer = new MutationObserver(function(mutations) {
+                observer = new MutationObserver(function() {
 
                     let InfoPhotoImage = document.querySelector("img[data-sc-id=InfoPhotoImage]");
                     let InfoEmailLink = document.querySelector("a[data-sc-id=InfoEmailLink]");
@@ -729,8 +729,6 @@ chrome.storage.sync.get((storage) => {
 
                     //RTE Tabs
                     if (global.isRichTextEditor) {
-                        var designTab = document.querySelector("#Editor_contentIframe").contentWindow.document.body;
-                        var htmlTab = document.querySelector("#EditorContentHiddenTextarea");
                         var reTextArea = document.querySelector(".reTextArea");
                     }
 
@@ -811,8 +809,7 @@ chrome.storage.sync.get((storage) => {
 
                 var dom = document.querySelector("#Languages");
                 var div = dom.querySelectorAll('.scMenuPanelItem,.scMenuPanelItemSelected')
-                var td, tdlanguage, tdversion, tdimage, temp, key;
-                var divcount = 0;
+                var td, tdlanguage, tdversion, tdimage, temp;
                 var tdcount = 0;
 
                 //Sort alphabetically or by version
@@ -859,7 +856,6 @@ chrome.storage.sync.get((storage) => {
                         tdcount++;
 
                     }
-                    divcount++;
 
                 }
             }
@@ -874,9 +870,9 @@ chrome.storage.sync.get((storage) => {
 
                 //Listener ScrollablePanelLanguages
                 target = document.querySelector("body");
-                observer = new MutationObserver(function(mutations) {
+                observer = new MutationObserver(function() {
 
-                    var temp, tdlanguage, key, scFlag;
+                    var tdlanguage;
                     var label = document.querySelectorAll("div[data-sc-id=CheckBoxListLanguages] > table:last-child")[0];
 
                     if (label != undefined && label.children[0].children.length > 1) {
@@ -906,14 +902,8 @@ chrome.storage.sync.get((storage) => {
             consoleLog("**** Publish / Rebuild / Package ****", "orange");
             storage.feature_flags == undefined ? storage.feature_flags = true : false;
 
-            //Get ID of the item to be published
-            let form = document.querySelector("form").getAttribute("action").split("id=");
-            let publishedItemId = form[1].replace("%7B", "{").replace("%7D", "}");
-            //fetch "sitecore/admin/dbbrowser.aspx?db=master&lang=en&id="+publishedItemId
-
             if (storage.feature_flags) {
 
-                var scFlag;
                 var label = document.querySelectorAll("#Languages > label");
 
                 for (let item of label) {
@@ -952,7 +942,7 @@ chrome.storage.sync.get((storage) => {
                             document.querySelector(".scPreviewButton").disabled = true;
                         }
 
-                        var timeout = setTimeout(function() {
+                        setTimeout(function() {
                             document.querySelector("#svgAnimation") ? document.querySelector("#svgAnimation").setAttribute("style", "opacity:0") : false;
                             document.querySelector("#EditorFrames").setAttribute("style", "opacity:1");
                             document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:1");
@@ -973,9 +963,6 @@ chrome.storage.sync.get((storage) => {
                                 newNodes.length == 1 ? newNodes[0].querySelector(".scContentTreeNodeGlyph").click() : false;
 
                                 if (storage.feature_autoexpandcount) {
-                                    let subTreeMain = document.querySelector("#" + glyphId).nextSibling.nextSibling;
-                                    let subTreeMainImg = subTreeMain.querySelector(".scContentTreeNodeIcon");
-                                    let subTreeMainText = subTreeMain.innerText;
                                     document.querySelectorAll(".scCountNodes").forEach(function(element) { element.setAttribute("style", "display:none") })
                                 }
 
@@ -1038,7 +1025,7 @@ chrome.storage.sync.get((storage) => {
          * > 10. Publish notification
          */
         target = document.querySelector("#LastPage");
-        observer = new MutationObserver(function(mutations) {
+        observer = new MutationObserver(function() {
 
             storage.feature_notification == undefined ? storage.feature_notification = true : false;
             storage.feature_experimentalui == undefined ? storage.feature_experimentalui = false : false;
@@ -1082,14 +1069,12 @@ chrome.storage.sync.get((storage) => {
              * Update hash in URL, update pushsate history, update link if 2nd tab opened
              */
             if (scQuickInfo) {
-                let ScItem = getScItemData();
                 var sitecoreItemID = scQuickInfo.getAttribute("value");
                 var scLanguage = document.querySelector("#scLanguage").getAttribute("value").toLowerCase();
 
                 let scVersion = document.querySelector(".scEditorHeaderVersionsVersion > span");
                 scVersion != null ? scVersion = scVersion.innerText : scVersion = 1;
                 var scEditorQuickInfo = document.querySelectorAll(".scEditorQuickInfo");
-                var lastScEditorQuickInfo = scEditorQuickInfo[scEditorQuickInfo.length - 1];
                 var countTab = scEditorQuickInfo.length;
                 var scEditorTitle = document.getElementsByClassName("scEditorHeaderTitle");
 
@@ -1115,7 +1100,7 @@ chrome.storage.sync.get((storage) => {
                     //Add text after title
                     var url = window.location.href;
                     url = url.split("#");
-                    var javascript = 'scForm.invoke("item:load(id=' + lastTabSitecoreItemID + ',language=' + scLanguage + ',version=1)");';
+                    //var javascript = 'scForm.invoke("item:load(id=' + lastTabSitecoreItemID + ',language=' + scLanguage + ',version=1)");';
                     var href = url[0] + '&reload#' + lastTabSitecoreItemID;
                     scEditorTitle[countTab - 1].insertAdjacentHTML('afterend', '[<a id="showInContentTree' + countTab + '" href="" onclick="javascript:window.location.href=\'' + href + '\'; return false;" />Show in content tree</a>]');
                 }
@@ -1149,7 +1134,7 @@ chrome.storage.sync.get((storage) => {
          */
         loadCssFile("css/onload-min.css");
         loadCssFile("css/tooltip-min.css");
-        loadJsFile("js/inject.js");
+        loadJsFile("js/inject.min.js");
 
         /*
          * Store Item ID
@@ -1187,7 +1172,6 @@ chrome.storage.sync.get((storage) => {
                 var tdDiv;
                 dom = document.querySelector('.sc-gallery-content');
                 div = dom.querySelectorAll('a[data-sc-argument]');
-                divcount = 0;
                 tdcount = 0;
 
                 //Sort alphabetically or by version
@@ -1243,7 +1227,7 @@ chrome.storage.sync.get((storage) => {
          * Tooltip bar 
          */
         target = document.querySelector(".scChromeControls");
-        observer = new MutationObserver(function(mutations) {
+        observer = new MutationObserver(function() {
 
             var scChromeToolbar = document.querySelectorAll(".scChromeToolbar");
 
@@ -1252,8 +1236,6 @@ chrome.storage.sync.get((storage) => {
 
                 controls.setAttribute('style', 'margin-left:50px');
                 var scChromeCommand = controls.querySelectorAll(".scChromeCommand");
-                var scChromeText = controls.querySelector(".scChromeText");
-                var scChromeCommandText = controls.querySelector(".scChromeCommandText");
                 var changeColor = false;
 
                 for (var command of scChromeCommand) {
@@ -1262,10 +1244,10 @@ chrome.storage.sync.get((storage) => {
 
                     if(!changeColor && title) {
                         if (title.toLowerCase().includes("move component") || title.toLowerCase().includes("remove component") ) {
-                            let selector = document.querySelectorAll(".scFrameSideHorizontal, .scFrameSideVertical").forEach( function(e) { e.classList.remove("scFrameYellow"); });
+                            document.querySelectorAll(".scFrameSideHorizontal, .scFrameSideVertical").forEach( function(e) { e.classList.remove("scFrameYellow"); });
                             changeColor = true;
                         } else {
-                            let selector = document.querySelectorAll(".scFrameSideHorizontal, .scFrameSideVertical").forEach( function(e) { e.classList.add("scFrameYellow"); });   
+                            document.querySelectorAll(".scFrameSideHorizontal, .scFrameSideVertical").forEach( function(e) { e.classList.add("scFrameYellow"); });   
                         }
                     }
 
@@ -1289,10 +1271,6 @@ chrome.storage.sync.get((storage) => {
         !pagemodeEdit ? pagemodeEdit = document.querySelector(".on-page-editor") : false;
         !pagemodeEdit ? pagemodeEdit = document.querySelector(".experience-editor") : false;
         !pagemodeEdit ? pagemodeEdit = document.querySelector(".scWebEditRibbon") : false;
-        var isQuery = global.windowLocationHref.includes('?');
-        var scCrossPiece = document.querySelector("#scCrossPiece");
-        var ribbon = document.querySelector('#scWebEditRibbon');
-        var scMessageBar = document.querySelector('.sc-messageBar');
         let tabColor;
 
         storage.feature_darkmode == undefined ? storage.feature_darkmode = false : false;

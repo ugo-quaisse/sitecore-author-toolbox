@@ -1,3 +1,7 @@
+/* eslint-disable no-new */
+/* eslint-disable no-unused-vars */
+/* eslint-disable consistent-return */
+/* eslint-disable func-style */
 /**
  * Sitecore Author Toolbox
  * A Google Chrome Extension
@@ -8,15 +12,10 @@
 
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
-/*
- * Helpers and variables
+/**
+ * Check existing cookie of SXA site
  */
-let sxa_site;
-let sc_site;
-let contextMenuEE = false;
-let contextMenuCE = false;
-
-function checkSiteSxa(request, sender, sendResponse) {
+function checkSiteSxa(sender, sendResponse) {
 
     var url = new URL(sender.tab.url);
     chrome.cookies.getAll({}, function(cookies) {
@@ -32,6 +31,9 @@ function checkSiteSxa(request, sender, sendResponse) {
     });
 }
 
+/**
+ * Action on right-clic
+ */
 function onClickHandler(info, tab) {
 
     console.table(tab);
@@ -66,6 +68,9 @@ function onClickHandler(info, tab) {
 
 }
 
+/**
+ * Get Sitecore userticket cookie
+ */
 function getSitecoreCookie(tab) {
 
     chrome.cookies.get({ "url": tab.url, "name": "sitecore_userticket" }, function(cookie) {
@@ -75,11 +80,13 @@ function getSitecoreCookie(tab) {
             return cookie.value;
 
         }
-
     })
 
 }
 
+/**
+ * Menu on right clic
+ */
 function showContextMenu(tab) {
 
     if (tab.url != undefined) {
@@ -91,7 +98,6 @@ function showContextMenu(tab) {
         var isUrl = url.includes("http");
         var isEditMode = tab.url.includes("sc_mode=edit");
         var isViewSource = url.includes("view-source:");
-        var isItemId = tab.url.includes("sc_itemid=");
 
         //Tab URL
         chrome.contextMenus.removeAll(function() {
@@ -103,6 +109,9 @@ function showContextMenu(tab) {
     }
 }
 
+/**
+ * Set exgtension icon and label
+ */
 function setIcon(tab) {
 
     //Variables
@@ -160,17 +169,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
     console.log(request);
 
-    if (request.greeting == "get_pagestatus") {
+    if (request.greeting == "get_pagestatus") { 
         
-        
-        fetch(request.url)
-        .then(function(response) {
+        fetch(request.url).then(function(response) {
             console.log(response);
             sendResponse({ status: response.status, redirected: response.redirected });
-        })
-        .catch(function(error) {
+        }).catch(function(error) {
             console.log(error);
-            sendResponse({ error: error });
+            sendResponse({ error });
         })
     }
 
@@ -201,20 +207,20 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 //When a tab is updated
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+chrome.tabs.onUpdated.addListener(function(tab) {
     chrome.tabs.getSelected(null, function(tab) {
         setIcon(tab);
     });
 });
 
 //When a tab is activated (does not fired is default_popup exists)
-chrome.tabs.onActivated.addListener(function(tabId, changeInfo, tab) {
+chrome.tabs.onActivated.addListener(function(tab) {
     chrome.tabs.getSelected(null, function(tab) {
         setIcon(tab);
     });
 });
 
- chrome.runtime.setUninstallURL("https://uquaisse.io/sitecore-cms/uninstallation-successful/?utm_source=uninstall&utm_medium=chrome")
+chrome.runtime.setUninstallURL("https://uquaisse.io/sitecore-cms/uninstallation-successful/?utm_source=uninstall&utm_medium=chrome")
 
 // When the extension is installed or upgraded ...
 chrome.runtime.onInstalled.addListener(function(details) {
@@ -227,10 +233,22 @@ chrome.runtime.onInstalled.addListener(function(details) {
     let versionIncrement = versionInfo[2];
 
     let extinformation = [
-        ["Extension", thisVersion],
-        ["Major", versionNumber],
-        ["Minor", versionRelease],
-        ["Increment", versionIncrement]
+        [
+            "Extension",
+            thisVersion
+        ],
+        [
+            "Major",
+            versionNumber
+        ],
+        [
+            "Minor",
+            versionRelease
+        ],
+        [
+            "Increment",
+            versionIncrement
+        ]
     ]
 
     chrome.storage.sync.get((e) => {
@@ -259,19 +277,20 @@ chrome.runtime.onInstalled.addListener(function(details) {
 
     //Page action only
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
-        chrome.declarativeContent.onPageChanged.addRules([{
-            conditions: [
-                new chrome.declarativeContent.PageStateMatcher({
-                    pageUrl: { urlContains: '/sitecore/' }
-                }),
-                new chrome.declarativeContent.PageStateMatcher({
-                    pageUrl: { urlContains: 'sc_mode=' }
-                })
-            ],
-            actions: [
-                new chrome.declarativeContent.ShowPageAction()
-            ]
-        }]);
+        chrome.declarativeContent.onPageChanged.addRules([
+            {
+                conditions: [
+                    new chrome.declarativeContent.PageStateMatcher({
+                        pageUrl: { urlContains: '/sitecore/' }
+                    }),
+                    new chrome.declarativeContent.PageStateMatcher({
+                        pageUrl: { urlContains: 'sc_mode=' }
+                    })
+                ],
+                actions:
+                [new chrome.declarativeContent.ShowPageAction()]
+            }
+        ]);
     });
 
 });

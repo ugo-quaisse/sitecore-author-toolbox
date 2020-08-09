@@ -60,16 +60,35 @@ Tested on Sitecore versions:
 * 9.2.0 (rev. 002893)
 * 8.2 (rev. 180406)
 
-## How to install
-* Download repo and zip it
-* Go to chrome://extensions/ or edge://extensions/
-* Activate "Developer Mode"
-* Clic "Load Unpacked"
-* Choose zip file
-
 ## Live version
 
 The latest stable version can be installed from the [Chrome Web Store here](https://chrome.google.com/webstore/detail/mckfcmcdbgkgffdknpkaihjigmcnnbco/) 
+
+## Development / Contributing
+
+Follow steps below if you want to start coding or fixing issues.
+
+### Prerequisites
+
+Install **nodejs**
+
+```cmd
+https://nodejs.org/en/download/
+```
+
+### Environment setup
+
+Clone repository
+
+```cmd
+git clone https://github.com/ugo-quaisse/sitecore-author-toolbox.git
+```
+
+Install node modules
+
+```cmd
+npm install
+```
 
 ## Support
 

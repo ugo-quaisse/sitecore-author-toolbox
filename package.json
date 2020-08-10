@@ -27,6 +27,7 @@
   "homepage": "https://github.com/ugo-quaisse/sitecore-author-toolbox#readme",
   "devDependencies": {
     "eslint": "^7.6.0",
+    "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-node": "^11.1.0",

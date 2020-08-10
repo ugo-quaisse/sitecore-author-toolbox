@@ -1,73 +1,120 @@
-.scOverlay, .ui-widget-overlay {
-	background: rgba(0, 0, 0, 0.2) !important;
+.scOverlay,
+.ui-widget-overlay {
+  background: rgba(0, 0, 0, 0.2) !important;
+}
+
+a.scContentButton {
+  color: var(--accent) !important;
 }
 
 #scModal {
-	background-color: var(--black1) !important;
+  background-color: var(--black1) !important;
 }
 
 #SearchPanel {
-	background-color: var(--black1) !important;
+  padding: 17px;
+  background-color: var(--black1) !important;
 }
 
 .scSaveBar {
-	background-color: var(--black1) !important;
-	border-bottom: 1px solid var(--black3);
+  background-color: var(--black1) !important;
+  border-bottom: 1px solid var(--black3);
+}
+
+.scSaveBar > .scActions > button {
+  background-color: var(--black2);
+  color: var(--white);
+}
+
+.scEditorTabControlsHolder {
+  margin: 11px 13px;
+  height: auto;
+}
+
+a.scEditorHeaderButton,
+button.scEditorHeaderButton {
+  background-color: var(--black2);
+  color: var(--white);
+}
+
+a.scEditorHeaderButton > img,
+button.scEditorHeaderButton > img {
+  filter: invert(1);
 }
 
 .scEditorGrid {
-	background-color: var(--black1) !important;
+  background-color: var(--black1) !important;
 }
 
 .scEditorTabHeaderActive {
-	background-color: var(--black2) !important;
-}
-
-#scEditorTabs > ul > li:hover {
-    color: var(--text);
-    background: var(--black3);
-    border-top: 2px solid var(--accent) !important;
-}
-
-.scMessageBar {
-	filter: saturate(2);
-}
-
-#BTAddNewSearch {
-	background-color: var(--black1) !important;
-	border: 0px solid var(--black1) !important;
-}
-
-.scEditorTabSelected {
-	background-color: var(--black3) !important;
-}
-
-.scEditorTabSelected:hover {
-	background-color: var(--black3) !important;
+  background-color: var(--black2) !important;
 }
 
 .scEditorTab {
-	background-color: var(--black2);
+  background: var(--black3) !important;
 }
 
 #scEditorTabs > ul > li {
-	border: 1px solid var(--black2);
+  border: 1px solid var(--black2);
+}
+
+#scEditorTabs > ul > li:hover {
+  color: var(--text) !important;
+  background: var(--black3) !important;
+  border-top: 2px solid var(--accent) !important;
+}
+
+.scMessageBar {
+  filter: saturate(2);
+}
+
+#BTAddNewSearch {
+  background-color: var(--black1) !important;
+  border: 0px solid var(--black1) !important;
+}
+
+.scEditorTabSelected {
+  background-color: var(--black2) !important;
+}
+
+.scEditorTabSelected:hover {
+  background-color: var(--black2) !important;
+  border-top: 2px solid var(--accent) !important;
 }
 
 .scEditorSectionPanel {
-	background-color: var(--black3) !important;
+  display: table;
+  border-radius: 0px 0px 3px 3px;
+  margin: 20px;
+  margin-top: 0px !important;
+  padding: 15px;
+  width: calc(100% - 40px);
+  background-color: var(--white);
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+  background-color: var(--black2) !important;
+}
+
+.scEditorSectionPanel.scTabsRounded {
+  border-radius: 3px;
+}
+
+.scEditorSectionPanelCell {
+  padding: 20px 20px 20px 15px;
 }
 
 .scEditorSections {
-	background-color: var(--black0) !important;
+  border-top: 0px;
+  background-color: var(--black0) !important;
 }
 
-
+.scEditorTabEmpty {
+  border-bottom: 0px;
+}
 
 .scContentTreeNodeGlyph:hover + a > span,
 div.scContentTreeNode > img:hover + a > span,
 a.scContentTreeNodeNormal:hover > span {
-	background-color: var(--black3) !important;
+  background-color: var(--black3) !important;
 }
 
 .scMenuItemIcon,
@@ -75,14 +122,15 @@ a.scContentTreeNodeNormal:hover > span {
 .elementImgAlignment,
 .scEditorHeaderNavigatorIcon,
 .scContentTreeNodeIcon {
-	filter: brightness(0) invert(1);
+  filter: brightness(0) invert(1);
 }
 
 .scInsertItemIcon {
-	filter: invert(0) !important;
+  filter: invert(0) !important;
 }
 
-.scTreeview .icon, .scTreeview .icon_Hover,
+.scTreeview .icon,
+.scTreeview .icon_Hover,
 #scModal .item > a > img {
-	filter: grayscale(1) brightness(0.4) contrast(2) invert(1);
+  filter: grayscale(1) brightness(0.4) contrast(2) invert(1);
 }

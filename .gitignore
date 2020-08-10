@@ -4,3 +4,4 @@ build/
 *.DS_Store
 js/modules/local.js
 node_modules/
+.vscode/settings.json

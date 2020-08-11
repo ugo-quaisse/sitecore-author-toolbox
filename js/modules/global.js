@@ -4,7 +4,7 @@
 /**
  * Global variables declaration
  */
-export const debug = false;
+export const debug = true;
 export const showSnackbar = false;
 export const extensionVersion = chrome.runtime.getManifest().version;
 export const extensionId = chrome.runtime
@@ -100,6 +100,7 @@ export const isGalleryLanguage = windowLocationHref.includes(
   "gallery.language"
 );
 export const isGalleryVersion = windowLocationHref.includes("gallery.version");
+export const isLayoutDetails = windowLocationHref.includes("layoutdetails");
 export const isRichText = windowLocationHref.includes("richtext.");
 export const isGalleryLanguageExpEd = windowLocationHref.includes(
   "selectlanguagegallery"

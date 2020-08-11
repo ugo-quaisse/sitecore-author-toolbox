@@ -1,8 +1,9 @@
 #Editors input:not([type]),
 #Editors input[type="text"],
 #Editors input[type="password"],
-#Editors select, #Editors textarea,
+#Editors select,
+#Editors textarea,
 #ContentWrapper {
-	direction: rtl !important;
-	text-align: unset;
+  direction: rtl !important;
+  text-align: unset;
 }

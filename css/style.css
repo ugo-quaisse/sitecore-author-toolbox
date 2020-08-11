@@ -11,16 +11,16 @@
   --black9: #999;
 
   --grey: #ccc;
-  --grey1: #47474E;
+  --grey1: #47474e;
   --grey2: #2b2b2b;
   --grey3: #f0f0f0;
   --grey4: #d6d6d6;
   --grey5: #e8e6e6;
-  --grey6: #E3E3E3;
+  --grey6: #e3e3e3;
   --grey7: #495057;
   --grey8: #f8f9fa;
   --grey9: #e3e3e3;
-  
+
   --lightblue: #1e81ef;
   --blue: #0b84ff;
   --darkblue: #034c9e;
@@ -33,7 +33,7 @@
   --accentText: #ffffff;
   --accentBrightness: 50;
 
-  --messageSuccessBgIcon: #8ce99a; 
+  --messageSuccessBgIcon: #8ce99a;
   --messageSuccessIcon: #40c057;
   --messageSuccessBar: #ebfbee;
   --messageSuccessLink: #40c057;
@@ -52,90 +52,89 @@
   --messageInfoIcon: #228be6;
   --messageInfoBar: #e7f5ff;
   --messageInfoLink: #228be6;
-  
 
   --lightred: #ee4546;
   --red: #a11d16;
-  --darkred: #6B120F;
+  --darkred: #6b120f;
 
   --white: #fff;
-  --text: #47474E;
+  --text: #47474e;
 
   --iconBrightness: 0.1;
   --iconContrast: 2;
 }
 
 form#ContentEditorForm {
-    filter: blur(7px) brightness(0.1) grayscale(1);
-    transition: all ease-in-out .2s;
-    transition-delay: 0.2s;
+  filter: blur(7px) brightness(0.1) grayscale(1);
+  transition: all ease-in-out 0.2s;
+  transition-delay: 0.2s;
 }
 
 body.contentEditor {
-    background-color: #000;
-    transition: all ease-in-out .1s;
-    transition-delay: 0.2s;
+  background-color: #000;
+  transition: all ease-in-out 0.1s;
+  transition-delay: 0.2s;
 }
 
 body.contentEditor:after {
-    content: "";
-    color: #cccccc;
-    font-size: 12px;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    opacity: 1;
-    transform: translate(-50%, -50%);
-    transition: 0.2s;
-    transition-delay: 0s;
-    text-align: center;
-    padding-top: 40px;
-    height: 56px;
-    width: 96px;
-    position: absolute;
-    background: transparent url('chrome-extension://__MSG_@@extension_id__/images/sc-spinner32.gif') no-repeat center center;
-    background-color: #ffffff;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.175);
-    z-index: auto;
-    transition: all ease-in-out .1s;
-    transition-delay: 0.2s;
+  content: "";
+  color: #cccccc;
+  font-size: 12px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  opacity: 1;
+  transform: translate(-50%, -50%);
+  transition: 0.2s;
+  transition-delay: 0s;
+  text-align: center;
+  padding-top: 40px;
+  height: 56px;
+  width: 96px;
+  position: absolute;
+  background: transparent url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner32.gif") no-repeat center center;
+  background-color: #ffffff;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.175);
+  z-index: auto;
+  transition: all ease-in-out 0.1s;
+  transition-delay: 0.2s;
 }
 
 .scWorkboxPanel,
 .scWindowBorder1 {
-    border: 0px solid !important;
+  border: 0px solid !important;
 }
 
 .ui-widget-overlay {
-    background: var(--black) !important;
+  background: var(--black) !important;
 }
 
 ul.sc-accountInformation {
-    opacity: 0;
-    transition: all ease-in-out .1s;
+  opacity: 0;
+  transition: all ease-in-out 0.1s;
 }
 
 div.scSaveBar {
-    background-color: #fff;
+  background-color: #fff;
 }
 
 #svgAnimation,
 #EditorFrames {
-    opacity: 0;
+  opacity: 0;
 }
 
 #scCreatePlus {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 #scModal {
-    visibility: hidden;
-    opacity: 0;
-    transition: all ease-in-out .2s;
+  visibility: hidden;
+  opacity: 0;
+  transition: all ease-in-out 0.2s;
 }
 
 div#Languages img {
-    display: block !important;
-    width: 32px;
+  display: block !important;
+  width: 32px;
 }

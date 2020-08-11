@@ -12,21 +12,11 @@
     "scripts": ["js/background.js"],
     "persistent": false
   },
-  "permissions": [
-    "activeTab",
-    "tabs",
-    "storage",
-    "notifications",
-    "declarativeContent",
-    "contextMenus",
-    "cookies",
-    "http://*/*",
-    "https://*/*"
-  ],
+  "permissions": ["activeTab", "tabs", "storage", "notifications", "declarativeContent", "contextMenus", "cookies", "http://*/*", "https://*/*"],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "css": ["css/style-min.css"],
+      "css": ["css/style.min.css"],
       "js": ["js/main.js"],
       "run_at": "document_idle",
       "all_frames": true
@@ -41,11 +31,5 @@
     "default_title": "Sitecore Author Toolbox (options)",
     "default_icon": "images/icon.png"
   },
-  "web_accessible_resources": [
-    "images/*",
-    "css/*",
-    "js/*",
-    "audio/*",
-    "options.html"
-  ]
+  "web_accessible_resources": ["images/*", "css/*", "js/*", "audio/*", "options.html"]
 }

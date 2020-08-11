@@ -1,0 +1,1 @@
+#ContentWrapper,#Editors input:not([type]),#Editors input[type=password],#Editors input[type=text],#Editors select,#Editors textarea{direction:rtl!important;text-align:unset}

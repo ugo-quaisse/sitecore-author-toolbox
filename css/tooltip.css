@@ -10,7 +10,8 @@
   /********** Left Tooltip ********* */
   /*z-index: -1;*/
 }
-[data-tooltip]:before, [data-tooltip]:after {
+[data-tooltip]:before,
+[data-tooltip]:after {
   position: absolute;
   visibility: hidden;
   opacity: 0;
@@ -23,7 +24,7 @@
   padding: 8px 10px;
   min-width: 100px;
   border-radius: 0px;
-  background: rgba(0,0,0,0.9);
+  background: rgba(0, 0, 0, 0.9);
   color: #fff;
   content: attr(data-tooltip);
   text-align: center;
@@ -38,7 +39,8 @@
   font-size: 0;
   line-height: 0;
 }
-[data-tooltip]:hover:before, [data-tooltip]:hover:after {
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after {
   visibility: visible;
   opacity: 1;
 }
@@ -67,11 +69,12 @@
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
-  border-top: 6px solid rgba(0,0,0,0.8);
+  border-top: 6px solid rgba(0, 0, 0, 0.8);
   border-bottom: none;
   top: -5px;
 }
-[data-tooltip].t-top:hover:before, [data-tooltip].t-top:hover:after {
+[data-tooltip].t-top:hover:before,
+[data-tooltip].t-top:hover:after {
   transform: translateX(-50%) translateY(-3px);
 }
 [data-tooltip].t-right:before {
@@ -84,10 +87,11 @@
   top: 50%;
   left: 100%;
   transform: translateY(-50%);
-  border-right: 8px solid rgba(0,0,0,0.8);
+  border-right: 8px solid rgba(0, 0, 0, 0.8);
   border-left: none;
 }
-[data-tooltip].t-right:hover:before, [data-tooltip].t-right:hover:after {
+[data-tooltip].t-right:hover:before,
+[data-tooltip].t-right:hover:after {
   transform: translateX(5px) translateY(-50%);
 }
 [data-tooltip].t-bottom:before {
@@ -100,10 +104,11 @@
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  border-bottom: 8px solid rgba(0,0,0,0.8);
+  border-bottom: 8px solid rgba(0, 0, 0, 0.8);
   border-top: none;
 }
-[data-tooltip].t-bottom:hover:before, [data-tooltip].t-bottom:hover:after {
+[data-tooltip].t-bottom:hover:before,
+[data-tooltip].t-bottom:hover:after {
   transform: translateX(-50%) translateY(5px);
 }
 [data-tooltip].t-left:before {
@@ -116,9 +121,10 @@
   top: 50%;
   right: 100%;
   transform: translateY(-50%);
-  border-left: 8px solid rgba(0,0,0,0.9);
+  border-left: 8px solid rgba(0, 0, 0, 0.9);
   border-right: none;
 }
-[data-tooltip].t-left:hover:before, [data-tooltip].t-left:hover:after {
+[data-tooltip].t-left:hover:before,
+[data-tooltip].t-left:hover:after {
   transform: translateX(-5px) translateY(-50%);
 }

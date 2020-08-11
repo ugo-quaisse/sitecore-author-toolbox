@@ -72,6 +72,7 @@ const checkUrlStatus = (status, source = null, dark, experimental = false) => {
   }
 
   //Update Dom
+  console.log(liveUrlStatus);
   liveUrlStatus
     ? (liveUrlStatus.innerHTML = html)
     : (liveUrlStatus.innerHTML = "");

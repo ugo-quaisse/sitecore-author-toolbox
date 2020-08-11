@@ -1,23 +1,11 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
-import {
-  loadCssFile,
-  loadJsFile,
-  sitecoreItemJson,
-  getScItemData,
-  preferesColorScheme,
-} from "./helpers.js";
+import { loadCssFile, loadJsFile, sitecoreItemJson, getScItemData, preferesColorScheme } from "./helpers.js";
 import { checkUrlStatus } from "./url.js";
 import { checkHelpLink } from "./help.js";
 import { findCountryName } from "./language.js";
-import {
-  insertSavebar,
-  insertBreadcrumb,
-  insertLanguageButton,
-  insertVersionButton,
-  insertMoreButton,
-} from "./experimentalui.js";
+import { insertSavebar, insertBreadcrumb, insertLanguageButton, insertVersionButton, insertMoreButton } from "./experimentalui.js";
 
 export { sitecoreAuthorToolbox };
 
@@ -33,27 +21,19 @@ const sitecoreAuthorToolbox = () => {
     var count = 0;
     let scEditorID = document.querySelector(".scEditorHeader");
     let scQuickInfo = document.querySelector(".scEditorHeaderQuickInfoInput");
-    let scLanguageMenu = document.querySelector(
-      ".scEditorHeaderVersionsLanguage"
-    );
-    let scVersion = document.querySelector(
-      ".scEditorHeaderVersionsVersion > span"
-    );
+    let scLanguageMenu = document.querySelector(".scEditorHeaderVersionsLanguage");
+    let scVersion = document.querySelector(".scEditorHeaderVersionsVersion > span");
     scVersion ? (scVersion = scVersion.innerText) : false;
     let scActiveTab = document.querySelector(".scEditorTabHeaderActive");
     var scErrors = document.querySelectorAll(" .scValidationMarkerIcon ");
     let scEditorSections = document.querySelector(".scEditorSections");
     let isTranslateMode = false;
-    var scEditorHeaderVersionsLanguage = document.querySelector(
-      ".scEditorHeaderVersionsLanguage"
-    );
+    var scEditorHeaderVersionsLanguage = document.querySelector(".scEditorHeaderVersionsLanguage");
     let currentScheme = preferesColorScheme();
     let darkMode = false;
 
     if (scEditorHeaderVersionsLanguage) {
-      var scLanguageTxtLong = scEditorHeaderVersionsLanguage.getAttribute(
-        "title"
-      ); //French : framçais
+      var scLanguageTxtLong = scEditorHeaderVersionsLanguage.getAttribute("title"); //French : framçais
       var scLanguageTxtShort = scEditorHeaderVersionsLanguage.innerText; //French
     }
 
@@ -71,9 +51,7 @@ const sitecoreAuthorToolbox = () => {
     } else {
       //Variables
       let ScItem = getScItemData();
-      var temp = document.getElementsByClassName(
-        "scEditorHeaderQuickInfoInput"
-      );
+      var temp = document.getElementsByClassName("scEditorHeaderQuickInfoInput");
       var sitecoreItemID = ScItem.id;
       var sitecoreItemPath = ScItem.path + "/";
       var sitecoreItemPathOriginal = ScItem.path + "/";
@@ -83,27 +61,14 @@ const sitecoreAuthorToolbox = () => {
       sitecoreSite = sitecoreSite.slice(-1)[0];
 
       var isContent = sitecoreItemPathOriginal.includes("/sitecore/content/");
-      var isMedia = sitecoreItemPathOriginal.includes(
-        "/sitecore/media library/"
-      );
+      var isMedia = sitecoreItemPathOriginal.includes("/sitecore/media library/");
       var isData = sitecoreItemPathOriginal.includes("/data/");
       var isSettings = sitecoreItemPathOriginal.includes("/settings/");
       var isPresentation = sitecoreItemPathOriginal.includes("/presentation/");
-      var isEmailTemplate = sitecoreItemPathOriginal.includes(
-        "/sitecore/content/email/"
-      );
+      var isEmailTemplate = sitecoreItemPathOriginal.includes("/sitecore/content/email/");
 
-      var scLanguage = document
-        .querySelector("#scLanguage")
-        .value.toLowerCase();
-      var scUrl =
-        window.location.origin +
-        "/?sc_itemid=" +
-        sitecoreItemID +
-        "&sc_mode=normal&sc_lang=" +
-        scLanguage +
-        "&sc_version=" +
-        scVersion;
+      var scLanguage = document.querySelector("#scLanguage").value.toLowerCase();
+      var scUrl = window.location.origin + "/?sc_itemid=" + sitecoreItemID + "&sc_mode=normal&sc_lang=" + scLanguage + "&sc_version=" + scVersion;
       var scFlag, tabbedFlag;
 
       /**
@@ -118,9 +83,7 @@ const sitecoreAuthorToolbox = () => {
       /**
        * Experimentations
        */
-      storage.feature_experimentalui == undefined
-        ? (storage.feature_experimentalui = false)
-        : false;
+      storage.feature_experimentalui == undefined ? (storage.feature_experimentalui = false) : false;
       if (storage.feature_experimentalui) {
         //Savebar
         insertSavebar();
@@ -149,10 +112,7 @@ const sitecoreAuthorToolbox = () => {
         //Welcome to Sitecore
         if (ScItem.id == "{11111111-1111-1111-1111-111111111111}") {
           scEditorPanel = document.querySelector(".scEditorPanel");
-          scEditorPanel.insertAdjacentHTML(
-            "afterbegin",
-            "<h1>Welcome to Sitecore!</h1>"
-          );
+          scEditorPanel.insertAdjacentHTML("afterbegin", "<h1>Welcome to Sitecore!</h1>");
         }
       }
 
@@ -162,39 +122,18 @@ const sitecoreAuthorToolbox = () => {
       //Generating Live URLs (xxxsxa_sitexxx will be replace later by active site)
       if (sitecoreItemPath[1] != undefined) {
         sitecoreItemPath = encodeURI(
-          window.location.origin +
-            "/" +
-            scLanguage +
-            "/" +
-            sitecoreItemPath[1] +
-            "?sc_site=xxxsxa_sitexxx&sc_mode=normal"
+          window.location.origin + "/" + scLanguage + "/" + sitecoreItemPath[1] + "?sc_site=xxxsxa_sitexxx&sc_mode=normal"
         ).toLowerCase();
       } else {
-        sitecoreItemPath = encodeURI(
-          window.location.origin +
-            "/" +
-            scLanguage +
-            "/?sc_site=xxxsxa_sitexxx&sc_mode=normal"
-        ).toLowerCase();
+        sitecoreItemPath = encodeURI(window.location.origin + "/" + scLanguage + "/?sc_site=xxxsxa_sitexxx&sc_mode=normal").toLowerCase();
       }
 
       //Excluding data, why not having it for media? (replace Media Library by -/media)
       //or link to media /sitecore/-/media/552be56d277c49a5b57846859150d531.ashx
-      if (
-        (isContent &&
-          !isData &&
-          !isPresentation &&
-          !isSettings &&
-          !isEmailTemplate) ||
-        isMedia
-      ) {
+      if ((isContent && !isData && !isPresentation && !isSettings && !isEmailTemplate) || isMedia) {
         //Get user preference
-        storage.feature_urls == undefined
-          ? (storage.feature_urls = true)
-          : false;
-        storage.feature_urlstatus == undefined
-          ? (storage.feature_urlstatus = true)
-          : false;
+        storage.feature_urls == undefined ? (storage.feature_urls = true) : false;
+        storage.feature_urlstatus == undefined ? (storage.feature_urlstatus = true) : false;
 
         //Stored data (Json)
         var liveUrl;
@@ -211,14 +150,9 @@ const sitecoreAuthorToolbox = () => {
         }
 
         //If not added yet
-        if (
-          !document.querySelector("#scMessageBarUrl") &&
-          storage.feature_urls
-        ) {
+        if (!document.querySelector("#scMessageBarUrl") && storage.feature_urls) {
           //Get cookie sxa_site
-          chrome.runtime.sendMessage({ greeting: "sxa_site" }, function (
-            response
-          ) {
+          chrome.runtime.sendMessage({ greeting: "sxa_site" }, function (response) {
             //Is website in cookie different than quick info
             if (response.farewell != null) {
               var site_quickinfo = sitecoreSite.toLowerCase();
@@ -239,34 +173,15 @@ const sitecoreAuthorToolbox = () => {
 
             // }
 
-            if (
-              response.farewell != null &&
-              isSameSite &&
-              liveUrl == undefined
-            ) {
-              sitecoreItemPath = sitecoreItemPath.replace(
-                "xxxsxa_sitexxx",
-                response.farewell
-              );
+            if (response.farewell != null && isSameSite && liveUrl == undefined) {
+              sitecoreItemPath = sitecoreItemPath.replace("xxxsxa_sitexxx", response.farewell);
             } else if (liveUrl == undefined) {
-              sitecoreItemPath = sitecoreItemPath.replace(
-                "sc_site=xxxsxa_sitexxx&",
-                ""
-              );
+              sitecoreItemPath = sitecoreItemPath.replace("sc_site=xxxsxa_sitexxx&", "");
             } else if (liveUrl != undefined) {
               //Generating CD/Live URLs
-              sitecoreItemPath = sitecoreItemPath.replace(
-                "sc_site=xxxsxa_sitexxx&",
-                ""
-              );
-              sitecoreItemPath = sitecoreItemPath.replace(
-                "?sc_mode=normal",
-                ""
-              );
-              sitecoreItemPath = sitecoreItemPath.replace(
-                window.location.origin,
-                liveUrl
-              );
+              sitecoreItemPath = sitecoreItemPath.replace("sc_site=xxxsxa_sitexxx&", "");
+              sitecoreItemPath = sitecoreItemPath.replace("?sc_mode=normal", "");
+              sitecoreItemPath = sitecoreItemPath.replace(window.location.origin, liveUrl);
               //Generating CD?Live URLS with SitecoreID
               scUrl = scUrl.replace(window.location.origin, liveUrl);
               scUrl = scUrl.replace("&sc_mode=normal", "");
@@ -275,21 +190,13 @@ const sitecoreAuthorToolbox = () => {
             }
 
             //Experimentation
-            storage.feature_experimentalui == undefined
-              ? (storage.feature_experimentalui = false)
-              : false;
+            storage.feature_experimentalui == undefined ? (storage.feature_experimentalui = false) : false;
             storage.feature_experimentalui ? (barStyle = "scSuccess") : false;
-            document.querySelector(".scPreviewButton")
-              ? document
-                  .querySelector(".scPreviewButton")
-                  .setAttribute("style", "display: block")
-              : false;
+            document.querySelector(".scPreviewButton") ? document.querySelector(".scPreviewButton").setAttribute("style", "display: block") : false;
 
             if (isMedia) {
-              var imageId = sitecoreItemID
-                .replace(/-/u, "")
-                .replace("{", "")
-                .replace("}", "");
+              // eslint-disable-next-line newline-per-chained-call
+              var imageId = sitecoreItemID.replace(/-/u, "").replace("{", "").replace("}", "");
               sitecoreItemPath =
                 window.location.origin +
                 "/sitecore/shell/Applications/-/media/" +
@@ -332,9 +239,7 @@ const sitecoreAuthorToolbox = () => {
             }
 
             //Insert message bar into Sitecore Content Editor
-            !document.querySelector("#scMessageBarLiveUrl")
-              ? scEditorID.insertAdjacentHTML("afterend", scMessage)
-              : false;
+            !document.querySelector("#scMessageBarLiveUrl") ? scEditorID.insertAdjacentHTML("afterend", scMessage) : false;
 
             //Insert link into Quickinfo table
             var table = document.querySelector(".scEditorQuickInfo");
@@ -355,19 +260,12 @@ const sitecoreAuthorToolbox = () => {
 
             //Experimental mode
             document.querySelector(".scPreviewButton")
-              ? document
-                  .querySelector(".scPreviewButton")
-                  .setAttribute(
-                    "onclick",
-                    "window.open('" + sitecoreItemPath + "'); return false;"
-                  )
+              ? document.querySelector(".scPreviewButton").setAttribute("onclick", "window.open('" + sitecoreItemPath + "'); return false;")
               : false;
 
             //Is dark mode on?
             (storage.feature_darkmode && !storage.feature_darkmode_auto) ||
-            (storage.feature_darkmode &&
-              storage.feature_darkmode_auto &&
-              currentScheme == "dark")
+            (storage.feature_darkmode && storage.feature_darkmode_auto && currentScheme == "dark")
               ? (darkMode = true)
               : false;
 
@@ -385,19 +283,11 @@ const sitecoreAuthorToolbox = () => {
                 },
                 (response) => {
                   global.debug ? console.log(response) : false;
-                  checkUrlStatus(
-                    response.status,
-                    null,
-                    darkMode,
-                    storage.feature_experimentalui
-                  );
+                  checkUrlStatus(response.status, null, darkMode, storage.feature_experimentalui);
                 }
               );
             } else {
-              storage.feature_experimentalui
-                ? (document.querySelector(".scPreviewButton").innerText =
-                    "No preview available")
-                : false;
+              storage.feature_experimentalui ? (document.querySelector(".scPreviewButton").innerText = "No preview available") : false;
             }
 
             /**
@@ -417,28 +307,16 @@ const sitecoreAuthorToolbox = () => {
           }); // End cookie
         }
       } else if (isData) {
-        storage.feature_urls == undefined
-          ? (storage.feature_urls = true)
-          : false;
-        storage.feature_messagebar == undefined
-          ? (storage.feature_messagebar = true)
-          : false;
+        storage.feature_urls == undefined ? (storage.feature_urls = true) : false;
+        storage.feature_messagebar == undefined ? (storage.feature_messagebar = true) : false;
 
         //If not added yet
-        if (
-          !document.getElementById("scMessageBarInfo") &&
-          storage.feature_urls &&
-          storage.feature_messagebar
-        ) {
+        if (!document.getElementById("scMessageBarInfo") && storage.feature_urls && storage.feature_messagebar) {
           //scMessage = '<div id="scMessageBarInfo" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' + global.iconData + ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">You are editing a datasource</div><div class="scMessageBarText">To see it, you have to attach it to a component via the Experience Editor.</b></div></div></div>'
           //scEditorID.insertAdjacentHTML('afterend', scMessage);
 
           //Experimental mode
-          document.querySelector(".scPreviewButton")
-            ? document
-                .querySelector(".scPreviewButton")
-                .setAttribute("style", "display: none")
-            : false;
+          document.querySelector(".scPreviewButton") ? document.querySelector(".scPreviewButton").setAttribute("style", "display: none") : false;
         }
       }
     }
@@ -446,62 +324,37 @@ const sitecoreAuthorToolbox = () => {
     /**
      * Help link banner
      */
-    storage.feature_helplink == undefined
-      ? (storage.feature_helplink = true)
-      : false;
-    storage.feature_helplink
-      ? checkHelpLink(
-          sitecoreItemID,
-          scLanguage,
-          scVersion,
-          storage.feature_helplink
-        )
-      : false;
+    storage.feature_helplink == undefined ? (storage.feature_helplink = true) : false;
+    storage.feature_helplink ? checkHelpLink(sitecoreItemID, scLanguage, scVersion, storage.feature_helplink) : false;
 
     /**
      * Change Title window
      */
     let ScItem = getScItemData();
-    window.document.title =
-      "" + ScItem.name.capitalize() + " (" + scLanguage.toUpperCase() + ")";
+    window.document.title = "" + ScItem.name.capitalize() + " (" + scLanguage.toUpperCase() + ")";
 
     /**
      * Insert Flag (In Active Tab) + Version Number
      */
     storage.feature_flags == undefined ? (storage.feature_flags = true) : false;
-    storage.feature_experimentalui == undefined
-      ? (storage.feature_experimentalui = false)
-      : false;
+    storage.feature_experimentalui == undefined ? (storage.feature_experimentalui = false) : false;
 
     //Version number
-    var scEditorHeaderVersionsVersion = document.querySelector(
-      ".scEditorHeaderVersionsVersion"
-    );
+    var scEditorHeaderVersionsVersion = document.querySelector(".scEditorHeaderVersionsVersion");
     if (scEditorHeaderVersionsVersion) {
       var scVersionTitle = scEditorHeaderVersionsVersion.getAttribute("title");
       temp = scVersionTitle.split("of");
       var versionTotal = temp[1].replace(".", "").trim();
       var versionNumber = temp[0].replace("Version", "").trim();
       versionNumber < versionTotal
-        ? (scEditorHeaderVersionsVersion.querySelector(
-            "span"
-          ).innerText = scVersionTitle
-            .replace("Version", "⚠️ Version")
-            .replace(".", " ▾"))
-        : (scEditorHeaderVersionsVersion.querySelector(
-            "span"
-          ).innerText = scVersionTitle.replace(".", " ▾"));
+        ? (scEditorHeaderVersionsVersion.querySelector("span").innerText = scVersionTitle.replace("Version", "⚠️ Version").replace(".", " ▾"))
+        : (scEditorHeaderVersionsVersion.querySelector("span").innerText = scVersionTitle.replace(".", " ▾"));
 
       //Experimental
       storage.feature_experimentalui
-        ? (scEditorHeaderVersionsVersion.querySelector(
-            "span"
-          ).innerHTML = scEditorHeaderVersionsVersion
+        ? (scEditorHeaderVersionsVersion.querySelector("span").innerHTML = scEditorHeaderVersionsVersion
             .querySelector("span")
-            .innerHTML.replace(
-              "Version",
-              "<img src='" + global.iconVersion + "' class='scVersionIcon' />"
-            ))
+            .innerHTML.replace("Version", "<img src='" + global.iconVersion + "' class='scVersionIcon' />"))
         : false;
       //storage.feature_experimentalui ? document.querySelector(".scEditorHeaderNavigator").setAttribute("style","display:none") : false;
     }
@@ -509,11 +362,7 @@ const sitecoreAuthorToolbox = () => {
     //Flag in tab and menu
     if (storage.feature_flags) {
       //Flag image
-      scFlag = chrome.runtime.getURL(
-        "images/Flags/32x32/flag_" +
-          findCountryName(scLanguageTxtShort) +
-          ".png"
-      );
+      scFlag = chrome.runtime.getURL("images/Flags/32x32/flag_" + findCountryName(scLanguageTxtShort) + ".png");
 
       //Insert Flag into Active Tab
       tabbedFlag = scFlag;
@@ -546,12 +395,7 @@ const sitecoreAuthorToolbox = () => {
       //Experimental
       if (!document.querySelector(".scLanguageIcon")) {
         storage.feature_experimentalui
-          ? scLanguageMenu.insertAdjacentHTML(
-              "afterbegin",
-              "<img src='" +
-                global.iconLanguage +
-                "' class='scLanguageIcon' /> "
-            )
+          ? scLanguageMenu.insertAdjacentHTML("afterbegin", "<img src='" + global.iconLanguage + "' class='scLanguageIcon' /> ")
           : false;
       }
     }
@@ -567,29 +411,21 @@ const sitecoreAuthorToolbox = () => {
 
       if (global.rteLanguages.includes(scFlag)) {
         //RTL
-        loadCssFile("css/rtl-min.css");
-        for (let iframe of document.getElementsByClassName(
-          "scContentControlHtml"
-        )) {
+        loadCssFile("css/rtl.min.css");
+        for (let iframe of document.getElementsByClassName("scContentControlHtml")) {
           iframe.onload = function () {
             iframe.contentWindow.document.getElementById("ContentWrapper")
-              ? (iframe.contentWindow.document.getElementById(
-                  "ContentWrapper"
-                ).style.direction = "RTL")
+              ? (iframe.contentWindow.document.getElementById("ContentWrapper").style.direction = "RTL")
               : false;
           };
         }
       } else {
         //LTR
-        loadCssFile("css/ltr-min.css");
-        for (let iframe of document.getElementsByClassName(
-          "scContentControlHtml"
-        )) {
+        loadCssFile("css/ltr.min.css");
+        for (let iframe of document.getElementsByClassName("scContentControlHtml")) {
           iframe.onload = function () {
             iframe.contentWindow.document.getElementById("ContentWrapper")
-              ? (iframe.contentWindow.document.getElementById(
-                  "ContentWrapper"
-                ).style.direction = "LTR")
+              ? (iframe.contentWindow.document.getElementById("ContentWrapper").style.direction = "LTR")
               : false;
           };
         }
@@ -599,9 +435,7 @@ const sitecoreAuthorToolbox = () => {
     /**
      * Grouped Errors
      */
-    storage.feature_errors == undefined
-      ? (storage.feature_errors = true)
-      : false;
+    storage.feature_errors == undefined ? (storage.feature_errors = true) : false;
     if (storage.feature_errors) {
       count = 0;
       //Prepare HTML
@@ -611,10 +445,7 @@ const sitecoreAuthorToolbox = () => {
         ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">';
 
       for (let item of scErrors) {
-        if (
-          item.getAttribute("src") !=
-          "/sitecore/shell/themes/standard/images/bullet_square_yellow.png"
-        ) {
+        if (item.getAttribute("src") != "/sitecore/shell/themes/standard/images/bullet_square_yellow.png") {
           scMessageErrors +=
             '<li class="scMessageBarOptionBullet" onclick="' +
             item.getAttribute("onclick") +
@@ -652,10 +483,7 @@ const sitecoreAuthorToolbox = () => {
             ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">';
 
           for (let item of scErrors) {
-            if (
-              item.getAttribute("src") !=
-              "/sitecore/shell/themes/standard/images/bullet_square_yellow.png"
-            ) {
+            if (item.getAttribute("src") != "/sitecore/shell/themes/standard/images/bullet_square_yellow.png") {
               scMessageErrors +=
                 '<li class="scMessageBarOptionBullet" onclick="' +
                 item.getAttribute("onclick") +
@@ -668,9 +496,7 @@ const sitecoreAuthorToolbox = () => {
           scMessageErrors += "</ul></div></div>";
 
           //Add errors
-          count > 0
-            ? scEditorID.insertAdjacentHTML("afterend", scMessageErrors)
-            : false;
+          count > 0 ? scEditorID.insertAdjacentHTML("afterend", scMessageErrors) : false;
         }, 1500);
       });
 
@@ -687,27 +513,19 @@ const sitecoreAuthorToolbox = () => {
     /**
      * Character counter and Copy to clipboard
      */
-    storage.feature_charscount == undefined
-      ? (storage.feature_charscount = true)
-      : false;
+    storage.feature_charscount == undefined ? (storage.feature_charscount = true) : false;
     if (storage.feature_charscount) {
       var scTextFields = document.querySelectorAll("input, textarea");
       var countHtml, labelHtml, copyHtml, charsText, chars;
       var copyCount = 0;
 
-      loadCssFile("css/tooltip-min.css");
+      loadCssFile("css/tooltip.min.css");
 
       //On load
       for (var field of scTextFields) {
         //Copy to clipboard
-        if (
-          field.className == "scEditorHeaderQuickInfoInput" ||
-          field.className == "scEditorHeaderQuickInfoInputID"
-        ) {
-          field.setAttribute(
-            "style",
-            "width: calc(100%-16px); margin-left:2px; display: none"
-          );
+        if (field.className == "scEditorHeaderQuickInfoInput" || field.className == "scEditorHeaderQuickInfoInputID") {
+          field.setAttribute("style", "width: calc(100%-16px); margin-left:2px; display: none");
           field.classList.add("copyCount_" + copyCount);
           copyHtml =
             `<span onclick="copyContent('` +
@@ -729,23 +547,14 @@ const sitecoreAuthorToolbox = () => {
             `"></span>`;
           field.value != "[unknown]"
             ? field.insertAdjacentHTML("beforebegin", copyHtml)
-            : field.insertAdjacentHTML(
-                "beforebegin",
-                `<span>` + field.value + `</span>`
-              );
+            : field.insertAdjacentHTML("beforebegin", `<span>` + field.value + `</span>`);
           copyCount++;
         }
 
         //Character counter
-        if (
-          field.className == "scContentControl" ||
-          field.className == "scContentControlMemo"
-        ) {
+        if (field.className == "scContentControl" || field.className == "scContentControlMemo") {
           field.setAttribute("style", "padding-right: 70px !important");
-          field.parentElement.setAttribute(
-            "style",
-            "position:relative !important"
-          );
+          field.parentElement.setAttribute("style", "position:relative !important");
           chars = field.value.length;
           if (chars > 1) {
             charsText = chars + " chars";
@@ -762,10 +571,7 @@ const sitecoreAuthorToolbox = () => {
           field.insertAdjacentHTML("afterend", countHtml);
         } else if (field.className == "scContentControlCheckbox") {
           //Add label
-          labelHtml =
-            '<label for="' +
-            field.id +
-            '" class="scContentControlCheckboxLabel"></label>';
+          labelHtml = '<label for="' + field.id + '" class="scContentControlCheckboxLabel"></label>';
           field.insertAdjacentHTML("afterend", labelHtml);
         } else if (field.className == "scContentControlImage") {
           // scContentButtons = field.parentElement.parentElement.querySelector(".scContentButtons");
@@ -780,10 +586,7 @@ const sitecoreAuthorToolbox = () => {
       document.addEventListener(
         "keyup",
         function (event) {
-          if (
-            event.target.localName == "input" ||
-            event.target.localName == "textarea"
-          ) {
+          if (event.target.localName == "input" || event.target.localName == "textarea") {
             chars = event.target.value.length;
             if (chars > 1) {
               charsText = chars + " chars";
@@ -794,9 +597,7 @@ const sitecoreAuthorToolbox = () => {
             //if(global.debug) { console.log('Input text: '+event.target.id+" -> "+charsText); }
 
             if (document.querySelector("#chars_" + event.target.id)) {
-              document.querySelector(
-                "#chars_" + event.target.id
-              ).innerText = charsText;
+              document.querySelector("#chars_" + event.target.id).innerText = charsText;
             }
           }
         },
@@ -807,25 +608,17 @@ const sitecoreAuthorToolbox = () => {
     /**
      * Translate Mode
      */
-    storage.feature_translatemode == undefined
-      ? (storage.feature_translatemode = false)
-      : false;
+    storage.feature_translatemode == undefined ? (storage.feature_translatemode = false) : false;
 
     if (storage.feature_translatemode) {
       var scEditorPanel = document.querySelector(".scEditorPanel");
-      var scEditorSectionPanel = document.querySelectorAll(
-        ".scEditorSectionPanel .scEditorSectionPanelCell"
-      )[1];
+      var scEditorSectionPanel = document.querySelectorAll(".scEditorSectionPanel .scEditorSectionPanelCell")[1];
       scTextFields = scEditorPanel.querySelectorAll("input, textarea, select");
       count = 0;
 
       //Detect if Translate Mode is on
       if (scEditorSectionPanel) {
-        if (
-          scEditorSectionPanel.querySelector(
-            ".scEditorFieldMarkerInputCell > table > tbody"
-          ) != null
-        ) {
+        if (scEditorSectionPanel.querySelector(".scEditorFieldMarkerInputCell > table > tbody") != null) {
           isTranslateMode = true;
         }
       }
@@ -836,8 +629,7 @@ const sitecoreAuthorToolbox = () => {
             field.className == "scContentControl" ||
             field.className == "scContentControlMemo" ||
             field.className == "scContentControlImage" ||
-            (field.className.includes("scCombobox") &&
-              !field.className.includes("scComboboxEdit"))
+            (field.className.includes("scCombobox") && !field.className.includes("scComboboxEdit"))
           ) {
             tdMiddle = null;
 
@@ -906,17 +698,13 @@ const sitecoreAuthorToolbox = () => {
     /**
      *  Tabs section
      */
-    storage.feature_cetabs == undefined
-      ? (storage.feature_cetabs = false)
-      : false;
+    storage.feature_cetabs == undefined ? (storage.feature_cetabs = false) : false;
     if (storage.feature_cetabs) {
       var scEditorTabs = document.querySelector("#scEditorTabs");
       var scEditorHeader = document.querySelector(".scEditorHeader");
       var scMessageBar = document.querySelectorAll(".scMessageBar");
       scMessageBar = scMessageBar[scMessageBar.length - 1];
-      var scEditorSectionCaption = document.querySelectorAll(
-        ".scEditorSectionCaptionCollapsed, .scEditorSectionCaptionExpanded"
-      );
+      var scEditorSectionCaption = document.querySelectorAll(".scEditorSectionCaptionCollapsed, .scEditorSectionCaptionExpanded");
       var sectionActiveCount = 0;
 
       if (scEditorTabs) {
@@ -945,11 +733,7 @@ const sitecoreAuthorToolbox = () => {
         }
 
         //Detect active panel
-        if (
-          sectionClass == "scEditorSectionCaptionExpanded" &&
-          sectionActiveCount == 0 &&
-          sectionVisible == true
-        ) {
+        if (sectionClass == "scEditorSectionCaptionExpanded" && sectionActiveCount == 0 && sectionVisible == true) {
           sectionSelected = "scEditorTabSelected";
           sectionPanelDisplay = "table";
           sectionActiveCount++;
@@ -964,19 +748,12 @@ const sitecoreAuthorToolbox = () => {
         //Detect next scEditorSectionPanel
         scEditorSectionPanel = section.nextSibling;
         if (scEditorSectionPanel) {
-          scEditorSectionPanel.setAttribute(
-            "style",
-            "display: " + sectionPanelDisplay + " !important"
-          );
+          scEditorSectionPanel.setAttribute("style", "display: " + sectionPanelDisplay + " !important");
           scEditorSectionPanel.classList.add("scTabsRounded");
         }
 
         //How many errors in this section
-        sectionError = scEditorSectionPanel
-          ? scEditorSectionPanel.querySelectorAll(
-              ".scEditorFieldMarkerBarCellRed"
-            ).length
-          : 0;
+        sectionError = scEditorSectionPanel ? scEditorSectionPanel.querySelectorAll(".scEditorFieldMarkerBarCellRed").length : 0;
         if (sectionError > 0) {
           sectionErrorHtml = "<span id='scCrossTabError'></span>";
           sectionErrorClass = "scTabsError";
@@ -1031,48 +808,28 @@ const sitecoreAuthorToolbox = () => {
     /**
      * Fancy message bars
      */
-    storage.feature_messagebar == undefined
-      ? (storage.feature_messagebar = false)
-      : false;
+    storage.feature_messagebar == undefined ? (storage.feature_messagebar = false) : false;
     if (storage.feature_messagebar) {
       setTimeout(function () {
         //Check who locked the item
         var scWarnings = document.querySelectorAll(".scWarning");
         for (var scWarning of scWarnings) {
-          var scWarningText = scWarning.querySelector(".scMessageBarTitle")
-            .innerText;
+          var scWarningText = scWarning.querySelector(".scMessageBarTitle").innerText;
           var scWarningTextBar = scWarning.querySelector(".scMessageBarText");
           var scWarningIcon = scWarning.querySelector(".scMessageBarIcon");
 
           var isLockMessage = scWarningText.includes("' has locked this item.");
           var isElevateUnlock = scWarningText.includes("Elevated Unlock");
-          var isNotFinalWorkflowStep = scWarningText.includes(
-            "is not in the final workflow step."
-          );
-          var isUnicorned = scWarningText.includes(
-            "This item is controlled by Unicorn"
-          );
-          var isNoVersion = scWarningText.includes(
-            "The current item does not have a version"
-          );
-          var isProtected = scWarningText.includes(
-            "You cannot edit this item because it is protected."
-          );
+          var isNotFinalWorkflowStep = scWarningText.includes("is not in the final workflow step.");
+          var isUnicorned = scWarningText.includes("This item is controlled by Unicorn");
+          var isNoVersion = scWarningText.includes("The current item does not have a version");
+          var isProtected = scWarningText.includes("You cannot edit this item because it is protected.");
           // eslint-disable-next-line no-unused-vars
-          var isWrongVersion = scWarningText.includes(
-            "it has been replaced by a newer version."
-          );
-          var isNoFields = scWarningText.includes(
-            "The current item does not contain any fields."
-          );
+          var isWrongVersion = scWarningText.includes("it has been replaced by a newer version.");
+          var isNoFields = scWarningText.includes("The current item does not contain any fields.");
 
           //No version exist
-          isNoVersion
-            ? scWarningIcon.setAttribute(
-                "style",
-                "background-image: url(" + global.iconTranslate + ");"
-              )
-            : false;
+          isNoVersion ? scWarningIcon.setAttribute("style", "background-image: url(" + global.iconTranslate + ");") : false;
 
           if (storage.feature_experimentalui) {
             isNoVersion && document.querySelector(".scSaveBar > .scActions")
@@ -1128,20 +885,10 @@ const sitecoreAuthorToolbox = () => {
           //isWrongVersion ? scWarningIcon.setAttribute("style","background-image: url(" + global.iconVersion + ");") : false;
 
           //Not in final workflow step
-          isNotFinalWorkflowStep
-            ? scWarningIcon.setAttribute(
-                "style",
-                "background-image: url(" + global.iconWorkflow + ");"
-              )
-            : false;
+          isNotFinalWorkflowStep ? scWarningIcon.setAttribute("style", "background-image: url(" + global.iconWorkflow + ");") : false;
 
           //Admin, elevate unlock
-          isElevateUnlock || isProtected
-            ? scWarningIcon.setAttribute(
-                "style",
-                "background-image: url(" + global.iconLock + ");"
-              )
-            : false;
+          isElevateUnlock || isProtected ? scWarningIcon.setAttribute("style", "background-image: url(" + global.iconLock + ");") : false;
 
           //Unicorded
           if (isUnicorned) {
@@ -1149,21 +896,13 @@ const sitecoreAuthorToolbox = () => {
             scWarningTextBar.innerHTML = scWarningTextBar.innerHTML
               .replace("<br><br>", "<br>")
               .replace("<br><b>Predicate", " <b>Predicate")
-              .replace(
-                "Changes to this item will be written to disk so they can be shared with others.<br>",
-                ""
-              );
-            scWarningIcon.setAttribute(
-              "style",
-              "background-image: url(" + global.iconUnicorn + ");"
-            );
+              .replace("Changes to this item will be written to disk so they can be shared with others.<br>", "");
+            scWarningIcon.setAttribute("style", "background-image: url(" + global.iconUnicorn + ");");
           }
         }
 
         //Check if item is locked
-        var isItemLocked = document
-          .querySelector(".scRibbon")
-          .innerHTML.includes("Check this item in.");
+        var isItemLocked = document.querySelector(".scRibbon").innerHTML.includes("Check this item in.");
 
         if (isItemLocked && !isElevateUnlock && !isLockMessage) {
           if (isLockMessage) {
@@ -1174,8 +913,7 @@ const sitecoreAuthorToolbox = () => {
             lockedBy = "You have";
           }
 
-          document.querySelector("#scLockMenuText").innerText =
-            "Unlock item...";
+          document.querySelector("#scLockMenuText").innerText = "Unlock item...";
 
           //Prepare HTML (scInformation scWarning scError)
           scMessage =
@@ -1187,23 +925,10 @@ const sitecoreAuthorToolbox = () => {
           scEditorID.insertAdjacentHTML("afterend", scMessage);
 
           //Experimental
+          document.querySelector("#scLockButton") ? document.querySelector("#scLockButton > img").setAttribute("src", global.iconLocked) : false;
+          document.querySelector("#scLockButton") ? document.querySelector("#scLockButton").setAttribute("title", `Unlock this item`) : false;
           document.querySelector("#scLockButton")
-            ? document
-                .querySelector("#scLockButton > img")
-                .setAttribute("src", global.iconLocked)
-            : false;
-          document.querySelector("#scLockButton")
-            ? document
-                .querySelector("#scLockButton")
-                .setAttribute("title", `Unlock this item`)
-            : false;
-          document.querySelector("#scLockButton")
-            ? document
-                .querySelector("#scLockButton")
-                .setAttribute(
-                  "onclick",
-                  `javascript:return scForm.postEvent(this,event,'item:checkin')`
-                )
+            ? document.querySelector("#scLockButton").setAttribute("onclick", `javascript:return scForm.postEvent(this,event,'item:checkin')`)
             : false;
         }
       }, 100);
@@ -1212,9 +937,7 @@ const sitecoreAuthorToolbox = () => {
     /**
      * Content Editor - UI enhancements
      */
-    storage.feature_contenteditor == undefined
-      ? (storage.feature_contenteditor = true)
-      : false;
+    storage.feature_contenteditor == undefined ? (storage.feature_contenteditor = true) : false;
     if (storage.feature_contenteditor == true) {
       /**
        * Custom checkboxes to IOS like style
@@ -1222,7 +945,7 @@ const sitecoreAuthorToolbox = () => {
       var link = document.createElement("link");
       link.type = "text/css";
       link.rel = "stylesheet";
-      link.href = chrome.runtime.getURL("css/checkbox-min.css");
+      link.href = chrome.runtime.getURL("css/checkbox.min.css");
       document.getElementsByTagName("head")[0].appendChild(link);
 
       /**
@@ -1230,20 +953,12 @@ const sitecoreAuthorToolbox = () => {
        */
       if (!isMedia) {
         var EditorTabs = document.querySelectorAll("#EditorTabs > a");
-        var CloseEditorTab = document.querySelectorAll(
-          "#EditorTabs .scEditorTabCloseContainer"
-        );
+        var CloseEditorTab = document.querySelectorAll("#EditorTabs .scEditorTabCloseContainer");
         count = 0;
         for (tab of EditorTabs) {
           count++;
-          if (
-            tab.innerText.toLowerCase() == "content" &&
-            count > 1 &&
-            CloseEditorTab.length == 0
-          ) {
-            !tab.classList.contains("scRibbonEditorTabActive")
-              ? tab.click()
-              : false;
+          if (tab.innerText.toLowerCase() == "content" && count > 1 && CloseEditorTab.length == 0) {
+            !tab.classList.contains("scRibbonEditorTabActive") ? tab.click() : false;
           }
         }
       }
@@ -1265,8 +980,7 @@ const sitecoreAuthorToolbox = () => {
           }
 
           //Inject HTML
-          var html =
-            ' <span class="scSearchListExtra">' + getFullpath + "</span>";
+          var html = ' <span class="scSearchListExtra">' + getFullpath + "</span>";
           if (getFullpath && scSearchListExtra == null) {
             line.innerHTML += html;
           }
@@ -1289,13 +1003,9 @@ const sitecoreAuthorToolbox = () => {
      */
     if (
       ScItem.template.includes("/experience accelerator/scriban") ||
-      ScItem.template.includes(
-        "/experience accelerator/generic meta rendering/html snippet"
-      )
+      ScItem.template.includes("/experience accelerator/generic meta rendering/html snippet")
     ) {
-      storage.feature_rtecolor == undefined
-        ? (storage.feature_rtecolor = true)
-        : false;
+      storage.feature_rtecolor == undefined ? (storage.feature_rtecolor = true) : false;
 
       if (storage.feature_rtecolor) {
         //Variables
@@ -1310,33 +1020,21 @@ const sitecoreAuthorToolbox = () => {
 
         //delete scCharCount
         let charCount = document.querySelector("textarea").nextSibling;
-        charCount.getAttribute("class") == "scCharCount"
-          ? charCount.remove()
-          : false;
+        charCount.getAttribute("class") == "scCharCount" ? charCount.remove() : false;
 
         //Inject codemirror
-        loadCssFile("css/codemirror.css");
+        loadCssFile("css/codemirror.min.css");
 
         if (
           (storage.feature_darkmode && !storage.feature_darkmode_auto) ||
-          (storage.feature_darkmode &&
-            storage.feature_darkmode_auto &&
-            currentScheme == "dark")
+          (storage.feature_darkmode && storage.feature_darkmode_auto && currentScheme == "dark")
         ) {
           darkModeTheme = "ayu-dark";
           loadCssFile("css/dark/ayu-dark.css");
         }
 
-        scribanTemplate.insertAdjacentHTML(
-          "afterend",
-          '<input type="hidden" class="scDarkMode" value="' +
-            darkModeTheme +
-            '" />'
-        );
-        scribanTemplate.insertAdjacentHTML(
-          "afterend",
-          '<input type="hidden" class="scEditor" value="scribanTemplate" />'
-        );
+        scribanTemplate.insertAdjacentHTML("afterend", '<input type="hidden" class="scDarkMode" value="' + darkModeTheme + '" />');
+        scribanTemplate.insertAdjacentHTML("afterend", '<input type="hidden" class="scEditor" value="scribanTemplate" />');
 
         loadJsFile("js/bundle-min.js");
       }
@@ -1345,16 +1043,9 @@ const sitecoreAuthorToolbox = () => {
     /**
      * Update Favorite Item ID
      */
-    let sitecorAuthorToolboxFav = document.querySelector(
-      "#sitecorAuthorToolboxFav"
-    );
-    let scFavoritesUrl =
-      "../default.aspx?xmlcontrol=Gallery.Favorites&id=" +
-      sitecoreItemID +
-      "&la=en&vs=1";
-    sitecorAuthorToolboxFav
-      ? (sitecorAuthorToolboxFav.src = scFavoritesUrl)
-      : false;
+    let sitecorAuthorToolboxFav = document.querySelector("#sitecorAuthorToolboxFav");
+    let scFavoritesUrl = "../default.aspx?xmlcontrol=Gallery.Favorites&id=" + sitecoreItemID + "&la=en&vs=1";
+    sitecorAuthorToolboxFav ? (sitecorAuthorToolboxFav.src = scFavoritesUrl) : false;
 
     /**
      * Save data in storage
@@ -1366,17 +1057,9 @@ const sitecoreAuthorToolbox = () => {
      */
     clearTimeout(global.timeout);
     setTimeout(function () {
-      storage.feature_experimentalui
-        ? document
-            .querySelector("#svgAnimation")
-            .setAttribute("style", "opacity:0")
-        : false;
-      document
-        .querySelector("#EditorFrames")
-        .setAttribute("style", "opacity:1");
-      document
-        .querySelector(".scContentTreeContainer")
-        .setAttribute("style", "opacity:1");
+      storage.feature_experimentalui ? document.querySelector("#svgAnimation").setAttribute("style", "opacity:0") : false;
+      document.querySelector("#EditorFrames").setAttribute("style", "opacity:1");
+      document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:1");
     }, 100);
   }); //end of Chrome.Storage
 };

@@ -1,3 +1,60 @@
+a:link {
+  color: inherit !important;
+}
+
+.scEditorTabHeaderActive,
+#EditorTabs {
+  background-color: var(--black2) !important;
+}
+
+.scSaveBar > .scActions > .scPublishMenu,
+.scEditorTabControlsHolder > .scMoreMenu {
+  background-color: var(--black1) !important;
+}
+
+.scEditorTabControlsHolder > .scMoreMenu > li:hover,
+.scSaveBar > .scActions > .scPublishMenu > li:hover {
+  background-color: #0d84ff !important;
+}
+
+.scEditorTabControlsHolder > .scMoreMenu > li.separator {
+  border-top: 1px solid var(--black3);
+}
+
+.scMessageBar {
+  border-radius: 3px !important;
+}
+
+.scMessageBar.scWarning {
+  margin: 20px;
+  border-radius: 0px 3px 3px 0px;
+  background-color: var(--messageWarningBar) !important;
+  color: var(--grey7) !important;
+  font-size: 14px;
+}
+
+.scWarning > .scMessageBarIcon {
+  border-radius: 3px 0px 0px 3px;
+  background-color: var(--messageWarningBgIcon) !important;
+}
+
+.scWarning > .scMessageBarTextContainer > .scMessageBar a,
+.scWarning > .scMessageBarTextContainer > .scMessageBarOption,
+.scWarning > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet {
+  color: var(--messageWarningLink) !important;
+  text-decoration-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+.scContentControlAttachmentImage {
+  background-color: var(--black2);
+  border: 0px;
+}
+
+.splitter-bar:hover,
+.splitter-bar:hover::before {
+  background-color: var(--accent) !important;
+}
+
 .scOverlay,
 .ui-widget-overlay {
   background: rgba(0, 0, 0, 0.2) !important;
@@ -61,16 +118,12 @@ button.scEditorHeaderButton > img {
 #scEditorTabs > ul > li:hover {
   color: var(--text) !important;
   background: var(--black3) !important;
-  border-top: 2px solid var(--accent) !important;
-}
-
-.scMessageBar {
-  filter: saturate(2);
+  border-top: 3px solid var(--accent) !important;
 }
 
 #BTAddNewSearch {
-  background-color: var(--black1) !important;
-  border: 0px solid var(--black1) !important;
+  background-color: var(--black2) !important;
+  border: 0px solid var(--black2) !important;
 }
 
 .scEditorTabSelected {
@@ -108,7 +161,7 @@ button.scEditorHeaderButton > img {
 }
 
 .scEditorTabEmpty {
-  border-bottom: 0px;
+  border-bottom: 0px !important;
 }
 
 .scContentTreeNodeGlyph:hover + a > span,
@@ -117,20 +170,13 @@ a.scContentTreeNodeNormal:hover > span {
   background-color: var(--black3) !important;
 }
 
-.scMenuItemIcon,
-.scMenuItemIcon_Disable,
-.elementImgAlignment,
-.scEditorHeaderNavigatorIcon,
-.scContentTreeNodeIcon {
-  filter: brightness(0) invert(1);
-}
-
-.scInsertItemIcon {
-  filter: invert(0) !important;
-}
-
 .scTreeview .icon,
 .scTreeview .icon_Hover,
 #scModal .item > a > img {
   filter: grayscale(1) brightness(0.4) contrast(2) invert(1);
+}
+
+.scInsertItemIcon,
+.scEditItemIcon {
+  filter: invert(0);
 }

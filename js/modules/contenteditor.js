@@ -236,10 +236,10 @@ const sitecoreAuthorToolbox = () => {
                 '" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this link</a> or try <a href="' +
                 scUrl +
                 '" target="_blank" class="scMessageBarOption">this alternative link</a></li></ul></div></div>';
-            }
 
-            //Insert message bar into Sitecore Content Editor
-            !document.querySelector("#scMessageBarLiveUrl") ? scEditorID.insertAdjacentHTML("afterend", scMessage) : false;
+              //Insert message bar into Sitecore Content Editor
+              !document.querySelector("#scMessageBarLiveUrl") ? scEditorID.insertAdjacentHTML("afterend", scMessage) : false;
+            }
 
             //Insert link into Quickinfo table
             var table = document.querySelector(".scEditorQuickInfo");

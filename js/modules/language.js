@@ -38,6 +38,7 @@ const cleanCountryName = (name) => {
   language = language.replace("SIMPLIFIED,_", "");
   language = language.replace("_S.A.R.", "");
   language = language.replace("_PRC", "");
+  language = language.replace("SAR", "").trim();
   //Replace non-standard country name
   language = language.replace("U.A.E.", "UNITED_ARAB_EMIRATES");
   language = language.replace("KOREA", "SOUTH_KOREA");
@@ -59,10 +60,7 @@ const findCountryName = (name) => {
   var country = cleanCountryName(name);
 
   for (var key in global.jsonData) {
-    if (
-      global.jsonData.hasOwnProperty(key) &&
-      country.toUpperCase() == global.jsonData[key].language.toUpperCase()
-    ) {
+    if (global.jsonData.hasOwnProperty(key) && country.toUpperCase() == global.jsonData[key].language.toUpperCase()) {
       country = global.jsonData[key].flag;
       break;
     }

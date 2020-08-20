@@ -4,21 +4,16 @@
 /**
  * Global variables declaration
  */
-export const debug = true;
+export const debug = false;
 export const showSnackbar = false;
 export const extensionVersion = chrome.runtime.getManifest().version;
-export const extensionId = chrome.runtime
-  .getURL("something")
-  .split("chrome-extension://")[1]
-  .split("/something")[0];
+export const extensionId = chrome.runtime.getURL("something").split("chrome-extension://")[1].split("/something")[0];
 export const iconPreload = chrome.runtime.getURL("images/preload.svg");
 export const iconTimeout = chrome.runtime.getURL("images/timeout.svg");
 export const icon = chrome.runtime.getURL("images/rocket.svg");
 export const iconRocket = chrome.runtime.getURL("images/warning-rocket.svg");
 export const iconInstantSearch = chrome.runtime.getURL("images/search.svg");
-export const iconInstantSearchGeneric = chrome.runtime.getURL(
-  "images/document_text.png"
-);
+export const iconInstantSearchGeneric = chrome.runtime.getURL("images/document_text.png");
 export const iconLock = chrome.runtime.getURL("images/lock.svg");
 export const iconData = chrome.runtime.getURL("images/data.svg");
 export const iconWorkflow = chrome.runtime.getURL("images/workflow.svg");
@@ -45,21 +40,15 @@ export const iconHelp = chrome.runtime.getURL("images/help.svg");
 export const iconPlay = chrome.runtime.getURL("images/play.svg");
 export const iconJira = chrome.runtime.getURL("images/jira.svg");
 export const iconConfluence = chrome.runtime.getURL("images/confluence.svg");
-export const iconFlagGeneric = chrome.runtime.getURL(
-  "images/Flags/32x32/flag_generic.png"
-);
+export const iconFlagGeneric = chrome.runtime.getURL("images/Flags/32x32/flag_generic.png");
 export const iconBell = chrome.runtime.getURL("images/bell.svg");
 export const iconUpload = chrome.runtime.getURL("images/upload.svg");
 export const uconPublish = chrome.runtime.getURL("images/publish.svg");
 export const iconAdd = chrome.runtime.getURL("images/add.svg");
 export const iconDownArrow = chrome.runtime.getURL("images/down-arrow.svg");
-export const iconExternalLink = chrome.runtime.getURL(
-  "images/external-link.svg"
-);
+export const iconExternalLink = chrome.runtime.getURL("images/external-link.svg");
 export const urlLoader = chrome.runtime.getURL("images/ajax-loader.gif");
-export const urlLoaderDark = chrome.runtime.getURL(
-  "images/ajax-loader-dark.gif"
-);
+export const urlLoaderDark = chrome.runtime.getURL("images/ajax-loader-dark.gif");
 export const dotGreen = chrome.runtime.getURL("images/dot_green.svg");
 export const dotRed = chrome.runtime.getURL("images/dot_red.svg");
 export const iconChrome = chrome.runtime.getURL("images/chrome.png");
@@ -80,115 +69,60 @@ export const squareLogo = chrome.runtime.getURL("images/square-logo.png");
 export let timeout;
 export const isSitecore = windowLocationHref.includes("/sitecore/");
 export let isPreviewMode = document.querySelector(".pagemode-preview");
-!isPreviewMode
-  ? (isPreviewMode = windowLocationHref.includes("sc_mode=preview"))
-  : false;
-export let isEditMode = document.querySelector(
-  ".pagemode-edit, .on-page-editor"
-);
-!isEditMode
-  ? (isEditMode = windowLocationHref.includes("sc_mode=edit"))
-  : false;
-!isEditMode
-  ? (isEditMode = windowLocationHref.includes("/experienceeditor/"))
-  : false;
-export const isXmlControl = windowLocationHref.includes(
-  "default.aspx?xmlcontrol="
-);
+!isPreviewMode ? (isPreviewMode = windowLocationHref.includes("sc_mode=preview")) : false;
+export let isEditMode = document.querySelector(".pagemode-edit, .on-page-editor");
+!isEditMode ? (isEditMode = windowLocationHref.includes("sc_mode=edit")) : false;
+!isEditMode ? (isEditMode = windowLocationHref.includes("/experienceeditor/")) : false;
+export const isXmlControl = windowLocationHref.includes("default.aspx?xmlcontrol=");
 export const scDatabase = urlParams.get("sc_content");
-export const isGalleryLanguage = windowLocationHref.includes(
-  "gallery.language"
-);
+export const isGalleryLanguage = windowLocationHref.includes("gallery.language");
 export const isGalleryVersion = windowLocationHref.includes("gallery.version");
 export const isLayoutDetails = windowLocationHref.includes("layoutdetails");
 export const isRichText = windowLocationHref.includes("richtext.");
-export const isGalleryLanguageExpEd = windowLocationHref.includes(
-  "selectlanguagegallery"
-);
-export const isGalleryFavorites = windowLocationHref.includes(
-  "gallery.favorites"
-);
-export const isGalleryVersions = windowLocationHref.includes(
-  "gallery.versions"
-);
+export const isGalleryLanguageExpEd = windowLocationHref.includes("selectlanguagegallery");
+export const isGalleryFavorites = windowLocationHref.includes("gallery.favorites");
+export const isGalleryVersions = windowLocationHref.includes("gallery.versions");
 export const isAdminCache = windowLocationHref.includes("/admin/cache.aspx");
 export const isAdmin = windowLocationHref.includes("/admin/");
 export const isMediaLibrary = windowLocationHref.includes("he=media+library");
-export const isMediaBrowser = windowLocationHref.includes(
-  "sitecore.shell.applications.media.mediabrowser"
-);
-export const isSourceBrowser = windowLocationHref.includes(
-  "sitecore.shell.applications.dialogs.selectrenderingdatasource"
-);
+export const isMediaBrowser = windowLocationHref.includes("sitecore.shell.applications.media.mediabrowser");
+export const isSourceBrowser = windowLocationHref.includes("sitecore.shell.applications.dialogs.selectrenderingdatasource");
 export const isMediaFolder = windowLocationHref.includes("media%20folder.aspx");
-export const isMediaUpload = windowLocationHref.includes(
-  "/applications/dialogs/uploadmediadialog"
-);
+export const isMediaUpload = windowLocationHref.includes("/applications/dialogs/uploadmediadialog");
 export const isUploadManager = windowLocationHref.includes("/uploadmanager/");
-export const isPublishWindow = windowLocationHref.includes(
-  "/applications/publish.aspx"
-);
-export const isPublishDialog = windowLocationHref.includes(
-  "/publishing/publishdialog"
-);
-export const isSecurityWindow = windowLocationHref.includes(
-  "/applications/security/"
-);
+export const isPublishWindow = windowLocationHref.includes("/applications/publish.aspx");
+export const isPublishDialog = windowLocationHref.includes("/publishing/publishdialog");
+export const isSecurityWindow = windowLocationHref.includes("/applications/security/");
 export const isEditUser = windowLocationHref.includes("security.edituser.aspx");
-export const isChangePassword = windowLocationHref.includes(
-  "changepassword.aspx"
-);
+export const isChangePassword = windowLocationHref.includes("changepassword.aspx");
 export const isUserManager = windowLocationHref.includes("user%20manager.aspx");
 export const isContentEditor = document.querySelector("#scLanguage");
-export const isExperienceEditor = windowLocationHref.includes(
-  "/applications/experienceeditor/"
-);
+export const isExperienceEditor = windowLocationHref.includes("/applications/experienceeditor/");
 export const isContentHome = windowLocationHref.includes("/content/");
 export const isLoginPage = windowLocationHref.includes("sitecore/login");
-export const isLaunchpad = windowLocationHref.includes(
-  "/applications/launchpad"
-);
+export const isLaunchpad = windowLocationHref.includes("/applications/launchpad");
 export const isDesktop = windowLocationHref.includes("/shell/default.aspx");
-export const isContentEditorApp = windowLocationHref.includes(
-  "/shell/applications/content-editor"
-);
-export const isRichTextEditor = windowLocationHref.includes(
-  "/controls/rich%20text%20editor/"
-);
+export const isContentEditorApp = windowLocationHref.includes("/shell/applications/content-editor");
+export const isRichTextEditor = windowLocationHref.includes("/controls/rich%20text%20editor/");
 export const isHtmlEditor = windowLocationHref.includes(".edithtml.aspx");
 export const isFieldEditor = windowLocationHref.includes("field%20editor.aspx");
-export const isModalDialogs = windowLocationHref.includes(
-  "jquerymodaldialogs.html"
-);
+export const isModalDialogs = windowLocationHref.includes("jquerymodaldialogs.html");
 export const isTelerikUi = windowLocationHref.includes("telerik.web.ui");
-export const isSecurityDetails = windowLocationHref.includes(
-  "securitydetails.aspx"
-);
-export const isEditorFolder = windowLocationHref.includes(
-  "editors.folder.aspx"
-);
+export const isSecurityDetails = windowLocationHref.includes("securitydetails.aspx");
+export const isEditorFolder = windowLocationHref.includes("editors.folder.aspx");
 export const isRibbon = windowLocationHref.includes("/ribbon.aspx");
-export const isDialog = windowLocationHref.includes(
-  "/experienceeditor/dialogs/confirm/"
-);
+export const isDialog = windowLocationHref.includes("/experienceeditor/dialogs/confirm/");
 export const isInsertPage = windowLocationHref.includes("/dialogs/insertpage/");
 export const isCreateUser = windowLocationHref.includes("createnewuser");
-export const isPersonalization = windowLocationHref.includes(
-  "dialogs.personalization"
-);
+export const isPersonalization = windowLocationHref.includes("dialogs.personalization");
 export const isRules = windowLocationHref.includes("rules.aspx");
 export const isCss = windowLocationHref.includes(".css");
 export const isSearch = windowLocationHref.includes("showresult.aspx");
-export const isExperienceProfile = windowLocationHref.includes(
-  "/applications/experienceprofile/"
-);
-export const scQuickInfo = document.querySelector(
-  ".scEditorHeaderQuickInfoInput"
-);
+export const isExperienceProfile = windowLocationHref.includes("/applications/experienceprofile/");
+export const scQuickInfo = document.querySelector(".scEditorHeaderQuickInfoInput");
 export const scUrlHash = window.location.hash.substr(1);
 export const workboxLaunchpad = document.querySelector("a[title='Workbox']");
-export const workboxPage =
-  "/sitecore/shell/Applications/Workbox/Default.aspx?he=Workbox&sc_bw=1";
+export const workboxPage = "/sitecore/shell/Applications/Workbox/Default.aspx?he=Workbox&sc_bw=1";
 export const hasRedirection = windowLocationHref.includes("&ro=");
 export const hasRedirectionOther = windowLocationHref.includes("&sc_ce_uri=");
 export const hasModePreview = windowLocationHref.includes("&mo=preview");

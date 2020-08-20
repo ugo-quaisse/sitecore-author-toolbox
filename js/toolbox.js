@@ -715,6 +715,11 @@ chrome.storage.sync.get((storage) => {
         loadCssFile("css/experimentalui.min.css");
       }
 
+      //Count item in this folder
+      let totalItem = document.querySelectorAll("#FileList > a").length;
+      let titleMedia = document.querySelectorAll(".scTitle")[1];
+      titleMedia ? (titleMedia.innerText = titleMedia.innerText + ` (` + totalItem + `)`) : false;
+
       if (storage.feature_dragdrop) {
         var scIframeSrc = window.location.href.split("id=%7B");
         scIframeSrc = scIframeSrc[1].split("%7B");
@@ -722,22 +727,12 @@ chrome.storage.sync.get((storage) => {
         var scMediaID = scIframeSrc[0];
 
         //Prepare HTML
-        var scUploadMediaUrl =
-          "/sitecore/client/Applications/Dialogs/UploadMediaDialog?ref=list&ro=sitecore://master/%7b" +
-          scMediaID +
-          "%7d%3flang%3den&fo=sitecore://master/%7b" +
-          scMediaID +
-          "%7d";
+        var scUploadMediaUrl = `/sitecore/client/Applications/Dialogs/UploadMediaDialog?ref=list&ro=sitecore://master/%7b${scMediaID}%7d%3flang%3den&fo=sitecore://master/%7b${scMediaID}%7d`;
 
-        // //Add button
+        //Add button
         var scFolderButtons = document.querySelector(".scFolderButtons");
         //scForm.invoke("item:load(id=' + lastTabSitecoreItemID + ')
-        var scButtonHtml =
-          '<a href="#" class="scButton" onclick="javascript:scSitecore.prototype.showModalDialog(\'' +
-          scUploadMediaUrl +
-          "', '', '', null, null); false\"><img loading=\"lazy\" src=\" " +
-          global.launchpadIcon +
-          ' " width="16" height="16" class="scIcon" alt="" border="0"><div class="scHeader">Upload files (Drag and Drop)</div></a>';
+        var scButtonHtml = `<a href="#" class="scButton" onclick="javascript:scSitecore.prototype.showModalDialog('${scUploadMediaUrl}', '', '', null, null); false"><img loading="lazy" src=" ${global.launchpadIcon} " width="16" height="16" class="scIcon" alt="" border="0"><div class="scHeader">Upload files (Drag and Drop)</div></a>`;
 
         // //Insert new button
         scFolderButtons.insertAdjacentHTML("afterbegin", scButtonHtml);

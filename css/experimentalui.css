@@ -75,8 +75,7 @@ body {
 /* Global containers */
 
 #globalLogo {
-  background: url(chrome-extension://__MSG_@@extension_id__/images/square-logo.svg)
-    center center no-repeat;
+  background: url(chrome-extension://__MSG_@@extension_id__/images/square-logo.svg) center center no-repeat;
   background-color: var(--accent);
   background-size: 105%;
 }
@@ -105,10 +104,6 @@ body {
   font-size: 16px;
   font-weight: bold;
   border-bottom: 1px solid #cccccc;
-}
-
-#ContentTreeHolder {
-  /*border-top: 2px solid transparent;*/
 }
 
 input[type="color"] {
@@ -238,11 +233,6 @@ ul.scAccountMenu li:hover {
   width: 10px;
   height: 10px;
   margin-left: 2px;
-}
-
-.scContentTreeContainer,
-#EditorFrames {
-  /*transition: opacity ease-out 0s;*/
 }
 
 .scNoResult,
@@ -397,10 +387,6 @@ div.scContentTreeNode > img:hover {
   border: 2px dashed var(--black1) !important;
 }
 
-.scDragHover > span {
-  /*color: var(--accentText) !important;*/
-}
-
 .scContentDragMarker {
   background-color: var(--accent) !important;
   color: var(--accent) !important;
@@ -446,7 +432,6 @@ a.scContentTreeNodeNormal > span > div.scItemName {
   display: inline;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: calc(100% - 80px);
 }
 
 a.scContentTreeNodeActive > span {
@@ -469,7 +454,6 @@ a.scContentTreeNodeActive > span {
 }
 
 a.scContentTreeNodeActive > span > img {
-  filter: brightness(var(--accentBrightness));
   max-width: 16px;
 }
 
@@ -493,8 +477,7 @@ a.scContentTreeNodeActive > span > img {
   float: right;
   margin-top: -31px;
   margin-right: 11px;
-  background: url(chrome-extension://__MSG_@@extension_id__/images/add.svg)
-    center center transparent no-repeat;
+  background: url(chrome-extension://__MSG_@@extension_id__/images/add.svg) center center transparent no-repeat;
   filter: invert(1);
 }
 
@@ -510,8 +493,7 @@ a.scContentTreeNodeActive > span > img {
   float: right;
   margin-top: -31px;
   margin-right: 40px;
-  background: url(chrome-extension://__MSG_@@extension_id__/images/edit2.svg)
-    center center transparent no-repeat;
+  background: url(chrome-extension://__MSG_@@extension_id__/images/edit2.svg) center center transparent no-repeat;
   filter: invert(1);
 }
 
@@ -615,7 +597,7 @@ a.scEditorHeaderButton:hover {
 
 .scEditorTab:hover {
   border-top: 2px solid var(--grey2) !important;
-  border-bottom: 1px solid transparent !important;
+  border-bottom: 0px solid transparent !important;
 }
 
 .scEditorTabSelected {
@@ -665,8 +647,7 @@ a.scRibbonEditorTabNormal:hover {
 #BTAddNewSearch {
   margin: 13px 0px 0px 0px;
   border-bottom: 3px solid transparent;
-  background-image: url("chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.svg"),
-    none !important;
+  background-image: url("chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.svg"), none !important;
   background-size: 16px 16px;
 }
 
@@ -674,8 +655,7 @@ a.scRibbonEditorTabNormal:hover {
 #BTAddNewSearch:hover {
   background-color: transparent !important;
   border-bottom: 3px solid var(--grey2);
-  background-image: url("chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.svg"),
-    none !important;
+  background-image: url("chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.svg"), none !important;
   background-size: 16px 16px;
   box-shadow: none !important;
   opacity: 1 !important;
@@ -687,11 +667,7 @@ a.scRibbonEditorTabNormal:hover {
   padding: 7px !important;
 }
 
-.scMessageBar
-  > .scMessageBarTextContainer
-  > .scMessageBarOptions
-  > .scMessageBarOptionBullet
-  > span {
+.scMessageBar > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet > span {
   color: var(--text);
 }
 
@@ -710,10 +686,7 @@ a.scRibbonEditorTabNormal:hover {
 
 .scWarning > .scMessageBarTextContainer > .scMessageBar a,
 .scWarning > .scMessageBarTextContainer > .scMessageBarOption,
-.scWarning
-  > .scMessageBarTextContainer
-  > .scMessageBarOptions
-  > .scMessageBarOptionBullet {
+.scWarning > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet {
   color: var(--messageWarningLink) !important;
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
@@ -733,10 +706,7 @@ a.scRibbonEditorTabNormal:hover {
 
 .scError > .scMessageBarTextContainer > .scMessageBar a,
 .scError > .scMessageBarTextContainer > .scMessageBarOption,
-.scError
-  > .scMessageBarTextContainer
-  > .scMessageBarOptions
-  > .scMessageBarOptionBullet {
+.scError > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet {
   color: var(--messageDangerLink) !important;
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
@@ -756,10 +726,7 @@ a.scRibbonEditorTabNormal:hover {
 
 .scInformation > .scMessageBarTextContainer > .scMessageBar a,
 .scInformation > .scMessageBarTextContainer > .scMessageBarOption,
-.scInformation
-  > .scMessageBarTextContainer
-  > .scMessageBarOptions
-  > .scMessageBarOptionBullet {
+.scInformation > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet {
   color: var(--messageInfoLink) !important;
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
@@ -779,10 +746,7 @@ a.scRibbonEditorTabNormal:hover {
 
 .scSuccess > .scMessageBarTextContainer > .scMessageBar a,
 .scSuccess > .scMessageBarTextContainer > .scMessageBarOption,
-.scSuccess
-  > .scMessageBarTextContainer
-  > .scMessageBarOptions
-  > .scMessageBarOptionBullet {
+.scSuccess > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet {
   color: var(--messageSuccessLink) !important;
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
@@ -863,7 +827,7 @@ a.scRibbonEditorTabNormal:hover {
 }
 
 .scEditorTab.scTabsError {
-  border-top: 2px solid var(--messageDangerLink) !important;
+  border-top: 3px dotted var(--red) !important;
 }
 
 .scEditorSectionPanel.scCrossTabError .scEditorSectionCaptionGlyph {
@@ -933,7 +897,7 @@ a.scRibbonEditorTabNormal:hover {
   width: 2px;
   margin-left: 0px;
   background-color: var(--grey4);
-  z-index: 100 !important;
+  z-index: 9 !important;
 }
 
 .splitter-bar:before,
@@ -1020,13 +984,6 @@ a.scRibbonEditorTabNormal:hover {
   margin-top: -2px;
 }
 
-.scFormDialogHeader,
-.scDialogHeader,
-.ui-widget-header {
-  /*background-color: var(--accent);
-    color: var(--accentText);*/
-}
-
 .scBackground {
   background: var(--grey3);
 }
@@ -1038,12 +995,6 @@ a.scRibbonEditorTabNormal:hover {
   font-size: 15px;
   font-weight: 800;
   color: var(--grey7);
-}
-
-#FileList a:hover,
-#FileList a:active,
-#FileList a.highlight {
-  /*border-color: var(--accent);*/
 }
 
 input[type="submit"],

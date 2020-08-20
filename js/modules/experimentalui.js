@@ -35,9 +35,7 @@ const insertSavebar = () => {
             </ul>
             <button class="primary primaryGrouped" onclick="javascript:return scForm.postEvent(this,event,'item:publish(id=)')">Save and Publish</button>`;
 
-  let scLiveyBtn = !global.hasModePreview
-    ? `<button class="scPreviewButton" disabled>...</button>`
-    : ``;
+  let scLiveyBtn = !global.hasModePreview ? `<button class="scPreviewButton" disabled>...</button>` : ``;
 
   //Save Bar
   let scSaveBar =
@@ -56,20 +54,12 @@ const insertSavebar = () => {
     </div>`;
 
   let contentEditor = document.querySelector("#ContentEditor");
-  document.querySelector(".scSaveBar")
-    ? document.querySelector(".scSaveBar").remove()
-    : false;
-  contentEditor
-    ? contentEditor.insertAdjacentHTML("afterbegin", scSaveBar)
-    : false;
+  document.querySelector(".scSaveBar") ? document.querySelector(".scSaveBar").remove() : false;
+  contentEditor ? contentEditor.insertAdjacentHTML("afterbegin", scSaveBar) : false;
 
   //Save mesasge
   let scSaveMessage = `<div class="saveMessage">Your changes have been saved successfully!</div>`;
-  !document.querySelector(".saveMessage")
-    ? document
-        .querySelector("body")
-        .insertAdjacentHTML("afterbegin", scSaveMessage)
-    : false;
+  !document.querySelector(".saveMessage") ? document.querySelector("body").insertAdjacentHTML("afterbegin", scSaveMessage) : false;
 };
 
 /**
@@ -77,6 +67,8 @@ const insertSavebar = () => {
  */
 const pathToBreadcrumb = (pathname, delimiter = "/", underline = true) => {
   let breadcrumb = "#####";
+  let count = 0;
+  let elipsis = false;
 
   if (pathname) {
     let path = pathname.toLowerCase() + "/";
@@ -84,39 +76,33 @@ const pathToBreadcrumb = (pathname, delimiter = "/", underline = true) => {
     if (path[1] != undefined) {
       path = path[1].split("/");
       underline
-        ? (breadcrumb +=
-            '<u class="home" onclick="javascript:return scForm.invoke(\'contenteditor:home\', event)">Home</u> ')
+        ? (breadcrumb += '<u class="home" onclick="javascript:return scForm.invoke(\'contenteditor:home\', event)">Home</u> ')
         : (breadcrumb += "Home ");
     } else {
       path = path[0].split("/");
     }
 
     for (let level of path) {
+      count++;
+      if (path.length > 7 && count > 3 && count < path.length - 2) {
+        if (!elipsis) {
+          level != "" ? (breadcrumb += "<i>" + delimiter + "</i> [...] ") : false;
+          elipsis = true;
+        }
+
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+
       if (underline) {
-        level != ""
-          ? (breadcrumb +=
-              "<i>" +
-              delimiter +
-              "</i> <u>" +
-              level.toLowerCase().capitalize() +
-              "</u> ")
-          : false;
+        level != "" ? (breadcrumb += "<i>" + delimiter + "</i> <u>" + level.toLowerCase().capitalize() + "</u> ") : false;
       } else {
-        level != ""
-          ? (breadcrumb +=
-              "<i>" +
-              delimiter +
-              "</i> " +
-              level.toLowerCase().capitalize() +
-              " ")
-          : false;
+        level != "" ? (breadcrumb += "<i>" + delimiter + "</i> " + level.toLowerCase().capitalize() + " ") : false;
       }
     }
   }
 
-  breadcrumb = breadcrumb
-    .replace("#####<i>" + delimiter + "</i>", "")
-    .replace("#####", "");
+  breadcrumb = breadcrumb.replace("#####<i>" + delimiter + "</i>", "").replace("#####", "");
 
   return breadcrumb;
 };
@@ -145,9 +131,7 @@ const insertLanguageButton = (scItemId, scLanguage = "EN", scVersion = 1) => {
   container ? container.insertAdjacentHTML("afterbegin", button) : false;
 
   //Iframe
-  document.querySelector("#scLanguageIframe")
-    ? document.querySelector("#scLanguageIframe").remove()
-    : false;
+  document.querySelector("#scLanguageIframe") ? document.querySelector("#scLanguageIframe").remove() : false;
   let body = document.querySelector("body");
   let iframe =
     `<iframe loading="lazy" id="scLanguageIframe" src="/sitecore/shell/default.aspx?xmlcontrol=Gallery.Languages&id=` +
@@ -163,9 +147,7 @@ const insertLanguageButton = (scItemId, scLanguage = "EN", scVersion = 1) => {
   //document.querySelector("#scLanguageIframe").contentWindow.document.body.querySelector(".scGalleryContent13").scrollTop = 0;
 
   //Hide old button
-  document.querySelector(".scEditorTabControls")
-    ? document.querySelector(".scEditorTabControls").remove()
-    : false;
+  document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;
 };
 
 /**
@@ -245,9 +227,7 @@ const insertMoreButton = () => {
     </div>`;
   panel ? (panel.innerHTML = html) : false;
 
-  document.querySelector(".scEditorTabControls")
-    ? document.querySelector(".scEditorTabControls").remove()
-    : false;
+  document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;
 };
 
 /**
@@ -261,14 +241,10 @@ const insertVersionButton = (scItemId, scLanguage = "EN", scVersion = 1) => {
     `" class="scLanguageIcon"> ` +
     scVersion +
     ` ▾</button>`;
-  container && scVersion != null
-    ? container.insertAdjacentHTML("afterbegin", button)
-    : false;
+  container && scVersion != null ? container.insertAdjacentHTML("afterbegin", button) : false;
 
   //Iframe
-  document.querySelector("#scVersionIframe")
-    ? document.querySelector("#scVersionIframe").remove()
-    : false;
+  document.querySelector("#scVersionIframe") ? document.querySelector("#scVersionIframe").remove() : false;
   let body = document.querySelector("body");
   let iframe =
     `<iframe loading="lazy" id="scVersionIframe" src="/sitecore/shell/default.aspx?xmlcontrol=Gallery.Versions&id=` +
@@ -280,9 +256,7 @@ const insertVersionButton = (scItemId, scLanguage = "EN", scVersion = 1) => {
     `&db=master"></iframe>`;
   body ? body.insertAdjacentHTML("beforeend", iframe) : false;
 
-  document.querySelector(".scEditorTabControls")
-    ? document.querySelector(".scEditorTabControls").remove()
-    : false;
+  document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;
 };
 
 /**
@@ -291,14 +265,10 @@ const insertVersionButton = (scItemId, scLanguage = "EN", scVersion = 1) => {
 const insertNavigatorButton = () => {
   let container = document.querySelector(".scEditorTabControlsHolder");
   let button =
-    `<button class="scEditorHeaderButton" id="scNavigatorButton" type="button"><img src="` +
-    global.iconNotebook +
-    `" class="scLanguageIcon"> ▾</button>`;
+    `<button class="scEditorHeaderButton" id="scNavigatorButton" type="button"><img src="` + global.iconNotebook + `" class="scLanguageIcon"> ▾</button>`;
   container ? container.insertAdjacentHTML("afterbegin", button) : false;
 
-  document.querySelector(".scEditorTabControls")
-    ? document.querySelector(".scEditorTabControls").remove()
-    : false;
+  document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;
 };
 
 /**
@@ -313,9 +283,7 @@ const insertLockButton = (locked = false) => {
     `" class="scLanguageIcon"></button>`;
   container ? container.insertAdjacentHTML("afterbegin", button) : false;
 
-  document.querySelector(".scEditorTabControls")
-    ? document.querySelector(".scEditorTabControls").remove()
-    : false;
+  document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;
 };
 
 /**
@@ -363,10 +331,7 @@ const getAccentColor = () => {
 const initColorPicker = () => {
   let color, text, brightness;
 
-  let input =
-    '<input type="color" id="scAccentColor" name="scAccentColor" value="' +
-    getAccentColor() +
-    '" title="Choose your accent color">';
+  let input = '<input type="color" id="scAccentColor" name="scAccentColor" value="' + getAccentColor() + '" title="Choose your accent color">';
   let menu = document.querySelector(".sc-accountInformation");
   menu ? menu.insertAdjacentHTML("afterbegin", input) : false;
 
@@ -427,16 +392,10 @@ const initUserMenu = () => {
     accountInformation.insertAdjacentHTML("afterbegin", htmlIcon);
 
     //Get User Name and add extra id to avatar
-    let accountUser = accountInformation
-      .querySelectorAll("li")[1]
-      .innerText.trim();
+    let accountUser = accountInformation.querySelectorAll("li")[1].innerText.trim();
     accountInformation.querySelector("li").remove();
-    accountInformation.querySelector(
-      "li"
-    ).innerHTML = accountInformation.querySelector("li > img").outerHTML;
-    accountInformation
-      .querySelector("li > img")
-      .setAttribute("id", "globalHeaderUserPortrait");
+    accountInformation.querySelector("li").innerHTML = accountInformation.querySelector("li > img").outerHTML;
+    accountInformation.querySelector("li > img").setAttribute("id", "globalHeaderUserPortrait");
 
     //Generate menu
     let htmlMenu =
@@ -470,26 +429,14 @@ const initUserMenu = () => {
     if (document.querySelector(".scAccountMenu")) {
       document.addEventListener("click", (event) => {
         event.srcElement.id == "globalHeaderUserPortrait"
-          ? document
-              .querySelector(".scAccountMenu")
-              .setAttribute(
-                "style",
-                "visibility: visible; top: 50px; opacity: 1;"
-              )
-          : document
-              .querySelector(".scAccountMenu")
-              .setAttribute(
-                "style",
-                "visibility: hidden; top: 40px; opacity: 0;"
-              );
+          ? document.querySelector(".scAccountMenu").setAttribute("style", "visibility: visible; top: 50px; opacity: 1;")
+          : document.querySelector(".scAccountMenu").setAttribute("style", "visibility: hidden; top: 40px; opacity: 0;");
       });
     }
 
     if (document.querySelector("#DesktopLinks")) {
       document.querySelector("#DesktopLinks").addEventListener("click", () => {
-        document
-          .querySelector(".scAccountMenu")
-          .setAttribute("style", "visibility: hidden; top: 40px; opacity: 0;");
+        document.querySelector(".scAccountMenu").setAttribute("style", "visibility: hidden; top: 40px; opacity: 0;");
       });
     }
   }
@@ -502,11 +449,7 @@ const setInsertIcon = (treeNode) => {
   let id = treeNode.replace("Tree_Node_", "");
   let a = document.querySelector("#Tree_Node_" + id);
   let itemName = a.querySelector("span").innerText;
-  let active = document.querySelector(".scContentTreeNodeActive")
-    ? document
-        .querySelector(".scContentTreeNodeActive")
-        .id.replace("Tree_Node_", "")
-    : false;
+  let active = document.querySelector(".scContentTreeNodeActive") ? document.querySelector(".scContentTreeNodeActive").id.replace("Tree_Node_", "") : false;
   let activeClass = "";
   id == active ? (activeClass = "scInsertItemIconInverted") : false;
 
@@ -534,22 +477,14 @@ const setInsertIcon = (treeNode) => {
   target ? target.setAttribute("style", "opacity:1") : false;
 
   //Listener when hover scInsertItemIcon
-  document
-    .querySelector(".scInsertItemIcon")
-    .addEventListener("mouseenter", function () {
-      let parent = document
-        .querySelector(".scInsertItemIcon")
-        .parentNode.querySelector("a > span");
-      parent.setAttribute("style", "background-color: var(--grey5)");
-    });
-  document
-    .querySelector(".scInsertItemIcon")
-    .addEventListener("mouseleave", function () {
-      let parent = document
-        .querySelector(".scInsertItemIcon")
-        .parentNode.querySelector("a > span");
-      parent.setAttribute("style", "");
-    });
+  document.querySelector(".scInsertItemIcon").addEventListener("mouseenter", function () {
+    let parent = document.querySelector(".scInsertItemIcon").parentNode.querySelector("a > span");
+    parent.setAttribute("style", "background-color: var(--grey5)");
+  });
+  document.querySelector(".scInsertItemIcon").addEventListener("mouseleave", function () {
+    let parent = document.querySelector(".scInsertItemIcon").parentNode.querySelector("a > span");
+    parent.setAttribute("style", "");
+  });
 
   //Remove existing Edit Icons
   document.querySelectorAll(".scEditItemIcon").forEach((el) => {
@@ -574,22 +509,14 @@ const setInsertIcon = (treeNode) => {
   target ? target.setAttribute("style", "opacity:1") : false;
 
   //Listener when hover scEditItemIcon
-  document
-    .querySelector(".scEditItemIcon")
-    .addEventListener("mouseenter", function () {
-      let parent = document
-        .querySelector(".scEditItemIcon")
-        .parentNode.querySelector("a > span");
-      parent.setAttribute("style", "background-color: var(--grey5)");
-    });
-  document
-    .querySelector(".scEditItemIcon")
-    .addEventListener("mouseleave", function () {
-      let parent = document
-        .querySelector(".scEditItemIcon")
-        .parentNode.querySelector("a > span");
-      parent.setAttribute("style", "");
-    });
+  document.querySelector(".scEditItemIcon").addEventListener("mouseenter", function () {
+    let parent = document.querySelector(".scEditItemIcon").parentNode.querySelector("a > span");
+    parent.setAttribute("style", "background-color: var(--grey5)");
+  });
+  document.querySelector(".scEditItemIcon").addEventListener("mouseleave", function () {
+    let parent = document.querySelector(".scEditItemIcon").parentNode.querySelector("a > span");
+    parent.setAttribute("style", "");
+  });
 };
 
 /**
@@ -600,31 +527,17 @@ const initInsertIcon = () => {
   let treeNode = document.querySelector(".scContentTreeContainer");
   if (treeNode) {
     treeNode.addEventListener("mouseover", (event) => {
-      if (
-        event.path[1].className == "scContentTreeNodeNormal" ||
-        event.path[1].className == "scContentTreeNodeActive"
-      ) {
+      if (event.path[1].className == "scContentTreeNodeNormal" || event.path[1].className == "scContentTreeNodeActive") {
         setInsertIcon(event.path[1].getAttribute("id"));
       }
-      if (
-        event.path[2].className == "scContentTreeNodeNormal" ||
-        event.path[2].className == "scContentTreeNodeActive"
-      ) {
+      if (event.path[2].className == "scContentTreeNodeNormal" || event.path[2].className == "scContentTreeNodeActive") {
         setInsertIcon(event.path[2].getAttribute("id"));
       }
     });
 
     contentTree.addEventListener("mouseleave", () => {
-      document.querySelector(".scInsertItemIcon")
-        ? document
-            .querySelector(".scInsertItemIcon")
-            .setAttribute("style", "opacity:0")
-        : false;
-      document.querySelector(".scEditItemIcon")
-        ? document
-            .querySelector(".scEditItemIcon")
-            .setAttribute("style", "opacity:0")
-        : false;
+      document.querySelector(".scInsertItemIcon") ? document.querySelector(".scInsertItemIcon").setAttribute("style", "opacity:0") : false;
+      document.querySelector(".scEditItemIcon") ? document.querySelector(".scEditItemIcon").setAttribute("style", "opacity:0") : false;
     });
   }
 };

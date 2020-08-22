@@ -1,3 +1,4 @@
+/* eslint-disable newline-per-chained-call */
 /**
  * Sitecore Author Toolbox
  * A Chrome/Edge Extension
@@ -23,6 +24,7 @@ import { sitecoreAuthorToolbox } from "./modules/contenteditor.js";
 import { getGravatar } from "./modules/users.js";
 import { instantSearch } from "./modules/instantsearch.js";
 import { insertModal, insertPanel } from "./modules/menu.js";
+import { initMediaExplorer } from "./modules/images.js";
 import { insertSavebar, initInsertIcon, initGutter, getAccentColor, initColorPicker, initSitecoreMenu, initUserMenu } from "./modules/experimentalui.js";
 
 /**
@@ -190,9 +192,9 @@ chrome.storage.sync.get((storage) => {
           let scVersionIframe = document.querySelector("#scVersionIframe");
 
           //Panel position
-          scPanel.setAttribute("style", "top: " + topPos + "px !important");
-          scLanguageIframe.setAttribute("style", "top: " + topPos + "px !important");
-          scVersionIframe.setAttribute("style", "top: " + topPos + "px !important");
+          scPanel ? scPanel.setAttribute("style", "top: " + topPos + "px !important") : false;
+          scLanguageIframe ? scLanguageIframe.setAttribute("style", "top: " + topPos + "px !important") : false;
+          scVersionIframe ? scVersionIframe.setAttribute("style", "top: " + topPos + "px !important") : false;
 
           //Publish menu
           if (document.querySelector(".scPublishMenu")) {
@@ -217,15 +219,18 @@ chrome.storage.sync.get((storage) => {
             : scPanel.classList.remove("open");
 
           //Language menu
-          event.srcElement.id == "scLanguageButton" || event.path[1].id == "scLanguageButton"
-            ? scLanguageIframe.classList.toggle("open")
-            : scLanguageIframe.classList.remove("open");
+          if (scLanguageIframe) {
+            event.srcElement.id == "scLanguageButton" || event.path[1].id == "scLanguageButton"
+              ? scLanguageIframe.classList.toggle("open")
+              : scLanguageIframe.classList.remove("open");
+          }
 
           //Version menu
-          event.srcElement.id == "scVersionButton" || event.path[1].id == "scVersionButton"
-            ? scVersionIframe.classList.toggle("open")
-            : scVersionIframe.classList.remove("open");
-
+          if (scVersionIframe) {
+            event.srcElement.id == "scVersionButton" || event.path[1].id == "scVersionButton"
+              ? scVersionIframe.classList.toggle("open")
+              : scVersionIframe.classList.remove("open");
+          }
           //Message bars
           // event.srcElement.className.includes("scMessageBar") ?
           // event.target.setAttribute("style","display:none") :
@@ -715,27 +720,62 @@ chrome.storage.sync.get((storage) => {
         loadCssFile("css/experimentalui.min.css");
       }
 
+      if (
+        (storage.feature_darkmode &&
+          !storage.feature_darkmode_auto &&
+          !global.isTelerikUi &&
+          !global.isExperienceEditor &&
+          !global.isAdminCache &&
+          !global.isContentHome &&
+          !global.isLoginPage &&
+          !global.isEditMode &&
+          !global.isRules &&
+          !global.isAdmin) ||
+        (storage.feature_darkmode &&
+          storage.feature_darkmode_auto &&
+          !global.isTelerikUi &&
+          !global.isExperienceEditor &&
+          !global.isAdminCache &&
+          !global.isContentHome &&
+          !global.isLoginPage &&
+          !global.isEditMode &&
+          !global.isRules &&
+          !global.isAdmin &&
+          currentScheme == "dark")
+      ) {
+        loadCssFile("css/dark/default-min.css");
+        loadCssFile("css/dark/ribbon-min.css");
+        loadCssFile("css/dark/contentmanager-min.css");
+        loadCssFile("css/dark/dialogs-min.css");
+        loadCssFile("css/dark/gallery-min.css");
+        loadCssFile("css/dark/speak-min.css");
+        loadCssFile("css/dark/experimentalui.min.css");
+      }
+
       //Count item in this folder
       let totalItem = document.querySelectorAll("#FileList > a").length;
       let titleMedia = document.querySelectorAll(".scTitle")[1];
       titleMedia ? (titleMedia.innerText = titleMedia.innerText + ` (` + totalItem + `)`) : false;
 
+      //Add drag and drop button
       if (storage.feature_dragdrop) {
         var scIframeSrc = window.location.href.split("id=%7B");
         scIframeSrc = scIframeSrc[1].split("%7B");
         scIframeSrc = scIframeSrc[0].split("%7D");
         var scMediaID = scIframeSrc[0];
-
         //Prepare HTML
         var scUploadMediaUrl = `/sitecore/client/Applications/Dialogs/UploadMediaDialog?ref=list&ro=sitecore://master/%7b${scMediaID}%7d%3flang%3den&fo=sitecore://master/%7b${scMediaID}%7d`;
-
         //Add button
         var scFolderButtons = document.querySelector(".scFolderButtons");
         //scForm.invoke("item:load(id=' + lastTabSitecoreItemID + ')
         var scButtonHtml = `<a href="#" class="scButton" onclick="javascript:scSitecore.prototype.showModalDialog('${scUploadMediaUrl}', '', '', null, null); false"><img loading="lazy" src=" ${global.launchpadIcon} " width="16" height="16" class="scIcon" alt="" border="0"><div class="scHeader">Upload files (Drag and Drop)</div></a>`;
-
         // //Insert new button
         scFolderButtons.insertAdjacentHTML("afterbegin", scButtonHtml);
+      }
+
+      //Media Library explorer
+      if (storage.feature_mediaexplorer) {
+        initMediaExplorer();
       }
     }
 
@@ -835,7 +875,7 @@ chrome.storage.sync.get((storage) => {
           /*
            * Codemirror librairires
            */
-          loadJsFile("js/bundle-min.js");
+          loadJsFile("js/bundle.min.js");
         }
       }
     }

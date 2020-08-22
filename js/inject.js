@@ -90,53 +90,57 @@ const toggleSection = (elem, name, experimental = false) => {
     var sectionPanel = section.nextSibling;
     var calc;
 
-    if (tab != elem) {
-      //Inactive tab
-      tab.classList.remove("scEditorTabSelected");
-      sectionPanel.setAttribute("style", "display: none !important");
-      section.classList.add("scEditorSectionCaptionCollapsed");
-      section.classList.remove("scEditorSectionCaptionExpanded");
-      scSections.value += encodeURI("&" + tab.innerText + "=1");
-    } else {
-      //Active tab
-      tab.classList.add("scEditorTabSelected");
-      sectionPanel.setAttribute("style", "display: table !important");
-      section.classList.remove("scEditorSectionCaptionCollapsed");
-      section.classList.add("scEditorSectionCaptionExpanded");
+    if (sectionPanel) {
+      if (tab != elem) {
+        //Inactive tab
+        tab.classList.remove("scEditorTabSelected");
+        sectionPanel ? sectionPanel.setAttribute("style", "display: none !important") : false;
+        section.classList.add("scEditorSectionCaptionCollapsed");
+        section.classList.remove("scEditorSectionCaptionExpanded");
+        scSections.value += encodeURI("&" + tab.innerText + "=1");
+      } else if (sectionPanel.tagName == "TABLE") {
+        //Active tab
+        tab.classList.add("scEditorTabSelected");
+        sectionPanel.setAttribute("style", "display: table !important");
+        section.classList.remove("scEditorSectionCaptionCollapsed");
+        section.classList.add("scEditorSectionCaptionExpanded");
 
-      if (isExperimental) {
-        //X Scroll to
-        let container = document
-          .querySelector("#scEditorTabs")
-          .getBoundingClientRect();
-        let x1 = container.left;
-        let x2 = container.right;
-        let m = container.width / 2 + x1;
+        if (isExperimental) {
+          //X Scroll to
+          let container = document.querySelector("#scEditorTabs").getBoundingClientRect();
+          let x1 = container.left;
+          let x2 = container.right;
+          let m = container.width / 2 + x1;
 
-        //Clicked tab
-        let clicked = tab.getBoundingClientRect();
+          //Clicked tab
+          let clicked = tab.getBoundingClientRect();
 
-        //Tabs to be scrolled
-        let tabsSection = document.querySelector("#scEditorTabs > ul");
-        let currentOffset =
-          tabsSection.currentStyle || window.getComputedStyle(tabsSection);
-        currentOffset = parseFloat(currentOffset.marginLeft.replace("px", ""));
-        let tabs = tabsSection.getBoundingClientRect();
-        let tabsWidth = tabsSection.scrollWidth;
+          //Tabs to be scrolled
+          let tabsSection = document.querySelector("#scEditorTabs > ul");
+          let currentOffset = tabsSection.currentStyle || window.getComputedStyle(tabsSection);
+          currentOffset = parseFloat(currentOffset.marginLeft.replace("px", ""));
+          let tabs = tabsSection.getBoundingClientRect();
+          let tabsWidth = tabsSection.scrollWidth;
 
-        //Calculation
-        let calc = Math.round(currentOffset + (m - clicked.left));
-        let calcPos = Math.round(tabs.left + tabsWidth + (m - clicked.left));
+          //Calculation
+          let calc = Math.round(currentOffset + (m - clicked.left));
+          let calcPos = Math.round(tabs.left + tabsWidth + (m - clicked.left));
 
-        //Detect boundaries
-        calcPos < x2 ? (calc = Math.round(calc + (x2 - calcPos))) : false;
-        calc > 0 ? (calc = 0) : false;
+          //Detect boundaries
+          calcPos < x2 ? (calc = Math.round(calc + (x2 - calcPos))) : false;
+          calc > 0 ? (calc = 0) : false;
 
-        // console.log(calcPos)
-        // console.log("Margin-left: "+calc);
+          // console.log(calcPos)
+          // console.log("Margin-left: "+calc);
 
-        //Scroll to position
-        tabsSection.setAttribute("style", "margin-left: " + calc + "px");
+          //Scroll to position
+          tabsSection.setAttribute("style", "margin-left: " + calc + "px");
+        }
+      } else {
+        section.innerText = section.innerText == "Quick Info" ? "QuickInfo" : section.innerText;
+        console.info("No table section for " + section.innerText);
+        // eslint-disable-next-line no-undef
+        scForm.postRequest("", "", "", 'ToggleSection("' + section.innerText + '","1")');
       }
     }
   }
@@ -165,84 +169,47 @@ const toggleMediaIframe = (url) => {
 
 const fadeEditorFrames = () => {
   let divResults = document.querySelector(".scInstantSearchResults");
-  divResults.setAttribute(
-    "style",
-    "height:0px; opacity: 0; visibility: hidden; top: 43px;"
-  );
+  divResults.setAttribute("style", "height:0px; opacity: 0; visibility: hidden; top: 43px;");
 
   document.querySelector("#EditorFrames").setAttribute("style", "opacity:0.6");
-  document
-    .querySelector(".scContentTreeContainer")
-    .setAttribute("style", "opacity:0.6");
-  document.querySelector(".scEditorTabHeaderActive > span").innerText =
-    "Loading...";
+  document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:0.6");
+  document.querySelector(".scEditorTabHeaderActive > span").innerText = "Loading...";
   var timeout = setTimeout(function () {
     document.querySelector("#EditorFrames").setAttribute("style", "opacity:1");
-    document
-      .querySelector(".scContentTreeContainer")
-      .setAttribute("style", "opacity:1");
+    document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:1");
   }, 8000);
 };
 
 const insertPage = (scItem, scItemName) => {
-  document.querySelector(".scOverlay")
-    ? document
-        .querySelector(".scOverlay")
-        .setAttribute("style", "visibility:visible")
-    : false;
+  document.querySelector(".scOverlay") ? document.querySelector(".scOverlay").setAttribute("style", "visibility:visible") : false;
   document.querySelector("#scModal").setAttribute("data-scItem", scItem);
-  document
-    .querySelector("#scModal")
-    .setAttribute("data-scItemName", scItemName);
-  scItemName != undefined
-    ? (document.querySelector("#scModal > .header > .title").innerHTML =
-        "Insert")
-    : false;
-  document
-    .querySelector("#scModal")
-    .setAttribute(
-      "style",
-      "opacity:1; visibility:visible; top: calc(50% - 550px/2)"
-    );
+  document.querySelector("#scModal").setAttribute("data-scItemName", scItemName);
+  scItemName != undefined ? (document.querySelector("#scModal > .header > .title").innerHTML = "Insert") : false;
+  document.querySelector("#scModal").setAttribute("style", "opacity:1; visibility:visible; top: calc(50% - 550px/2)");
   document.querySelector("#scModal > .main").innerHTML = "";
-  document
-    .querySelector("#scModal > .preload")
-    .setAttribute("style", "opacity:1");
+  document.querySelector("#scModal > .preload").setAttribute("style", "opacity:1");
 };
 
 const insertPageClose = () => {
   setTimeout(function () {
-    document
-      .querySelector(".scOverlay")
-      .setAttribute("style", "visibility:hidden");
-    document
-      .querySelector("#scModal")
-      .setAttribute(
-        "style",
-        "opacity:0; visibility:hidden; top: calc(50% - 550px/2 - 20px)"
-      );
+    document.querySelector(".scOverlay").setAttribute("style", "visibility:hidden");
+    document.querySelector("#scModal").setAttribute("style", "opacity:0; visibility:hidden; top: calc(50% - 550px/2 - 20px)");
   }, 10);
 };
 
 const showSitecoreMenu = () => {
   let dock = document.querySelector(".scDockTop")
     ? document.querySelector(".scDockTop")
-    : document
-        .querySelector("iframe")
-        .contentWindow.document.querySelector(".scDockTop");
+    : document.querySelector("iframe").contentWindow.document.querySelector(".scDockTop");
   dock ? dock.classList.toggle("showSitecoreMenu") : false;
 
   let icon = document.querySelector("#scSitecoreMenu")
     ? document.querySelector("#scSitecoreMenu")
-    : document
-        .querySelector("iframe")
-        .contentWindow.document.querySelector("#scSitecoreMenu");
+    : document.querySelector("iframe").contentWindow.document.querySelector("#scSitecoreMenu");
   icon ? icon.classList.toggle("scSitecoreMenu") : false;
 
   if (dock) {
-    dock.classList.contains("showSitecoreMenu")
-      ? localStorage.setItem("scSitecoreMenu", true)
-      : localStorage.setItem("scSitecoreMenu", false);
+    dock.classList.contains("showSitecoreMenu") ? localStorage.setItem("scSitecoreMenu", true) : localStorage.setItem("scSitecoreMenu", false);
   }
 };
 
@@ -254,19 +221,13 @@ const copyContent = (value, targetClass) => {
   navigator.clipboard.writeText(value).then(
     function () {
       let target = document.querySelector(".copyCount_" + targetClass);
-      let targetMessage = document.querySelector(
-        ".copyCountMessage_" + targetClass
-      );
+      let targetMessage = document.querySelector(".copyCountMessage_" + targetClass);
       console.log(target);
       let saveMessage = document.querySelector(".saveMessage");
-      saveMessage
-        ? (saveMessage.innerHTML = "Copied")
-        : (targetMessage.innerHTML = "Copied!");
+      saveMessage ? (saveMessage.innerHTML = "Copied") : (targetMessage.innerHTML = "Copied!");
       saveMessage ? saveMessage.classList.add("visible") : false;
       setTimeout(function () {
-        saveMessage
-          ? saveMessage.classList.remove("visible")
-          : (targetMessage.innerHTML = "");
+        saveMessage ? saveMessage.classList.remove("visible") : (targetMessage.innerHTML = "");
       }, 1000);
     },
     function (err) {
@@ -281,3 +242,52 @@ const showEditableContent = () => {
   });
   document.querySelector("#scEditableImg").classList.toggle("grayscaleClass");
 };
+
+/**
+ * Sort media table
+ */
+function sortTable(column, order = "ASC") {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.querySelector(".scMediaExplorer");
+  switching = true;
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 1; i < rows.length - 1; i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("TD")[column];
+      y = rows[i + 1].getElementsByTagName("TD")[column];
+
+      //check if the two rows should switch place:
+      if (x.innerText.toLowerCase() > y.innerText.toLowerCase()) {
+        //if so, mark as a switch and break the loop:
+        shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+/**
+ * Sort media table
+ */
+function updateMediaThumbnails(value) {
+  console.log(value);
+  document.querySelectorAll(".scMediaThumbnail").forEach((el) => {
+    console.log(el);
+    el.setAttribute("style", "width:" + value + "px !important");
+  });
+}

@@ -26,7 +26,6 @@ const sitecoreAuthorToolbox = () => {
     scVersion ? (scVersion = scVersion.innerText) : false;
     let scActiveTab = document.querySelector(".scEditorTabHeaderActive");
     var scErrors = document.querySelectorAll(" .scValidationMarkerIcon ");
-    let scEditorSections = document.querySelector(".scEditorSections");
     let isTranslateMode = false;
     var scEditorHeaderVersionsLanguage = document.querySelector(".scEditorHeaderVersionsLanguage");
     let currentScheme = preferesColorScheme();
@@ -41,12 +40,12 @@ const sitecoreAuthorToolbox = () => {
      * If no Quick info displayed, fallback message
      */
     if (!scQuickInfo) {
-      if (!document.querySelector("#scMessageBarUrl") && scEditorSections) {
+      if (!document.querySelector("#scMessageBarUrl") && scEditorID) {
         var scMessage =
-          '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' +
+          '<div id="scMessageBarUrl" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' +
           global.icon +
-          ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">😭 Oh snap, you are missing out big! 😭</div><div class="scMessageBarText">To fully enjoy Sitecore Author Toolbox, please enable <b>Title bar</b> and <b>Quick info section</b> under <b>Application Options</b>.</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="" onclick="javascript:return scForm.postEvent(this,event,\'shell:useroptions\')" class="scMessageBarOption">Open Application Options</a>.</li></ul></div></div>';
-        scEditorSections.insertAdjacentHTML("afterbegin", scMessage);
+          ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Sitecore Author Toolbox help</div><div class="scMessageBarText">To fully enjoy Sitecore Author Toolbox, please enable <b>Title bar</b> and <b>Quick info section</b> under <b>Application Options</b>.<br />Alternatively, try to open the <b>Quick Info section</b> down below, if visible..</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="" onclick="javascript:return scForm.postEvent(this,event,\'shell:useroptions\')" class="scMessageBarOption">Open Application Options</a>.</li></ul></div></div>';
+        scEditorID.insertAdjacentHTML("afterend", scMessage);
       }
     } else {
       //Variables
@@ -331,7 +330,7 @@ const sitecoreAuthorToolbox = () => {
      * Change Title window
      */
     let ScItem = getScItemData();
-    window.document.title = "" + ScItem.name.capitalize() + " (" + scLanguage.toUpperCase() + ")";
+    ScItem.name ? (window.document.title = "" + ScItem.name.capitalize() + " (" + scLanguage.toUpperCase() + ")") : false;
 
     /**
      * Insert Flag (In Active Tab) + Version Number
@@ -724,7 +723,7 @@ const sitecoreAuthorToolbox = () => {
         var sectionErrorHtml = "";
         var sectionErrorClass = "";
 
-        //Hide Quick Info section in experimental UI
+        //Obsolete: Hide Quick Info section in experimental UI
         if (storage.feature_experimentalui == true) {
           //sectionVisible = sectionTitle != "Quick Info" ? true : false;
           sectionVisible = true;
@@ -747,7 +746,7 @@ const sitecoreAuthorToolbox = () => {
 
         //Detect next scEditorSectionPanel
         scEditorSectionPanel = section.nextSibling;
-        if (scEditorSectionPanel) {
+        if (scEditorSectionPanel && scEditorSectionPanel.tagName == "TABLE") {
           scEditorSectionPanel.setAttribute("style", "display: " + sectionPanelDisplay + " !important");
           scEditorSectionPanel.classList.add("scTabsRounded");
         }
@@ -1001,42 +1000,44 @@ const sitecoreAuthorToolbox = () => {
     /**
      * Scriban syntax highlighter
      */
-    if (
-      ScItem.template.includes("/experience accelerator/scriban") ||
-      ScItem.template.includes("/experience accelerator/generic meta rendering/html snippet")
-    ) {
-      storage.feature_rtecolor == undefined ? (storage.feature_rtecolor = true) : false;
+    if (ScItem.template) {
+      if (
+        ScItem.template.includes("/experience accelerator/scriban") ||
+        ScItem.template.includes("/experience accelerator/generic meta rendering/html snippet")
+      ) {
+        storage.feature_rtecolor == undefined ? (storage.feature_rtecolor = true) : false;
 
-      if (storage.feature_rtecolor) {
-        //Variables
-        let darkModeTheme = "default";
+        if (storage.feature_rtecolor) {
+          //Variables
+          let darkModeTheme = "default";
 
-        //Get Scriban template field
-        let scribanTemplate = document.querySelector("textarea");
-        scribanTemplate.setAttribute(
-          "style",
-          "min-height: 300px; resize: vertical; overflow: auto; margin: 0px; padding-right: 0px !important; font-family: monospace;"
-        );
+          //Get Scriban template field
+          let scribanTemplate = document.querySelector("textarea");
+          scribanTemplate.setAttribute(
+            "style",
+            "min-height: 300px; resize: vertical; overflow: auto; margin: 0px; padding-right: 0px !important; font-family: monospace;"
+          );
 
-        //delete scCharCount
-        let charCount = document.querySelector("textarea").nextSibling;
-        charCount.getAttribute("class") == "scCharCount" ? charCount.remove() : false;
+          //delete scCharCount
+          let charCount = document.querySelector("textarea").nextSibling;
+          charCount.getAttribute("class") == "scCharCount" ? charCount.remove() : false;
 
-        //Inject codemirror
-        loadCssFile("css/codemirror.min.css");
+          //Inject codemirror
+          loadCssFile("css/codemirror.min.css");
 
-        if (
-          (storage.feature_darkmode && !storage.feature_darkmode_auto) ||
-          (storage.feature_darkmode && storage.feature_darkmode_auto && currentScheme == "dark")
-        ) {
-          darkModeTheme = "ayu-dark";
-          loadCssFile("css/dark/ayu-dark.css");
+          if (
+            (storage.feature_darkmode && !storage.feature_darkmode_auto) ||
+            (storage.feature_darkmode && storage.feature_darkmode_auto && currentScheme == "dark")
+          ) {
+            darkModeTheme = "ayu-dark";
+            loadCssFile("css/dark/ayu-dark.css");
+          }
+
+          scribanTemplate.insertAdjacentHTML("afterend", '<input type="hidden" class="scDarkMode" value="' + darkModeTheme + '" />');
+          scribanTemplate.insertAdjacentHTML("afterend", '<input type="hidden" class="scEditor" value="scribanTemplate" />');
+
+          loadJsFile("js/bundle.min.js");
         }
-
-        scribanTemplate.insertAdjacentHTML("afterend", '<input type="hidden" class="scDarkMode" value="' + darkModeTheme + '" />');
-        scribanTemplate.insertAdjacentHTML("afterend", '<input type="hidden" class="scEditor" value="scribanTemplate" />');
-
-        loadJsFile("js/bundle-min.js");
       }
     }
 

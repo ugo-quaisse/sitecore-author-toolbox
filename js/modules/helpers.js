@@ -197,7 +197,11 @@ const getScItemData = () => {
 /**
  * Plural english
  */
-const setPlural = (int) => (int > 1 ? "s" : false);
+const setPlural = (int) => {
+  var letter = int > 1 ? "s" : "";
+
+  return letter;
+};
 
 /**
  * Used with Fetch as a timout event

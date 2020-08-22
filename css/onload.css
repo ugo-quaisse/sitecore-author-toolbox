@@ -35,9 +35,7 @@ body.contentEditor:after {
   height: 56px;
   width: 96px;
   position: absolute;
-  background: transparent
-    url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner32.gif")
-    no-repeat center center;
+  background: transparent url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner32.gif") no-repeat center center;
   background-color: #ffffff;
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.175);
@@ -127,13 +125,11 @@ div#Languages img {
 
 .DesktopArea > iframe {
   background-color: rgba(0, 0, 0, 0.5) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 22px 70px 4px rgba(0, 0, 0, 0.56), 0 0 0 1px rgba(0, 0, 0, 0) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 22px 70px 4px rgba(0, 0, 0, 0.56), 0 0 0 1px rgba(0, 0, 0, 0) !important;
 }
 
 #scWebEditRibbon {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 22px 70px 4px rgba(0, 0, 0, 0.56), 0 0 0 1px rgba(0, 0, 0, 0) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 22px 70px 4px rgba(0, 0, 0, 0.56), 0 0 0 1px rgba(0, 0, 0, 0) !important;
 }
 
 /*Custom folder Content Editor*/
@@ -461,8 +457,7 @@ a.scTileItem:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.175);
   font-family: RobotoDraft, Roboto, Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 14px;
-  background: url(chrome-extension://__MSG_@@extension_id__/images/rocket.svg)
-    center left #333 no-repeat;
+  background: url(chrome-extension://__MSG_@@extension_id__/images/rocket.svg) center left #333 no-repeat;
   background-size: 9%;
   background-position-x: 18px;
   position: fixed;
@@ -607,9 +602,7 @@ textarea:focus {
   left: calc(50% - 450px / 2) !important;
   padding: 8px 12px !important;
   top: 5px !important;
-  background: #111111
-    url("chrome-extension://__MSG_@@extension_id__/images/magnifier.svg")
-    no-repeat center right 10px !important;
+  background: #111111 url("chrome-extension://__MSG_@@extension_id__/images/magnifier.svg") no-repeat center right 10px !important;
   z-index: 10000 !important;
   font-size: 15px !important;
   box-sizing: border-box;
@@ -622,9 +615,7 @@ textarea:focus {
   transition: all ease-in-out 0.15s !important;
 }
 .scInstantSearch:focus {
-  background: var(--white)
-    url("chrome-extension://__MSG_@@extension_id__/images/magnifier.svg")
-    no-repeat center right 10px !important;
+  background: var(--white) url("chrome-extension://__MSG_@@extension_id__/images/magnifier.svg") no-repeat center right 10px !important;
   color: #333333 !important;
 }
 .scInstantSearch::placeholder {
@@ -932,8 +923,7 @@ ul.scAccountMenu li:after {
   opacity: 0.9;
   width: 16px;
   height: 16px;
-  background: url("chrome-extension://__MSG_@@extension_id__/images/dialog_close.png")
-    no-repeat center center;
+  background: url("chrome-extension://__MSG_@@extension_id__/images/dialog_close.png") no-repeat center center;
   z-index: 100;
   cursor: pointer;
 }
@@ -945,8 +935,7 @@ ul.scAccountMenu li:after {
   opacity: 0.9;
   width: 16px;
   height: 16px;
-  background: url("chrome-extension://__MSG_@@extension_id__/images/dialog_maximize.png")
-    no-repeat center center;
+  background: url("chrome-extension://__MSG_@@extension_id__/images/dialog_maximize.png") no-repeat center center;
   z-index: 100;
   cursor: pointer;
 }
@@ -1090,4 +1079,71 @@ ul.scAccountMenu li:after {
 }
 .scIconCopy:hover {
   filter: brightness(1.5);
+}
+
+/* Media Explorer */
+
+.scMediaExplorer {
+  width: 100%;
+  color: var(--black7);
+}
+
+.scMediaExplorer tr:nth-child(even) {
+  background: #ffffff;
+}
+
+.scMediaExplorer tr:nth-child(odd) {
+  background: #f0f0f0;
+}
+
+.scMediaExplorer th {
+  font-weight: bold;
+  /* background: #e8e6e6 !important; */
+  border-top: 1px solid #ccc;
+  padding: 6px !important;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.scMediaExplorer th,
+td {
+  text-align: left;
+  padding: 2px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.scMediaExplorer td.mediaArrow,
+.scMediaExplorer td.mediaTitle {
+  font-weight: bold;
+  color: var(--text);
+}
+
+.scMediaExplorer tr:hover td.mediaTitle,
+.scMediaExplorer tr:hover {
+  cursor: pointer;
+  background: var(--accent);
+  color: var(--accentText) !important;
+}
+
+.scMediaExplorer td > img.scMediaFolder {
+  border: 1px solid transparent;
+  width: 24px !important;
+  min-height: 24px !important;
+  margin: 3px 5px 0px 5px;
+  padding: 0;
+  transition: all ease-in-out 0.1s !important;
+}
+
+.scMediaExplorer td > img.scMediaPreview {
+  background: #f0f0f0;
+  border: 1px solid #fff;
+  width: 24px !important;
+  min-height: 24px !important;
+  margin: 3px 5px 0px 5px;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.5));
+  border-radius: 1px;
+  padding: 0;
+  transition: all ease-in-out 0.1s !important;
 }

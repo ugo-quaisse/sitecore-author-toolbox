@@ -2,9 +2,15 @@ a:link {
   color: inherit !important;
 }
 
+.scBackground,
 .scEditorTabHeaderActive,
 #EditorTabs {
   background-color: var(--black2) !important;
+}
+
+#FileList a {
+  background-color: var(--black1);
+  border-color: var(--black1);
 }
 
 .scSaveBar > .scActions > .scPublishMenu,
@@ -45,8 +51,9 @@ a:link {
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
+.scEditorTabHeaderNormal,
 .scContentControlAttachmentImage {
-  background-color: var(--black2);
+  background-color: var(--black2) !important;
   border: 0px;
 }
 

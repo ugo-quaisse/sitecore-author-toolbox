@@ -133,7 +133,7 @@ const insertModal = (sitecoreItemID, scLanguage, scVersion, scItemName = "", mut
       }
       let htmlMenuInner =
         '<div class="header"><span class="title">Insert under ' +
-        ScItem.name.capitalize() +
+        ScItem.name +
         '</span> <span class="maximize"></span> <span class="close"></span></div><div class="main"> ' +
         menuTiles +
         ' </div><div class="preload"> ' +

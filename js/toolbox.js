@@ -14,7 +14,16 @@
  */
 import * as global from "./modules/global.js";
 // import * as local from './modules/local.js' // This file is missing on Github, you should create yours with all your private local API keys
-import { consoleLog, loadCssFile, loadJsFile, exeJsCode, preferesColorScheme, sitecoreItemJson, getScItemData, startDrag } from "./modules/helpers.js";
+import {
+  consoleLog,
+  loadCssFile,
+  loadJsFile,
+  exeJsCode,
+  preferesColorScheme,
+  sitecoreItemJson,
+  getScItemData,
+  startDrag,
+} from "./modules/helpers.js";
 import { showSnackbar } from "./modules/snackbar.js";
 import { checkWorkbox } from "./modules/workbox.js";
 import { checkUrlStatus } from "./modules/url.js";
@@ -24,8 +33,16 @@ import { sitecoreAuthorToolbox } from "./modules/contenteditor.js";
 import { getGravatar } from "./modules/users.js";
 import { instantSearch } from "./modules/instantsearch.js";
 import { insertModal, insertPanel } from "./modules/menu.js";
-import { initMediaExplorer } from "./modules/images.js";
-import { insertSavebar, initInsertIcon, initGutter, getAccentColor, initColorPicker, initSitecoreMenu, initUserMenu } from "./modules/experimentalui.js";
+import { initMediaExplorer, initMediaCounter, initMediaDragDrop } from "./modules/media.js";
+import {
+  insertSavebar,
+  initInsertIcon,
+  initGutter,
+  getAccentColor,
+  initColorPicker,
+  initSitecoreMenu,
+  initUserMenu,
+} from "./modules/experimentalui.js";
 
 /**
  * Get all user's settings from storage
@@ -47,7 +64,13 @@ chrome.storage.sync.get((storage) => {
    * 1. Content Editor *
    ************************
    */
-  if (global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isCss && !global.isUploadManager) {
+  if (
+    global.isSitecore &&
+    !global.isEditMode &&
+    !global.isLoginPage &&
+    !global.isCss &&
+    !global.isUploadManager
+  ) {
     /**
      * Load extra JS and CSS
      */
@@ -116,8 +139,12 @@ chrome.storage.sync.get((storage) => {
       /**
        * Experimental UI
        */
-      storage.feature_experimentalui == undefined ? (storage.feature_experimentalui = false) : false;
-      storage.feature_contrast_icons == undefined ? (storage.feature_contrast_icons = false) : false;
+      storage.feature_experimentalui == undefined
+        ? (storage.feature_experimentalui = false)
+        : false;
+      storage.feature_contrast_icons == undefined
+        ? (storage.feature_contrast_icons = false)
+        : false;
 
       if (!global.isLaunchpad && storage.feature_experimentalui) {
         //Variables
@@ -160,7 +187,9 @@ chrome.storage.sync.get((storage) => {
 
         //document.querySelector("#PublishChildren").checked = true;
         let svgAnimation = `<div id="svgAnimation">` + global.svgAnimation + `</div>`;
-        document.querySelector("#EditorFrames") ? document.querySelector("#EditorFrames").insertAdjacentHTML("beforebegin", svgAnimation) : false;
+        document.querySelector("#EditorFrames")
+          ? document.querySelector("#EditorFrames").insertAdjacentHTML("beforebegin", svgAnimation)
+          : false;
 
         //Hide search
         let SearchPanel = document.querySelector("#SearchPanel");
@@ -193,8 +222,12 @@ chrome.storage.sync.get((storage) => {
 
           //Panel position
           scPanel ? scPanel.setAttribute("style", "top: " + topPos + "px !important") : false;
-          scLanguageIframe ? scLanguageIframe.setAttribute("style", "top: " + topPos + "px !important") : false;
-          scVersionIframe ? scVersionIframe.setAttribute("style", "top: " + topPos + "px !important") : false;
+          scLanguageIframe
+            ? scLanguageIframe.setAttribute("style", "top: " + topPos + "px !important")
+            : false;
+          scVersionIframe
+            ? scVersionIframe.setAttribute("style", "top: " + topPos + "px !important")
+            : false;
 
           //Publish menu
           if (document.querySelector(".scPublishMenu")) {
@@ -245,9 +278,16 @@ chrome.storage.sync.get((storage) => {
 
           //Overlay
           if (document.querySelector("#scModal")) {
-            event.srcElement.className == "scOverlay" ? document.querySelector(".scOverlay").setAttribute("style", "visibility: hidden") : false;
             event.srcElement.className == "scOverlay"
-              ? document.querySelector("#scModal").setAttribute("style", "opacity:0; visibility: hidden; top: calc(50% - 550px/2 - 10px)")
+              ? document.querySelector(".scOverlay").setAttribute("style", "visibility: hidden")
+              : false;
+            event.srcElement.className == "scOverlay"
+              ? document
+                  .querySelector("#scModal")
+                  .setAttribute(
+                    "style",
+                    "opacity:0; visibility: hidden; top: calc(50% - 550px/2 - 10px)"
+                  )
               : false;
           }
         });
@@ -260,7 +300,8 @@ chrome.storage.sync.get((storage) => {
 
       if (!global.isLaunchpad && storage.feature_instantsearch) {
         let globalHeader = document.querySelector(".sc-globalHeader");
-        let html = '<input type="text" class="scInstantSearch scIgnoreModified" placeholder="Search for content or media" tabindex="1" accesskey="f">';
+        let html =
+          '<input type="text" class="scInstantSearch scIgnoreModified" placeholder="Search for content or media" tabindex="1" accesskey="f">';
         let htmlResult = '<ul class="scInstantSearchResults"></ul>';
         globalHeader ? globalHeader.insertAdjacentHTML("afterbegin", htmlResult) : false;
         globalHeader ? globalHeader.insertAdjacentHTML("afterbegin", html) : false;
@@ -274,7 +315,15 @@ chrome.storage.sync.get((storage) => {
         if (event.state && event.state.id != "") {
           //Store a local value to tell toolboxscript we are changing item from back/previous button, so no need to add #hash as it's already performed by the browser
           localStorage.setItem("scBackPrevious", true);
-          exeJsCode(`scForm.invoke("item:load(id=` + event.state.id + `,language=` + event.state.language + `,version=` + event.state.version + `)");`);
+          exeJsCode(
+            `scForm.invoke("item:load(id=` +
+              event.state.id +
+              `,language=` +
+              event.state.language +
+              `,version=` +
+              event.state.version +
+              `)");`
+          );
         }
       };
 
@@ -298,7 +347,11 @@ chrome.storage.sync.get((storage) => {
         //fo parameters is the default Sitecore behaviour to open a specific item
 
         storage.feature_reloadnode == undefined ? (storage.feature_reloadnode = true) : false;
-        if (storage.scData != undefined && !global.urlParams.get("fo") && !global.urlParams.get("ro")) {
+        if (
+          storage.scData != undefined &&
+          !global.urlParams.get("fo") &&
+          !global.urlParams.get("ro")
+        ) {
           //If Hash detected in the URL
           if (global.scUrlHash != "") {
             temp = global.scUrlHash.split("_");
@@ -333,7 +386,15 @@ chrome.storage.sync.get((storage) => {
             consoleLog("[Read " + storage.scSource + "] Language : " + storage.scLanguage, "beige");
             consoleLog("[Read " + storage.scSource + "] Version : " + storage.scVersion, "beige");
             consoleLog("*** Redirection ***", "yellow");
-            exeJsCode(`scForm.invoke("item:load(id=` + storage.scItemID + `,language=` + storage.scLanguage + `,version=` + storage.scVersion + `)");`);
+            exeJsCode(
+              `scForm.invoke("item:load(id=` +
+                storage.scItemID +
+                `,language=` +
+                storage.scLanguage +
+                `,version=` +
+                storage.scVersion +
+                `)");`
+            );
           }
 
           sitecoreAuthorToolbox();
@@ -355,7 +416,8 @@ chrome.storage.sync.get((storage) => {
         //Get current scItem
         let ScItem = getScItemData();
         //Prepare HTML
-        var scFavoritesUrl = "../default.aspx?xmlcontrol=Gallery.Favorites&id=" + ScItem.id + "&la=en&vs=1";
+        var scFavoritesUrl =
+          "../default.aspx?xmlcontrol=Gallery.Favorites&id=" + ScItem.id + "&la=en&vs=1";
         var scMyShortcut =
           '<iframe loading="lazy" id="sitecorAuthorToolboxFav" class="sitecorAuthorToolboxFav" src="' +
           scFavoritesUrl +
@@ -371,7 +433,9 @@ chrome.storage.sync.get((storage) => {
       if (!global.isLaunchpad) {
         //Current version of the Snackbar
         let snackbarVersion = global.extensionVersion;
-        localStorage.getItem("sbDismiss") != snackbarVersion ? showSnackbar(snackbarVersion) : false;
+        localStorage.getItem("sbDismiss") != snackbarVersion
+          ? showSnackbar(snackbarVersion)
+          : false;
       }
 
       /**
@@ -413,7 +477,9 @@ chrome.storage.sync.get((storage) => {
         var desktopOptionMenu = document.querySelectorAll(".scStartMenuLeftOption");
         // Loop and fin title = "Command line interface to manage content."
         for (let item of desktopOptionMenu) {
-          item.getAttribute("title") == "Install and maintain apps." ? item.insertAdjacentHTML("afterend", html) : false;
+          item.getAttribute("title") == "Install and maintain apps."
+            ? item.insertAdjacentHTML("afterend", html)
+            : false;
         }
       }
     }
@@ -421,7 +487,9 @@ chrome.storage.sync.get((storage) => {
     if (global.isLaunchpad) {
       consoleLog("**** Launchpad ****", "orange");
       storage.feature_launchpad == undefined ? (storage.feature_launchpad = true) : false;
-      storage.feature_launchpad_tiles == undefined ? (storage.feature_launchpad_tiles = false) : false;
+      storage.feature_launchpad_tiles == undefined
+        ? (storage.feature_launchpad_tiles = false)
+        : false;
 
       if (storage.feature_launchpad) {
         //Find last dom item
@@ -550,7 +618,8 @@ chrome.storage.sync.get((storage) => {
             field.insertAdjacentHTML("afterend", countHtml);
           } else if (field.className == "scContentControlCheckbox") {
             //Add label
-            labelHtml = '<label for="' + field.id + '" class="scContentControlCheckboxLabel"></label>';
+            labelHtml =
+              '<label for="' + field.id + '" class="scContentControlCheckboxLabel"></label>';
             field.insertAdjacentHTML("afterend", labelHtml);
           }
         }
@@ -588,10 +657,14 @@ chrome.storage.sync.get((storage) => {
       /*
        * Enhanced Bucket List Select Box (multilist)
        */
-      var scBucketListSelectedBox = document.querySelectorAll(".scBucketListSelectedBox, .scContentControlMultilistBox");
+      var scBucketListSelectedBox = document.querySelectorAll(
+        ".scBucketListSelectedBox, .scContentControlMultilistBox"
+      );
       var Section_Data = document.querySelector("#Section_Data");
 
-      scBucketListSelectedBox[1] ? (scBucketListSelectedBox = scBucketListSelectedBox[1]) : (scBucketListSelectedBox = scBucketListSelectedBox[0]);
+      scBucketListSelectedBox[1]
+        ? (scBucketListSelectedBox = scBucketListSelectedBox[1])
+        : (scBucketListSelectedBox = scBucketListSelectedBox[0]);
 
       if (scBucketListSelectedBox) {
         scBucketListSelectedBox.addEventListener("change", function () {
@@ -646,7 +719,10 @@ chrome.storage.sync.get((storage) => {
           ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">';
 
         for (let item of scErrors) {
-          if (item.getAttribute("src") != "/sitecore/shell/themes/standard/images/bullet_square_yellow.png") {
+          if (
+            item.getAttribute("src") !=
+            "/sitecore/shell/themes/standard/images/bullet_square_yellow.png"
+          ) {
             scMessageErrors +=
               '<li class="scMessageBarOptionBullet" onclick="' +
               item.getAttribute("onclick") +
@@ -684,7 +760,10 @@ chrome.storage.sync.get((storage) => {
               ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">';
 
             for (let item of scErrors) {
-              if (item.getAttribute("src") != "/sitecore/shell/themes/standard/images/bullet_square_yellow.png") {
+              if (
+                item.getAttribute("src") !=
+                "/sitecore/shell/themes/standard/images/bullet_square_yellow.png"
+              ) {
                 scMessageErrors +=
                   '<li class="scMessageBarOptionBullet" onclick="' +
                   item.getAttribute("onclick") +
@@ -752,29 +831,14 @@ chrome.storage.sync.get((storage) => {
         loadCssFile("css/dark/experimentalui.min.css");
       }
 
-      //Count item in this folder
-      let totalItem = document.querySelectorAll("#FileList > a").length;
-      let titleMedia = document.querySelectorAll(".scTitle")[1];
-      titleMedia ? (titleMedia.innerText = titleMedia.innerText + ` (` + totalItem + `)`) : false;
-
       //Add drag and drop button
       if (storage.feature_dragdrop) {
-        var scIframeSrc = window.location.href.split("id=%7B");
-        scIframeSrc = scIframeSrc[1].split("%7B");
-        scIframeSrc = scIframeSrc[0].split("%7D");
-        var scMediaID = scIframeSrc[0];
-        //Prepare HTML
-        var scUploadMediaUrl = `/sitecore/client/Applications/Dialogs/UploadMediaDialog?ref=list&ro=sitecore://master/%7b${scMediaID}%7d%3flang%3den&fo=sitecore://master/%7b${scMediaID}%7d`;
-        //Add button
-        var scFolderButtons = document.querySelector(".scFolderButtons");
-        //scForm.invoke("item:load(id=' + lastTabSitecoreItemID + ')
-        var scButtonHtml = `<a href="#" class="scButton" onclick="javascript:scSitecore.prototype.showModalDialog('${scUploadMediaUrl}', '', '', null, null); false"><img loading="lazy" src=" ${global.launchpadIcon} " width="16" height="16" class="scIcon" alt="" border="0"><div class="scHeader">Upload files (Drag and Drop)</div></a>`;
-        // //Insert new button
-        scFolderButtons.insertAdjacentHTML("afterbegin", scButtonHtml);
+        initMediaDragDrop();
       }
 
       //Media Library explorer
       if (storage.feature_mediaexplorer) {
+        initMediaCounter();
         initMediaExplorer();
       }
     }
@@ -794,7 +858,10 @@ chrome.storage.sync.get((storage) => {
           // InfoEmailLink ? console.log(InfoEmailLink.innerHTML) : false;
 
           if (InfoPhotoImage && InfoEmailLink) {
-            if (InfoEmailLink.innerHTML.includes("@") && !InfoPhotoImage.src.includes("www.gravatar.com")) {
+            if (
+              InfoEmailLink.innerHTML.includes("@") &&
+              !InfoPhotoImage.src.includes("www.gravatar.com")
+            ) {
               InfoPhotoImage.src = getGravatar(InfoEmailLink.innerHTML, 170);
 
               //Add https://www.fullcontact.com/developer-portal/ api to get more information
@@ -865,11 +932,23 @@ chrome.storage.sync.get((storage) => {
 
           //Extra variables
           if (global.isRichTextEditor) {
-            reTextArea.insertAdjacentHTML("afterend", '<input type="hidden" class="scDarkMode" value="' + darkModeTheme + '" />');
-            reTextArea.insertAdjacentHTML("afterend", '<input type="hidden" class="scEditor" value="richTextEditor" />');
+            reTextArea.insertAdjacentHTML(
+              "afterend",
+              '<input type="hidden" class="scDarkMode" value="' + darkModeTheme + '" />'
+            );
+            reTextArea.insertAdjacentHTML(
+              "afterend",
+              '<input type="hidden" class="scEditor" value="richTextEditor" />'
+            );
           } else if (global.isHtmlEditor) {
-            contentIframe.insertAdjacentHTML("afterend", '<input type="hidden" class="scDarkMode" value="' + darkModeTheme + '" />');
-            contentIframe.insertAdjacentHTML("afterend", '<input type="hidden" class="scEditor" value="htmlEditor" />');
+            contentIframe.insertAdjacentHTML(
+              "afterend",
+              '<input type="hidden" class="scDarkMode" value="' + darkModeTheme + '" />'
+            );
+            contentIframe.insertAdjacentHTML(
+              "afterend",
+              '<input type="hidden" class="scEditor" value="htmlEditor" />'
+            );
           }
 
           /*
@@ -881,7 +960,10 @@ chrome.storage.sync.get((storage) => {
     }
 
     //Change logo href target on Desktop mode if
-    if ((global.isContentEditorApp && storage.feature_experimentalui) || (global.isContentEditorApp && storage.feature_instantsearch)) {
+    if (
+      (global.isContentEditorApp && storage.feature_experimentalui) ||
+      (global.isContentEditorApp && storage.feature_instantsearch)
+    ) {
       let globalLogo = document.querySelector("#globalLogo");
       globalLogo ? globalLogo.setAttribute("target", "_parent") : false;
     }
@@ -964,7 +1046,10 @@ chrome.storage.sync.get((storage) => {
               //Check version
               if (tdversion[0] != "0") {
                 temp = item2.getElementsByTagName("div");
-                temp[2].setAttribute("style", "background-color: yellow; display: initial; padding: 0px 3px; color: #000000 !important");
+                temp[2].setAttribute(
+                  "style",
+                  "background-color: yellow; display: initial; padding: 0px 3px; color: #000000 !important"
+                );
               }
 
               tdlanguage = findCountryName(tdlanguage);
@@ -991,7 +1076,9 @@ chrome.storage.sync.get((storage) => {
         target = document.querySelector("body");
         observer = new MutationObserver(function () {
           var tdlanguage;
-          var label = document.querySelectorAll("div[data-sc-id=CheckBoxListLanguages] > table:last-child")[0];
+          var label = document.querySelectorAll(
+            "div[data-sc-id=CheckBoxListLanguages] > table:last-child"
+          )[0];
 
           if (label != undefined && label.children[0].children.length > 1) {
             //Loop
@@ -1056,7 +1143,9 @@ chrome.storage.sync.get((storage) => {
      * Auto Expand (Inspired by https://github.com/alan-null/sc_ext)
      */
     storage.feature_autoexpand == undefined ? (storage.feature_autoexpand = true) : false;
-    storage.feature_autoexpandcount == undefined ? (storage.feature_autoexpandcount = false) : false;
+    storage.feature_autoexpandcount == undefined
+      ? (storage.feature_autoexpandcount = false)
+      : false;
 
     if (storage.feature_autoexpand) {
       //Content tree
@@ -1066,12 +1155,17 @@ chrome.storage.sync.get((storage) => {
           //Chage EditorFrames opacity on load item
           if (event.target.offsetParent != null) {
             if (event.target.offsetParent.matches(".scContentTreeNodeNormal")) {
-              storage.feature_experimentalui ? document.querySelector("#svgAnimation").setAttribute("style", "opacity:1") : false;
+              storage.feature_experimentalui
+                ? document.querySelector("#svgAnimation").setAttribute("style", "opacity:1")
+                : false;
               storage.feature_experimentalui
                 ? document.querySelector("#EditorFrames").setAttribute("style", "opacity:0")
                 : document.querySelector("#EditorFrames").setAttribute("style", "opacity:0.5");
-              document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:0.5");
-              document.querySelector(".scEditorTabHeaderActive > span").innerText = global.tabLoadingTitle;
+              document
+                .querySelector(".scContentTreeContainer")
+                .setAttribute("style", "opacity:0.5");
+              document.querySelector(".scEditorTabHeaderActive > span").innerText =
+                global.tabLoadingTitle;
 
               //Experimental mode
               if (document.querySelector(".scPreviewButton")) {
@@ -1080,9 +1174,13 @@ chrome.storage.sync.get((storage) => {
               }
 
               setTimeout(function () {
-                document.querySelector("#svgAnimation") ? document.querySelector("#svgAnimation").setAttribute("style", "opacity:0") : false;
+                document.querySelector("#svgAnimation")
+                  ? document.querySelector("#svgAnimation").setAttribute("style", "opacity:0")
+                  : false;
                 document.querySelector("#EditorFrames").setAttribute("style", "opacity:1");
-                document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:1");
+                document
+                  .querySelector(".scContentTreeContainer")
+                  .setAttribute("style", "opacity:1");
               }, 8000);
             }
           }
@@ -1093,10 +1191,13 @@ chrome.storage.sync.get((storage) => {
 
             setTimeout(function () {
               if (document && glyphId) {
-                let subTreeDiv = document.querySelector("#" + glyphId).nextSibling.nextSibling.nextSibling;
+                let subTreeDiv = document.querySelector("#" + glyphId).nextSibling.nextSibling
+                  .nextSibling;
                 if (subTreeDiv) {
                   let newNodes = subTreeDiv.querySelectorAll(".scContentTreeNode");
-                  newNodes.length == 1 ? newNodes[0].querySelector(".scContentTreeNodeGlyph").click() : false;
+                  newNodes.length == 1
+                    ? newNodes[0].querySelector(".scContentTreeNodeGlyph").click()
+                    : false;
 
                   if (storage.feature_autoexpandcount) {
                     document.querySelectorAll(".scCountNodes").forEach(function (element) {
@@ -1105,7 +1206,9 @@ chrome.storage.sync.get((storage) => {
                   }
                 } else {
                   let subTreeMain = document.querySelector("#" + glyphId).nextSibling.nextSibling;
-                  subTreeMain.querySelector(".scCountNodes") ? subTreeMain.querySelector(".scCountNodes").remove() : false;
+                  subTreeMain.querySelector(".scCountNodes")
+                    ? subTreeMain.querySelector(".scCountNodes").remove()
+                    : false;
                 }
               }
             }, 200);
@@ -1121,7 +1224,9 @@ chrome.storage.sync.get((storage) => {
                 console.log(subTreeDiv);
                 if (subTreeDiv) {
                   let newNodes = subTreeDiv.querySelectorAll(".dynatree-has-children");
-                  newNodes.length == 1 ? newNodes[0].querySelector(".dynatree-expander").click() : false;
+                  newNodes.length == 1
+                    ? newNodes[0].querySelector(".dynatree-expander").click()
+                    : false;
                   console.log(newNodes);
                 }
               }
@@ -1160,7 +1265,9 @@ chrome.storage.sync.get((storage) => {
     target = document.querySelector("#LastPage");
     observer = new MutationObserver(function () {
       storage.feature_notification == undefined ? (storage.feature_notification = true) : false;
-      storage.feature_experimentalui == undefined ? (storage.feature_experimentalui = false) : false;
+      storage.feature_experimentalui == undefined
+        ? (storage.feature_experimentalui = false)
+        : false;
 
       if (storage.feature_notification) {
         //Variable
@@ -1169,20 +1276,27 @@ chrome.storage.sync.get((storage) => {
         var notificationSubTitle = target.querySelector(".sc-text-largevalue").innerHTML;
         var notificationBody = target.querySelector(".scFieldLabel").innerHTML;
         if (notificationBody == "Result:") {
-          notificationBody = "Finished " + document.querySelector("#ResultText").value.split("Finished")[1];
+          notificationBody =
+            "Finished " + document.querySelector("#ResultText").value.split("Finished")[1];
         }
 
         //Send notification
         sendNotification(notificationSubTitle, notificationBody);
 
         //Is dark mode on?
-        (storage.feature_darkmode && !storage.feature_darkmode_auto) || (storage.feature_darkmode && storage.feature_darkmode_auto && currentScheme == "dark")
+        (storage.feature_darkmode && !storage.feature_darkmode_auto) ||
+        (storage.feature_darkmode && storage.feature_darkmode_auto && currentScheme == "dark")
           ? (darkMode = true)
           : false;
 
         //Update url Status
         var parentSelector = parent.parent.document.querySelector("body");
-        checkUrlStatus(parentSelector.querySelector(".liveUrlStatus"), parentSelector, darkMode, storage.feature_experimentalui);
+        checkUrlStatus(
+          parentSelector.querySelector(".liveUrlStatus"),
+          parentSelector,
+          darkMode,
+          storage.feature_experimentalui
+        );
       }
     });
 
@@ -1213,7 +1327,9 @@ chrome.storage.sync.get((storage) => {
         var scEditorTitle = document.getElementsByClassName("scEditorHeaderTitle");
 
         var tabSitecoreItemID = document.querySelectorAll(".scEditorHeaderQuickInfoInput");
-        var lastTabSitecoreItemID = tabSitecoreItemID[tabSitecoreItemID.length - 2].getAttribute("value");
+        var lastTabSitecoreItemID = tabSitecoreItemID[tabSitecoreItemID.length - 2].getAttribute(
+          "value"
+        );
 
         var locaStorage = localStorage.getItem("scBackPrevious");
 
@@ -1226,7 +1342,11 @@ chrome.storage.sync.get((storage) => {
               language: scLanguage,
               version: scVersion,
             };
-            history.pushState(state, undefined, "#" + sitecoreItemID + "_" + scLanguage + "_" + scVersion);
+            history.pushState(
+              state,
+              undefined,
+              "#" + sitecoreItemID + "_" + scLanguage + "_" + scVersion
+            );
           } else {
             localStorage.removeItem("scBackPrevious");
           }
@@ -1234,7 +1354,10 @@ chrome.storage.sync.get((storage) => {
 
         //Tabs opened?
         global.debug
-          ? console.info("%c - Tabs opened: " + countTab + " ", "font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;")
+          ? console.info(
+              "%c - Tabs opened: " + countTab + " ",
+              "font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;"
+            )
           : false;
 
         if (countTab > 1 && !document.getElementById("showInContentTree" + countTab + "")) {
@@ -1316,7 +1439,10 @@ chrome.storage.sync.get((storage) => {
 
         //Sort alphabetically or by version
         div = [].slice.call(div).sort(function (a, b) {
-          return a.querySelector("a > div > div:last-child > span").textContent > b.querySelector("a > div > div:last-child > span").textContent ? -1 : 1;
+          return a.querySelector("a > div > div:last-child > span").textContent >
+            b.querySelector("a > div > div:last-child > span").textContent
+            ? -1
+            : 1;
           //return a.textContent > b.textContent ? 1 : -1;
         });
         //Append dom
@@ -1325,14 +1451,19 @@ chrome.storage.sync.get((storage) => {
         });
 
         for (let item of div) {
-          tdDiv = item.querySelector(".sc-gallery-option-content,.sc-gallery-option-content-active");
+          tdDiv = item.querySelector(
+            ".sc-gallery-option-content,.sc-gallery-option-content-active"
+          );
           tdlanguage = item.querySelector(".sc-gallery-option-content-header > span").innerText;
           tdversion = item.querySelector(".sc-gallery-option-content-description > span");
 
           //Check version
           temp = tdversion.innerHTML.split(" ");
           if (temp[0] != "0") {
-            tdversion.setAttribute("style", "background-color: yellow; display: initial; padding: 0px 3px; color: #000000 !important");
+            tdversion.setAttribute(
+              "style",
+              "background-color: yellow; display: initial; padding: 0px 3px; color: #000000 !important"
+            );
           }
 
           tdlanguage = findCountryName(tdlanguage);
@@ -1341,7 +1472,9 @@ chrome.storage.sync.get((storage) => {
             : chrome.runtime.getURL("images/Flags/32x32/flag_" + tdlanguage + ".png");
           tdDiv.setAttribute(
             "style",
-            "padding-left:48px; background-image: url(" + flag + "); background-repeat: no-repeat; background-position: 5px; background-size: 32px"
+            "padding-left:48px; background-image: url(" +
+              flag +
+              "); background-repeat: no-repeat; background-position: 5px; background-size: 32px"
           );
         }
       }
@@ -1363,7 +1496,12 @@ chrome.storage.sync.get((storage) => {
         let flag = storage.feature_experimentalui
           ? chrome.runtime.getURL("images/Flags/svg/" + tdlanguage + ".svg")
           : chrome.runtime.getURL("images/Flags/24x24/flag_" + tdlanguage + ".png");
-        scRibbonFlagIcons.setAttribute("style", "background-image: url(" + flag + "); background-repeat: no-repeat; background-position: top left;");
+        scRibbonFlagIcons.setAttribute(
+          "style",
+          "background-image: url(" +
+            flag +
+            "); background-repeat: no-repeat; background-position: top left;"
+        );
       }
     }
 
@@ -1385,15 +1523,22 @@ chrome.storage.sync.get((storage) => {
           command.setAttribute("style", "z-index:auto");
 
           if (!changeColor && title) {
-            if (title.toLowerCase().includes("move component") || title.toLowerCase().includes("remove component")) {
-              document.querySelectorAll(".scFrameSideHorizontal, .scFrameSideVertical").forEach(function (e) {
-                e.classList.remove("scFrameYellow");
-              });
+            if (
+              title.toLowerCase().includes("move component") ||
+              title.toLowerCase().includes("remove component")
+            ) {
+              document
+                .querySelectorAll(".scFrameSideHorizontal, .scFrameSideVertical")
+                .forEach(function (e) {
+                  e.classList.remove("scFrameYellow");
+                });
               changeColor = true;
             } else {
-              document.querySelectorAll(".scFrameSideHorizontal, .scFrameSideVertical").forEach(function (e) {
-                e.classList.add("scFrameYellow");
-              });
+              document
+                .querySelectorAll(".scFrameSideHorizontal, .scFrameSideVertical")
+                .forEach(function (e) {
+                  e.classList.add("scFrameYellow");
+                });
             }
           }
 
@@ -1427,7 +1572,9 @@ chrome.storage.sync.get((storage) => {
 
     storage.feature_darkmode == undefined ? (storage.feature_darkmode = false) : false;
     storage.feature_darkmode_auto == undefined ? (storage.feature_darkmode_auto = false) : false;
-    storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;
+    storage.feature_experienceeditor == undefined
+      ? (storage.feature_experienceeditor = true)
+      : false;
 
     if (storage.feature_experienceeditor) {
       //Experience Editor Reset (container, hover styles..)
@@ -1438,9 +1585,18 @@ chrome.storage.sync.get((storage) => {
       (storage.feature_darkmode && !storage.feature_darkmode_auto && global.isRibbon) ||
       (storage.feature_darkmode && !storage.feature_darkmode_auto && global.isDialog) ||
       (storage.feature_darkmode && !storage.feature_darkmode_auto && global.isInsertPage) ||
-      (storage.feature_darkmode && storage.feature_darkmode_auto && global.isRibbon && currentScheme == "dark") ||
-      (storage.feature_darkmode && storage.feature_darkmode_auto && global.isDialog && currentScheme == "dark") ||
-      (storage.feature_darkmode && storage.feature_darkmode_auto && global.isInsertPage && currentScheme == "dark")
+      (storage.feature_darkmode &&
+        storage.feature_darkmode_auto &&
+        global.isRibbon &&
+        currentScheme == "dark") ||
+      (storage.feature_darkmode &&
+        storage.feature_darkmode_auto &&
+        global.isDialog &&
+        currentScheme == "dark") ||
+      (storage.feature_darkmode &&
+        storage.feature_darkmode_auto &&
+        global.isInsertPage &&
+        currentScheme == "dark")
     ) {
       //Experience Editor buttons
       loadCssFile("css/dark/experience-min.css");

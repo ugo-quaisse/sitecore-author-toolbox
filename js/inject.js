@@ -181,7 +181,9 @@ const fadeEditorFrames = () => {
 };
 
 const insertPage = (scItem, scItemName) => {
-  document.querySelector(".scOverlay") ? document.querySelector(".scOverlay").setAttribute("style", "visibility:visible") : false;
+  document.querySelector(".scOverlay")
+    ? document.querySelector(".scOverlay").setAttribute("style", "visibility:visible")
+    : false;
   document.querySelector("#scModal").setAttribute("data-scItem", scItem);
   document.querySelector("#scModal").setAttribute("data-scItemName", scItemName);
   scItemName != undefined ? (document.querySelector("#scModal > .header > .title").innerHTML = "Insert") : false;
@@ -193,7 +195,9 @@ const insertPage = (scItem, scItemName) => {
 const insertPageClose = () => {
   setTimeout(function () {
     document.querySelector(".scOverlay").setAttribute("style", "visibility:hidden");
-    document.querySelector("#scModal").setAttribute("style", "opacity:0; visibility:hidden; top: calc(50% - 550px/2 - 20px)");
+    document
+      .querySelector("#scModal")
+      .setAttribute("style", "opacity:0; visibility:hidden; top: calc(50% - 550px/2 - 20px)");
   }, 10);
 };
 
@@ -209,7 +213,9 @@ const showSitecoreMenu = () => {
   icon ? icon.classList.toggle("scSitecoreMenu") : false;
 
   if (dock) {
-    dock.classList.contains("showSitecoreMenu") ? localStorage.setItem("scSitecoreMenu", true) : localStorage.setItem("scSitecoreMenu", false);
+    dock.classList.contains("showSitecoreMenu")
+      ? localStorage.setItem("scSitecoreMenu", true)
+      : localStorage.setItem("scSitecoreMenu", false);
   }
 };
 
@@ -246,9 +252,20 @@ const showEditableContent = () => {
 /**
  * Sort media table
  */
-function sortTable(column, order = "ASC") {
-  var table, rows, switching, i, x, y, shouldSwitch;
+function sortTable(column, id, title) {
+  let table, rows, switching, i, x, y, sort, shouldSwitch;
+
   table = document.querySelector(".scMediaExplorer");
+  sort = id.dataset.sort;
+
+  if (sort == "ASC") {
+    id.innerText = title + " ▲";
+  } else if (sort == "DESC") {
+    id.innerText = title + " ▼";
+  }
+
+  id.classList.add("selected");
+
   switching = true;
   /*Make a loop that will continue until
   no switching has been done:*/
@@ -261,16 +278,28 @@ function sortTable(column, order = "ASC") {
     for (i = 1; i < rows.length - 1; i++) {
       //start by saying there should be no switching:
       shouldSwitch = false;
+
       /*Get the two elements you want to compare,
       one from current row and one from the next:*/
       x = rows[i].getElementsByTagName("TD")[column];
       y = rows[i + 1].getElementsByTagName("TD")[column];
 
+      x = x.querySelector("span").dataset.size ? x.querySelector("span").dataset.size : x.innerText.toLowerCase();
+      y = y.querySelector("span").dataset.size ? y.querySelector("span").dataset.size : y.innerText.toLowerCase();
+
       //check if the two rows should switch place:
-      if (x.innerText.toLowerCase() > y.innerText.toLowerCase()) {
-        //if so, mark as a switch and break the loop:
-        shouldSwitch = true;
-        break;
+      if (sort == "ASC") {
+        if (x > y) {
+          shouldSwitch = true;
+          id.dataset.sort = "DESC";
+          break;
+        }
+      } else if (sort == "DESC") {
+        if (x < y) {
+          shouldSwitch = true;
+          id.dataset.sort = "ASC";
+          break;
+        }
       }
     }
     if (shouldSwitch) {
@@ -282,12 +311,12 @@ function sortTable(column, order = "ASC") {
   }
 }
 /**
- * Sort media table
+ * Update media thumbnail size
  */
 function updateMediaThumbnails(value) {
   console.log(value);
   document.querySelectorAll(".scMediaThumbnail").forEach((el) => {
-    console.log(el);
     el.setAttribute("style", "width:" + value + "px !important");
+    localStorage.setItem("scMediaThumbnailSize", value);
   });
 }

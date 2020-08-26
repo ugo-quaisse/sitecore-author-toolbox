@@ -1,3 +1,5 @@
+/* eslint-disable newline-per-chained-call */
+/* eslint-disable no-array-constructor */
 /* eslint-disable space-before-function-paren */
 /* eslint-disable no-mixed-operators */
 /* eslint-disable func-style */
@@ -181,9 +183,7 @@ const fadeEditorFrames = () => {
 };
 
 const insertPage = (scItem, scItemName) => {
-  document.querySelector(".scOverlay")
-    ? document.querySelector(".scOverlay").setAttribute("style", "visibility:visible")
-    : false;
+  document.querySelector(".scOverlay") ? document.querySelector(".scOverlay").setAttribute("style", "visibility:visible") : false;
   document.querySelector("#scModal").setAttribute("data-scItem", scItem);
   document.querySelector("#scModal").setAttribute("data-scItemName", scItemName);
   scItemName != undefined ? (document.querySelector("#scModal > .header > .title").innerHTML = "Insert") : false;
@@ -195,9 +195,7 @@ const insertPage = (scItem, scItemName) => {
 const insertPageClose = () => {
   setTimeout(function () {
     document.querySelector(".scOverlay").setAttribute("style", "visibility:hidden");
-    document
-      .querySelector("#scModal")
-      .setAttribute("style", "opacity:0; visibility:hidden; top: calc(50% - 550px/2 - 20px)");
+    document.querySelector("#scModal").setAttribute("style", "opacity:0; visibility:hidden; top: calc(50% - 550px/2 - 20px)");
   }, 10);
 };
 
@@ -213,9 +211,7 @@ const showSitecoreMenu = () => {
   icon ? icon.classList.toggle("scSitecoreMenu") : false;
 
   if (dock) {
-    dock.classList.contains("showSitecoreMenu")
-      ? localStorage.setItem("scSitecoreMenu", true)
-      : localStorage.setItem("scSitecoreMenu", false);
+    dock.classList.contains("showSitecoreMenu") ? localStorage.setItem("scSitecoreMenu", true) : localStorage.setItem("scSitecoreMenu", false);
   }
 };
 
@@ -249,74 +245,97 @@ const showEditableContent = () => {
   document.querySelector("#scEditableImg").classList.toggle("grayscaleClass");
 };
 
+var asc = 0;
 /**
  * Sort media table
  */
-function sortTable(column, id, title) {
-  let table, rows, switching, i, x, y, sort, shouldSwitch;
+function sortTable(col, title, pos) {
+  //Variables
+  document.querySelector(".mediaSortOrder") ? document.querySelector(".mediaSortOrder").remove() : false;
+  document.querySelector(".mediaSelected") ? document.querySelector(".mediaSelected").classList.remove("mediaSelected") : false;
+  asc == 2 ? (asc = -1) : (asc = 2);
+  var table = document.querySelectorAll(".scMediaExplorer");
+  var head = document.querySelector(".scMediaExplorer > thead > tr");
+  var rows = document.querySelectorAll(".scMediaExplorer > tbody > tr");
+  var rlen = rows.length;
+  var arr = new Array();
+  var cells, clen;
 
-  table = document.querySelector(".scMediaExplorer");
-  sort = id.dataset.sort;
-
-  if (sort == "ASC") {
-    id.innerText = title + " ▲";
-  } else if (sort == "DESC") {
-    id.innerText = title + " ▼";
+  // fill the array with values from the table
+  for (var i = 0; i < rlen; i++) {
+    cells = rows[i].cells;
+    clen = cells.length;
+    arr[i] = new Array();
+    arr[i].arrow = cells[0].innerHTML;
+    arr[i].img = cells[1].innerHTML;
+    arr[i].title = cells[2].innerHTML;
+    arr[i].info = cells[3].innerHTML;
+    arr[i].type = cells[4].innerHTML;
+    arr[i].size = cells[5].innerHTML;
+    arr[i].datasize = cells[5].dataset.size;
+    arr[i].validation = cells[6].innerHTML;
+    arr[i].usage = cells[7].innerHTML;
+    arr[i].actions = cells[8].innerHTML;
   }
 
-  id.classList.add("selected");
-
-  switching = true;
-  /*Make a loop that will continue until
-  no switching has been done:*/
-  while (switching) {
-    //start by saying: no switching is done:
-    switching = false;
-    rows = table.rows;
-    /*Loop through all table rows (except the
-    first, which contains table headers):*/
-    for (i = 1; i < rows.length - 1; i++) {
-      //start by saying there should be no switching:
-      shouldSwitch = false;
-
-      /*Get the two elements you want to compare,
-      one from current row and one from the next:*/
-      x = rows[i].getElementsByTagName("TD")[column];
-      y = rows[i + 1].getElementsByTagName("TD")[column];
-
-      x = x.querySelector("span").dataset.size ? x.querySelector("span").dataset.size : x.innerText.toLowerCase();
-      y = y.querySelector("span").dataset.size ? y.querySelector("span").dataset.size : y.innerText.toLowerCase();
-
-      //check if the two rows should switch place:
-      if (sort == "ASC") {
-        if (x > y) {
-          shouldSwitch = true;
-          id.dataset.sort = "DESC";
-          break;
-        }
-      } else if (sort == "DESC") {
-        if (x < y) {
-          shouldSwitch = true;
-          id.dataset.sort = "ASC";
-          break;
-        }
+  // sort the array by the specified column number (col) and order (asc)
+  arr.sort(function (a, b) {
+    var retval = 0;
+    var col1 = a[col].toLowerCase();
+    var col2 = b[col].toLowerCase();
+    var fA = parseFloat(col1);
+    var fB = parseFloat(col2);
+    if (col1 != col2) {
+      if (fA == col1 && fB == col2) {
+        retval = fA > fB ? asc : -1 * asc;
+      } else {
+        retval = col1 > col2 ? asc : -1 * asc;
       }
     }
-    if (shouldSwitch) {
-      /*If a switch has been marked, make the switch
-      and mark that a switch has been done:*/
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-    }
+
+    return retval;
+  });
+
+  //Draw the new sorted table
+  for (i = 0; i < rlen; i++) {
+    rows[i].cells[0].innerHTML = arr[i].arrow;
+    rows[i].cells[1].innerHTML = arr[i].img;
+    rows[i].cells[2].innerHTML = arr[i].title;
+    rows[i].cells[3].innerHTML = arr[i].info;
+    rows[i].cells[4].innerHTML = arr[i].type;
+    rows[i].cells[5].innerHTML = arr[i].size;
+    rows[i].cells[5].dataset.size = arr[i].datasize;
+    rows[i].cells[6].innerHTML = arr[i].validation;
+    rows[i].cells[7].innerHTML = arr[i].usage;
+    rows[i].cells[8].innerHTML = arr[i].actions;
   }
+
+  //Add sort icon to column
+  head.cells[pos].innerHTML = asc == -1 ? title + ` <span class="mediaSortOrder">▼</span>` : title + ` <span class="mediaSortOrder">▲</span>`;
+  head.cells[pos].classList.add("mediaSelected");
+
+  localStorage.setItem("scMediaSortPos", pos);
+  localStorage.setItem("scMediaSortOrder", asc);
 }
+
 /**
  * Update media thumbnail size
  */
 function updateMediaThumbnails(value) {
-  console.log(value);
   document.querySelectorAll(".scMediaThumbnail").forEach((el) => {
     el.setAttribute("style", "width:" + value + "px !important");
     localStorage.setItem("scMediaThumbnailSize", value);
   });
+}
+
+/**
+ * Update media thumbnail size
+ */
+function switchMediaView(view) {
+  if (view == "grid") {
+    localStorage.setItem("scMediaView", "grid");
+  } else {
+    localStorage.setItem("scMediaView", "list");
+  }
+  document.location.reload();
 }

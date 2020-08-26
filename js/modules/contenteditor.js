@@ -368,31 +368,35 @@ const sitecoreAuthorToolbox = () => {
       setTimeout(function () {
         if (!document.querySelector("#scFlag")) {
           scActiveTab = document.querySelector(".scEditorTabHeaderActive");
-          scActiveTab.insertAdjacentHTML(
-            "afterbegin",
-            '<img loading="lazy" id="scFlag" src="' +
-              tabbedFlag +
-              '" style="width: 21px; vertical-align: middle; padding: 0px 4px 0px 0px;" onerror="this.onerror=null;this.src=\'' +
-              global.iconFlagGeneric +
-              "';\"/>"
-          );
+          scActiveTab
+            ? scActiveTab.insertAdjacentHTML(
+                "afterbegin",
+                '<img loading="lazy" id="scFlag" src="' +
+                  tabbedFlag +
+                  '" style="width: 21px; vertical-align: middle; padding: 0px 4px 0px 0px;" onerror="this.onerror=null;this.src=\'' +
+                  global.iconFlagGeneric +
+                  "';\"/>"
+              )
+            : false;
         }
       }, 100);
 
       //Insert Flag into Sitecore Language selector
       if (!document.querySelector("#scFlagMenu")) {
-        scLanguageMenu.insertAdjacentHTML(
-          "afterbegin",
-          '<img loading="lazy" id="scFlagMenu" src="' +
-            scFlag +
-            '" style="width: 15px; vertical-align: sub; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' +
-            global.iconFlagGeneric +
-            "';\"/>"
-        );
+        scLanguageMenu
+          ? scLanguageMenu.insertAdjacentHTML(
+              "afterbegin",
+              '<img loading="lazy" id="scFlagMenu" src="' +
+                scFlag +
+                '" style="width: 15px; vertical-align: sub; padding: 0px 5px 0px 0px;" onerror="this.onerror=null;this.src=\'' +
+                global.iconFlagGeneric +
+                "';\"/>"
+            )
+          : false;
       }
 
       //Experimental
-      if (!document.querySelector(".scLanguageIcon")) {
+      if (!document.querySelector(".scLanguageIcon") && scLanguageMenu) {
         storage.feature_experimentalui
           ? scLanguageMenu.insertAdjacentHTML("afterbegin", "<img src='" + global.iconLanguage + "' class='scLanguageIcon' /> ")
           : false;
@@ -787,7 +791,7 @@ const sitecoreAuthorToolbox = () => {
       //Add tabs to Content Editor
       if (scMessageBar) {
         scMessageBar.insertAdjacentHTML("afterend", scEditorTabs);
-      } else {
+      } else if (scEditorHeader) {
         scEditorHeader.insertAdjacentHTML("afterend", scEditorTabs);
       }
 
@@ -1058,9 +1062,11 @@ const sitecoreAuthorToolbox = () => {
      */
     clearTimeout(global.timeout);
     setTimeout(function () {
-      storage.feature_experimentalui ? document.querySelector("#svgAnimation").setAttribute("style", "opacity:0") : false;
-      document.querySelector("#EditorFrames").setAttribute("style", "opacity:1");
-      document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:1");
+      if (storage.feature_experimentalui) {
+        document.querySelector("#svgAnimation") ? document.querySelector("#svgAnimation").setAttribute("style", "opacity:0") : false;
+        document.querySelector("#EditorFrames") ? document.querySelector("#EditorFrames").setAttribute("style", "opacity:1") : false;
+        document.querySelector(".scContentTreeContainer") ? document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:1") : false;
+      }
     }, 100);
   }); //end of Chrome.Storage
 };

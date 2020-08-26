@@ -401,12 +401,6 @@ document.getElementById("feature_experimentalui").onclick = function () {
     document.getElementById("feature_cetabs").checked = true;
   }
 };
-//Media Library explorer
-document.getElementById("feature_mediaexplorer").onclick = function () {
-  if (document.getElementById("feature_mediaexplorer").checked == true) {
-    document.getElementById("feature_mediaexplorer").checked = true;
-  }
-};
 
 document.getElementById("feature_darkmode").onclick = function () {
   if (document.getElementById("feature_darkmode").checked == false) {
@@ -678,10 +672,6 @@ document.querySelector("#set").onclick = function (event) {
   //CE Tabs
   chrome.storage.sync.set({ feature_cetabs: document.getElementById("feature_cetabs").checked }, function () {
     console.info("--> CE Tabs: " + document.getElementById("feature_cetabs").checked);
-  });
-  //Media library explorer
-  chrome.storage.sync.set({ feature_mediaexplorer: document.getElementById("feature_mediaexplorer").checked }, function () {
-    console.info("--> Media Library explorer: " + document.getElementById("feature_mediaexplorer").checked);
   });
   //RTE Color
   chrome.storage.sync.set({ feature_rtecolor: document.getElementById("feature_rtecolor").checked }, function () {

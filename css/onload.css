@@ -602,7 +602,11 @@ textarea:focus {
   left: calc(50% - 450px / 2) !important;
   padding: 8px 12px !important;
   top: 5px !important;
-  background: #111111 url("chrome-extension://__MSG_@@extension_id__/images/magnifier.svg") no-repeat center right 10px !important;
+  background-size: 16px;
+  background-image: url("chrome-extension://__MSG_@@extension_id__/images/magnifier.svg") !important;
+  background-repeat: no-repeat;
+  background-color: #111111 !important;
+  background-position: center right 10px !important;
   z-index: 10000 !important;
   font-size: 15px !important;
   box-sizing: border-box;
@@ -1076,103 +1080,21 @@ ul.scAccountMenu li:after {
 .scIconCopy {
   vertical-align: middle;
   cursor: pointer;
+  width: 16px;
 }
 .scIconCopy:hover {
   filter: brightness(1.5);
 }
 
-/* Media Explorer */
-
-.scMediaExplorer {
-  width: 100%;
-  color: var(--black7);
+#FileList a.scButton.scButtonList.selected,
+#FileList a.scButton.scButtonGrid.selected {
+  background-color: var(--blue);
+  border: 1px solid var(--blue);
+  background-image: none !important;
+  box-shadow: none !important;
 }
 
-.scMediaExplorer tr:nth-child(even) {
-  background: #ffffff;
-}
-
-.scMediaExplorer tr:nth-child(odd) {
-  background: #f0f0f0;
-}
-
-.scMediaExplorer th {
-  font-weight: bold;
-  border-top: 1px solid #ccc;
-  padding: 6px 10px !important;
-  cursor: pointer;
-  color: var(--text);
-}
-
-.scMediaExplorer th,
-td {
-  text-align: left;
-  padding: 2px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.scMediaExplorer td.mediaArrow,
-.scMediaExplorer td.mediaTitle {
-  font-weight: bold;
-  color: var(--text);
-}
-
-.scMediaExplorer td.mediaArrow {
-  text-align: right;
-  width: 2%;
-}
-
-.scMediaExplorer td.mediaThumbnail {
-  text-align: center !important;
-  width: 3%;
-}
-
-.scMediaExplorer td.mediaSize {
-  text-align: left !important;
-}
-
-.scMediaExplorer tr:hover td.mediaTitle,
-.scMediaExplorer tr:hover {
-  cursor: pointer;
-  background: var(--accent);
-  color: var(--accentText) !important;
-}
-
-.scMediaExplorer tr:first-child:hover {
-  background: #f0f0f0;
-  color: var(--text);
-}
-
-.scMediaExplorer tr:first-child th.selected {
-  background: #e0e0e0 !important;
-  color: var(--text);
-}
-
-.scMediaExplorer tr:first-child th:hover {
-  cursor: pointer;
-  background: #d6d6d6 !important;
-  color: var(--text);
-}
-
-.scMediaExplorer td > img.scMediaFolder {
-  border: 1px solid transparent;
-  width: 25px !important;
-  min-height: 25px !important;
-  margin: 3px 6px 0px 6px;
-  padding: 0;
-  transition: all ease-in-out 0.1s !important;
-}
-
-.scMediaExplorer td > img.scMediaPreview {
-  background: #f0f0f0;
-  border: 1px solid #fff;
-  width: 25px !important;
-  min-height: 25px !important;
-  margin: 3px 5px 0px 5px;
-  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.5));
-  border-radius: 1px;
-  padding: 0;
-  transition: all ease-in-out 0.1s !important;
+#FileList a.scButton.scButtonList.selected > img,
+#FileList a.scButton.scButtonGrid.selected > img {
+  filter: invert(1);
 }

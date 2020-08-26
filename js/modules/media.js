@@ -1,3 +1,4 @@
+/* eslint-disable prefer-named-capture-group */
 /* eslint-disable newline-per-chained-call */
 /* eslint-disable radix */
 /* eslint-disable no-mixed-operators */
@@ -5,8 +6,9 @@
 
 import * as global from "./global.js";
 import { setPlural } from "./helpers.js";
+import { getAccentColor } from "./experimentalui.js";
 
-export { getImageInfo, initMediaExplorer, initMediaCounter, initMediaDragDrop };
+export { getImageInfo, initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons };
 
 /**
  * Convert bytes to Size
@@ -26,7 +28,7 @@ const bytesToSize = (bytes) => {
 const getFileType = (type) => {
   var fileType = type.split("/");
   fileType = fileType[1] ? fileType[1] : fileType[0];
-  fileType = fileType == "x-zip-compressed" ? "zip" : fileType;
+  fileType = fileType == "x-zip-compressed" ? "Zip file" : fileType;
   fileType = fileType == "svg+xml" ? "SVG image" : fileType;
   fileType = fileType == "jpg" ? "JPEG image" : fileType;
   fileType = fileType == "jpeg" ? "JPEG image" : fileType;
@@ -42,7 +44,7 @@ const getFileType = (type) => {
 /**
  * Get image information
  */
-const getImageInfo = (imageUrl, imageId, imageJson) => {
+const getImageInfo = (imageUrl, imageId, jsonObject) => {
   var blob = null;
   var xhr = new XMLHttpRequest();
   xhr.open("GET", imageUrl, true);
@@ -53,11 +55,10 @@ const getImageInfo = (imageUrl, imageId, imageJson) => {
     document.querySelector(".mediaType_" + imageId).innerHTML = getFileType(blob.type);
     document.querySelector(".mediaSize_" + imageId).innerHTML = bytesToSize(blob.size);
 
-    document.querySelector(".mediaType_" + imageId).dataset.type = blob.size;
-    document.querySelector(".mediaSize_" + imageId).dataset.size = blob.size;
+    jsonObject.type = getFileType(blob.type);
+    jsonObject.size = bytesToSize(blob.size);
 
-    imageJson.size = bytesToSize(blob.size);
-    imageJson.type = getFileType(blob.type);
+    document.querySelector(".mediaSize_" + imageId).dataset.size = blob.size;
   };
   xhr.send();
 };
@@ -70,93 +71,149 @@ const initMediaExplorer = () => {
   mediaItems.forEach((el) => {
     el.remove();
   });
-  let mediaId,
-    mediaThumbnail,
-    mediaImage,
-    mediaTitle,
-    mediaDimensions,
-    mediaWarning,
-    mediaUsage,
-    mediaFolder,
-    mediaArrow,
-    mediaClass,
-    mediaClick;
+  let mediaId, mediaThumbnail, mediaImage, mediaTitle, mediaDimensions, mediaWarning, mediaUsage, mediaFolder, mediaArrow, mediaClass, mediaClick;
   let mediaItemsJson = {};
-  let scMediaThumbnailSize = localStorage.getItem("scMediaThumbnailSize")
-    ? localStorage.getItem("scMediaThumbnailSize")
-    : 25;
+  let scMediaThumbnailSize = localStorage.getItem("scMediaThumbnailSize") ? localStorage.getItem("scMediaThumbnailSize") : 25;
+
+  getAccentColor();
+
   // prettier-ignore
-  let mediaExplorer = `
-      <input id="mediaThumbnailSize" type ="range" min ="25" max="100" step ="5" value ="` + scMediaThumbnailSize + `" onchange="updateMediaThumbnails(this.value)" style="float: right;
-    margin: -20px 30px 5px 0px;"/>
+  let mediaExplorer =
+    `<input id="mediaThumbnailSize" class="mediaThumbnailSize" type ="range" min ="25" max="100" step ="5" value ="` + scMediaThumbnailSize + `" onchange="updateMediaThumbnails(this.value)"/>
 
       <table class="scMediaExplorer">
-        <tr>
-          <th colspan="3" width="35%" onclick="sortTable(2, this, 'Name')">Name</th>
-          <th width="13%" onclick="sortTable(3, this, 'Info')" data-sort="ASC">Info</th>
-          <th width="13%" onclick="sortTable(4, this, 'Type')" data-sort="ASC">Type</th>
-          <th width="13%" onclick="sortTable(5, this, 'Size')" data-sort="ASC">Size</th>
-          <th width="13%" onclick="sortTable(6, this, 'Validation')" data-sort="ASC">Validation</th>
-          <th width="13%" onclick="sortTable(7, this, 'Usage')" data-sort="ASC">Usage</th>
-        </tr>`;
+        <thead>
+          <tr>
+            <th colspan="3" width="35%" onclick="sortTable('title', 'Name', 0)">Name</th>
+            <th width="12%" onclick="sortTable('info', 'Info', 1)" data-sort="ASC">Info</th>
+            <th width="12%" onclick="sortTable('type', 'Type', 2)" data-sort="ASC">Type</th>
+            <th width="12%" onclick="sortTable('datasize', 'Size', 3)" data-sort="ASC">Size</th>
+            <th width="11%" onclick="sortTable('validation', 'Validation', 4)" data-sort="ASC">Validation</th>
+            <th width="11%" onclick="sortTable('usage', 'Usage', 5)" data-sort="ASC">Usage</th>
+            <th width="7%" class="noSort"></th>
+          </tr>
+        </thead>
+        <tbody>`;
 
   for (let item of mediaItems) {
     mediaId = item ? item.getAttribute("id") : false;
-    mediaThumbnail = item.querySelector(".scMediaBorder > img")
-      ? item.querySelector(".scMediaBorder > img").getAttribute("src")
-      : false;
+    mediaThumbnail = item.querySelector(".scMediaBorder > img") ? item.querySelector(".scMediaBorder > img").getAttribute("src") : false;
     mediaImage = item.querySelector(".scMediaBorder > img")
-      ? item
-          .querySelector(".scMediaBorder > img")
-          .getAttribute("src")
-          .replace("&h=72&thn=1&w=72", "")
-          .replace("bc=white&", "")
+      ? item.querySelector(".scMediaBorder > img").getAttribute("src").replace("&h=72&thn=1&w=72", "").replace("bc=white&", "")
       : false;
     mediaTitle = item.querySelector(".scMediaTitle") ? item.querySelector(".scMediaTitle").innerText : "--";
     mediaDimensions = item.querySelector(".scMediaDetails") ? item.querySelector(".scMediaDetails").innerText : "--";
-    mediaWarning = item.querySelector(".scMediaValidation") ? item.querySelector(".scMediaValidation").innerText : "";
+    mediaWarning = item.querySelector(".scMediaValidation") ? item.querySelector(".scMediaValidation").innerText : "--";
     mediaWarning = mediaWarning.includes(" warning")
       ? mediaWarning.split(" warning")[0] + " warning" + setPlural(mediaWarning.split(" warning")[0])
       : mediaWarning;
-    mediaUsage = item.querySelector(".scMediaUsages") ? item.querySelector(".scMediaUsages").innerText : "";
+    //iconWarningMedia
+    mediaUsage = item.querySelector(".scMediaUsages") ? item.querySelector(".scMediaUsages").innerText : "not used";
     mediaFolder = mediaImage.includes("/folder.png") ? "Folder" : "--";
     mediaClass = mediaImage.includes("/folder.png") ? "scMediaFolder" : "scMediaPreview";
     mediaArrow = mediaImage.includes("/folder.png") ? "▶" : " ";
+    mediaUsage = mediaImage.includes("/folder.png") ? "--" : mediaUsage;
     mediaClick = item ? item.getAttribute("onclick") : false;
 
     //Build a JSON object
     mediaItemsJson[mediaId] = {
       id: mediaId,
-      thumbnail: mediaThumbnail,
-      image: mediaImage,
       title: mediaTitle,
       dimensions: mediaDimensions,
       warning: mediaWarning,
       usage: mediaUsage,
-      size: "--",
       type: "--",
+      size: "--",
     };
+
+    //Item ID
+    let itemId = mediaClick.split("{")[1].split("}")[0];
 
     //Prepare html table
     // prettier-ignore
     mediaExplorer += `
-    <tr id="mediaItem_` + mediaId + `" onclick="` + mediaClick + `">
-      <td class="mediaArrow">` + mediaArrow + `</td>
-      <td class="mediaThumbnail"><img src='` + mediaThumbnail + `' style="width: ` + scMediaThumbnailSize + `px !important" class="` + mediaClass + ` scMediaThumbnail" loading="lazy"/></td>
-      <td class="mediaTitle"><span data-title="` + mediaTitle + `">` + mediaTitle + `</span></td>
-      <td class="mediaDimensions"><span data-dimensions="` + mediaDimensions + `">` + mediaDimensions + `</span></td>
-      <td class="mediaType"><span class="mediaType_` + mediaId + `" data-type="` + mediaFolder + `">` + mediaFolder + `</span></td>
-      <td class="mediaSize"><span class="mediaSize_` + mediaId + `" data-size="--">--</span></td>
-      <td><span data-warning="` + mediaWarning + `">` + mediaWarning + `</span></td>
-      <td><span data-usage="` + mediaUsage + `">` + mediaUsage + `</span></td>
-    </tr>`;
+      <tr id="mediaItem_` + mediaId + `">
+        <td class="mediaArrow" onclick="` + mediaClick + `">` + mediaArrow + `</td>
+        <td class="mediaThumbnail" onclick="` + mediaClick + `"><img src='` + mediaThumbnail + `' style="width: ` + scMediaThumbnailSize + `px !important" class="` + mediaClass + ` scMediaThumbnail" loading="lazy"/></td>
+        <td><div ondblclick="javascript:return scForm.postEvent(this,event,'item:rename(id={` + itemId + `})')" class="mediaTitle" title="` + mediaTitle + `">` + mediaTitle + `</div></td>
+        <td class="left" onclick="` + mediaClick + `">` + mediaDimensions + `</td>
+        <td class="mediaType mediaType_` + mediaId + `" onclick="` + mediaClick + `">` + mediaFolder + `</td>
+        <td class="mediaSize mediaSize_` + mediaId + `" data-size="0" onclick="` + mediaClick + `">--</td>
+        <td class="left" onclick="` + mediaClick + `">` + mediaWarning + `</td>
+        <td class="left" onclick="` + mediaClick + `">` + mediaUsage + `</td>
+        <td class="center">
+          <a download href="` + mediaImage + `" class="scMediaActions" title="Download">
+            <img src="` + global.iconDownload + `" class="scLanguageIcon">
+          </a>
+          <button class="scMediaActions" title="Delete" type="button" onclick="javascript:return scForm.postEvent(this,event,'item:delete(id={` + itemId + `})')">
+            <img src="` + global.iconBin + `" class="scLanguageIcon">
+          </button>
+        </td>
+      </tr>`;
 
     //Get size and type from URL
     mediaFolder != "Folder" ? getImageInfo(mediaImage, mediaId, mediaItemsJson[mediaId]) : "Folder";
   }
-  mediaExplorer += `</table>`;
-  document.querySelectorAll(".scTitle")[1].insertAdjacentHTML("afterend", mediaExplorer);
-  resizeTable(".scMediaExplorer");
+  mediaExplorer += `</tbody></table>`;
+  document.querySelectorAll(".scTitle")[1] ? document.querySelectorAll(".scTitle")[1].insertAdjacentHTML("afterend", mediaExplorer) : false;
+
+  //Buttom view
+  document.querySelector(".scButtonGrid").classList.remove("selected");
+  document.querySelector(".scButtonList").classList.add("selected");
+
+  //Insert Refresh
+  let scButtonHtml = `<a class="scButton scSmall" onclick="javascript:location.reload(); return false;" title="Refresh view"><img loading="lazy" src=" ${global.iconRefresh} " width="16" height="16" class="scIcon" alt="Refresh view" border="0"><div class="scHeader">&nbsp;</div></a>`;
+  document.querySelector(".scFolderButtons").insertAdjacentHTML("afterbegin", scButtonHtml);
+
+  //Sort
+  let scMediaSortPos = localStorage.getItem("scMediaSortPos") ? localStorage.getItem("scMediaSortPos") : 0;
+  let scMediaSortOrder = localStorage.getItem("scMediaSortOrder") ? localStorage.getItem("scMediaSortOrder") : 2;
+
+  if (scMediaSortPos != null) {
+    setTimeout(function () {
+      document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos].click();
+    }, 200);
+  }
+  if (scMediaSortOrder == -1) {
+    setTimeout(function () {
+      document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos].click();
+    }, 210);
+  }
+
+  //get parent
+  // Get the next sibling element
+  setTimeout(function () {
+    var elem = parent.document.querySelector(".scContentTreeNodeActive");
+    var count = 0;
+    for (; elem && elem !== document; elem = elem.parentNode) {
+      if (elem.classList) {
+        if (elem.classList.contains("scContentTreeNode")) {
+          count++;
+          if (count == 2) {
+            var parentScId = elem
+              .querySelector(".scContentTreeNodeNormal")
+              .getAttribute("id")
+              .replace("Tree_Node_", "")
+              .replace(
+                // eslint-disable-next-line prefer-named-capture-group
+                /(.{8})(.{4})(.{4})(.{4})(.{12})/u,
+                "$1-$2-$3-$4-$5"
+              );
+            console.log(parentScId);
+            //Insert Refresh
+            let scButtonHtml =
+              `<a class="scButton scSmall" onclick="javascript:scForm.getParentForm().invoke('item:load(id={` +
+              parentScId +
+              `})');return false" title="Back to parent folder"><img loading="lazy" src=" ${global.iconParent} " width="16" height="16" class="scIcon" alt="alt="Back to parent folder"" border="0"><div class="scHeader">&nbsp;</div></a>`;
+            document.querySelector(".scFolderButtons").insertAdjacentHTML("afterbegin", scButtonHtml);
+            break;
+          }
+        }
+      }
+    }
+  }, 200);
+
+  //console.log(parent.document.querySelector(".scContentTreeNodeActive").closest(".scContentTreeNode"));
 };
 
 /**
@@ -180,33 +237,32 @@ const initMediaDragDrop = () => {
   var scUploadMediaUrl = `/sitecore/client/Applications/Dialogs/UploadMediaDialog?ref=list&ro=sitecore://master/%7b${scMediaID}%7d%3flang%3den&fo=sitecore://master/%7b${scMediaID}%7d`;
   //Add button
   var scFolderButtons = document.querySelector(".scFolderButtons");
-  //scForm.invoke("item:load(id=' + lastTabSitecoreItemID + ')
-  var scButtonHtml = `<a href="#" class="scButton" onclick="javascript:scSitecore.prototype.showModalDialog('${scUploadMediaUrl}', '', '', null, null); false"><img loading="lazy" src=" ${global.launchpadIcon} " width="16" height="16" class="scIcon" alt="" border="0"><div class="scHeader">Upload files (Drag and Drop)</div></a>`;
-  // //Insert new button
+  var scButtonHtml = `<a class="scButton" id="scUploadDragDrop" onclick="javascript:scSitecore.prototype.showModalDialog('${scUploadMediaUrl}', '', '', null, null); return false;"><img loading="lazy" src=" ${global.iconGallery} " width="16" height="16" class="scIcon" alt="" border="0"><div class="scHeader">Upload multiple files</div></a>`;
   scFolderButtons.insertAdjacentHTML("afterbegin", scButtonHtml);
+};
+
+/**
+ * Init Media Library View buttons
+ */
+const initMediaViewButtons = () => {
+  let scFolderButtons = document.querySelector(".scFolderButtons");
+  let listSelected, gridSelected;
+  localStorage.getItem("scMediaView") == "list" ? (listSelected = "selected") : (gridSelected = "selected");
+
+  //Insert Media view
+  // prettier-ignore
+  let scButtonHtml = `
+  <a class="scButton scButtonList ` + listSelected + `"  onclick="switchMediaView('list')" title="Switch to list view"><img loading="lazy" src=" ${global.iconListView} " width="16" height="16" class="scIcon" alt="" border="0"></a>
+  <a class="scButton scButtonGrid ` + gridSelected + `"  onclick="switchMediaView('grid')" title="Switch to grid view"><img loading="lazy" src=" ${global.iconGridView} " width="16" height="16" class="scIcon" alt="" border="0"></a>`;
+  scFolderButtons.insertAdjacentHTML("beforeend", scButtonHtml);
 };
 
 /**
  * Init Media Library Drag and Drop button
  */
+// eslint-disable-next-line no-unused-vars
 const resizeTable = (id) => {
-  var table = document.querySelector(id);
-  var row = table.getElementsByTagName("tr")[0],
-    cols = row ? row.children : undefined;
-  if (!cols) return;
-
-  table.style.overflow = "hidden";
-
-  var tableHeight = table.offsetHeight;
-
-  for (var i = 0; i < cols.length; i++) {
-    var div = createDiv(tableHeight);
-    cols[i].appendChild(div);
-    cols[i].style.position = "relative";
-    setListeners(div);
-  }
-
-  function setListeners(div) {
+  const setListeners = (div) => {
     var pageX, curCol, nxtCol, curColWidth, nxtColWidth;
 
     div.addEventListener("mousedown", function (e) {
@@ -238,16 +294,16 @@ const resizeTable = (id) => {
       }
     });
 
-    document.addEventListener("mouseup", function (e) {
+    document.addEventListener("mouseup", function () {
       curCol = undefined;
       nxtCol = undefined;
       pageX = undefined;
       nxtColWidth = undefined;
       curColWidth = undefined;
     });
-  }
+  };
 
-  function createDiv(height) {
+  const createDiv = (height) => {
     var div = document.createElement("div");
     div.style.top = 0;
     div.style.right = 0;
@@ -256,20 +312,36 @@ const resizeTable = (id) => {
     div.style.cursor = "col-resize";
     div.style.userSelect = "none";
     div.style.height = height + "px";
-    return div;
-  }
 
-  function paddingDiff(col) {
+    return div;
+  };
+
+  const paddingDiff = (col) => {
     if (getStyleVal(col, "box-sizing") == "border-box") {
       return 0;
     }
 
     var padLeft = getStyleVal(col, "padding-left");
     var padRight = getStyleVal(col, "padding-right");
-    return parseInt(padLeft) + parseInt(padRight);
-  }
 
-  function getStyleVal(elm, css) {
-    return window.getComputedStyle(elm, null).getPropertyValue(css);
+    return parseInt(padLeft) + parseInt(padRight);
+  };
+
+  const getStyleVal = (elm, css) => window.getComputedStyle(elm, null).getPropertyValue(css);
+
+  var table = document.querySelector(id);
+  var row = table.getElementsByTagName("tr")[0],
+    cols = row ? row.children : undefined;
+  if (!cols) return;
+
+  table.style.overflow = "hidden";
+
+  var tableHeight = table.offsetHeight;
+
+  for (var i = 0; i < cols.length; i++) {
+    var div = createDiv(tableHeight);
+    cols[i].appendChild(div);
+    cols[i].style.position = "relative";
+    setListeners(div);
   }
 };

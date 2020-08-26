@@ -307,19 +307,26 @@ const initSitecoreMenu = () => {
  * Get Accent Color
  */
 const getAccentColor = () => {
-  let color, text, brightness;
+  let color, text, brightness, invert;
   let storage = localStorage.getItem("scColorPicker");
+  let root = document.documentElement;
+
   if (storage) {
     color = storage;
     text = setTextColour(color);
     text == "#ffffff" ? (brightness = 10) : (brightness = 0);
+    text == "#ffffff" ? (invert = 1) : (invert = 0);
 
-    let root = document.documentElement;
     root.style.setProperty("--accent", color);
     root.style.setProperty("--accentText", text);
     root.style.setProperty("--accentBrightness", brightness);
+    root.style.setProperty("--accentInvert", invert);
   } else {
     color = "#ee3524"; //red
+    root.style.setProperty("--accent", "#ee3524");
+    root.style.setProperty("--accentText", "#ffffff");
+    root.style.setProperty("--accentBrightness", 50);
+    root.style.setProperty("--accentInvert", 1);
   }
 
   return color;
@@ -329,7 +336,7 @@ const getAccentColor = () => {
  * Init Color Picker
  */
 const initColorPicker = () => {
-  let color, text, brightness;
+  let color, text, brightness, invert;
 
   let input = '<input type="color" id="scAccentColor" name="scAccentColor" value="' + getAccentColor() + '" title="Choose your accent color">';
   let menu = document.querySelector(".sc-accountInformation");
@@ -342,12 +349,14 @@ const initColorPicker = () => {
       color = colorPicker.value;
       text = setTextColour(color);
       text == "#ffffff" ? (brightness = 10) : (brightness = 0);
+      text == "#ffffff" ? (invert = 1) : (invert = 0);
 
       //Root
       let root = document.documentElement;
       root.style.setProperty("--accent", color);
       root.style.setProperty("--accentText", text);
       root.style.setProperty("--accentBrightness", brightness);
+      root.style.setProperty("--accentInvert", invert);
 
       //Iframes
       document.querySelectorAll("iframe").forEach(function (e) {
@@ -355,6 +364,7 @@ const initColorPicker = () => {
         iframe.style.setProperty("--accent", color);
         iframe.style.setProperty("--accentText", text);
         iframe.style.setProperty("--accentBrightness", brightness);
+        iframe.style.setProperty("--accentInvert", invert);
       });
 
       localStorage.setItem("scColorPicker", color);

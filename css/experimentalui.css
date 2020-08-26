@@ -989,12 +989,46 @@ a.scRibbonEditorTabNormal:hover {
 }
 
 .scTitle {
-  padding: 20px 20px 0px 20px;
+  padding: 10px;
+  margin-top: 3px;
   border-bottom: none;
   clear: left;
   font-size: 15px;
   font-weight: 800;
   color: var(--grey7);
+}
+.scFolderButtons {
+  padding-top: 10px;
+}
+
+.scFolderButtonsTitle {
+  display: none;
+}
+
+.scMediaExplorer tbody tr:hover .mediaTitle,
+.scMediaExplorer tbody tr:hover {
+  cursor: pointer;
+  background: var(--accent) !important;
+  color: var(--accentText) !important;
+}
+
+.scMediaExplorer tbody tr:hover button.scMediaActions,
+.scMediaExplorer tbody tr:hover a.scMediaActions {
+  opacity: 1;
+  filter: invert(var(--accentInvert));
+}
+
+#FileList a.scButton.scButtonList.selected,
+#FileList a.scButton.scButtonGrid.selected {
+  background-color: var(--accent);
+  border: 1px solid var(--accent);
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+#FileList a.scButton.scButtonList.selected > img,
+#FileList a.scButton.scButtonGrid.selected > img {
+  filter: invert(var(--accentInvert));
 }
 
 input[type="submit"],

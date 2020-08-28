@@ -718,6 +718,7 @@ chrome.storage.sync.get((storage) => {
 
       if (storage.feature_experimentalui) {
         loadCssFile("css/experimentalui.min.css");
+        loadCssFile("css/tooltip.min.css");
         getAccentColor();
         //Icon contrasted
         if (storage.feature_contrast_icons === false) {

@@ -79,18 +79,20 @@ const initMediaExplorer = () => {
 
   // prettier-ignore
   let mediaExplorer =
-    `<input id="mediaThumbnailSize" class="mediaThumbnailSize" type ="range" min ="25" max="100" step ="5" value ="` + scMediaThumbnailSize + `" onchange="updateMediaThumbnails(this.value)"/>
+    `<input id="mediaThumbnailSize" class="mediaThumbnailSize" type ="range" min ="25" max="100" step ="5" value ="` +
+    scMediaThumbnailSize +
+    `" onchange="updateMediaThumbnails(this.value)"/>
 
       <table class="scMediaExplorer">
         <thead>
           <tr>
-            <th colspan="3" width="35%" onclick="sortTable('title', 'Name', 0)">Name</th>
+            <th colspan="3" width="35%" onclick="sortTable('name', 'Name', 0)">Name</th>
             <th width="12%" onclick="sortTable('info', 'Info', 1)" data-sort="ASC">Info</th>
             <th width="12%" onclick="sortTable('type', 'Type', 2)" data-sort="ASC">Type</th>
             <th width="12%" onclick="sortTable('datasize', 'Size', 3)" data-sort="ASC">Size</th>
-            <th width="11%" onclick="sortTable('validation', 'Validation', 4)" data-sort="ASC">Validation</th>
-            <th width="11%" onclick="sortTable('usage', 'Usage', 5)" data-sort="ASC">Usage</th>
-            <th width="7%" class="noSort"></th>
+            <th onclick="sortTable('validation', 'Validation', 4)" data-sort="ASC">Validation</th>
+            <th onclick="sortTable('usage', 'Usage', 5)" data-sort="ASC">Usage</th>
+            <th width="100px" class="noSort"></th>
           </tr>
         </thead>
         <tbody>`;
@@ -135,17 +137,17 @@ const initMediaExplorer = () => {
       <tr id="mediaItem_` + mediaId + `">
         <td class="mediaArrow" onclick="` + mediaClick + `">` + mediaArrow + `</td>
         <td class="mediaThumbnail" onclick="` + mediaClick + `"><img src='` + mediaThumbnail + `' style="width: ` + scMediaThumbnailSize + `px !important" class="` + mediaClass + ` scMediaThumbnail" loading="lazy"/></td>
-        <td><div ondblclick="javascript:return scForm.postEvent(this,event,'item:rename(id={` + itemId + `})')" class="mediaTitle" title="` + mediaTitle + `">` + mediaTitle + `</div></td>
+        <td onclick="` + mediaClick + `"><div onclick="javascript:return scForm.postEvent(this,event,'item:rename(id={` + itemId + `})')" class="mediaTitle"  title="` + mediaTitle + ` (Click to rename)" >` + mediaTitle + `</div></td>
         <td class="left" onclick="` + mediaClick + `">` + mediaDimensions + `</td>
         <td class="mediaType mediaType_` + mediaId + `" onclick="` + mediaClick + `">` + mediaFolder + `</td>
         <td class="mediaSize mediaSize_` + mediaId + `" data-size="0" onclick="` + mediaClick + `">--</td>
         <td class="left" onclick="` + mediaClick + `">` + mediaWarning + `</td>
         <td class="left" onclick="` + mediaClick + `">` + mediaUsage + `</td>
         <td class="center">
-          <a download href="` + mediaImage + `" class="scMediaActions" title="Download">
+          <a download href="` + mediaImage + `" class="scMediaActions t-sm t-top t-invert" data-tooltip="Download">
             <img src="` + global.iconDownload + `" class="scLanguageIcon">
           </a>
-          <button class="scMediaActions" title="Delete" type="button" onclick="javascript:return scForm.postEvent(this,event,'item:delete(id={` + itemId + `})')">
+          <button class="scMediaActions t-sm t-top t-invert" data-tooltip="Delete" type="button" onclick="javascript:return scForm.postEvent(this,event,'item:delete(id={` + itemId + `})')">
             <img src="` + global.iconBin + `" class="scLanguageIcon">
           </button>
         </td>
@@ -161,12 +163,8 @@ const initMediaExplorer = () => {
   document.querySelector(".scButtonGrid").classList.remove("selected");
   document.querySelector(".scButtonList").classList.add("selected");
 
-  //Insert Refresh
-  let scButtonHtml = `<a class="scButton scSmall" onclick="javascript:location.reload(); return false;" title="Refresh view"><img loading="lazy" src=" ${global.iconRefresh} " width="16" height="16" class="scIcon" alt="Refresh view" border="0"><div class="scHeader">&nbsp;</div></a>`;
-  document.querySelector(".scFolderButtons").insertAdjacentHTML("afterbegin", scButtonHtml);
-
   //Sort
-  let scMediaSortPos = localStorage.getItem("scMediaSortPos") ? localStorage.getItem("scMediaSortPos") : 0;
+  let scMediaSortPos = localStorage.getItem("scMediaSortPos") ? localStorage.getItem("scMediaSortPos") : null;
   let scMediaSortOrder = localStorage.getItem("scMediaSortOrder") ? localStorage.getItem("scMediaSortOrder") : 2;
 
   if (scMediaSortPos != null) {
@@ -179,41 +177,6 @@ const initMediaExplorer = () => {
       document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos].click();
     }, 210);
   }
-
-  //get parent
-  // Get the next sibling element
-  setTimeout(function () {
-    var elem = parent.document.querySelector(".scContentTreeNodeActive");
-    var count = 0;
-    for (; elem && elem !== document; elem = elem.parentNode) {
-      if (elem.classList) {
-        if (elem.classList.contains("scContentTreeNode")) {
-          count++;
-          if (count == 2) {
-            var parentScId = elem
-              .querySelector(".scContentTreeNodeNormal")
-              .getAttribute("id")
-              .replace("Tree_Node_", "")
-              .replace(
-                // eslint-disable-next-line prefer-named-capture-group
-                /(.{8})(.{4})(.{4})(.{4})(.{12})/u,
-                "$1-$2-$3-$4-$5"
-              );
-            console.log(parentScId);
-            //Insert Refresh
-            let scButtonHtml =
-              `<a class="scButton scSmall" onclick="javascript:scForm.getParentForm().invoke('item:load(id={` +
-              parentScId +
-              `})');return false" title="Back to parent folder"><img loading="lazy" src=" ${global.iconParent} " width="16" height="16" class="scIcon" alt="alt="Back to parent folder"" border="0"><div class="scHeader">&nbsp;</div></a>`;
-            document.querySelector(".scFolderButtons").insertAdjacentHTML("afterbegin", scButtonHtml);
-            break;
-          }
-        }
-      }
-    }
-  }, 200);
-
-  //console.log(parent.document.querySelector(".scContentTreeNodeActive").closest(".scContentTreeNode"));
 };
 
 /**
@@ -237,7 +200,7 @@ const initMediaDragDrop = () => {
   var scUploadMediaUrl = `/sitecore/client/Applications/Dialogs/UploadMediaDialog?ref=list&ro=sitecore://master/%7b${scMediaID}%7d%3flang%3den&fo=sitecore://master/%7b${scMediaID}%7d`;
   //Add button
   var scFolderButtons = document.querySelector(".scFolderButtons");
-  var scButtonHtml = `<a class="scButton" id="scUploadDragDrop" onclick="javascript:scSitecore.prototype.showModalDialog('${scUploadMediaUrl}', '', '', null, null); return false;"><img loading="lazy" src=" ${global.iconGallery} " width="16" height="16" class="scIcon" alt="" border="0"><div class="scHeader">Upload multiple files</div></a>`;
+  var scButtonHtml = `<a class="scButton t-sm t-top" data-tooltip="Drag and drop upload" id="scUploadDragDrop" onclick="javascript:scSitecore.prototype.showModalDialog('${scUploadMediaUrl}', '', '', null, null); return false;"><img loading="lazy" src=" ${global.iconGallery} " width="16" height="16" class="scIcon" alt="" border="0"><div class="scHeader">Upload multiple files</div></a>`;
   scFolderButtons.insertAdjacentHTML("afterbegin", scButtonHtml);
 };
 
@@ -252,9 +215,48 @@ const initMediaViewButtons = () => {
   //Insert Media view
   // prettier-ignore
   let scButtonHtml = `
-  <a class="scButton scButtonList ` + listSelected + `"  onclick="switchMediaView('list')" title="Switch to list view"><img loading="lazy" src=" ${global.iconListView} " width="16" height="16" class="scIcon" alt="" border="0"></a>
-  <a class="scButton scButtonGrid ` + gridSelected + `"  onclick="switchMediaView('grid')" title="Switch to grid view"><img loading="lazy" src=" ${global.iconGridView} " width="16" height="16" class="scIcon" alt="" border="0"></a>`;
+  <a class="scButton scButtonList ` + listSelected + ` t-sm t-top" data-tooltip="List view"  onclick="switchMediaView('list')"><img loading="lazy" src=" ${global.iconListView} " width="16" height="16" class="scIcon" alt="" border="0"></a>
+  <a class="scButton scButtonGrid ` + gridSelected + ` t-sm t-top" data-tooltip="Grid view""  onclick="switchMediaView('grid')"><img loading="lazy" src=" ${global.iconGridView} " width="16" height="16" class="scIcon" alt="" border="0"></a>`;
   scFolderButtons.insertAdjacentHTML("beforeend", scButtonHtml);
+
+  //Back to parent
+  setTimeout(function () {
+    var elem = parent.document.querySelector(".scContentTreeNodeActive");
+    var count = 0;
+    for (; elem && elem !== document; elem = elem.parentNode) {
+      if (elem.classList) {
+        if (elem.classList.contains("scContentTreeNode")) {
+          count++;
+          if (count == 2) {
+            var parentScTitle = elem.querySelector(".scContentTreeNodeNormal > span").innerText;
+            var parentScId = elem
+              .querySelector(".scContentTreeNodeNormal")
+              .getAttribute("id")
+              .replace("Tree_Node_", "")
+              .replace(
+                // eslint-disable-next-line prefer-named-capture-group
+                /(.{8})(.{4})(.{4})(.{4})(.{12})/u,
+                "$1-$2-$3-$4-$5"
+              );
+            //Insert Refresh
+            let scButtonHtml = `<a class="scButton scSmall t-sm t-top" data-tooltip="Refresh" onclick="javascript:location.reload(); return false;" title="Refresh view"><img loading="lazy" src=" ${global.iconRefresh} " width="16" height="16" class="scIcon" alt="Refresh view" border="0"><div class="scHeader">&nbsp;</div></a>`;
+            document.querySelector(".scFolderButtons").insertAdjacentHTML("afterbegin", scButtonHtml);
+            //Insert Back
+            scButtonHtml =
+              `<a class="scButton scSmall t-sm t-top" data-tooltip="Back" onclick="javascript:scForm.getParentForm().invoke('item:load(id={` +
+              parentScId +
+              `})');return false" title="Back to ` +
+              parentScTitle +
+              `"><img loading="lazy" src=" ${global.iconParent} " width="16" height="16" class="scIcon" alt="alt="Back to ` +
+              parentScTitle +
+              `" border="0"><div class="scHeader">&nbsp;</div></a>`;
+            document.querySelector(".scFolderButtons").insertAdjacentHTML("afterbegin", scButtonHtml);
+            break;
+          }
+        }
+      }
+    }
+  }, 150);
 };
 
 /**

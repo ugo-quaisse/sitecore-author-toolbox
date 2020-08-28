@@ -33,6 +33,7 @@
   --accentText: #ffffff;
   --accentBrightness: 50;
   --accentInvert: 0;
+  --radius: 3px;
 
   --messageSuccessBgIcon: #8ce99a;
   --messageSuccessIcon: #40c057;
@@ -68,7 +69,7 @@
 form#ContentEditorForm {
   filter: blur(7px) brightness(0.1) grayscale(1);
   transition: all ease-in-out 0.2s;
-  transition-delay: 0.2s;
+  transition-delay: 0.5s;
 }
 
 body.contentEditor {
@@ -233,6 +234,7 @@ div#Languages img {
 
 .scMediaExplorer td.mediaArrow,
 .scMediaExplorer .mediaTitle {
+  width: fit-content;
   font-weight: bold;
   color: var(--text);
   text-overflow: ellipsis;
@@ -342,7 +344,7 @@ div#Languages img {
   display: unset !important;
   line-height: unset !important;
   border: 0px solid var(--black) !important;
-  padding: 5px !important;
+  padding: 0px !important;
   margin: 5px !important;
 }
 

@@ -260,7 +260,7 @@ ul.scAccountMenu li:hover {
   font-size: 12px;
   padding: 9px 14px;
   position: relative;
-  border-radius: 3px;
+  border-radius: var(--radius);
   border: 0px;
   background-color: var(--accent);
   color: var(--accentText);
@@ -393,7 +393,7 @@ div.scContentTreeNode > img:hover {
   height: 4px;
   margin-top: 3px;
   margin-left: -15px;
-  border-radius: 2px;
+  border-radius: var(--radius);
 }
 
 img.scContentTreeNodeGlyph:hover[src="/sitecore/shell/themes/standard/images/noexpand15x15.gif"] {
@@ -529,7 +529,7 @@ a.scEditorHeaderButton {
   font-size: 12px;
   padding: 9px 14px;
   position: relative;
-  border-radius: 3px;
+  border-radius: var(--radius);
   border: 0px;
   background-color: var(--grey5);
   color: var(--black6);
@@ -556,7 +556,7 @@ a.scEditorHeaderButton:hover {
   left: unset !important;
   width: 400px !important;
   height: 100% !important;
-  border-radius: 2px;
+  border-radius: var(--radius);
   box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1);
   transition: right ease-out 0.2s;
 }
@@ -579,7 +579,7 @@ a.scEditorHeaderButton:hover {
   width: 0px;
   height: 0px;
   background: var(--white);
-  border-radius: 3px;
+  border-radius: var(--radius);
 }
 
 #scEditorTabs > ul > li {
@@ -673,14 +673,14 @@ a.scRibbonEditorTabNormal:hover {
 
 .scMessageBar.scWarning {
   margin: 20px;
-  border-radius: 0px 3px 3px 0px;
+  border-radius: 0px var(--radius) var(--radius) 0px;
   background-color: var(--messageWarningBar) !important;
   color: var(--grey7) !important;
   font-size: 14px;
 }
 
 .scWarning > .scMessageBarIcon {
-  border-radius: 3px 0px 0px 3px;
+  border-radius: var(--radius) 0px 0px var(--radius);
   background-color: var(--messageWarningBgIcon) !important;
 }
 
@@ -693,14 +693,14 @@ a.scRibbonEditorTabNormal:hover {
 
 .scMessageBar.scError {
   margin: 20px;
-  border-radius: 0px 3px 3px 0px;
+  border-radius: 0px var(--radius) var(--radius) 0px;
   background-color: var(--messageDangerBar) !important;
   color: var(--grey7) !important;
   font-size: 14px;
 }
 
 .scError > .scMessageBarIcon {
-  border-radius: 3px 0px 0px 3px;
+  border-radius: var(--radius) 0px 0px var(--radius);
   background-color: var(--messageDangerBgIcon) !important;
 }
 
@@ -713,14 +713,14 @@ a.scRibbonEditorTabNormal:hover {
 
 .scMessageBar.scInformation {
   margin: 20px;
-  border-radius: 0px 3px 3px 0px;
+  border-radius: 0px var(--radius) var(--radius) 0px;
   background-color: var(--messageInfoBar) !important;
   color: var(--grey7) !important;
   font-size: 14px;
 }
 
 .scInformation > .scMessageBarIcon {
-  border-radius: 3px 0px 0px 3px;
+  border-radius: var(--radius) 0px 0px var(--radius);
   background-color: var(--messageInfoBgIcon) !important;
 }
 
@@ -733,14 +733,14 @@ a.scRibbonEditorTabNormal:hover {
 
 .scMessageBar.scSuccess {
   margin: 20px;
-  border-radius: 0px 3px 3px 0px;
+  border-radius: 0px var(--radius) var(--radius) 0px;
   background-color: var(--messageSuccessBar) !important;
   color: var(--grey7) !important;
   font-size: 14px;
 }
 
 .scSuccess > .scMessageBarIcon {
-  border-radius: 3px 0px 0px 3px;
+  border-radius: var(--radius) 0px 0px var(--radius);
   background-color: var(--messageSuccessBgIcon) !important;
 }
 
@@ -791,7 +791,7 @@ a.scRibbonEditorTabNormal:hover {
   padding: 2px 20px;
   background-color: var(--accent);
   color: var(--accentText);
-  border-radius: 3px 3px 0px 0px;
+  border-radius: var(--radius) var(--radius) 0px 0px;
   border: 0px;
   border-bottom: 0px solid #e1e1e1;
   font-size: 14px;
@@ -800,7 +800,7 @@ a.scRibbonEditorTabNormal:hover {
 
 .scEditorSectionCaptionCollapsed {
   background-color: var(--black9);
-  border-radius: 3px;
+  border-radius: var(--radius);
 }
 
 .scEditorSectionCaptionCollapsed:hover {
@@ -813,7 +813,7 @@ a.scRibbonEditorTabNormal:hover {
 
 .scEditorSectionPanel {
   display: table;
-  border-radius: 0px 0px 3px 3px;
+  border-radius: 0px 0px var(--radius) var(--radius);
   margin: 20px;
   margin-top: 0px !important;
   padding: 15px;
@@ -823,7 +823,7 @@ a.scRibbonEditorTabNormal:hover {
 }
 
 .scEditorSectionPanel.scTabsRounded {
-  border-radius: 3px;
+  border-radius: var(--radius);
 }
 
 .scEditorTab.scTabsError {
@@ -839,6 +839,23 @@ a.scRibbonEditorTabNormal:hover {
   font-size: 14px;
 }
 
+/* .scContentControlImagePane {
+  border: 1px;
+} */
+a.scContentButton {
+  color: var(--accent);
+  border: 1px solid transparent !important;
+  margin: 8px 8px 0px 0px !important;
+  padding: 5px !important;
+  border-radius: var(--radius);
+  text-decoration: none;
+}
+
+a.scContentButton:hover {
+  color: var(--accentText);
+  background-color: var(--accent);
+  text-decoration: none;
+}
 /*Instant Search */
 .scInstantSearchResults > li:focus,
 .scInstantSearchResults > li:hover {
@@ -882,8 +899,8 @@ a.scRibbonEditorTabNormal:hover {
 .scEditorFieldLabelAdministrator {
   font-size: 11px;
   font-weight: 600;
-  border-radius: 3px;
-  padding: 2px 5px;
+  border-radius: var(--radius);
+  padding: 3px 3px 3px 0px;
   margin: 3px;
   background-color: var(--accent);
   color: var(--accentText);
@@ -948,7 +965,7 @@ a.scRibbonEditorTabNormal:hover {
   top: 45px;
   visibility: hidden;
   opacity: 0;
-  border-radius: 3px;
+  border-radius: var(--radius);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
 
@@ -979,7 +996,7 @@ a.scRibbonEditorTabNormal:hover {
   padding: 7px 14px 8px 14px;
   margin: 0px 5px;
   border: 0px;
-  border-radius: 3px;
+  border-radius: var(--radius);
   cursor: pointer;
   margin-top: -2px;
 }
@@ -998,7 +1015,8 @@ a.scRibbonEditorTabNormal:hover {
   color: var(--grey7);
 }
 .scFolderButtons {
-  padding-top: 10px;
+  padding-left: 10px;
+  padding-top: 25px;
 }
 
 .scFolderButtonsTitle {
@@ -1016,6 +1034,12 @@ a.scRibbonEditorTabNormal:hover {
 .scMediaExplorer tbody tr:hover a.scMediaActions {
   opacity: 1;
   filter: invert(var(--accentInvert));
+}
+
+#Filelist {
+  background: var(--white) !important;
+  border-radius: 3px;
+  overflow: visible;
 }
 
 #FileList a.scButton.scButtonList.selected,
@@ -1039,7 +1063,7 @@ input[type="submit"],
   background-image: none;
   padding: 7px 14px 8px 14px;
   border: 0px;
-  border-radius: 3px;
+  border-radius: var(--radius);
   cursor: pointer;
   box-shadow: none;
 }
@@ -1070,7 +1094,7 @@ input[type="submit"],
 }
 
 .scSaveBar > .scActions > button.primaryGrouped {
-  border-radius: 3px 0px 0px 3px;
+  border-radius: var(--radius) 0px 0px var(--radius);
   border-right: 1px solid rgba(0, 0, 0, 0.2);
   margin-right: 0px;
 }
@@ -1082,12 +1106,12 @@ input[type="submit"],
   margin-right: 5px;
   background-color: var(--accent);
   color: var(--accentText);
-  border-radius: 0px 3px 3px 0px;
+  border-radius: 0px var(--radius) var(--radius) 0px;
 }
 
 .scPopup {
   background-color: var(--white);
-  border-radius: 3px;
+  border-radius: var(--radius);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
 
@@ -1106,7 +1130,7 @@ input[type="submit"],
   top: 45px;
   visibility: hidden;
   opacity: 0;
-  border-radius: 3px;
+  border-radius: var(--radius);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
 
@@ -1145,7 +1169,7 @@ input[type="submit"],
 /* Gallery Frame */
 
 .scGalleryFrame {
-  border-radius: 2px;
+  border-radius: var(--radius);
   box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 

@@ -21,9 +21,9 @@
   font-family: sans-serif;
 }
 [data-tooltip]:before {
-  padding: 8px 10px;
-  min-width: 100px;
-  border-radius: 0px;
+  padding: 10px 8px 8px 8px;
+  min-width: 40px;
+  border-radius: 4px;
   background: rgba(0, 0, 0, 0.9);
   color: #fff;
   content: attr(data-tooltip);
@@ -31,6 +31,7 @@
   font-size: 14px;
   font-weight: 700;
   line-height: 1.2;
+  text-transform: capitalize;
 }
 [data-tooltip]:after {
   border: 6px solid transparent;
@@ -43,6 +44,9 @@
 [data-tooltip]:hover:after {
   visibility: visible;
   opacity: 1;
+}
+[data-tooltip].t-invert:before {
+  filter: invert(1);
 }
 [data-tooltip].t-xl:before {
   font-size: 15px;
@@ -64,6 +68,9 @@
   left: 50%;
   margin-bottom: 5px;
   transform: translateX(-50%);
+}
+[data-tooltip].t-invert:after {
+  filter: invert(1);
 }
 [data-tooltip].t-top:after {
   bottom: 100%;

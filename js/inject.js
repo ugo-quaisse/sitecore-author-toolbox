@@ -269,6 +269,7 @@ function sortTable(col, title, pos) {
     arr[i].arrow = cells[0].innerHTML;
     arr[i].img = cells[1].innerHTML;
     arr[i].title = cells[2].innerHTML;
+    arr[i].name = cells[2].innerText;
     arr[i].info = cells[3].innerHTML;
     arr[i].type = cells[4].innerHTML;
     arr[i].size = cells[5].innerHTML;

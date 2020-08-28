@@ -242,20 +242,22 @@ const sitecoreAuthorToolbox = () => {
 
             //Insert link into Quickinfo table
             var table = document.querySelector(".scEditorQuickInfo");
-            var row = table.insertRow(-1);
-            var cell1 = row.insertCell(0);
-            var cell2 = row.insertCell(1);
-            var url = new URL(sitecoreItemPath);
-            cell1.innerHTML = "Live URL:";
-            cell2.innerHTML =
-              '<a href="' +
-              sitecoreItemPath +
-              '" target="_blank">' +
-              url.origin +
-              url.pathname +
-              ' <img src="' +
-              global.iconExternalLink +
-              '" style="width: 14px; vertical-align: text-top;" /></a>';
+            if (table) {
+              var row = table.insertRow(-1);
+              var cell1 = row.insertCell(0);
+              var cell2 = row.insertCell(1);
+              var url = new URL(sitecoreItemPath);
+              cell1.innerHTML = "Live URL:";
+              cell2.innerHTML =
+                '<a href="' +
+                sitecoreItemPath +
+                '" target="_blank">' +
+                url.origin +
+                url.pathname +
+                ' <img src="' +
+                global.iconExternalLink +
+                '" style="width: 14px; vertical-align: text-top;" /></a>';
+            }
 
             //Experimental mode
             document.querySelector(".scPreviewButton")

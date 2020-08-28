@@ -266,19 +266,18 @@ function sortTable(col, title, pos) {
     cells = rows[i].cells;
     clen = cells.length;
     arr[i] = new Array();
-    arr[i].arrow = cells[0].innerHTML;
-    arr[i].img = cells[1].innerHTML;
-    arr[i].title = cells[2].innerHTML;
+    arr[i].arrow = cells[0].outerHTML;
+    arr[i].img = cells[1].outerHTML;
+    arr[i].title = cells[2].outerHTML;
     arr[i].name = cells[2].innerText;
-    arr[i].info = cells[3].innerHTML;
-    arr[i].type = cells[4].innerHTML;
-    arr[i].size = cells[5].innerHTML;
+    arr[i].info = cells[3].outerHTML;
+    arr[i].type = cells[4].outerHTML;
+    arr[i].size = cells[5].outerHTML;
     arr[i].datasize = cells[5].dataset.size;
-    arr[i].validation = cells[6].innerHTML;
-    arr[i].usage = cells[7].innerHTML;
-    arr[i].actions = cells[8].innerHTML;
+    arr[i].validation = cells[6].outerHTML;
+    arr[i].usage = cells[7].outerHTML;
+    arr[i].actions = cells[8].outerHTML;
   }
-
   // sort the array by the specified column number (col) and order (asc)
   arr.sort(function (a, b) {
     var retval = 0;
@@ -296,19 +295,18 @@ function sortTable(col, title, pos) {
 
     return retval;
   });
-
   //Draw the new sorted table
   for (i = 0; i < rlen; i++) {
-    rows[i].cells[0].innerHTML = arr[i].arrow;
-    rows[i].cells[1].innerHTML = arr[i].img;
-    rows[i].cells[2].innerHTML = arr[i].title;
-    rows[i].cells[3].innerHTML = arr[i].info;
-    rows[i].cells[4].innerHTML = arr[i].type;
-    rows[i].cells[5].innerHTML = arr[i].size;
+    rows[i].cells[0].outerHTML = arr[i].arrow;
+    rows[i].cells[1].outerHTML = arr[i].img;
+    rows[i].cells[2].outerHTML = arr[i].title;
+    rows[i].cells[3].outerHTML = arr[i].info;
+    rows[i].cells[4].outerHTML = arr[i].type;
+    rows[i].cells[5].outerHTML = arr[i].size;
     rows[i].cells[5].dataset.size = arr[i].datasize;
-    rows[i].cells[6].innerHTML = arr[i].validation;
-    rows[i].cells[7].innerHTML = arr[i].usage;
-    rows[i].cells[8].innerHTML = arr[i].actions;
+    rows[i].cells[6].outerHTML = arr[i].validation;
+    rows[i].cells[7].outerHTML = arr[i].usage;
+    rows[i].cells[8].outerHTML = arr[i].actions;
   }
 
   //Add sort icon to column

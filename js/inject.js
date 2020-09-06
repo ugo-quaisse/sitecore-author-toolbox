@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable newline-before-return */
 /* eslint-disable newline-per-chained-call */
 /* eslint-disable no-array-constructor */
 /* eslint-disable space-before-function-paren */
@@ -107,6 +109,8 @@ const toggleSection = (elem, name, experimental = false) => {
         section.classList.remove("scEditorSectionCaptionCollapsed");
         section.classList.add("scEditorSectionCaptionExpanded");
 
+        localStorage.setItem("scTabSection", name);
+
         if (isExperimental) {
           //X Scroll to
           let container = document.querySelector("#scEditorTabs").getBoundingClientRect();
@@ -131,9 +135,6 @@ const toggleSection = (elem, name, experimental = false) => {
           //Detect boundaries
           calcPos < x2 ? (calc = Math.round(calc + (x2 - calcPos))) : false;
           calc > 0 ? (calc = 0) : false;
-
-          // console.log(calcPos)
-          // console.log("Margin-left: "+calc);
 
           //Scroll to position
           tabsSection.setAttribute("style", "margin-left: " + calc + "px");
@@ -224,7 +225,6 @@ const copyContent = (value, targetClass) => {
     function () {
       let target = document.querySelector(".copyCount_" + targetClass);
       let targetMessage = document.querySelector(".copyCountMessage_" + targetClass);
-      console.log(target);
       let saveMessage = document.querySelector(".saveMessage");
       saveMessage ? (saveMessage.innerHTML = "Copied") : (targetMessage.innerHTML = "Copied!");
       saveMessage ? saveMessage.classList.add("visible") : false;
@@ -337,4 +337,27 @@ function switchMediaView(view) {
     localStorage.setItem("scMediaView", "list");
   }
   document.location.reload();
+}
+
+/**
+ * Update media thumbnail size
+ */
+function doubleClick(id, itemId) {
+  var el = document.querySelector(".mediaTitle_" + id);
+
+  if (el.getAttribute("data-dblclick") == null) {
+    el.setAttribute("data-dblclick", 1);
+    // eslint-disable-next-line consistent-return
+    setTimeout(function () {
+      if (el.getAttribute("data-dblclick") == 1) {
+        // eslint-disable-next-line no-undef
+        return scForm.getParentForm().invoke("item:load(id={" + itemId + "})");
+      }
+      el.removeAttribute("data-dblclick");
+    }, 300);
+  } else {
+    el.removeAttribute("data-dblclick");
+    // eslint-disable-next-line no-undef
+    return scForm.postEvent(el, event, "item:rename(id={" + itemId + "})");
+  }
 }

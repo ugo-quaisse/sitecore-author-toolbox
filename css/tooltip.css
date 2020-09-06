@@ -1,6 +1,6 @@
 [data-tooltip] {
   cursor: pointer;
-  position: relative;
+  /* position: relative; */
   /********** Default Behavior ********* */
   /********** Timeout Variant ********* */
   /********** Tooltip Sizes ********* */

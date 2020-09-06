@@ -25,7 +25,6 @@ export {
  */
 const insertSavebar = () => {
   //If preview mode
-  //<li onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor')">Edit in Experience Editor...</li>
   let scPrimaryBtn = global.hasModePreview
     ? `<button class="primary scExitButton" onclick="javascript:return scForm.invoke('contenteditor:closepreview', event)">Close Panel</button>`
     : `<button id="scPublishMenuMore" class="grouped" type="button">▾</button>
@@ -38,17 +37,13 @@ const insertSavebar = () => {
   let scLiveyBtn = !global.hasModePreview ? `<button class="scPreviewButton" disabled>...</button>` : ``;
 
   //Save Bar
+  //prettier-ignore
   let scSaveBar =
-    `
-    <div class="scSaveBar">
+    `<div class="scSaveBar">
         <div class="scActions">
-            ` +
-    scPrimaryBtn +
-    `
+            ` + scPrimaryBtn + `
             <button class="scSaveButton" onclick="javascript:return scForm.invoke('contenteditor:save', event)">Save</button>
-            ` +
-    scLiveyBtn +
-    `
+            ` + scLiveyBtn + `
         </div>
         <div class="scBreadcrumb"></div>
     </div>`;
@@ -501,19 +496,12 @@ const setInsertIcon = (treeNode) => {
     el.remove();
   });
   //Add Edit icon
-  a.insertAdjacentHTML(
-    "afterend",
-    `<span id="scIconEE` +
-      id +
-      `" title="Edit in Experience Editor" class="scEditItemIcon ` +
-      activeClass +
-      `" onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor(id={` +
-      id.replace(
+  //prettier-ignore
+  a.insertAdjacentHTML("afterend", `<span id="scIconEE` + id + `" title="Edit in Experience Editor" class="scEditItemIcon ` + activeClass + `" onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor(id={` +
+        id.replace(
         // eslint-disable-next-line prefer-named-capture-group
         /([0-z]{8})([0-z]{4})([0-z]{4})([0-z]{4})([0-z]{12})/u,
-        "$1-$2-$3-$4-$5"
-      ) +
-      `})')"></span>`
+        "$1-$2-$3-$4-$5") + `})')"></span>`
   );
   target = document.querySelector("#scIconEE" + id);
   target ? target.setAttribute("style", "opacity:1") : false;
@@ -535,19 +523,45 @@ const setInsertIcon = (treeNode) => {
 const initInsertIcon = () => {
   let contentTree = document.querySelector(".scContentTree");
   let treeNode = document.querySelector(".scContentTreeContainer");
+  let node, nodeIcon, nodeContent;
   if (treeNode) {
     treeNode.addEventListener("mouseover", (event) => {
-      if (event.path[1].className == "scContentTreeNodeNormal" || event.path[1].className == "scContentTreeNodeActive") {
+      if (event.path[1].classList.contains("scContentTreeNodeNormal") || event.path[1].classList.contains("scContentTreeNodeActive")) {
         setInsertIcon(event.path[1].getAttribute("id"));
+        node = event.path[1];
       }
-      if (event.path[2].className == "scContentTreeNodeNormal" || event.path[2].className == "scContentTreeNodeActive") {
+      if (event.path[2].classList.contains("scContentTreeNodeNormal") || event.path[2].classList.contains("scContentTreeNodeActive")) {
         setInsertIcon(event.path[2].getAttribute("id"));
+        node = event.path[2];
+      }
+      //Updating html structure to allow text-overflow and avoid icons overlap
+      if (node && !node.classList.contains("scNoOverlap")) {
+        nodeIcon = node.querySelector("span > img").src;
+        nodeContent = node.querySelector("span").innerText;
+        node.querySelector("span").innerHTML =
+          `<img src="` + nodeIcon + `" width="16" height="16" class="scContentTreeNodeIcon" alt="" border="0"><div>` + nodeContent + `</div>`;
+        node.classList.add("scNoOverlap");
       }
     });
 
     contentTree.addEventListener("mouseleave", () => {
       document.querySelector(".scInsertItemIcon") ? document.querySelector(".scInsertItemIcon").setAttribute("style", "opacity:0") : false;
       document.querySelector(".scEditItemIcon") ? document.querySelector(".scEditItemIcon").setAttribute("style", "opacity:0") : false;
+
+      // if (event.path[1].classList.contains("scContentTreeNodeNormal") || event.path[1].classList.contains("scContentTreeNodeActive")) {
+      //   node = event.path[1];
+      // }
+      // if (event.path[2].classList.contains("scContentTreeNodeNormal") || event.path[2].classList.contains("scContentTreeNodeActive")) {
+      //   node = event.path[2];
+      // }
+      // //Updating html structure to allow text-overflow and avoid icons overlap
+      // if (node.classList.contains("scNoOverlap")) {
+      //   nodeIcon = node.querySelector("span > img").src;
+      //   nodeContent = node.querySelector("span").innerText;
+      //   node.querySelector("span").innerHTML =
+      //     `<img src="` + nodeIcon + `" width="16" height="16" class="scContentTreeNodeIcon" alt="" border="0">` + nodeContent;
+      //   node.classList.remove("scNoOverlap");
+      // }
     });
   }
 };

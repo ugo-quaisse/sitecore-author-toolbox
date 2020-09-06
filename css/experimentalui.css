@@ -180,6 +180,11 @@ a.scContentButton {
   color: var(--accent);
 }
 
+a.scTileItem:hover {
+  background-color: var(--accent) !important;
+  color: var(--accentText) !important;
+}
+
 #scModal .header {
   background-color: var(--accent);
   color: var(--accentText);
@@ -407,6 +412,7 @@ a.scContentTreeNodeNormal {
   padding: 1px 0px 5px 5px;
   vertical-align: sub;
   border: 2px solid transparent;
+  z-index: 1;
 }
 
 .scContentControlTree a.scContentTreeNodeActive,
@@ -442,6 +448,16 @@ a.scContentTreeNodeNormal > span {
   color: var(--text);
 }
 
+a.scContentTreeNodeActive > span > div,
+a.scContentTreeNodeNormal > span > div {
+  display: block;
+  overflow: hidden;
+  width: calc(100% - 100px);
+  text-overflow: ellipsis;
+  margin-top: -19px;
+  margin-left: 24px;
+}
+
 .scContentTreeNodeGlyph:hover + a > span,
 div.scContentTreeNode > img:hover + a > span,
 a.scContentTreeNodeNormal:hover > span {
@@ -458,11 +474,19 @@ a.scContentTreeNodeActive > span > img {
 }
 
 .scGutter {
-  z-index: 100000000000;
+  z-index: 100;
   top: 0;
   width: 20px;
   height: 100%;
   position: absolute;
+}
+
+.scContentTreeNodeGutter {
+  z-index: 1001;
+}
+
+.scContentTreeNodeGutterIcon {
+  z-index: 1001;
 }
 
 .scInsertItemIcon {
@@ -1044,8 +1068,8 @@ a.scContentButton:hover {
 
 #FileList a.scButton.scButtonList.selected,
 #FileList a.scButton.scButtonGrid.selected {
-  background-color: var(--accent);
-  border: 1px solid var(--accent);
+  background-color: var(--accent) !important;
+  border: 1px solid var(--accent) !important;
   background-image: none !important;
   box-shadow: none !important;
 }

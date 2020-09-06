@@ -144,10 +144,6 @@ select[disabled] {
   cursor: not-allowed;
   background-color: #e3e3e3;
 }
-
-.scBackground {
-}
-
 .scHorizontalLine {
   height: 1px;
   line-height: 1px;
@@ -167,9 +163,6 @@ select[disabled] {
 .scFill {
   width: 100%;
   height: 100%;
-}
-
-.scFont {
 }
 
 .scFormTable {
@@ -240,12 +233,6 @@ select[disabled] {
 
 .scLargeFont2_Hover {
   font: 12px;
-}
-
-.scClickFont {
-}
-
-.scClickFont_Hover {
 }
 
 .sc-globalHeader {
@@ -597,9 +584,6 @@ td.scCalendarToday:hover {
   border-top: 1px solid #f0f0f0;
 }
 
-.scCalendarYearRow {
-}
-
 .scCalendarYearLeftCell,
 .scCalendarYearMiddleCell,
 .scCalendarYearRightCell {
@@ -676,7 +660,6 @@ td.scCalendarToday:hover {
 .scCombobuttonEditor {
   border: none;
   display: inline;
-  height: 22px;
   padding-right: 1px;
   vertical-align: top;
   white-space: nowrap;
@@ -686,7 +669,6 @@ td.scCalendarToday:hover {
 .scCombobuttonEditor_Disabled {
   cursor: default;
   display: inline;
-  height: 22px;
   vertical-align: top;
   white-space: nowrap;
 }
@@ -694,7 +676,6 @@ td.scCalendarToday:hover {
 .scCombobutton_Down,
 .scCombobuttonEditor_Down {
   cursor: default;
-  height: 22px;
   display: inline;
   vertical-align: top;
   white-space: nowrap;
@@ -705,7 +686,6 @@ td.scCalendarToday:hover {
   cursor: default;
   display: inline;
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#A5ADAF', EndColorStr='#7A8284');
-  height: 22px;
   vertical-align: top;
   white-space: nowrap;
 }
@@ -713,7 +693,6 @@ td.scCalendarToday:hover {
 .scCombobutton_Hot,
 .scCombobuttonEditor_Hot {
   cursor: default;
-  height: 22px;
   display: inline;
   vertical-align: top;
   white-space: nowrap;
@@ -724,7 +703,6 @@ td.scCalendarToday:hover {
   background: transparent;
   color: white;
   display: inline;
-  height: 100%;
   padding: 4px 2px 1px 5px;
   white-space: nowrap;
 }
@@ -736,14 +714,12 @@ td.scCalendarToday:hover {
   color: black;
   display: inline;
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#F8EED0', EndColorStr='#F8D5A6');
-  height: 100%;
   padding: 3px 2px 0px 4px;
   white-space: nowrap;
 }
 
 .scCombobuttonMain_Disabled {
   display: inline;
-  height: 100%;
   padding: 4px 2px 1px 5px;
   white-space: nowrap;
   border: none;
@@ -759,14 +735,12 @@ td.scCalendarToday:hover {
   color: graytext;
   display: inline;
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#F8EED0', EndColorStr='#F8D5A6');
-  height: 100%;
   padding: 3px 2px 0px 4px;
   white-space: nowrap;
 }
 
 .scCombobuttonMain_Down,
 .scCombobuttonEditorMain_Down {
-  height: 100%;
   display: inline;
   padding: 3px 2px 0px 4px;
   white-space: nowrap;
@@ -778,7 +752,6 @@ td.scCalendarToday:hover {
 
 .scCombobuttonMain_Hover,
 .scCombobuttonEditorMain_Hover {
-  height: 100%;
   display: inline;
   padding: 2px 3px 1px;
   white-space: nowrap;
@@ -789,7 +762,6 @@ td.scCalendarToday:hover {
 
 .scCombobuttonMain_Hot,
 .scCombobuttonEditorMain_Hot {
-  height: 100%;
   display: inline;
   padding: 3px 2px 0px 4px;
   white-space: nowrap;
@@ -801,7 +773,6 @@ td.scCalendarToday:hover {
 
 .scCombobuttonDrop {
   display: inline;
-  height: 100%;
   padding: 4px 1px 1px 3px;
   border: none;
 }
@@ -811,13 +782,11 @@ td.scCalendarToday:hover {
   border-left: none;
   display: inline;
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#F8EED0', EndColorStr='#F8D5A6');
-  height: 100%;
   padding: 3px 0px 0px 3px;
 }
 
 .scCombobuttonDrop_Disabled {
   display: inline;
-  height: 100%;
   padding: 4px 1px 1px 3px;
   border: none;
 }
@@ -827,14 +796,12 @@ td.scCalendarToday:hover {
   border-left: none;
   display: inline;
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#F8EED0', EndColorStr='#F8D5A6');
-  height: 100%;
   padding: 3px 0px 0px 3px;
 }
 
 .scCombobuttonDrop_Down,
 .scCombobuttonEditorDrop_Down {
   display: inline;
-  height: 100%;
   padding: 3px 1px 0px 2px;
   border: 1px solid #242424;
   border-left: 1px solid #6e7475;
@@ -845,7 +812,6 @@ td.scCalendarToday:hover {
 .scCombobuttonDrop_Hover,
 .scCombobuttonEditorDrop_Hover {
   display: inline;
-  height: 100%;
   padding: 2px 2px 1px 1px;
   border: 1px solid #242424;
   border-left: 1px solid #6e7475;
@@ -855,7 +821,6 @@ td.scCalendarToday:hover {
 .scCombobuttonDrop_Hot,
 .scCombobuttonEditorDrop_Hot {
   display: inline;
-  height: 100%;
   padding: 3px 1px 0px 2px;
   border: 1px solid #242424;
   border-left: 1px solid #6e7475;
@@ -904,10 +869,6 @@ a.scContentLabelLink:hover {
 .scContentControl[disabled] .scComboboxDropDown {
   background-color: #181818 !important;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-}
-
-.scContentControl[disabled] .scComboboxEdit:active,
-.scContentControl[disabled] .scComboboxDropDown:active {
 }
 
 iframe.scContentControl {
@@ -1004,9 +965,6 @@ iframe.scContentControl {
   width: 100%;
 }
 
-.scContentControlCheckbox {
-}
-
 .scContentControlHtml {
   border: 1px solid #191919 !important;
   height: 100%;
@@ -1073,13 +1031,6 @@ iframe.scContentControl {
   height: 80px;
   width: 100%;
 }
-
-.scContentControlImage {
-}
-
-.scContentControlImage_Active {
-}
-
 .scContentControlImagePane {
   border: 1px solid var(--black3) !important;
   border-top: none;
@@ -1311,12 +1262,6 @@ a.scHyperlinkButton:last-of-type {
   border-right: 0;
 }
 
-.scGrayGradient {
-}
-
-.scGrayGradientLightShadow {
-}
-
 .scWhiteBackground {
   background-color: var(--text);
 }
@@ -1365,7 +1310,6 @@ a.scHyperlinkButton:last-of-type {
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
-  vertical-align: top;
   width: 128px;
   height: 128px;
   float: left;
@@ -1388,7 +1332,6 @@ a.scHyperlinkButton:last-of-type {
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
-  vertical-align: top;
   width: 128px;
   height: 128px;
   float: left;
@@ -1408,8 +1351,6 @@ a.scHyperlinkButton:last-of-type {
   padding: 2px;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 150px;
-  float: left;
 }
 
 .scListviewItemList:hover {
@@ -1426,8 +1367,6 @@ a.scHyperlinkButton:last-of-type {
   padding: 2px;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 150px;
-  float: left;
 }
 
 .scListviewItemDetails {
@@ -1471,7 +1410,6 @@ a.scHyperlinkButton:last-of-type {
   text-align: center;
   text-overflow: ellipsis;
   vertical-align: top;
-  width: 100px;
 }
 
 .scListviewItemThumbnails_Selected {
@@ -1486,7 +1424,6 @@ a.scHyperlinkButton:last-of-type {
   text-align: center;
   text-overflow: ellipsis;
   vertical-align: top;
-  width: 100px;
 }
 
 .scListviewItemThumbnailsIcon {
@@ -2620,9 +2557,6 @@ input[type="hidden"] + .scFieldLabel {
   border: none;
 }
 
-.scContentControlLayout {
-}
-
 .scContentControlLayout_Active {
   border: 1px solid activecaption;
   background: #e9e9e9;
@@ -2807,9 +2741,6 @@ nobr:last-child > .scTabActive_Hover {
   display: none;
 }
 
-.scVerticalTabstrip .scTabContent {
-}
-
 .scViewerHeadline {
   border-top: 1px solid #b6b8cb;
   border-bottom: 1px solid #cdcedb;
@@ -2871,7 +2802,6 @@ nobr:last-child > .scTabActive_Hover {
   background-color: #000;
   opacity: 0.2;
   zoom: 1;
-  -ms-filter: progid:DXImageTransform.Microsoft.alpha(Opacity=20);
 }
 
 #SearchBox {
@@ -3307,7 +3237,6 @@ a.scContentTreeNodeBlured {
 }
 
 .scVSplitterImage {
-  vertical-align: top;
   width: 3px;
   display: block;
 }
@@ -3377,7 +3306,6 @@ form[lang|="ja"] *,
 #Presets .scRibbonToolbarLargeTextButton {
   white-space: nowrap;
   padding: 8px 15px;
-  vertical-align: middle;
   display: block;
 }
 
@@ -3508,17 +3436,11 @@ form[lang|="ja"] *,
 
 /* Notification and warnings */
 
-.scEditorWarningPanel {
-}
-
 .scEditorWarning {
   background-color: #fce99c;
   color: #897b2f;
   min-height: 50px;
   font-size: 14px;
-}
-
-.scEditorWarning td {
 }
 
 .scEditorWarning td:first-child {
@@ -3552,9 +3474,6 @@ form[lang|="ja"] *,
   margin-top: 1px;
 }
 
-.scMessageBar.scMessageBarNested {
-}
-
 .scMessageBar .scMessageBarIcon {
   background-repeat: no-repeat;
   background-position: center;
@@ -3571,10 +3490,6 @@ form[lang|="ja"] *,
   display: block;
   font-weight: 600;
 }
-
-.scMessageBar .scMessageBarTextContainer .scMessageBarText {
-}
-
 .scMessageBar .scMessageBarTextContainer .scMessageBarText + .scMessageBarText {
   margin-top: 10px;
 }
@@ -3683,9 +3598,6 @@ form[lang|="ja"] *,
   cursor: default;
   text-decoration: none;
   font-weight: 600;
-}
-
-.scMessageBarOptions .scMessageBarOptionBullet {
 }
 
 .scMessageBarOptions .scMessageBarOptionBullet .scMessageBarOption {
@@ -3818,10 +3730,6 @@ div.content {
 }
 .pagination li:last-of-type a {
   border-right: 1px solid var(--black2) !important;
-}
-.scFlexColumnContainer > div,
-.scFlexColumnContainerWithoutFlexie > div {
-  /*background-color: var(--black2) !important;*/
 }
 .sc-button-text,
 .sc .btn {
@@ -3979,7 +3887,7 @@ a.scButton {
 }
 
 #FileList a.scButton {
-  background: var(--blue) !important;
+  background: var(--blue);
 }
 
 .liveUrlBadge {

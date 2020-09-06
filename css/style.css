@@ -210,10 +210,12 @@ div#Languages img {
   color: var(--black7);
 }
 
+.scTiles .scTileItem:nth-child(even),
 .scMediaExplorer tbody tr:nth-child(even) {
   background: #f0f0f0;
 }
 
+.scTiles .scTileItem:nth-child(odd),
 .scMediaExplorer tbody tr:nth-child(odd) {
   background: #ffffff;
 }
@@ -352,4 +354,13 @@ div#Languages img {
 .scMediaExplorer tbody tr:hover a.scMediaActions {
   opacity: 1;
   filter: invert(0);
+}
+
+.scIconCopy {
+  vertical-align: middle;
+  cursor: pointer;
+  width: 16px;
+}
+.scIconCopy:hover {
+  filter: brightness(1.5);
 }

@@ -710,7 +710,7 @@ const sitecoreAuthorToolbox = () => {
       var scMessageBar = document.querySelectorAll(".scMessageBar");
       scMessageBar = scMessageBar[scMessageBar.length - 1];
       var scEditorSectionCaption = document.querySelectorAll(".scEditorSectionCaptionCollapsed, .scEditorSectionCaptionExpanded");
-      var sectionActiveCount = 0;
+      var sectionActiveCount = false;
 
       if (scEditorTabs) {
         scEditorTabs.remove();
@@ -718,30 +718,22 @@ const sitecoreAuthorToolbox = () => {
 
       scEditorTabs = '<div id="scEditorTabs"><ul>';
 
-      for (var section of scEditorSectionCaption) {
-        var sectionVisible;
-        var sectionTitle = section.innerText;
-        var sectionId = section.getAttribute("id");
-        var sectionClass = section.getAttribute("class");
-        var sectionSelected = "";
-        var sectionPanelDisplay = "";
-        var sectionError = 0;
-        var sectionErrorHtml = "";
-        var sectionErrorClass = "";
-
-        //Obsolete: Hide Quick Info section in experimental UI
-        if (storage.feature_experimentalui == true) {
-          //sectionVisible = sectionTitle != "Quick Info" ? true : false;
-          sectionVisible = true;
-        } else {
-          sectionVisible = true;
-        }
+      for (let section of scEditorSectionCaption) {
+        let sectionTitle = section.innerText;
+        let sectionId = section.getAttribute("id");
+        //let sectionClass = section.getAttribute("class");
+        let sectionSelected, sectionPanelDisplay, sectionErrorHtml, sectionErrorClass, sectionError;
+        let lastClickedTab = localStorage.getItem("scTabSection");
 
         //Detect active panel
-        if (sectionClass == "scEditorSectionCaptionExpanded" && sectionActiveCount == 0 && sectionVisible == true) {
+        if (sectionActiveCount == false && lastClickedTab != null && sectionTitle == lastClickedTab) {
           sectionSelected = "scEditorTabSelected";
           sectionPanelDisplay = "table";
-          sectionActiveCount++;
+          sectionActiveCount = true;
+          // } else if (sectionActiveCount == false && sectionClass == "scEditorSectionCaptionExpanded" && sectionTitle != "Quick Info") {
+          //   sectionSelected = "scEditorTabSelected";
+          //   sectionPanelDisplay = "table";
+          //   sectionActiveCount = true;
         } else {
           sectionSelected = "";
           sectionPanelDisplay = "none";
@@ -762,30 +754,17 @@ const sitecoreAuthorToolbox = () => {
         if (sectionError > 0) {
           sectionErrorHtml = "<span id='scCrossTabError'></span>";
           sectionErrorClass = "scTabsError t-sm t-top";
+        } else {
+          sectionErrorHtml = "";
+          sectionErrorClass = "";
         }
 
         //Add tabs to document
-        if (sectionVisible == true) {
-          scEditorTabs += '<li class="scEditorTabEmpty"></li>';
-          scEditorTabs +=
-            '<li data-id="' +
-            sectionId +
-            '" class="scEditorTab ' +
-            sectionSelected +
-            " " +
-            sectionErrorClass +
-            '" onclick="toggleSection(this,\'' +
-            sectionTitle +
-            "', false, '" +
-            storage.feature_experimentalui +
-            "');\">" +
-            sectionErrorHtml +
-            sectionTitle +
-            "</li>";
-        }
-        //Add trigger on grouped error message click to open tab
-        //var sectionTitle = document.querySelector("#FIELD47775058").closest("table").closest("td").closest("table").previousSibling.innerText
-        //toggleSection(this,\'' + sectionTitle+ '\');
+        //prettier-ignore
+        scEditorTabs += `
+        <li class="scEditorTabEmpty"></li>
+        <li data-id="` + sectionId + `" class="scEditorTab ` + sectionSelected + ` ` + sectionErrorClass + `"
+        onclick="toggleSection(this,'` + sectionTitle + `', false, '` + storage.feature_experimentalui + `')">` + sectionErrorHtml + sectionTitle + `</li>`;
       }
 
       scEditorTabs += '<li class="scEditorTabEmpty"></li></ul></div>';
@@ -926,7 +905,7 @@ const sitecoreAuthorToolbox = () => {
             lockedBy = "You have";
           }
 
-          document.querySelector("#scLockMenuText").innerText = "Unlock item...";
+          document.querySelector("#scLockMenuText") ? (document.querySelector("#scLockMenuText").innerText = "Unlock item...") : false;
 
           //Prepare HTML (scInformation scWarning scError)
           scMessage =
@@ -1065,11 +1044,9 @@ const sitecoreAuthorToolbox = () => {
      */
     clearTimeout(global.timeout);
     setTimeout(function () {
-      if (storage.feature_experimentalui) {
-        document.querySelector("#svgAnimation") ? document.querySelector("#svgAnimation").setAttribute("style", "opacity:0") : false;
-        document.querySelector("#EditorFrames") ? document.querySelector("#EditorFrames").setAttribute("style", "opacity:1") : false;
-        document.querySelector(".scContentTreeContainer") ? document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:1") : false;
-      }
+      document.querySelector("#svgAnimation") ? document.querySelector("#svgAnimation").setAttribute("style", "opacity:0") : false;
+      document.querySelector("#EditorFrames") ? document.querySelector("#EditorFrames").setAttribute("style", "opacity:1") : false;
+      document.querySelector(".scContentTreeContainer") ? document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:1") : false;
     }, 100);
   }); //end of Chrome.Storage
 };

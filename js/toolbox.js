@@ -13,8 +13,8 @@
  * Modules
  */
 import * as global from "./modules/global.js";
-// import * as local from './modules/local.js' // This file is missing on Github, you should create yours with all your private local API keys
-import { consoleLog, loadCssFile, loadJsFile, exeJsCode, preferesColorScheme, sitecoreItemJson, getScItemData, startDrag } from "./modules/helpers.js";
+//prettier-ignore
+import { consoleLog, loadCssFile, loadJsFile, exeJsCode, preferesColorScheme, initDarkMode, sitecoreItemJson, getScItemData, startDrag } from "./modules/helpers.js";
 import { showSnackbar } from "./modules/snackbar.js";
 import { checkWorkbox } from "./modules/workbox.js";
 import { checkUrlStatus } from "./modules/url.js";
@@ -57,55 +57,12 @@ chrome.storage.sync.get((storage) => {
     /**
      * Dark mode
      */
-    storage.feature_darkmode == undefined ? (storage.feature_darkmode = false) : false;
-    storage.feature_darkmode_auto == undefined ? (storage.feature_darkmode_auto = false) : false;
-    storage.feature_experimentalui == undefined ? (storage.feature_experimentalui = false) : false;
-
-    if (storage.feature_experimentalui !== true) {
-      if (
-        (storage.feature_darkmode &&
-          !storage.feature_darkmode_auto &&
-          !global.isTelerikUi &&
-          !global.isExperienceEditor &&
-          !global.isAdminCache &&
-          !global.isContentHome &&
-          !global.isLoginPage &&
-          !global.isEditMode &&
-          !global.isRules &&
-          !global.isAdmin) ||
-        (storage.feature_darkmode &&
-          storage.feature_darkmode_auto &&
-          !global.isTelerikUi &&
-          !global.isExperienceEditor &&
-          !global.isAdminCache &&
-          !global.isContentHome &&
-          !global.isLoginPage &&
-          !global.isEditMode &&
-          !global.isRules &&
-          !global.isAdmin &&
-          currentScheme == "dark")
-      ) {
-        darkMode = true;
-        loadCssFile("css/dark/default-min.css");
-        loadCssFile("css/dark/ribbon-min.css");
-        loadCssFile("css/dark/contentmanager-min.css");
-        loadCssFile("css/dark/dialogs-min.css");
-        loadCssFile("css/dark/gallery-min.css");
-        loadCssFile("css/dark/speak-min.css");
-
-        navigator.platform.indexOf("Win") == 0 ? loadCssFile("css/dark/scrollbars-min.css") : false;
-      }
-    }
+    initDarkMode(storage);
 
     /**
      * Browser notification
      */
     checkNotification();
-
-    /**
-     * Extension ID
-     */
-    //!global.isRichTextEditor ? document.querySelector('body').insertAdjacentHTML( 'beforeend', '<input type="hidden" class="extensionId" value="' + global.extensionId + '" />' ) : false;
 
     /**
      * Content Editor application
@@ -125,40 +82,9 @@ chrome.storage.sync.get((storage) => {
 
         //Load extra CSS
         loadCssFile("css/experimentalui.min.css");
+        initDarkMode(storage);
 
-        if (
-          (storage.feature_darkmode &&
-            !storage.feature_darkmode_auto &&
-            !global.isTelerikUi &&
-            !global.isExperienceEditor &&
-            !global.isAdminCache &&
-            !global.isContentHome &&
-            !global.isLoginPage &&
-            !global.isEditMode &&
-            !global.isRules &&
-            !global.isAdmin) ||
-          (storage.feature_darkmode &&
-            storage.feature_darkmode_auto &&
-            !global.isTelerikUi &&
-            !global.isExperienceEditor &&
-            !global.isAdminCache &&
-            !global.isContentHome &&
-            !global.isLoginPage &&
-            !global.isEditMode &&
-            !global.isRules &&
-            !global.isAdmin &&
-            currentScheme == "dark")
-        ) {
-          loadCssFile("css/dark/default-min.css");
-          loadCssFile("css/dark/ribbon-min.css");
-          loadCssFile("css/dark/contentmanager-min.css");
-          loadCssFile("css/dark/dialogs-min.css");
-          loadCssFile("css/dark/gallery-min.css");
-          loadCssFile("css/dark/speak-min.css");
-          loadCssFile("css/dark/experimentalui.min.css");
-        }
-
-        //document.querySelector("#PublishChildren").checked = true;
+        //3 dots SVG animation
         let svgAnimation = `<div id="svgAnimation">` + global.svgAnimation + `</div>`;
         document.querySelector("#EditorFrames") ? document.querySelector("#EditorFrames").insertAdjacentHTML("beforebegin", svgAnimation) : false;
 
@@ -716,9 +642,10 @@ chrome.storage.sync.get((storage) => {
       consoleLog("**** Media Folder ****", "orange");
       storage.feature_dragdrop == undefined ? (storage.feature_dragdrop = true) : false;
 
+      loadCssFile("css/tooltip.min.css");
+
       if (storage.feature_experimentalui) {
         loadCssFile("css/experimentalui.min.css");
-        loadCssFile("css/tooltip.min.css");
         getAccentColor();
         //Icon contrasted
         if (storage.feature_contrast_icons === false) {
@@ -727,46 +654,15 @@ chrome.storage.sync.get((storage) => {
         }
       }
 
-      if (
-        (storage.feature_darkmode &&
-          !storage.feature_darkmode_auto &&
-          !global.isTelerikUi &&
-          !global.isExperienceEditor &&
-          !global.isAdminCache &&
-          !global.isContentHome &&
-          !global.isLoginPage &&
-          !global.isEditMode &&
-          !global.isRules &&
-          !global.isAdmin) ||
-        (storage.feature_darkmode &&
-          storage.feature_darkmode_auto &&
-          !global.isTelerikUi &&
-          !global.isExperienceEditor &&
-          !global.isAdminCache &&
-          !global.isContentHome &&
-          !global.isLoginPage &&
-          !global.isEditMode &&
-          !global.isRules &&
-          !global.isAdmin &&
-          currentScheme == "dark")
-      ) {
-        loadCssFile("css/dark/default-min.css");
-        loadCssFile("css/dark/ribbon-min.css");
-        loadCssFile("css/dark/contentmanager-min.css");
-        loadCssFile("css/dark/dialogs-min.css");
-        loadCssFile("css/dark/gallery-min.css");
-        loadCssFile("css/dark/speak-min.css");
-        loadCssFile("css/dark/experimentalui.min.css");
-      }
-
-      //Add drag and drop button
+      //Init features
+      initDarkMode(storage);
       initMediaDragDrop();
       initMediaViewButtons();
       initMediaCounter();
 
       //Media Library explorer
       if (localStorage.getItem("scMediaView") == "list") {
-        initMediaExplorer();
+        initMediaExplorer(storage.feature_experimentalui);
       }
 
       //Show Media Library explorer
@@ -1077,7 +973,7 @@ chrome.storage.sync.get((storage) => {
                 document.querySelector("#svgAnimation") ? document.querySelector("#svgAnimation").setAttribute("style", "opacity:0") : false;
                 document.querySelector("#EditorFrames").setAttribute("style", "opacity:1");
                 document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:1");
-              }, 8000);
+              }, 7000);
             }
           }
 
@@ -1147,6 +1043,22 @@ chrome.storage.sync.get((storage) => {
         false
       );
     }
+
+    /**
+     * Content Tree Error Tooltip
+     */
+    //TODO to be triggered on TREE VIEW refresh
+    loadCssFile("css/tooltip.min.css");
+    setTimeout(function () {
+      document.querySelectorAll(".scContentTreeNodeGutterIcon").forEach(function (el) {
+        let parent = el.parentElement;
+        console.log(el);
+        parent.setAttribute("data-tooltip", el.getAttribute("title"));
+        parent.classList.add("t-right");
+        parent.classList.add("t-xs");
+        el.removeAttribute("title");
+      });
+    }, 2500);
 
     /**
      * > 10. Publish notification
@@ -1367,6 +1279,8 @@ chrome.storage.sync.get((storage) => {
     target = document.querySelector(".scChromeDropDown");
     observer = new MutationObserver(function () {
       let scChromeDropDownRow = document.querySelectorAll(".scChromeDropDownRow");
+      let scLanguage = document.querySelector("#scLanguage").value;
+      let scVersion = "";
 
       for (var row of scChromeDropDownRow) {
         if (row.getAttribute("title").toLowerCase() == "change associated content") {
@@ -1374,7 +1288,11 @@ chrome.storage.sync.get((storage) => {
           var html =
             `<a href="#" title="Edit in Content Editor" class="scChromeDropDownRow" onclick="javascript:window.open('/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#{` +
             id +
-            `}')"><img src="/~/icon/applicationsv2/32x32/window_edit.png" style="width:16px" alt="Edit in Content Editor"><span>Edit in Content Editor</span></a>`;
+            `}_` +
+            scLanguage.toLowerCase() +
+            `_` +
+            scVersion +
+            `')"><img src="/~/icon/applicationsv2/32x32/window_edit.png" style="width:16px" alt="Edit in Content Editor"><span>Edit in Content Editor</span></a>`;
           row.insertAdjacentHTML("beforebegin", html);
         }
       }

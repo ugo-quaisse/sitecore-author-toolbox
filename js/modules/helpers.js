@@ -21,6 +21,7 @@ export {
   loadJsFile,
   exeJsCode,
   preferesColorScheme,
+  initDarkMode,
   sitecoreItemJson,
   fetchTimeout,
   getScItemData,
@@ -132,6 +133,48 @@ const preferesColorScheme = () => {
 };
 
 /**
+ * Is Dark Mode
+ */
+// eslint-disable-next-line consistent-return
+const initDarkMode = (storage) => {
+  if (
+    (storage.feature_darkmode &&
+      !storage.feature_darkmode_auto &&
+      !global.isTelerikUi &&
+      !global.isExperienceEditor &&
+      !global.isAdminCache &&
+      !global.isContentHome &&
+      !global.isLoginPage &&
+      !global.isEditMode &&
+      !global.isRules &&
+      !global.isAdmin) ||
+    (storage.feature_darkmode &&
+      storage.feature_darkmode_auto &&
+      !global.isTelerikUi &&
+      !global.isExperienceEditor &&
+      !global.isAdminCache &&
+      !global.isContentHome &&
+      !global.isLoginPage &&
+      !global.isEditMode &&
+      !global.isRules &&
+      !global.isAdmin &&
+      preferesColorScheme() == "dark")
+  ) {
+    loadCssFile("css/dark/default-min.css");
+    loadCssFile("css/dark/ribbon-min.css");
+    loadCssFile("css/dark/contentmanager-min.css");
+    loadCssFile("css/dark/dialogs-min.css");
+    loadCssFile("css/dark/gallery-min.css");
+    loadCssFile("css/dark/speak-min.css");
+    loadCssFile("css/dark/experience-min.css");
+    loadCssFile("css/dark/experimentalui.min.css");
+    navigator.platform.indexOf("Win") == 0 ? loadCssFile("css/dark/scrollbars-min.css") : false;
+
+    return true;
+  }
+};
+
+/**
  * Get active Siteore item from Chrome Storage
  */
 const sitecoreItemJson = (itemID, languageID, versionID) => {
@@ -178,13 +221,19 @@ const getScItemData = () => {
   var dom = document.querySelectorAll(".scEditorQuickInfo  > tbody > tr");
 
   for (var tr of dom) {
-    tr.cells[0].innerText == "Item ID:" ? (scItem.id = tr.cells[1].querySelector("input").value.toLowerCase()) : false;
-    tr.cells[0].innerText == "Item name:" ? (scItem.name = tr.cells[1].innerText.toLowerCase()) : false;
-    tr.cells[0].innerText == "Item path:" ? (scItem.path = tr.cells[1].querySelector("input").value.toLowerCase()) : false;
-    tr.cells[0].innerText == "Template:" ? (scItem.template = tr.cells[1].querySelector("a").innerText.toLowerCase()) : false;
-    tr.cells[0].innerText == "Template:" ? (scItem.templateId = tr.cells[1].querySelector("input").value.toLowerCase()) : false;
-    tr.cells[0].innerText == "Created from:" ? (scItem.from = tr.cells[1].innerText.toLowerCase()) : false;
-    tr.cells[0].innerText == "Item owner:" ? (scItem.owner = tr.cells[1].querySelector("input").value.toLowerCase()) : false;
+    tr.cells[0].innerText == "Item ID:" && tr.cells[1].querySelector("input") ? (scItem.id = tr.cells[1].querySelector("input").value.toLowerCase()) : false;
+    tr.cells[0].innerText == "Item name:" && tr.cells[1] ? (scItem.name = tr.cells[1].innerText.toLowerCase()) : false;
+    tr.cells[0].innerText == "Item path:" && tr.cells[1].querySelector("input")
+      ? (scItem.path = tr.cells[1].querySelector("input").value.toLowerCase())
+      : false;
+    tr.cells[0].innerText == "Template:" && tr.cells[1].querySelector("a") ? (scItem.template = tr.cells[1].querySelector("a").innerText.toLowerCase()) : false;
+    tr.cells[0].innerText == "Template:" && tr.cells[1].querySelector("input")
+      ? (scItem.templateId = tr.cells[1].querySelector("input").value.toLowerCase())
+      : false;
+    tr.cells[0].innerText == "Created from:" && tr.cells[1] ? (scItem.from = tr.cells[1].innerText.toLowerCase()) : false;
+    tr.cells[0].innerText == "Item owner:" && tr.cells[1].querySelector("input")
+      ? (scItem.owner = tr.cells[1].querySelector("input").value.toLowerCase())
+      : false;
     scItem.language = document.querySelector("#scLanguage") ? document.querySelector("#scLanguage").value.toLowerCase() : "en";
     scItem.version = document.querySelector(".scEditorHeaderVersionsVersion > span")
       ? document.querySelector(".scEditorHeaderVersionsVersion > span").innerText

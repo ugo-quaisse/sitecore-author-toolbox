@@ -12,7 +12,7 @@ const cleanCountryName = (name) => {
   var temp = name;
   var language;
 
-  if (temp != "" && temp.includes(" (region")) {
+  if (temp != undefined && temp != "" && temp.includes(" (region")) {
     temp = temp.split(" (region");
     temp = temp[0];
   }

@@ -66,7 +66,7 @@ const getImageInfo = (imageUrl, imageId, jsonObject) => {
 /**
  * Init Media Library Explorer
  */
-const initMediaExplorer = () => {
+const initMediaExplorer = (isExperimental = false) => {
   let mediaItems = document.querySelectorAll("#FileList > a");
   mediaItems.forEach((el) => {
     el.remove();
@@ -101,7 +101,7 @@ const initMediaExplorer = () => {
     mediaId = item ? item.getAttribute("id") : false;
     mediaThumbnail = item.querySelector(".scMediaBorder > img") ? item.querySelector(".scMediaBorder > img").getAttribute("src") : false;
     mediaImage = item.querySelector(".scMediaBorder > img")
-      ? item.querySelector(".scMediaBorder > img").getAttribute("src").replace("&h=72&thn=1&w=72", "").replace("bc=white&", "")
+      ? item.querySelector(".scMediaBorder > img").getAttribute("src").replace("&h=72", "").replace("&thn=1", "").replace("&w=72", "").replace("bc=white&", "")
       : false;
     mediaTitle = item.querySelector(".scMediaTitle") ? item.querySelector(".scMediaTitle").innerText : "--";
     mediaDimensions = item.querySelector(".scMediaDetails") ? item.querySelector(".scMediaDetails").innerText : "--";
@@ -113,7 +113,7 @@ const initMediaExplorer = () => {
     mediaUsage = item.querySelector(".scMediaUsages") ? item.querySelector(".scMediaUsages").innerText : "not used";
     mediaFolder = mediaImage.includes("/folder.png") ? "Folder" : "--";
     mediaClass = mediaImage.includes("/folder.png") ? "scMediaFolder" : "scMediaPreview";
-    mediaArrow = mediaImage.includes("/folder.png") ? "▶" : " ";
+    mediaArrow = mediaImage.includes("/folder.png") && mediaDimensions.toLowerCase() != "0 items" ? "▶" : " ";
     mediaUsage = mediaImage.includes("/folder.png") ? "--" : mediaUsage;
     mediaClick = item ? item.getAttribute("onclick") : false;
 
@@ -131,23 +131,31 @@ const initMediaExplorer = () => {
     //Item ID
     let itemId = mediaClick.split("{")[1].split("}")[0];
 
+    //Invert color icons
+    let invert = isExperimental ? "t-invert" : "";
+
     //Prepare html table
     // prettier-ignore
     mediaExplorer += `
       <tr id="mediaItem_` + mediaId + `">
         <td class="mediaArrow" onclick="` + mediaClick + `">` + mediaArrow + `</td>
         <td class="mediaThumbnail" onclick="` + mediaClick + `"><img src='` + mediaThumbnail + `' style="width: ` + scMediaThumbnailSize + `px !important" class="` + mediaClass + ` scMediaThumbnail" loading="lazy"/></td>
-        <td onclick="` + mediaClick + `"><div onclick="javascript:return scForm.postEvent(this,event,'item:rename(id={` + itemId + `})')" class="mediaTitle"  title="` + mediaTitle + ` (Click to rename)" >` + mediaTitle + `</div></td>
+        <td class="mediaTitle_` + mediaId + `" onclick="doubleClick('` + mediaId + `','` + itemId + `')" title="` + mediaTitle + ` (Double click to rename)">
+          <div class="mediaTitle">` + mediaTitle + `</div>
+        </td>
         <td class="left" onclick="` + mediaClick + `">` + mediaDimensions + `</td>
         <td class="mediaType mediaType_` + mediaId + `" onclick="` + mediaClick + `">` + mediaFolder + `</td>
         <td class="mediaSize mediaSize_` + mediaId + `" data-size="0" onclick="` + mediaClick + `">--</td>
         <td class="left" onclick="` + mediaClick + `">` + mediaWarning + `</td>
         <td class="left" onclick="` + mediaClick + `">` + mediaUsage + `</td>
-        <td class="center">
-          <a download href="` + mediaImage + `" class="scMediaActions t-sm t-top t-invert" data-tooltip="Download">
+        <td class="center">  
+          <a download href="` + mediaImage + `" class="scMediaActions t-sm t-top ` + invert + `" data-tooltip="Download">
             <img src="` + global.iconDownload + `" class="scLanguageIcon">
           </a>
-          <button class="scMediaActions t-sm t-top t-invert" data-tooltip="Delete" type="button" onclick="javascript:return scForm.postEvent(this,event,'item:delete(id={` + itemId + `})')">
+          <button class="scMediaActions t-sm t-top ` + invert + `" data-tooltip="Publish" type="button" onclick="javascript:return scForm.postEvent(this,event,'item:publish(id={` + itemId + `})')">
+            <img src="` + global.iconPublish + `" class="scLanguageIcon">
+          </button>
+          <button class="scMediaActions t-sm t-top ` + invert + `" data-tooltip="Delete" type="button" onclick="javascript:return scForm.postEvent(this,event,'item:delete(id={` + itemId + `})')">
             <img src="` + global.iconBin + `" class="scLanguageIcon">
           </button>
         </td>
@@ -169,13 +177,17 @@ const initMediaExplorer = () => {
 
   if (scMediaSortPos != null) {
     setTimeout(function () {
-      document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos].click();
-    }, 200);
+      document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos]
+        ? document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos].click()
+        : false;
+    }, 250);
   }
   if (scMediaSortOrder == -1) {
     setTimeout(function () {
-      document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos].click();
-    }, 210);
+      document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos]
+        ? document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos].click()
+        : false;
+    }, 270);
   }
 };
 

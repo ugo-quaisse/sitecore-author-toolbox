@@ -725,7 +725,7 @@ const sitecoreAuthorToolbox = () => {
         let sectionSelected, sectionPanelDisplay, sectionErrorHtml, sectionErrorClass, sectionError;
         let lastClickedTab = localStorage.getItem("scTabSection");
 
-        //Detect active panel
+        //Detect active panel and show it if there, othjerwise fallback to quick Info
         if (sectionActiveCount == false && lastClickedTab != null && sectionTitle == lastClickedTab) {
           sectionSelected = "scEditorTabSelected";
           sectionPanelDisplay = "table";

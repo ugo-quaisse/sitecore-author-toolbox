@@ -5,11 +5,14 @@
   top: -3px;
 }
 
+#PublishChildren,
+#PublishRelatedItems,
 .scContentControlCheckbox {
   display: none;
 }
 .scContentControlCheckboxLabel {
-  display: block;
+  display: inline-block;
+  margin: 3px 3px 3px 0px;
   width: 48px;
   height: 24px;
   text-indent: -150%;
@@ -31,8 +34,8 @@
   max-height: 24px;
   background-color: #cccccc;
   border-radius: 9999em;
-  -webkit-transition: background-color 0.25s ease;
-  transition: background-color 0.25s ease;
+  -webkit-transition: background-color 0.15s ease;
+  transition: background-color 0.15s ease;
 }
 .scContentControlCheckboxLabel::after {
   top: 0;
@@ -42,9 +45,13 @@
   border-radius: 50%;
   background-color: #fff;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.45);
-  -webkit-transition: left 0.25s ease;
-  transition: left 0.25s ease;
+  -webkit-transition: left 0.15s ease;
+  transition: left 0.15s ease;
   cursor: pointer !important;
+  position: relative;
+}
+.scContentControlCheckbox:disabled + .scContentControlCheckboxLabel::before {
+  opacity: 0.5;
 }
 .scContentControlCheckbox:checked + .scContentControlCheckboxLabel::before {
   background-color: #6edc60;

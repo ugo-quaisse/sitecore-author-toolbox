@@ -435,14 +435,7 @@ chrome.storage.sync.get((storage) => {
       consoleLog("**** Field editor ****", "orange");
       storage.feature_contenteditor == undefined ? (storage.feature_contenteditor = true) : false;
       if (storage.feature_contenteditor === true) {
-        /**
-         * Custom checkboxes to IOS like style
-         */
-        var link = document.createElement("link");
-        link.type = "text/css";
-        link.rel = "stylesheet";
-        link.href = chrome.runtime.getURL("css/checkbox.min.css");
-        document.getElementsByTagName("head")[0].appendChild(link);
+        loadCssFile("css/checkbox.min.css");
       }
 
       storage.feature_charscount == undefined ? (storage.feature_charscount = true) : false;
@@ -787,6 +780,11 @@ chrome.storage.sync.get((storage) => {
 
     if (global.isXmlControl && !global.isRichText) {
       consoleLog("**** XML Control (Window) ****", "orange");
+
+      if (storage.feature_experimentalui) {
+        loadCssFile("css/experimentalui.min.css");
+        getAccentColor();
+      }
     }
 
     if (global.isGalleryVersion) {
@@ -874,6 +872,7 @@ chrome.storage.sync.get((storage) => {
 
     if (global.isPublishDialog) {
       consoleLog("**** Publishing window ****", "orange");
+
       storage.feature_flags == undefined ? (storage.feature_flags = true) : false;
 
       if (storage.feature_flags) {
@@ -920,6 +919,21 @@ chrome.storage.sync.get((storage) => {
 
     if (global.isPublishWindow) {
       consoleLog("**** Publish / Rebuild / Package ****", "orange");
+
+      if (storage.feature_experimentalui) {
+        loadCssFile("css/experimentalui.min.css");
+        getAccentColor();
+      }
+
+      if (storage.feature_contenteditor === true) {
+        document.querySelectorAll("#PublishChildrenPane input[type=checkbox], #PublishingTargets input[type=checkbox]").forEach(function (checkbox) {
+          checkbox.classList.add("scContentControlCheckbox");
+          let labelHtml = '<label for="' + checkbox.id + '" class="scContentControlCheckboxLabel"></label>';
+          checkbox.insertAdjacentHTML("afterend", labelHtml);
+        });
+        loadCssFile("css/checkbox.min.css");
+      }
+
       storage.feature_flags == undefined ? (storage.feature_flags = true) : false;
 
       if (storage.feature_flags) {

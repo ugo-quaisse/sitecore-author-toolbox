@@ -165,7 +165,7 @@ input[type="color"]::-webkit-color-swatch {
   margin-left: 14px;
 }
 
-#scFlag,
+#EditorTabs #scFlag,
 #scFlagMenu,
 .liveUrlStatus {
   visibility: hidden;
@@ -426,7 +426,7 @@ a.scContentTreeNodeNormal > span {
   padding: 10px 0px;
   height: 20px;
   position: absolute;
-  width: -webkit-fill-available;
+  width: -webkit-fill-available !important;
   margin-left: -500px;
   margin-top: -10px;
   text-indent: 500px;
@@ -1090,17 +1090,17 @@ input[type="submit"],
   border-radius: var(--radius);
   cursor: pointer;
   box-shadow: none;
+  outline-color: var(--accent);
 }
 
 .scButtonPrimary {
-  background-color: var(--accent);
+  background: var(--accent) !important;
   color: var(--accentText);
+  outline-color: var(--accent);
 }
 
 .scButtonPrimary:hover {
-  filter: brightness(1.1);
-  background-color: var(--accent);
-  color: var(--accentText);
+  filter: brightness(1.07);
 }
 
 .scButton:hover,

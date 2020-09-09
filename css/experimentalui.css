@@ -1236,3 +1236,17 @@ input[type="submit"],
 .scVerticalImagedTabstrip > div.selected:hover {
   background-color: var(--grey3) !important;
 }
+
+/*
+* Dialog
+*/
+
+/* .ui-widget-header,
+.scFormDialogHeader {
+  background-color: var(--accent) !important;
+  color: var(--accentText) !important;
+} */
+
+.ui-progressbar-value {
+  background-color: var(--accent) !important;
+}

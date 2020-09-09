@@ -271,11 +271,15 @@ function sortTable(col, title, pos) {
     arr[i].title = cells[2].outerHTML;
     arr[i].name = cells[2].innerText;
     arr[i].info = cells[3].outerHTML;
+    arr[i].datainfo = cells[3].innerText.replace("items", "").replace("item", "");
     arr[i].type = cells[4].outerHTML;
+    arr[i].datatype = cells[4].innerText;
     arr[i].size = cells[5].outerHTML;
     arr[i].datasize = cells[5].dataset.size;
     arr[i].validation = cells[6].outerHTML;
+    arr[i].datavalidation = cells[6].innerText;
     arr[i].usage = cells[7].outerHTML;
+    arr[i].datausage = cells[7].innerText;
     arr[i].actions = cells[8].outerHTML;
   }
   // sort the array by the specified column number (col) and order (asc)

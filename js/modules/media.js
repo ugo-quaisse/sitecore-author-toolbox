@@ -71,7 +71,7 @@ const initMediaExplorer = (isExperimental = false) => {
   mediaItems.forEach((el) => {
     el.remove();
   });
-  let mediaId, mediaThumbnail, mediaImage, mediaTitle, mediaDimensions, mediaWarning, mediaUsage, mediaFolder, mediaArrow, mediaClass, mediaClick;
+  let mediaId, mediaThumbnail, mediaImage, mediaTitle, mediaDimensions, mediaWarning, mediaUsage, mediaFolder, mediaArrow, mediaClass, mediaClick, showDownload;
   let mediaItemsJson = {};
   let scMediaThumbnailSize = localStorage.getItem("scMediaThumbnailSize") ? localStorage.getItem("scMediaThumbnailSize") : 25;
 
@@ -87,11 +87,11 @@ const initMediaExplorer = (isExperimental = false) => {
         <thead>
           <tr>
             <th colspan="3" width="35%" onclick="sortTable('name', 'Name', 0)">Name</th>
-            <th width="12%" onclick="sortTable('info', 'Info', 1)" data-sort="ASC">Info</th>
-            <th width="12%" onclick="sortTable('type', 'Type', 2)" data-sort="ASC">Type</th>
+            <th width="12%" onclick="sortTable('datainfo', 'Info', 1)" data-sort="ASC">Info</th>
+            <th width="12%" onclick="sortTable('datatype', 'Type', 2)" data-sort="ASC">Type</th>
             <th width="12%" onclick="sortTable('datasize', 'Size', 3)" data-sort="ASC">Size</th>
-            <th onclick="sortTable('validation', 'Validation', 4)" data-sort="ASC">Validation</th>
-            <th onclick="sortTable('usage', 'Usage', 5)" data-sort="ASC">Usage</th>
+            <th onclick="sortTable('datavalidation', 'Validation', 4)" data-sort="ASC">Validation</th>
+            <th onclick="sortTable('datausage', 'Usage', 5)" data-sort="ASC">Usage</th>
             <th width="100px" class="noSort"></th>
           </tr>
         </thead>
@@ -115,6 +115,7 @@ const initMediaExplorer = (isExperimental = false) => {
     mediaClass = mediaImage.includes("/folder.png") ? "scMediaFolder" : "scMediaPreview";
     mediaArrow = mediaImage.includes("/folder.png") && mediaDimensions.toLowerCase() != "0 items" ? "▶" : " ";
     mediaUsage = mediaImage.includes("/folder.png") ? "--" : mediaUsage;
+    showDownload = mediaImage.includes("/folder.png") ? "hidden" : "visible";
     mediaClick = item ? item.getAttribute("onclick") : false;
 
     //Build a JSON object
@@ -149,7 +150,7 @@ const initMediaExplorer = (isExperimental = false) => {
         <td class="left" onclick="` + mediaClick + `">` + mediaWarning + `</td>
         <td class="left" onclick="` + mediaClick + `">` + mediaUsage + `</td>
         <td class="center">  
-          <a download href="` + mediaImage + `" class="scMediaActions t-sm t-top ` + invert + `" data-tooltip="Download">
+          <a download href="` + mediaImage + `" class="scMediaActions t-sm t-top ` + invert + `" data-tooltip="Download" style="visibility: ` + showDownload + `">
             <img src="` + global.iconDownload + `" class="scLanguageIcon">
           </a>
           <button class="scMediaActions t-sm t-top ` + invert + `" data-tooltip="Publish" type="button" onclick="javascript:return scForm.postEvent(this,event,'item:publish(id={` + itemId + `})')">

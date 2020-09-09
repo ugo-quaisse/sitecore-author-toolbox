@@ -405,8 +405,8 @@ img.scContentTreeNodeGlyph:hover[src="/sitecore/shell/themes/standard/images/noe
   background-color: transparent;
 }
 
-a.scContentTreeNodeActive,
-a.scContentTreeNodeNormal {
+#ContentTreePanel a.scContentTreeNodeActive,
+#ContentTreePanel a.scContentTreeNodeNormal {
   background-color: transparent;
   width: -webkit-fill-available;
   padding: 1px 0px 5px 5px;
@@ -420,8 +420,8 @@ a.scContentTreeNodeNormal {
   vertical-align: super;
 }
 
-a.scContentTreeNodeActive > span,
-a.scContentTreeNodeNormal > span {
+#ContentTreePanel a.scContentTreeNodeActive > span,
+#ContentTreePanel a.scContentTreeNodeNormal > span {
   background-color: transparent;
   padding: 10px 0px;
   height: 20px;
@@ -433,23 +433,23 @@ a.scContentTreeNodeNormal > span {
   z-index: 1;
 }
 
-a.scContentTreeNodeActive > span > div.scItemName,
-a.scContentTreeNodeNormal > span > div.scItemName {
+#ContentTreePanel a.scContentTreeNodeActive > span > div.scItemName,
+#ContentTreePanel a.scContentTreeNodeNormal > span > div.scItemName {
   display: inline;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-a.scContentTreeNodeActive > span {
+#ContentTreePanel a.scContentTreeNodeActive > span {
   color: var(--white) !important;
 }
 
-a.scContentTreeNodeNormal > span {
+#ContentTreePanel a.scContentTreeNodeNormal > span {
   color: var(--text);
 }
 
-a.scContentTreeNodeActive > span > div,
-a.scContentTreeNodeNormal > span > div {
+#ContentTreePanel a.scContentTreeNodeActive > span > div,
+#ContentTreePanel a.scContentTreeNodeNormal > span > div {
   display: block;
   overflow: hidden;
   width: calc(100% - 100px);
@@ -458,18 +458,18 @@ a.scContentTreeNodeNormal > span > div {
   margin-left: 24px;
 }
 
-.scContentTreeNodeGlyph:hover + a > span,
-div.scContentTreeNode > img:hover + a > span,
-a.scContentTreeNodeNormal:hover > span {
+#ContentTreePanel .scContentTreeNodeGlyph:hover + a > span,
+#ContentTreePanel div.scContentTreeNode > img:hover + a > span,
+#ContentTreePanel a.scContentTreeNodeNormal:hover > span {
   background-color: var(--grey5) !important;
 }
 
-a.scContentTreeNodeActive > span {
+#ContentTreePanel a.scContentTreeNodeActive > span {
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
 }
 
-a.scContentTreeNodeActive > span > img {
+#ContentTreePanel a.scContentTreeNodeActive > span > img {
   max-width: 16px;
 }
 
@@ -570,7 +570,9 @@ a.scEditorHeaderButton:hover {
 }
 
 /*Iframe */
-
+#Renderings {
+  padding: 0px 10px;
+}
 #scLanguageIframe,
 #scVersionIframe {
   position: fixed;
@@ -1105,7 +1107,7 @@ input[type="submit"],
 
 .scButton:hover,
 .scSaveBar > .scActions > button:hover {
-  filter: brightness(1.07);
+  filter: brightness(1.01);
 }
 
 .scSaveBar > .scActions > button:disabled {
@@ -1228,4 +1230,9 @@ input[type="submit"],
 .scEditorFieldLabel:hover .sc-ext-goToDatasource-button,
 .scEditorFieldLabel:hover .scEditorFieldLabelAdministrator {
   display: inline !important;
+}
+
+.scVerticalImagedTabstrip > div.selected,
+.scVerticalImagedTabstrip > div.selected:hover {
+  background-color: var(--grey3) !important;
 }

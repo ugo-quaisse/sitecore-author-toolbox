@@ -32,11 +32,6 @@ import { insertSavebar, initInsertIcon, initGutter, getAccentColor, initColorPic
  */
 chrome.storage.sync.get((storage) => {
   /**
-   * Debug URL
-   */
-  consoleLog(window.location.href.replace("https://", "").replace("http://", ""), "green");
-
-  /**
    * Variables
    */
   let currentScheme = preferesColorScheme();
@@ -65,6 +60,14 @@ chrome.storage.sync.get((storage) => {
     checkNotification();
 
     /**
+     * Contrasted Icons
+     */
+    if (storage.feature_contrast_icons === false) {
+      document.documentElement.style.setProperty("--iconBrightness", 1);
+      document.documentElement.style.setProperty("--iconContrast", 1);
+    }
+
+    /**
      * Content Editor application
      */
     if (global.isContentEditor || global.isLaunchpad) {
@@ -91,12 +94,6 @@ chrome.storage.sync.get((storage) => {
         //Hide search
         let SearchPanel = document.querySelector("#SearchPanel");
         SearchPanel ? (SearchPanel.innerHTML = "Content") : false;
-
-        //Icon contrasted
-        if (storage.feature_contrast_icons === false) {
-          document.documentElement.style.setProperty("--iconBrightness", 1);
-          document.documentElement.style.setProperty("--iconContrast", 1);
-        }
 
         insertSavebar();
         insertModal(ScItem.id, ScItem.language, ScItem.version);
@@ -631,6 +628,10 @@ chrome.storage.sync.get((storage) => {
       }
     }
 
+    if (global.isSourceBrowser) {
+      consoleLog("**** Source Browser ****", "orange");
+    }
+
     if (global.isMediaFolder) {
       consoleLog("**** Media Folder ****", "orange");
       storage.feature_dragdrop == undefined ? (storage.feature_dragdrop = true) : false;
@@ -926,7 +927,8 @@ chrome.storage.sync.get((storage) => {
       }
 
       if (storage.feature_contenteditor === true) {
-        document.querySelectorAll("#PublishChildrenPane input[type=checkbox], #PublishingTargets input[type=checkbox]").forEach(function (checkbox) {
+        //Add #PublishingTargets input[type=checkbox] if needed
+        document.querySelectorAll("#PublishChildrenPane input[type=checkbox]").forEach(function (checkbox) {
           checkbox.classList.add("scContentControlCheckbox");
           let labelHtml = '<label for="' + checkbox.id + '" class="scContentControlCheckboxLabel"></label>';
           checkbox.insertAdjacentHTML("afterend", labelHtml);

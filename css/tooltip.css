@@ -118,6 +118,23 @@
 [data-tooltip].t-bottom:hover:after {
   transform: translateX(-50%) translateY(5px);
 }
+[data-tooltip].t-bottom2:before {
+  top: 100%;
+  margin-top: 5px;
+  margin-left: 10px;
+  transform: translateX(-50%);
+}
+[data-tooltip].t-bottom2:after {
+  top: 100%;
+  transform: translateX(-50%);
+  border-bottom: 8px solid rgba(0, 0, 0, 0.8);
+  border-top: none;
+  margin-left: 10px;
+}
+[data-tooltip].t-bottom2:hover:before,
+[data-tooltip].t-bottom2:hover:after {
+  transform: translateX(-50%) translateY(5px);
+}
 [data-tooltip].t-left:before {
   top: 50%;
   right: 100%;

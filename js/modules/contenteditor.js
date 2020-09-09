@@ -288,6 +288,14 @@ const sitecoreAuthorToolbox = () => {
                 }
               );
             } else {
+              //Automatically switch to Folder tab
+              let activeTab = document.querySelector("#EditorTabs > .scRibbonEditorTabActive").innerText.toLowerCase();
+              if (activeTab == "search") {
+                document.querySelectorAll("#EditorTabs > a").forEach(function (e) {
+                  e.innerText.toLowerCase() == "folder" ? e.click() : false;
+                });
+              }
+              //Update preview button
               storage.feature_experimentalui ? (document.querySelector(".scPreviewButton").innerText = "No preview available") : false;
             }
 

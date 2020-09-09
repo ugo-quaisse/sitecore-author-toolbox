@@ -333,7 +333,10 @@ const getAccentColor = () => {
 const initColorPicker = () => {
   let color, text, brightness, invert;
 
-  let input = '<input type="color" id="scAccentColor" name="scAccentColor" value="' + getAccentColor() + '" title="Choose your accent color">';
+  let input =
+    '<input type="color" id="scAccentColor" name="scAccentColor" value="' +
+    getAccentColor() +
+    '" class="t-bottom2 t-sm" data-tooltip="Choose your accent color">';
   let menu = document.querySelector(".sc-accountInformation");
   menu ? menu.insertAdjacentHTML("afterbegin", input) : false;
 
@@ -384,13 +387,13 @@ const initUserMenu = () => {
 
     //Add Notification and arrow icons
     let htmlIcon =
-      `<img loading="lazy" title="No notification in your workbox" id="scNotificationBell" onclick="javascript:scSitecore.prototype.showModalDialog('` +
+      `<img loading="lazy" id="scNotificationBell" onclick="javascript:scSitecore.prototype.showModalDialog('` +
       global.workboxPage.replace("&sc_bw=1", "&sc_bw=0") +
       `', '', '` +
       dialogParamsLarge +
       `Workbox', null, null); false" src="` +
       global.iconBell +
-      `" class="scIconMenu" accesskey="w"/>
+      `" class="scIconMenu" accesskey="w" />
         <img loading="lazy" title="Show ribbon" id="scSitecoreMenu" onclick="showSitecoreMenu()" src="` +
       global.iconDownArrow +
       `" class="scIconMenu" accesskey="a" />`;

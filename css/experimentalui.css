@@ -474,7 +474,7 @@ img.scContentTreeNodeGlyph:hover[src="/sitecore/shell/themes/standard/images/noe
 }
 
 .scGutter {
-  z-index: 100;
+  z-index: 1002;
   top: 0;
   width: 20px;
   height: 100%;

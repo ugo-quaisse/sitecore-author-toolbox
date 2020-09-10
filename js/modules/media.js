@@ -99,6 +99,7 @@ const initMediaExplorer = (isExperimental = false) => {
 
   for (let item of mediaItems) {
     mediaId = item ? item.getAttribute("id") : false;
+    //.replace("&h=72", "&h=300").replace("&w=72", "&w=300")
     mediaThumbnail = item.querySelector(".scMediaBorder > img") ? item.querySelector(".scMediaBorder > img").getAttribute("src") : false;
     mediaImage = item.querySelector(".scMediaBorder > img")
       ? item.querySelector(".scMediaBorder > img").getAttribute("src").replace("&h=72", "").replace("&thn=1", "").replace("&w=72", "").replace("bc=white&", "")

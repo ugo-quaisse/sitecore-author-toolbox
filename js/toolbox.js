@@ -850,8 +850,13 @@ chrome.storage.sync.get((storage) => {
               tdversion = tdversion[2].innerHTML;
               tdversion = tdversion.split(" ");
 
+              let rawVersion = item2.getElementsByTagName("div")[2].innerHTML.toLowerCase();
+
               //Check version
-              if (tdversion[0] != "0") {
+              if (rawVersion == "fallback version") {
+                temp = item2.getElementsByTagName("div");
+                temp[2].setAttribute("style", "background-color: lime; display: initial; padding: 0px 3px; color: #000000 !important");
+              } else if (tdversion[0] != "0") {
                 temp = item2.getElementsByTagName("div");
                 temp[2].setAttribute("style", "background-color: yellow; display: initial; padding: 0px 3px; color: #000000 !important");
               }

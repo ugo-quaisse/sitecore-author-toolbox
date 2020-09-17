@@ -365,3 +365,32 @@ function doubleClick(id, itemId) {
     return scForm.postEvent(el, event, "item:rename(id={" + itemId + "})");
   }
 }
+
+/**
+ * Get parent in tree node
+ */
+const getParentNode = (int = 1) => {
+  var elem = parent.document.querySelector(".scContentTreeNodeActive");
+  var count = 0;
+  for (; elem && elem !== document; elem = elem.parentNode) {
+    if (elem.classList) {
+      if (elem.classList.contains("scContentTreeNode")) {
+        count++;
+        if (count == 1 + int) {
+          var parentScId = elem
+            .querySelector(".scContentTreeNodeNormal")
+            .getAttribute("id")
+            .replace("Tree_Node_", "")
+            .replace(
+              // eslint-disable-next-line prefer-named-capture-group
+              /(.{8})(.{4})(.{4})(.{4})(.{12})/u,
+              "$1-$2-$3-$4-$5"
+            );
+
+          // eslint-disable-next-line no-undef
+          return scForm.invoke("item:load(id={" + parentScId + "})");
+        }
+      }
+    }
+  }
+};

@@ -36,6 +36,7 @@ const getFileType = (type) => {
   fileType = fileType == "gif" ? "GIF image" : fileType;
   fileType = fileType == "wepb" ? "WEBP image" : fileType;
   fileType = fileType == "svg+xml" ? "SVG image" : fileType;
+  fileType = fileType == "pdf" ? "PDF document" : fileType;
   fileType = fileType.includes("-officedocument") ? "Office document" : fileType;
 
   return fileType;
@@ -200,6 +201,10 @@ const initMediaCounter = () => {
   let totalItem = document.querySelectorAll("#FileList > a").length;
   let titleMedia = document.querySelectorAll(".scTitle")[1];
   titleMedia ? (titleMedia.innerText = titleMedia.innerText + ` (` + totalItem + `)`) : false;
+  if (totalItem == 0) {
+    let scFolderButtons = document.querySelector(".scFolderButtons");
+    scFolderButtons.insertAdjacentHTML("beforeend", `<div class="scNoVersion"><p>This folder is empty.</p><br /></div>`);
+  }
 };
 
 /**

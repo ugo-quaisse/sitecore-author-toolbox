@@ -84,35 +84,14 @@ const sitecoreAuthorToolbox = () => {
        */
       storage.feature_experimentalui == undefined ? (storage.feature_experimentalui = false) : false;
       if (storage.feature_experimentalui) {
-        //Savebar
         insertSavebar();
-
-        //Breadcrumb
         insertBreadcrumb(ScItem.path);
-
-        //More menu
         insertMoreButton();
-
-        //Version menu
         insertVersionButton(ScItem.id, ScItem.language, ScItem.version);
-
-        //Language menu
         insertLanguageButton(ScItem.id, ScItem.language, ScItem.version);
-
-        //Navigator menu
         //insertNavigatorButton();
-
-        //Lock buttom
-        // insertLockButton(false);
-
-        //Get related medias
+        //insertLockButton(false);
         //getRelatedMedia(sitecoreItemID, scLanguage, scVersion);
-
-        //Welcome to Sitecore
-        if (ScItem.id == "{11111111-1111-1111-1111-111111111111}") {
-          scEditorPanel = document.querySelector(".scEditorPanel");
-          scEditorPanel.insertAdjacentHTML("afterbegin", "<h1>Welcome to Sitecore!</h1>");
-        }
       }
 
       /**
@@ -809,7 +788,7 @@ const sitecoreAuthorToolbox = () => {
         var scWarningTextBar = scWarning.querySelector(".scMessageBarText");
         var scWarningIcon = scWarning.querySelector(".scMessageBarIcon");
 
-        var isLockMessage = scWarningText.includes("' has locked this item.");
+        var isLockMessage = scWarningText.includes("' has locked");
         var isElevateUnlock = scWarningText.includes("Elevated Unlock");
         var isNotFinalWorkflowStep = scWarningText.includes("is not in the final workflow step.");
         var isUnicorned = scWarningText.includes("This item is controlled by Unicorn");
@@ -830,45 +809,33 @@ const sitecoreAuthorToolbox = () => {
             : false;
 
           if (isProtected) {
+            //prettier-ignore
             document.querySelector(".scEditorPanel").innerHTML =
-              `
-                            <div class="scNoVersion">
-                                <img src='` +
-              global.iconLocked +
-              `' width="128" /><br />
-                                <p>` +
-              scWarningText +
-              `</p><br />
-                                <button onclick="javascript:return scForm.postEvent(this,event,'item:togglereadonly')" type="button">Unprotect this item</button>
-                            </div>`;
+            `<div class="scNoVersion">
+              <img src='` + global.iconLocked + `' width="128" /><br />
+              <p>` + scWarningText + `</p><br />
+              <button onclick="javascript:return scForm.postEvent(this,event,'item:togglereadonly')" type="button">Unprotect this item</button>
+            </div>`;
           }
 
           if (isNoFields) {
+            //prettier-ignore
             document.querySelector(".scEditorPanel").innerHTML =
-              `
-                            <div class="scNoVersion">
-                                <img src='` +
-              global.iconFields +
-              `' width="128" /><br />
-                                <p>` +
-              scWarningText +
-              `</p><br />
-                                <button id="scInfoButton" type="button">Show Item details</button>
-                            </div>`;
+              `<div class="scNoVersion">
+                <img src='` + global.iconFields + `' width="128" /><br />
+                <p>` + scWarningText + `</p><br />
+                <button id="scInfoButton" type="button">Show Item details</button>
+              </div>`;
           }
 
           if (isNoVersion) {
+            //prettier-ignore
             document.querySelector(".scEditorPanel").innerHTML =
-              `
-                            <div class="scNoVersion">
-                                <img src='` +
-              global.iconLanguage +
-              `' width="128" /><br />
-                                <p>` +
-              scWarningText +
-              `</p><br />
-                                <button onclick="javascript:return scForm.postEvent(this,event,'item:addversion')" type="button">Add new version</button>
-                            </div>`;
+              `<div class="scNoVersion">
+                <img src='` + global.iconLanguage + `' width="128" /><br />
+              <p>` + scWarningText + `</p><br />
+              <button onclick="javascript:return scForm.postEvent(this,event,'item:addversion')" type="button">Add new version</button>
+              </div>`;
           }
 
           //Experimental
@@ -889,6 +856,9 @@ const sitecoreAuthorToolbox = () => {
 
           //Admin, elevate unlock
           isElevateUnlock || isProtected ? scWarningIcon.setAttribute("style", "background-image: url(" + global.iconLock + ");") : false;
+
+          //Is locked
+          isLockMessage ? scWarningIcon.setAttribute("style", `background-image: url(${global.iconLock});`) : false;
 
           //Unicorded
           if (isUnicorned) {

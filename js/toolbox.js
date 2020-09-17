@@ -1073,7 +1073,6 @@ chrome.storage.sync.get((storage) => {
     setTimeout(function () {
       document.querySelectorAll(".scContentTreeNodeGutterIcon").forEach(function (el) {
         let parent = el.parentElement;
-        console.log(el);
         parent.setAttribute("data-tooltip", el.getAttribute("title"));
         parent.classList.add("t-right");
         parent.classList.add("t-xs");

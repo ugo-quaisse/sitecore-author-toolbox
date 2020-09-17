@@ -981,6 +981,10 @@ a.scContentButton:hover {
   vertical-align: middle;
 }
 
+.scSaveBar > .scBreadcrumb > u {
+  cursor: pointer;
+}
+
 .scSaveBar > .scActions > .scPublishMenu {
   width: 240px;
   height: fit-content;

@@ -18,6 +18,7 @@ export {
   initSitecoreMenu,
   initUserMenu,
   initGutter,
+  getParentNode,
 };
 
 /**
@@ -79,7 +80,7 @@ const pathToBreadcrumb = (pathname, delimiter = "/", underline = true) => {
 
     for (let level of path) {
       count++;
-      if (path.length > 7 && count > 3 && count < path.length - 2) {
+      if (path.length > 8 && count > 3 && count < path.length - 2) {
         if (!elipsis) {
           level != "" ? (breadcrumb += "<i>" + delimiter + "</i> [...] ") : false;
           elipsis = true;
@@ -90,14 +91,17 @@ const pathToBreadcrumb = (pathname, delimiter = "/", underline = true) => {
       }
 
       if (underline) {
-        level != "" ? (breadcrumb += "<i>" + delimiter + "</i> <u>" + level.toLowerCase().capitalize() + "</u> ") : false;
+        level != ""
+          ? (breadcrumb +=
+              `<i>` + delimiter + `</i> <u onclick="getParentNode(` + (path.length - count - 1) + `);">` + level.toLowerCase().capitalize() + `</u> `)
+          : false;
       } else {
-        level != "" ? (breadcrumb += "<i>" + delimiter + "</i> " + level.toLowerCase().capitalize() + " ") : false;
+        level != "" ? (breadcrumb += `<i>` + delimiter + `</i> ` + level.toLowerCase().capitalize() + ` `) : false;
       }
     }
   }
 
-  breadcrumb = breadcrumb.replace("#####<i>" + delimiter + "</i>", "").replace("#####", "");
+  breadcrumb = breadcrumb.replace(`#####<i>` + delimiter + `</i>`, ``).replace(`#####`, ``);
 
   return breadcrumb;
 };
@@ -576,4 +580,33 @@ const initGutter = () => {
   let treeNode = document.querySelector(".scContentTreeContainer");
   let html = `<div class="scGutter" onclick="javascript:if (window.scGeckoActivate) window.scGeckoActivate(); return scContent.onTreeClick(this, event)" oncontextmenu="javascript:return scContent.onTreeContextMenu(this, event)" onkeydown="javascript:return scContent.onTreeKeyDown(this, event)"></div>`;
   treeNode ? treeNode.insertAdjacentHTML("afterbegin", html) : false;
+};
+
+/**
+ * Get parent in tree node
+ */
+const getParentNode = (int = 1) => {
+  var elem = parent.document.querySelector(".scContentTreeNodeActive");
+  var count = 0;
+  for (; elem && elem !== document; elem = elem.parentNode) {
+    if (elem.classList) {
+      if (elem.classList.contains("scContentTreeNode")) {
+        count++;
+        if (count == 1 + int) {
+          var parentScTitle = elem.querySelector(".scContentTreeNodeNormal > span").innerText;
+          var parentScId = elem
+            .querySelector(".scContentTreeNodeNormal")
+            .getAttribute("id")
+            .replace("Tree_Node_", "")
+            .replace(
+              // eslint-disable-next-line prefer-named-capture-group
+              /(.{8})(.{4})(.{4})(.{4})(.{12})/u,
+              "$1-$2-$3-$4-$5"
+            );
+          console.log(parentScTitle + " " + parentScId);
+          break;
+        }
+      }
+    }
+  }
 };

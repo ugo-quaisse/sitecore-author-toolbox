@@ -1,3 +1,4 @@
+/* eslint-disable default-param-last */
 /* eslint-disable consistent-return */
 /* eslint-disable newline-before-return */
 /* eslint-disable newline-per-chained-call */
@@ -369,14 +370,14 @@ function doubleClick(id, itemId) {
 /**
  * Get parent in tree node
  */
-const getParentNode = (int = 1) => {
+function getParentNode(int = 1, tabLoadingTitle) {
   var elem = parent.document.querySelector(".scContentTreeNodeActive");
   var count = 0;
   for (; elem && elem !== document; elem = elem.parentNode) {
     if (elem.classList) {
       if (elem.classList.contains("scContentTreeNode")) {
         count++;
-        if (count == 1 + int) {
+        if (count == 1 + int && elem.querySelector(".scContentTreeNodeNormal")) {
           var parentScId = elem
             .querySelector(".scContentTreeNodeNormal")
             .getAttribute("id")
@@ -387,10 +388,15 @@ const getParentNode = (int = 1) => {
               "$1-$2-$3-$4-$5"
             );
 
+          document.querySelector("#svgAnimation").setAttribute("style", "opacity:1");
+          document.querySelector("#EditorFrames").setAttribute("style", "opacity:0");
+          document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:0.5");
+          document.querySelector(".scEditorTabHeaderActive > span").innerText = tabLoadingTitle;
+
           // eslint-disable-next-line no-undef
           return scForm.invoke("item:load(id={" + parentScId + "})");
         }
       }
     }
   }
-};
+}

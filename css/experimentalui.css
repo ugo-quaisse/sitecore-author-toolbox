@@ -1106,7 +1106,15 @@ input[type="submit"],
 }
 
 .scButtonPrimary:hover {
-  filter: brightness(1.07);
+  filter: brightness(1.07) !important;
+}
+
+.scButtonPrimary:active {
+  background: var(--accent) !important;
+  color: var(--accentText);
+  outline-color: var(--accent);
+  filter: brightness(0.9);
+  box-shadow: none;
 }
 
 .scButton:hover,

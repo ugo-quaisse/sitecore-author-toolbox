@@ -93,7 +93,15 @@ const pathToBreadcrumb = (pathname, delimiter = "/", underline = true) => {
       if (underline) {
         level != ""
           ? (breadcrumb +=
-              `<i>` + delimiter + `</i> <u onclick="getParentNode(` + (path.length - count - 1) + `);">` + level.toLowerCase().capitalize() + `</u> `)
+              `<i>` +
+              delimiter +
+              `</i> <u onclick="getParentNode(` +
+              (path.length - count - 1) +
+              `, '` +
+              global.tabLoadingTitle +
+              `');">` +
+              level.toLowerCase().capitalize() +
+              `</u> `)
           : false;
       } else {
         level != "" ? (breadcrumb += `<i>` + delimiter + `</i> ` + level.toLowerCase().capitalize() + ` `) : false;

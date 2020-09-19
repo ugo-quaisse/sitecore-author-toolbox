@@ -13,6 +13,7 @@ export { sitecoreAuthorToolbox };
  * Main function executed when the Content Editor refreshes
  */
 const sitecoreAuthorToolbox = () => {
+  //document.querySelector(".scEditorPanel").innerHTML = `test`;
   /**
    * Get all user's settings from storage
    */
@@ -74,10 +75,6 @@ const sitecoreAuthorToolbox = () => {
        * Detect homepage
        */
       global.debug ? console.table(ScItem) : false;
-
-      // if(ScItem.path.includes("/sitecore/content/sitecore/styleguide/home")) {
-      //     ScItem.baseUrl = "https://vps.uquaisse.io/styleguide";
-      // }
 
       /**
        * Experimentations
@@ -172,52 +169,24 @@ const sitecoreAuthorToolbox = () => {
             storage.feature_experimentalui ? (barStyle = "scSuccess") : false;
             document.querySelector(".scPreviewButton") ? document.querySelector(".scPreviewButton").setAttribute("style", "display: block") : false;
 
-            if (isMedia) {
-              // eslint-disable-next-line newline-per-chained-call
-              var imageId = sitecoreItemID.replace(/-/u, "").replace("{", "").replace("}", "");
-              sitecoreItemPath =
-                window.location.origin +
-                "/sitecore/shell/Applications/-/media/" +
-                imageId +
-                ".ashx?vs=" +
-                scVersion +
-                "&ts=" +
-                Math.round(Math.random() * 100000);
-              //Prepare HTML (scInformation scWarning scError)
-              scMessage =
-                '<div id="scMessageBarLiveUrl" class="scMessageBar ' +
-                barStyle +
-                '"><div class="scMessageBarIcon" style="background-image:url(' +
-                global.iconMedia +
-                ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Media Live URL</div><div class="scMessageBarText">If you want to preview this media</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' +
-                sitecoreItemPath +
-                '" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this media</a> or <a href="' +
-                sitecoreItemPath +
-                '" download class="scMessageBarOption sitecoreItemPath">download it</a></li></ul></div></div>';
-            } else {
-              //Prepare HTML (scInformation scWarning scError)
-              scMessage =
-                '<div id="scMessageBarLiveUrl" class="scMessageBar ' +
-                barStyle +
-                '"><div class="scMessageBarIcon" style="background-image:url(' +
-                global.icon +
-                ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Sitecore Live URL <span class="liveUrlBadge" onclick="location.href = \'' +
-                global.launchpadPage +
-                "?configure_domains=true&launchpad=true&url=" +
-                global.windowLocationHref +
-                '\'" title="Click to configure your domains">' +
-                envBadge +
-                '</span> <span class="liveUrlStatus"></span></div><div class="scMessageBarText">To preview this page in <b>"' +
-                scLanguageTxtLong +
-                '".</b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' +
-                sitecoreItemPath +
-                '" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this link</a> or try <a href="' +
-                scUrl +
-                '" target="_blank" class="scMessageBarOption">this alternative link</a></li></ul></div></div>';
+            //Prepare HTML (scInformation scWarning scError)
+            //prettier-ignore
+            scMessage = `<div id="scMessageBarLiveUrl" class="scMessageBar ` + barStyle + `">
+            <div class="scMessageBarIcon" style="background-image:url(` + global.icon + `)"></div>
+            <div class="scMessageBarTextContainer">
+              <div class="scMessageBarTitle">Sitecore Live URL
+              <span class="liveUrlBadge" onclick="location.href = '` + global.launchpadPage + `?configure_domains=true&launchpad=true&url=` + global.windowLocationHref + `'" title="Click to configure your domains">` + envBadge + `</span>
+              <span class="liveUrlStatus"></span>
+              </div>
+              <div class="scMessageBarText">To preview this page in <b>"` + scLanguageTxtLong + `".</b></div>
+              <ul class="scMessageBarOptions" style="margin:0px">
+              <li class="scMessageBarOptionBullet"><a href="` + sitecoreItemPath + `" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this link</a> or try <a href="` + scUrl + `" target="_blank" class="scMessageBarOption">this alternative link</a></li>
+              </ul>
+              </div>
+            </div>`;
 
-              //Insert message bar into Sitecore Content Editor
-              !document.querySelector("#scMessageBarLiveUrl") ? scEditorID.insertAdjacentHTML("afterend", scMessage) : false;
-            }
+            //Insert message bar into Sitecore Content Editor
+            !document.querySelector("#scMessageBarLiveUrl") ? scEditorID.insertAdjacentHTML("afterend", scMessage) : false;
 
             //Insert link into Quickinfo table
             var table = document.querySelector(".scEditorQuickInfo");
@@ -227,15 +196,8 @@ const sitecoreAuthorToolbox = () => {
               var cell2 = row.insertCell(1);
               var url = new URL(sitecoreItemPath);
               cell1.innerHTML = "Live URL:";
-              cell2.innerHTML =
-                '<a href="' +
-                sitecoreItemPath +
-                '" target="_blank">' +
-                url.origin +
-                url.pathname +
-                ' <img src="' +
-                global.iconExternalLink +
-                '" style="width: 14px; vertical-align: text-top;" /></a>';
+              //prettier-ignore
+              cell2.innerHTML = `<a href="` + sitecoreItemPath + `" target="_blank">` + url.origin + url.pathname + ` <img src="` + global.iconExternalLink + `" style="width: 14px; vertical-align: text-top;" /></a>`;
             }
 
             //Experimental mode

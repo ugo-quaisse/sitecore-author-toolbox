@@ -118,10 +118,9 @@ document.body.onload = function () {
 
   //Urls
   chrome.storage.sync.get(["feature_urls"], function (result) {
+    //it should be !result.feature_urls = checked
     if (!chrome.runtime.error && result.feature_urls != undefined) {
-      if (result.feature_urls) {
-        document.getElementById("feature_urls").checked = true;
-      }
+      result.feature_urls ? (document.getElementById("feature_urls").checked = true) : false;
     } else {
       document.getElementById("feature_urls").checked = true;
     }
@@ -144,16 +143,6 @@ document.body.onload = function () {
       }
     } else {
       document.getElementById("feature_errors").checked = true;
-    }
-  });
-  //Drag and drop
-  chrome.storage.sync.get(["feature_dragdrop"], function (result) {
-    if (!chrome.runtime.error && result.feature_dragdrop != undefined) {
-      if (result.feature_dragdrop) {
-        document.getElementById("feature_dragdrop").checked = true;
-      }
-    } else {
-      document.getElementById("feature_dragdrop").checked = true;
     }
   });
   //Notification
@@ -569,10 +558,6 @@ document.querySelector("#set").onclick = function (event) {
   //Errors
   chrome.storage.sync.set({ feature_errors: document.getElementById("feature_errors").checked }, function () {
     console.info("--> Errors: " + document.getElementById("feature_errors").checked);
-  });
-  //Drag and Drop
-  chrome.storage.sync.set({ feature_dragdrop: document.getElementById("feature_dragdrop").checked }, function () {
-    console.info("--> Drag and drop: " + document.getElementById("feature_dragdrop").checked);
   });
   //Notificattion
   chrome.storage.sync.set(

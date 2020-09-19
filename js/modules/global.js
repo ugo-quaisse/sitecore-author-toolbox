@@ -4,7 +4,9 @@
 /**
  * Global variables declaration
  */
-export const debug = false;
+export const queryString = window.location.search.toLowerCase();
+export const urlParams = new URLSearchParams(queryString);
+export const debug = !!urlParams.has("debugsat");
 export const showSnackbar = false;
 export const extensionVersion = chrome.runtime.getManifest().version;
 export const extensionId = chrome.runtime.getURL("something").split("chrome-extension://")[1].split("/something")[0];
@@ -66,8 +68,6 @@ export const iconCE = chrome.runtime.getURL("images/ce.png");
 export const iconED = chrome.runtime.getURL("images/editable.png");
 export const rteLanguages = ["ARABIC", "HEBREW", "PERSIAN", "URDU", "SINDHI"];
 export const windowLocationHref = window.location.href.toLowerCase();
-export const queryString = window.location.search.toLowerCase();
-export const urlParams = new URLSearchParams(queryString);
 export const launchpadPage = chrome.runtime.getURL("options.html");
 export const launchpadIcon = chrome.runtime.getURL("images/icon.png");
 export const launchpadGroupTitle = "Sitecore Author Toolbox";

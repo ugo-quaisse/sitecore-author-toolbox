@@ -971,12 +971,12 @@ chrome.storage.sync.get((storage) => {
 
     if (storage.feature_autoexpand) {
       //Content tree
-      document.addEventListener(
+      document.querySelector(".scContentTree").addEventListener(
         "click",
         function (event) {
           //Chage EditorFrames opacity on load item
           if (event.target.offsetParent != null) {
-            if (event.target.offsetParent.matches(".scContentTreeNodeNormal")) {
+            if (event.target.offsetParent.offsetParent.matches(".scContentTreeNodeNormal")) {
               storage.feature_experimentalui ? document.querySelector("#svgAnimation").setAttribute("style", "opacity:1") : false;
               storage.feature_experimentalui
                 ? document.querySelector("#EditorFrames").setAttribute("style", "opacity:0")
@@ -1134,13 +1134,6 @@ chrome.storage.sync.get((storage) => {
         var scLanguage = document.querySelector("#scLanguage").getAttribute("value").toLowerCase();
         let scVersion = document.querySelector(".scEditorHeaderVersionsVersion > span");
         scVersion != null ? (scVersion = scVersion.innerText) : (scVersion = 1);
-        var scEditorQuickInfo = document.querySelectorAll(".scEditorQuickInfo");
-        var countTab = scEditorQuickInfo.length;
-        var scEditorTitle = document.getElementsByClassName("scEditorHeaderTitle");
-
-        var tabSitecoreItemID = document.querySelectorAll(".scEditorHeaderQuickInfoInput");
-        var lastTabSitecoreItemID = tabSitecoreItemID[tabSitecoreItemID.length - 2].getAttribute("value");
-
         var locaStorage = localStorage.getItem("scBackPrevious");
 
         //Add hash to URL
@@ -1156,27 +1149,6 @@ chrome.storage.sync.get((storage) => {
           } else {
             localStorage.removeItem("scBackPrevious");
           }
-        }
-
-        //Tabs opened?
-        global.debug
-          ? console.info("%c - Tabs opened: " + countTab + " ", "font-size:12px; background: #7b3090; color: white; border-radius:5px; padding 3px;")
-          : false;
-
-        if (countTab > 1 && !document.getElementById("showInContentTree" + countTab + "")) {
-          //Add text after title
-          var url = window.location.href;
-          url = url.split("#");
-          //var javascript = 'scForm.invoke("item:load(id=' + lastTabSitecoreItemID + ',language=' + scLanguage + ',version=1)");';
-          var href = url[0] + "&reload#" + lastTabSitecoreItemID;
-          scEditorTitle[countTab - 1].insertAdjacentHTML(
-            "afterend",
-            '[<a id="showInContentTree' +
-              countTab +
-              '" href="" onclick="javascript:window.location.href=\'' +
-              href +
-              "'; return false;\" />Show in content tree</a>]"
-          );
         }
       }
 

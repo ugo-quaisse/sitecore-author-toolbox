@@ -17,15 +17,8 @@ const instantSearch = () => {
     scInstantSearch.addEventListener("blur", () => {
       setTimeout(function () {
         if (document.activeElement.getAttribute("class")) {
-          if (
-            !document.activeElement
-              .getAttribute("class")
-              .includes("scInstantRow")
-          ) {
-            divResults.setAttribute(
-              "style",
-              "height:0px; opacity: 0; visibility: hidden; top: 43px;"
-            );
+          if (!document.activeElement.getAttribute("class").includes("scInstantRow")) {
+            divResults.setAttribute("style", "opacity: 0; visibility: hidden; top: 38px;");
           }
         }
       }, 200);
@@ -34,24 +27,15 @@ const instantSearch = () => {
     // On focus
     scInstantSearch.addEventListener("focus", (event) => {
       const chars = event.target.value.length;
-      chars >= 2
-        ? divResults.setAttribute(
-            "style",
-            "opacity: 1; visibility: visible; top: 48px;"
-          )
-        : false;
+      chars >= 2 ? divResults.setAttribute("style", "opacity: 1; visibility: visible; top: 48px;") : false;
     });
 
     //Tab index
     divResults.addEventListener("keyup", (event) => {
       if (event.key === "ArrowUp") {
-        document.activeElement.nextElementSibling
-          ? document.activeElement.previousElementSibling.focus()
-          : false;
+        document.activeElement.nextElementSibling ? document.activeElement.previousElementSibling.focus() : false;
       } else if (event.key === "ArrowDown") {
-        document.activeElement.nextElementSibling
-          ? document.activeElement.nextElementSibling.focus()
-          : false;
+        document.activeElement.nextElementSibling ? document.activeElement.nextElementSibling.focus() : false;
       } else if (event.key === "Enter") {
         let ref = event.target != null ? event.target : event.srcElement;
         ref
@@ -66,20 +50,14 @@ const instantSearch = () => {
             )
           : false;
       } else if (event.key === "Escape") {
-        divResults.setAttribute(
-          "style",
-          "height:0px; opacity: 0; visibility: hidden; top: 43px;"
-        );
+        divResults.setAttribute("style", "height:0px; opacity: 0; visibility: hidden; top: 43px;");
       }
     });
 
     //Document
     document.addEventListener("keyup", (event) => {
       if (event.key === "Escape") {
-        divResults.setAttribute(
-          "style",
-          "height:0px; opacity: 0; visibility: hidden; top: 43px;"
-        );
+        divResults.setAttribute("style", "height:0px; opacity: 0; visibility: hidden; top: 43px;");
       }
     });
 
@@ -113,65 +91,35 @@ const instantSearch = () => {
           if (chars >= 2 && !specialKey) {
             globalTimeout = null;
             // Preload results
-            divResults.setAttribute(
-              "style",
-              "opacity: 1; visibility: visible; top: 48px;"
-            );
+            divResults.setAttribute("style", "opacity: 1; visibility: visible; top: 48px;");
             //divResults.innerHTML = '<div class="scInstantSeachLoading"><img loading="lazy" class="pulseAnimate" src="' + global.iconInstantSearch + '" /><span class="textLoading"><span></div>'
-            divResults.innerHTML =
-              '<div class="preload">' +
-              global.svgAnimation +
-              '</div><span class="textLoading"><span>';
-            document
-              .querySelector(".scInstantSearchResults > .preload")
-              .setAttribute("style", "opacity:1 !important");
+            divResults.innerHTML = '<div class="preload">' + global.svgAnimation + '</div><span class="textLoading"><span>';
+            document.querySelector(".scInstantSearchResults > .preload").setAttribute("style", "opacity:1 !important");
 
             if (divResults.querySelector(".textLoading")) {
               var loadingTimeout1 = setTimeout(function () {
-                divResults.querySelector(".textLoading").innerText =
-                  "Sitecore is processing your request ...";
+                divResults.querySelector(".textLoading").innerText = "Sitecore is processing your request ...";
               }, 6000);
 
               var loadingTimeout2 = setTimeout(function () {
-                divResults.querySelector(".textLoading").innerText =
-                  "... Hang tight, it takes a little longer than expected...";
+                divResults.querySelector(".textLoading").innerText = "... Hang tight, it takes a little longer than expected...";
               }, 11000);
 
               var loadingTimeout3 = setTimeout(function () {
-                divResults.querySelector(".textLoading").innerText =
-                  "... server is warming up, bear with us :-)";
+                divResults.querySelector(".textLoading").innerText = "... server is warming up, bear with us :-)";
               }, 16000);
             }
 
             var ajax = new XMLHttpRequest();
             ajax.timeout = 20000;
-            ajax.open(
-              "GET",
-              "/sitecore/shell/applications/search/instant/instantsearch.aspx?q=" +
-                event.target.value +
-                "&v=1",
-              true
-            );
+            ajax.open("GET", "/sitecore/shell/applications/search/instant/instantsearch.aspx?q=" + event.target.value + "&v=1", true);
             ajax.onreadystatechange = function () {
               if (ajax.readyState === 4 && ajax.status == "200") {
-                let category,
-                  title,
-                  href,
-                  img,
-                  text,
-                  scItem,
-                  scLanguage,
-                  scVersion,
-                  showCat;
+                let category, title, href, img, text, scItem, scLanguage, scVersion, showCat;
                 let html = "";
                 let count = 0;
-                const dom = new DOMParser().parseFromString(
-                  ajax.responseText,
-                  "text/html"
-                );
-                const results = dom.querySelectorAll(
-                  ".scSearchResultsTable > tbody > tr"
-                );
+                const dom = new DOMParser().parseFromString(ajax.responseText, "text/html");
+                const results = dom.querySelectorAll(".scSearchResultsTable > tbody > tr");
 
                 for (const row of results) {
                   const td = row.querySelectorAll("td");
@@ -191,9 +139,7 @@ const instantSearch = () => {
                       // Get item language version
                       try {
                         scItem = "{" + href.split("/{")[1].split("}_")[0] + "}";
-                        scLanguage = href
-                          .split("_qst_lang_eq_")[1]
-                          .split("&ver_")[0];
+                        scLanguage = href.split("_qst_lang_eq_")[1].split("&ver_")[0];
                         scVersion = href.split("&ver_eq_")[1];
                       } catch (error) {
                         // error
@@ -211,9 +157,7 @@ const instantSearch = () => {
                     // Get item language version
                     try {
                       scItem = "{" + href.split("/{")[1].split("}_")[0] + "}";
-                      scLanguage = href
-                        .split("_qst_lang_eq_")[1]
-                        .split("&ver_")[0];
+                      scLanguage = href.split("_qst_lang_eq_")[1].split("&ver_")[0];
                       scVersion = href.split("&ver_eq_")[1];
                     } catch (error) {
                       // error
@@ -221,11 +165,7 @@ const instantSearch = () => {
                   }
 
                   // Append
-                  if (
-                    category.toLowerCase() == "content" ||
-                    category.toLowerCase() == "media library" ||
-                    category.toLowerCase() == "direct hit"
-                  ) {
+                  if (category.toLowerCase() == "content" || category.toLowerCase() == "media library" || category.toLowerCase() == "direct hit") {
                     showCat ? (html += "<h1>" + category + "</h1>") : false;
                     html +=
                       "<li onclick='fadeEditorFrames(); setTimeout(function() { scForm.invoke(\"item:load(id=" +
@@ -257,12 +197,7 @@ const instantSearch = () => {
                   }
                 }
 
-                count == 0
-                  ? (html =
-                      '<div class="scInstantSeachLoading">No result for "<u>' +
-                      event.target.value +
-                      '</u>", try something else.</div>')
-                  : false;
+                count == 0 ? (html = '<div class="scInstantSeachLoading">No result for "<u>' + event.target.value + '</u>", try something else.</div>') : false;
 
                 // Populate result
                 divResults.innerHTML = "";
@@ -286,9 +221,7 @@ const instantSearch = () => {
                 divResults.innerHTML = "";
                 divResults.insertAdjacentHTML(
                   "afterbegin",
-                  '<div class="scInstansSeachLoading"><img src="' +
-                    global.iconTimeout +
-                    '" width="128px" /> Sitecore timeout. Try again...</div>'
+                  '<div class="scInstansSeachLoading"><img src="' + global.iconTimeout + '" width="128px" /> Sitecore timeout. Try again...</div>'
                 );
               }
 

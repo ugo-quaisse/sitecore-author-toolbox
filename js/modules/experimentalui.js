@@ -394,7 +394,7 @@ const initUserMenu = () => {
       "center:yes; help:no; resizable:yes; scroll:yes; status:no; dialogMinHeight:200; dialogMinWidth:300; dialogWidth:1100; dialogHeight:700; header:";
 
     //Add app name
-    let htmlApp = `<div class="sc-globalheader-appName">Content Editor</div>`;
+    let htmlApp = `<div class="sc-globalheader-appName" onclick="javascript:return scForm.invoke('contenteditor:home', event)">Content Editor</div>`;
     startButton ? startButton.insertAdjacentHTML("afterend", htmlApp) : false;
 
     //Add Notification and arrow icons
@@ -601,8 +601,7 @@ const getParentNode = (int = 1) => {
       if (elem.classList.contains("scContentTreeNode")) {
         count++;
         if (count == 1 + int) {
-          var parentScTitle = elem.querySelector(".scContentTreeNodeNormal > span").innerText;
-          var parentScId = elem
+          elem
             .querySelector(".scContentTreeNodeNormal")
             .getAttribute("id")
             .replace("Tree_Node_", "")
@@ -611,7 +610,6 @@ const getParentNode = (int = 1) => {
               /(.{8})(.{4})(.{4})(.{4})(.{12})/u,
               "$1-$2-$3-$4-$5"
             );
-          console.log(parentScTitle + " " + parentScId);
           break;
         }
       }

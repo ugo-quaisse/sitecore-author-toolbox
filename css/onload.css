@@ -1118,3 +1118,15 @@ ul.scAccountMenu li:after {
 #FileList a.scButton.scButtonGrid.selected > img {
   filter: invert(1);
 }
+
+#SearchPanel .scBurgerMenu {
+  width: 14px;
+  opacity: 0.8;
+  vertical-align: middle;
+  display: none;
+}
+
+#SearchPanel .scBurgerMenuTitle {
+  display: contents;
+  cursor: pointer;
+}

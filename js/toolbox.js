@@ -93,7 +93,12 @@ chrome.storage.sync.get((storage) => {
 
         //Hide search
         let SearchPanel = document.querySelector("#SearchPanel");
-        SearchPanel ? (SearchPanel.innerHTML = "Content") : false;
+        SearchPanel
+          ? (SearchPanel.innerHTML =
+              `<button class="scMenuButton" type="button"><img src="` +
+              global.iconMenu +
+              `" class="scBurgerMenu"/></button> <div class="scBurgerMenuTitle" onclick="javascript:return scForm.invoke('contenteditor:home', event)" title="Go back Home">Content</div>`)
+          : false;
 
         insertSavebar();
         insertModal(ScItem.id, ScItem.language, ScItem.version);
@@ -650,9 +655,9 @@ chrome.storage.sync.get((storage) => {
 
       //Init features
       initDarkMode(storage);
+      initMediaCounter();
       initMediaDragDrop();
       initMediaViewButtons();
-      initMediaCounter();
 
       //Media Library explorer
       if (localStorage.getItem("scMediaView") == "list") {
@@ -969,7 +974,7 @@ chrome.storage.sync.get((storage) => {
     storage.feature_autoexpand == undefined ? (storage.feature_autoexpand = true) : false;
     storage.feature_autoexpandcount == undefined ? (storage.feature_autoexpandcount = false) : false;
 
-    if (storage.feature_autoexpand) {
+    if (storage.feature_autoexpand && document.querySelector(".scContentTree")) {
       //Content tree
       document.querySelector(".scContentTree").addEventListener(
         "click",

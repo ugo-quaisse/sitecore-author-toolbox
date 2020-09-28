@@ -17,6 +17,7 @@ export const iconRocket = chrome.runtime.getURL("images/warning-rocket.svg");
 export const iconInstantSearch = chrome.runtime.getURL("images/search.svg");
 export const iconInstantSearchGeneric = chrome.runtime.getURL("images/document_text.png");
 export const iconLock = chrome.runtime.getURL("images/lock.svg");
+export const iconMenu = chrome.runtime.getURL("images/menu.svg");
 export const iconData = chrome.runtime.getURL("images/data.svg");
 export const iconWorkflow = chrome.runtime.getURL("images/workflow.svg");
 export const iconPublish = chrome.runtime.getURL("images/publish.svg");

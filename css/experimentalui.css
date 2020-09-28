@@ -64,6 +64,17 @@ body {
   top: 30px;
 }
 
+.scMenuButton {
+  background-color: transparent;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.sc-globalheader-appName {
+  cursor: pointer;
+}
+
 /* Sitecore hide */
 
 .scValidatorPanel,
@@ -99,11 +110,12 @@ body {
 }
 
 #SearchPanel {
-  padding: 17px;
+  padding: 18px 18px 16px 18px;
+  min-height: 57px;
   background-color: #e8e6e6;
   font-size: 16px;
   font-weight: bold;
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid var(--grey);
 }
 
 input[type="color"] {
@@ -241,6 +253,7 @@ ul.scAccountMenu li:hover {
 }
 
 .scNoResult,
+.scHelp,
 .scNoVersion {
   margin: auto;
   padding: 50px;
@@ -1043,6 +1056,7 @@ a.scContentButton:hover {
   font-size: 15px;
   font-weight: 800;
   color: var(--grey7);
+  clear: both;
 }
 .scFolderButtons {
   padding-left: 10px;
@@ -1066,10 +1080,11 @@ a.scContentButton:hover {
   filter: invert(var(--accentInvert));
 }
 
-#Filelist {
+#FileList {
   background: var(--white) !important;
   border-radius: 3px;
   overflow: visible;
+  padding-top: 25px !important;
 }
 
 #FileList a.scButton.scButtonList.selected,

@@ -105,7 +105,7 @@ const sitecoreAuthorToolbox = () => {
 
       //Excluding data, why not having it for media? (replace Media Library by -/media)
       //or link to media /sitecore/-/media/552be56d277c49a5b57846859150d531.ashx
-      if ((isContent && !isData && !isPresentation && !isSettings && !isEmailTemplate) || isMedia) {
+      if (isContent && !isData && !isPresentation && !isSettings && !isEmailTemplate) {
         //Get user preference
         storage.feature_urls == undefined ? (storage.feature_urls = true) : false;
         storage.feature_urlstatus == undefined ? (storage.feature_urlstatus = true) : false;
@@ -750,12 +750,13 @@ const sitecoreAuthorToolbox = () => {
         var scWarningTextBar = scWarning.querySelector(".scMessageBarText");
         var scWarningIcon = scWarning.querySelector(".scMessageBarIcon");
 
-        var isLockMessage = scWarningText.includes("' has locked");
+        var isLockMessage = scWarningText.includes(" lock");
         var isElevateUnlock = scWarningText.includes("Elevated Unlock");
         var isNotFinalWorkflowStep = scWarningText.includes("is not in the final workflow step.");
         var isUnicorned = scWarningText.includes("This item is controlled by Unicorn");
         var isNoVersion = scWarningText.includes("The current item does not have a version");
         var isProtected = scWarningText.includes("You cannot edit this item because it is protected.");
+        var isPermission = scWarningText.includes("you do not have write access to it.");
         // eslint-disable-next-line no-unused-vars
         var isWrongVersion = scWarningText.includes("it has been replaced by a newer version.");
         var isNoFields = scWarningText.includes("The current item does not contain any fields.");
@@ -779,6 +780,16 @@ const sitecoreAuthorToolbox = () => {
               <button onclick="javascript:return scForm.postEvent(this,event,'item:togglereadonly')" type="button">Unprotect this item</button>
             </div>`;
           }
+
+          // if (isPermission) {
+          //   //prettier-ignore
+          //   document.querySelector(".scEditorPanel").innerHTML =
+          //   `<div class="scNoVersion">
+          //     <img src='` + global.iconLocked + `' width="128" /><br />
+          //     <p>` + scWarningText + `</p><br />
+          //     <button onclick="javascript:history.go(-1)" type="button">Go back</button>
+          //   </div>`;
+          // }
 
           if (isNoFields) {
             //prettier-ignore
@@ -817,7 +828,7 @@ const sitecoreAuthorToolbox = () => {
           isNotFinalWorkflowStep ? scWarningIcon.setAttribute("style", "background-image: url(" + global.iconWorkflow + ");") : false;
 
           //Admin, elevate unlock
-          isElevateUnlock || isProtected ? scWarningIcon.setAttribute("style", "background-image: url(" + global.iconLock + ");") : false;
+          isElevateUnlock || isProtected || isPermission ? scWarningIcon.setAttribute("style", "background-image: url(" + global.iconLock + ");") : false;
 
           //Is locked
           isLockMessage ? scWarningIcon.setAttribute("style", `background-image: url(${global.iconLock});`) : false;

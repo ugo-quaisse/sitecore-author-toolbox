@@ -51,15 +51,17 @@ const getImageInfo = (imageUrl, imageId, jsonObject) => {
   xhr.open("GET", imageUrl, true);
   xhr.responseType = "blob";
   xhr.onload = function () {
-    blob = xhr.response;
+    if (xhr.status == "200") {
+      blob = xhr.response;
 
-    document.querySelector(".mediaType_" + imageId).innerHTML = getFileType(blob.type);
-    document.querySelector(".mediaSize_" + imageId).innerHTML = bytesToSize(blob.size);
+      document.querySelector(".mediaType_" + imageId).innerHTML = getFileType(blob.type);
+      document.querySelector(".mediaSize_" + imageId).innerHTML = bytesToSize(blob.size);
 
-    jsonObject.type = getFileType(blob.type);
-    jsonObject.size = bytesToSize(blob.size);
+      jsonObject.type = getFileType(blob.type);
+      jsonObject.size = bytesToSize(blob.size);
 
-    document.querySelector(".mediaSize_" + imageId).dataset.size = blob.size;
+      document.querySelector(".mediaSize_" + imageId).dataset.size = blob.size;
+    }
   };
   xhr.send();
 };
@@ -68,7 +70,7 @@ const getImageInfo = (imageUrl, imageId, jsonObject) => {
  * Init Media Library Explorer
  */
 const initMediaExplorer = (isExperimental = false) => {
-  let mediaItems = document.querySelectorAll("#FileList > a");
+  let mediaItems = document.querySelectorAll("#FileList > a:not(.scButton)");
   mediaItems.forEach((el) => {
     el.remove();
   });
@@ -80,7 +82,7 @@ const initMediaExplorer = (isExperimental = false) => {
 
   // prettier-ignore
   let mediaExplorer =
-    `<input id="mediaThumbnailSize" class="mediaThumbnailSize" type ="range" min ="25" max="100" step ="5" value ="` +
+    `<input id="mediaThumbnailSize" class="mediaThumbnailSize" type ="range" min ="25" max="150" step ="5" value ="` +
     scMediaThumbnailSize +
     `" onchange="updateMediaThumbnails(this.value)"/>
 
@@ -101,7 +103,9 @@ const initMediaExplorer = (isExperimental = false) => {
   for (let item of mediaItems) {
     mediaId = item ? item.getAttribute("id") : false;
     //.replace("&h=72", "&h=300").replace("&w=72", "&w=300")
-    mediaThumbnail = item.querySelector(".scMediaBorder > img") ? item.querySelector(".scMediaBorder > img").getAttribute("src") : false;
+    mediaThumbnail = item.querySelector(".scMediaBorder > img")
+      ? item.querySelector(".scMediaBorder > img").getAttribute("src").replace("&h=72", "&h=150").replace("&w=72", "&h=150")
+      : false;
     mediaImage = item.querySelector(".scMediaBorder > img")
       ? item.querySelector(".scMediaBorder > img").getAttribute("src").replace("&h=72", "").replace("&thn=1", "").replace("&w=72", "").replace("bc=white&", "")
       : false;
@@ -168,11 +172,15 @@ const initMediaExplorer = (isExperimental = false) => {
     mediaFolder != "Folder" ? getImageInfo(mediaImage, mediaId, mediaItemsJson[mediaId]) : "Folder";
   }
   mediaExplorer += `</tbody></table>`;
-  document.querySelectorAll(".scTitle")[1] ? document.querySelectorAll(".scTitle")[1].insertAdjacentHTML("afterend", mediaExplorer) : false;
+
+  //Insert list view
+  document.querySelectorAll(".scTitle").forEach((el) => {
+    el.innerText.toLowerCase().includes("media") ? el.insertAdjacentHTML("afterend", mediaExplorer) : false;
+  });
 
   //Buttom view
-  document.querySelector(".scButtonGrid").classList.remove("selected");
-  document.querySelector(".scButtonList").classList.add("selected");
+  document.querySelector(".scButtonGrid") ? document.querySelector(".scButtonGrid").classList.remove("selected") : false;
+  document.querySelector(".scButtonList") ? document.querySelector(".scButtonList").classList.add("selected") : false;
 
   //Sort
   let scMediaSortPos = localStorage.getItem("scMediaSortPos") ? localStorage.getItem("scMediaSortPos") : null;
@@ -199,11 +207,20 @@ const initMediaExplorer = (isExperimental = false) => {
  */
 const initMediaCounter = () => {
   let totalItem = document.querySelectorAll("#FileList > a").length;
-  let titleMedia = document.querySelectorAll(".scTitle")[1];
-  titleMedia ? (titleMedia.innerText = titleMedia.innerText + ` (` + totalItem + `)`) : false;
+  document.querySelectorAll(".scTitle").forEach((el) => {
+    el.innerText.toLowerCase().includes("media") ? (el.innerText = el.innerText + ` (` + totalItem + `)`) : false;
+  });
+  //If empty
   if (totalItem == 0) {
     let scFolderButtons = document.querySelector(".scFolderButtons");
-    scFolderButtons.insertAdjacentHTML("beforeend", `<div class="scNoVersion"><p>This folder is empty.</p><br /></div>`);
+    let scButtonHtml = `<div class="scNoVersion"><p>The folder is empty.</p><br /></div>`;
+    if (scFolderButtons) {
+      scFolderButtons.insertAdjacentHTML("afterbegin", scButtonHtml);
+    } else {
+      document.querySelectorAll(".scTitle").forEach((el) => {
+        el.innerText.toLowerCase().includes("media") ? el.insertAdjacentHTML("beforebegin", scButtonHtml) : false;
+      });
+    }
   }
 };
 
@@ -220,7 +237,7 @@ const initMediaDragDrop = () => {
   //Add button
   var scFolderButtons = document.querySelector(".scFolderButtons");
   var scButtonHtml = `<a class="scButton t-sm t-top" data-tooltip="Drag and drop upload" id="scUploadDragDrop" onclick="javascript:scSitecore.prototype.showModalDialog('${scUploadMediaUrl}', '', '', null, null); return false;"><img loading="lazy" src=" ${global.iconGallery} " width="16" height="16" class="scIcon" alt="" border="0"><div class="scHeader">Upload multiple files</div></a>`;
-  scFolderButtons.insertAdjacentHTML("afterbegin", scButtonHtml);
+  scFolderButtons ? scFolderButtons.insertAdjacentHTML("afterbegin", scButtonHtml) : false;
 };
 
 /**
@@ -236,7 +253,14 @@ const initMediaViewButtons = () => {
   let scButtonHtml = `
   <a class="scButton scButtonList ` + listSelected + ` t-sm t-top" data-tooltip="List view"  onclick="switchMediaView('list')"><img loading="lazy" src=" ${global.iconListView} " width="16" height="16" class="scIcon" alt="" border="0"></a>
   <a class="scButton scButtonGrid ` + gridSelected + ` t-sm t-top" data-tooltip="Grid view""  onclick="switchMediaView('grid')"><img loading="lazy" src=" ${global.iconGridView} " width="16" height="16" class="scIcon" alt="" border="0"></a>`;
-  scFolderButtons.insertAdjacentHTML("beforeend", scButtonHtml);
+
+  if (scFolderButtons) {
+    scFolderButtons.insertAdjacentHTML("beforeend", scButtonHtml);
+  } else {
+    document.querySelectorAll(".scTitle").forEach((el) => {
+      el.innerText.toLowerCase().includes("media") ? el.insertAdjacentHTML("beforebegin", scButtonHtml) : false;
+    });
+  }
 
   //Back to parent
   setTimeout(function () {
@@ -259,17 +283,23 @@ const initMediaViewButtons = () => {
               );
             //Insert Refresh
             let scButtonHtml = `<a class="scButton scSmall t-sm t-top" data-tooltip="Refresh" onclick="javascript:location.reload(); return false;" title="Refresh view"><img loading="lazy" src=" ${global.iconRefresh} " width="16" height="16" class="scIcon" alt="Refresh view" border="0"><div class="scHeader">&nbsp;</div></a>`;
-            document.querySelector(".scFolderButtons").insertAdjacentHTML("afterbegin", scButtonHtml);
+            if (scFolderButtons) {
+              scFolderButtons.insertAdjacentHTML("afterbegin", scButtonHtml);
+            } else {
+              document.querySelectorAll(".scTitle").forEach((el) => {
+                el.innerText.toLowerCase().includes("media") ? el.insertAdjacentHTML("beforebegin", scButtonHtml) : false;
+              });
+            }
             //Insert Back
-            scButtonHtml =
-              `<a class="scButton scSmall t-sm t-top" data-tooltip="Back" onclick="javascript:scForm.getParentForm().invoke('item:load(id={` +
-              parentScId +
-              `})');return false" title="Back to ` +
-              parentScTitle +
-              `"><img loading="lazy" src=" ${global.iconParent} " width="16" height="16" class="scIcon" alt="alt="Back to ` +
-              parentScTitle +
-              `" border="0"><div class="scHeader">&nbsp;</div></a>`;
-            document.querySelector(".scFolderButtons").insertAdjacentHTML("afterbegin", scButtonHtml);
+            //prettier-ignore
+            scButtonHtml = `<a class="scButton scSmall t-sm t-top" data-tooltip="Back" onclick="javascript:scForm.getParentForm().invoke('item:load(id={` + parentScId + `})');return false" title="Back to ` + parentScTitle + `"><img loading="lazy" src=" ${global.iconParent} " width="16" height="16" class="scIcon" alt="alt="Back to ` + parentScTitle + `" border="0"><div class="scHeader">&nbsp;</div></a>`;
+            if (scFolderButtons) {
+              scFolderButtons.insertAdjacentHTML("afterbegin", scButtonHtml);
+            } else {
+              document.querySelectorAll(".scTitle").forEach((el) => {
+                el.innerText.toLowerCase().includes("media") ? el.insertAdjacentHTML("beforebegin", scButtonHtml) : false;
+              });
+            }
             break;
           }
         }

@@ -37,6 +37,11 @@ const getFileType = (type) => {
   fileType = fileType == "wepb" ? "WEBP image" : fileType;
   fileType = fileType == "svg+xml" ? "SVG image" : fileType;
   fileType = fileType == "pdf" ? "PDF document" : fileType;
+  fileType = fileType == "mp4" ? "MP4 video" : fileType;
+  fileType = fileType == "avi" ? "AVI video" : fileType;
+  fileType = fileType == "mov" ? "MOV video" : fileType;
+  fileType = fileType == "mpeg" ? "MPEG video" : fileType;
+  fileType = fileType == "ogg" ? "OGG video" : fileType;
   fileType = fileType.includes("-officedocument") ? "Office document" : fileType;
 
   return fileType;
@@ -104,7 +109,7 @@ const initMediaExplorer = (isExperimental = false) => {
     mediaId = item ? item.getAttribute("id") : false;
     //.replace("&h=72", "&h=300").replace("&w=72", "&w=300")
     mediaThumbnail = item.querySelector(".scMediaBorder > img")
-      ? item.querySelector(".scMediaBorder > img").getAttribute("src").replace("&h=72", "&h=150").replace("&w=72", "&h=150")
+      ? item.querySelector(".scMediaBorder > img").getAttribute("src").replace("&h=72", "&h=150").replace("&w=72", "&w=150")
       : false;
     mediaImage = item.querySelector(".scMediaBorder > img")
       ? item.querySelector(".scMediaBorder > img").getAttribute("src").replace("&h=72", "").replace("&thn=1", "").replace("&w=72", "").replace("bc=white&", "")

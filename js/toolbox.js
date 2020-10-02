@@ -440,6 +440,16 @@ chrome.storage.sync.get((storage) => {
         loadCssFile("css/checkbox.min.css");
       }
 
+      if (storage.feature_experimentalui) {
+        loadCssFile("css/experimentalui.min.css");
+        getAccentColor();
+        //Icon contrasted
+        if (storage.feature_contrast_icons === false) {
+          document.documentElement.style.setProperty("--iconBrightness", 1);
+          document.documentElement.style.setProperty("--iconContrast", 1);
+        }
+      }
+
       storage.feature_charscount == undefined ? (storage.feature_charscount = true) : false;
 
       if (storage.feature_charscount) {

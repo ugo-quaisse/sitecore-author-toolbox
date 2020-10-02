@@ -1277,3 +1277,12 @@ input[type="submit"],
 .ui-progressbar-value {
   background-color: var(--accent) !important;
 }
+
+.zg-delightful-droppable.hovered {
+  background-color: #0f7ec254;
+}
+
+.sxa-toolbox-droppable.toolbox-dropping .inner,
+.sxa-toolbox-div.toolbox-dropping .inner {
+  background-color: var(--accent);
+}

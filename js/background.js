@@ -19,15 +19,10 @@
  * Check existing cookie of SXA site
  */
 function checkSiteSxa(sender, sendResponse) {
-  console.log(sender);
   var url = new URL(sender.tab.url);
   chrome.cookies.getAll({}, function (cookies) {
     for (var i in cookies) {
-      if (
-        cookies[i].domain == url.hostname &&
-        cookies[i].name == "sxa_site" &&
-        cookies[i].value != "login"
-      ) {
+      if (cookies[i].domain == url.hostname && cookies[i].name == "sxa_site" && cookies[i].value != "login") {
         sendResponse({ farewell: cookies[i].value });
         break;
       }
@@ -40,8 +35,6 @@ function checkSiteSxa(sender, sendResponse) {
  * Action on right-clic
  */
 function onClickHandler(info, tab) {
-  console.table(tab);
-
   if (info.menuItemId == "SitecoreAuthorToolbox") {
     //Check if window.location.href = CD/Live server
     chrome.storage.sync.get(["domain_manager"], (result) => {
@@ -74,9 +67,7 @@ function onClickHandler(info, tab) {
  * Get Sitecore userticket cookie
  */
 function getSitecoreCookie(tab) {
-  chrome.cookies.get({ url: tab.url, name: "sitecore_userticket" }, function (
-    cookie
-  ) {
+  chrome.cookies.get({ url: tab.url, name: "sitecore_userticket" }, function (cookie) {
     if (cookie.value) {
       return cookie.value;
     }
@@ -132,11 +123,7 @@ function setIcon(tab) {
       chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
 
       for (var i in cookies) {
-        if (
-          cookies[i].name == "sitecore_userticket" ||
-          cookies[i].name.includes("#lang") ||
-          cookies[i].name.includes("#sc_mode")
-        ) {
+        if (cookies[i].name == "sitecore_userticket" || cookies[i].name.includes("#lang") || cookies[i].name.includes("#sc_mode")) {
           cookie = true;
           break;
         }
@@ -149,9 +136,7 @@ function setIcon(tab) {
 
         //Context menu
         chrome.storage.sync.get(["feature_contextmenu"], (result) => {
-          result.feature_contextmenu == undefined
-            ? (result.feature_contextmenu = false)
-            : false;
+          result.feature_contextmenu == undefined ? (result.feature_contextmenu = false) : false;
           result.feature_contextmenu ? showContextMenu(tab) : false;
         });
       } else {
@@ -167,19 +152,15 @@ function setIcon(tab) {
 
 //When message is requested from toolbox.js
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  console.log(request);
-
   if (request.greeting == "get_pagestatus") {
     fetch(request.url)
       .then(function (response) {
-        console.log(response);
         sendResponse({
           status: response.status,
           redirected: response.redirected,
         });
       })
       .catch(function (error) {
-        console.log(error);
         sendResponse({ error });
       });
   }
@@ -218,9 +199,7 @@ chrome.tabs.onActivated.addListener(function (tab) {
   });
 });
 
-chrome.runtime.setUninstallURL(
-  "https://uquaisse.io/sitecore-cms/uninstallation-successful/?utm_source=uninstall&utm_medium=chrome"
-);
+chrome.runtime.setUninstallURL("https://uquaisse.io/sitecore-cms/uninstallation-successful/?utm_source=uninstall&utm_medium=chrome");
 
 // When the extension is installed or upgraded ...
 chrome.runtime.onInstalled.addListener(function (details) {
@@ -238,19 +217,17 @@ chrome.runtime.onInstalled.addListener(function (details) {
     ["Increment", versionIncrement],
   ];
 
-  chrome.storage.sync.get((e) => {
-    console.table(e);
-    console.table(e.scData);
-    console.table(e.domain_manager);
-  });
+  // chrome.storage.sync.get((e) => {
+  //   console.table(e);
+  //   console.table(e.scData);
+  //   console.table(e.domain_manager);
+  // });
 
   if (details.reason == "install") {
     //chrome.tabs.create({ url: "https://uquaisse.io/extension-update/?utm_source=install&utm_medium=chrome&utm_campaign=" + thisVersion });
   } else if (details.reason == "update") {
     if (thisVersion != details.previousVersion) {
-      console.log(
-        "Updated from " + details.previousVersion + " to " + thisVersion
-      );
+      console.log("Updated from " + details.previousVersion + " to " + thisVersion);
       new Notification("Extension updated!", {
         body: "Version " + thisVersion,
         icon: chrome.runtime.getURL("images/icon.png"),

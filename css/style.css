@@ -68,14 +68,14 @@
 
 form#ContentEditorForm {
   filter: blur(7px) brightness(0.1) grayscale(1);
-  transition: all ease-in-out 0.2s;
+  transition: all ease-in-out 0.3s;
   transition-delay: 0.5s;
 }
 
 body.contentEditor {
   background-color: #000;
-  transition: all ease-in-out 0.1s;
-  transition-delay: 0.2s;
+  transition: all ease-in-out 0.3s;
+  transition-delay: 0.5s;
 }
 
 body.contentEditor:after {

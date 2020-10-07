@@ -26,6 +26,8 @@ import { instantSearch } from "./modules/instantsearch.js";
 import { insertModal, insertPanel } from "./modules/menu.js";
 import { initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons } from "./modules/media.js";
 import { insertSavebar, initInsertIcon, initGutter, getAccentColor, initColorPicker, initSitecoreMenu, initUserMenu } from "./modules/experimentalui.js";
+import { initFavorites } from "./modules/favorites.js";
+import { initGroupedErrors } from "./modules/errors.js";
 
 /**
  * Get all user's settings from storage
@@ -274,39 +276,20 @@ chrome.storage.sync.get((storage) => {
        * Favorites bar
        */
       storage.feature_favorites == undefined ? (storage.feature_favorites = false) : false;
-
-      if (storage.feature_favorites && !global.isPublishWindow && global.scContentTree) {
-        var scFavoritesIframe = document.querySelector("#sitecorAuthorToolboxFav");
-        //If already there
-        scFavoritesIframe ? scFavoritesIframe.remove() : false;
-
-        //Get current scItem
-        let ScItem = getScItemData();
-        //Prepare HTML
-        var scFavoritesUrl = "../default.aspx?xmlcontrol=Gallery.Favorites&id=" + ScItem.id + "&la=en&vs=1";
-        var scMyShortcut =
-          '<iframe loading="lazy" id="sitecorAuthorToolboxFav" class="sitecorAuthorToolboxFav" src="' +
-          scFavoritesUrl +
-          '" style="width:100%; height:150px; margin-top: 0px; resize: vertical;"></iframe>';
-
-        //Insert HTML
-        global.scContentTree.insertAdjacentHTML("afterend", scMyShortcut);
-      }
+      storage.feature_favorites && !global.isPublishWindow && global.scContentTree ? initFavorites() : false;
 
       /**
        * Show Snackbar
        */
       if (!global.isLaunchpad) {
-        //Current version of the Snackbar
-        let snackbarVersion = global.extensionVersion;
-        localStorage.getItem("sbDismiss") != snackbarVersion ? showSnackbar(snackbarVersion) : false;
+        localStorage.getItem("sbDismiss") != global.extensionVersion ? showSnackbar(global.extensionVersion) : false;
       }
 
       /**
        * Workbox badge
        */
       storage.feature_workbox == undefined ? (storage.feature_workbox = true) : false;
-      !chrome.runtime.error && storage.feature_workbox === true ? checkWorkbox() : false;
+      storage.feature_workbox ? checkWorkbox() : false;
     }
     //End CE
 
@@ -325,24 +308,11 @@ chrome.storage.sync.get((storage) => {
       }
 
       if (storage.feature_launchpad) {
-        var html =
-          '<a href="#" class="scStartMenuLeftOption" title="" onclick="window.location.href=\'' +
-          global.launchpadPage +
-          "?launchpad=true&url=" +
-          global.windowLocationHref +
-          '\'"><img loading="lazy" src="' +
-          global.launchpadIcon +
-          '" class="scStartMenuLeftOptionIcon" alt="" border="0"><div class="scStartMenuLeftOptionDescription"><div class="scStartMenuLeftOptionDisplayName">' +
-          global.launchpadGroupTitle +
-          '</div><div class="scStartMenuLeftOptionTooltip">' +
-          global.launchpadTitle +
-          "</div></div></a>";
-        // //Find last dom item
-        var desktopOptionMenu = document.querySelectorAll(".scStartMenuLeftOption");
-        // Loop and fin title = "Command line interface to manage content."
-        for (let item of desktopOptionMenu) {
+        //prettier-ignore
+        var html = `<a href="#" class="scStartMenuLeftOption" title="" onclick="window.location.href='` + global.launchpadPage + `?launchpad=true&url=` + global.windowLocationHref + `'"><img loading="lazy" src="` + global.launchpadIcon + `" class="scStartMenuLeftOptionIcon" alt="" border="0"><div class="scStartMenuLeftOptionDescription"><div class="scStartMenuLeftOptionDisplayName">` + global.launchpadGroupTitle + `</div><div class="scStartMenuLeftOptionTooltip">` + global.launchpadTitle + `</div></div></a>`;
+        document.querySelectorAll(".scStartMenuLeftOption").forEach(function (item) {
           item.getAttribute("title") == "Install and maintain apps." ? item.insertAdjacentHTML("afterend", html) : false;
-        }
+        });
       }
     }
 
@@ -352,26 +322,9 @@ chrome.storage.sync.get((storage) => {
       storage.feature_launchpad_tiles == undefined ? (storage.feature_launchpad_tiles = false) : false;
 
       if (storage.feature_launchpad) {
-        //Find last dom item
-        var launchpadCol = document.querySelectorAll(".last");
-        //get popup url
-        html =
-          '<div class="sc-launchpad-group"><header class="sc-launchpad-group-title">' +
-          global.launchpadGroupTitle +
-          '</header><div class="sc-launchpad-group-row"><a href="#" onclick="window.location.href=\'' +
-          global.launchpadPage +
-          "?launchpad=true&url=" +
-          global.windowLocationHref +
-          '\'" class="sc-launchpad-item" title="' +
-          global.launchpadTitle +
-          '"><span class="icon"><img loading="lazy" src="' +
-          global.launchpadIcon +
-          '" width="48" height="48" alt="' +
-          global.launchpadTitle +
-          '"></span><span class="sc-launchpad-text">' +
-          global.launchpadTitle +
-          "</span></a></div></div>";
-        //Insert into launchpad
+        let launchpadCol = document.querySelectorAll(".last");
+        //prettier-ignore
+        html = `<div class="sc-launchpad-group"><header class="sc-launchpad-group-title">` + global.launchpadGroupTitle + `</header><div class="sc-launchpad-group-row"><a href="#" onclick="window.location.href='` + global.launchpadPage + `?launchpad=true&url=` + global.windowLocationHref + `'" class="sc-launchpad-item" title="` + global.launchpadTitle + `"><span class="icon"><img loading="lazy" src="` + global.launchpadIcon + `" width="48" height="48" alt="` + global.launchpadTitle + `"></span><span class="sc-launchpad-text">` + global.launchpadTitle + `</span></a></div></div>`;
         launchpadCol[0].insertAdjacentHTML("afterend", html);
       }
       if (storage.feature_launchpad_tiles) {
@@ -563,84 +516,7 @@ chrome.storage.sync.get((storage) => {
        * Grouped errors
        */
       storage.feature_errors == undefined ? (storage.feature_errors = true) : false;
-
-      //Variables
-      var count = 0;
-      var scErrors = document.getElementsByClassName("scValidationMarkerIcon");
-      var scEditorID = document.querySelector("#MainPanel");
-
-      if (storage.feature_errors) {
-        //Prepare HTML
-        var scMessageErrors =
-          '<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' +
-          global.iconError +
-          ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">';
-
-        for (let item of scErrors) {
-          if (item.getAttribute("src") != "/sitecore/shell/themes/standard/images/bullet_square_yellow.png") {
-            scMessageErrors +=
-              '<li class="scMessageBarOptionBullet" onclick="' +
-              item.getAttribute("onclick") +
-              '" style="cursor:pointer;">' +
-              item.getAttribute("title") +
-              "</li>";
-            count++;
-          }
-        }
-        scMessageErrors += "</ul></div></div>";
-
-        //Insert message bar into Sitecore Content Editor
-        if (count > 0) {
-          scEditorID.insertAdjacentHTML("beforebegin", scMessageErrors);
-        }
-
-        //Update on change/unblur
-        let timer, element;
-        target = document.querySelector(".scValidatorPanel");
-        observer = new MutationObserver(function () {
-          timer ? clearTimeout(timer) : false;
-          timer = setTimeout(function () {
-            //Delete all errors
-            element = document.querySelector("#scMessageBarError");
-            element ? element.parentNode.removeChild(element) : false;
-
-            count = 0;
-            //Current errors
-            scErrors = document.querySelectorAll(" .scValidationMarkerIcon ");
-
-            //Prepare HTML
-            var scMessageErrors =
-              '<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' +
-              global.iconError +
-              ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">';
-
-            for (let item of scErrors) {
-              if (item.getAttribute("src") != "/sitecore/shell/themes/standard/images/bullet_square_yellow.png") {
-                scMessageErrors +=
-                  '<li class="scMessageBarOptionBullet" onclick="' +
-                  item.getAttribute("onclick") +
-                  '" style="cursor:pointer;">' +
-                  item.getAttribute("title") +
-                  "</li>";
-                count++;
-              }
-            }
-            scMessageErrors += "</ul></div></div>";
-
-            //Add errors
-            count > 0 ? scEditorID.insertAdjacentHTML("beforebegin", scMessageErrors) : false;
-          }, 1500);
-        });
-
-        //Observer
-        target
-          ? observer.observe(target, {
-              attributes: true,
-              childList: true,
-              characterData: true,
-            })
-          : false;
-      }
+      storage.feature_errors ? initGroupedErrors() : false;
     }
 
     if (global.isSourceBrowser) {

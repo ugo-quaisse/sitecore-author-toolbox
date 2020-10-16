@@ -100,7 +100,7 @@ const initMediaExplorer = (isExperimental = false) => {
             <th width="12%" onclick="sortTable('datasize', 'Size', 3)" data-sort="ASC">Size</th>
             <th onclick="sortTable('datavalidation', 'Validation', 4)" data-sort="ASC">Validation</th>
             <th onclick="sortTable('datausage', 'Usage', 5)" data-sort="ASC">Usage</th>
-            <th width="100px" class="noSort"></th>
+            <th width="150px" class="noSort"></th>
           </tr>
         </thead>
         <tbody>`;
@@ -151,7 +151,7 @@ const initMediaExplorer = (isExperimental = false) => {
     mediaExplorer += `
       <tr id="mediaItem_` + mediaId + `">
         <td class="mediaArrow" onclick="` + mediaClick + `">` + mediaArrow + `</td>
-        <td class="mediaThumbnail" onclick="` + mediaClick + `"><img src='` + mediaThumbnail + `' style="width: ` + scMediaThumbnailSize + `px !important" class="` + mediaClass + ` scMediaThumbnail" loading="lazy"/></td>
+        <td class="mediaThumbnail" onclick="` + mediaClick + `"><img src='` + mediaThumbnail + `' style="width: ` + scMediaThumbnailSize + `px !important; min-height: ` + scMediaThumbnailSize + `px !important" class="` + mediaClass + ` scMediaThumbnail" loading="lazy"/></td>
         <td class="mediaTitle_` + mediaId + `" onclick="doubleClick('` + mediaId + `','` + itemId + `')" title="` + mediaTitle + ` (Double click to rename)">
           <div class="mediaTitle">` + mediaTitle + `</div>
         </td>

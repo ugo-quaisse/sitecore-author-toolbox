@@ -1278,6 +1278,10 @@ input[type="submit"],
   background-color: var(--accent) !important;
 }
 
+.ui-progressbar-indeterminate.ui-progressbar {
+  background-color: var(--accent) !important;
+}
+
 .zg-delightful-droppable.hovered {
   background-color: #0f7ec254;
 }
@@ -1285,4 +1289,39 @@ input[type="submit"],
 .sxa-toolbox-droppable.toolbox-dropping .inner,
 .sxa-toolbox-div.toolbox-dropping .inner {
   background-color: var(--accent);
+}
+
+/* @keyframes preloading {
+  from {
+    background-position: 0px center;
+  }
+  to {
+    background-position: -100px center;
+  }
+}
+
+.scMediaThumbnail {
+  background: url(chrome-extension://__MSG_@@extension_id__/images/media_loader.jpg) !important;
+  background-position: 0px center;
+  background-size: cover !important;
+  animation: preloading 2s linear infinite;
+} */
+
+a.scContentTreeNodeActive {
+  background-color: var(--accent);
+  color: var(--accentText);
+  border-radius: var(--radius);
+  padding: 4px 8px 8px 8px;
+}
+
+a.scContentTreeNodeActive > img {
+  filter: brightness(var(--iconBrightness)) contrast(var(--iconContrast));
+}
+
+.scOpenItem {
+  background-color: var(--accent);
+  color: var(--accentText);
+  padding: 3px 5px;
+  border-radius: var(--radius);
+  font-weight: 600;
 }

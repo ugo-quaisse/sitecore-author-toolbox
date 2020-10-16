@@ -482,23 +482,13 @@ chrome.storage.sync.get((storage) => {
           var itemId = scBucketListSelectedBox.value;
           itemId = itemId.includes("|") ? itemId.split("|")[1] : itemId;
           var itemName = scBucketListSelectedBox[scBucketListSelectedBox.selectedIndex].text;
-          var scMessageEditText =
-            '<a class="scMessageBarOption" href="' +
-            window.location.origin +
-            "/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#" +
-            itemId +
-            '" target="_blank"><u>Click here ⧉</u></a> ';
+          //prettier-ignore
+          var scMessageEditText = `<a class="scMessageBarOption" href="${window.location.origin}/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#${itemId}" target="_blank"><u>Click here ⧉</u></a> `;
           //var scMessageExperienceText = '<a class="scMessageBarOption" href="' + window.location.origin + '/?sc_mode=edit&sc_itemid=' + itemId + '" target="_blank"><u>Click here ⧉</u></a> ';
-          var scMessageEdit =
-            `<div id="Warnings" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(` +
-            global.icon +
-            `)"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">` +
-            itemName +
-            `</div>`;
-          scMessageEdit +=
-            `<span id="Information" class="scMessageBarText"><span class="scMessageBarOptionBullet">` +
-            scMessageEditText +
-            `</span> to edit this datasource in <b>Content Editor</b>.</span>`;
+          //prettier-ignore
+          var scMessageEdit = `<div id="Warnings" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(` + global.icon + `)"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">` + itemName + `</div>`;
+          //prettier-ignore
+          scMessageEdit += `<span id="Information" class="scMessageBarText"><span class="scMessageBarOptionBullet">` + scMessageEditText + `</span> to edit this datasource in <b>Content Editor</b>.</span>`;
           //scMessageEdit += `<span id="Information" class="scMessageBarText"><br /><span class="scMessageBarOptionBulletXP">` + scMessageExperienceText + `</span> to edit this datasource in <b>Experience Editor</b>.</span>`
           scMessageEdit += `</div></div>`;
 
@@ -1278,11 +1268,8 @@ chrome.storage.sync.get((storage) => {
       for (var mutation of mutations) {
         for (var addedNode of mutation.addedNodes) {
           if (addedNode.id == "scCrossPiece") {
-            //Show/Hide button
-            var html =
-              `<div class="scExpTab ` +
-              tabColor +
-              `">
+            //prettier-ignore
+            var html = `<div class="scExpTab ` + tabColor + `">
                         <span class="tabHandle"></span>
                         <span class="tabText" onclick="toggleRibbon()">▲ Hide<span>
                         </div>`;
@@ -1328,14 +1315,8 @@ chrome.storage.sync.get((storage) => {
     }
 
     if (storage.feature_experienceeditor && !global.isRibbon) {
-      html =
-        '<div class="scNormalModeTab ' +
-        tabColor +
-        '"><span class="t-right t-sm" data-tooltip="Open in Normal Mode"><a href="' +
-        linkNormalMode +
-        '" target="_blank"><img loading="lazy" src="' +
-        global.iconChrome +
-        '"/></a></span></div>';
+      //prettier-ignore
+      html = '<div class="scNormalModeTab ' + tabColor + '"><span class="t-right t-sm" data-tooltip="Open in Normal Mode"><a href="' + linkNormalMode + '" target="_blank"><img loading="lazy" src="' + global.iconChrome + '"/></a></span></div>';
       pagemodeEdit ? pagemodeEdit.insertAdjacentHTML("afterend", html) : false;
     }
 

@@ -481,24 +481,8 @@ const sitecoreAuthorToolbox = () => {
         if (field.className == "scEditorHeaderQuickInfoInput" || field.className == "scEditorHeaderQuickInfoInputID") {
           field.setAttribute("style", "width: calc(100%-16px); margin-left:2px; display: none");
           field.classList.add("copyCount_" + copyCount);
-          copyHtml =
-            `<span onclick="copyContent('` +
-            field.value +
-            `', '` +
-            copyCount +
-            `')" class="copyCountSpan_` +
-            copyCount +
-            `">` +
-            field.value +
-            `</span> <a class="t-top t-sm" data-tooltip="Copy" onclick="copyContent('` +
-            field.value +
-            `', '` +
-            copyCount +
-            `')"><img src="` +
-            global.iconCopy +
-            `" class="scIconCopy" /></a> <span class="copyCountMessage_` +
-            copyCount +
-            `"></span>`;
+          //prettier-ignore
+          copyHtml = `<span onclick="copyContent('` + field.value + `', '` + copyCount + `')" class="copyCountSpan_` + copyCount + `">` + field.value + `</span> <a class="t-top t-sm" data-tooltip="Copy" onclick="copyContent('` + field.value + `', '` + copyCount + `')"><img src="` + global.iconCopy + `" class="scIconCopy" /></a> <span class="copyCountMessage_` + copyCount + `"></span>`;
           field.value != "[unknown]"
             ? field.insertAdjacentHTML("beforebegin", copyHtml)
             : field.insertAdjacentHTML("beforebegin", `<span>` + field.value + `</span>`);
@@ -898,6 +882,24 @@ const sitecoreAuthorToolbox = () => {
           }
         }
       }
+
+      /*
+       * Tree list shortcut to item when select option
+       */
+      document.querySelectorAll(".scContentControlSelectedList").forEach(function (item) {
+        item.addEventListener("change", function (elem) {
+          //Get selected option
+          let itemId = elem.target.options[elem.target.selectedIndex].value;
+          itemId = itemId.includes("|") ? itemId.split("|")[1] : itemId;
+          console.log(itemId);
+          //Get closest scContentControlMultilistCaption
+          let parent = elem.target.options[elem.target.selectedIndex].closest(".scContentControlSelectedList");
+          document.querySelector(".scOpenParent") ? document.querySelector(".scOpenParent").remove() : false;
+          //prettier-ignore
+          parent.insertAdjacentHTML("beforebegin", "<span class='scOpenParent'><a class='scOpenItem' href='#' onclick='scForm.invoke(\"item:load(id=" + itemId + ")\")'>Go to source ↗</a><span>"
+          );
+        });
+      });
 
       /*
        * Search enhancements

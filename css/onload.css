@@ -305,7 +305,7 @@ a.scTileItem .scTileItemIconImage {
 
 .scEditableTab {
   position: fixed;
-  top: 270px;
+  top: 310px;
   background-color: #f7f7f7;
   padding: 10px 12px 7px 12px;
   z-index: 10000;
@@ -322,7 +322,7 @@ a.scTileItem .scTileItemIconImage {
 
 .scContentEditorTab {
   position: fixed;
-  top: 314px;
+  top: 364px;
   background-color: #f7f7f7;
   padding: 10px 12px 7px 12px;
   z-index: 10000;
@@ -339,7 +339,7 @@ a.scTileItem .scTileItemIconImage {
 
 .scNormalModeTab {
   position: fixed;
-  top: 360px;
+  top: 410px;
   background-color: #f7f7f7;
   padding: 10px 12px 7px 12px;
   z-index: 10000;
@@ -1129,4 +1129,10 @@ ul.scAccountMenu li:after {
 #SearchPanel .scBurgerMenuTitle {
   display: contents;
   cursor: pointer;
+}
+
+.scOpenParent {
+  margin-top: -25px;
+  margin-left: -10px;
+  text-align: right;
 }

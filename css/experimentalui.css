@@ -9,6 +9,12 @@ body {
   font-size: 12px;
 }
 
+button:focus,
+button:active {
+  outline: 0px solid var(--accent);
+  box-shadow: 0 0 0 2.5px var(--accent) !important;
+}
+
 #scPanel h1 {
   font-size: 250%;
   font-weight: 700;
@@ -236,8 +242,12 @@ ul.scAccountMenu li:hover {
 
 .scEditorQuickInfo {
   margin: 0px;
-  border-spacing: 10px;
+  border-spacing: 0px;
   border-collapse: separate;
+}
+
+.scEditorQuickInfo td {
+  padding: 8px;
 }
 
 .splitter-bar:hover::before,
@@ -489,7 +499,7 @@ img.scContentTreeNodeGlyph:hover[src="/sitecore/shell/themes/standard/images/noe
 .scGutter {
   z-index: 1002;
   top: 0;
-  width: 20px;
+  width: 10px;
   height: 100%;
   position: absolute;
 }
@@ -580,6 +590,14 @@ a.scEditorHeaderButton {
 button.scEditorHeaderButton:hover,
 a.scEditorHeaderButton:hover {
   filter: brightness(0.95);
+}
+
+button.scEditorHeaderButton:disabled {
+  opacity: 0.5;
+}
+
+.scEditorHeaderButton > img {
+  transition: transform 0.2s ease-in-out;
 }
 
 /*Iframe */
@@ -1324,4 +1342,15 @@ a.scContentTreeNodeActive > img {
   padding: 3px 5px;
   border-radius: var(--radius);
   font-weight: 600;
+}
+
+.sc-label,
+[data-sc-id="ReferenceContentSearchBorder"] {
+  background-color: var(--accent);
+  color: var(--accentText);
+}
+
+.scPreviewButton.focus {
+  outline: 0px solid var(--accent);
+  box-shadow: 0 0 0 2.5px var(--accent) !important;
 }

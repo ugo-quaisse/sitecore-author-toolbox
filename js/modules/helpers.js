@@ -35,7 +35,7 @@ export {
 /**
  * Show message in console
  */
-const consoleLog = (message, color) => {
+const consoleLog = (message, color = "yellow") => {
   let bgColor, txtColor, fontSize;
 
   switch (color) {

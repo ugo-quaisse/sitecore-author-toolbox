@@ -35,7 +35,9 @@ const insertSavebar = () => {
             </ul>
             <button class="primary primaryGrouped" onclick="javascript:return scForm.postEvent(this,event,'item:publish(id=)')">Save and Publish</button>`;
 
-  let scLiveyBtn = !global.hasModePreview ? `<button class="scPreviewButton" disabled>...</button>` : ``;
+  let scLiveyBtn = !global.hasModePreview
+    ? `<button class="scPreviewButton" onclick="javascript:return scForm.invoke('contenteditor:preview', event)">Preview</button>`
+    : ``;
 
   //Save Bar
   //prettier-ignore
@@ -129,31 +131,21 @@ const insertBreadcrumb = (path) => {
 const insertLanguageButton = (scItemId, scLanguage = "EN", scVersion = 1) => {
   //Button
   let container = document.querySelector(".scEditorTabControlsHolder");
-  let button =
-    `<button class="scEditorHeaderButton" id="scLanguageButton" type="button"><img src="` +
-    global.iconLanguage +
-    `" class="scLanguageIcon"> ` +
-    scLanguage +
-    ` ▾</button>`;
-  container ? container.insertAdjacentHTML("afterbegin", button) : false;
+  //prettier-ignore
+  let button = `<button class="scEditorHeaderButton" id="scLanguageButton" type="button"><img src="` + global.iconLanguage + `" class="scLanguageIcon"> ` + scLanguage + ` ▾</button>`;
+  container && !document.querySelector("#scLanguageButton") ? container.insertAdjacentHTML("afterbegin", button) : false;
 
   //Iframe
   document.querySelector("#scLanguageIframe") ? document.querySelector("#scLanguageIframe").remove() : false;
   let body = document.querySelector("body");
-  let iframe =
-    `<iframe loading="lazy" id="scLanguageIframe" src="/sitecore/shell/default.aspx?xmlcontrol=Gallery.Languages&id=` +
-    scItemId +
-    `&la=` +
-    scLanguage +
-    `&vs=` +
-    scVersion +
-    `&db=master"></iframe>`;
-  body ? body.insertAdjacentHTML("beforeend", iframe) : false;
+  //prettier-ignore
+  let iframe = `<iframe loading="lazy" id="scLanguageIframe" src="/sitecore/shell/default.aspx?xmlcontrol=Gallery.Languages&id=` + scItemId + `&la=` + scLanguage + `&vs=` + scVersion + `&db=master"></iframe>`;
+  body && !document.querySelector("#scLanguageIframe") ? body.insertAdjacentHTML("beforeend", iframe) : false;
 
   //Scroll position
   //document.querySelector("#scLanguageIframe").contentWindow.document.body.querySelector(".scGalleryContent13").scrollTop = 0;
 
-  //Hide old button
+  //Remove old
   document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;
 };
 
@@ -168,11 +160,10 @@ const insertMoreButton = () => {
   // <img src="` + global.iconInfo + `" class="scLanguageIcon">
   // </button>`;
 
+  //prettier-ignore
   let button =
     `<button class="scEditorHeaderButton" id="scMoreButton" title="More actions" type="button">
-    <img src="` +
-    global.iconMore +
-    `" class="scLanguageIcon">
+    <img src="` + global.iconMore + `" class="scLanguageIcon">
     </button>
     <ul class="scMoreMenu">
         <li onclick="javascript:return scForm.invoke('contenteditor:edit')" id="scLockMenuText">Lock item</li>
@@ -182,55 +173,25 @@ const insertMoreButton = () => {
         <li class="separator" onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor')">Edit in Experience Editor...</li>
         <li class="separator"  onclick="javascript:return scForm.postEvent(this,event,'item:sethelp')">Help texts</li>
         <li id="scInfoButton">Item details</li>
-        <li onclick="javascript:return scForm.postEvent(this,event,'item:executescript(id=` +
-    ScItem.id +
-    `,db=master,script={1876D433-4FAE-46B2-B2EF-AAA0FDA110E7},scriptDb=master)')">Author statistics</li>
-        <li class="separator danger" onclick="javascript:return scForm.invoke('item:delete(id=` +
-    ScItem.id +
-    `)', event)">Delete</li>
+        <li onclick="javascript:return scForm.postEvent(this,event,'item:executescript(id=` + ScItem.id + `,db=master,script={1876D433-4FAE-46B2-B2EF-AAA0FDA110E7},scriptDb=master)')">Author statistics</li>
+        <li class="separator danger" onclick="javascript:return scForm.invoke('item:delete(id=` + ScItem.id + `)', event)">Delete</li>
     </ul>`;
-  container ? container.insertAdjacentHTML("afterbegin", button) : false;
+  container && !document.querySelector("#scMoreButton") ? container.insertAdjacentHTML("afterbegin", button) : false;
 
   let panel = document.querySelector("#scPanel");
+  //prettier-ignore
   let html =
     `<div class="content">
-        <h2>Item details</h2>
-        <h3>Item ID:</h3>
-        ` +
-    ScItem.id +
-    `
-        <h3>Name:</h3>
-    ` +
-    ScItem.name +
-    `
-        <h3>Path:</h3>
-    ` +
-    ScItem.path +
-    `
-        <h3>Template:</h3>
-    ` +
-    ScItem.template +
-    `
-        <h3>Template ID:</h3>
-    ` +
-    ScItem.templateId +
-    `
-        <h3>From:</h3>
-    ` +
-    ScItem.from +
-    `
-        <h3>Owner:</h3>
-    ` +
-    ScItem.owner +
-    `
-        <h3>Language:</h3>
-    ` +
-    ScItem.language +
-    `
-        <h3>Version:</h3>
-    ` +
-    ScItem.version +
-    `
+      <h2>Item details</h2>
+      <h3>Item ID:</h3> ` + ScItem.id + `
+      <h3>Name:</h3> ` + ScItem.name + `
+      <h3>Path:</h3> ` + ScItem.path + `
+      <h3>Template:</h3> ` + ScItem.template + `
+      <h3>Template ID:</h3> ` + ScItem.templateId + `
+      <h3>From:</h3> ` + ScItem.from + `
+      <h3>Owner:</h3> ` + ScItem.owner + `
+      <h3>Language:</h3> ` + ScItem.language + `
+      <h3>Version:</h3> ` + ScItem.version + `
     </div>`;
   panel ? (panel.innerHTML = html) : false;
 
@@ -241,28 +202,20 @@ const insertMoreButton = () => {
  * Insert Version button
  */
 const insertVersionButton = (scItemId, scLanguage = "EN", scVersion = 1) => {
+  //Button
   let container = document.querySelector(".scEditorTabControlsHolder");
-  let button =
-    `<button class="scEditorHeaderButton" id="scVersionButton" type="button"><img src="` +
-    global.iconVersion +
-    `" class="scLanguageIcon"> ` +
-    scVersion +
-    ` ▾</button>`;
-  container && scVersion != null ? container.insertAdjacentHTML("afterbegin", button) : false;
+  //prettier-ignore
+  let button = `<button class="scEditorHeaderButton" id="scVersionButton" type="button"><img src="` + global.iconVersion + `" class="scLanguageIcon"> ` + scVersion + ` ▾</button>`;
+  container && !document.querySelector("#scVersionButton") && scVersion != null ? container.insertAdjacentHTML("afterbegin", button) : false;
 
   //Iframe
   document.querySelector("#scVersionIframe") ? document.querySelector("#scVersionIframe").remove() : false;
   let body = document.querySelector("body");
-  let iframe =
-    `<iframe loading="lazy" id="scVersionIframe" src="/sitecore/shell/default.aspx?xmlcontrol=Gallery.Versions&id=` +
-    scItemId +
-    `&la=` +
-    scLanguage +
-    `&vs=` +
-    scVersion +
-    `&db=master"></iframe>`;
-  body ? body.insertAdjacentHTML("beforeend", iframe) : false;
+  //prettier-ignore
+  let iframe = `<iframe loading="lazy" id="scVersionIframe" src="/sitecore/shell/default.aspx?xmlcontrol=Gallery.Versions&id=` + scItemId + `&la=` + scLanguage + `&vs=` + scVersion + `&db=master"></iframe>`;
+  body && !document.querySelector("#scVersionIframe") ? body.insertAdjacentHTML("beforeend", iframe) : false;
 
+  //Remove old button
   document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;
 };
 

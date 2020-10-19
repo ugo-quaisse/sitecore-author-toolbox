@@ -1136,3 +1136,112 @@ ul.scAccountMenu li:after {
   margin-left: -10px;
   text-align: right;
 }
+
+/* Preview mode */
+#ContentEditor {
+  background-color: var(--grey4);
+}
+
+#Page {
+  background-color: var(--grey4);
+  transition: transform 0.5s ease-in-out;
+}
+
+#Page > #Shadow {
+  transition: width 0.5s ease-in-out, height 0.5s ease-in-out, border 0.5s ease-in-out;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin: auto;
+  padding: 0px;
+  border: 0px solid var(--black10);
+  background-color: var(--grey10);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 100%;
+  width: 100%;
+  box-shadow: 0 10px 30px 0px rgba(0, 0, 0, 0.15);
+}
+
+#Page iframe {
+  border: 0px;
+  position: relative;
+  left: 0px;
+  top: 0px;
+}
+
+/* Mobile portrait */
+
+#Page.mobile_v iframe {
+  border-radius: 27px;
+}
+
+#Page.mobile_v > #Shadow {
+  width: 375px;
+  height: 812px;
+  border-width: 13px;
+  border-radius: 40px;
+}
+
+/* Mobile landscape */
+
+#Page.mobile_h iframe {
+  border-radius: 27px;
+}
+
+#Page.mobile_h > #Shadow {
+  width: 812px;
+  height: 375px;
+  border-width: 13px;
+  border-radius: 40px;
+}
+
+/* Tablet portrait */
+
+#Page.tablet_v iframe {
+  border-radius: 17px;
+}
+
+#Page.tablet_v > #Shadow {
+  width: 1024px;
+  height: 1366px;
+  border-width: 25px;
+  border-radius: 40px;
+}
+
+/* Tablet landscape */
+
+#Page.tablet_h iframe {
+  border-radius: 17px;
+}
+
+#Page.tablet_h > #Shadow {
+  width: 1366px;
+  height: 1024px;
+  border-width: 25px;
+  border-radius: 40px;
+}
+
+.scButtonExtended {
+  border-radius: 0px !important;
+  padding: 0px 15px;
+  min-width: 50px;
+  height: 29px;
+  margin-right: 10px;
+  margin-top: -20px;
+  vertical-align: text-bottom;
+  border: 1px solid #bdbdbd;
+  background-color: #f7f7f7;
+  box-shadow: inset 0 1px #ffffff;
+}
+
+.scButtonExtended:hover {
+  background-color: #ffffff;
+}
+
+.scButtonExtended > img {
+  zoom: 0.6;
+  vertical-align: middle;
+  transition: all 0.2s ease-in-out;
+}

@@ -177,7 +177,7 @@ const fadeEditorFrames = () => {
 
   document.querySelector("#EditorFrames").setAttribute("style", "opacity:0.6");
   document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:0.6");
-  document.querySelector(".scEditorTabHeaderActive > span").innerText = "Loading...";
+  document.querySelectorAll(".scEditorTabHeaderNormal, .scEditorTabHeaderActive > span")[0].innerText = "Loading...";
   var timeout = setTimeout(function () {
     document.querySelector("#EditorFrames").setAttribute("style", "opacity:1");
     document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:1");
@@ -333,6 +333,14 @@ function updateMediaThumbnails(value) {
 }
 
 /**
+ * Update preview thumbnail size
+ */
+function updatePreviewSize(iframeId, value) {
+  //prettier-ignore
+  document.querySelector('#' + iframeId).contentWindow.document.body.querySelector('#Page').setAttribute('style', 'transform: scale(' + value + ')');
+}
+
+/**
  * Update media thumbnail size
  */
 function switchMediaView(view) {
@@ -391,12 +399,109 @@ function getParentNode(int = 1, tabLoadingTitle) {
           document.querySelector("#svgAnimation").setAttribute("style", "opacity:1");
           document.querySelector("#EditorFrames").setAttribute("style", "opacity:0");
           document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:0.5");
-          document.querySelector(".scEditorTabHeaderActive > span").innerText = tabLoadingTitle;
+          document.querySelectorAll(".scEditorTabHeaderNormal, .scEditorTabHeaderActive > span")[0] = tabLoadingTitle;
 
           // eslint-disable-next-line no-undef
           return scForm.invoke("item:load(id={" + parentScId + "})");
         }
       }
+    }
+  }
+}
+
+/**
+ * Change device preview
+ */
+function changeDevicePreview(iframeId, device, orientation = "v") {
+  let ratio;
+
+  //Get preview page size
+  let pageWidth = document.querySelector("#" + iframeId).clientWidth;
+  let pageHeight = document.querySelector("#" + iframeId).clientHeight;
+
+  //Clear existing class
+  document.querySelector("#" + iframeId).removeAttribute("class");
+
+  //Rotate icons
+  if (orientation == "v") {
+    document.querySelectorAll("#scRotateDeviceButton > img, #scMobileDeviceButton > img, #scTabletDeviceButton > img").forEach(function (elem) {
+      elem.setAttribute("style", "transform: rotate(0deg);");
+    });
+  } else if (orientation == "h") {
+    document.querySelectorAll("#scRotateDeviceButton > img, #scMobileDeviceButton > img, #scTabletDeviceButton > img").forEach(function (elem) {
+      elem.setAttribute("style", "transform: rotate(90deg);");
+    });
+  }
+
+  //Switch to device
+  switch (device) {
+    case "mobile":
+      //Add class
+      document
+        .querySelector("#" + iframeId)
+        .contentWindow.document.body.querySelector("#Page")
+        .setAttribute("class", "mobile_" + orientation);
+      //Check viewport height
+
+      ratio = pageHeight / 812 - 0.05;
+      ratio = Math.round(ratio * 100) / 100;
+      ratio > 1 ? (ratio = 1) : false;
+      document.querySelector("#previewRange").value = ratio;
+      updatePreviewSize(iframeId, ratio);
+
+      //Enable rotate
+      document.querySelectorAll("#scRotateDeviceButton").forEach(function (elem) {
+        elem.disabled = false;
+      });
+      break;
+
+    case "tablet":
+      //Add class
+      document
+        .querySelector("#" + iframeId)
+        .contentWindow.document.body.querySelector("#Page")
+        .setAttribute("class", "tablet_" + orientation);
+      //Check viewport height
+
+      ratio = pageHeight / 1366 - 0.05;
+      ratio = Math.round(ratio * 100) / 100;
+      ratio > 1 ? (ratio = 1) : false;
+      document.querySelector("#previewRange").value = ratio;
+      updatePreviewSize(iframeId, ratio);
+
+      //Enable rotate
+      document.querySelector("#scRotateDeviceButton").disabled = false;
+      break;
+
+    default:
+      //Reset class
+      document
+        .querySelector("#" + iframeId)
+        .contentWindow.document.body.querySelector("#Page")
+        .setAttribute("class", "");
+      //Reset viewport
+      document.querySelector("#previewRange").value = "1";
+      updatePreviewSize(iframeId, 1);
+      //Enable rotate
+      document.querySelector("#scRotateDeviceButton").disabled = true;
+  }
+}
+
+/**
+ * Change device preview
+ */
+function changePreviewRotation(iframeId) {
+  let orientation = document
+    .querySelector("#" + iframeId)
+    .contentWindow.document.body.querySelector("#Page")
+    .getAttribute("class");
+
+  if (orientation !== null) {
+    let device = orientation.split("_");
+    if (device[1] == "v") {
+      changeDevicePreview(iframeId, device[0], "h");
+    } else if (device[1] == "h") {
+      changeDevicePreview(iframeId, device[0], "v");
     }
   }
 }

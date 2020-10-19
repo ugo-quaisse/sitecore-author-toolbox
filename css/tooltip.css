@@ -152,3 +152,7 @@
 [data-tooltip].t-left:hover:after {
   transform: translateX(-5px) translateY(-50%);
 }
+[data-tooltip].t-hide:before,
+[data-tooltip].t-hide:after {
+  display: none !important;
+}

@@ -28,6 +28,7 @@ import { initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewBu
 import { insertSavebar, initInsertIcon, initGutter, getAccentColor, initColorPicker, initSitecoreMenu, initUserMenu } from "./modules/experimentalui.js";
 import { initFavorites } from "./modules/favorites.js";
 import { initGroupedErrors } from "./modules/errors.js";
+import { insertPreviewButton, listenPreviewTab } from "./modules/preview.js";
 
 /**
  * Get all user's settings from storage
@@ -116,7 +117,7 @@ chrome.storage.sync.get((storage) => {
          */
         document.addEventListener("click", (event) => {
           //Menus position
-          let topPos = document.querySelector("#EditorTabs").getBoundingClientRect().bottom;
+          let topPos = document.querySelector("#EditorTabs") ? document.querySelector("#EditorTabs").getBoundingClientRect().bottom : "100";
           let scPanel = document.querySelector("#scPanel");
           let scLanguageIframe = document.querySelector("#scLanguageIframe");
           let scVersionIframe = document.querySelector("#scVersionIframe");
@@ -384,6 +385,21 @@ chrome.storage.sync.get((storage) => {
             subtree: false,
           })
         : false;
+    }
+
+    if (global.isPreviewTab) {
+      if (storage.feature_experimentalui) {
+        loadCssFile("css/experimentalui.min.css");
+        getAccentColor();
+        //Icon contrasted
+        if (storage.feature_contrast_icons === false) {
+          document.documentElement.style.setProperty("--iconBrightness", 1);
+          document.documentElement.style.setProperty("--iconContrast", 1);
+        }
+      }
+
+      insertPreviewButton(storage.feature_experimentalui);
+      listenPreviewTab(storage.feature_experimentalui);
     }
 
     if (global.isFieldEditor) {
@@ -863,7 +879,7 @@ chrome.storage.sync.get((storage) => {
                 ? document.querySelector("#EditorFrames").setAttribute("style", "opacity:0")
                 : document.querySelector("#EditorFrames").setAttribute("style", "opacity:0.5");
               document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:0.5");
-              document.querySelector(".scEditorTabHeaderActive > span").innerText = global.tabLoadingTitle;
+              document.querySelectorAll(".scEditorTabHeaderNormal, .scEditorTabHeaderActive > span")[0].innerText = global.tabLoadingTitle;
 
               //Experimental mode
               if (document.querySelector(".scPreviewButton")) {
@@ -1158,14 +1174,8 @@ chrome.storage.sync.get((storage) => {
       for (var row of scChromeDropDownRow) {
         if (row.getAttribute("title").toLowerCase() == "change associated content") {
           var id = row.getAttribute("onclick").split("id={")[1].split("}")[0];
-          var html =
-            `<a href="#" title="Edit in Content Editor" class="scChromeDropDownRow" onclick="javascript:window.open('/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#{` +
-            id +
-            `}_` +
-            scLanguage.toLowerCase() +
-            `_` +
-            scVersion +
-            `')"><img src="/~/icon/applicationsv2/32x32/window_edit.png" style="width:16px" alt="Edit in Content Editor"><span>Edit in Content Editor</span></a>`;
+          //prettier-ignore
+          var html = `<a href="#" title="Edit in Content Editor" class="scChromeDropDownRow" onclick="javascript:window.open('/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#{` + id + `}_` + scLanguage.toLowerCase() + `_` + scVersion + `')"><img src="/~/icon/applicationsv2/32x32/window_edit.png" style="width:16px" alt="Edit in Content Editor"><span>Edit in Content Editor</span></a>`;
           row.insertAdjacentHTML("beforebegin", html);
         }
       }

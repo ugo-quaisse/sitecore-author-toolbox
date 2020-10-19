@@ -201,9 +201,9 @@ const sitecoreAuthorToolbox = () => {
             }
 
             //Experimental mode
-            document.querySelector(".scPreviewButton")
-              ? document.querySelector(".scPreviewButton").setAttribute("onclick", "window.open('" + sitecoreItemPath + "'); return false;")
-              : false;
+            // document.querySelector(".scPreviewButton")
+            //   ? document.querySelector(".scPreviewButton").setAttribute("onclick", "window.open('" + sitecoreItemPath + "'); return false;")
+            //   : false;
 
             //Is dark mode on?
             (storage.feature_darkmode && !storage.feature_darkmode_auto) ||
@@ -638,17 +638,15 @@ const sitecoreAuthorToolbox = () => {
      */
     storage.feature_cetabs == undefined ? (storage.feature_cetabs = false) : false;
     if (storage.feature_cetabs) {
-      var scEditorTabs = document.querySelector("#scEditorTabs");
+      var scEditorTabs = document.querySelector(".scEditorPanel > #scEditorTabs");
       var scEditorHeader = document.querySelector(".scEditorHeader");
       var scMessageBar = document.querySelectorAll(".scMessageBar");
       scMessageBar = scMessageBar[scMessageBar.length - 1];
       var scEditorSectionCaption = document.querySelectorAll(".scEditorSectionCaptionCollapsed, .scEditorSectionCaptionExpanded");
       var sectionActiveCount = false;
 
-      if (scEditorTabs) {
-        scEditorTabs.remove();
-      }
-
+      //Remove existing tabs
+      scEditorTabs ? scEditorTabs.remove() : false;
       scEditorTabs = '<div id="scEditorTabs"><ul>';
 
       for (let section of scEditorSectionCaption) {
@@ -890,13 +888,13 @@ const sitecoreAuthorToolbox = () => {
         item.addEventListener("change", function (elem) {
           //Get selected option
           let itemId = elem.target.options[elem.target.selectedIndex].value;
+          let itemName = elem.target.options[elem.target.selectedIndex].text;
           itemId = itemId.includes("|") ? itemId.split("|")[1] : itemId;
-          console.log(itemId);
           //Get closest scContentControlMultilistCaption
           let parent = elem.target.options[elem.target.selectedIndex].closest(".scContentControlSelectedList");
           document.querySelector(".scOpenParent") ? document.querySelector(".scOpenParent").remove() : false;
           //prettier-ignore
-          parent.insertAdjacentHTML("beforebegin", "<span class='scOpenParent'><a class='scOpenItem' href='#' onclick='scForm.invoke(\"item:load(id=" + itemId + ")\")'>Go to source ↗</a><span>"
+          parent.insertAdjacentHTML("beforebegin", "<span class='scOpenParent'><a class='scOpenItem' href='#' onclick='scForm.invoke(\"item:load(id=" + itemId + ")\")'>Open \"" + itemName + "\" ↗</a><span>"
           );
         });
       });

@@ -14,7 +14,7 @@
  */
 import * as global from "./modules/global.js";
 //prettier-ignore
-import { consoleLog, loadCssFile, loadJsFile, exeJsCode, preferesColorScheme, initDarkMode, sitecoreItemJson, getScItemData, startDrag } from "./modules/helpers.js";
+import { consoleLog, loadCssFile, loadJsFile, exeJsCode, preferesColorScheme, initDarkMode, initDarkModeEditor, sitecoreItemJson, getScItemData, startDrag } from "./modules/helpers.js";
 import { showSnackbar } from "./modules/snackbar.js";
 import { checkWorkbox } from "./modules/workbox.js";
 import { checkUrlStatus } from "./modules/url.js";
@@ -25,7 +25,7 @@ import { getGravatar } from "./modules/users.js";
 import { instantSearch } from "./modules/instantsearch.js";
 import { insertModal, insertPanel } from "./modules/menu.js";
 import { initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons } from "./modules/media.js";
-import { insertSavebar, initInsertIcon, initGutter, getAccentColor, initColorPicker, initSitecoreMenu, initUserMenu } from "./modules/experimentalui.js";
+import { initExperimentalUi, insertSavebar, initInsertIcon, initGutter, initColorPicker, initSitecoreMenu, initUserMenu } from "./modules/experimentalui.js";
 import { initFavorites } from "./modules/favorites.js";
 import { initGroupedErrors } from "./modules/errors.js";
 import { insertPreviewButton, listenPreviewTab } from "./modules/preview.js";
@@ -87,21 +87,12 @@ chrome.storage.sync.get((storage) => {
         let ScItem = getScItemData();
 
         //Load extra CSS
-        loadCssFile("css/experimentalui.min.css");
+        initExperimentalUi(storage);
         initDarkMode(storage);
 
         //3 dots SVG animation
         let svgAnimation = `<div id="svgAnimation">` + global.svgAnimation + `</div>`;
         document.querySelector("#EditorFrames") ? document.querySelector("#EditorFrames").insertAdjacentHTML("beforebegin", svgAnimation) : false;
-
-        //Hide search
-        let SearchPanel = document.querySelector("#SearchPanel");
-        SearchPanel
-          ? (SearchPanel.innerHTML =
-              `<button class="scMenuButton" type="button"><img src="` +
-              global.iconMenu +
-              `" class="scBurgerMenu"/></button> <div class="scBurgerMenuTitle" onclick="javascript:return scForm.invoke('contenteditor:home', event)" title="Go back Home">Content</div>`)
-          : false;
 
         insertSavebar();
         insertModal(ScItem.id, ScItem.language, ScItem.version);
@@ -306,7 +297,7 @@ chrome.storage.sync.get((storage) => {
       insertLaunchpadMenu(storage, currentScheme);
 
       if (storage.feature_experimentalui) {
-        loadCssFile("css/experimentalui.min.css");
+        initExperimentalUi(storage);
         initUserMenu();
         initColorPicker();
         initSitecoreMenu();
@@ -371,18 +362,7 @@ chrome.storage.sync.get((storage) => {
     }
 
     if (global.isPreviewTab) {
-      if (storage.feature_experimentalui) {
-        loadCssFile("css/experimentalui.min.css");
-        getAccentColor();
-        console.log("XP");
-        //Icon contrasted
-        if (storage.feature_contrast_icons === false) {
-          document.documentElement.style.setProperty("--iconBrightness", 1);
-          document.documentElement.style.setProperty("--iconContrast", 1);
-        }
-      }
-
-      //Preview mode
+      initExperimentalUi(storage);
       insertPreviewButton(storage);
       listenPreviewTab(storage);
     }
@@ -394,15 +374,7 @@ chrome.storage.sync.get((storage) => {
         loadCssFile("css/checkbox.min.css");
       }
 
-      if (storage.feature_experimentalui) {
-        loadCssFile("css/experimentalui.min.css");
-        getAccentColor();
-        //Icon contrasted
-        if (storage.feature_contrast_icons === false) {
-          document.documentElement.style.setProperty("--iconBrightness", 1);
-          document.documentElement.style.setProperty("--iconContrast", 1);
-        }
-      }
+      initExperimentalUi(storage);
 
       storage.feature_charscount == undefined ? (storage.feature_charscount = true) : false;
 
@@ -519,18 +491,7 @@ chrome.storage.sync.get((storage) => {
       storage.feature_dragdrop == undefined ? (storage.feature_dragdrop = true) : false;
 
       loadCssFile("css/tooltip.min.css");
-
-      if (storage.feature_experimentalui) {
-        loadCssFile("css/experimentalui.min.css");
-        getAccentColor();
-        //Icon contrasted
-        if (storage.feature_contrast_icons === false) {
-          document.documentElement.style.setProperty("--iconBrightness", 1);
-          document.documentElement.style.setProperty("--iconContrast", 1);
-        }
-      }
-
-      //Init features
+      initExperimentalUi(storage);
       initDarkMode(storage);
       initMediaCounter();
       initMediaDragDrop();
@@ -599,10 +560,7 @@ chrome.storage.sync.get((storage) => {
       storage.feature_darkmode == undefined ? (storage.feature_darkmode = false) : false;
       storage.feature_darkmode_auto == undefined ? (storage.feature_darkmode_auto = false) : false;
 
-      if (storage.feature_experimentalui) {
-        loadCssFile("css/experimentalui.min.css");
-        getAccentColor();
-      }
+      initExperimentalUi(storage);
 
       if (storage.feature_experimentalui) {
         //Tooltips
@@ -623,33 +581,19 @@ chrome.storage.sync.get((storage) => {
 
       if (storage.feature_rtecolor) {
         var contentIframe;
-        var darkModeTheme = "default";
 
         //Which HTML editor
-        if (global.isRichTextEditor) {
-          contentIframe = document.querySelector("#Editor_contentIframe");
-        } else if (global.isHtmlEditor) {
-          contentIframe = document.querySelector("#ctl00_ctl00_ctl05_Html");
-        }
+        contentIframe = global.isRichTextEditor ? document.querySelector("#Editor_contentIframe") : document.querySelector("#ctl00_ctl00_ctl05_Html");
 
         if (contentIframe) {
           //RTE Tabs
-          if (global.isRichTextEditor) {
-            var reTextArea = document.querySelector(".reTextArea");
-          }
+          let reTextArea = global.isRichTextEditor ? document.querySelector(".reTextArea") : false;
 
           /*
            * Codemirror css
            */
           loadCssFile("css/codemirror.min.css");
-
-          if (
-            (storage.feature_darkmode && !storage.feature_darkmode_auto) ||
-            (storage.feature_darkmode && storage.feature_darkmode_auto && currentScheme == "dark")
-          ) {
-            darkModeTheme = "ayu-dark";
-            loadCssFile("css/dark/ayu-dark.css");
-          }
+          let darkModeTheme = initDarkModeEditor(storage);
 
           //Extra variables
           if (global.isRichTextEditor) {
@@ -676,38 +620,22 @@ chrome.storage.sync.get((storage) => {
 
     if (global.isEditorFolder) {
       consoleLog("**** Editors folder ****", "orange");
-
-      if (storage.feature_experimentalui) {
-        loadCssFile("css/experimentalui.min.css");
-        getAccentColor();
-      }
+      initExperimentalUi(storage);
     }
 
     if (global.isXmlControl && !global.isRichText) {
       consoleLog("**** XML Control (Window) ****", "orange");
-
-      if (storage.feature_experimentalui) {
-        loadCssFile("css/experimentalui.min.css");
-        getAccentColor();
-      }
+      initExperimentalUi(storage);
     }
 
     if (global.isGalleryVersion) {
       consoleLog("**** Versions menu ****", "orange");
-
-      if (storage.feature_experimentalui) {
-        loadCssFile("css/experimentalui.min.css");
-        getAccentColor();
-      }
+      initExperimentalUi(storage);
     }
 
     if (global.isGalleryLinks) {
       consoleLog("**** Links menu ****", "orange");
-
-      if (storage.feature_experimentalui) {
-        loadCssFile("css/experimentalui.min.css");
-        getAccentColor();
-      }
+      initExperimentalUi(storage);
 
       let datasources = new Set();
       document.querySelectorAll("#Links > a.scLink").forEach(function (elem) {
@@ -717,7 +645,6 @@ chrome.storage.sync.get((storage) => {
           ? datasources.add(elem.innerText)
           : false;
       });
-      console.log(datasources);
     }
 
     if (global.isLayoutDetails) {
@@ -731,11 +658,7 @@ chrome.storage.sync.get((storage) => {
 
     if (global.isGalleryLanguage) {
       consoleLog("**** Languages menu ****", "orange");
-
-      if (storage.feature_experimentalui) {
-        loadCssFile("css/experimentalui.min.css");
-        getAccentColor();
-      }
+      initExperimentalUi(storage);
 
       storage.feature_flags == undefined ? (storage.feature_flags = true) : false;
 
@@ -848,11 +771,7 @@ chrome.storage.sync.get((storage) => {
 
     if (global.isPublishWindow) {
       consoleLog("**** Publish / Rebuild / Package ****", "orange");
-
-      if (storage.feature_experimentalui) {
-        loadCssFile("css/experimentalui.min.css");
-        getAccentColor();
-      }
+      initExperimentalUi(storage);
 
       if (storage.feature_contenteditor === true) {
         //Add #PublishingTargets input[type=checkbox] if needed
@@ -1121,11 +1040,7 @@ chrome.storage.sync.get((storage) => {
      */
     if (global.isGalleryLanguageExpEd) {
       consoleLog("**** Languages menu ****", "yellow");
-
-      if (storage.feature_experimentalui) {
-        loadCssFile("css/experimentalui.min.css");
-        getAccentColor();
-      }
+      initExperimentalUi(storage);
 
       storage.feature_flags == undefined ? (storage.feature_flags = true) : false;
 

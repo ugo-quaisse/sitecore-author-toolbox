@@ -18,18 +18,6 @@ const insertPreviewButton = (storage) => {
   //Experimental mode
   let extraClass = storage.feature_experimentalui ? "t-top t-sm" : "t-hide scButtonExtended";
 
-  //Preview Button style
-  //parent.document.querySelector(".scPreviewButton").classList.add("focus");
-  // document.getElementById("#Editor").onload = function () {
-  //   console.log("myframe is loaded");
-  // };
-
-  // setTimeout(function () {
-  //   let iframe = document.getElementById("#Editor");
-  //   console.log(iframe);
-  //   iframe.addEventListener("load", console.log("LOADED"), true);
-  // }, 10000);
-
   //prettier-ignore
   let button = `
     <div id="EditorTabControls_Preview" class="scEditorTabControlsHolder">

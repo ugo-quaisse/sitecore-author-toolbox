@@ -22,6 +22,7 @@ export {
   exeJsCode,
   preferesColorScheme,
   initDarkMode,
+  initDarkModeEditor,
   sitecoreItemJson,
   fetchTimeout,
   getScItemData,
@@ -172,6 +173,23 @@ const initDarkMode = (storage) => {
 
     return true;
   }
+};
+
+/**
+ * Is Dark Mode for Editor
+ */
+// eslint-disable-next-line consistent-return
+const initDarkModeEditor = (storage) => {
+  let darkModeTheme = "default";
+  if (
+    (storage.feature_darkmode && !storage.feature_darkmode_auto) ||
+    (storage.feature_darkmode && storage.feature_darkmode_auto && preferesColorScheme() == "dark")
+  ) {
+    darkModeTheme = "ayu-dark";
+    loadCssFile("css/dark/ayu-dark.css");
+  }
+
+  return darkModeTheme;
 };
 
 /**

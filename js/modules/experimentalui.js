@@ -1,9 +1,10 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
-import { exeJsCode, getScItemData, setTextColour } from "./helpers.js";
+import { exeJsCode, loadCssFile, getScItemData, setTextColour } from "./helpers.js";
 
 export {
+  initExperimentalUi,
   insertSavebar,
   insertBreadcrumb,
   insertLanguageButton,
@@ -19,6 +20,26 @@ export {
   initUserMenu,
   initGutter,
   getParentNode,
+};
+
+/**
+ * Init Experimental UI
+ */
+const initExperimentalUi = (storage) => {
+  //Hide search
+  let SearchPanel = document.querySelector("#SearchPanel");
+  //prettier-ignore
+  SearchPanel ? (SearchPanel.innerHTML = `<button class="scMenuButton" type="button"><img src="` + global.iconMenu + `" class="scBurgerMenu"/></button> <div class="scBurgerMenuTitle" onclick="javascript:return scForm.invoke('contenteditor:home', event)" title="Go back Home">Content</div>`) : false;
+
+  //Load CSS
+  if (storage.feature_experimentalui) {
+    loadCssFile("css/experimentalui.min.css");
+    getAccentColor();
+  }
+  if (storage.feature_contrast_icons === false) {
+    document.documentElement.style.setProperty("--iconBrightness", 1);
+    document.documentElement.style.setProperty("--iconContrast", 1);
+  }
 };
 
 /**

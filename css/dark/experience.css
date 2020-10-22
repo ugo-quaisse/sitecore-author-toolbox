@@ -29,7 +29,7 @@
 }
 
 body {
-  background-color: var(--black2) !important;
+  background-color: var(--black1) !important;
   color: var(--text) !important;
 }
 .selected .mode,

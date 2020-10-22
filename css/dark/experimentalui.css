@@ -224,3 +224,9 @@ a.scContentTreeNodeNormal:hover > span {
 #Page {
   background-color: var(--black);
 }
+
+#ContentTreePanel .scContentTreeNodeGlyph:hover + a > span,
+#ContentTreePanel div.scContentTreeNode > img:hover + a > span,
+#ContentTreePanel a.scContentTreeNodeNormal:hover > span {
+  background-color: var(--grey2) !important;
+}

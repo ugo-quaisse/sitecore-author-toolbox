@@ -2912,7 +2912,6 @@ a.scContentTreeNodeBlured {
 .scContentTreeNodeIcon {
   border: none;
   line-height: 0;
-  margin: 0 5px 0 0;
   vertical-align: text-bottom;
 }
 
@@ -3518,7 +3517,7 @@ form[lang|="ja"] *,
 }
 
 .scMessageBar.scError .scMessageBarIcon {
-  background-color: var(--red);
+  background-color: var(--red) !important;
 }
 
 .scMessageBar.scOrange {
@@ -3643,7 +3642,7 @@ span.sc-ext-fieldSearchClear {
 }
 .reMode_design span,
 .reMode_selected.reMode_design span {
-  color: var(--black3) !important;
+  color: var(--black8) !important;
 }
 .reContentCell,
 .reContentCell iframe {

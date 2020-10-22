@@ -31,8 +31,15 @@ a:link {
   border-top: 1px solid var(--black3);
 }
 
-.scMessageBar {
-  filter: brightness(0.7) contrast(1.5);
+.scMessageBar.scSuccess {
+  filter: hue-rotate(180deg) invert(1) brightness(2);
+}
+
+.scMessageBar.scSuccess {
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background-color: var(--messageSuccessBar) !important;
+  color: var(--grey7) !important;
+  font-size: 14px;
 }
 
 .scMessageBar.scWarning {

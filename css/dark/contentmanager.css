@@ -1555,8 +1555,9 @@ body .reEditorModes a {
 }
 
 body .Metro.RadEditor .reEditorModes .reMode_selected {
-  background-color: #f7f7f7 !important;
-  color: #131313 !important;
+  background-color: var(--black1) !important;
+  color: var(--white) !important;
+  border: 1px solid var(--black1) !important;
 }
 
 #EditorBottom {

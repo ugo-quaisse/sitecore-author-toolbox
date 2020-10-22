@@ -9,6 +9,7 @@ body.contentEditor {
 
 body.contentEditor:after {
   opacity: 0;
+  visibility: hidden;
 }
 
 #scPageExtendersForm {
@@ -1145,10 +1146,12 @@ ul.scAccountMenu li:after {
 #Page {
   background-color: var(--grey4);
   transition: transform 0.5s ease-in-out;
+  height: 100%;
+  width: 100%;
 }
 
 #Page > #Shadow {
-  transition: width 0.5s ease-in-out, height 0.5s ease-in-out, border 0.5s ease-in-out;
+  transition: width 0.5s ease-in-out, height 0.5s ease-in-out, border 0.5s ease-in-out, border-radius 0.5s ease-in-out;
   margin-right: 0px;
   margin-bottom: 0px;
   margin: auto;
@@ -1165,6 +1168,9 @@ ul.scAccountMenu li:after {
 }
 
 #Page iframe {
+  background: transparent url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner32.gif") no-repeat center center;
+  background-size: 32px;
+  transition: border-radius 0.5s ease-in-out;
   border: 0px;
   position: relative;
   left: 0px;

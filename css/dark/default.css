@@ -3951,3 +3951,74 @@ a.scResult:hover {
   color: var(--text) !important;
   border-top: 1px solid var(--black2) !important;
 }
+
+.scButtonExtended {
+  border: 1px solid var(--black1) !important;
+  background-color: var(--black1) !important;
+  box-shadow: inset 0 1px transparent;
+}
+
+.scBackground {
+  background: var(--black);
+}
+
+.scMediaExplorer {
+  width: 100%;
+  color: var(--black7);
+}
+
+.scTiles .scTileItem:nth-child(odd),
+.scMediaExplorer tbody tr:nth-child(odd) {
+  background: var(--black);
+}
+
+.scTiles .scTileItem:nth-child(even),
+.scMediaExplorer tbody tr:nth-child(even) {
+  background: var(--black1);
+}
+
+.scMediaExplorer th {
+  border-top: 1px solid var(--black3);
+  color: var(--text);
+}
+
+.scMediaExplorer td.mediaArrow,
+.scMediaExplorer .mediaTitle {
+  color: var(--text);
+}
+
+.scMediaExplorer tbody tr:hover .mediaTitle,
+.scMediaExplorer tbody tr:hover {
+  background: var(--black4) !important;
+  color: var(--text) !important;
+}
+
+.scMediaExplorer thead tr {
+  background: var(--black1);
+  color: var(--text);
+}
+
+.scMediaExplorer thead tr:hover {
+  background: var(--black3);
+}
+
+.scMediaExplorer thead tr .mediaSelected {
+  background: var(--black3) !important;
+  color: var(--text);
+}
+
+.scMediaExplorer thead tr th:hover {
+  background: var(--black3) !important;
+  color: var(--text);
+}
+
+.scMediaExplorer td > img.scMediaPreview {
+  background: var(--black1);
+  border: 1px solid var(--black);
+}
+
+#FileList a.scButton.scButtonGrid.selected,
+#FileList a.scButton.scButtonList.selected {
+  background-color: var(--blue) !important;
+  border: 1px solid var(--blue) !important;
+}

@@ -11,15 +11,24 @@ export { insertPreviewButton, listenPreviewTab };
 /**
  * Insert Preview buttons
  */
-const insertPreviewButton = (experimental) => {
+const insertPreviewButton = (storage) => {
   let iframeId = window.frameElement.getAttribute("id");
   let container = parent.document.querySelector("#EditorTabs");
 
   //Experimental mode
-  let extraClass = experimental ? "t-top t-sm" : "t-hide scButtonExtended";
+  let extraClass = storage.feature_experimentalui ? "t-top t-sm" : "t-hide scButtonExtended";
 
   //Preview Button style
   //parent.document.querySelector(".scPreviewButton").classList.add("focus");
+  // document.getElementById("#Editor").onload = function () {
+  //   console.log("myframe is loaded");
+  // };
+
+  // setTimeout(function () {
+  //   let iframe = document.getElementById("#Editor");
+  //   console.log(iframe);
+  //   iframe.addEventListener("load", console.log("LOADED"), true);
+  // }, 10000);
 
   //prettier-ignore
   let button = `
@@ -38,13 +47,10 @@ const insertPreviewButton = (experimental) => {
 /**
  * Insert Preview buttons
  */
-const listenPreviewTab = (experimental) => {
+const listenPreviewTab = (storage) => {
   let target = parent.document.querySelector("[id^='FPreview']");
   let observer = new MutationObserver(function (mutation) {
-    console.log(mutation);
-    mutation[0].target.style.display != "none"
-      ? insertPreviewButton(experimental)
-      : parent.document.querySelector(".scPreviewButton").classList.remove("focus");
+    mutation[0].target.style.display != "none" ? insertPreviewButton(storage) : parent.document.querySelector(".scPreviewButton").classList.remove("focus");
   });
 
   //Observer

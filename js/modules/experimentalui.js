@@ -163,18 +163,24 @@ const insertMoreButton = () => {
   //prettier-ignore
   let button =
     `<button class="scEditorHeaderButton" id="scMoreButton" title="More actions" type="button">
-    <img src="` + global.iconMore + `" class="scLanguageIcon">
+    <img src="` +
+    global.iconMore +
+    `" class="scLanguageIcon">
     </button>
     <ul class="scMoreMenu">
-        <li onclick="javascript:return scForm.invoke('contenteditor:edit')" id="scLockMenuText">Lock item</li>
         <li onclick="javascript:if(confirm('Do you really want to create a new version for this item?')) { return scForm.postEvent(this,event,'item:addversion(id=)') }">Add new version</li>
+        <li onclick="javascript:return scForm.invoke('contenteditor:edit')" id="scLockMenuText">Lock item</li>
         <li onclick="javascript:return scForm.postEvent(this,event,'item:rename')">Rename item</li>
         <li onclick="javascript:return scForm.invoke('item:duplicate')">Duplicate</li>
         <li class="separator" onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor')">Edit in Experience Editor...</li>
         <li class="separator"  onclick="javascript:return scForm.postEvent(this,event,'item:sethelp')">Help texts</li>
         <li id="scInfoButton">Item details</li>
-        <li onclick="javascript:return scForm.postEvent(this,event,'item:executescript(id=` + ScItem.id + `,db=master,script={1876D433-4FAE-46B2-B2EF-AAA0FDA110E7},scriptDb=master)')">Author statistics</li>
-        <li class="separator danger" onclick="javascript:return scForm.invoke('item:delete(id=` + ScItem.id + `)', event)">Delete</li>
+        <li onclick="javascript:return scForm.postEvent(this,event,'item:executescript(id=` +
+    ScItem.id +
+    `,db=master,script={1876D433-4FAE-46B2-B2EF-AAA0FDA110E7},scriptDb=master)')">Author statistics</li>
+        <li class="separator danger" onclick="javascript:return scForm.invoke('item:delete(id=` +
+    ScItem.id +
+    `)', event)">Delete</li>
     </ul>`;
   container && !document.querySelector("#scMoreButton") ? container.insertAdjacentHTML("afterbegin", button) : false;
 

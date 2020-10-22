@@ -8,6 +8,10 @@ a:link {
   background-color: var(--black2) !important;
 }
 
+#FileList {
+  background: var(--black1) !important;
+}
+
 #FileList a {
   background-color: var(--black1);
   border-color: var(--black1);
@@ -28,14 +32,14 @@ a:link {
 }
 
 .scMessageBar {
-  border-radius: 3px !important;
+  filter: brightness(0.7) contrast(1.5);
 }
 
 .scMessageBar.scWarning {
   margin: 20px;
   border-radius: 0px 3px 3px 0px;
-  background-color: var(--messageWarningBar) !important;
-  color: var(--grey7) !important;
+  background-color: var(--verydarkblue) !important;
+  color: var(--grey8) !important;
   font-size: 14px;
 }
 
@@ -47,7 +51,7 @@ a:link {
 .scWarning > .scMessageBarTextContainer > .scMessageBar a,
 .scWarning > .scMessageBarTextContainer > .scMessageBarOption,
 .scWarning > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet {
-  color: var(--messageWarningLink) !important;
+  color: var(--grey8) !important;
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
@@ -97,8 +101,9 @@ a.scContentButton {
 
 a.scEditorHeaderButton,
 button.scEditorHeaderButton {
-  background-color: var(--black2);
+  background-color: var(--black);
   color: var(--white);
+  border: 1px solid transparent;
 }
 
 a.scEditorHeaderButton > img,
@@ -125,7 +130,7 @@ button.scEditorHeaderButton > img {
 #scEditorTabs > ul > li:hover {
   color: var(--text) !important;
   background: var(--black3) !important;
-  border-top: 3px solid var(--accent) !important;
+  border-top: 2px solid var(--accent);
 }
 
 #BTAddNewSearch {
@@ -138,8 +143,7 @@ button.scEditorHeaderButton > img {
 }
 
 .scEditorTabSelected:hover {
-  background-color: var(--black2) !important;
-  border-top: 2px solid var(--accent) !important;
+  border-top: 3px solid var(--accent) !important;
 }
 
 .scEditorSectionPanel {
@@ -214,4 +218,9 @@ a.scContentTreeNodeNormal:hover > span {
 .scTiles .scTileItem:nth-child(odd),
 .scMediaExplorer tbody tr:nth-child(odd) {
   background: var(--black2);
+}
+
+#ContentEditor,
+#Page {
+  background-color: var(--black);
 }

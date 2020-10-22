@@ -160,15 +160,15 @@ const initDarkMode = (storage) => {
       !global.isAdmin &&
       preferesColorScheme() == "dark")
   ) {
-    loadCssFile("css/dark/default-min.css");
-    loadCssFile("css/dark/ribbon-min.css");
-    loadCssFile("css/dark/contentmanager-min.css");
-    loadCssFile("css/dark/dialogs-min.css");
-    loadCssFile("css/dark/gallery-min.css");
-    loadCssFile("css/dark/speak-min.css");
-    loadCssFile("css/dark/experience-min.css");
-    loadCssFile("css/dark/experimentalui.min.css");
-    navigator.platform.indexOf("Win") == 0 ? loadCssFile("css/dark/scrollbars-min.css") : false;
+    loadCssFile("css/dark/default.min.css");
+    loadCssFile("css/dark/ribbon.min.css");
+    loadCssFile("css/dark/contentmanager.min.css");
+    loadCssFile("css/dark/dialogs.min.css");
+    loadCssFile("css/dark/gallery.min.css");
+    loadCssFile("css/dark/speak.min.css");
+    loadCssFile("css/dark/experience.min.css");
+    storage.feature_experimentalui ? loadCssFile("css/dark/experimentalui.min.css") : false;
+    navigator.platform.indexOf("Win") == 0 ? loadCssFile("css/dark/scrollbars.min.css") : false;
 
     return true;
   }

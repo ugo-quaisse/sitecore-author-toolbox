@@ -309,6 +309,17 @@ ul.scAccountMenu li:hover {
   padding-left: 2px;
 }
 
+.scContentControlImageImage {
+  padding: 0px;
+}
+
+.scContentControlImageImage > iframe {
+  background-image: linear-gradient(45deg, #ddd 25%, transparent 25%), linear-gradient(-45deg, #ddd 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #ddd 75%), linear-gradient(-45deg, transparent 75%, #ddd 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
 /*Forms*/
 
 #Editors input:not([type]),
@@ -719,6 +730,10 @@ a.scRibbonEditorTabNormal:hover {
 }
 
 /* Message bar */
+.scMessageBar .scMessageBarTextContainer .scMessageBarText {
+  margin: 7px 0px 0px 0px;
+}
+
 .scMessageBar .scMessageBarIcon {
   background-position: center 19px !important;
   padding: 7px !important;
@@ -909,7 +924,7 @@ a.scContentButton {
 }
 
 a.scContentButton:hover {
-  color: var(--accentText);
+  color: var(--accentText) !important;
   background-color: var(--accent);
   text-decoration: none;
 }
@@ -1353,4 +1368,20 @@ a.scContentTreeNodeActive > img {
 .scPreviewButton.focus {
   outline: 0px solid var(--accent);
   box-shadow: 0 0 0 2.5px var(--accent) !important;
+}
+
+.scScrollbox {
+  border-radius: var(--radius);
+}
+
+.scLink:hover {
+  background-color: var(--accent);
+  color: var(--accentText);
+}
+
+/* RTE */
+.reEditorModesCell {
+  background-color: var(--black5);
+  height: 30px;
+  border-top: 2px solid var(--accent) !important;
 }

@@ -29,7 +29,7 @@ import { insertSavebar, initInsertIcon, initGutter, getAccentColor, initColorPic
 import { initFavorites } from "./modules/favorites.js";
 import { initGroupedErrors } from "./modules/errors.js";
 import { insertPreviewButton, listenPreviewTab } from "./modules/preview.js";
-
+import { insertLaunchpadIcon, insertLaunchpadMenu } from "./modules/launchpad.js";
 /**
  * Get all user's settings from storage
  */
@@ -292,14 +292,18 @@ chrome.storage.sync.get((storage) => {
       storage.feature_workbox == undefined ? (storage.feature_workbox = true) : false;
       storage.feature_workbox ? checkWorkbox() : false;
     }
-    //End CE
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /*
-     * Sitecore Pages
+     ************************
+     * 2. Sitecore pages  *
+     ************************
      */
+
     if (global.isDesktop && !global.isGalleryFavorites && !global.isXmlControl) {
       consoleLog("**** Desktop Shell ****", "orange");
-      storage.feature_launchpad == undefined ? (storage.feature_launchpad = true) : false;
+      insertLaunchpadMenu(storage, currentScheme);
 
       if (storage.feature_experimentalui) {
         loadCssFile("css/experimentalui.min.css");
@@ -307,42 +311,21 @@ chrome.storage.sync.get((storage) => {
         initColorPicker();
         initSitecoreMenu();
       }
-
-      if (storage.feature_launchpad) {
-        //prettier-ignore
-        var html = `<a href="#" class="scStartMenuLeftOption" title="" onclick="window.location.href='` + global.launchpadPage + `?launchpad=true&url=` + global.windowLocationHref + `'"><img loading="lazy" src="` + global.launchpadIcon + `" class="scStartMenuLeftOptionIcon" alt="" border="0"><div class="scStartMenuLeftOptionDescription"><div class="scStartMenuLeftOptionDisplayName">` + global.launchpadGroupTitle + `</div><div class="scStartMenuLeftOptionTooltip">` + global.launchpadTitle + `</div></div></a>`;
-        document.querySelectorAll(".scStartMenuLeftOption").forEach(function (item) {
-          item.getAttribute("title") == "Install and maintain apps." ? item.insertAdjacentHTML("afterend", html) : false;
-        });
-      }
     }
 
     if (global.isLaunchpad) {
       consoleLog("**** Launchpad ****", "orange");
-      storage.feature_launchpad == undefined ? (storage.feature_launchpad = true) : false;
-      storage.feature_launchpad_tiles == undefined ? (storage.feature_launchpad_tiles = false) : false;
-
-      if (storage.feature_launchpad) {
-        let launchpadCol = document.querySelectorAll(".last");
-        //prettier-ignore
-        html = `<div class="sc-launchpad-group"><header class="sc-launchpad-group-title">` + global.launchpadGroupTitle + `</header><div class="sc-launchpad-group-row"><a href="#" onclick="window.location.href='` + global.launchpadPage + `?launchpad=true&url=` + global.windowLocationHref + `'" class="sc-launchpad-item" title="` + global.launchpadTitle + `"><span class="icon"><img loading="lazy" src="` + global.launchpadIcon + `" width="48" height="48" alt="` + global.launchpadTitle + `"></span><span class="sc-launchpad-text">` + global.launchpadTitle + `</span></a></div></div>`;
-        launchpadCol[0].insertAdjacentHTML("afterend", html);
-      }
-      if (storage.feature_launchpad_tiles) {
-        //Inject CSS
-        loadCssFile("css/tilelaunchpad.min.css");
-        if (
-          (storage.feature_darkmode && !storage.feature_darkmode_auto) ||
-          (storage.feature_darkmode && storage.feature_darkmode_auto && currentScheme == "dark")
-        ) {
-          loadCssFile("css/dark/tilelaunchpad.min.css");
-        }
-      }
+      insertLaunchpadIcon(storage, currentScheme);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /*
-     * Sitecore Iframes
+     ************************
+     * 3. Sitecore frames  *
+     ************************
      */
+
     if (global.isSearch) {
       consoleLog("**** Internal Search ****", "orange");
 
@@ -391,6 +374,7 @@ chrome.storage.sync.get((storage) => {
       if (storage.feature_experimentalui) {
         loadCssFile("css/experimentalui.min.css");
         getAccentColor();
+        console.log("XP");
         //Icon contrasted
         if (storage.feature_contrast_icons === false) {
           document.documentElement.style.setProperty("--iconBrightness", 1);
@@ -398,8 +382,9 @@ chrome.storage.sync.get((storage) => {
         }
       }
 
-      insertPreviewButton(storage.feature_experimentalui);
-      listenPreviewTab(storage.feature_experimentalui);
+      //Preview mode
+      insertPreviewButton(storage);
+      listenPreviewTab(storage);
     }
 
     if (global.isFieldEditor) {
@@ -614,6 +599,28 @@ chrome.storage.sync.get((storage) => {
       storage.feature_darkmode == undefined ? (storage.feature_darkmode = false) : false;
       storage.feature_darkmode_auto == undefined ? (storage.feature_darkmode_auto = false) : false;
 
+      if (storage.feature_experimentalui) {
+        loadCssFile("css/experimentalui.min.css");
+        getAccentColor();
+      }
+
+      if (storage.feature_experimentalui) {
+        //Tooltips
+        loadCssFile("css/tooltip.min.css");
+        setTimeout(function () {
+          document.querySelectorAll("ul.Metro > li > a").forEach(function (el) {
+            let parent = el.parentElement;
+            let type = el.getAttribute("class");
+            if (type != "reDropdown") {
+              parent.setAttribute("data-tooltip", el.getAttribute("title"));
+              parent.classList.add("t-bottom3");
+              parent.classList.add("t-xs");
+              el.removeAttribute("title");
+            }
+          });
+        }, 500);
+      }
+
       if (storage.feature_rtecolor) {
         var contentIframe;
         var darkModeTheme = "default";
@@ -692,6 +699,25 @@ chrome.storage.sync.get((storage) => {
         loadCssFile("css/experimentalui.min.css");
         getAccentColor();
       }
+    }
+
+    if (global.isGalleryLinks) {
+      consoleLog("**** Links menu ****", "orange");
+
+      if (storage.feature_experimentalui) {
+        loadCssFile("css/experimentalui.min.css");
+        getAccentColor();
+      }
+
+      let datasources = new Set();
+      document.querySelectorAll("#Links > a.scLink").forEach(function (elem) {
+        elem.getAttribute("title").toLowerCase().includes("'__final renderings'") &&
+        !elem.innerText.toLowerCase().includes("/sitecore/system/") &&
+        !elem.innerText.toLowerCase().includes("/rendering variants/")
+          ? datasources.add(elem.innerText)
+          : false;
+      });
+      console.log(datasources);
     }
 
     if (global.isLayoutDetails) {
@@ -1062,7 +1088,7 @@ chrome.storage.sync.get((storage) => {
 
   /*
    ************************
-   * 2. Experience Editor *
+   * 4. Experience Editor *
    ************************
    */
   if ((global.isEditMode && !global.isLoginPage) || (global.isPreviewMode && !global.isLoginPage)) {
@@ -1260,7 +1286,7 @@ chrome.storage.sync.get((storage) => {
       (storage.feature_darkmode && storage.feature_darkmode_auto && global.isInsertPage && currentScheme == "dark")
     ) {
       //Experience Editor buttons
-      loadCssFile("css/dark/experience-min.css");
+      loadCssFile("css/dark/experience.min.css");
     }
 
     if (
@@ -1326,7 +1352,7 @@ chrome.storage.sync.get((storage) => {
 
     if (storage.feature_experienceeditor && !global.isRibbon) {
       //prettier-ignore
-      html = '<div class="scNormalModeTab ' + tabColor + '"><span class="t-right t-sm" data-tooltip="Open in Normal Mode"><a href="' + linkNormalMode + '" target="_blank"><img loading="lazy" src="' + global.iconChrome + '"/></a></span></div>';
+      let html = '<div class="scNormalModeTab ' + tabColor + '"><span class="t-right t-sm" data-tooltip="Open in Normal Mode"><a href="' + linkNormalMode + '" target="_blank"><img loading="lazy" src="' + global.iconChrome + '"/></a></span></div>';
       pagemodeEdit ? pagemodeEdit.insertAdjacentHTML("afterend", html) : false;
     }
 
@@ -1334,7 +1360,7 @@ chrome.storage.sync.get((storage) => {
      * Go to Content Editor
      */
     if (storage.feature_experienceeditor && !global.isRibbon) {
-      html =
+      let html =
         '<div class="scContentEditorTab ' +
         tabColor +
         '"><span class="t-right t-sm" data-tooltip="Open in Content Editor"><a href="' +
@@ -1349,7 +1375,7 @@ chrome.storage.sync.get((storage) => {
      * Show editable content
      */
     if (storage.feature_experienceeditor && !global.isRibbon) {
-      html =
+      let html =
         '<div class="scEditableTab ' +
         tabColor +
         '"><span class="t-right t-sm" data-tooltip="Show/hide editable content"><a onclick="showEditableContent()"><img loading="lazy" src="' +

@@ -50,6 +50,10 @@ const checkHelpLink = (item, language, version) => {
       if (ajax.readyState === 4 && ajax.status == "200") {
         let dom = new DOMParser().parseFromString(ajax.responseText, "text/html");
         let link = dom.querySelector("#Link").value;
+        let short = dom.querySelector("#ShortDescription").value;
+        let long = dom.querySelector("#LongDescription").innerHTML;
+        let title = short ? `<div class="scMessageBarTitle">` + short + `</div>` : `<div class="scMessageBarTitle">Documentation and help available</div>`;
+        let text = long ? `<div class="scMessageBarText">` + long + `</div>` : ``;
 
         if (link) {
           try {
@@ -59,14 +63,17 @@ const checkHelpLink = (item, language, version) => {
             let scEditorID = document.querySelector(".scEditorHeader");
             let service = checkUrlType(url.host);
             let icon = checkIconType(url.host);
-            let scMessage =
-              '<div id="scMessageBarUrl" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' +
-              icon +
-              ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Documentation and help available</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="' +
-              url.href +
-              '" target="_blank" class="scMessageBarOption">Open ' +
-              service +
-              " page</a></li></ul></div></div>";
+            //prettier-ignore
+            let scMessage = `<div id="scMessageBarUrl" class="scMessageBar scInformation">
+            <div class="scMessageBarIcon" style="background-image:url(` + icon + `)"></div>
+              <div class="scMessageBarTextContainer">
+                ` + title + `
+                ` + text + `
+                <ul class="scMessageBarOptions" style="margin:0px">
+                <li class="scMessageBarOptionBullet"><a href="` + url.href + `" target="_blank" class="scMessageBarOption">Open ` + service + ` page</a></li>
+                </ul>
+              </div>
+            </div>`;
             scEditorID.insertAdjacentHTML("afterend", scMessage);
           } catch (error) {
             //error

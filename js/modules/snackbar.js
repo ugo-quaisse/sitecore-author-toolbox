@@ -10,8 +10,8 @@ export { showSnackbar };
 const showSnackbar = (version) => {
   //Snackbar settings
   let snackbarHtml = `
-    <b>Sitecore Author Toolbox has been updated!</b><br />
-    Do you want to share something with us?<br />Click the "Feedback" button`;
+    <b>Sitecore Author Toolbox is updated!</b><br />
+    A new "preview mode" is available in Content Editor, give it a try!`;
   let html =
     `<div class="snackbar">` +
     snackbarHtml +
@@ -24,9 +24,7 @@ const showSnackbar = (version) => {
     //Add listener on click #sbDismiss
     document.querySelector("#sbDismiss").addEventListener("click", function () {
       localStorage.setItem("sbDismiss", version);
-      document
-        .querySelector(".snackbar")
-        .setAttribute("style", "display: none");
+      document.querySelector(".snackbar").setAttribute("style", "display: none");
     });
   }
 };

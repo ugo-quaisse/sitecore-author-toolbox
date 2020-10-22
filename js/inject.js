@@ -37,7 +37,7 @@ function scSaveAnimation(id) {
 
     setTimeout(function () {
       let saveMessage = document.querySelector(".saveMessage");
-      saveMessage.innerHTML = "Your changes have been saved successfully!";
+      saveMessage.innerHTML = "Saved successfully!";
       document.querySelector(".scSaveButton").innerText = "Save";
       document.querySelector(".scSaveButton").removeAttribute("disabled");
       saveMessage.classList.add("visible");

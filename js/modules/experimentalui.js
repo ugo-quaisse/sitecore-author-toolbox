@@ -34,7 +34,7 @@ const initExperimentalUi = (storage) => {
   //Hide search
   let SearchPanel = document.querySelector("#SearchPanel");
   //prettier-ignore
-  SearchPanel ? (SearchPanel.innerHTML = `<button class="scMenuButton" type="button"><img src="` + global.iconMenu + `" class="scBurgerMenu"/></button> <div class="scBurgerMenuTitle" onclick="javascript:return scForm.invoke('contenteditor:home', event)" title="Go back Home">Content</div>`) : false;
+  SearchPanel ? (SearchPanel.innerHTML = `<button class="scMenuButton" type="button"><img src="` + global.iconMenu + `" class="scBurgerMenu"/></button> <div class="scBurgerMenuTitle t-top t-sm" data-tooltip="Go back home" onclick="javascript:return scForm.invoke('contenteditor:home', event)" title="Go back Home">Content</div>`) : false;
 
   //Load CSS
   if (storage.feature_experimentalui) {
@@ -228,7 +228,7 @@ const insertMoreButton = () => {
         <li onclick="javascript:return scForm.postEvent(this,event,'item:rename')">Rename item</li>
         <li onclick="javascript:return scForm.invoke('item:duplicate')">Duplicate</li>
         <li class="separator" onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor')">Edit in Experience Editor...</li>
-        <li class="separator"  onclick="javascript:return scForm.postEvent(this,event,'item:sethelp')">Help texts</li>
+        <li class="separator" onclick="javascript:return scForm.postEvent(this,event,'item:sethelp')">Help texts</li>
         <li id="scInfoButton">Item details</li>
         <li onclick="javascript:return scForm.postEvent(this,event,'item:executescript(id=` +
     ScItem.id +
@@ -377,10 +377,8 @@ const getAccentColor = () => {
 const initColorPicker = () => {
   let color, text, brightness, invert;
 
-  let input =
-    '<input type="color" id="scAccentColor" name="scAccentColor" value="' +
-    getAccentColor() +
-    '" class="t-bottom t-sm" data-tooltip="Choose your accent color">';
+  //prettier-ignore
+  let input = `<input type="color" id="scAccentColor" name="scAccentColor" value="` + getAccentColor() + `" class="t-bottom t-sm" data-tooltip="Your accent color">`;
   let menu = document.querySelector(".sc-accountInformation");
   menu ? menu.insertAdjacentHTML("afterbegin", input) : false;
 
@@ -430,17 +428,10 @@ const initUserMenu = () => {
     startButton ? startButton.insertAdjacentHTML("afterend", htmlApp) : false;
 
     //Add Notification and arrow icons
+    //prettier-ignore
     let htmlIcon =
-      `<span class="t-bottom t-sm" data-tooltip="Workbox notification"><img loading="lazy" id="scNotificationBell" onclick="javascript:scSitecore.prototype.showModalDialog('` +
-      global.workboxPage.replace("&sc_bw=1", "&sc_bw=0") +
-      `', '', '` +
-      dialogParamsLarge +
-      `Workbox', null, null); false" src="` +
-      global.iconBell +
-      `" class="scIconMenu" accesskey="w" /></span>
-        <span class="t-bottom t-sm" data-tooltip="Toggle ribbon"><img loading="lazy" id="scSitecoreMenu" onclick="showSitecoreMenu()" src="` +
-      global.iconDownArrow +
-      `" class="scIconMenu" accesskey="a" /></span>`;
+      `<span class="t-bottom t-sm" data-tooltip="Workbox notification"><img loading="lazy" id="scNotificationBell" onclick="javascript:scSitecore.prototype.showModalDialog('` + global.workboxPage.replace("&sc_bw=1", "&sc_bw=0") + `', '', '` + dialogParamsLarge + `Workbox', null, null); false" src="` + global.iconBell + `" class="scIconMenu" accesskey="w" /></span>
+       <span class="t-bottom t-sm" data-tooltip="Toggle ribbon"><img loading="lazy" id="scSitecoreMenu" onclick="showSitecoreMenu()" src="` + global.iconDownArrow + `" class="scIconMenu" accesskey="a" /></span>`;
     accountInformation.insertAdjacentHTML("afterbegin", htmlIcon);
 
     //Get User Name and add extra id to avatar
@@ -535,17 +526,8 @@ const setInsertIcon = (treeNode) => {
     el.remove();
   });
   //Add Insert Icon
-  a.insertAdjacentHTML(
-    "afterend",
-    `<span id="scIcon` +
-      id +
-      `" title="Insert under this node" class="scInsertItemIcon ` +
-      activeClass +
-      `" onclick="insertPage('` +
-      id +
-      `', '` +
-      itemName +
-      `')"></span>`
+  //prettier-ignore
+  a.insertAdjacentHTML("afterend", `<span id="scIcon` + id + `" class="scInsertItemIcon ` + activeClass + ` t-left t-sm" data-tooltip="Insert under" onclick="insertPage('` + id + `', '` + itemName + `')"></span>`
   );
   let target = document.querySelector("#scIcon" + id);
   target ? target.setAttribute("style", "opacity:1") : false;
@@ -574,7 +556,7 @@ const setInsertIcon = (treeNode) => {
   });
   //Add Edit icon
   //prettier-ignore
-  a.insertAdjacentHTML("afterend", `<span id="scIconEE` + id + `" title="Edit in Experience Editor" class="scEditItemIcon ` + activeClass + `" onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor(id={` +
+  a.insertAdjacentHTML("afterend", `<span id="scIconEE` + id + `" class="scEditItemIcon ` + activeClass + ` t-left t-sm" data-tooltip="Edit in Experience Editor" onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor(id={` +
         id.replace(
         // eslint-disable-next-line prefer-named-capture-group
         /([0-z]{8})([0-z]{4})([0-z]{4})([0-z]{4})([0-z]{12})/u,

@@ -237,3 +237,9 @@ a.scContentTreeNodeNormal:hover > span {
 #ContentTreePanel a.scContentTreeNodeNormal:hover > span {
   background-color: var(--grey2) !important;
 }
+
+.scFormDialogHeader,
+.scDialogHeader,
+.ui-widget-header {
+  background-color: var(--black1) !important;
+}

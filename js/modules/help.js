@@ -2,8 +2,33 @@
 
 import * as global from "./global.js";
 
-export { checkHelpLink, checkUrlType, checkIconType };
+export { addHelpIcons, checkHelpLink, checkUrlType, checkIconType };
 
+/**
+ * Loop trhough fields and add help icon
+ */
+const addHelpIcons = () => {
+  document.querySelectorAll(".scEditorFieldLabel").forEach(function (elem) {
+    //prettier-ignore
+    let helpLink = elem.querySelector(".scEditorFieldLabelLink")
+      ? `<a href="` + elem.querySelector(".scEditorFieldLabelLink").getAttribute("href") + `" target="_help"><img loading="lazy" src="` + global.iconInfo + `" class="scIconCopy" /></a>`
+      : `<img loading="lazy" src="` + global.iconInfo + `" class="scIconCopy" />`;
+    if (elem.getAttribute("title")) {
+      // eslint-disable-next-line require-unicode-regexp
+      // eslint-disable-next-line prefer-named-capture-group
+      let text = elem.getAttribute("title").replace(/(<([^>]+)>)/u, "");
+      elem.insertAdjacentHTML(
+        "beforebegin",
+        `<div style="display:inline; margin-right: 5px; float:left" class="t-right t-sm" data-tooltip="` + text + `">` + helpLink + `</div>`
+      );
+      elem.removeAttribute("title");
+    }
+  });
+};
+
+/**
+ * Pick an icon for each type of helplink
+ */
 const checkIconType = (host) => {
   let service;
 
@@ -20,6 +45,9 @@ const checkIconType = (host) => {
   return service;
 };
 
+/**
+ * Check which type of url is assigned to help link
+ */
 const checkUrlType = (host) => {
   let service;
 
@@ -37,7 +65,7 @@ const checkUrlType = (host) => {
 };
 
 /**
- * Check if helplin exist
+ * Check if helpl exist
  */
 const checkHelpLink = (item, language, version) => {
   if (item) {

@@ -221,7 +221,9 @@ const instantSearch = () => {
                 divResults.innerHTML = "";
                 divResults.insertAdjacentHTML(
                   "afterbegin",
-                  '<div class="scInstansSeachLoading"><img src="' + global.iconTimeout + '" width="128px" /> Sitecore timeout. Try again...</div>'
+                  '<div class="scInstansSeachLoading"><img src="' +
+                    global.iconTimeout +
+                    '" width="display: block; margin: auto; width: 60px;" /> Sitecore timeout. Try again...</div>'
                 );
               }
 

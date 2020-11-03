@@ -1167,6 +1167,7 @@ ul.scAccountMenu li:after {
   box-shadow: 0 10px 30px 0px rgba(0, 0, 0, 0.15);
 }
 
+.scGalleryFrame iframe,
 #Page iframe {
   background: transparent url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner32.gif") no-repeat center center;
   background-size: 32px;
@@ -1247,7 +1248,7 @@ ul.scAccountMenu li:after {
 }
 
 .scButtonExtended > img {
-  zoom: 0.6;
+  max-height: 80%;
   vertical-align: middle;
   transition: all 0.2s ease-in-out;
 }

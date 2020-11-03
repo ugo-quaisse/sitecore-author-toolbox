@@ -11,11 +11,11 @@ const showSnackbar = (version) => {
   //Snackbar settings
   let snackbarHtml = `
     <b>Sitecore Author Toolbox is updated!</b><br />
-    A new "preview mode" is available in Content Editor, give it a try!`;
+    A new "preview mode" is available in Content Editor (Presentation tab), give it a try!`;
   let html =
     `<div class="snackbar">` +
     snackbarHtml +
-    `<button onclick="window.open('https://forms.gle/vWbp8w9Z1zETyvKd9')">FEEDBACK</button><button id="sbDismiss">DISMISS</button></div>`;
+    `<button onclick="window.open('https://uquaisse.io/sitecore-cms/new-preview-mode-in-sitecore-author-toolbox-4-0/')">READ&nbsp;MORE</button><button id="sbDismiss">DISMISS</button></div>`;
 
   //Show Snackbar
   if (global.showSnackbar) {
@@ -24,7 +24,9 @@ const showSnackbar = (version) => {
     //Add listener on click #sbDismiss
     document.querySelector("#sbDismiss").addEventListener("click", function () {
       localStorage.setItem("sbDismiss", version);
-      document.querySelector(".snackbar").setAttribute("style", "display: none");
+      document
+        .querySelector(".snackbar")
+        .setAttribute("style", "display: none");
     });
   }
 };

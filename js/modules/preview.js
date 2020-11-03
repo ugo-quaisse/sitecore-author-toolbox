@@ -14,9 +14,10 @@ export { insertPreviewButton, listenPreviewTab };
 const insertPreviewButton = (storage) => {
   let iframeId = window.frameElement.getAttribute("id");
   let container = parent.document.querySelector("#EditorTabs");
+  let activeTab = parent.document.querySelector("#EditorTabs > a.scRibbonEditorTabActive").innerText.toLowerCase();
 
   //Experimental mode
-  let extraClass = storage.feature_experimentalui ? "t-top t-sm" : "t-hide scButtonExtended";
+  let extraClass = storage.feature_experimentalui ? "t-top t-sm" : "t-top t-sm scButtonExtended";
 
   //prettier-ignore
   let button = `
@@ -29,7 +30,7 @@ const insertPreviewButton = (storage) => {
     </div>`;
 
   //Add to view
-  container && !document.querySelector("#EditorTabControls_Preview") ? container.insertAdjacentHTML("beforeend", button) : false;
+  container && !document.querySelector("#EditorTabControls_Preview") && activeTab == "preview" ? container.insertAdjacentHTML("beforeend", button) : false;
 };
 
 /**

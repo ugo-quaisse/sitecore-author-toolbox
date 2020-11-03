@@ -23,6 +23,7 @@
   --grey9: #e3e3e3;
   --grey10: #f0f1f3;
   --grey11: #dddddd;
+  --grey12: #f7f7f7;
 
   --lightblue: #1e81ef;
   --blue: #0b84ff;
@@ -98,13 +99,21 @@ body.contentEditor:after {
   height: 56px;
   width: 96px;
   position: absolute;
-  background: transparent url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner32.gif") no-repeat center center;
+  background: transparent
+    url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner32.gif")
+    no-repeat center center;
   background-color: #ffffff;
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.175);
   z-index: auto;
   transition: all ease-in-out 0.1s;
   transition-delay: 0.2s;
+}
+
+button:focus,
+button:active {
+  outline: 0px solid transparent;
+  box-shadow: 0 0 0 2.5px #0974ff !important;
 }
 
 .scWorkboxPanel,
@@ -150,7 +159,7 @@ div#Languages img {
 }
 
 .scFolderButtons {
-  padding-top: 10px;
+  padding-top: 25px !important;
 }
 
 .scFolderButtonsTitle {
@@ -367,4 +376,8 @@ div#Languages img {
 }
 .scIconCopy:hover {
   filter: brightness(1.5);
+}
+
+.scSystemButtons {
+  display: none;
 }

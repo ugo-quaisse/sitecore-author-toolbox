@@ -70,6 +70,6 @@
   --iconContrast: 2;
 }
 
-:root body.dark {
+:root body.dark_sat {
   --text: #fff !important;
 }

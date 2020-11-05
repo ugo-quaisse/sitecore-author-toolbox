@@ -6,7 +6,7 @@ import {
   loadJsFile,
   sitecoreItemJson,
   getScItemData,
-  preferesColorScheme,
+  currentColorScheme,
 } from "./helpers.js";
 import { checkUrlStatus } from "./url.js";
 import { addHelpIcons, checkHelpLink } from "./help.js";
@@ -46,7 +46,7 @@ const sitecoreAuthorToolbox = () => {
     var scEditorHeaderVersionsLanguage = document.querySelector(
       ".scEditorHeaderVersionsLanguage"
     );
-    let currentScheme = preferesColorScheme();
+    let currentScheme = currentColorScheme();
     let darkMode = false;
 
     if (scEditorHeaderVersionsLanguage) {

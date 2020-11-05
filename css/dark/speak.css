@@ -1,311 +1,282 @@
-body.dark #Editor_contentIframe body {
+body.dark_sat #Editor_contentIframe body {
   color: #fff;
 }
 
-body.dark .sc-dialogHeader {
+body.dark_sat .sc-dialogHeader {
   background-color: var(--black1) !important;
 }
 
-body.dark .sc-applicationContent,
-body.dark .sc-applicationContent-main {
+body.dark_sat .sc-applicationContent,
+body.dark_sat .sc-applicationContent-main {
   color: var(--black1) !important;
   border-color: var(--text) !important;
   background-color: var(--black2) !important;
-  padding: 15px;
 }
-body.dark .sc-applicationContent {
-  padding: 0px !important;
-}
-body.dark .sc-controlpanel-box-content {
+body.dark_sat .sc-controlpanel-box-content {
   background-color: var(--black3);
 }
-body.dark .sc-controlpanel-box-content li {
+body.dark_sat .sc-controlpanel-box-content li {
   border-bottom: 1px solid var(--black4) !important;
 }
-body.dark .sc-applicationHeader-row2 {
+body.dark_sat .sc-applicationHeader-row2 {
   background-color: #2b2b2b !important;
   border-bottom: 1px solid var(--black4);
 }
-body.dark .sc-controlpanel-box-header h4 {
+body.dark_sat .sc-controlpanel-box-header h4 {
   color: var(--text) !important;
 }
-body.dark .sc-dialogFooter {
+body.dark_sat .sc-dialogFooter {
   background-color: var(--black1) !important;
-  height: 60px;
-  padding: 12px 0;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  display: block;
   border-bottom: 1px solid var(--black1) !important;
-  border-left: 0;
-  border-right: 0;
   border-top: 0px solid var(--black3) !important;
-  /* A trick to fix missing footer in Safari on macOS. */
-  overflow: hidden;
 }
-body.dark .sc-dialogContent-toolbar {
+body.dark_sat .sc-dialogContent-toolbar {
   background-color: var(--black2) !important;
-  padding: 12px 15px;
-  height: 60px;
-  line-height: 36px;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
-  margin-bottom: 1px;
 }
-body.dark .sc-dialogContent-main {
+body.dark_sat .sc-dialogContent-main {
   color: var(--text) !important;
   border-color: var(--text) !important;
-  background-color: inherit;
-  padding: 15px;
 }
-body.dark .sc .sc-backbutton.btn {
-  text-decoration: none;
-  text-shadow: none;
-  position: relative;
-  outline: none;
-  border: none;
-  background-image: none;
-  background: none;
+body.dark_sat .sc .sc-backbutton.btn {
   color: var(--white);
-  box-shadow: none;
 }
-body.dark .sc .sc-text-largetitle {
-  font-size: 1.5em;
+body.dark_sat .sc .sc-text-largetitle {
   color: var(--text) !important;
 }
 
-body.dark .sc-launchpad-item .icon {
+body.dark_sat .sc-launchpad-item .icon {
   background-color: var(--black3) !important;
   background-image: none !important;
   border: 1px var(--black4) solid !important;
 }
 
-body.dark .sc .sc-border[data-sc-id="AnalyticsFallback"] {
+body.dark_sat .sc .sc-border[data-sc-id="AnalyticsFallback"] {
   background-color: var(--black3) !important;
 }
 
-body.dark .sc-togglebutton-text {
+body.dark_sat .sc-togglebutton-text {
   color: var(--black2) !important;
 }
-body.dark .btn-primary > .sc-button-text {
+body.dark_sat .btn-primary > .sc-button-text {
   color: var(--white) !important;
 }
 
-body.dark .sc-iconList-wrap .sc-iconList-item {
+body.dark_sat .sc-iconList-wrap .sc-iconList-item {
   border: 1px solid var(--black4);
   background: var(--black2);
 }
 
-body.dark form.sc-uploader {
+body.dark_sat form.sc-uploader {
   background-color: var(--black2) !important;
   border: 2px dashed var(--black6);
-  border-radius: 5px;
 }
 
-body.dark .sc .sc-smartpanel {
+body.dark_sat .sc .sc-smartpanel {
   background: #212121 !important;
 }
 
-body.dark .sc .sc-smartpanel-buttons,
-body.dark .sc .sc-smartpanel-header {
+body.dark_sat .sc .sc-smartpanel-buttons,
+body.dark_sat .sc .sc-smartpanel-header {
   background-color: var(--black2) !important;
   border: 1px solid var(--black3) !important;
-  border-right: 0px;
-  border-left: 0px;
 }
-body.dark .sc-listcontrol-body {
+body.dark_sat .sc-listcontrol-body {
   background-color: var(--black3) !important;
 }
-body.dark .sc-listcontrol .sc-table {
+body.dark_sat .sc-listcontrol .sc-table {
   background-color: var(--black3) !important;
 }
-body.dark .form-control {
+body.dark_sat .form-control {
   background-color: var(--black1) !important;
   border: 1px solid var(--black1) !important;
 }
-body.dark .sc-dialogWindow-header {
+body.dark_sat .sc-dialogWindow-header {
   background-color: var(--black2) !important;
 }
 
-body.dark .sc .sc-menu .menuroot,
-body.dark .sc-dialogContent-navigation {
+body.dark_sat .sc .sc-menu .menuroot,
+body.dark_sat .sc-dialogContent-navigation {
   background-color: var(--black3);
   border-color: var(--black3);
 }
 
-body.dark
+body.dark_sat
   div.sc-navigation-content
   section.sc-dialogContent-main
   div[data-sc-id="InfoBorderBox"] {
   background-color: var(--black3);
 }
 
-body.dark .btn-primary:active,
-body.dark .btn-primary {
+body.dark_sat .btn-primary:active,
+body.dark_sat .btn-primary {
   background: var(--blue);
-  border: none;
-  box-shadow: none;
-  background-image: none;
 }
 
-body.dark .btn-primary:hover {
+body.dark_sat .btn-primary:hover {
   background: var(--darkblue);
 }
 
-body.dark .sc .sc-messageBar .alert.alert-error {
+body.dark_sat .sc .sc-messageBar .alert.alert-error {
   color: #ffffff;
   background-color: #8b1913;
 }
-body.dark .sc-listcontrol .sc-listcontrol-body .table tr td,
+body.dark_sat .sc-listcontrol .sc-listcontrol-body .table tr td,
 .sc-listcontrol .sc-listcontrol-body .sc-table tr td,
-body.dark .sc-listcontrol .empty {
+body.dark_sat .sc-listcontrol .empty {
   color: var(--text);
 }
 
-body.dark .sc-advancedExpander .sc-advancedExpander-header,
-body.dark .sc-ChartComposites {
+body.dark_sat .sc-advancedExpander .sc-advancedExpander-header,
+body.dark_sat .sc-ChartComposites {
   background: var(--black1) !important;
 }
 
-body.dark .sc-advancedExpander .sc-advancedExpander-body {
+body.dark_sat .sc-advancedExpander .sc-advancedExpander-body {
   background: var(--black3) !important;
   border-left: 1px solid var(--black3);
   border-right: 1px solid var(--black3);
   border-bottom: 1px solid var(--black3);
-  padding: 0;
   color: var(--text);
 }
 
-body.dark .sc span.dynatree-expander,
-body.dark .sc span.dynatree-checkbox {
+body.dark_sat .sc span.dynatree-expander,
+body.dark_sat .sc span.dynatree-checkbox {
   filter: invert(1);
 }
 
-body.dark .sc-applicationHeader-row2 {
+body.dark_sat .sc-applicationHeader-row2 {
   background-color: var(--black1) !important;
 }
-body.dark .sc .sc-tabcontrol > .nav-tabs > li > a {
+body.dark_sat .sc .sc-tabcontrol > .nav-tabs > li > a {
   background-color: var(--black1);
   border: 1px solid var(--black2);
 }
-body.dark .sc .sc-tabcontrol > .nav-tabs > li > a:hover {
+body.dark_sat .sc .sc-tabcontrol > .nav-tabs > li > a:hover {
   background-color: var(--black3);
 }
-body.dark div[data-sc-id="OverviewBorderPadding"] .row {
+body.dark_sat div[data-sc-id="OverviewBorderPadding"] .row {
   background: var(--black3);
   border-bottom: 1px solid var(--black2);
 }
-body.dark div.sc-border[data-sc-id="InfoPhotoImageBorder"] img {
+body.dark_sat div.sc-border[data-sc-id="InfoPhotoImageBorder"] img {
   background: var(--black4) !important;
   border: 15px solid var(--black3);
 }
 
-body.dark .sc .sc-timeline div.timeline-content {
+body.dark_sat .sc .sc-timeline div.timeline-content {
   background: var(--black2);
 }
-body.dark .sc .sc-timeline div.timeline-axis {
+body.dark_sat .sc .sc-timeline div.timeline-axis {
   background: var(--black2);
 }
-body.dark .sc .sc-timeline div.timeline-axis-text,
-body.dark span.sc-text[data-sc-id="LatestVisitHeader"],
-body.dark span.sc-text[data-sc-id="StatsHeader"],
-body.dark span.sc-text[data-sc-id="DetailsHeader"],
-body.dark div[data-sc-id="OverviewBorderPadding"] .row > div:nth-child(even),
-body.dark div[data-sc-id="OverviewBorderPadding"] .row > div {
+body.dark_sat .sc .sc-timeline div.timeline-axis-text,
+body.dark_sat span.sc-text[data-sc-id="LatestVisitHeader"],
+body.dark_sat span.sc-text[data-sc-id="StatsHeader"],
+body.dark_sat span.sc-text[data-sc-id="DetailsHeader"],
+body.dark_sat
+  div[data-sc-id="OverviewBorderPadding"]
+  .row
+  > div:nth-child(even),
+body.dark_sat div[data-sc-id="OverviewBorderPadding"] .row > div {
   color: var(--text);
 }
-body.dark .sc-backbutton-text {
+body.dark_sat .sc-backbutton-text {
   color: var(--text) !important;
 }
-body.dark .sc-advancedExpander.open .sc-advancedExpander-header > table {
+body.dark_sat .sc-advancedExpander.open .sc-advancedExpander-header > table {
   background: var(--black4);
 }
-body.dark .sc-advancedExpander.open .sc-advancedExpander-header {
+body.dark_sat .sc-advancedExpander.open .sc-advancedExpander-header {
   border-left: 5px solid var(--blue);
 }
-body.dark .sc .sc-timeline .timeline-era.era-0 {
+body.dark_sat .sc .sc-timeline .timeline-era.era-0 {
   background-color: var(--blue);
   color: var(--blue);
 }
-body.dark .sc .sc-tabcontrol.subTab > .nav-tabs {
+body.dark_sat .sc .sc-tabcontrol.subTab > .nav-tabs {
   background: var(--black4);
   border: 1px solid var(--black4);
 }
-body.dark .sc .sc-tabcontrol.subTab > .nav-tabs > li > a {
+body.dark_sat .sc .sc-tabcontrol.subTab > .nav-tabs > li > a {
   background: var(--black4);
 }
-body.dark .sc .sc-tabcontrol.subTab > .nav-tabs > li > a:hover {
+body.dark_sat .sc .sc-tabcontrol.subTab > .nav-tabs > li > a:hover {
   background: var(--black3);
 }
-body.dark .sc .sc-tabcontrol.subTab > .nav-tabs > li.active > a:before,
-body.dark .sc .sc-tabcontrol.subTab > .nav-tabs > li.active > a:after {
+body.dark_sat .sc .sc-tabcontrol.subTab > .nav-tabs > li.active > a:before,
+body.dark_sat .sc .sc-tabcontrol.subTab > .nav-tabs > li.active > a:after {
   border-top-color: var(--black4);
 }
-body.dark .sc .sc-tabcontrol.subTab > .nav-tabs > li.active > a:hover:before,
-body.dark .sc .sc-tabcontrol.subTab > .nav-tabs > li.active > a:hover:after {
+body.dark_sat
+  .sc
+  .sc-tabcontrol.subTab
+  > .nav-tabs
+  > li.active
+  > a:hover:before,
+body.dark_sat
+  .sc
+  .sc-tabcontrol.subTab
+  > .nav-tabs
+  > li.active
+  > a:hover:after {
   border-top-color: var(--black3);
 }
-body.dark .sc-listcontrol .sc-table tbody tr th,
+body.dark_sat .sc-listcontrol .sc-table tbody tr th,
 .sc-listcontrol .sc-table thead th {
   background: var(--black5);
 }
-body.dark
-  .sc-advancedExpander-bodywrapper
-  > .sc-listcontrol
-  .sc-table:first-of-type {
-  border-style: hidden !important;
-}
-body.dark .sc-listcontrol .sc-table tbody tr td a[href] {
+body.dark_sat .sc-listcontrol .sc-table tbody tr td a[href] {
   color: var(--blue) !important;
 }
-body.dark .sc-actionpanel .sc-foldout ul > li .sc-action-text {
+body.dark_sat .sc-actionpanel .sc-foldout ul > li .sc-action-text {
   color: var(--black1);
 }
-body.dark
+body.dark_sat
   .sc-ChartComposites
   .sc-advancedExpander.open
   .sc-advancedExpander-header
   > table,
-body.dark
+body.dark_sat
   .sc-ChartComposites
   .sc-advancedExpander
   .sc-advancedExpander-header
   > table,
-body.dark
+body.dark_sat
   .sc-ExperienceAnalyticsListControl
   .sc-advancedExpander.open
   .sc-advancedExpander-header
   > table,
-body.dark
+body.dark_sat
   .sc-ExperienceAnalyticsListControl
   .sc-advancedExpander
   .sc-advancedExpander-header
   > table,
-body.dark .sc-advancedExpander {
+body.dark_sat .sc-advancedExpander {
   background: var(--black2);
 }
 
-body.dark div[data-sc-id="OverallTitleRow"],
-body.dark div[data-sc-id="ActivityTitleRow"],
-body.dark div[data-sc-id="OverallKPIRow"],
-body.dark div[data-sc-id="IndividualKPIRow"],
-body.dark .sc div[data-sc-id="PreviousMonthTitleBorder"],
-body.dark .sc div[data-sc-id="CurrentMonthTitleBorder"],
-body.dark .sc div[data-sc-id="PreviousBestGuessingTitleBorder"],
-body.dark .sc div[data-sc-id="CurrentBestGuessingTitleBorder"],
-body.dark .sc div[data-sc-id="PreviousEffectTitleBorder"],
-body.dark .sc div[data-sc-id="CurrentEffectTitleBorder"],
-body.dark .sc div[data-sc-id="PreviousActiveUsersTitleBorder"],
-body.dark .sc div[data-sc-id="CurrentActiveUsersTitleBorder"],
-body.dark .sc span[data-sc-id="CurrentPeriodTitle"],
-body.dark .sc span[data-sc-id="PreviousPeriodTitle"] {
+body.dark_sat div[data-sc-id="OverallTitleRow"],
+body.dark_sat div[data-sc-id="ActivityTitleRow"],
+body.dark_sat div[data-sc-id="OverallKPIRow"],
+body.dark_sat div[data-sc-id="IndividualKPIRow"],
+body.dark_sat .sc div[data-sc-id="PreviousMonthTitleBorder"],
+body.dark_sat .sc div[data-sc-id="CurrentMonthTitleBorder"],
+body.dark_sat .sc div[data-sc-id="PreviousBestGuessingTitleBorder"],
+body.dark_sat .sc div[data-sc-id="CurrentBestGuessingTitleBorder"],
+body.dark_sat .sc div[data-sc-id="PreviousEffectTitleBorder"],
+body.dark_sat .sc div[data-sc-id="CurrentEffectTitleBorder"],
+body.dark_sat .sc div[data-sc-id="PreviousActiveUsersTitleBorder"],
+body.dark_sat .sc div[data-sc-id="CurrentActiveUsersTitleBorder"],
+body.dark_sat .sc span[data-sc-id="CurrentPeriodTitle"],
+body.dark_sat .sc span[data-sc-id="PreviousPeriodTitle"] {
   background: var(--black3);
 }
 
-body.dark .sc-ChartComposites .sc-advancedExpander-header {
+body.dark_sat .sc-ChartComposites .sc-advancedExpander-header {
   border-bottom: 1px solid var(--black2);
 }
-body.dark
+body.dark_sat
   .sc-ChartComposites
   .sc-advancedExpander
   .sc-advancedExpander-header
@@ -318,6 +289,6 @@ body.dark
   .sc-advancedExpander-header-title {
   color: var(--text);
 }
-body.dark .sc-applicationContent-navigation {
+body.dark_sat .sc-applicationContent-navigation {
   background-color: var(--black3);
 }

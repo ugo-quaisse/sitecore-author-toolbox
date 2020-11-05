@@ -7,7 +7,9 @@
  */
 if (!window.location.href.toLowerCase().includes("jquerymodaldialogs.html")) {
   (async () => {
-    const contentScript = await import(chrome.extension.getURL("js/toolbox.min.js"));
+    const contentScript = await import(
+      chrome.extension.getURL("js/toolbox.min.js")
+    );
     try {
       contentScript.main();
     } catch (e) {

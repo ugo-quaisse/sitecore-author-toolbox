@@ -20,7 +20,7 @@ export {
   loadCssFile,
   loadJsFile,
   exeJsCode,
-  preferesColorScheme,
+  currentColorScheme,
   initDarkMode,
   initDarkModeEditor,
   autoDarkMode,
@@ -132,17 +132,15 @@ const exeJsCode = (code) => {
 /**
  * Get active OS color Scheme
  */
-const preferesColorScheme = () => {
+const currentColorScheme = () => {
   let color = "light";
   if (
     window.matchMedia &&
     window.matchMedia("(prefers-color-scheme: dark)").matches
   ) {
     color = "dark";
-    //document.body.classList.add("dark")
   } else {
     color = "light";
-    //document.body.classList.remove("dark")
   }
 
   return color;
@@ -174,9 +172,9 @@ const initDarkMode = (storage) => {
       !global.isEditMode &&
       !global.isRules &&
       !global.isAdmin &&
-      preferesColorScheme() == "dark")
+      currentColorScheme() == "dark")
   ) {
-    document.body.classList.add("dark");
+    document.body.classList.add("dark_sat");
     navigator.platform.indexOf("Win") == 0
       ? loadCssFile("css/dark/scrollbars.min.css")
       : false;
@@ -195,7 +193,7 @@ const initDarkModeEditor = (storage) => {
     (storage.feature_darkmode && !storage.feature_darkmode_auto) ||
     (storage.feature_darkmode &&
       storage.feature_darkmode_auto &&
-      preferesColorScheme() == "dark")
+      currentColorScheme() == "dark")
   ) {
     darkModeTheme = "ayu-dark";
     loadCssFile("css/dark/ayu-dark.css");
@@ -212,8 +210,8 @@ const autoDarkMode = (storage) => {
     const scheme = window.matchMedia("(prefers-color-scheme: dark)");
     scheme.addEventListener("change", () => {
       scheme.matches
-        ? document.body.classList.add("dark")
-        : document.body.classList.remove("dark");
+        ? document.body.classList.add("dark_sat")
+        : document.body.classList.remove("dark_sat");
     });
   }
 };

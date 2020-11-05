@@ -1,1 +1,1 @@
-body.dark ::-webkit-scrollbar{width:12px!important;height:12px!important}body.dark ::-webkit-scrollbar-thumb{border-radius:0!important;background:var(--black5)!important;box-shadow:none!important}body.dark ::-webkit-scrollbar-track{border-radius:0!important;box-shadow:none!important}
+body.dark_sat ::-webkit-scrollbar{width:12px!important;height:12px!important}body.dark_sat ::-webkit-scrollbar-thumb{border-radius:0!important;background:var(--black5)!important;box-shadow:none!important}body.dark_sat ::-webkit-scrollbar-track{border-radius:0!important;box-shadow:none!important}

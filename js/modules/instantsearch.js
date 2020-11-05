@@ -4,7 +4,19 @@ import * as global from "./global.js";
 import { exeJsCode } from "./helpers.js";
 import { pathToBreadcrumb } from "./experimentalui.js";
 
-export { instantSearch };
+export { initInstantSearch, instantSearch };
+
+const initInstantSearch = (storage) => {
+  storage.feature_instantsearch == undefined ? (storage.feature_instantsearch = true) : false;
+  if (!global.isLaunchpad && storage.feature_instantsearch) {
+    let globalHeader = document.querySelector(".sc-globalHeader");
+    let html = '<input type="text" class="scInstantSearch scIgnoreModified" placeholder="Search for content or media" tabindex="1" accesskey="f">';
+    let htmlResult = '<ul class="scInstantSearchResults"></ul>';
+    globalHeader ? globalHeader.insertAdjacentHTML("afterbegin", htmlResult) : false;
+    globalHeader ? globalHeader.insertAdjacentHTML("afterbegin", html) : false;
+    globalHeader ? instantSearch() : false;
+  }
+};
 
 const instantSearch = () => {
   // Variables
@@ -40,13 +52,7 @@ const instantSearch = () => {
         let ref = event.target != null ? event.target : event.srcElement;
         ref
           ? exeJsCode(
-              `fadeEditorFrames(); setTimeout(function() { scForm.invoke("item:load(id=` +
-                ref.getAttribute("data-scitem") +
-                `,language=` +
-                ref.getAttribute("data-language") +
-                `,version=` +
-                ref.getAttribute("data-version") +
-                `)") }, 150)`
+              `fadeEditorFrames(); setTimeout(function() { scForm.invoke("item:load(id=` + ref.getAttribute("data-scitem") + `,language=` + ref.getAttribute("data-language") + `,version=` + ref.getAttribute("data-version") + `)") }, 150)`
             )
           : false;
       } else if (event.key === "Escape") {
@@ -182,16 +188,7 @@ const instantSearch = () => {
                       scVersion +
                       '">';
                     html += '<h2 title="' + title + '">' + text + "</h2>";
-                    html +=
-                      '<p title="' +
-                      title +
-                      '"><img loading="lazy" src="' +
-                      img +
-                      '" onerror="this.onerror=null;this.src=\'' +
-                      global.iconInstantSearchGeneric +
-                      "';\"/> " +
-                      pathToBreadcrumb(title, ">", false) +
-                      "</p>";
+                    html += '<p title="' + title + '"><img loading="lazy" src="' + img + '" onerror="this.onerror=null;this.src=\'' + global.iconInstantSearchGeneric + "';\"/> " + pathToBreadcrumb(title, ">", false) + "</p>";
                     html += "</li>";
                     count++;
                   }
@@ -205,10 +202,7 @@ const instantSearch = () => {
               } else if (ajax.status == "500") {
                 // Populate result
                 divResults.innerHTML = "";
-                divResults.insertAdjacentHTML(
-                  "afterbegin",
-                  '<div class="scInstansSeachLoading">Sorry, your Sitecore instance is not compatible with this feature :-(</div>'
-                );
+                divResults.insertAdjacentHTML("afterbegin", '<div class="scInstansSeachLoading">Sorry, your Sitecore instance is not compatible with this feature :-(</div>');
               } else if (ajax.status == "401") {
                 // Populate result
                 divResults.innerHTML = "";
@@ -219,12 +213,7 @@ const instantSearch = () => {
               } else if (ajax.status == "0") {
                 // Populate result
                 divResults.innerHTML = "";
-                divResults.insertAdjacentHTML(
-                  "afterbegin",
-                  '<div class="scInstansSeachLoading"><img src="' +
-                    global.iconTimeout +
-                    '" width="display: block; margin: auto; width: 60px;" /> Sitecore timeout. Try again...</div>'
-                );
+                divResults.insertAdjacentHTML("afterbegin", '<div class="scInstansSeachLoading"><img src="' + global.iconTimeout + '" width="display: block; margin: auto; width: 60px;" /> Sitecore timeout. Try again...</div>');
               }
 
               loadingTimeout1 != null ? clearTimeout(loadingTimeout1) : false;

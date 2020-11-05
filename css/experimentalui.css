@@ -1300,7 +1300,7 @@ body.experimentalui .scSaveBar > .scActions > button.primary {
 
 body.experimentalui .scSaveBar > .scActions > button.primaryGrouped {
   border-radius: var(--radius) 0px 0px var(--radius);
-  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  border-right: 1px solid rgba(255, 255, 255, 0.4);
   margin-right: 0px;
 }
 
@@ -1310,6 +1310,7 @@ body.experimentalui .scSaveBar > .scActions > button.grouped {
   padding: 7px 10px 8px 10px;
   margin-right: 5px;
   background-color: var(--accent) !important;
+  color: var(--accentText);
   border-radius: 0px var(--radius) var(--radius) 0px;
 }
 

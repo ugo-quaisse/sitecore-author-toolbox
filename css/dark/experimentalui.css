@@ -1,48 +1,51 @@
-a:link {
+body.experimentalui.dark a:link {
   color: inherit !important;
 }
 
-.scBackground,
-.scEditorTabHeaderActive,
-#EditorTabs {
+body.experimentalui.dark .scBackground,
+body.experimentalui.dark .scEditorTabHeaderActive,
+body.experimentalui.dark #EditorTabs {
   background-color: var(--black2) !important;
 }
 
-#FileList {
+body.experimentalui.dark #FileList {
   background: var(--black1) !important;
 }
 
-#FileList a {
+body.experimentalui.dark #FileList a {
   background-color: var(--black1);
   border-color: var(--black1);
 }
 
-.scSaveBar > .scActions > .scPublishMenu,
-.scEditorTabControlsHolder > .scMoreMenu {
+body.experimentalui.dark .scSaveBar > .scActions > .scPublishMenu,
+body.experimentalui.dark .scEditorTabControlsHolder > .scMoreMenu {
   background-color: var(--black1) !important;
 }
 
-.scEditorTabControlsHolder > .scMoreMenu > li:hover,
-.scSaveBar > .scActions > .scPublishMenu > li:hover {
+body.experimentalui.dark .scEditorTabControlsHolder > .scMoreMenu > li:hover,
+body.experimentalui.dark .scSaveBar > .scActions > .scPublishMenu > li:hover {
   background-color: #0d84ff !important;
 }
 
-.scEditorTabControlsHolder > .scMoreMenu > li.separator {
+body.experimentalui.dark
+  .scEditorTabControlsHolder
+  > .scMoreMenu
+  > li.separator {
   border-top: 1px solid var(--black3);
 }
 
-.scMessageBar.scSuccess {
+body.experimentalui.dark .scMessageBar.scSuccess {
   filter: hue-rotate(180deg) invert(1) brightness(2);
 }
 
-.scMessageBar.scSuccess {
+body.experimentalui.dark .scMessageBar.scSuccess {
   border-radius: 0 var(--radius) var(--radius) 0;
   background-color: var(--messageSuccessBar) !important;
   color: var(--grey7) !important;
   font-size: 14px;
 }
 
-.scMessageBar.scWarning {
+body.experimentalui.dark .scMessageBar.scWarning {
   margin: 20px;
   border-radius: 0px 3px 3px 0px;
   background-color: var(--verydarkblue) !important;
@@ -50,110 +53,121 @@ a:link {
   font-size: 14px;
 }
 
-.scWarning > .scMessageBarIcon {
+body.experimentalui.dark .scWarning > .scMessageBarIcon {
   border-radius: 3px 0px 0px 3px;
   background-color: var(--messageWarningBgIcon) !important;
 }
 
-.scWarning > .scMessageBarTextContainer > .scMessageBar a,
-.scWarning > .scMessageBarTextContainer > .scMessageBarOption,
-.scWarning > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet {
+body.experimentalui.dark
+  .scWarning
+  > .scMessageBarTextContainer
+  > .scMessageBar
+  a,
+body.experimentalui.dark
+  .scWarning
+  > .scMessageBarTextContainer
+  > .scMessageBarOption,
+body.experimentalui.dark
+  .scWarning
+  > .scMessageBarTextContainer
+  > .scMessageBarOptions
+  > .scMessageBarOptionBullet {
   color: var(--grey8) !important;
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
-.scEditorTabHeaderNormal,
-.scContentControlAttachmentImage {
+body.experimentalui.dark .scEditorTabHeaderNormal,
+body.experimentalui.dark .scContentControlAttachmentImage {
   background-color: var(--black2) !important;
   border: 0px;
 }
 
-.splitter-bar:hover,
-.splitter-bar:hover::before {
+body.experimentalui.dark .splitter-bar:hover,
+body.experimentalui.dark .splitter-bar:hover::before {
   background-color: var(--accent) !important;
 }
 
-.scOverlay,
-.ui-widget-overlay {
+body.experimentalui.dark .scOverlay,
+body.experimentalui.dark .ui-widget-overlay {
   background: rgba(0, 0, 0, 0.2) !important;
 }
 
-a.scContentButton {
+body.experimentalui.dark a.scContentButton {
   color: var(--accent) !important;
 }
 
-#scModal {
+body.experimentalui.dark #scModal {
   background-color: var(--black1) !important;
 }
 
-#SearchPanel {
+body.experimentalui.dark #SearchPanel {
   padding: 17px;
   background-color: var(--black1) !important;
 }
 
-.scSaveBar {
+body.experimentalui.dark .scSaveBar {
   background-color: var(--black1) !important;
   border-bottom: 1px solid var(--black3);
 }
 
-.scSaveBar > .scActions > button {
+body.experimentalui.dark .scSaveBar > .scActions > button {
   background-color: var(--black2);
   color: var(--white);
 }
 
-.scEditorTabControlsHolder {
+body.experimentalui.dark .scEditorTabControlsHolder {
   margin: 11px 13px;
   height: auto;
 }
 
-a.scEditorHeaderButton,
-button.scEditorHeaderButton {
+body.experimentalui.dark a.scEditorHeaderButton,
+body.experimentalui.dark button.scEditorHeaderButton {
   background-color: var(--black);
   color: var(--white);
   border: 1px solid transparent;
 }
 
-a.scEditorHeaderButton > img,
-button.scEditorHeaderButton > img {
+body.experimentalui.dark a.scEditorHeaderButton > img,
+body.experimentalui.dark button.scEditorHeaderButton > img {
   filter: invert(1);
 }
 
-.scEditorGrid {
+body.experimentalui.dark .scEditorGrid {
   background-color: var(--black1) !important;
 }
 
-.scEditorTabHeaderActive {
+body.experimentalui.dark .scEditorTabHeaderActive {
   background-color: var(--black2) !important;
 }
 
-.scEditorTab {
+body.experimentalui.dark .scEditorTab {
   background: var(--black3) !important;
 }
 
-#scEditorTabs > ul > li {
+body.experimentalui.dark #scEditorTabs > ul > li {
   border: 1px solid var(--black2);
 }
 
-#scEditorTabs > ul > li:hover {
+body.experimentalui.dark #scEditorTabs > ul > li:hover {
   color: var(--text) !important;
   background: var(--black3) !important;
   border-top: 2px solid var(--accent);
 }
 
-#BTAddNewSearch {
+body.experimentalui.dark #BTAddNewSearch {
   background-color: var(--black2) !important;
   border: 0px solid var(--black2) !important;
 }
 
-.scEditorTabSelected {
+body.experimentalui.dark .scEditorTabSelected {
   background-color: var(--black2) !important;
 }
 
-.scEditorTabSelected:hover {
+body.experimentalui.dark .scEditorTabSelected:hover {
   border-top: 3px solid var(--accent) !important;
 }
 
-.scEditorSectionPanel {
+body.experimentalui.dark .scEditorSectionPanel {
   display: table;
   border-radius: 0px 0px 3px 3px;
   margin: 20px;
@@ -165,81 +179,97 @@ button.scEditorHeaderButton > img {
   background-color: var(--black2) !important;
 }
 
-.scEditorSectionPanel.scTabsRounded {
+body.experimentalui.dark .scEditorSectionPanel.scTabsRounded {
   border-radius: 3px;
 }
 
-.scEditorSectionPanelCell {
+body.experimentalui.dark .scEditorSectionPanelCell {
   padding: 20px 20px 20px 15px;
 }
 
-.scEditorSections {
+body.experimentalui.dark .scEditorSections {
   border-top: 0px;
   background-color: var(--black0) !important;
 }
 
-.scEditorTabEmpty {
+body.experimentalui.dark .scEditorTabEmpty {
   border-bottom: 0px !important;
 }
 
-.scContentTreeNodeGlyph:hover + a > span,
-div.scContentTreeNode > img:hover + a > span,
-a.scContentTreeNodeNormal:hover > span {
+body.experimentalui.dark .scContentTreeNodeGlyph:hover + a > span,
+body.experimentalui.dark div.scContentTreeNode > img:hover + a > span,
+body.experimentalui.dark a.scContentTreeNodeNormal:hover > span {
   background-color: var(--black3) !important;
 }
 
-.scTreeview .icon,
-.scTreeview .icon_Hover,
-#scModal .item > a > img {
+body.experimentalui.dark .scTreeview .icon,
+body.experimentalui.dark .scTreeview .icon_Hover,
+body.experimentalui.dark #scModal .item > a > img {
   filter: grayscale(1) brightness(0.4) contrast(2) invert(1);
 }
 
-.scInsertItemIcon,
-.scEditItemIcon {
+body.experimentalui.dark .scInsertItemIcon,
+body.experimentalui.dark .scEditItemIcon {
   filter: invert(0);
 }
 
-#FileList a.scButton {
+body.experimentalui.dark #FileList a.scButton {
   background: var(--black4) !important;
 }
 
-.scMediaExplorer th {
+body.experimentalui.dark .scMediaExplorer th {
   border-top: 1px solid var(--black1);
 }
 
-.scMediaExplorer thead tr {
+body.experimentalui.dark .scMediaExplorer thead tr {
   background: var(--black1);
 }
 
-.scMediaExplorer thead tr:hover,
-.scMediaExplorer thead tr th:hover,
-.scMediaExplorer thead tr .mediaSelected {
+body.experimentalui.dark .scMediaExplorer thead tr:hover,
+body.experimentalui.dark .scMediaExplorer thead tr th:hover,
+body.experimentalui.dark .scMediaExplorer thead tr .mediaSelected {
   background: var(--black2) !important;
 }
 
-.scTiles .scTileItem:nth-child(even),
-.scMediaExplorer tbody tr:nth-child(even) {
+body.experimentalui.dark .scTiles .scTileItem:nth-child(even),
+body.experimentalui.dark .scMediaExplorer tbody tr:nth-child(even) {
   background: var(--black3);
 }
 
-.scTiles .scTileItem:nth-child(odd),
-.scMediaExplorer tbody tr:nth-child(odd) {
+body.experimentalui.dark .scTiles .scTileItem:nth-child(odd),
+body.experimentalui.dark .scMediaExplorer tbody tr:nth-child(odd) {
   background: var(--black2);
 }
 
-#ContentEditor,
-#Page {
+body.experimentalui.dark #ContentEditor,
+body.experimentalui.dark #Page {
   background-color: var(--black);
 }
 
-#ContentTreePanel .scContentTreeNodeGlyph:hover + a > span,
-#ContentTreePanel div.scContentTreeNode > img:hover + a > span,
-#ContentTreePanel a.scContentTreeNodeNormal:hover > span {
+body.experimentalui.dark
+  #ContentTreePanel
+  .scContentTreeNodeGlyph:hover
+  + a
+  > span,
+body.experimentalui.dark
+  #ContentTreePanel
+  div.scContentTreeNode
+  > img:hover
+  + a
+  > span,
+body.experimentalui.dark
+  #ContentTreePanel
+  a.scContentTreeNodeNormal:hover
+  > span {
   background-color: var(--grey2) !important;
 }
 
-.scFormDialogHeader,
-.scDialogHeader,
-.ui-widget-header {
+body.experimentalui.dark .scFormDialogHeader,
+body.experimentalui.dark .scDialogHeader,
+body.experimentalui.dark .ui-widget-header {
   background-color: var(--black1) !important;
+}
+
+body.experimentalui.dark a.scRibbonEditorTabNormal {
+  border-bottom: 3px solid var(--black2) !important;
 }

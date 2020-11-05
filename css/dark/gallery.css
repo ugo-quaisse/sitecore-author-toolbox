@@ -1,35 +1,34 @@
-form {
+body.dark form {
   background: transparent !important;
   height: 100%;
-  margin:0px;
+  margin: 0px;
 }
 
-.sc {
+body.dark .sc {
   background-color: var(--black2) !important;
 }
 
-.scGalleryOuterFrame {
+body.dark .scGalleryOuterFrame {
   border: 1px solid var(--black9);
   height: 100%;
 }
 
-.scGalleryInnerFrame {
-  background: var(--black9) ;
+body.dark .scGalleryInnerFrame {
+  background: var(--black9);
   border: 1px solid var(--black6);
   height: 100%;
 }
 
-.ff .scGalleryInnerFrame 
-{
+body.dark .ff .scGalleryInnerFrame {
   border: none;
 }
 
-.scGalleryGrip {
- text-align: right;
- height:10px;
+body.dark .scGalleryGrip {
+  text-align: right;
+  height: 10px;
 }
 
-.scGalleryGripIcon {
+body.dark .scGalleryGripIcon {
   vertical-align: top;
   width: 7px;
   height: 7px;
@@ -37,13 +36,13 @@ form {
   cursor: nw-resize;
 }
 
-.scGalleryMenu {
+body.dark .scGalleryMenu {
   border: none;
   height: 100%;
   width: 100%;
 }
 
-.scGalleryContent13 {
+body.dark .scGalleryContent13 {
   position: absolute;
   top: 0;
   bottom: 13px;
@@ -52,7 +51,7 @@ form {
   overflow: auto;
 }
 
-.scGalleryBottom13 {
+body.dark .scGalleryBottom13 {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -60,7 +59,7 @@ form {
   height: 13px;
 }
 
-.scGalleryContent10 {
+body.dark .scGalleryContent10 {
   position: absolute;
   top: 0;
   bottom: 10px;
@@ -69,7 +68,7 @@ form {
   overflow: auto;
 }
 
-.scGalleryBottom10 {
+body.dark .scGalleryBottom10 {
   position: absolute;
   bottom: 0;
   left: 0;

@@ -3,19 +3,19 @@
  * dialogs.css
  */
 
-form {
+body.dark form {
   height: 100%;
   width: 100%;
   position: absolute;
   color: var(--text) !important;
 }
 
-.scFormDialogHeader {
+body.dark .scFormDialogHeader {
   width: 100%;
   min-height: 45px !important;
 }
 
-.scFormDialogFooter {
+body.dark .scFormDialogFooter {
   position: relative;
   background-color: var(--black1) !important;
   border-top: 1px solid var(--black3) !important;
@@ -26,22 +26,22 @@ form {
   line-height: 34px;
 }
 
-.scFormDialogFooter .footerOkCancel {
+body.dark .scFormDialogFooter .footerOkCancel {
   white-space: nowrap;
   right: 15px;
   text-align: right;
 }
 
-.ie8 .lang_ja_jp .scFormDialogFooter > div,
-.ie9 .lang_ja_jp .scFormDialogFooter > div {
+body.dark .ie8 .lang_ja_jp .scFormDialogFooter > div,
+body.dark .ie9 .lang_ja_jp .scFormDialogFooter > div {
   padding-top: 0;
 }
 
-.scDialogHeader {
+body.dark .scDialogHeader {
   width: 100%;
 }
 
-.scDialogMessage {
+body.dark .scDialogMessage {
   font-size: 1.167em;
   color: #cccccc !important;
   line-height: 1.42857143;
@@ -49,7 +49,7 @@ form {
   word-break: break-word; /* Chrome */
 }
 
-.scDialogContentContainer {
+body.dark .scDialogContentContainer {
   width: 100%;
   padding: 15px;
   -moz-box-sizing: border-box;
@@ -58,47 +58,47 @@ form {
   overflow: auto;
 }
 
-.ie9 .scDialogContentContainer.scStretchAbsolute {
+body.dark .ie9 .scDialogContentContainer.scStretchAbsolute {
   width: auto;
 }
 
-.scDialogContentContainer > div {
+body.dark .scDialogContentContainer > div {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 
-.scDialogTextWithPadding {
+body.dark .scDialogTextWithPadding {
   display: block;
   padding-bottom: 4px;
 }
 
-.lang_ja_jp #Versions td {
+body.dark .lang_ja_jp #Versions td {
   white-space: nowrap;
 }
 
-.scDialogNoWrap {
+body.dark .scDialogNoWrap {
   white-space: nowrap;
   overflow: hidden;
 }
 
-.DialogHeader {
+body.dark .DialogHeader {
   font-size: 18px;
   padding: 0 15px 0;
   line-height: 30px;
 }
 
-.DialogHeaderDescription {
+body.dark .DialogHeaderDescription {
   padding: 10px 75px 10px 15px;
   background-color: var(--black2);
   color: var(--black9);
 }
 
 /* Extracted from dialogs*/
-.ProfileCardsContainer {
+body.dark .ProfileCardsContainer {
   overflow-y: auto;
 }
 
-.NoProfilesText {
+body.dark .NoProfilesText {
   margin: 10px;
   color: var(--black6);
 }
@@ -114,39 +114,39 @@ form {
         }
     */
 
-.dialogButtonsRight > .scButton {
+body.dark .dialogButtonsRight > .scButton {
   width: 100%;
   margin-top: 15px;
   margin-left: 0;
 }
 
-.dialogButtonsRight > .scButton:first-child {
+body.dark .dialogButtonsRight > .scButton:first-child {
   margin-top: 0;
 }
 
 /* jquery overwrite */
 
-.ui-dialog {
+body.dark .ui-dialog {
   padding: 0;
   -webkit-box-shadow: 0 5px 50px rgb(0, 0, 0) !important;
   box-shadow: 0 5px 50px rgb(0, 0, 0) !important;
   background-clip: padding-box;
 }
 
-.ui-dialog .ui-dialog-title {
+body.dark .ui-dialog .ui-dialog-title {
   margin: 0;
   display: none;
 }
 
-.ui-dialog-titlebar,
-.ui-dialog .ui-dialog-titlebar {
+body.dark .ui-dialog-titlebar,
+body.dark .ui-dialog .ui-dialog-titlebar {
   padding: 0;
   position: relative;
   background-color: var(--black1) !important;
 }
 
-.scFormDialogHeader .DialogHeader,
-.ui-dialog .ui-dialog-titlebar + .DialogHeader {
+body.dark .scFormDialogHeader .DialogHeader,
+body.dark .ui-dialog .ui-dialog-titlebar + .DialogHeader {
   height: 45px;
   background: var(--black1) !important;
   color: #fff;
@@ -155,15 +155,15 @@ form {
   font-size: 18px;
 }
 
-.ui-widget-content {
+body.dark .ui-widget-content {
   border: 0px;
   background-image: none;
   background-color: var(--black2) !important;
 }
 
-.scFormDialogHeader,
-.scDialogHeader,
-.ui-widget-header {
+body.dark .scFormDialogHeader,
+body.dark .scDialogHeader,
+body.dark .ui-widget-header {
   border: 0;
   background-image: none;
   padding: 0;
@@ -174,11 +174,11 @@ form {
   border-radius: 0;
 }
 
-.ui-progressbar-value {
+body.dark .ui-progressbar-value {
   background-color: #00b6ff !important;
 }
 
-.ui-dialog-titlebar-buttonpane {
+body.dark .ui-dialog-titlebar-buttonpane {
   margin-top: 0 !important;
   position: absolute;
   top: 21px !important;
@@ -186,92 +186,92 @@ form {
   z-index: 9999;
 }
 
-.ui-state-default,
-.ui-widget-content .ui-state-default,
-.ui-widget-header .ui-state-default,
-.ui-dialog-titlebar-buttonpane a {
+body.dark .ui-state-default,
+body.dark .ui-widget-content .ui-state-default,
+body.dark .ui-widget-header .ui-state-default,
+body.dark .ui-dialog-titlebar-buttonpane a {
   background-image: none;
   background-color: transparent;
   border: 0;
   margin-right: 15px;
 }
 
-.ui-dialog .ui-dialog-titlebar-close {
+body.dark .ui-dialog .ui-dialog-titlebar-close {
   height: 18px;
 }
 
-.no-close .ui-dialog-titlebar-close,
-.no-maximize .ui-dialog-titlebar-maximize,
-.no-restore .ui-dialog-titlebar-restore {
+body.dark .no-close .ui-dialog-titlebar-close,
+body.dark .no-maximize .ui-dialog-titlebar-maximize,
+body.dark .no-restore .ui-dialog-titlebar-restore {
   display: none !important;
 }
 
-.scNavButton:hover,
-.scCalendarYearLeftCell:hover,
-.scCalendarYearRightCell:hover {
+body.dark .scNavButton:hover,
+body.dark .scCalendarYearLeftCell:hover,
+body.dark .scCalendarYearRightCell:hover {
   background: #e3e3e3;
   cursor: pointer;
 }
 
-.scOverlay,
-.ui-widget-overlay {
+body.dark .scOverlay,
+body.dark .ui-widget-overlay {
   background: rgba(255, 255, 255, 0.05) !important;
 }
 
-#SettingsPane {
+body.dark #SettingsPane {
   background: var(--black) !important;
   border: 0px !important;
   padding: 10px;
 }
 
-#FooterRow {
+body.dark #FooterRow {
   border-top: 1px solid var(--black2);
 }
-#Editors,
-#MainPanel,
-.scValidatorPanel,
-.scEditorSections {
+body.dark #Editors,
+body.dark #MainPanel,
+body.dark .scValidatorPanel,
+body.dark .scEditorSections {
   background-color: var(--black3) !important;
 }
 
-#FooterRow {
+body.dark #FooterRow {
   background: var(--black2) !important;
 }
-#Renderings,
-#placeholders {
+body.dark #Renderings,
+body.dark #placeholders {
   color: var(--black5);
 }
-.scEditorInformation {
+body.dark .scEditorInformation {
   background-color: var(--lightblue) !important;
 }
-.standardWindowCaption {
+body.dark .standardWindowCaption {
   background-color: var(--black1) !important;
 }
-.cmd .clipboard {
+body.dark .cmd .clipboard {
   background-color: transparent !important;
   border: 0px !important;
   outline: none !important;
   box-shadow: none !important;
 }
-.spe-secured-app .scEditorWarningOption {
+body.dark .spe-secured-app .scEditorWarningOption {
   color: #897a2e !important;
 }
-.top-row {
+body.dark .top-row {
   background-color: var(--black3) !important;
 }
-.sc-kpi {
+body.dark .sc-kpi {
   background-color: var(--black2) !important;
 }
-.pick-button,
-.display-off,
-.item-picker {
+body.dark .pick-button,
+body.dark .display-off,
+body.dark .item-picker {
   background-color: var(--black1) !important;
 }
-.pick-button:hover {
+body.dark .pick-button:hover {
   background-color: #69a8d0 !important;
 }
 
-.scEditHtmlButtons {
+body.dark .scEditHtmlButtons {
   background: var(--black2);
   border-top: #333 1px solid;
 }

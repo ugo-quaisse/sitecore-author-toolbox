@@ -14,7 +14,7 @@
  */
 import * as global from "./modules/global.js";
 //prettier-ignore
-import { consoleLog, loadCssFile, loadJsFile, exeJsCode, preferesColorScheme, initDarkMode, initDarkModeEditor, sitecoreItemJson, getScItemData, startDrag } from "./modules/helpers.js";
+import { consoleLog, loadCssFile, loadJsFile, exeJsCode, preferesColorScheme, initDarkMode, initDarkModeEditor, autoDarkMode, sitecoreItemJson, getScItemData, startDrag } from "./modules/helpers.js";
 import { showSnackbar } from "./modules/snackbar.js";
 import { checkWorkbox } from "./modules/workbox.js";
 import { checkUrlStatus } from "./modules/url.js";
@@ -71,7 +71,7 @@ chrome.storage.sync.get((storage) => {
     /**
      * Load extra JS and CSS
      */
-    loadCssFile("css/onload.min.css");
+    document.body.classList.add("loaded");
     loadJsFile("js/inject.js");
 
     /**
@@ -284,15 +284,7 @@ chrome.storage.sync.get((storage) => {
       /**
        * Auto Dark Mode
        */
-      if (storage.feature_darkmode && storage.feature_darkmode_auto) {
-        const scheme = window.matchMedia("(prefers-color-scheme: dark)");
-        scheme.addEventListener("change", () => {
-          exeJsCode(`scForm.invoke('contenteditor:save', event)`);
-          setTimeout(function () {
-            window.location.reload();
-          }, 500);
-        });
-      }
+      autoDarkMode(storage);
 
       /**
        * Resume from where you left
@@ -1326,7 +1318,7 @@ chrome.storage.sync.get((storage) => {
     /*
      * Load extra CSS
      */
-    loadCssFile("css/onload.min.css");
+    document.body.classList.add("loaded");
     loadCssFile("css/tooltip.min.css");
     loadJsFile("js/inject.js");
 
@@ -1591,7 +1583,8 @@ chrome.storage.sync.get((storage) => {
         currentScheme == "dark")
     ) {
       //Experience Editor buttons
-      loadCssFile("css/dark/experience.min.css");
+      document.body.classList.add("dark");
+      // loadCssFile("css/dark/experience.min.css");
     }
 
     if (

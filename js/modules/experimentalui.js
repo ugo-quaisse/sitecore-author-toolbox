@@ -1,12 +1,7 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
-import {
-  exeJsCode,
-  loadCssFile,
-  getScItemData,
-  setTextColour,
-} from "./helpers.js";
+import { exeJsCode, getScItemData, setTextColour } from "./helpers.js";
 
 export {
   initExperimentalUi,
@@ -38,7 +33,7 @@ const initExperimentalUi = (storage) => {
 
   //Load CSS
   if (storage.feature_experimentalui) {
-    loadCssFile("css/experimentalui.min.css");
+    document.body.classList.add("experimentalui");
     getAccentColor();
   }
   if (storage.feature_contrast_icons === false) {
@@ -179,7 +174,7 @@ const insertLanguageButton = (scItemId, scLanguage = "EN", scVersion = 1) => {
   //Button
   let container = document.querySelector(".scEditorTabControlsHolder");
   //prettier-ignore
-  let button = `<button class="scEditorHeaderButton" id="scLanguageButton" type="button"><img src="` + global.iconLanguage + `" class="scLanguageIcon"> ` + scLanguage + ` ▾</button>`;
+  let button = `<button class="scEditorHeaderButton" id="scLanguageButton" type="button"><img src="` + global.iconLanguage + `" class="scLanguageIcon"> ` + scLanguage.toUpperCase() + ` ▾</button>`;
   container && !document.querySelector("#scLanguageButton")
     ? container.insertAdjacentHTML("afterbegin", button)
     : false;
@@ -527,7 +522,7 @@ const setInsertIcon = (treeNode) => {
   });
   //Add Insert Icon
   //prettier-ignore
-  a.insertAdjacentHTML("afterend", `<span id="scIcon` + id + `" class="scInsertItemIcon ` + activeClass + ` t-left t-sm" data-tooltip="Insert under" onclick="insertPage('` + id + `', '` + itemName + `')"></span>`
+  a.insertAdjacentHTML("afterend", `<span id="scIcon` + id + `" class="scInsertItemIcon ` + activeClass + ` t-left t-sm" data-tooltip="Insert" onclick="insertPage('` + id + `', '` + itemName + `')"></span>`
   );
   let target = document.querySelector("#scIcon" + id);
   target ? target.setAttribute("style", "opacity:1") : false;

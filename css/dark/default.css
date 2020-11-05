@@ -1,150 +1,117 @@
-/*
- * Sitecore Dark Mode UI, by Ugo Quaisse
- * default.css
- */
-
-:root {
-  --black: #000;
-  --black1: #111;
-  --black2: #222;
-  --black3: #333;
-  --black4: #444;
-  --black5: #555;
-  --black6: #666;
-  --black7: #777;
-  --black8: #888;
-  --black9: #999;
-  --grey1: #171717;
-
-  --lightblue: #1e81ef;
-  --blue: #0b84ff;
-  --darkblue: #034c9e;
-  --verydarkblue: #002f64;
-
-  --lightgreen: #00e458;
-  --green: #32ed74;
-  --darkgreen: #46b450;
-
-  --lightred: #ee4546;
-  --red: #a11d16;
-  --darkred: #6b120f;
-
-  --white: #fff;
-  --text: #ccc;
-}
-
-body {
+body.dark {
   border: 0px !important;
 }
 
-a,
-a:active,
-a:visited {
+body.dark a,
+body.dark a:active,
+body.dark a:visited {
   color: var(--text);
 }
 
-a:link {
+body.dark a:link {
   color: var(--text) !important;
 }
 
-#Editor_contentIframe a,
-#Editor_contentIframe a:active,
-#Editor_contentIframe a:visited {
+body.dark #Editor_contentIframe a,
+body.dark #Editor_contentIframe a:active,
+body.dark #Editor_contentIframe a:visited {
   color: var(--blue) !important;
 }
 
-.scButtons > .scButton {
+body.dark .scButtons > .scButton {
   background-image: linear-gradient(var(--blue) 0%, var(--blue) 100%);
 }
 
-.ff a {
+body.dark .ff a {
   outline: none;
 }
 
-input[type="radio"],
-input[type="checkbox"] {
+body.dark input[type="radio"],
+body.dark input[type="checkbox"] {
   line-height: normal;
   margin: 0 4px 0 0;
   vertical-align: middle;
 }
 
-input[type="radio"] + label,
-input[type="checkbox"] + label {
+body.dark input[type="radio"] + label,
+body.dark input[type="checkbox"] + label {
   vertical-align: middle;
 }
 
-input:not([type]),
-input[type="text"],
-input[type="password"],
-select,
-textarea {
-  box-sizing: border-box;
-  display: block;
-  width: 100%;
-  min-height: 34px;
-  padding: 8px 12px;
-  font-size: 12px;
-  line-height: 1.42857143;
-  color: var(--text) !important;
-  background-color: var(--black1) !important;
-  background-image: none;
-  border: 1px solid var(--black2) !important;
-  border-radius: 4px;
-  box-shadow: inset 0 0px 4px transparent !important;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+body.dark .scInstantSearch {
+  background-color: #111111 !important;
+  color: #cccccc !important;
+  border: 1px solid #222222 !important;
+}
+body.dark .scInstantSearch:focus {
+  background-color: var(--white) !important;
+  color: #333333 !important;
+}
+body.dark .scInstantSearch::placeholder {
+  color: #777 !important;
 }
 
-input:not([type]):focus,
-input[type="text"]:focus,
-input[type="password"]:focus,
-select:focus,
-textarea:focus {
+body.dark input:not([type]),
+body.dark input[type="text"]:not(.scInstantSearch),
+body.dark input[type="password"],
+body.dark select,
+body.dark textarea {
+  color: var(--text) !important;
+  background-color: var(--black2) !important;
+  border: 1px solid var(--black4) !important;
+}
+
+body.dark input:not([type]):focus,
+body.dark input[type="text"]:focus,
+body.dark input[type="password"]:focus,
+body.dark select:focus,
+body.dark textarea:focus {
   border: 1px solid rgba(14, 99, 156, 0.8) !important;
   outline: 0 !important;
   box-shadow: 0 0 4px rgba(14, 99, 156, 0.3) !important;
 }
 
-input[disabled]:not([type]),
-input[type="text"][disabled],
-input[type="password"][disabled],
-input[readonly]:not([type]),
-input[type="text"][readonly],
-input[type="password"][readonly] select[disabled] {
+body.dark input[disabled]:not([type]),
+body.dark input[type="text"][disabled],
+body.dark input[type="password"][disabled],
+body.dark input[readonly]:not([type]),
+body.dark input[type="text"][readonly],
+body.dark input[type="password"][readonly] select[disabled] {
   cursor: not-allowed;
   background-color: #e3e3e3;
   opacity: 1;
 }
 
-input[readonly]:not([type]),
-input[type="text"][readonly],
-input[type="password"][readonly],
-select[disabled] {
+body.dark input[readonly]:not([type]),
+body.dark input[type="text"][readonly],
+body.dark input[type="password"][readonly],
+body.dark select[disabled] {
   cursor: default;
 }
 
-select {
+body.dark select {
   margin-bottom: 10px;
 }
 
-select:last-child {
+body.dark select:last-child {
   margin-bottom: 0;
 }
 
-.ie8 input {
+body.dark .ie8 input {
   box-sizing: border-box;
 }
 
-input:not([type])::-ms-clear,
-input[type="text"]::-ms-clear {
+body.dark input:not([type])::-ms-clear,
+body.dark input[type="text"]::-ms-clear {
   display: none;
 }
 
-input[disabled],
-select[disabled] {
+body.dark input[disabled],
+body.dark select[disabled] {
   cursor: not-allowed;
   background-color: #e3e3e3;
 }
-.scHorizontalLine {
+body.dark .scHorizontalLine {
   height: 1px;
   line-height: 1px;
   width: 100%;
@@ -152,7 +119,7 @@ select[disabled] {
   font-size: 0;
 }
 
-.scBlackHorizontalLine {
+body.dark .scBlackHorizontalLine {
   height: 1px;
   line-height: 1px;
   color: transparent;
@@ -160,20 +127,20 @@ select[disabled] {
   background-color: black;
 }
 
-.scFill {
+body.dark .scFill {
   width: 100%;
   height: 100%;
 }
 
-.scFormTable {
+body.dark .scFormTable {
   width: 100%;
 }
 
-.scFormTable > tbody > tr > td {
+body.dark .scFormTable > tbody > tr > td {
   padding: 5px;
 }
 
-.scFormTable > tbody > tr > td:first-child {
+body.dark .scFormTable > tbody > tr > td:first-child {
   color: var(--text);
   vertical-align: top;
   padding-top: 14px;
@@ -183,72 +150,72 @@ select[disabled] {
   white-space: nowrap;
 }
 
-.scFormTable > tbody > tr > td:last-child {
+body.dark .scFormTable > tbody > tr > td:last-child {
   padding-right: 0;
 }
 
-.scFormTable > tbody > tr:first-child > td {
+body.dark .scFormTable > tbody > tr:first-child > td {
   padding-top: 0;
 }
 
-.scFormTable > tbody > tr:last-child > td {
+body.dark .scFormTable > tbody > tr:last-child > td {
   padding-bottom: 0;
 }
 
-.scFormTable > tbody > tr:first-child > td:first-child {
+body.dark .scFormTable > tbody > tr:first-child > td:first-child {
   padding-top: 9px;
 }
 
-.scFormTable fieldset td {
+body.dark .scFormTable fieldset td {
   padding: 5px;
 }
 
-.scFormTable + .scFieldLabel {
+body.dark .scFormTable + .scFieldLabel {
   padding-top: 20px;
 }
 
-.scFormTable.scNoneditableForm > tbody > tr > td {
+body.dark .scFormTable.scNoneditableForm > tbody > tr > td {
   padding-top: 5px;
 }
 
-.scFormTable.scNoneditableForm > tbody > tr:first-child > td {
+body.dark .scFormTable.scNoneditableForm > tbody > tr:first-child > td {
   padding-top: 0;
 }
 
-.scFormTable.scNoneditableForm > tbody > tr:last-child > td {
+body.dark .scFormTable.scNoneditableForm > tbody > tr:last-child > td {
   padding-bottom: 0;
 }
 
-.scLargeFont {
+body.dark .scLargeFont {
   font-size: 14px;
 }
 
-.scLargeFont_Hover {
+body.dark .scLargeFont_Hover {
   font: 14px;
 }
 
-.scLargeFont2 {
+body.dark .scLargeFont2 {
   font: 12px;
 }
 
-.scLargeFont2_Hover {
+body.dark .scLargeFont2_Hover {
   font: 12px;
 }
 
-.sc-globalHeader {
+body.dark .sc-globalHeader {
   top: 0px !important;
   height: 51px !important;
 }
 
 /* buttons*/
-#CancelButton,
-#Cancel {
+body.dark #CancelButton,
+body.dark #Cancel {
   background: var(--black3) !important;
   color: var(--white);
 }
 
-.scButton,
-input[type="submit"] {
+body.dark .scButton,
+body.dark input[type="submit"] {
   display: inline-block;
   margin-bottom: 0;
   font-weight: normal;
@@ -271,17 +238,21 @@ input[type="submit"] {
   border-radius: 4px !important;
 }
 
-.scButton:hover,
-input[type="submit"]:hover {
+body.dark .scButton:hover,
+body.dark input[type="submit"]:hover {
   border-color: var(--black) !important;
   background-color: var(--black) !important;
   color: var(--blue) !important;
 }
 
-.scButton:active,
-input[type="submit"]:active {
+body.dark .scButton:active,
+body.dark input[type="submit"]:active {
   background-color: #d1d1d1;
-  background-image: linear-gradient(to bottom, transparent 0%, transparent 100%);
+  background-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 100%
+  );
   background-repeat: repeat-x;
   box-shadow: inset 0 0px 6px transparent !important;
   background-image: none;
@@ -290,9 +261,9 @@ input[type="submit"]:active {
   color: var(--text) !important;
 }
 
-.scButton[disabled],
-.scButton[disabled]:hover,
-.scButton[disabled]:active {
+body.dark .scButton[disabled],
+body.dark .scButton[disabled]:hover,
+body.dark .scButton[disabled]:active {
   background-color: #d1d1d1;
   background-image: none;
   cursor: default;
@@ -302,62 +273,74 @@ input[type="submit"]:active {
   color: #5e5e5e;
 }
 
-.scButton:first-of-type,
-input[type="submit"]:first-of-type {
+body.dark .scButton:first-of-type,
+body.dark input[type="submit"]:first-of-type {
   margin-left: 5px;
 }
 
-.scButtonPrimary,
-input[type="submit"].scButtonPrimary {
+body.dark .scButtonPrimary,
+body.dark input[type="submit"].scButtonPrimary {
   background-repeat: repeat-x;
   border-color: var(--lightblue) !important;
   box-shadow: inset 0 1px #5dbadf;
   color: var(--text);
   background-color: var(--blue);
-  background-image: linear-gradient(to bottom, var(--blue) 0%, var(--blue) 100%);
+  background-image: linear-gradient(
+    to bottom,
+    var(--blue) 0%,
+    var(--blue) 100%
+  );
   border-radius: 4px;
 }
 
-.scButtonPrimary:hover,
-input[type="submit"].scButtonPrimary:hover {
+body.dark .scButtonPrimary:hover,
+body.dark input[type="submit"].scButtonPrimary:hover {
   background-repeat: repeat-x;
   color: var(--text) !important;
   border-color: var(--lightblue);
   background-color: var(--blue);
   background-position: 0 0;
-  background-image: linear-gradient(to bottom, var(--blue) 0%, var(--blue) 100%);
+  background-image: linear-gradient(
+    to bottom,
+    var(--blue) 0%,
+    var(--blue) 100%
+  );
 }
 
-.scButtonPrimary:active,
-input[type="submit"].scButtonPrimary:active {
+body.dark .scButtonPrimary:active,
+body.dark input[type="submit"].scButtonPrimary:active {
   background-color: var(--blue);
-  background-image: linear-gradient(to bottom, var(--blue) 0%, var(--blue) 100%);
+  background-image: linear-gradient(
+    to bottom,
+    var(--blue) 0%,
+    var(--blue) 100%
+  );
   background-repeat: repeat-x;
   box-shadow: inset 0 3px 3px var(--blue);
   background-image: none;
   border-color: var(--blue);
 }
 
-.ie9 .scButton:hover,
-.ie9 input[type="submit"]:hover {
+body.dark .ie9 .scButton:hover,
+body.dark .ie9 input[type="submit"]:hover {
   background: #f0f0f0;
 }
 
-.ie9 .scButton:active,
-.ie9 input[type="submit"]:active {
+body.dark .ie9 .scButton:active,
+body.dark .ie9 input[type="submit"]:active {
   background: #d9d9d9;
 }
 
-.ie9 .scButtonPrimary:hover {
+body.dark .ie9 .scButtonPrimary:hover {
   background: var(--blue);
 }
 
-.ie9 .scButtonPrimary:active {
+body.dark .ie9 .scButtonPrimary:active {
   background: var(--blue);
 }
 
-.ie8 .scButton,
-.ie8 .scButton_Disabled {
+body.dark .ie8 .scButton,
+body.dark .ie8 .scButton_Disabled {
   min-width: 50px;
 }
 
@@ -367,12 +350,12 @@ input[type="submit"].scButtonPrimary:active {
     width: 50px;
 }*/
 
-.scButton_Disabled {
+body.dark .scButton_Disabled {
   width: 75px;
   height: 24px;
 }
 
-.scBevelVerticalLine {
+body.dark .scBevelVerticalLine {
   background: transparent;
   border-left: 1px solid threedshadow;
   border-right: 1px solid threedhighlight;
@@ -380,7 +363,7 @@ input[type="submit"].scButtonPrimary:active {
   width: 2px;
 }
 
-.scBevelHorizontalLine {
+body.dark .scBevelHorizontalLine {
   border-top: 1px solid threedshadow;
   background: threedhighlight;
   height: 2px;
@@ -388,7 +371,7 @@ input[type="submit"].scButtonPrimary:active {
   width: 100%;
 }
 
-.scBevelRaisedBox {
+body.dark .scBevelRaisedBox {
   background: transparent;
   border-top: 1px solid threedhighlight;
   border-left: 1px solid threedhighlight;
@@ -396,7 +379,7 @@ input[type="submit"].scButtonPrimary:active {
   border-bottom: 1px solid threedshadow;
 }
 
-.scBevelLoweredBox {
+body.dark .scBevelLoweredBox {
   background: transparent;
   border-top: 1px solid threedshadow;
   border-left: 1px solid threedshadow;
@@ -404,17 +387,17 @@ input[type="submit"].scButtonPrimary:active {
   border-bottom: 1px solid threedhighlight;
 }
 
-.scBottomEdge {
+body.dark .scBottomEdge {
   height: 1px;
   background: threedshadow;
 }
 
-.scTopEdge {
+body.dark .scTopEdge {
   height: 1px;
   background: threedhighlight;
 }
 
-.scWizardSmallIcon {
+body.dark .scWizardSmallIcon {
   position: absolute;
   top: 8px;
   left: 102px;
@@ -423,12 +406,12 @@ input[type="submit"].scButtonPrimary:active {
   border: 2px solid white;
 }
 
-.scWizardSmallIcon > img {
+body.dark .scWizardSmallIcon > img {
   width: 48px;
   height: 48px;
 }
 
-.scWizardLargeIcon {
+body.dark .scWizardLargeIcon {
   overflow: hidden;
   opacity: 0.2;
   filter: progid:DXImageTransform.Microsoft.BasicImage(opacity=0.20, grayscale=1);
@@ -440,12 +423,12 @@ input[type="submit"].scButtonPrimary:active {
   right: 0;
 }
 
-.scWizardLargeIcon > img {
+body.dark .scWizardLargeIcon > img {
   width: 196px;
   height: 196px;
 }
 
-.scWizardButtons {
+body.dark .scWizardButtons {
   position: absolute;
   width: 100%;
   bottom: 0;
@@ -459,20 +442,20 @@ input[type="submit"].scButtonPrimary:active {
   border-top: 1px solid var(--black3) !important;
 }
 
-.scWizardPageContainer {
+body.dark .scWizardPageContainer {
   position: absolute;
   top: 0;
   bottom: 56px;
   width: 100%;
 }
 
-.scWizardFormPadding {
+body.dark .scWizardFormPadding {
   padding: 8px;
   overflow: auto;
 }
 
-.scWizardFirstPageLeftPanel,
-.scWizardLastPageLeftPanel {
+body.dark .scWizardFirstPageLeftPanel,
+body.dark .scWizardLastPageLeftPanel {
   width: 164px;
   position: absolute;
   height: 100%;
@@ -480,8 +463,8 @@ input[type="submit"].scButtonPrimary:active {
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#123960', EndColorStr='#405E7A');
 }
 
-.scWizardFirstPageContent,
-.scWizardLastPageContent {
+body.dark .scWizardFirstPageContent,
+body.dark .scWizardLastPageContent {
   margin-left: 164px;
   height: 100%;
   overflow: auto;
@@ -490,49 +473,53 @@ input[type="submit"].scButtonPrimary:active {
   background: white;
 }
 
-.scWizardProgressPage {
+body.dark .scWizardProgressPage {
   text-align: center;
 }
 
-.scWizardProgressPage > * {
+body.dark .scWizardProgressPage > * {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
-.scWizardProgressPage .scSpinner {
+body.dark .scWizardProgressPage .scSpinner {
   margin-top: 150px;
   width: 32px;
   height: 32px;
 }
 
-.scWizardProgressPage .scActionText {
+body.dark .scWizardProgressPage .scActionText {
   margin-top: 15px;
 }
 
-.scWizardProgressPage .scWizardStatusText {
+body.dark .scWizardProgressPage .scWizardStatusText {
   margin-top: 15px;
 }
 
-.ie8 .scWizardFormContentForOldIE,
-.ie9 .scWizardFormContentForOldIE {
+body.dark .ie8 .scWizardFormContentForOldIE,
+body.dark .ie9 .scWizardFormContentForOldIE {
   position: absolute;
   top: 66px;
   bottom: 0;
   width: 100%;
 }
 
-.ie9 .scWizardPageContainer > div:last-child .scWizardFormContentForOldIE {
+body.dark
+  .ie9
+  .scWizardPageContainer
+  > div:last-child
+  .scWizardFormContentForOldIE {
   top: 45px;
 }
 
-.scCalendar {
+body.dark .scCalendar {
   border-collapse: collapse;
   width: 100%;
   height: 100%;
 }
 
-.scCalendarDay {
+body.dark .scCalendarDay {
   font-weight: 600;
   cursor: default;
   padding: 3px 6px;
@@ -541,19 +528,19 @@ input[type="submit"].scButtonPrimary:active {
   color: #969696;
 }
 
-.scCalendarToday {
+body.dark .scCalendarToday {
   font-weight: 600 !important;
 }
 
-.scCalendarSelected {
+body.dark .scCalendarSelected {
   cursor: default;
   text-align: center;
   background-color: #d0ebf6;
   color: var(--black1);
 }
 
-.scCalendarCell,
-.scCalendarToday {
+body.dark .scCalendarCell,
+body.dark .scCalendarToday {
   cursor: pointer;
   text-align: center;
   border: none;
@@ -561,13 +548,13 @@ input[type="submit"].scButtonPrimary:active {
   padding: 0 8px;
 }
 
-td.scCalendarCell:hover,
-td.scCalendarToday:hover {
+body.dark td.scCalendarCell:hover,
+body.dark td.scCalendarToday:hover {
   background-color: #e3e3e3;
   color: var(--black1);
 }
 
-.scCalendarCellOtherMonth {
+body.dark .scCalendarCellOtherMonth {
   cursor: default;
   text-align: center;
   color: #969696;
@@ -575,7 +562,7 @@ td.scCalendarToday:hover {
   padding: 0 8px;
 }
 
-.scCalendarTodayCell {
+body.dark .scCalendarTodayCell {
   border: none;
   line-height: 34px;
   padding: 0 8px;
@@ -584,44 +571,44 @@ td.scCalendarToday:hover {
   border-top: 1px solid #f0f0f0;
 }
 
-.scCalendarYearLeftCell,
-.scCalendarYearMiddleCell,
-.scCalendarYearRightCell {
+body.dark .scCalendarYearLeftCell,
+body.dark .scCalendarYearMiddleCell,
+body.dark .scCalendarYearRightCell {
   line-height: 34px;
   padding: 0 8px;
   text-transform: uppercase;
 }
 
 /* date/time pickers */
-.scDateTimePickerContainer {
+body.dark .scDateTimePickerContainer {
   overflow: hidden;
   white-space: nowrap;
 }
 
-.scDatePickerComboBox,
-.scTimePickerComboBox {
+body.dark .scDatePickerComboBox,
+body.dark .scTimePickerComboBox {
   vertical-align: top;
 }
 
-.scDatePickerComboBox,
-.scDateTimePickerContainer > img,
-.scTimePickerComboBox {
+body.dark .scDatePickerComboBox,
+body.dark .scDateTimePickerContainer > img,
+body.dark .scTimePickerComboBox {
   display: inline-block;
 }
 
-.scDatePickerComboBox[disabled] .scComboboxDropDown,
-.scTimePickerComboBox[disabled] .scComboboxDropDown {
+body.dark .scDatePickerComboBox[disabled] .scComboboxDropDown,
+body.dark .scTimePickerComboBox[disabled] .scComboboxDropDown {
   background-color: #e3e3e3;
   cursor: auto;
 }
 
-.scDatePickerComboBox[disabled] .scComboboxEdit,
-.scTimePickerComboBox[disabled] .scComboboxEdit {
+body.dark .scDatePickerComboBox[disabled] .scComboboxEdit,
+body.dark .scTimePickerComboBox[disabled] .scComboboxEdit {
   background-color: #e3e3e3 !important;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075) !important;
 }
 
-.scTimePicker {
+body.dark .scTimePicker {
   width: 80px;
   height: 300px;
   overflow: auto;
@@ -630,7 +617,7 @@ td.scCalendarToday:hover {
   list-style-type: none;
 }
 
-.scTimePicker a {
+body.dark .scTimePicker a {
   height: 16px;
   padding: 1px;
   width: auto;
@@ -638,26 +625,26 @@ td.scCalendarToday:hover {
   display: block;
 }
 
-.scTimePicker li {
+body.dark .scTimePicker li {
   width: 100%;
 }
 
-.scTimePicker a:hover {
+body.dark .scTimePicker a:hover {
   background-color: #e3e3e3;
   color: var(--black1);
   text-decoration: none;
 }
 
-.scTimePicker a:active {
+body.dark .scTimePicker a:active {
   background-color: #d0ebf6;
 }
 
-.scComboEditInput {
+body.dark .scComboEditInput {
   width: 100%;
 }
 
-.scCombobutton,
-.scCombobuttonEditor {
+body.dark .scCombobutton,
+body.dark .scCombobuttonEditor {
   border: none;
   display: inline;
   padding-right: 1px;
@@ -665,24 +652,24 @@ td.scCalendarToday:hover {
   white-space: nowrap;
 }
 
-.scCombobutton_Disabled,
-.scCombobuttonEditor_Disabled {
+body.dark .scCombobutton_Disabled,
+body.dark .scCombobuttonEditor_Disabled {
   cursor: default;
   display: inline;
   vertical-align: top;
   white-space: nowrap;
 }
 
-.scCombobutton_Down,
-.scCombobuttonEditor_Down {
+body.dark .scCombobutton_Down,
+body.dark .scCombobuttonEditor_Down {
   cursor: default;
   display: inline;
   vertical-align: top;
   white-space: nowrap;
 }
 
-.scCombobutton_Hover,
-.scCombobuttonEditor_Hover {
+body.dark .scCombobutton_Hover,
+body.dark .scCombobuttonEditor_Hover {
   cursor: default;
   display: inline;
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#A5ADAF', EndColorStr='#7A8284');
@@ -690,15 +677,15 @@ td.scCalendarToday:hover {
   white-space: nowrap;
 }
 
-.scCombobutton_Hot,
-.scCombobuttonEditor_Hot {
+body.dark .scCombobutton_Hot,
+body.dark .scCombobuttonEditor_Hot {
   cursor: default;
   display: inline;
   vertical-align: top;
   white-space: nowrap;
 }
 
-.scCombobuttonMain {
+body.dark .scCombobuttonMain {
   border: none;
   background: transparent;
   color: white;
@@ -707,7 +694,7 @@ td.scCalendarToday:hover {
   white-space: nowrap;
 }
 
-.scCombobuttonEditorMain {
+body.dark .scCombobuttonEditorMain {
   background: transparent;
   border: 1px solid #f0cca5;
   border-right: none;
@@ -718,7 +705,7 @@ td.scCalendarToday:hover {
   white-space: nowrap;
 }
 
-.scCombobuttonMain_Disabled {
+body.dark .scCombobuttonMain_Disabled {
   display: inline;
   padding: 4px 2px 1px 5px;
   white-space: nowrap;
@@ -728,7 +715,7 @@ td.scCalendarToday:hover {
   filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
 }
 
-.scCombobuttonEditorMain_Disabled {
+body.dark .scCombobuttonEditorMain_Disabled {
   background: transparent;
   border: 1px solid #f0cca5;
   border-right: none;
@@ -739,8 +726,8 @@ td.scCalendarToday:hover {
   white-space: nowrap;
 }
 
-.scCombobuttonMain_Down,
-.scCombobuttonEditorMain_Down {
+body.dark .scCombobuttonMain_Down,
+body.dark .scCombobuttonEditorMain_Down {
   display: inline;
   padding: 3px 2px 0px 4px;
   white-space: nowrap;
@@ -750,8 +737,8 @@ td.scCalendarToday:hover {
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#A5ADAF', EndColorStr='#7A8284');
 }
 
-.scCombobuttonMain_Hover,
-.scCombobuttonEditorMain_Hover {
+body.dark .scCombobuttonMain_Hover,
+body.dark .scCombobuttonEditorMain_Hover {
   display: inline;
   padding: 2px 3px 1px;
   white-space: nowrap;
@@ -760,8 +747,8 @@ td.scCalendarToday:hover {
   color: white;
 }
 
-.scCombobuttonMain_Hot,
-.scCombobuttonEditorMain_Hot {
+body.dark .scCombobuttonMain_Hot,
+body.dark .scCombobuttonEditorMain_Hot {
   display: inline;
   padding: 3px 2px 0px 4px;
   white-space: nowrap;
@@ -771,13 +758,13 @@ td.scCalendarToday:hover {
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#7A8284', EndColorStr='#A4ACAE');
 }
 
-.scCombobuttonDrop {
+body.dark .scCombobuttonDrop {
   display: inline;
   padding: 4px 1px 1px 3px;
   border: none;
 }
 
-.scCombobuttonEditorDrop {
+body.dark .scCombobuttonEditorDrop {
   border: 1px solid #f0cca5;
   border-left: none;
   display: inline;
@@ -785,13 +772,13 @@ td.scCalendarToday:hover {
   padding: 3px 0px 0px 3px;
 }
 
-.scCombobuttonDrop_Disabled {
+body.dark .scCombobuttonDrop_Disabled {
   display: inline;
   padding: 4px 1px 1px 3px;
   border: none;
 }
 
-.scCombobuttonEditorDrop_Disabled {
+body.dark .scCombobuttonEditorDrop_Disabled {
   border: 1px solid #f0cca5;
   border-left: none;
   display: inline;
@@ -799,8 +786,8 @@ td.scCalendarToday:hover {
   padding: 3px 0px 0px 3px;
 }
 
-.scCombobuttonDrop_Down,
-.scCombobuttonEditorDrop_Down {
+body.dark .scCombobuttonDrop_Down,
+body.dark .scCombobuttonEditorDrop_Down {
   display: inline;
   padding: 3px 1px 0px 2px;
   border: 1px solid #242424;
@@ -809,8 +796,8 @@ td.scCalendarToday:hover {
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#7A8284', EndColorStr='#A5ADAF');
 }
 
-.scCombobuttonDrop_Hover,
-.scCombobuttonEditorDrop_Hover {
+body.dark .scCombobuttonDrop_Hover,
+body.dark .scCombobuttonEditorDrop_Hover {
   display: inline;
   padding: 2px 2px 1px 1px;
   border: 1px solid #242424;
@@ -818,8 +805,8 @@ td.scCalendarToday:hover {
   color: buttontext;
 }
 
-.scCombobuttonDrop_Hot,
-.scCombobuttonEditorDrop_Hot {
+body.dark .scCombobuttonDrop_Hot,
+body.dark .scCombobuttonEditorDrop_Hot {
   display: inline;
   padding: 3px 1px 0px 2px;
   border: 1px solid #242424;
@@ -828,54 +815,54 @@ td.scCalendarToday:hover {
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#A5ADAF', EndColorStr='#7A8284');
 }
 
-.scContentEditorItemInformationLine {
+body.dark .scContentEditorItemInformationLine {
   font-size: 9pt;
   color: black;
   padding: 3px;
 }
 
-.scContentEditorItemInformationHeader {
+body.dark .scContentEditorItemInformationHeader {
   color: white;
   font-weight: 600;
 }
 
-.scContentLabel {
+body.dark .scContentLabel {
   color: #6487dc;
   padding: 16px 0px 1px 0px;
 }
 
-a.scContentLabelLink,
-a.scContentLabelLink:active,
-a.scContentLabelLink:visited {
+body.dark a.scContentLabelLink,
+body.dark a.scContentLabelLink:active,
+body.dark a.scContentLabelLink:visited {
   color: #6487dc;
   padding-bottom: 1px;
   text-decoration: none;
 }
 
-a.scContentLabelLink:hover {
+body.dark a.scContentLabelLink:hover {
   color: #6487dc;
   padding-bottom: 1px;
   text-decoration: underline;
 }
 
-.scContentControl {
+body.dark .scContentControl {
   width: 100%;
   box-sizing: border-box;
   min-height: 35px;
   padding: 5px;
 }
 
-.scContentControl[disabled] .scComboboxEdit,
-.scContentControl[disabled] .scComboboxDropDown {
+body.dark .scContentControl[disabled] .scComboboxEdit,
+body.dark .scContentControl[disabled] .scComboboxDropDown {
   background-color: #181818 !important;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
 
-iframe.scContentControl {
+body.dark iframe.scContentControl {
   padding: 0 0 0 5px;
 }
 
-.scContentControl_Active {
+body.dark .scContentControl_Active {
   background: white;
   border: 1px solid activecaption;
   color: black;
@@ -883,39 +870,39 @@ iframe.scContentControl {
   width: 100%;
 }
 
-.scContentControlComboControl {
+body.dark .scContentControlComboControl {
   border: 1px solid var(--text) !important;
   color: black;
   width: 100%;
 }
 
-.scContentControlChecklist {
+body.dark .scContentControlChecklist {
   background: var(--black1) !important;
   border: 1px solid var(--black) !important;
   padding-left: 5px;
   height: 150px;
 }
 
-.scContentControlChecklist input {
+body.dark .scContentControlChecklist input {
   margin-top: 5px;
 }
 
-.scContentControlTreelist {
+body.dark .scContentControlTreelist {
   position: relative;
 }
 
-.scTreelistEx {
+body.dark .scTreelistEx {
   border: 1px solid var(--black2) !important;
   background: var(--black1);
   height: 150px;
   overflow: auto;
 }
 
-.scTreelistEx > div {
+body.dark .scTreelistEx > div {
   padding: 2px 0 2px 5px;
 }
 
-.scTreeListHalfPart {
+body.dark .scTreeListHalfPart {
   height: 100%;
   width: 50%;
   position: relative;
@@ -923,11 +910,11 @@ iframe.scContentControl {
   vertical-align: top;
 }
 
-.ie .scTreeListHalfPart {
+body.dark .ie .scTreeListHalfPart {
   height: calc(100% - 1px);
 }
 
-.scTreeListHalfPart > div:first-child {
+body.dark .scTreeListHalfPart > div:first-child {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -935,63 +922,63 @@ iframe.scContentControl {
   right: 25px;
 }
 
-.ff .scContentControlChecklist label,
-.ff .scContentControlChecklist input {
+body.dark .ff .scContentControlChecklist label,
+body.dark .ff .scContentControlChecklist input {
   float: left;
 }
 
-.ff .scContentControlChecklist label {
+body.dark .ff .scContentControlChecklist label {
   padding-top: 2px;
 }
 
-.ff .scContentControlChecklist br {
+body.dark .ff .scContentControlChecklist br {
   clear: left;
 }
 
-.scContentControlChecklist_Active {
+body.dark .scContentControlChecklist_Active {
   background: white;
   border: 1px solid activecaption;
   color: black;
 }
 
-.scContentControlMemo {
+body.dark .scContentControlMemo {
   height: 80px;
   width: 100%;
   box-sizing: border-box;
 }
 
-.scContentControlMemo_Active {
+body.dark .scContentControlMemo_Active {
   height: 80px;
   width: 100%;
 }
 
-.scContentControlHtml {
+body.dark .scContentControlHtml {
   border: 1px solid #191919 !important;
   height: 100%;
   width: 100%;
 }
 
-.defaultFieldEditorsFrameContainer {
+body.dark .defaultFieldEditorsFrameContainer {
   height: 150px;
 }
 
-.defaultFieldEditorsMultilistContainer {
+body.dark .defaultFieldEditorsMultilistContainer {
   height: 250px;
 }
 
-.defaultFieldEditorsFrameContainer > iframe {
+body.dark .defaultFieldEditorsFrameContainer > iframe {
   box-sizing: border-box;
 }
 
-.scContentControlHtmlToolbar {
+body.dark .scContentControlHtmlToolbar {
   padding: 1px 2px 1px 2px;
 }
 
-.scContentControlHtmlToolbarButton,
-.scContentControlHtmlToolbarButton:link,
-.scContentControlHtmlToolbarButton:visited,
-.scContentControlHtmlToolbarButton:hover,
-.scContentControlHtmlToolbarButton:active {
+body.dark .scContentControlHtmlToolbarButton,
+body.dark .scContentControlHtmlToolbarButton:link,
+body.dark .scContentControlHtmlToolbarButton:visited,
+body.dark .scContentControlHtmlToolbarButton:hover,
+body.dark .scContentControlHtmlToolbarButton:active {
   color: #303030;
   cursor: default;
   padding: 2px 2px 2px 2px;
@@ -999,57 +986,57 @@ iframe.scContentControl {
   white-space: nowrap;
 }
 
-.scContentControlHtmlToolbarButton:active {
+body.dark .scContentControlHtmlToolbarButton:active {
   border: 1px solid;
   border-color: #ddcf9b #c1a877 #dfd8bd #c1a877;
   padding: 1px 1px 1px 1px;
 }
 
-.scContentControlHtmlToolbarButton:hover {
+body.dark .scContentControlHtmlToolbarButton:hover {
   border: 1px solid;
   border-color: #ddcf9b #c1a877 #dfd8bd #c1a877;
   padding: 1px 1px 1px 1px;
   text-decoration: underline;
 }
 
-.scContentControlHtml_Active {
+body.dark .scContentControlHtml_Active {
   border: 1px solid activecaption;
   height: 100%;
   width: 100%;
 }
 
-.scContentControlIFrame {
+body.dark .scContentControlIFrame {
   border: 1px solid var(--text) !important;
   color: black;
   height: 150px;
   width: 100%;
 }
 
-.scContentControlIFrame_Active {
+body.dark .scContentControlIFrame_Active {
   border: 1px solid activecaption;
   color: black;
   height: 80px;
   width: 100%;
 }
-.scContentControlImagePane {
+body.dark .scContentControlImagePane {
   border: 1px solid var(--black3) !important;
   border-top: none;
 }
 
-.scContentControlImageImage {
+body.dark .scContentControlImageImage {
   padding: 8px 12px !important;
   background-color: var(--black2) !important;
   border: 0px !important;
   text-align: center;
 }
 
-.scContentControlImageDetails {
+body.dark .scContentControlImageDetails {
   padding: 8px 12px;
   color: var(--black8);
   background-color: #272727;
 }
 
-.scContentControlAttachment {
+body.dark .scContentControlAttachment {
   background: transparent;
   border: 1px solid var(--text) !important;
   color: black;
@@ -1057,7 +1044,7 @@ iframe.scContentControl {
   width: 100%;
 }
 
-.scContentControlAttachment_Active {
+body.dark .scContentControlAttachment_Active {
   background: transparent;
   border: 1px solid activecaption;
   color: black;
@@ -1065,67 +1052,67 @@ iframe.scContentControl {
   width: 100%;
 }
 
-.scContentControlAttachmentPane {
+body.dark .scContentControlAttachmentPane {
   background: #e9e9e9;
   color: black;
   margin: 0px 0px 0px 0px;
   width: 100%;
 }
 
-.scContentControlAttachmentImage {
+body.dark .scContentControlAttachmentImage {
   background: white;
   border: 1px solid #e3e3e3;
   text-align: center;
 }
 
-.scMultilistNav {
+body.dark .scMultilistNav {
   width: 200%;
   overflow: hidden;
   height: 50px;
   white-space: nowrap;
 }
 
-.scMultilistNav a {
+body.dark .scMultilistNav a {
   display: inline-block;
   margin-right: 15px;
   cursor: pointer;
 }
 
-.scMultilistNav a img {
+body.dark .scMultilistNav a img {
   margin: 0 5px;
 }
 
-.scMultilistNav a:nth-of-type(1) {
+body.dark .scMultilistNav a:nth-of-type(1) {
   padding-left: 15px;
 }
 
-.scMultilistNav a:nth-of-type(2) {
+body.dark .scMultilistNav a:nth-of-type(2) {
   padding-right: 15px;
   border-right: 1px solid var(--text) !important;
 }
 
-.scMultilistNav a:nth-of-type(4) {
+body.dark .scMultilistNav a:nth-of-type(4) {
   padding-right: 15px;
   border-right: 1px solid var(--text) !important;
 }
 
-.scMultilistNav > span {
+body.dark .scMultilistNav > span {
   display: inline-block;
   line-height: 50px;
 }
 
-.scContentControlMultilist {
+body.dark .scContentControlMultilist {
   width: 100%;
   height: 100%;
   table-layout: fixed;
   padding: 5px;
 }
 
-.scContentControlMultilistCaption {
+body.dark .scContentControlMultilistCaption {
   color: #666;
 }
 
-.scContentControlTree {
+body.dark .scContentControlTree {
   position: absolute;
   top: 20px;
   bottom: 0;
@@ -1135,35 +1122,35 @@ iframe.scContentControl {
   border: 1px solid var(--black1) !important;
 }
 
-.scContentControlTree.scScrollbox {
+body.dark .scContentControlTree.scScrollbox {
   padding: 10px 0;
 }
 
-.scContentControlMultilistContainer,
-.scContentControlSearchListContainer {
+body.dark .scContentControlMultilistContainer,
+body.dark .scContentControlSearchListContainer {
   height: 100%;
   overflow: auto;
   box-sizing: border-box;
 }
 
-.ie .scContentControlSearchListContainer {
+body.dark .ie .scContentControlSearchListContainer {
   padding-bottom: 30px;
 }
 
-.ie .scContentControlMultilistContainer {
+body.dark .ie .scContentControlMultilistContainer {
   padding-bottom: 50px;
 }
 
-.ff .scContentControlSearchListContainer {
+body.dark .ff .scContentControlSearchListContainer {
   padding-bottom: 15px;
 }
 
-.scContentControlMultilistBox {
+body.dark .scContentControlMultilistBox {
   border-bottom: 0px;
   height: 100%;
 }
 
-.scContentControlNavigation {
+body.dark .scContentControlNavigation {
   padding-top: 20px;
   position: absolute;
   top: 0;
@@ -1172,12 +1159,12 @@ iframe.scContentControl {
   width: 25px;
 }
 
-.scContentControlNavigation > img {
+body.dark .scContentControlNavigation > img {
   margin: 5px;
   display: block;
 }
 
-.scContentControlTreeListHelp {
+body.dark .scContentControlTreeListHelp {
   background-color: var(--black2) !important;
   line-height: 30px;
   height: 30px;
@@ -1191,7 +1178,7 @@ iframe.scContentControl {
   padding: 0 10px;
 }
 
-.scContentControlMultilistHelp {
+body.dark .scContentControlMultilistHelp {
   background-color: var(--black2) !important;
   height: 20px;
   line-height: 20px;
@@ -1200,7 +1187,7 @@ iframe.scContentControl {
   padding: 5px;
 }
 
-.scContentControlSelectedList {
+body.dark .scContentControlSelectedList {
   position: absolute;
   top: 20px;
   left: 0;
@@ -1209,39 +1196,39 @@ iframe.scContentControl {
   z-index: 5;
 }
 
-.scContentControlSelectedList > select {
+body.dark .scContentControlSelectedList > select {
   height: 100%;
 }
 
-.scContentControlSecurity {
+body.dark .scContentControlSecurity {
   border: 1px solid var(--text) !important;
   color: black;
   width: 100%;
   height: 100% !important;
 }
 
-.scContentControlSecurity_Active {
+body.dark .scContentControlSecurity_Active {
   border: 1px solid activecaption;
   color: black;
   width: 100%;
 }
 
-.scContentControlTreelistEx {
+body.dark .scContentControlTreelistEx {
   height: 80px;
   width: 100%;
   overflow: auto;
 }
 
-.scContentControlTreelistEx div {
+body.dark .scContentControlTreelistEx div {
   padding: 2px;
 }
 
-.scContentHeaderLabel {
+body.dark .scContentHeaderLabel {
   color: white;
   padding: 6px 0px 1px 0px;
 }
 
-a.scHyperlinkButton {
+body.dark a.scHyperlinkButton {
   color: var(--blue);
   white-space: nowrap;
   display: inline-block;
@@ -1249,33 +1236,33 @@ a.scHyperlinkButton {
   padding: 0 14px 0 15px;
 }
 
-a.scHyperlinkButton:hover,
-a.scHyperlinkButton:active {
+body.dark a.scHyperlinkButton:hover,
+body.dark a.scHyperlinkButton:active {
   text-decoration: underline;
 }
 
-a.scHyperlinkButton:first-of-type {
+body.dark a.scHyperlinkButton:first-of-type {
   padding-left: 0;
 }
 
-a.scHyperlinkButton:last-of-type {
+body.dark a.scHyperlinkButton:last-of-type {
   border-right: 0;
 }
 
-.scWhiteBackground {
+body.dark .scWhiteBackground {
   background-color: var(--text);
 }
 
-.scGreyBackground {
+body.dark .scGreyBackground {
   background-color: #f0f0f0;
 }
 
-.scListview {
+body.dark .scListview {
   height: 100%;
   overflow: auto;
 }
 
-.scListviewItemReport {
+body.dark .scListviewItemReport {
   color: windowtext;
   cursor: default;
   overflow: hidden;
@@ -1284,7 +1271,7 @@ a.scHyperlinkButton:last-of-type {
   vertical-align: top;
 }
 
-.scListviewItemReport_Selected {
+body.dark .scListviewItemReport_Selected {
   background: #f6d2ab;
   border: 1px solid #f0cca5;
   color: #46448d;
@@ -1296,12 +1283,12 @@ a.scHyperlinkButton:last-of-type {
   vertical-align: top;
 }
 
-.scListviewViewReportIcon {
+body.dark .scListviewViewReportIcon {
   cursor: default;
   padding-bottom: 4px;
 }
 
-.scListviewItemIcons {
+body.dark .scListviewItemIcons {
   cursor: default;
   display: block;
   overflow: hidden;
@@ -1317,11 +1304,11 @@ a.scHyperlinkButton:last-of-type {
   box-sizing: border-box;
 }
 
-.scListviewItemIcons:hover {
+body.dark .scListviewItemIcons:hover {
   background: #e3e3e3;
 }
 
-.scListviewItemIcons_Selected {
+body.dark .scListviewItemIcons_Selected {
   background: #aadbee;
   color: #46448d;
   cursor: default;
@@ -1339,12 +1326,12 @@ a.scHyperlinkButton:last-of-type {
   box-sizing: border-box;
 }
 
-.scListviewViewIconsIcon {
+body.dark .scListviewViewIconsIcon {
   cursor: default;
   padding-bottom: 4px;
 }
 
-.scListviewItemList {
+body.dark .scListviewItemList {
   cursor: default;
   display: inline;
   overflow: hidden;
@@ -1353,11 +1340,11 @@ a.scHyperlinkButton:last-of-type {
   white-space: nowrap;
 }
 
-.scListviewItemList:hover {
+body.dark .scListviewItemList:hover {
   background: #e3e3e3;
 }
 
-.scListviewItemList_Selected {
+body.dark .scListviewItemList_Selected {
   background: #aadbee;
   color: #46448d;
   cursor: default;
@@ -1369,7 +1356,7 @@ a.scHyperlinkButton:last-of-type {
   white-space: nowrap;
 }
 
-.scListviewItemDetails {
+body.dark .scListviewItemDetails {
   cursor: default;
   overflow: hidden;
   padding: 3px;
@@ -1377,7 +1364,7 @@ a.scHyperlinkButton:last-of-type {
   white-space: nowrap;
 }
 
-.scListviewItemDetails_Selected {
+body.dark .scListviewItemDetails_Selected {
   cursor: default;
   overflow: hidden;
   padding: 3px;
@@ -1385,23 +1372,23 @@ a.scHyperlinkButton:last-of-type {
   white-space: nowrap;
 }
 
-.scListviewItemDetailsCell,
-.scListviewItemDetailsCell_Selected {
+body.dark .scListviewItemDetailsCell,
+body.dark .scListviewItemDetailsCell_Selected {
   cursor: default;
   padding: 5px 10px;
   white-space: nowrap;
 }
 
-.scListviewItemDetailsCell > img,
-.scListviewItemDetailsCell_Selected > img {
+body.dark .scListviewItemDetailsCell > img,
+body.dark .scListviewItemDetailsCell_Selected > img {
   margin-right: 5px;
 }
 
-.scListviewItemDetailsCell_Selected {
+body.dark .scListviewItemDetailsCell_Selected {
   background-color: #d0ebf6;
 }
 
-.scListviewItemThumbnails {
+body.dark .scListviewItemThumbnails {
   color: windowtext;
   cursor: default;
   display: inline;
@@ -1412,7 +1399,7 @@ a.scHyperlinkButton:last-of-type {
   vertical-align: top;
 }
 
-.scListviewItemThumbnails_Selected {
+body.dark .scListviewItemThumbnails_Selected {
   background: #f8d5a6;
   border: 1px solid #f6d2ab;
   color: #46448d;
@@ -1426,7 +1413,7 @@ a.scHyperlinkButton:last-of-type {
   vertical-align: top;
 }
 
-.scListviewItemThumbnailsIcon {
+body.dark .scListviewItemThumbnailsIcon {
   border: 1px solid threedface;
   cursor: default;
   height: 72px;
@@ -1434,7 +1421,7 @@ a.scHyperlinkButton:last-of-type {
   width: 72px;
 }
 
-.scListviewItemDocument {
+body.dark .scListviewItemDocument {
   border-bottom: 1px solid threedface;
   color: highlight;
   cursor: default;
@@ -1445,7 +1432,7 @@ a.scHyperlinkButton:last-of-type {
   vertical-align: top;
 }
 
-.scListviewItemDocument_Selected {
+body.dark .scListviewItemDocument_Selected {
   border-bottom: 1px solid threedface;
   background: highlight;
   color: highlighttext;
@@ -1457,19 +1444,19 @@ a.scHyperlinkButton:last-of-type {
   vertical-align: top;
 }
 
-.scListviewItemDocumentTitle {
+body.dark .scListviewItemDocumentTitle {
   color: windowtext;
 }
 
-.scListviewItemDocumentText {
+body.dark .scListviewItemDocumentText {
   color: windowtext;
 }
 
-.scListviewDetailline {
+body.dark .scListviewDetailline {
   padding: 2px 0px 2px 0px;
 }
 
-.scListviewNavigator {
+body.dark .scListviewNavigator {
   background: threedface;
   border-left: 1px solid threedhighlight;
   border-top: 1px solid threedhighlight;
@@ -1479,16 +1466,16 @@ a.scHyperlinkButton:last-of-type {
   white-space: nowrap;
 }
 
-.scListviewNavigatorItem {
+body.dark .scListviewNavigatorItem {
   font-weight: 600;
 }
 
-.scListviewNavigatorItemActive {
+body.dark .scListviewNavigatorItemActive {
   color: activecaption;
   font-weight: 600;
 }
 
-.scListviewViewDetailsHeader {
+body.dark .scListviewViewDetailsHeader {
   background-color: var(--black);
   border-right: 1px solid var(--black1) !important;
   border-top: 1px solid var(--black1) !important;
@@ -1498,11 +1485,11 @@ a.scHyperlinkButton:last-of-type {
   white-space: nowrap;
 }
 
-.scListviewViewDetailsHeader:first-child {
+body.dark .scListviewViewDetailsHeader:first-child {
   border-left: 1px solid var(--text) !important;
 }
 
-.scListviewViewDetailsHeaderHover {
+body.dark .scListviewViewDetailsHeaderHover {
   background-color: var(--black);
   border-right: 1px solid var(--black1) !important;
   height: 17px;
@@ -1511,19 +1498,19 @@ a.scHyperlinkButton:last-of-type {
   white-space: nowrap;
 }
 
-.scMenu,
-.scPopup {
+body.dark .scMenu,
+body.dark .scPopup {
   background-color: #202020 !important;
   border-radius: 0px !important;
   filter: drop-shadow(2px 4px 7px rgba(0, 0, 0, 0.2)) !important;
   box-sizing: border-box;
 }
 
-.scPopup.scPopupSharp {
+body.dark .scPopup.scPopupSharp {
   border: none;
 }
 
-.scPopup > .scMenu {
+body.dark .scPopup > .scMenu {
   background-color: var(--black2) !important;
   border: 0px;
   border-collapse: separate;
@@ -1533,66 +1520,66 @@ a.scHyperlinkButton:last-of-type {
   user-select: none;
 }
 
-.scMenuHeader {
+body.dark .scMenuHeader {
   font-weight: 600;
   font-size: 14px;
   padding: 15px 15px 5px;
 }
 
 /*.scMenu tr:first-child td:nth-child(1),
-.scMenu tr:first-child td:nth-child(2),
-.scMenu tr:first-child td:nth-child(3) {
+body.dark .scMenu tr:first-child td:nth-child(2),
+body.dark .scMenu tr:first-child td:nth-child(3) {
     padding: 15px 15px 5px;
 }
 
-.scMenu tr:last-child td:nth-child(1),
-.scMenu tr:last-child td:nth-child(2),
-.scMenu tr:last-child td:nth-child(3) {
+body.dark .scMenu tr:last-child td:nth-child(1),
+body.dark .scMenu tr:last-child td:nth-child(2),
+body.dark .scMenu tr:last-child td:nth-child(3) {
     padding: 5px 15px 15px;
 }*/
 
-.scMenuItem {
+body.dark .scMenuItem {
   padding: 5px 15px;
   line-height: 140%;
 }
 
-.scMenuItemHotkey {
+body.dark .scMenuItemHotkey {
   white-space: nowrap;
   padding: 0 5px;
   vertical-align: middle;
   filter: invert(1) !important;
 }
 
-.scMenuItemIcon,
-.scMenuItemCaption,
-.scMenuItemIcon_Hover,
-.scMenuItemCaption_Hover,
-.scMenuItemHotkey_Hover,
-.scMenuPanelItem_Hover,
-.scMenuPanelItemSelected_Hover,
-.scMenuItemIcon_Disabled,
-.scMenuItemCaption_Disabled,
-.scMenuItemHotkey_Disabled {
+body.dark .scMenuItemIcon,
+body.dark .scMenuItemCaption,
+body.dark .scMenuItemIcon_Hover,
+body.dark .scMenuItemCaption_Hover,
+body.dark .scMenuItemHotkey_Hover,
+body.dark .scMenuPanelItem_Hover,
+body.dark .scMenuPanelItemSelected_Hover,
+body.dark .scMenuItemIcon_Disabled,
+body.dark .scMenuItemCaption_Disabled,
+body.dark .scMenuItemHotkey_Disabled {
   white-space: nowrap;
   padding: 0 5px;
   vertical-align: middle;
 }
 
-.scMenuPanelItem_Hover div b,
-.scMenuPanelItem_Hover div {
+body.dark .scMenuPanelItem_Hover div b,
+body.dark .scMenuPanelItem_Hover div {
   color: var(--white) !important;
 }
 
-.scMenuPanelItem,
-.scMenuPanelItem_Hover,
-.scMenuPanelItemSelected,
-.scMenuPanelItemSelected_Hover {
+body.dark .scMenuPanelItem,
+body.dark .scMenuPanelItem_Hover,
+body.dark .scMenuPanelItemSelected,
+body.dark .scMenuPanelItemSelected_Hover {
   padding: 8px 0px !important;
 }
 
-.scMenuItemIcon,
-.scMenuItemIcon_Hover,
-.scMenuItemIcon_Disabled {
+body.dark .scMenuItemIcon,
+body.dark .scMenuItemIcon_Hover,
+body.dark .scMenuItemIcon_Disabled {
   width: 24px;
   padding-left: 15px;
   padding-right: 0;
@@ -1600,52 +1587,52 @@ a.scHyperlinkButton:last-of-type {
   padding-bottom: 5px;
 }
 
-.scMenuItemIcon_Hover,
-.scMenuItemCaption_Hover,
-.scMenuItemHotkey_Hover,
-.scMenuPanelItemSelected_Hover,
-.scMenuPanelItem_Hover {
+body.dark .scMenuItemIcon_Hover,
+body.dark .scMenuItemCaption_Hover,
+body.dark .scMenuItemHotkey_Hover,
+body.dark .scMenuPanelItemSelected_Hover,
+body.dark .scMenuPanelItem_Hover {
   background-color: var(--blue) !important;
   cursor: pointer;
   color: var(--white) !important;
 }
 
-.scMenuItemIcon_Disabled,
-.scMenuItemCaption_Disabled,
-.scMenuItemHotkey_Disabled {
+body.dark .scMenuItemIcon_Disabled,
+body.dark .scMenuItemCaption_Disabled,
+body.dark .scMenuItemHotkey_Disabled {
   color: var(--text) !important;
   cursor: default;
 }
 
-.scMenuItemIcon_Disabled > img {
+body.dark .scMenuItemIcon_Disabled > img {
   opacity: 0.4;
   filter: alpha(opacity=40);
 }
 
-.scMenuDividerIcon {
+body.dark .scMenuDividerIcon {
   background-color: #323232 !important;
   height: 1px;
 }
 
-.scMenuDividerIcon img {
+body.dark .scMenuDividerIcon img {
   display: block;
 }
 
-.scScrollbox .scRibbonToolbarSmallButton {
+body.dark .scScrollbox .scRibbonToolbarSmallButton {
   white-space: nowrap;
   padding: 8px 15px;
   vertical-align: middle;
 }
 
-.scScrollbox a.scRibbonToolbarSmallButton:hover {
+body.dark .scScrollbox a.scRibbonToolbarSmallButton:hover {
   text-decoration: none;
 }
 
-.scScrollbox .scRibbonToolbarSmallButton > img {
+body.dark .scScrollbox .scRibbonToolbarSmallButton > img {
   padding-right: 10px;
 }
 
-.scMenuDividerCaption {
+body.dark .scMenuDividerCaption {
   background-color: #323232 !important;
   /*border-top: 1px solid #fafafa;*/
   /*border-bottom: 1px solid #fafafa;
@@ -1653,43 +1640,51 @@ a.scHyperlinkButton:last-of-type {
   height: 1px;
 }
 
-.scMenuDividerCaption img {
+body.dark .scMenuDividerCaption img {
   display: block;
 }
 
-.scMenuDividerHotkey {
+body.dark .scMenuDividerHotkey {
   background-color: #323232 !important;
   /*border-top: 1px solid #fafafa;*/
   /*border-bottom: 1px solid #fafafa;*/
   height: 1px;
 }
 
-.scMenuDividerHotkey img {
+body.dark .scMenuDividerHotkey img {
   display: block;
 }
 
-.scMenuPanelItem,
-.scMenuPanelItemSelected {
+body.dark .scMenuPanelItem,
+body.dark .scMenuPanelItemSelected {
   white-space: nowrap;
   padding: 0 5px;
 }
 
-.versionNumSelected,
-.scMenuPanelItemSelected {
+body.dark .versionNumSelected,
+body.dark .scMenuPanelItemSelected {
   background-color: var(--darkblue) !important;
 }
 
-.scMenuPanelItemSelected_Hover > table > tbody > tr > td > div > div > b,
-.scMenuPanelItemSelected > table > tbody > tr > td > div > div > b {
+body.dark
+  .scMenuPanelItemSelected_Hover
+  > table
+  > tbody
+  > tr
+  > td
+  > div
+  > div
+  > b,
+body.dark .scMenuPanelItemSelected > table > tbody > tr > td > div > div > b {
   color: var(--white) !important;
 }
 
-.versionNum,
-.versionNumSelected {
+body.dark .versionNum,
+body.dark .versionNumSelected {
   padding: 10px;
 }
 
-.scMenubar {
+body.dark .scMenubar {
   background: threedface;
   border: none;
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=1, StartColorStr='#F1F3F1', EndColorStr='#ECE9D8');
@@ -1697,31 +1692,31 @@ a.scHyperlinkButton:last-of-type {
   padding: 1px 0px 1px 2px;
 }
 
-.scBorderCell {
+body.dark .scBorderCell {
   border: 1px solid threedface;
 }
 
-.scBorderCellHigh {
+body.dark .scBorderCellHigh {
   color: highlighttext;
   background: highlight;
 }
 
-.scBorderCellSelected {
+body.dark .scBorderCellSelected {
   color: captiontext;
   background: activecaption;
 }
 
-.scDarkBorderCell {
+body.dark .scDarkBorderCell {
   border: 1px solid #d4d0c8;
 }
 
-.scNotebookFrame {
+body.dark .scNotebookFrame {
   border-left: 1px solid threedhighlight;
   border-bottom: 1px solid threedshadow;
   border-right: 1px solid threedshadow;
 }
 
-.scScrollbox {
+body.dark .scScrollbox {
   background-color: #181818 !important;
   height: 100%;
   overflow: auto;
@@ -1730,7 +1725,7 @@ a.scHyperlinkButton:last-of-type {
   border: 1px solid #212121 !important;
 }
 
-.scScrollboxStretchAbsolute {
+body.dark .scScrollboxStretchAbsolute {
   overflow: auto;
   position: absolute;
   top: 0;
@@ -1740,7 +1735,7 @@ a.scHyperlinkButton:last-of-type {
   margin: 15px;
 }
 
-.scStretchAbsolute {
+body.dark .scStretchAbsolute {
   position: absolute !important;
   top: 0;
   bottom: 0;
@@ -1749,16 +1744,16 @@ a.scHyperlinkButton:last-of-type {
   background-color: var(--black2) !important;
 }
 
-.scStretchAbsolute .scTreeviewContainerLayout {
+body.dark .scStretchAbsolute .scTreeviewContainerLayout {
   position: relative;
 }
 
-.scStretchAbsolute .scTreeviewContainerLayout .scTreeviewInnerLayout {
+body.dark .scStretchAbsolute .scTreeviewContainerLayout .scTreeviewInnerLayout {
   position: absolute;
   width: 100%;
 }
 
-.scMarginAbsolute {
+body.dark .scMarginAbsolute {
   top: 0px;
   right: 0px;
   bottom: 0px;
@@ -1766,38 +1761,38 @@ a.scHyperlinkButton:last-of-type {
   padding: 15px;
 }
 
-.Row td.DataCell {
+body.dark .Row td.DataCell {
   border: 1px solid var(--black2);
 }
 
-#Roles_searchBox,
-#Users_searchBox {
+body.dark #Roles_searchBox,
+body.dark #Users_searchBox {
   display: initial;
 }
-.scAccessViewerRight > img,
-.scSecurityItem > img,
-.scAccessRights > img {
+body.dark .scAccessViewerRight > img,
+body.dark .scSecurityItem > img,
+body.dark .scAccessRights > img {
   filter: invert(1);
 }
-.scTreeview .scTreeItem,
-.scTreeview .scTreeItem_Hover {
+body.dark .scTreeview .scTreeItem,
+body.dark .scTreeview .scTreeItem_Hover {
   padding: 3px;
 }
-.scTreeview .nodeSelected,
-.scTreeview .nodeSelected_Hover {
+body.dark .scTreeview .nodeSelected,
+body.dark .scTreeview .nodeSelected_Hover {
   background-color: var(--blue) !important;
   border-radius: 3px;
   padding: 3px;
 }
-.scTreeview .header,
-.scTreeview .scTreeHeader {
+body.dark .scTreeview .header,
+body.dark .scTreeview .scTreeHeader {
   background-color: var(--black2) !important;
 }
-.scTreeview .scTreeItem.hover {
+body.dark .scTreeview .scTreeItem.hover {
   background-color: var(--black4) !important;
 }
 
-.scStretch {
+body.dark .scStretch {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -1805,39 +1800,39 @@ a.scHyperlinkButton:last-of-type {
   background-color: #111;
 }
 
-.scScroller {
+body.dark .scScroller {
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
 }
 
-.wk .scScroller {
+body.dark .wk .scScroller {
   margin-bottom: 2px;
 }
 
-.scScrollerLeft {
+body.dark .scScrollerLeft {
   display: none;
 }
 
-.scScrollerRight {
+body.dark .scScrollerRight {
   display: none;
 }
 
-.scShellTasks {
+body.dark .scShellTasks {
   height: 100%;
   padding: 8px;
   width: 100%;
 }
 
-.scShellDetails {
+body.dark .scShellDetails {
   padding: 6px;
 }
 
-.scSpinEditButton {
+body.dark .scSpinEditButton {
   padding-bottom: 1px;
 }
 
-.scSpinEditInput {
+body.dark .scSpinEditInput {
   border-top: 1px solid #7f9db9;
   border-left: 1px solid #7f9db9;
   border-bottom: 1px solid #7f9db9;
@@ -1846,41 +1841,41 @@ a.scHyperlinkButton:last-of-type {
   width: 100%;
 }
 
-.scTaskboxOption {
+body.dark .scTaskboxOption {
   cursor: default;
 }
 
-.scTaskboxOption_Hover {
+body.dark .scTaskboxOption_Hover {
   cursor: default;
   text-decoration: underline;
 }
 
-.scTaskboxBody {
+body.dark .scTaskboxBody {
   height: 100%;
   overflow: auto;
   padding: 4px;
   width: 100%;
 }
 
-.scTabstripTopTabs {
+body.dark .scTabstripTopTabs {
   border-top: 2px solid #fffbe9;
   background: #fffbe9;
 }
 
-.scTabstripTopTabs_Tab {
+body.dark .scTabstripTopTabs_Tab {
   color: #817e73;
   border-bottom: 2px groove;
   padding: 3px 8px 3px 8px;
 }
 
-.scTabstripTopTabs_TabHover {
+body.dark .scTabstripTopTabs_TabHover {
   color: #f93;
   text-decoration: underline;
   border-bottom: 2px groove;
   padding: 3px 8px 3px 8px;
 }
 
-.scTabstripTopTabs_ActiveTab {
+body.dark .scTabstripTopTabs_ActiveTab {
   background: threedface;
   font-weight: 600;
   border-left: 1px solid threedhighlight;
@@ -1889,7 +1884,7 @@ a.scHyperlinkButton:last-of-type {
   padding: 3px 8px 3px 8px;
 }
 
-.scTabstripTopTabs_ActiveTabHover {
+body.dark .scTabstripTopTabs_ActiveTabHover {
   background: threedface;
   color: #f93;
   font-weight: 600;
@@ -1900,29 +1895,29 @@ a.scHyperlinkButton:last-of-type {
   padding: 3px 8px 3px 8px;
 }
 
-.scTabstripTopTabs_Filler {
+body.dark .scTabstripTopTabs_Filler {
   border-bottom: 2px groove;
 }
 
-.scTabstripBottomTabs {
+body.dark .scTabstripBottomTabs {
   border-bottom: 2px solid #fffbe9;
   background: #fffbe9;
 }
 
-.scTabstripBottomTabs_Tab {
+body.dark .scTabstripBottomTabs_Tab {
   color: #817e73;
   border-top: 2px groove;
   padding: 4px 8px 4px 8px;
 }
 
-.scTabstripBottomTabs_TabHover {
+body.dark .scTabstripBottomTabs_TabHover {
   color: #f93;
   text-decoration: underline;
   border-top: 2px groove;
   padding: 3px 8px 3px 8px;
 }
 
-.scTabstripBottomTabs_ActiveTab {
+body.dark .scTabstripBottomTabs_ActiveTab {
   background: threedface;
   font-weight: 600;
   border-left: 1px solid threedhighlight;
@@ -1931,7 +1926,7 @@ a.scHyperlinkButton:last-of-type {
   padding: 3px 8px 3px 8px;
 }
 
-.scTabstripBottomTabs_ActiveTabHover {
+body.dark .scTabstripBottomTabs_ActiveTabHover {
   background: threedface;
   color: #f93;
   font-weight: 600;
@@ -1942,33 +1937,33 @@ a.scHyperlinkButton:last-of-type {
   padding: 3px 8px 3px 8px;
 }
 
-.scTabstripBottomTabs_Filler {
+body.dark .scTabstripBottomTabs_Filler {
   border-top: 2px groove;
 }
 
-.scTabstripButtons {
+body.dark .scTabstripButtons {
   border: 3px solid #fffbe9;
   background: #fffbe9;
 }
 
-.scTabstripButtons_Tab {
+body.dark .scTabstripButtons_Tab {
   color: #817e73;
   padding: 3px 9px 3px 9px;
 }
 
-.scTabstripButtons_TabHover {
+body.dark .scTabstripButtons_TabHover {
   color: #f93;
   text-decoration: underline;
   padding: 3px 9px 3px 9px;
 }
 
-.scTabstripButtons_ActiveTab {
+body.dark .scTabstripButtons_ActiveTab {
   background: window;
   border: 1px solid #316ac5;
   padding: 2px 8px 2px 8px;
 }
 
-.scTabstripButtons_ActiveTabHover {
+body.dark .scTabstripButtons_ActiveTabHover {
   background: window;
   color: #f93;
   text-decoration: underline;
@@ -1976,17 +1971,17 @@ a.scHyperlinkButton:last-of-type {
   padding: 2px 8px 2px 8px;
 }
 
-.scTaskboxCaption {
+body.dark .scTaskboxCaption {
   color: #0148b2;
   background: #c5d2f0;
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=1, StartColorStr='#FFFFFF', EndColorStr='#C5D2F0');
 }
 
-.scTaskboxBody {
+body.dark .scTaskboxBody {
   background: white;
 }
 
-.scTaskOption {
+body.dark .scTaskOption {
   color: white;
   font-weight: 600;
   cursor: default;
@@ -1994,7 +1989,7 @@ a.scHyperlinkButton:last-of-type {
   white-space: nowrap;
 }
 
-.scTaskOption_Hover {
+body.dark .scTaskOption_Hover {
   color: white;
   font-weight: 600;
   text-decoration: underline;
@@ -2003,7 +1998,7 @@ a.scHyperlinkButton:last-of-type {
   white-space: nowrap;
 }
 
-.scDisabledTaskOption {
+body.dark .scDisabledTaskOption {
   color: graytext;
   font-weight: 600;
   cursor: default;
@@ -2011,18 +2006,18 @@ a.scHyperlinkButton:last-of-type {
   white-space: nowrap;
 }
 
-.scToolbar {
+body.dark .scToolbar {
   border: none;
   padding: 13px;
   background: #f0f0f0;
 }
 
-.scToolbutton,
-.scToolbutton_Disabled,
-.scToolbutton_Down,
-.scToolbutton_Down_Hover,
-.scToolbutton_Hover,
-.scToolbutton_Hot {
+body.dark .scToolbutton,
+body.dark .scToolbutton_Disabled,
+body.dark .scToolbutton_Down,
+body.dark .scToolbutton_Down_Hover,
+body.dark .scToolbutton_Hover,
+body.dark .scToolbutton_Hot {
   background: transparent;
   border: none;
   cursor: default;
@@ -2034,60 +2029,60 @@ a.scHyperlinkButton:last-of-type {
   user-select: none;
 }
 
-.scToolbutton:last-of-type,
-.scToolbutton_Disabled:last-of-type,
-.scToolbutton_Down:last-of-type,
-.scToolbutton_Down_Hoverlast-of-type,
-.scToolbutton_Hoverlast-of-type,
-.scToolbutton_Hotlast-of-type {
+body.dark .scToolbutton:last-of-type,
+body.dark .scToolbutton_Disabled:last-of-type,
+body.dark .scToolbutton_Down:last-of-type,
+body.dark .scToolbutton_Down_Hoverlast-of-type,
+body.dark .scToolbutton_Hoverlast-of-type,
+body.dark .scToolbutton_Hotlast-of-type {
   margin-right: 0;
 }
 
-.scToolbutton_Disabled {
+body.dark .scToolbutton_Disabled {
   background: transparent;
   filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
   border: none;
   cursor: default;
 }
 
-.scToolbutton_Down {
+body.dark .scToolbutton_Down {
   background: #e3e3e3;
   cursor: pointer;
 }
 
-.scToolbutton_Down_Hover {
+body.dark .scToolbutton_Down_Hover {
   background: #e3e3e3;
   cursor: pointer;
 }
 
-.scToolbutton:hover,
-.scToolbutton_Hover {
+body.dark .scToolbutton:hover,
+body.dark .scToolbutton_Hover {
   cursor: pointer;
   text-decoration: underline;
 }
 
-.scToolbutton_Hot {
+body.dark .scToolbutton_Hot {
   background: #e3e3e3;
   cursor: pointer;
 }
 
-.scToolbutton img,
-.scToolbutton_Disabled img,
-.scToolbutton_Down img,
-.scToolbutton_Down_Hover img,
-.scToolbutton_Hover img,
-.scToolbutton_Hot img {
+body.dark .scToolbutton img,
+body.dark .scToolbutton_Disabled img,
+body.dark .scToolbutton_Down img,
+body.dark .scToolbutton_Down_Hover img,
+body.dark .scToolbutton_Hover img,
+body.dark .scToolbutton_Hot img {
   vertical-align: middle;
   margin: 0 10px 0 0 !important;
 }
 
-.scPropertyInspectorEditor {
+body.dark .scPropertyInspectorEditor {
   border: none;
   background: transparent;
   width: 100%;
 }
 
-.scFieldCaption {
+body.dark .scFieldCaption {
   color: #666;
   border-top: 1px solid threedshadow;
   border-left: none;
@@ -2097,7 +2092,7 @@ a.scHyperlinkButton:last-of-type {
   padding: 5px 0px 0px 8px;
 }
 
-.scFieldBody {
+body.dark .scFieldBody {
   background: window;
   border-top: 1px solid threedshadow;
   border-left: none;
@@ -2105,7 +2100,7 @@ a.scHyperlinkButton:last-of-type {
   border-bottom: 1px solid threedshadow;
 }
 
-.scFieldBodySpace {
+body.dark .scFieldBodySpace {
   background: threedface;
   border-top: 1px solid threedshadow;
   border-left: none;
@@ -2113,78 +2108,78 @@ a.scHyperlinkButton:last-of-type {
   border-bottom: 1px solid threedshadow;
 }
 
-table.scTemplateEditorInspector {
+body.dark table.scTemplateEditorInspector {
   border-collapse: collapse;
   color: windowtext;
 }
 
-.scTemplateEditorSelector {
+body.dark .scTemplateEditorSelector {
   border: none;
   background: transparent;
   width: 100%;
 }
 
-.scTaskTitle {
+body.dark .scTaskTitle {
   font-weight: 600;
   color: white;
   height: 28px;
 }
 
-.scTaskHeadline {
+body.dark .scTaskHeadline {
   font-weight: 600;
   font-size: 18pt;
   color: #d6dff5;
 }
 
-.scTaskWhatDoYouWantToDo {
+body.dark .scTaskWhatDoYouWantToDo {
   font-weight: 600;
   font-size: 18pt;
   color: #e9e9e9;
   padding: 0px 0px 4px 0px;
 }
 
-.scTaskGradient {
+body.dark .scTaskGradient {
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=1, StartColorStr='#3366CC', EndColorStr='#6375D6');
   height: 28px;
 }
 
-a.scTagTracker,
-a.scTagTracker:active,
-a.scTagTracker:visited {
+body.dark a.scTagTracker,
+body.dark a.scTagTracker:active,
+body.dark a.scTagTracker:visited {
   color: windowtext;
   text-decoration: none;
   padding: 1px;
   white-space: nowrap;
 }
 
-a.scTagTracker:hover {
+body.dark a.scTagTracker:hover {
   color: activecaption;
   text-decoration: underline;
   padding: 1px;
   white-space: nowrap;
 }
 
-.scTagTrackerSelected {
+body.dark .scTagTrackerSelected {
   font-weight: 600;
   color: windowtext;
   padding: 1px;
   white-space: nowrap;
 }
 
-.scInspector {
+body.dark .scInspector {
   background: appworkspace;
   width: 100%;
   height: 100%;
   overflow: auto;
 }
 
-.scInspectorGrid {
+body.dark .scInspectorGrid {
   background: threedface;
   border-collapse: collapse;
   border: none;
 }
 
-.scInspectorSection {
+body.dark .scInspectorSection {
   color: #666;
   border: 1px solid threedshadow;
   border-left: none;
@@ -2193,7 +2188,7 @@ a.scTagTracker:hover {
   padding: 0px 4px 0px 4px;
 }
 
-.scInspectorKey {
+body.dark .scInspectorKey {
   color: #666;
   border: 1px solid threedshadow;
   border-left: none;
@@ -2201,7 +2196,7 @@ a.scTagTracker:hover {
   padding: 0px 4px 0px 4px;
 }
 
-.scInspectorValue {
+body.dark .scInspectorValue {
   background: window;
   color: windowtext;
   border: 1px solid threedshadow;
@@ -2210,7 +2205,7 @@ a.scTagTracker:hover {
   padding-left: 4px;
 }
 
-.scInspectorButtons {
+body.dark .scInspectorButtons {
   background: window;
   color: windowtext;
   border: 1px solid threedshadow;
@@ -2219,7 +2214,7 @@ a.scTagTracker:hover {
   padding: 0px;
 }
 
-.scInspectorButton {
+body.dark .scInspectorButton {
   font-weight: 600;
   font-size: 10pt;
   color: buttontext;
@@ -2228,105 +2223,105 @@ a.scTagTracker:hover {
   height: 19px;
 }
 
-.scInspectorInput {
+body.dark .scInspectorInput {
   border: none;
   width: 100%;
   background: transparent;
 }
 
-.scInspectorDropdown {
+body.dark .scInspectorDropdown {
   border: none;
   width: 100%;
   background: transparent;
 }
 
-.scInspectorHeader {
+body.dark .scInspectorHeader {
   font-weight: 600;
   border: none;
   padding: 4px;
   background: threedlightshadow;
 }
 
-.scInspectorText {
+body.dark .scInspectorText {
   color: #666;
   text-align: center;
 }
 
-a.scInspectorTaglist,
-a:hover.scInspectorTaglist,
-a:active.scInspectorTaglist,
-a:visited.scInspectorTaglist {
+body.dark a.scInspectorTaglist,
+body.dark a:hover.scInspectorTaglist,
+body.dark a:active.scInspectorTaglist,
+body.dark a:visited.scInspectorTaglist {
   color: Black;
   border: none;
   text-decoration: none;
   background: transparent;
 }
 
-a.scInspectorInspectedtag,
-a:hover.scInspectorInspectedtag,
-a:active.scInspectorInspectedtag,
-a:visited.scInspectorInspectedtag {
+body.dark a.scInspectorInspectedtag,
+body.dark a:hover.scInspectorInspectedtag,
+body.dark a:active.scInspectorInspectedtag,
+body.dark a:visited.scInspectorInspectedtag {
   color: highlighttext;
   border: none;
   text-decoration: none;
   background: highlight;
 }
 
-.scWizardHeader {
+body.dark .scWizardHeader {
   color: var(--text);
   background-color: #2b2b2b;
   min-height: 64px;
 }
 
-.ie8 .scWizardHeader,
-.ie9 .scWizardHeader {
+body.dark .ie8 .scWizardHeader,
+body.dark .ie9 .scWizardHeader {
   height: 64px;
   overflow: hidden;
 }
 
-.scWizardHeader > img {
+body.dark .scWizardHeader > img {
   float: right;
   margin-top: 10px;
   margin-right: 5px;
 }
 
-.scWizardTitle {
+body.dark .scWizardTitle {
   font-weight: 600;
   margin: 5px 0 5px 15px;
 }
 
-.scWizardText {
+body.dark .scWizardText {
   margin-left: 15px;
   padding-bottom: 4px;
 }
 
-.scWizardWelcomeTitle {
+body.dark .scWizardWelcomeTitle {
   font-weight: 600;
   font-size: 12pt;
   padding-bottom: 16px;
 }
 
-.scWizardWelcomePanel {
+body.dark .scWizardWelcomePanel {
   color: windowtext;
   background: window;
   padding: 8px;
 }
 
-.scWizardSkip {
+body.dark .scWizardSkip {
   position: absolute;
   bottom: 10px;
 }
 
-.scWizardTextPanel {
+body.dark .scWizardTextPanel {
   padding: 8px 36px 0px 36px;
 }
 
-.scWizardTextline {
+body.dark .scWizardTextline {
   color: windowtext;
   padding-bottom: 8px;
 }
 
-.scWizardDocument {
+body.dark .scWizardDocument {
   font: 9pt Courier New;
   width: 412px;
   height: 100%;
@@ -2336,74 +2331,74 @@ a:visited.scInspectorInspectedtag {
   background: window;
 }
 
-.ie8 .scWizardLastPageResultText,
-.ie9 .scWizardLastPageResultText {
+body.dark .ie8 .scWizardLastPageResultText,
+body.dark .ie9 .scWizardLastPageResultText {
   position: absolute;
   top: 65px;
   bottom: 0;
   width: 100%;
 }
 
-.wizardCompleteText {
+body.dark .wizardCompleteText {
   padding-bottom: 16px;
   font-weight: 600;
   display: inline-block;
 }
 
-.wizardResult {
+body.dark .wizardResult {
   padding-bottom: 2px;
   display: inline-block;
 }
 
-li.scWizardBullet {
+body.dark li.scWizardBullet {
   padding-bottom: 8px;
 }
 
-.scRollOver {
+body.dark .scRollOver {
   cursor: default;
   text-decoration: none;
 }
 
-.scRollOver_Hover,
-.scRollOver:hover {
+body.dark .scRollOver_Hover,
+body.dark .scRollOver:hover {
   cursor: pointer;
   text-decoration: underline;
 }
 
-.scRollOver2 {
+body.dark .scRollOver2 {
   cursor: default;
   text-decoration: none;
 }
 
-.scRollOver2_Hover {
+body.dark .scRollOver2_Hover {
   background: #edb078;
   cursor: default;
   text-decoration: none;
 }
 
-.scRollover,
-.scRollover_Hover {
+body.dark .scRollover,
+body.dark .scRollover_Hover {
   cursor: pointer;
   text-decoration: none;
   color: var(--blue);
   margin-right: 15px;
 }
 
-.scRollover img,
-.scRollover_Hover img {
+body.dark .scRollover img,
+body.dark .scRollover_Hover img {
   display: none;
 }
 
-.scSection {
+body.dark .scSection {
   width: 100%;
   margin-bottom: 1px;
 }
 
-.scSectionLeft {
+body.dark .scSectionLeft {
   background-color: #474747;
 }
 
-.scSectionCenter {
+body.dark .scSectionCenter {
   color: var(--text);
   font-weight: 600;
   font-size: 12px;
@@ -2414,63 +2409,63 @@ li.scWizardBullet {
   border-left: 5px solid #dc291e;
 }
 
-.scSectionRight {
+body.dark .scSectionRight {
   padding: 10px;
   background-color: #474747;
   text-align: right;
 }
 
-.scSectionRight a {
+body.dark .scSectionRight a {
   margin-right: 10px;
 }
 
-.scSectionCenter,
-.scSectionRight {
+body.dark .scSectionCenter,
+body.dark .scSectionRight {
   user-select: none;
   cursor: pointer;
 }
 
-.scCollapsed .scSectionCenter {
+body.dark .scCollapsed .scSectionCenter {
   background-color: #969696;
   border-left: 5px solid #969696;
 }
 
-.scCollapsed .scSectionRight {
+body.dark .scCollapsed .scSectionRight {
   background-color: #969696;
 }
 
-.scCommandbarContainer {
+body.dark .scCommandbarContainer {
   overflow: hidden;
   padding: 15px;
   border-bottom: 1px solid #e3e3e3;
 }
 
-.scCommandContainer {
+body.dark .scCommandContainer {
   display: inline-block;
 }
 
-.scCommand,
-.scCommand_Hover {
+body.dark .scCommand,
+body.dark .scCommand_Hover {
   cursor: default;
   padding: 10px;
   white-space: nowrap;
 }
 
-.scCommand_Hover {
+body.dark .scCommand_Hover {
   cursor: pointer;
   background-color: #e3e3e3;
 }
 
-.scCombobox {
+body.dark .scCombobox {
   white-space: nowrap;
   height: 35px;
 }
 
-.scCombobox td {
+body.dark .scCombobox td {
   padding: 0 !important;
 }
 
-input[type="text"][readonly].scComboboxEdit {
+body.dark input[type="text"][readonly].scComboboxEdit {
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
   height: 35px;
@@ -2479,7 +2474,7 @@ input[type="text"][readonly].scComboboxEdit {
   box-shadow: none !important;
 }
 
-.scComboboxDropDown {
+body.dark .scComboboxDropDown {
   margin: 0;
   padding: 14px 5px;
   border-left: none;
@@ -2490,23 +2485,23 @@ input[type="text"][readonly].scComboboxEdit {
   border: 1px solid #1f1f1f !important;
 }
 
-.scComboboxDropDown:hover {
+body.dark .scComboboxDropDown:hover {
   background-color: var(--black3) !important;
 }
 
-.scListbox {
+body.dark .scListbox {
   cursor: default;
   overflow: auto;
   border: 3px inset;
 }
 
-.scListboxItem {
+body.dark .scListboxItem {
   font-size: 10pt;
   padding: 1px;
   white-space: nowrap;
 }
 
-.scListboxItem_Selected {
+body.dark .scListboxItem_Selected {
   background: highlight;
   color: highlighttext;
   font-size: 10pt;
@@ -2514,7 +2509,7 @@ input[type="text"][readonly].scComboboxEdit {
   white-space: nowrap;
 }
 
-.scInformationBar {
+body.dark .scInformationBar {
   background: infobackground;
   color: infotext;
   padding: 6px 2px 6px 2px;
@@ -2522,30 +2517,30 @@ input[type="text"][readonly].scComboboxEdit {
   border-bottom: 1px solid var(--black6);
 }
 
-.scFieldLabel {
+body.dark .scFieldLabel {
   padding: 10px 0 10px;
   display: block;
 }
 
-.scFieldLabel:first-child,
-.scFieldLabel + .scFieldLabel,
-legend + .scFieldLabel,
-input[type="hidden"] + .scFieldLabel {
+body.dark .scFieldLabel:first-child,
+body.dark .scFieldLabel + .scFieldLabel,
+body.dark legend + .scFieldLabel,
+body.dark input[type="hidden"] + .scFieldLabel {
   padding-top: 0;
 }
 
-.scFieldLabel + fieldset {
+body.dark .scFieldLabel + fieldset {
   margin-top: 0;
 }
 
-.scFieldInput {
+body.dark .scFieldInput {
   background: window;
   border-bottom: 1px solid threedshadow;
   padding: 0px 0px 0px 4px;
   width: 100%;
 }
 
-.scFieldSection {
+body.dark .scFieldSection {
   background: threedface;
   padding: 2px 0px 2px 4px;
   border-bottom: 1px solid threedshadow;
@@ -2553,27 +2548,27 @@ input[type="hidden"] + .scFieldLabel {
   font-size: 8pt;
 }
 
-.scFieldTextbox {
+body.dark .scFieldTextbox {
   border: none;
 }
 
-.scContentControlLayout_Active {
+body.dark .scContentControlLayout_Active {
   border: 1px solid activecaption;
   background: #e9e9e9;
   margin: 0px 0px 16px 0px;
 }
 
-.scContentControlLayoutDevice {
+body.dark .scContentControlLayoutDevice {
   margin: 10px 0;
   white-space: nowrap;
 }
 
-.scContentControlLayoutDevice_Active {
+body.dark .scContentControlLayoutDevice_Active {
   background: #e9e9e9;
   white-space: nowrap;
 }
 
-.scContentControlLayoutDeviceName {
+body.dark .scContentControlLayoutDeviceName {
   padding: 5px 0px;
   white-space: normal;
   overflow: hidden;
@@ -2585,7 +2580,7 @@ input[type="hidden"] + .scFieldLabel {
   vertical-align: top;
 }
 
-.scContentControlLayoutDeviceRenderings {
+body.dark .scContentControlLayoutDeviceRenderings {
   padding: 5px 10px;
   display: inline-block;
   width: 85%;
@@ -2593,12 +2588,12 @@ input[type="hidden"] + .scFieldLabel {
   box-sizing: border-box;
 }
 
-.scTabstripContainer {
+body.dark .scTabstripContainer {
   position: relative;
   height: 100%;
 }
 
-.scTabstrip {
+body.dark .scTabstrip {
   height: 42px;
   vertical-align: bottom;
   position: relative;
@@ -2607,11 +2602,11 @@ input[type="hidden"] + .scFieldLabel {
   box-sizing: border-box;
 }
 
-.ff .scTabstrip {
+body.dark .ff .scTabstrip {
   width: 100%;
 }
 
-.scTabs {
+body.dark .scTabs {
   background-color: var(--black1) !important;
   position: absolute;
   z-index: 9;
@@ -2621,7 +2616,7 @@ input[type="hidden"] + .scFieldLabel {
   right: 0;
 }
 
-.scTabPage {
+body.dark .scTabPage {
   width: 100%;
   position: absolute;
   top: 0;
@@ -2633,10 +2628,10 @@ input[type="hidden"] + .scFieldLabel {
   border-top: 0;
 }
 
-.scTab,
-.scTab_Hover,
-.scTabActive,
-.scTabActive_Hover {
+body.dark .scTab,
+body.dark .scTab_Hover,
+body.dark .scTabActive,
+body.dark .scTabActive_Hover {
   background-color: var(--black3) !important;
   cursor: pointer;
   line-height: 39px;
@@ -2651,8 +2646,8 @@ input[type="hidden"] + .scFieldLabel {
   border-right: 1px solid var(--black3) !important;
 }
 
-.scTabActive,
-.scTabActive_Hover {
+body.dark .scTabActive,
+body.dark .scTabActive_Hover {
   background-color: #474747 !important;
   color: var(--text);
   cursor: default;
@@ -2663,45 +2658,45 @@ input[type="hidden"] + .scFieldLabel {
   padding: 0 19px 0 21px;
 }
 
-.scTabActive:after,
-.scTabActive_Hover:after {
+body.dark .scTabActive:after,
+body.dark .scTabActive_Hover:after {
   width: 0px;
 }
 
-.scTab_Hover {
+body.dark .scTab_Hover {
   background-color: #e3e3e3;
 }
 
-nobr:first-child > .scTab,
-nobr:first-child > .scTab_Hover {
+body.dark nobr:first-child > .scTab,
+body.dark nobr:first-child > .scTab_Hover {
   border-left: 1px solid var(--black3) !important;
 }
 
-nobr:first-child > .scTabActive,
-nobr:first-child > .scTabActive_Hover {
+body.dark nobr:first-child > .scTabActive,
+body.dark nobr:first-child > .scTabActive_Hover {
   border-left: 1px solid #474747;
   position: static;
   padding: 0 20px;
 }
 
-nobr:last-child > .scTabActive,
-nobr:last-child > .scTabActive_Hover {
+body.dark nobr:last-child > .scTabActive,
+body.dark nobr:last-child > .scTabActive_Hover {
   border-right: 1px solid #474747;
 }
 
-.scTabFiller {
+body.dark .scTabFiller {
   background: transparent;
   width: 100%;
 }
 
-.scVerticalTabstrip .scVerticalTabs {
+body.dark .scVerticalTabstrip .scVerticalTabs {
   border-right: 1px solid #474747;
   overflow: auto;
   margin-right: 15px;
 }
 
-.scVerticalTabstrip .scVerticalTabs a,
-.scVerticalTabstrip .scVerticalTabs span.header {
+body.dark .scVerticalTabstrip .scVerticalTabs a,
+body.dark .scVerticalTabstrip .scVerticalTabs span.header {
   padding: 0 8px;
   line-height: 34px;
   display: block;
@@ -2710,38 +2705,38 @@ nobr:last-child > .scTabActive_Hover {
   border-right: 0;
 }
 
-.scVerticalTabstrip .scVerticalTabs a {
+body.dark .scVerticalTabstrip .scVerticalTabs a {
   border-bottom: 0;
 }
 
-.scVerticalTabstrip .scVerticalTabs a:last-child {
+body.dark .scVerticalTabstrip .scVerticalTabs a:last-child {
   border-bottom: 1px solid var(--black3) !important;
 }
 
-.scVerticalTabstrip .scVerticalTabs a.active,
-.scVerticalTabstrip .scVerticalTabs a.active:hover {
+body.dark .scVerticalTabstrip .scVerticalTabs a.active,
+body.dark .scVerticalTabstrip .scVerticalTabs a.active:hover {
   background-color: #474747;
   color: var(--text);
   border: 1px solid #474747;
   border-right: 0;
 }
-.scVerticalTabstrip .scVerticalTabs a.active + a {
+body.dark .scVerticalTabstrip .scVerticalTabs a.active + a {
   border-top: 0;
 }
 
-.scVerticalTabstrip .scVerticalTabs a:hover {
+body.dark .scVerticalTabstrip .scVerticalTabs a:hover {
   background-color: #207da2 !important;
   color: var(--black1) !important;
   text-decoration: none;
 }
 
-.scVerticalTabstrip .scVerticalTabs span.header {
+body.dark .scVerticalTabstrip .scVerticalTabs span.header {
   font-weight: 600;
   border: 0px;
   display: none;
 }
 
-.scViewerHeadline {
+body.dark .scViewerHeadline {
   border-top: 1px solid #b6b8cb;
   border-bottom: 1px solid #cdcedb;
   color: white;
@@ -2750,7 +2745,7 @@ nobr:last-child > .scTabActive_Hover {
   height: 33px;
 }
 
-.scDesktopItemIcons {
+body.dark .scDesktopItemIcons {
   cursor: default;
   overflow: hidden;
   padding: 5px;
@@ -2760,7 +2755,7 @@ nobr:last-child > .scTabActive_Hover {
   width: 80px;
 }
 
-.scDesktopItemIcons_Selected {
+body.dark .scDesktopItemIcons_Selected {
   background: highlight;
   color: highlighttext;
   cursor: default;
@@ -2772,27 +2767,27 @@ nobr:last-child > .scTabActive_Hover {
   width: 80px;
 }
 
-.scDesktopViewIconsIcon {
+body.dark .scDesktopViewIconsIcon {
   cursor: default;
   padding-bottom: 4px;
 }
 
-.scWindowManagementButton,
-.scWindowManagementCloseButton {
+body.dark .scWindowManagementButton,
+body.dark .scWindowManagementCloseButton {
   border: none;
   padding: 5px 3px;
   margin: 0 8px 0 0;
   cursor: pointer;
 }
 
-#scLightbox {
+body.dark #scLightbox {
   position: absolute;
   z-index: 100;
   border: solid 1px #868686;
   background: white;
 }
 
-#scOverlay {
+body.dark #scOverlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -2804,7 +2799,7 @@ nobr:last-child > .scTabActive_Hover {
   zoom: 1;
 }
 
-#SearchBox {
+body.dark #SearchBox {
   border: none;
   width: 255px;
   color: var(--text) !important;
@@ -2813,38 +2808,38 @@ nobr:last-child > .scTabActive_Hover {
   padding-left: 17px;
 }
 
-#SearchBox.focus {
+body.dark #SearchBox.focus {
   background-color: #2b2b2b;
 }
 
 /* Content Tree */
 
-.scContentTreeContainer {
+body.dark .scContentTreeContainer {
   width: 100%;
   height: 100%;
   position: absolute;
 }
 
-.scContentTree {
-  background: var(--black1) !important;
+body.dark .scContentTree {
+  background: var(--black2) !important;
 }
 
-#ContentTreeActualSize {
+body.dark #ContentTreeActualSize {
   padding-top: 15px;
 }
 
-.scContentTreeNode {
+body.dark .scContentTreeNode {
   padding: 0px 5px 0px 16px;
   white-space: nowrap;
   clear: both;
 }
 
-.scContentTreeNode a {
+body.dark .scContentTreeNode a {
   text-decoration: none;
   outline: none;
 }
 
-.scContentTreeNode > img {
+body.dark .scContentTreeNode > img {
   display: inline-block;
   vertical-align: top;
   width: 16px;
@@ -2852,90 +2847,90 @@ nobr:last-child > .scTabActive_Hover {
   filter: invert(1) brightness(0.5);
 }
 
-.scContentTreeNode > a {
+body.dark .scContentTreeNode > a {
   display: inline-block;
   padding: 3px 5px;
   margin: 1px 0;
   height: 16px !important;
 }
 
-a.scContentTreeNodeNormal,
-a.scContentTreeNodeActive,
-a.scContentTreeNodeStatic {
+body.dark a.scContentTreeNodeNormal,
+body.dark a.scContentTreeNodeActive,
+body.dark a.scContentTreeNodeStatic {
   border-radius: 4px;
 }
 
-a.scContentTreeNodeStatic,
-a.scContentTreeNodeStatic:visited,
-a.scContentTreeNodeStatic:hover,
-a.scContentTreeNodeStatic:active {
+body.dark a.scContentTreeNodeStatic,
+body.dark a.scContentTreeNodeStatic:visited,
+body.dark a.scContentTreeNodeStatic:hover,
+body.dark a.scContentTreeNodeStatic:active {
   color: var(--black6);
 }
 
-a.scContentTreeNodeNormal:hover,
-a.scContentTreeNodeActive,
-a.scContentTreeNodeNormal.scDragHover {
+body.dark a.scContentTreeNodeNormal:hover,
+body.dark a.scContentTreeNodeActive,
+body.dark a.scContentTreeNodeNormal.scDragHover {
   background-color: var(--blue) !important;
   border-radius: 4px;
 }
 
-a.scContentTreeNodeActive > span {
+body.dark a.scContentTreeNodeActive > span {
   color: rgba(255, 255, 255, 0.7) !important;
 }
 
-a.scContentTreeNodeActive {
+body.dark a.scContentTreeNodeActive {
   background-color: var(--blue) !important;
   color: rgba(255, 255, 255, 0.7) !important;
 }
 
-a.scContentTreeNodeBlured {
+body.dark a.scContentTreeNodeBlured {
   background-color: transparent;
 }
 
-.scContentTreeNodeGlyph {
+body.dark .scContentTreeNodeGlyph {
   border: none;
   line-height: 0;
   vertical-align: middle;
   cursor: pointer;
 }
 
-.scContentTreeNodeGlyph:hover {
+body.dark .scContentTreeNodeGlyph:hover {
   background-color: #e3e3e3;
 }
 
-.scLoadingGlyph {
+body.dark .scLoadingGlyph {
   line-height: 0;
   margin: 0 0 0 8px;
   vertical-align: middle;
 }
 
-.scContentTreeNodeIcon {
+body.dark .scContentTreeNodeIcon {
   border: none;
   line-height: 0;
   vertical-align: text-bottom;
 }
 
-.scContentTreeNodeTitle {
+body.dark .scContentTreeNodeTitle {
   outline: none;
 }
 
-.scContentTree a {
+body.dark .scContentTree a {
   text-decoration: none !important;
 }
 
-.scContentTreeNodeGutter {
+body.dark .scContentTreeNodeGutter {
   position: absolute;
   left: 1px;
   display: inline;
 }
 
-.scContentTreeNodeGutterIcon {
+body.dark .scContentTreeNodeGutterIcon {
   width: 16px;
   height: 16px;
   padding: 5px 0;
 }
 
-.scContentTreeNodeGutterFlyout {
+body.dark .scContentTreeNodeGutterFlyout {
   position: absolute;
   z-index: 999;
   border: 1px solid var(--black1);
@@ -2945,60 +2940,60 @@ a.scContentTreeNodeBlured {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.175);
 }
 
-.scContentTreeNodeGutterFlyout .scContentTreeNodeGutterButton {
+body.dark .scContentTreeNodeGutterFlyout .scContentTreeNodeGutterButton {
   display: inline-block;
   padding: 5px;
 }
 
-.scContentTreeNodeGutterButton,
-.scContentTreeNodeGutterButton:link,
-.scContentTreeNodeGutterButton:active,
-.scContentTreeNodeGutterButton:hover,
-.scContentTreeNodeGutterButton:visited {
+body.dark .scContentTreeNodeGutterButton,
+body.dark .scContentTreeNodeGutterButton:link,
+body.dark .scContentTreeNodeGutterButton:active,
+body.dark .scContentTreeNodeGutterButton:hover,
+body.dark .scContentTreeNodeGutterButton:visited {
   text-decoration: none;
 }
 
-.scContentTreeNodeGutterButton:hover,
-.scContentTreeNodeGutterButton:visited {
+body.dark .scContentTreeNodeGutterButton:hover,
+body.dark .scContentTreeNodeGutterButton:visited {
   background-color: #e3e3e3;
 }
 
 /* Item Tiles */
-.scTileItemIcon {
+body.dark .scTileItemIcon {
   height: 32px;
   width: 32px;
 }
 
-.ff .scInsetBorder {
+body.dark .ff .scInsetBorder {
   min-height: 200px !important;
 }
 
-.ie .scInsetBorder {
+body.dark .ie .scInsetBorder {
   border: 1px inset;
 }
 
-.scFixSize,
-.scFixSizeInitialized {
+body.dark .scFixSize,
+body.dark .scFixSizeInitialized {
   height: 100px;
   overflow: auto;
   box-sizing: border-box;
   padding-top: 10px !important;
 }
 
-.scFixSize > * {
+body.dark .scFixSize > * {
   display: none;
 }
 
-.ff img[align="middle"] {
+body.dark .ff img[align="middle"] {
   vertical-align: middle;
 }
 
 /* Enables traditional box model like in IE quirks mode. */
-.scQuirksBoxModel {
+body.dark .scQuirksBoxModel {
   box-sizing: border-box;
 }
 
-.scTmpCalculateSize > * {
+body.dark .scTmpCalculateSize > * {
   display: none !important;
 }
 
@@ -3006,13 +3001,13 @@ a.scContentTreeNodeBlured {
  * Treeview.
  */
 
-.scTreeview {
+body.dark .scTreeview {
   border: none;
   margin: 0;
   padding: 0;
 }
 
-.scTreeview ul {
+body.dark .scTreeview ul {
   border: none;
   clear: both;
   list-style-type: none;
@@ -3021,7 +3016,7 @@ a.scContentTreeNodeBlured {
   white-space: nowrap;
 }
 
-.scTreeview ul li {
+body.dark .scTreeview ul li {
   border: none;
   display: inline-block;
   margin: 0;
@@ -3031,14 +3026,14 @@ a.scContentTreeNodeBlured {
   vertical-align: top;
 }
 
-.scTreeview .cell {
+body.dark .scTreeview .cell {
   padding-bottom: 2px;
   padding-left: 5px;
   padding-right: 5px;
   padding-top: 1px;
 }
 
-.scTreeview .header {
+body.dark .scTreeview .header {
   background-color: #5e5e5e;
   border: none;
   color: var(--text);
@@ -3046,29 +3041,29 @@ a.scContentTreeNodeBlured {
   text-align: left;
 }
 
-.scTreeview .header:before {
+body.dark .scTreeview .header:before {
   content: " ";
   border-right: 1px solid #fff;
   margin-left: -8px;
   margin-right: 8px;
 }
 
-.scTreeview .scTreeHeader {
+body.dark .scTreeview .scTreeHeader {
   background-color: #5e5e5e;
 }
 
-.scTreeHeader .scTreeHeaderItem:first-of-type .header:before {
+body.dark .scTreeHeader .scTreeHeaderItem:first-of-type .header:before {
   content: " ";
   border-right: 0px solid #fff;
   margin-left: -8px;
   margin-right: 8px;
 }
 
-.scTreeview .value {
+body.dark .scTreeview .value {
   border-left: solid 1px #e3e3e3;
 }
 
-.scTreeview .glyph {
+body.dark .scTreeview .glyph {
   border: none;
   display: inline-block;
   height: 16px;
@@ -3079,23 +3074,23 @@ a.scContentTreeNodeBlured {
   filter: invert(1);
 }
 
-.scTreeview .glyph:hover {
+body.dark .scTreeview .glyph:hover {
   background-color: #e3e3e3;
   cursor: pointer;
 }
 
-.scTreeview .icon,
-.scTreeview .icon_Hover {
+body.dark .scTreeview .icon,
+body.dark .scTreeview .icon_Hover {
   border: none;
   margin: 0;
   margin-right: 3px;
   vertical-align: middle;
 }
 
-.scTreeview .nodeNormal,
-.scTreeview .nodeNormal_Hover,
-.scTreeview .nodeSelected,
-.scTreeview .nodeSelected_Hover {
+body.dark .scTreeview .nodeNormal,
+body.dark .scTreeview .nodeNormal_Hover,
+body.dark .scTreeview .nodeSelected,
+body.dark .scTreeview .nodeSelected_Hover {
   display: inline-block;
   vertical-align: middle;
   height: 16px;
@@ -3105,68 +3100,68 @@ a.scContentTreeNodeBlured {
   outline: none;
 }
 
-.scTreeview .nodeNormal,
-.scTreeview .nodeNormal_Hover {
+body.dark .scTreeview .nodeNormal,
+body.dark .scTreeview .nodeNormal_Hover {
   background: transparent;
   border-color: transparent;
 }
 
-.scTreeview .nodeSelected,
-.scTreeview .nodeSelected_Hover {
+body.dark .scTreeview .nodeSelected,
+body.dark .scTreeview .nodeSelected_Hover {
   background-color: #d0ebf6;
 }
 
-.scTreeview .scTreeItem,
-.scTreeview .scTreeItem_Hover {
+body.dark .scTreeview .scTreeItem,
+body.dark .scTreeview .scTreeItem_Hover {
   height: 21px;
 }
 
-.scTreeview .scTreeItem.hover {
+body.dark .scTreeview .scTreeItem.hover {
   background-color: #e3e3e3;
   white-space: nowrap;
 }
 
-.scAccessViewerRight,
-.scAccessViewerRight:link,
-.scAccessViewerRight:active,
-.scAccessViewerRight:hover,
-.scAccessViewerRight:visited {
+body.dark .scAccessViewerRight,
+body.dark .scAccessViewerRight:link,
+body.dark .scAccessViewerRight:active,
+body.dark .scAccessViewerRight:hover,
+body.dark .scAccessViewerRight:visited {
   display: block;
   padding: 1px 6px;
   text-decoration: none;
   white-space: nowrap;
 }
 
-.scAccessViewerRight:hover {
+body.dark .scAccessViewerRight:hover {
   background-color: #e3e3e3;
 }
 
-.scAccessViewerRight:active,
-.scAccessViewerRight:focus {
+body.dark .scAccessViewerRight:active,
+body.dark .scAccessViewerRight:focus {
   background-color: #d0ebf6;
 }
 
-.scActionLink,
-.scActionLink:link,
-.scActionLink:hover,
-.scActionLink:active {
+body.dark .scActionLink,
+body.dark .scActionLink:link,
+body.dark .scActionLink:hover,
+body.dark .scActionLink:active {
   color: #186bf9;
   text-decoration: none;
   outline: none;
 }
 
-.scActionLink:hover {
+body.dark .scActionLink:hover {
   text-decoration: underline;
 }
 
-.scApplicationContentContainer {
+body.dark .scApplicationContentContainer {
   padding: 15px;
   box-sizing: border-box;
   position: relative;
   overflow: auto;
 }
 
-.scApplicationFooter {
+body.dark .scApplicationFooter {
   position: relative;
   background-color: var(--black);
   border-top: 1px solid var(--black1);
@@ -3177,26 +3172,26 @@ a.scContentTreeNodeBlured {
   text-align: right;
 }
 
-.scWorkBoxMainHeader {
+body.dark .scWorkBoxMainHeader {
   background-color: #474747;
   line-height: 36px;
   cursor: pointer;
 }
 
-.scWorkBoxMainHeader.scCollapsed {
+body.dark .scWorkBoxMainHeader.scCollapsed {
   background-color: #969696;
 }
 
-.scWorkBoxMainHeader td:last-of-type {
+body.dark .scWorkBoxMainHeader td:last-of-type {
   padding-right: 15px;
 }
 
-.scWorkBoxMainHeader td:last-of-type div * {
+body.dark .scWorkBoxMainHeader td:last-of-type div * {
   cursor: pointer;
   vertical-align: middle;
 }
 
-.scPaneHeader {
+body.dark .scPaneHeader {
   color: #fff;
   border-left: 5px solid #dc291e;
   padding-left: 15px;
@@ -3204,111 +3199,101 @@ a.scContentTreeNodeBlured {
   user-select: none;
 }
 
-.scCollapsed .scPaneHeader {
+body.dark .scCollapsed .scPaneHeader {
   border-left: 5px solid #969696;
 }
 
-.scPaddingless {
+body.dark .scPaddingless {
   padding: 0 !important;
 }
 
-.scSpacer {
+body.dark .scSpacer {
   display: block;
 }
 
-.scHeightAuto {
+body.dark .scHeightAuto {
   height: auto !important;
 }
 
-.scHeight100 {
+body.dark .scHeight100 {
   height: 100% !important;
 }
 
-.SecurityLegend {
+body.dark .SecurityLegend {
   background-color: var(--black);
   border-top: 1px solid var(--black1) !important;
   overflow: hidden;
   padding: 5px 10px;
 }
-.SecurityLegend > div {
+body.dark .SecurityLegend > div {
   display: inline-block;
   margin-right: 15px;
 }
 
-.scVSplitterImage {
+body.dark .scVSplitterImage {
   width: 3px;
   display: block;
 }
 
-.scTextAlignCenter {
+body.dark .scTextAlignCenter {
   text-align: center;
 }
 
-.scTextAlignRight {
+body.dark .scTextAlignRight {
   text-align: right !important;
 }
 
-.scVerticalTabContent {
+body.dark .scVerticalTabContent {
   height: 100%;
-}
-
-.col2 {
-  height: 100%;
-  width: 50%;
-  position: relative;
-  display: inline-block;
-  vertical-align: top;
-  box-sizing: border-box;
-  padding: 5px;
 }
 
 /* Japanese language support*/
-.lang_ja_jp a.scRibbonToolbarSmallButton span {
+body.dark .lang_ja_jp a.scRibbonToolbarSmallButton span {
   height: 0;
 }
 
-.lang_ja_jp .scPaneHeader,
-.lang_ja_jp .scSectionCenter,
-.lang_ja_jp .scClickFont,
-.lang_ja_jp .scClickFont_Hover,
-.lang_ja_jp .scFont,
-.lang_ja_jp .scFont_Hover,
-.lang_ja_jp .scPopup,
-.lang_ja_jp .scLargeFont {
+body.dark .lang_ja_jp .scPaneHeader,
+body.dark .lang_ja_jp .scSectionCenter,
+body.dark .lang_ja_jp .scClickFont,
+body.dark .lang_ja_jp .scClickFont_Hover,
+body.dark .lang_ja_jp .scFont,
+body.dark .lang_ja_jp .scFont_Hover,
+body.dark .lang_ja_jp .scPopup,
+body.dark .lang_ja_jp .scLargeFont {
   font-family: メイリオ, Meiryo, Microsoft YaHei, tahoma, sans-serif;
 }
 
 /* Japanese font support. */
-form[lang|="ja"] *,
-.lang_ja_jp,
-.lang_ja_jp table,
-.lang_ja_jp button,
-.lang_ja_jp th,
-.lang_ja_jp a:link,
-.lang_ja_jp a:hover {
+body.dark form[lang|="ja"] *,
+body.dark .lang_ja_jp,
+body.dark .lang_ja_jp table,
+body.dark .lang_ja_jp button,
+body.dark .lang_ja_jp th,
+body.dark .lang_ja_jp a:link,
+body.dark .lang_ja_jp a:hover {
   font-family: メイリオ, Meiryo, Microsoft YaHei, tahoma, sans-serif;
 }
 
 /* Ribbon > Configure > Icons */
 
-#Icons .scRibbonToolbarLargeIconButton {
+body.dark #Icons .scRibbonToolbarLargeIconButton {
   display: inline-block;
   padding: 5px;
 }
 
-#Icons .scRibbonToolbarLargeIconButton:hover {
+body.dark #Icons .scRibbonToolbarLargeIconButton:hover {
   display: inline-block;
   padding: 5px;
   background-color: #e3e3e3;
 }
 
-#Presets .scRibbonToolbarLargeTextButton {
+body.dark #Presets .scRibbonToolbarLargeTextButton {
   white-space: nowrap;
   padding: 8px 15px;
   display: block;
 }
 
-#Presets .scRibbonToolbarLargeTextButton:hover {
+body.dark #Presets .scRibbonToolbarLargeTextButton:hover {
   white-space: nowrap;
   padding: 8px 15px;
   vertical-align: middle;
@@ -3316,44 +3301,44 @@ form[lang|="ja"] *,
   text-decoration: none;
 }
 
-.scProgressIndicator32 {
+body.dark .scProgressIndicator32 {
   height: 32px;
   width: 32px;
   background-color: var(--text);
   color: transparent;
 }
 
-.sc-text-bold {
+body.dark .sc-text-bold {
   font-weight: 600;
   color: var(--black1);
 }
 
-.sc-text-label {
+body.dark .sc-text-label {
   font-size: 12px;
 }
 
-.sc-text-value {
+body.dark .sc-text-value {
   font-size: 12px;
 }
 
-.sc-text-largevalue {
+body.dark .sc-text-largevalue {
   font-weight: 600;
   font-size: 14px;
 }
 
-.sc-text-title {
+body.dark .sc-text-title {
   font-size: 14px;
 }
 
-.sc-text-smalltitle {
+body.dark .sc-text-smalltitle {
   font-size: 10px;
 }
 
-.sc-text-largetitle {
+body.dark .sc-text-largetitle {
   font-size: 18px;
 }
 
-.sc-text-divider {
+body.dark .sc-text-divider {
   display: block;
   padding: 10px 0;
   margin: 10px 0 10px 0;
@@ -3362,7 +3347,7 @@ form[lang|="ja"] *,
   font-size: 18px;
 }
 
-.scListControl {
+body.dark .scListControl {
   padding: 0;
   margin: 0;
   border-collapse: collapse;
@@ -3371,32 +3356,32 @@ form[lang|="ja"] *,
   line-height: 1.42857143;
 }
 
-.scListControl > tbody:first-child > tr:first-child,
-.scListControl > thead,
-.scListControlHead {
+body.dark .scListControl > tbody:first-child > tr:first-child,
+body.dark .scListControl > thead,
+body.dark .scListControlHead {
   background-color: #5e5e5e !important;
   color: white;
 }
 
-.scListControl > thead img {
+body.dark .scListControl > thead img {
   margin-left: 5px;
   vertical-align: middle;
 }
 
-.scListControl > tbody > tr:nth-child(odd) {
+body.dark .scListControl > tbody > tr:nth-child(odd) {
   background-color: var(--black2) !important;
 }
 
-.scListControl > tbody > tr:nth-child(even) {
+body.dark .scListControl > tbody > tr:nth-child(even) {
   background-color: var(--black3) !important;
 }
 
-.scListControl > tbody > tr:hover {
+body.dark .scListControl > tbody > tr:hover {
   background-color: var(--black4) !important;
 }
 
-.scListControl > thead th,
-.scListControl > tbody > tr > td {
+body.dark .scListControl > thead th,
+body.dark .scListControl > tbody > tr > td {
   border: 1px solid var(--black2) !important;
   padding: 14px 15px;
   text-overflow: ellipsis;
@@ -3405,19 +3390,23 @@ form[lang|="ja"] *,
   text-align: left;
 }
 
-.scListControl > thead th,
-.scListControl > tbody:first-child > tr:first-child > td {
+body.dark .scListControl > thead th,
+body.dark .scListControl > tbody:first-child > tr:first-child > td {
   border: 1px solid #5e5e5e;
   position: relative;
 }
 
-.scListControl > thead th:only-of-type,
-.scListControl > tbody:first-child > tr:first-child > td:only-of-type {
+body.dark .scListControl > thead th:only-of-type,
+body.dark
+  .scListControl
+  > tbody:first-child
+  > tr:first-child
+  > td:only-of-type {
   text-align: left;
 }
 
-.scListControl > thead th:after,
-.scListControl > tbody:first-child > tr:first-child > td:after {
+body.dark .scListControl > thead th:after,
+body.dark .scListControl > tbody:first-child > tr:first-child > td:after {
   background: #5e5e5e right center;
   position: absolute;
   width: 1px;
@@ -3428,52 +3417,56 @@ form[lang|="ja"] *,
   content: "";
 }
 
-.scListControl > thead th:last-child:after,
-.scListControl > tbody:first-child > tr:first-child > td:last-child:after {
+body.dark .scListControl > thead th:last-child:after,
+body.dark
+  .scListControl
+  > tbody:first-child
+  > tr:first-child
+  > td:last-child:after {
   background: none;
 }
 
 /* Notification and warnings */
 
-.scEditorWarning {
+body.dark .scEditorWarning {
   background-color: #fce99c;
   color: #897b2f;
   min-height: 50px;
   font-size: 14px;
 }
 
-.scEditorWarning td:first-child {
+body.dark .scEditorWarning td:first-child {
   padding-right: 0px;
 }
 
-.scWizardWarning {
+body.dark .scWizardWarning {
   background-color: #fefae6;
   color: #e0b406;
   padding: 10px;
 }
 
-.scWizardWarning img {
+body.dark .scWizardWarning img {
   margin: 0 10px 0 0;
   float: left;
 }
 
-.scWizardWarning .scEditorWarningText {
+body.dark .scWizardWarning .scEditorWarningText {
   display: block;
   margin-top: 4px;
 }
 
-.scMessageBar {
+body.dark .scMessageBar {
   font-size: 12px;
   display: -ms-flexbox;
   display: flex;
   align-items: center;
 }
 
-.scMessageBar + .scMessageBar {
+body.dark .scMessageBar + .scMessageBar {
   margin-top: 1px;
 }
 
-.scMessageBar .scMessageBarIcon {
+body.dark .scMessageBar .scMessageBarIcon {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 32px;
@@ -3482,60 +3475,64 @@ form[lang|="ja"] *,
   align-self: stretch;
 }
 
-.scMessageBar .scMessageBarTextContainer {
+body.dark .scMessageBar .scMessageBarTextContainer {
   padding: 11px 14px;
 }
-.scMessageBar .scMessageBarTextContainer .scMessageBarTitle {
+body.dark .scMessageBar .scMessageBarTextContainer .scMessageBarTitle {
   display: block;
   font-weight: 600;
 }
-.scMessageBar .scMessageBarTextContainer .scMessageBarText + .scMessageBarText {
+body.dark
+  .scMessageBar
+  .scMessageBarTextContainer
+  .scMessageBarText
+  + .scMessageBarText {
   margin-top: 10px;
 }
 
-.scMessageBar.scWarning {
+body.dark .scMessageBar.scWarning {
   background-color: var(--verydarkblue) !important;
   color: rgba(255, 255, 255, 0.7) !important;
 }
 
-.scMessageBar.scWarning .scMessageBarIcon {
+body.dark .scMessageBar.scWarning .scMessageBarIcon {
   background-color: var(--darkblue) !important;
 }
 
-.scMessageBar.scInformation {
+body.dark .scMessageBar.scInformation {
   background-color: var(--verydarkblue) !important;
   color: rgba(255, 255, 255, 0.7) !important;
 }
 
-.scMessageBar.scInformation .scMessageBarIcon {
+body.dark .scMessageBar.scInformation .scMessageBarIcon {
   background-color: var(--darkblue) !important;
 }
 
-.scMessageBar.scError {
+body.dark .scMessageBar.scError {
   background-color: var(--darkred) !important;
   color: rgba(255, 255, 255, 0.7) !important;
 }
 
-.scMessageBar.scError .scMessageBarIcon {
+body.dark .scMessageBar.scError .scMessageBarIcon {
   background-color: var(--red) !important;
 }
 
-.scMessageBar.scOrange {
+body.dark .scMessageBar.scOrange {
   background-color: var(--darkred) !important;
   color: rgba(255, 255, 255, 0.7) !important;
 }
 
-.scMessageBar.scOrange .scMessageBarIcon {
+body.dark .scMessageBar.scOrange .scMessageBarIcon {
   background-color: var(--red) !important;
 }
 
-.scMessageBar .scDetailsLink {
+body.dark .scMessageBar .scDetailsLink {
   color: inherit;
   margin-left: 4px;
   text-decoration: underline;
 }
 
-.scMessageBar .scDetailsLink:after {
+body.dark .scMessageBar .scDetailsLink:after {
   width: 0;
   height: 0px;
   border-style: solid;
@@ -3548,227 +3545,233 @@ form[lang|="ja"] *,
   bottom: 2px;
 }
 
-.scMessageBar .scMessageBarTextContainer.scExpanded .scDetailsLink:after {
+body.dark
+  .scMessageBar
+  .scMessageBarTextContainer.scExpanded
+  .scDetailsLink:after {
   border-width: 0 5px 5px 5px;
 }
 
-.scMessageBar.scError .scDetailsLink:after {
+body.dark .scMessageBar.scError .scDetailsLink:after {
   border-top-color: rgb(139, 25, 19);
 }
 
-.scMessageBar.scError .scMessageBarTextContainer.scExpanded .scDetailsLink:after {
+body.dark
+  .scMessageBar.scError
+  .scMessageBarTextContainer.scExpanded
+  .scDetailsLink:after {
   border-top-color: transparent;
   border-bottom-color: rgb(139, 25, 19);
 }
 
-.scMessageBar .scDetails {
+body.dark .scMessageBar .scDetails {
   word-break: break-word;
   display: none;
 }
 
-.scMessageBar .scMessageBarTextContainer.scExpanded .scDetails {
+body.dark .scMessageBar .scMessageBarTextContainer.scExpanded .scDetails {
   display: block;
 }
 
-.scWarning img {
+body.dark .scWarning img {
   margin: 0 10px 0 0;
   float: left;
 }
 
-.scWarning .scWarningTextContainer {
+body.dark .scWarning .scWarningTextContainer {
   overflow: hidden;
 }
 
-.scWarning .scWarningText {
+body.dark .scWarning .scWarningText {
   display: block;
   padding-top: 4px;
 }
 
-.scWarning .scWarningText:first-of-type {
+body.dark .scWarning .scWarningText:first-of-type {
   padding-top: 0;
 }
 
-.scWarning .scWarningText:only-of-type {
+body.dark .scWarning .scWarningText:only-of-type {
   padding: 5px 0;
 }
 
-.scMessageBarOptions {
+body.dark .scMessageBarOptions {
   margin: 4px 0 0 24px;
   cursor: default;
   text-decoration: none;
   font-weight: 600;
 }
 
-.scMessageBarOptions .scMessageBarOptionBullet .scMessageBarOption {
+body.dark .scMessageBarOptions .scMessageBarOptionBullet .scMessageBarOption {
   text-decoration: underline;
   color: inherit;
 }
 
-.scImageCircle {
+body.dark .scImageCircle {
   border-radius: 50%;
 }
 
-.scUnselectable {
+body.dark .scUnselectable {
   user-select: none;
 }
 
-.scContentControlChecklist > div {
+body.dark .scContentControlChecklist > div {
   height: 100% !important;
 }
 
-.scHidden {
+body.dark .scHidden {
   display: none;
 }
 
-.scWebEditContentEditorButton {
+body.dark .scWebEditContentEditorButton {
   z-index: 10 !important;
 }
 
-span.sc-ext-fieldSearchClear {
+body.dark span.sc-ext-fieldSearchClear {
   border-top: 6px solid var(--black1) !important;
   border-right: 6px solid var(--black1) !important;
   border-bottom: 6px solid var(--black1) !important;
 }
 
-.scEditorTabControls input[type="text"].sc-ext-fieldSearch {
+body.dark .scEditorTabControls input[type="text"].sc-ext-fieldSearch {
   height: 30px !important;
 }
-.Metro {
+body.dark .Metro {
   background-color: #0e0e0e !important;
 }
-.reMode_html span,
-.reMode_selected.reMode_html span {
+body.dark .reMode_html span,
+body.dark .reMode_selected.reMode_html span {
   color: var(--black3) !important;
 }
-.reMode_design span,
-.reMode_selected.reMode_design span {
+body.dark .reMode_design span,
+body.dark .reMode_selected.reMode_design span {
   color: var(--black8) !important;
 }
-.reContentCell,
-.reContentCell iframe {
+body.dark .reContentCell,
+body.dark .reContentCell iframe {
   background-color: var(--grey1) !important;
   color: var(--white) !important;
 }
-.RadForm.rfdTextarea textarea {
+body.dark .RadForm.rfdTextarea textarea {
   font-family: monospace !important;
   line-height: 20px !important;
 }
-#ContentWrapper {
+body.dark #ContentWrapper {
   padding: 5px !important;
 }
-.Row {
+body.dark .Row {
   background-color: var(--black2) !important;
 }
-.Row:nth-child(odd) {
+body.dark .Row:nth-child(odd) {
   background-color: var(--black3) !important;
 }
-.Row:hover,
-.Row:nth-child(odd):hover {
+body.dark .Row:hover,
+body.dark .Row:nth-child(odd):hover {
   background-color: var(--black) !important;
 }
 
-a.scTileItem {
+body.dark a.scTileItem {
   background-color: var(--black2) !important;
   border: 1px solid var(--black1) !important;
   border-radius: 4px;
 }
 
-a.scTileItem:hover {
+body.dark a.scTileItem:hover {
   background-color: var(--black3) !important;
 }
-div.content {
+body.dark div.content {
   background-color: #0f0f0f !important;
 }
-.search-box {
+body.dark .search-box {
   background-color: var(--black2) !important;
   border: 1px solid var(--black2) !important;
 }
-.btn-search {
+body.dark .btn-search {
   background-color: var(--black2) !important;
   background-image: url("chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.png");
   box-shadow: inset 0 1px transparent;
 }
-.btn-search,
-.btn-clear {
+body.dark .btn-search,
+body.dark .btn-clear {
   border-left: 1px solid var(--black3) !important;
   box-shadow: none;
 }
-.BlogPostArea:hover,
-.ie .BlogPostArea.hover {
+body.dark .BlogPostArea:hover,
+body.dark .ie .BlogPostArea.hover {
   background-color: #212121;
 }
-.sideMask {
+body.dark .sideMask {
   background-color: #0f0f0f;
 }
-.filters .filter {
+body.dark .filters .filter {
   border: 1px solid transparent;
   background-color: var(--black3) !important;
 }
-.filters .filter .icon {
+body.dark .filters .filter .icon {
   border-right: 1px solid #212121;
 }
-.filters .filter .remove {
+body.dark .filters .filter .remove {
   border-left: 1px solid #212121;
 }
-#grid-content .post_float {
+body.dark #grid-content .post_float {
   background-color: var(--black2) !important;
   border: 1px solid var(--black1);
   border-radius: 4px;
 }
-#grid-content .post_float:hover {
+body.dark #grid-content .post_float:hover {
   background-color: var(--black3) !important;
 }
-.pagination li a {
+body.dark .pagination li a {
   background-color: var(--black2) !important;
 }
-.pagination li a:hover {
+body.dark .pagination li a:hover {
   background-color: var(--black3) !important;
 }
-.pagination li.active a {
+body.dark .pagination li.active a {
   background-color: #dc2a1e;
 }
-.pagination li:last-of-type a {
+body.dark .pagination li:last-of-type a {
   border-right: 1px solid var(--black2) !important;
 }
-.sc-button-text,
-.sc .btn {
+body.dark .sc-button-text,
+body.dark .sc .btn {
   color: var(--black5) !important;
 }
-.sc .btn .btn-primary {
+body.dark .sc .btn .btn-primary {
   color: var(--text) !important;
 }
-#sitecorAuthorToolboxFav {
+body.dark #sitecorAuthorToolboxFav {
   box-shadow: rgba(0, 0, 0, 0.5) 0px -10px 10px 0px;
 }
-a.scItemThumbnailSelected,
-a.scItemThumbnail:hover {
+body.dark a.scItemThumbnailSelected,
+body.dark a.scItemThumbnail:hover {
   background-color: var(--darkblue) !important;
   border: 1px solid var(--darkblue);
   padding: 4px 11px;
   text-decoration: none;
 }
 
-a.scItemThumbnail:hover > span.scDisplayName {
+body.dark a.scItemThumbnail:hover > span.scDisplayName {
   color: var(--black3) !important;
 }
 
-.ff #Right {
+body.dark .ff #Right {
   background-color: var(--black1) !important;
 }
 
-.selected .mode,
-.selected .mode:hover,
-.selected .mode:active {
+body.dark .selected .mode,
+body.dark .selected .mode:hover,
+body.dark .selected .mode:active {
   background-color: var(--darkblue) !important;
   border: 1px solid var(--darkblue);
   padding: 7px;
 }
 
-.main-column {
+body.dark .main-column {
   border: 1px solid var(--black3);
 }
 
-.section-header {
+body.dark .section-header {
   font-weight: bold;
   color: var(--text) !important;
   border-bottom: 0px solid var(--black3);
@@ -3777,247 +3780,249 @@ a.scItemThumbnail:hover > span.scDisplayName {
   padding: 5px;
 }
 
-.reContentCell {
+body.dark .reContentCell {
   border: 1px solid #0f0f0f !important;
 }
-.scChecked {
+body.dark .scChecked {
   background-color: var(--darkblue);
 }
 
-.scStartMenu,
-.scStartMenuPrograms {
+body.dark .scStartMenu,
+body.dark .scStartMenuPrograms {
   background-color: var(--black2) !important;
 }
 
-.scStartMenuRightFolder:hover,
-.scStartMenuProgramsMenu:hover,
-.scStartMenuLeftOption:hover {
+body.dark .scStartMenuRightFolder:hover,
+body.dark .scStartMenuProgramsMenu:hover,
+body.dark .scStartMenuLeftOption:hover {
   background-color: var(--darkblue);
 }
 
-.scStartMenuDivider {
+body.dark .scStartMenuDivider {
   filter: invert(1);
 }
 
-#DatabaseSelector.scToolbutton {
+body.dark #DatabaseSelector.scToolbutton {
   color: var(--text);
 }
-.scEditorInformationHelp,
-.scEditorInformationTitle {
+body.dark .scEditorInformationHelp,
+body.dark .scEditorInformationTitle {
   color: var(--text);
 }
-#StatusBar .status-bar-panel {
+body.dark #StatusBar .status-bar-panel {
   background-color: #212121;
   border: 0px;
 }
-.sc .sc-border[data-sc-id="FallbackMessageWrap"] {
+body.dark .sc .sc-border[data-sc-id="FallbackMessageWrap"] {
   color: var(--text);
 }
-.scWindowFrame {
+body.dark .scWindowFrame {
   border: 1px solid var(--black2) !important;
 }
-.sb_down,
-.sb_up,
-.remove,
-.display-value {
+body.dark .sb_down,
+body.dark .sb_up,
+body.dark .remove,
+body.dark .display-value {
   filter: invert(1);
 }
-.filters .filter .icon {
+body.dark .filters .filter .icon {
   border-right: 1px solid var(--black2) !important;
 }
-.filters .filter .display-name {
+body.dark .filters .filter .display-name {
   color: var(--text) !important;
 }
-form {
+body.dark form {
   color: var(--text) !important;
 }
-.scLineHover {
+body.dark .scLineHover {
   background-color: #289bc8 !important;
 }
-.right-column {
+body.dark .right-column {
   background-color: var(--black2) !important;
 }
-#SectionHeader {
+body.dark #SectionHeader {
   color: var(--text) !important;
 }
-.mode:hover {
+body.dark .mode:hover {
   background-color: var(--darkblue);
   border: 1px solid var(--darkblue) !important;
 }
-#FileList a:hover,
-#FileList a:active,
-#FileList a.highlight {
+body.dark #FileList a:hover,
+body.dark #FileList a:active,
+body.dark #FileList a.highlight {
   background: var(--darkblue) !important;
   color: var(--white) !important;
 }
-.sc-uploader-content {
+body.dark .sc-uploader-content {
   border: 0px dashed var(--blue) !important;
 }
-select[disabled] > option {
+body.dark select[disabled] > option {
   color: var(--black8) !important;
 }
-#SearchResult {
+body.dark #SearchResult {
   background-color: var(--black2) !important;
 }
-#SearchResult,
-#Log {
+body.dark #SearchResult,
+body.dark #Log {
   color: var(--text) !important;
 }
-.highlight,
-.side li a:hover,
-.side li a.facetClickSelected {
+body.dark .highlight,
+body.dark .side li a:hover,
+body.dark .side li a.facetClickSelected {
   background-color: var(--blue) !important;
 }
 
-.sc ul.dynatree-container a:hover,
-.sc span.dynatree-active a,
-.sc span.dynatree-active a:hover {
+body.dark .sc ul.dynatree-container a:hover,
+body.dark .sc span.dynatree-active a,
+body.dark .sc span.dynatree-active a:hover {
   background-color: var(--blue) !important;
   border-radius: 4px !important;
 }
 
-.scTitle {
+body.dark .scTitle {
   border-bottom: 1px solid var(--black3);
 }
 
-.scTileItemDetailsHeader,
-a.scButton {
+body.dark .scTileItemDetailsHeader,
+body.dark a.scButton {
   color: rgba(255, 255, 255, 0.8);
 }
 
-#FileList a.scButton {
+body.dark #FileList a.scButton {
   background: var(--blue);
 }
 
-.liveUrlBadge {
+body.dark .liveUrlBadge {
   background-color: var(--blue);
   color: rgba(255, 255, 255, 0.7);
 }
 
-.liveUrlBadge:hover {
+body.dark .liveUrlBadge:hover {
   background-color: transparent;
   border: 1px solid var(--blue);
   color: rgba(255, 255, 255, 0.7);
 }
 
-.liveStatusRed {
+body.dark .liveStatusRed {
   color: var(--lightred);
 }
 
-.liveStatusGreen {
+body.dark .liveStatusGreen {
   color: var(--lightgreen);
 }
 
-.sc-launchpad-item .sc-launchpad-text {
+body.dark .sc-launchpad-item .sc-launchpad-text {
   color: var(--text);
 }
-.wbNotification {
+body.dark .wbNotification {
   background-color: var(--red);
 }
 
-a.scResult:hover {
+body.dark a.scResult:hover {
   background-color: var(--blue) !important;
   text-decoration: none;
 }
 
-.scContentControlCheckbox:checked + .scContentControlCheckboxLabel::before {
+body.dark
+  .scContentControlCheckbox:checked
+  + .scContentControlCheckboxLabel::before {
   background-color: var(--blue) !important;
 }
 
-.scContentControlCheckboxLabel::before {
+body.dark .scContentControlCheckboxLabel::before {
   background-color: #666 !important;
 }
 
-.sc-dialogContent {
+body.dark .sc-dialogContent {
   color: var(--text);
 }
 
-.sc-listcontrol-tile-content {
+body.dark .sc-listcontrol-tile-content {
   background: var(--black2) !important;
 }
 
-#scModal {
+body.dark #scModal {
   color: var(--text) !important;
   background-color: hsla(0, 0%, 7%, 0.7) !important;
 }
 
-#scModal .item:hover {
+body.dark #scModal .item:hover {
   background-color: var(--black5);
 }
 
-#scModal .footer {
+body.dark #scModal .footer {
   background-color: var(--black1) !important;
   color: var(--text) !important;
   border-top: 1px solid var(--black2) !important;
 }
 
-.scButtonExtended {
+body.dark .scButtonExtended {
   border: 1px solid var(--black1) !important;
   background-color: var(--black1) !important;
   box-shadow: inset 0 1px transparent;
 }
 
-.scBackground {
+body.dark .scBackground {
   background: var(--black);
 }
 
-.scMediaExplorer {
+body.dark .scMediaExplorer {
   width: 100%;
   color: var(--black7);
 }
 
-.scTiles .scTileItem:nth-child(odd),
-.scMediaExplorer tbody tr:nth-child(odd) {
+body.dark .scTiles .scTileItem:nth-child(odd),
+body.dark .scMediaExplorer tbody tr:nth-child(odd) {
   background: var(--black);
 }
 
-.scTiles .scTileItem:nth-child(even),
-.scMediaExplorer tbody tr:nth-child(even) {
+body.dark .scTiles .scTileItem:nth-child(even),
+body.dark .scMediaExplorer tbody tr:nth-child(even) {
   background: var(--black1);
 }
 
-.scMediaExplorer th {
+body.dark .scMediaExplorer th {
   border-top: 1px solid var(--black3);
   color: var(--text);
 }
 
-.scMediaExplorer td.mediaArrow,
-.scMediaExplorer .mediaTitle {
+body.dark .scMediaExplorer td.mediaArrow,
+body.dark .scMediaExplorer .mediaTitle {
   color: var(--text);
 }
 
-.scMediaExplorer tbody tr:hover .mediaTitle,
-.scMediaExplorer tbody tr:hover {
+body.dark .scMediaExplorer tbody tr:hover .mediaTitle,
+body.dark .scMediaExplorer tbody tr:hover {
   background: var(--black4) !important;
   color: var(--text) !important;
 }
 
-.scMediaExplorer thead tr {
+body.dark .scMediaExplorer thead tr {
   background: var(--black1);
   color: var(--text);
 }
 
-.scMediaExplorer thead tr:hover {
+body.dark .scMediaExplorer thead tr:hover {
   background: var(--black3);
 }
 
-.scMediaExplorer thead tr .mediaSelected {
+body.dark .scMediaExplorer thead tr .mediaSelected {
   background: var(--black3) !important;
   color: var(--text);
 }
 
-.scMediaExplorer thead tr th:hover {
+body.dark .scMediaExplorer thead tr th:hover {
   background: var(--black3) !important;
   color: var(--text);
 }
 
-.scMediaExplorer td > img.scMediaPreview {
+body.dark .scMediaExplorer td > img.scMediaPreview {
   background: var(--black1);
   border: 1px solid var(--black);
 }
 
-#FileList a.scButton.scButtonGrid.selected,
-#FileList a.scButton.scButtonList.selected {
+body.dark #FileList a.scButton.scButtonGrid.selected,
+body.dark #FileList a.scButton.scButtonList.selected {
   background-color: var(--blue) !important;
   border: 1px solid var(--blue) !important;
 }

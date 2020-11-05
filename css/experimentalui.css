@@ -3,20 +3,19 @@
  * experimental.css
  */
 
-html,
-body {
+body.experimentalui {
   -webkit-font-smoothing: antialiased;
   font-size: 12px;
   color: var(--grey1) !important;
 }
 
-button:focus,
-button:active {
+body.experimentalui button:focus,
+body.experimentalui button:active {
   outline: 0px solid var(--accent);
   box-shadow: 0 0 0 2.5px var(--accent) !important;
 }
 
-#scPanel h1 {
+body.experimentalui #scPanel h1 {
   font-size: 250%;
   font-weight: 700;
   color: var(--accent);
@@ -24,7 +23,7 @@ button:active {
   margin: auto;
 }
 
-#scPanel h2 {
+body.experimentalui #scPanel h2 {
   font-size: 125%;
   border-bottom: 1px solid var(--text);
   font-weight: 700;
@@ -33,7 +32,7 @@ button:active {
   text-transform: uppercase;
 }
 
-#scPanel h3 {
+body.experimentalui #scPanel h3 {
   font-size: 100%;
   font-weight: 700;
   color: var(--accent);
@@ -41,16 +40,16 @@ button:active {
   margin: auto;
 }
 
-#scPageExtendersForm {
+body.experimentalui #scPageExtendersForm {
   border-bottom: 3px solid var(--accent);
 }
 
-.visible {
+body.experimentalui .visible {
   visibility: visible !important;
   opacity: 1 !important;
 }
 
-.saveMessage {
+body.experimentalui .saveMessage {
   position: fixed;
   margin: auto;
   top: -50px;
@@ -67,43 +66,43 @@ button:active {
   box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
 }
 
-.saveMessage.visible {
+body.experimentalui .saveMessage.visible {
   top: 30px;
 }
 
-.scMenuButton {
+body.experimentalui .scMenuButton {
   background-color: transparent;
   border: none;
   font-weight: bold;
   font-size: 16px;
 }
 
-.sc-globalheader-appName {
+body.experimentalui .sc-globalheader-appName {
   cursor: pointer;
 }
 
 /* Sitecore hide */
 
-.scValidatorPanel,
-.scDockTop,
-.scDockBottom {
+body.experimentalui .scValidatorPanel,
+body.experimentalui .scDockTop,
+body.experimentalui .scDockBottom {
   display: none;
 }
 
 /* Global containers */
 
-#globalLogo {
+body.experimentalui #globalLogo {
   background: url(chrome-extension://__MSG_@@extension_id__/images/square-logo.svg)
     center center no-repeat;
   background-color: var(--accent);
   background-size: 105%;
 }
 
-#ContentEditor {
+body.experimentalui #ContentEditor {
   margin-left: -1px;
 }
 
-#EditorTabs {
+body.experimentalui #EditorTabs {
   position: absolute;
   width: -webkit-fill-available;
   background-color: var(--white);
@@ -112,12 +111,12 @@ button:active {
   z-index: 10;
 }
 
-#EditorFrames {
+body.experimentalui #EditorFrames {
   margin-top: 56px;
   height: calc(100% - 115px);
 }
 
-#SearchPanel {
+body.experimentalui #SearchPanel {
   padding: 18px 18px 16px 18px;
   min-height: 57px;
   background-color: #e8e6e6;
@@ -126,7 +125,7 @@ button:active {
   border-bottom: 1px solid var(--grey);
 }
 
-input[type="color"] {
+body.experimentalui input[type="color"] {
   outline: none;
   background-color: #2b2b2b;
   border-radius: 100px;
@@ -139,21 +138,21 @@ input[type="color"] {
   cursor: pointer;
 }
 
-input[type="color"]::-webkit-color-swatch-wrapper {
+body.experimentalui input[type="color"]::-webkit-color-swatch-wrapper {
   padding: 0;
   color: transparent;
 }
 
-input[type="color"]::-webkit-color-swatch {
+body.experimentalui input[type="color"]::-webkit-color-swatch {
   border: none;
 }
 
-.wbNotificationMenu {
+body.experimentalui .wbNotificationMenu {
   background-color: var(--accent);
   right: 117px;
 }
 
-#scSitecoreRibbon {
+body.experimentalui #scSitecoreRibbon {
   width: 40px;
   height: 20px;
   cursor: pointer;
@@ -166,11 +165,11 @@ input[type="color"]::-webkit-color-swatch {
   outline: 0;
 }
 
-#scSitecoreRibbon:focus {
+body.experimentalui #scSitecoreRibbon:focus {
   outline: 0;
 }
 
-#scSitecoreRibbon > span {
+body.experimentalui #scSitecoreRibbon > span {
   width: 12px;
   height: 12px;
   background-color: var(--grey2);
@@ -180,62 +179,62 @@ input[type="color"]::-webkit-color-swatch {
   display: block;
 }
 
-#scSitecoreRibbon > span.active {
+body.experimentalui #scSitecoreRibbon > span.active {
   background-color: var(--accent);
   margin-left: 14px;
 }
 
-#EditorTabs #scFlag,
-#scFlagMenu,
-.liveUrlStatus {
+body.experimentalui #EditorTabs #scFlag,
+body.experimentalui #scFlagMenu,
+body.experimentalui .liveUrlStatus {
   visibility: hidden;
   display: none;
 }
 
-.scWindowBorder3 {
+body.experimentalui .scWindowBorder3 {
   background-color: transparent !important;
   height: 0px;
 }
 
-.scEditorPanel {
+body.experimentalui .scEditorPanel {
   margin-right: 0px;
 }
 
-.scContentButtons {
+body.experimentalui .scContentButtons {
   margin-left: -5px;
 }
 
-a.scContentButton {
+body.experimentalui a.scContentButton {
   color: var(--accent);
 }
 
-a.scTileItem:hover {
+body.experimentalui a.scTileItem:hover {
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
 }
 
-#scModal .header {
+body.experimentalui #scModal .header {
   background-color: var(--accent);
   color: var(--accentText);
 }
 
-#scModal .header .maximize {
+body.experimentalui #scModal .header .maximize {
   filter: brightness(var(--accentBrightness));
 }
 
-#scModal .header .close {
+body.experimentalui #scModal .header .close {
   filter: brightness(var(--accentBrightness));
 }
 
-.showSitecoreMenu {
+body.experimentalui .showSitecoreMenu {
   display: block !important;
 }
 
-.scSitecoreMenu {
+body.experimentalui .scSitecoreMenu {
   transform: rotate(180deg);
 }
 
-#scAccentColor {
+body.experimentalui #scAccentColor {
   -webkit-appearance: none;
   padding: 0;
   border: none;
@@ -243,58 +242,58 @@ a.scTileItem:hover {
   width: 18px;
   height: 18px;
 }
-#scAccentColor::-webkit-color-swatch {
+body.experimentalui #scAccentColor::-webkit-color-swatch {
   border: none;
   border-radius: 10px;
   padding: 0;
 }
-#scAccentColor::-webkit-color-swatch-wrapper {
+body.experimentalui #scAccentColor::-webkit-color-swatch-wrapper {
   border: none;
   border-radius: 10px;
   padding: 0;
 }
 
-ul.scAccountMenu li:hover {
+body.experimentalui ul.scAccountMenu li:hover {
   background-color: var(--accent);
   color: var(--accentText);
 }
 
-.scEditorFieldMarker {
+body.experimentalui .scEditorFieldMarker {
   margin: 0 0 40px 0;
 }
 
-.scLanguageIcon,
-.scVersionIcon {
+body.experimentalui .scLanguageIcon,
+body.experimentalui .scVersionIcon {
   width: 16px;
   height: 16px;
   vertical-align: sub;
 }
 
-.scEditorQuickInfo {
+body.experimentalui .scEditorQuickInfo {
   margin: 0px;
   border-spacing: 0px;
   border-collapse: separate;
 }
 
-.scEditorQuickInfo td {
+body.experimentalui .scEditorQuickInfo td {
   padding: 8px;
 }
 
-.splitter-bar:hover::before,
-.splitter-bar:hover {
+body.experimentalui .splitter-bar:hover::before,
+body.experimentalui .splitter-bar:hover {
   background-color: var(--accent) !important;
 }
 
-.liveUrlDot {
+body.experimentalui .liveUrlDot {
   vertical-align: inherit;
   width: 10px;
   height: 10px;
   margin-left: 2px;
 }
 
-.scNoResult,
-.scHelp,
-.scNoVersion {
+body.experimentalui .scNoResult,
+body.experimentalui .scHelp,
+body.experimentalui .scNoVersion {
   margin: auto;
   padding: 50px;
   text-align: center;
@@ -303,18 +302,18 @@ ul.scAccountMenu li:hover {
   font-weight: 800;
 }
 
-.scNoResult > img,
-.scNoVersion > img {
+body.experimentalui .scNoResult > img,
+body.experimentalui .scNoVersion > img {
   width: 256px;
   opacity: 0.15;
   padding: 20px;
 }
 
-.scNoVersion > p {
+body.experimentalui .scNoVersion > p {
   padding: 0px 0px 10px 0px;
 }
 
-.scNoVersion > button {
+body.experimentalui .scNoVersion > button {
   font-size: 12px;
   padding: 9px 14px;
   position: relative;
@@ -329,21 +328,25 @@ ul.scAccountMenu li:hover {
   cursor: pointer;
 }
 
-.scNoVersion > button:hover {
+body.experimentalui .scNoVersion > button:hover {
   filter: brightness(0.95);
 }
 
-.scEditorTabHeaderNormal > span.scEditorTabHeaderModified:after,
-.scEditorTabHeaderActive > span.scEditorTabHeaderModified:after {
+body.experimentalui
+  .scEditorTabHeaderNormal
+  > span.scEditorTabHeaderModified:after,
+body.experimentalui
+  .scEditorTabHeaderActive
+  > span.scEditorTabHeaderModified:after {
   color: var(--accent);
   padding-left: 2px;
 }
 
-.scContentControlImageImage {
+body.experimentalui .scContentControlImageImage {
   padding: 0px;
 }
 
-.scContentControlImageImage > iframe {
+body.experimentalui .scContentControlImageImage > iframe {
   /* background-image: linear-gradient(45deg, #ddd 25%, transparent 25%), linear-gradient(-45deg, #ddd 25%, transparent 25%),
     linear-gradient(45deg, transparent 75%, #ddd 75%), linear-gradient(-45deg, transparent 75%, #ddd 75%);
   background-size: 20px 20px;
@@ -354,19 +357,19 @@ ul.scAccountMenu li:hover {
   background-size: 7%;
 }
 
-.scContentControlImageDetails {
+body.experimentalui .scContentControlImageDetails {
   /* border-top: 1px solid var(--grey); */
   background-color: var(--grey12);
 }
 
 /*Forms*/
 
-#Editors input:not([type]),
-#Editors input[type="text"],
-#Editors input[type="password"],
-#Editors select,
-#Editors textarea,
-#ContentWrapper {
+body.experimentalui #Editors input:not([type]),
+body.experimentalui #Editors input[type="text"],
+body.experimentalui #Editors input[type="password"],
+body.experimentalui #Editors select,
+body.experimentalui #Editors textarea,
+body.experimentalui #ContentWrapper {
   font-size: 15px;
   line-height: 20px;
   border-radius: none;
@@ -375,38 +378,40 @@ ul.scAccountMenu li:hover {
   box-sizing: border-box;
 }
 
-#Editors select:not([multiple]) {
+body.experimentalui #Editors select:not([multiple]) {
   min-height: 34px !important;
   border-radius: 0px !important;
   /*-webkit-appearance: initial;*/
 }
 
-.scContentControlSelectedList {
+body.experimentalui .scContentControlSelectedList {
   bottom: 1px;
 }
 
-.scContentControlCheckbox:checked + .scContentControlCheckboxLabel::before {
+body.experimentalui
+  .scContentControlCheckbox:checked
+  + .scContentControlCheckboxLabel::before {
   background-color: var(--accent) !important;
 }
 
-select option:focus,
-select option:active,
-select option:checked {
+body.experimentalui select option:focus,
+body.experimentalui select option:active,
+body.experimentalui select option:checked {
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
 }
 
 /* Icons */
 
-.scMenuItemIcon,
-.scMenuItemIcon_Disable,
-.elementImgAlignment,
-.scEditorHeaderNavigatorIcon,
-.scContentTreeNodeIcon {
+body.experimentalui .scMenuItemIcon,
+body.experimentalui .scMenuItemIcon_Disable,
+body.experimentalui .elementImgAlignment,
+body.experimentalui .scEditorHeaderNavigatorIcon,
+body.experimentalui .scContentTreeNodeIcon {
   filter: brightness(var(--iconBrightness));
 }
 
-.scContentTreeNodeIcon {
+body.experimentalui .scContentTreeNodeIcon {
   margin: 0 8px 0 0;
   transform: scale(1.15);
   position: relative;
@@ -414,41 +419,41 @@ select option:checked {
   image-rendering: pixelated;
 }
 
-.scMenuItemCaption,
-.scMenuItemCaption_Hover {
+body.experimentalui .scMenuItemCaption,
+body.experimentalui .scMenuItemCaption_Hover {
   padding: 0 10px;
   font-size: 14px;
 }
 
-.scTreeview .icon,
-.scTreeview .icon_Hover,
-#scModal .item > a > img {
+body.experimentalui .scTreeview .icon,
+body.experimentalui .scTreeview .icon_Hover,
+body.experimentalui #scModal .item > a > img {
   filter: brightness(var(--iconBrightness)) contrast(var(--iconContrast));
 }
 
-#scModal .item:hover > a > img {
+body.experimentalui #scModal .item:hover > a > img {
   filter: unset;
 }
 
 /* Content Tree */
 
-.scContentTree {
+body.experimentalui .scContentTree {
   overflow-x: hidden;
   z-index: 100;
 }
 
-.scContentTreeNodeGlyph {
+body.experimentalui .scContentTreeNodeGlyph {
   width: 20px !important;
   vertical-align: middle !important;
   filter: grayscale(1);
 }
 
-div.scContentTreeNode {
+body.experimentalui div.scContentTreeNode {
   padding: 2px 0px 1px 17px;
   font-size: 14px;
 }
 
-div.scContentTreeNode > img {
+body.experimentalui div.scContentTreeNode > img {
   position: relative;
   z-index: 10;
   margin-top: 0px;
@@ -456,16 +461,16 @@ div.scContentTreeNode > img {
   cursor: pointer;
 }
 
-div.scContentTreeNode > img:hover {
+body.experimentalui div.scContentTreeNode > img:hover {
   background-color: transparent;
 }
 
-.scDragHover {
+body.experimentalui .scDragHover {
   /*background-color: var(--accent) !important;*/
   border: 2px dashed var(--black1) !important;
 }
 
-.scContentDragMarker {
+body.experimentalui .scContentDragMarker {
   background-color: var(--accent) !important;
   color: var(--accent) !important;
   height: 4px;
@@ -474,12 +479,13 @@ div.scContentTreeNode > img:hover {
   border-radius: var(--radius);
 }
 
-img.scContentTreeNodeGlyph:hover[src="/sitecore/shell/themes/standard/images/noexpand15x15.gif"] {
+body.experimentalui
+  img.scContentTreeNodeGlyph:hover[src="/sitecore/shell/themes/standard/images/noexpand15x15.gif"] {
   background-color: transparent;
 }
 
-#ContentTreePanel a.scContentTreeNodeActive,
-#ContentTreePanel a.scContentTreeNodeNormal {
+body.experimentalui #ContentTreePanel a.scContentTreeNodeActive,
+body.experimentalui #ContentTreePanel a.scContentTreeNodeNormal {
   background-color: transparent;
   width: -webkit-fill-available;
   padding: 1px 0px 5px 5px;
@@ -488,13 +494,13 @@ img.scContentTreeNodeGlyph:hover[src="/sitecore/shell/themes/standard/images/noe
   z-index: 1;
 }
 
-.scContentControlTree a.scContentTreeNodeActive,
-.scContentControlTree a.scContentTreeNodeNormal {
+body.experimentalui .scContentControlTree a.scContentTreeNodeActive,
+body.experimentalui .scContentControlTree a.scContentTreeNodeNormal {
   vertical-align: super;
 }
 
-#ContentTreePanel a.scContentTreeNodeActive > span,
-#ContentTreePanel a.scContentTreeNodeNormal > span {
+body.experimentalui #ContentTreePanel a.scContentTreeNodeActive > span,
+body.experimentalui #ContentTreePanel a.scContentTreeNodeNormal > span {
   background-color: transparent;
   padding: 10px 0px;
   height: 20px;
@@ -506,23 +512,31 @@ img.scContentTreeNodeGlyph:hover[src="/sitecore/shell/themes/standard/images/noe
   z-index: 1;
 }
 
-#ContentTreePanel a.scContentTreeNodeActive > span > div.scItemName,
-#ContentTreePanel a.scContentTreeNodeNormal > span > div.scItemName {
+body.experimentalui
+  #ContentTreePanel
+  a.scContentTreeNodeActive
+  > span
+  > div.scItemName,
+body.experimentalui
+  #ContentTreePanel
+  a.scContentTreeNodeNormal
+  > span
+  > div.scItemName {
   display: inline;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-#ContentTreePanel a.scContentTreeNodeActive > span {
+body.experimentalui #ContentTreePanel a.scContentTreeNodeActive > span {
   color: var(--white) !important;
 }
 
-#ContentTreePanel a.scContentTreeNodeNormal > span {
+body.experimentalui #ContentTreePanel a.scContentTreeNodeNormal > span {
   color: var(--text);
 }
 
-#ContentTreePanel a.scContentTreeNodeActive > span > div,
-#ContentTreePanel a.scContentTreeNodeNormal > span > div {
+body.experimentalui #ContentTreePanel a.scContentTreeNodeActive > span > div,
+body.experimentalui #ContentTreePanel a.scContentTreeNodeNormal > span > div {
   display: block;
   overflow: hidden;
   width: calc(100% - 100px);
@@ -531,22 +545,27 @@ img.scContentTreeNodeGlyph:hover[src="/sitecore/shell/themes/standard/images/noe
   margin-left: 24px;
 }
 
-#ContentTreePanel .scContentTreeNodeGlyph:hover + a > span,
-#ContentTreePanel div.scContentTreeNode > img:hover + a > span,
-#ContentTreePanel a.scContentTreeNodeNormal:hover > span {
+body.experimentalui #ContentTreePanel .scContentTreeNodeGlyph:hover + a > span,
+body.experimentalui
+  #ContentTreePanel
+  div.scContentTreeNode
+  > img:hover
+  + a
+  > span,
+body.experimentalui #ContentTreePanel a.scContentTreeNodeNormal:hover > span {
   background-color: var(--grey5) !important;
 }
 
-#ContentTreePanel a.scContentTreeNodeActive > span {
+body.experimentalui #ContentTreePanel a.scContentTreeNodeActive > span {
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
 }
 
-#ContentTreePanel a.scContentTreeNodeActive > span > img {
+body.experimentalui #ContentTreePanel a.scContentTreeNodeActive > span > img {
   max-width: 16px;
 }
 
-.scGutter {
+body.experimentalui .scGutter {
   z-index: 1002;
   top: 0;
   width: 10px;
@@ -554,15 +573,15 @@ img.scContentTreeNodeGlyph:hover[src="/sitecore/shell/themes/standard/images/noe
   position: absolute;
 }
 
-.scContentTreeNodeGutter {
+body.experimentalui .scContentTreeNodeGutter {
   z-index: 1001;
 }
 
-.scContentTreeNodeGutterIcon {
+body.experimentalui .scContentTreeNodeGutterIcon {
   z-index: 1001;
 }
 
-.scInsertItemIcon {
+body.experimentalui .scInsertItemIcon {
   position: relative;
   color: var(--black1);
   z-index: 101;
@@ -579,7 +598,7 @@ img.scContentTreeNodeGlyph:hover[src="/sitecore/shell/themes/standard/images/noe
   filter: invert(1);
 }
 
-.scEditItemIcon {
+body.experimentalui .scEditItemIcon {
   position: relative;
   color: var(--black1);
   z-index: 101;
@@ -596,35 +615,35 @@ img.scContentTreeNodeGlyph:hover[src="/sitecore/shell/themes/standard/images/noe
   filter: invert(1);
 }
 
-.scInsertItemIconInverted {
+body.experimentalui .scInsertItemIconInverted {
   filter: invert(0);
 }
 
 /* Content Editor Header */
 
-.scEditorHeaderIcon {
+body.experimentalui .scEditorHeaderIcon {
   filter: brightness(10);
 }
 
-.scEditorHeaderTitle {
+body.experimentalui .scEditorHeaderTitle {
   color: var(--white) !important;
 }
 
-.scEditorHeaderTitleHelp {
+body.experimentalui .scEditorHeaderTitleHelp {
   margin-top: -5px;
 }
 
-.scEditorHeaderTitleHelp > a {
+body.experimentalui .scEditorHeaderTitleHelp > a {
   color: var(--grey);
 }
 
-.scEditorTabControlsHolder {
+body.experimentalui .scEditorTabControlsHolder {
   margin: 11px 13px;
   height: auto;
 }
 
-button.scEditorHeaderButton,
-a.scEditorHeaderButton {
+body.experimentalui button.scEditorHeaderButton,
+body.experimentalui a.scEditorHeaderButton {
   font-size: 12px;
   padding: 9px 14px;
   position: relative;
@@ -638,30 +657,30 @@ a.scEditorHeaderButton {
   cursor: pointer;
 }
 
-button.scEditorHeaderButton:hover,
-a.scEditorHeaderButton:hover {
+body.experimentalui button.scEditorHeaderButton:hover,
+body.experimentalui a.scEditorHeaderButton:hover {
   filter: brightness(0.95);
 }
 
-button.scEditorHeaderButton:disabled {
+body.experimentalui button.scEditorHeaderButton:disabled {
   opacity: 0.5;
 }
 
-.scEditorHeaderButton > img {
+body.experimentalui .scEditorHeaderButton > img {
   transition: transform 0.2s ease-in-out;
 }
 
 /*Overlay*/
-iframe.ui-widget-content {
+body.experimentalui iframe.ui-widget-content {
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
 
 /*Iframe */
-#Renderings {
+body.experimentalui #Renderings {
   padding: 0px 10px;
 }
-#scLanguageIframe,
-#scVersionIframe {
+body.experimentalui #scLanguageIframe,
+body.experimentalui #scVersionIframe {
   position: fixed;
   background-color: var(--white);
   top: 0px !important;
@@ -674,28 +693,34 @@ iframe.ui-widget-content {
   transition: right ease-out 0.2s;
 }
 
+body.experimentalui #scVersionIframe.open,
+body.experimentalui #scLanguageIframe.open,
+body.experimentalui #scPanel.open {
+  right: 0px !important;
+}
+
 /* Content Editor Tabs */
 
-#scEditorTabs {
+body.experimentalui #scEditorTabs {
   background-color: transparent;
   margin: 20px 20px 0px 20px;
   overflow-x: hidden;
 }
 
-#scEditorTabs > ul {
+body.experimentalui #scEditorTabs > ul {
   overflow-x: scroll;
   transition: margin-left ease-out 0.2s !important;
   width: auto !important;
 }
 
-#scEditorTabs > ul::-webkit-scrollbar {
+body.experimentalui #scEditorTabs > ul::-webkit-scrollbar {
   width: 0px;
   height: 0px;
   background: var(--white);
   border-radius: var(--radius);
 }
 
-#scEditorTabs > ul > li {
+body.experimentalui #scEditorTabs > ul > li {
   background-color: transparent;
   border: 1px solid #e2e2e2;
   border-bottom: 0px solid #e2e2e2;
@@ -704,69 +729,69 @@ iframe.ui-widget-content {
   font-weight: 400;
 }
 
-.scEditorTab {
+body.experimentalui .scEditorTab {
   background-color: var(--grey5) !important;
 }
 
-.scEditorTab:hover {
+body.experimentalui .scEditorTab:hover {
   border-top: 2px solid var(--grey2) !important;
   border-bottom: 0px solid transparent !important;
 }
 
-.scEditorTabSelected {
+body.experimentalui .scEditorTabSelected {
   background-color: var(--white) !important;
   border-top: 3px solid var(--accent) !important;
 }
 
-.scEditorTabSelected:hover {
+body.experimentalui .scEditorTabSelected:hover {
   background-color: var(--white) !important;
   border-top: 3px solid var(--accent) !important;
   border-bottom: none !important;
 }
 
-.scEditorTabEmpty {
+body.experimentalui .scEditorTabEmpty {
   padding: 0px 3px !important;
 }
 
-a.scRibbonEditorTabActive {
-  color: var(--grey2);
-  background-color: transparent;
-  border: 0px;
-  border-bottom: 3px solid var(--accent);
-  margin-top: 13px;
-  font-weight: bold;
-  text-transform: uppercase;
+body.experimentalui a.scRibbonEditorTabActive {
+  color: var(--grey2) !important;
+  background-color: transparent !important;
+  border: 0px !important;
+  border-bottom: 3px solid var(--accent) !important;
+  margin-top: 13px !important;
+  font-weight: bold !important;
+  text-transform: uppercase !important;
 }
 
-a.scRibbonEditorTabActive > span > img {
+body.experimentalui a.scRibbonEditorTabActive > span > img {
   display: none;
 }
 
-a.scRibbonEditorTabNormal {
-  background-color: transparent;
-  border: 0px;
-  border-bottom: 3px solid transparent;
-  margin-top: 13px;
-  font-weight: normal;
-  text-transform: uppercase;
-  cursor: pointer;
+body.experimentalui a.scRibbonEditorTabNormal {
+  background-color: transparent !important;
+  border: 0px !important;
+  border-bottom: 3px solid transparent !important;
+  margin-top: 13px !important;
+  font-weight: normal !important;
+  text-transform: uppercase !important;
+  cursor: pointer !important;
 }
 
-a.scRibbonEditorTabNormal:hover {
+body.experimentalui a.scRibbonEditorTabNormal:hover {
   background-color: transparent;
   border-bottom: 3px solid var(--grey2);
 }
 
-#BTAddNewSearch {
-  margin: 13px 0px 0px 0px;
-  border-bottom: 3px solid transparent;
+body.experimentalui #BTAddNewSearch {
+  margin: 13px 0px 0px 0px !important;
+  border-bottom: 3px solid transparent !important;
   background-image: url("chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.svg"),
     none !important;
-  background-size: 16px 16px;
+  background-size: 16px 16px !important;
 }
 
-#BTAddNewSearch:active,
-#BTAddNewSearch:hover {
+body.experimentalui #BTAddNewSearch:active,
+body.experimentalui #BTAddNewSearch:hover {
   background-color: transparent !important;
   border-bottom: 3px solid var(--grey2);
   background-image: url("chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.svg"),
@@ -777,16 +802,17 @@ a.scRibbonEditorTabNormal:hover {
 }
 
 /* Message bar */
-.scMessageBar .scMessageBarTextContainer .scMessageBarText {
+body.experimentalui .scMessageBar .scMessageBarTextContainer .scMessageBarText {
   margin: 7px 0px 0px 0px;
 }
 
-.scMessageBar .scMessageBarIcon {
+body.experimentalui .scMessageBar .scMessageBarIcon {
   background-position: center 19px !important;
   padding: 7px !important;
 }
 
-.scMessageBar
+body.experimentalui
+  .scMessageBar
   > .scMessageBarTextContainer
   > .scMessageBarOptions
   > .scMessageBarOptionBullet
@@ -794,7 +820,7 @@ a.scRibbonEditorTabNormal:hover {
   color: var(--text);
 }
 
-.scMessageBar.scWarning {
+body.experimentalui .scMessageBar.scWarning {
   margin: 20px;
   border-radius: 0px var(--radius) var(--radius) 0px;
   background-color: var(--messageWarningBar) !important;
@@ -802,14 +828,18 @@ a.scRibbonEditorTabNormal:hover {
   font-size: 14px;
 }
 
-.scWarning > .scMessageBarIcon {
+body.experimentalui .scWarning > .scMessageBarIcon {
   border-radius: var(--radius) 0px 0px var(--radius);
   background-color: var(--messageWarningBgIcon) !important;
 }
 
-.scWarning > .scMessageBarTextContainer > .scMessageBar a,
-.scWarning > .scMessageBarTextContainer > .scMessageBarOption,
-.scWarning
+body.experimentalui .scWarning > .scMessageBarTextContainer > .scMessageBar a,
+body.experimentalui
+  .scWarning
+  > .scMessageBarTextContainer
+  > .scMessageBarOption,
+body.experimentalui
+  .scWarning
   > .scMessageBarTextContainer
   > .scMessageBarOptions
   > .scMessageBarOptionBullet {
@@ -817,7 +847,7 @@ a.scRibbonEditorTabNormal:hover {
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
-.scMessageBar.scError {
+body.experimentalui .scMessageBar.scError {
   margin: 20px;
   border-radius: 0px var(--radius) var(--radius) 0px;
   background-color: var(--messageDangerBar) !important;
@@ -825,14 +855,15 @@ a.scRibbonEditorTabNormal:hover {
   font-size: 14px;
 }
 
-.scError > .scMessageBarIcon {
+body.experimentalui .scError > .scMessageBarIcon {
   border-radius: var(--radius) 0px 0px var(--radius);
   background-color: var(--messageDangerBgIcon) !important;
 }
 
-.scError > .scMessageBarTextContainer > .scMessageBar a,
-.scError > .scMessageBarTextContainer > .scMessageBarOption,
-.scError
+body.experimentalui .scError > .scMessageBarTextContainer > .scMessageBar a,
+body.experimentalui .scError > .scMessageBarTextContainer > .scMessageBarOption,
+body.experimentalui
+  .scError
   > .scMessageBarTextContainer
   > .scMessageBarOptions
   > .scMessageBarOptionBullet {
@@ -840,7 +871,7 @@ a.scRibbonEditorTabNormal:hover {
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
-.scMessageBar.scInformation {
+body.experimentalui .scMessageBar.scInformation {
   margin: 20px;
   border-radius: 0px var(--radius) var(--radius) 0px;
   background-color: var(--messageInfoBar) !important;
@@ -848,14 +879,22 @@ a.scRibbonEditorTabNormal:hover {
   font-size: 14px;
 }
 
-.scInformation > .scMessageBarIcon {
+body.experimentalui .scInformation > .scMessageBarIcon {
   border-radius: var(--radius) 0px 0px var(--radius);
   background-color: var(--messageInfoBgIcon) !important;
 }
 
-.scInformation > .scMessageBarTextContainer > .scMessageBar a,
-.scInformation > .scMessageBarTextContainer > .scMessageBarOption,
-.scInformation
+body.experimentalui
+  .scInformation
+  > .scMessageBarTextContainer
+  > .scMessageBar
+  a,
+body.experimentalui
+  .scInformation
+  > .scMessageBarTextContainer
+  > .scMessageBarOption,
+body.experimentalui
+  .scInformation
   > .scMessageBarTextContainer
   > .scMessageBarOptions
   > .scMessageBarOptionBullet {
@@ -863,7 +902,7 @@ a.scRibbonEditorTabNormal:hover {
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
-.scMessageBar.scSuccess {
+body.experimentalui .scMessageBar.scSuccess {
   margin: 20px;
   border-radius: 0px var(--radius) var(--radius) 0px;
   background-color: var(--messageSuccessBar) !important;
@@ -871,14 +910,18 @@ a.scRibbonEditorTabNormal:hover {
   font-size: 14px;
 }
 
-.scSuccess > .scMessageBarIcon {
+body.experimentalui .scSuccess > .scMessageBarIcon {
   border-radius: var(--radius) 0px 0px var(--radius);
   background-color: var(--messageSuccessBgIcon) !important;
 }
 
-.scSuccess > .scMessageBarTextContainer > .scMessageBar a,
-.scSuccess > .scMessageBarTextContainer > .scMessageBarOption,
-.scSuccess
+body.experimentalui .scSuccess > .scMessageBarTextContainer > .scMessageBar a,
+body.experimentalui
+  .scSuccess
+  > .scMessageBarTextContainer
+  > .scMessageBarOption,
+body.experimentalui
+  .scSuccess
   > .scMessageBarTextContainer
   > .scMessageBarOptions
   > .scMessageBarOptionBullet {
@@ -886,7 +929,7 @@ a.scRibbonEditorTabNormal:hover {
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
-.liveUrlBadge {
+body.experimentalui .liveUrlBadge {
   background-color: var(--accent) !important;
   color: var(--messageWarningBar) !important;
   font-size: 10px;
@@ -895,33 +938,33 @@ a.scRibbonEditorTabNormal:hover {
   display: none;
 }
 
-.scMessageBarTextContainer {
+body.experimentalui .scMessageBarTextContainer {
   line-height: 20px !important;
   padding: 15px 25px !important;
 }
 
-.scMessageBarOptions {
+body.experimentalui .scMessageBarOptions {
   margin: 5px 0px 0px 0px !important;
 }
 
-.scMessageBar a:hover {
+body.experimentalui .scMessageBar a:hover {
   filter: brightness(0.8);
 }
 
 /* Sections */
 
-.scEditorHeader {
+body.experimentalui .scEditorHeader {
   opacity: 0;
   display: none;
 }
 
-.scEditorSections {
+body.experimentalui .scEditorSections {
   border: 0px;
   margin: 0px !important;
 }
 
-.scEditorSectionCaptionCollapsed,
-.scEditorSectionCaptionExpanded {
+body.experimentalui .scEditorSectionCaptionCollapsed,
+body.experimentalui .scEditorSectionCaptionExpanded {
   margin: 10px 20px 0px 20px;
   padding: 2px 20px;
   background-color: var(--accent);
@@ -933,20 +976,20 @@ a.scRibbonEditorTabNormal:hover {
   border-left: 0px solid #dc291e;
 }
 
-.scEditorSectionCaptionCollapsed {
+body.experimentalui .scEditorSectionCaptionCollapsed {
   background-color: var(--black9);
   border-radius: var(--radius);
 }
 
-.scEditorSectionCaptionCollapsed:hover {
+body.experimentalui .scEditorSectionCaptionCollapsed:hover {
   background-color: var(--black8);
 }
 
-.scEditorSectionCaptionGlyph {
+body.experimentalui .scEditorSectionCaptionGlyph {
   margin: 11px 0px 0 0;
 }
 
-.scEditorSectionPanel {
+body.experimentalui .scEditorSectionPanel {
   display: table;
   border-radius: 0px 0px var(--radius) var(--radius);
   margin: 20px;
@@ -957,19 +1000,21 @@ a.scRibbonEditorTabNormal:hover {
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.scEditorSectionPanel.scTabsRounded {
+body.experimentalui .scEditorSectionPanel.scTabsRounded {
   border-radius: var(--radius);
 }
 
-.scEditorTab.scTabsError {
+body.experimentalui .scEditorTab.scTabsError {
   border-top: 3px dotted var(--red) !important;
 }
 
-.scEditorSectionPanel.scCrossTabError .scEditorSectionCaptionGlyph {
+body.experimentalui
+  .scEditorSectionPanel.scCrossTabError
+  .scEditorSectionCaptionGlyph {
   display: none;
 }
 
-.scEditorSectionPanelCell {
+body.experimentalui .scEditorSectionPanelCell {
   padding: 20px 20px 20px 15px;
   font-size: 14px;
 }
@@ -977,7 +1022,7 @@ a.scRibbonEditorTabNormal:hover {
 /* .scContentControlImagePane {
   border: 1px;
 } */
-a.scContentButton {
+body.experimentalui a.scContentButton {
   color: var(--accent);
   border: 1px solid transparent !important;
   margin: 8px 8px 0px 0px !important;
@@ -986,53 +1031,53 @@ a.scContentButton {
   text-decoration: none;
 }
 
-a.scContentButton:hover {
+body.experimentalui a.scContentButton:hover {
   color: var(--accentText) !important;
   background-color: var(--accent);
   text-decoration: none;
 }
 /*Instant Search */
-.scInstantSearchResults > li:focus,
-.scInstantSearchResults > li:hover {
+body.experimentalui .scInstantSearchResults > li:focus,
+body.experimentalui .scInstantSearchResults > li:hover {
   background-color: var(--accent);
   color: var(--accentText);
 }
 
-.scInstantSearchResults > li:focus > h2,
-.scInstantSearchResults > li:hover > h2 {
+body.experimentalui .scInstantSearchResults > li:focus > h2,
+body.experimentalui .scInstantSearchResults > li:hover > h2 {
   color: var(--accentText) !important;
 }
 
-.scInstantSearchResults > li:focus > p,
-.scInstantSearchResults > li:hover > p {
+body.experimentalui .scInstantSearchResults > li:focus > p,
+body.experimentalui .scInstantSearchResults > li:hover > p {
   color: var(--accentText) !important;
 }
 
-.scInstantSearchResults > li > p > img,
-.scInstantSearchResults > li > p > img {
+body.experimentalui .scInstantSearchResults > li > p > img,
+body.experimentalui .scInstantSearchResults > li > p > img {
   filter: brightness(10);
 }
 
-.scInstantSearchResults > li:focus > p > img,
-.scInstantSearchResults > li:hover > p > img {
+body.experimentalui .scInstantSearchResults > li:focus > p > img,
+body.experimentalui .scInstantSearchResults > li:hover > p > img {
   filter: brightness(var(--accentBrightness));
 }
 
 /*Forms in section*/
 
-.scEditorFieldLabel {
+body.experimentalui .scEditorFieldLabel {
   font-size: 14px;
   font-weight: 600;
   padding: 0px 0px 7px 0px;
 }
 
-.scContentButton {
+body.experimentalui .scContentButton {
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
 }
 
-.scEditorFieldLabelAdministrator {
+body.experimentalui .scEditorFieldLabelAdministrator {
   font-size: 11px;
   font-weight: 600;
   border-radius: var(--radius);
@@ -1046,22 +1091,22 @@ a.scContentButton:hover {
 
 /* Splitter bar */
 
-.splitter-bar {
+body.experimentalui .splitter-bar {
   width: 2px;
   margin-left: 0px;
   background-color: var(--grey4);
   z-index: 9 !important;
 }
 
-.splitter-bar:before,
-.splitter-bar:after {
+body.experimentalui .splitter-bar:before,
+body.experimentalui .splitter-bar:after {
   background-color: var(--grey4);
   z-index: 100 !important;
 }
 
 /* Content Editor buttons */
 
-.scSaveBar {
+body.experimentalui .scSaveBar {
   background-color: var(--grey5) !important;
   height: 30px;
   border-bottom: 1px solid var(--grey);
@@ -1070,7 +1115,7 @@ a.scContentButton:hover {
   padding: 13px;
 }
 
-.scSaveBar > .scBreadcrumb {
+body.experimentalui .scSaveBar > .scBreadcrumb {
   float: left;
   font-size: 12px;
   padding: 8px;
@@ -1083,7 +1128,7 @@ a.scContentButton:hover {
   text-overflow: ellipsis;
 }
 
-.scSaveBar > .scBreadcrumb > i {
+body.experimentalui .scSaveBar > .scBreadcrumb > i {
   font-style: initial;
   color: #a5a5a5;
   margin: 1px;
@@ -1091,11 +1136,11 @@ a.scContentButton:hover {
   vertical-align: middle;
 }
 
-.scSaveBar > .scBreadcrumb > u {
+body.experimentalui .scSaveBar > .scBreadcrumb > u {
   cursor: pointer;
 }
 
-.scSaveBar > .scActions > .scPublishMenu {
+body.experimentalui .scSaveBar > .scActions > .scPublishMenu {
   width: 240px;
   height: fit-content;
   background-color: var(--white);
@@ -1109,7 +1154,7 @@ a.scContentButton:hover {
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
 
-.scSaveBar > .scActions > .scPublishMenu > li {
+body.experimentalui .scSaveBar > .scActions > .scPublishMenu > li {
   background: 0 0;
   border: 0;
   display: block;
@@ -1124,11 +1169,21 @@ a.scContentButton:hover {
   padding: 8px 20px;
 }
 
-.scSaveBar > .scActions > .scPublishMenu > li:hover {
+body.experimentalui .scSaveBar > .scActions > .scPublishMenu > li:first-child {
+  border-top-left-radius: var(--radius);
+  border-top-right-radius: var(--radius);
+}
+
+body.experimentalui .scSaveBar > .scActions > .scPublishMenu > li:last-child {
+  border-bottom-left-radius: var(--radius);
+  border-bottom-right-radius: var(--radius);
+}
+
+body.experimentalui .scSaveBar > .scActions > .scPublishMenu > li:hover {
   background-color: var(--grey5);
 }
 
-.scSaveBar > .scActions > button {
+body.experimentalui .scSaveBar > .scActions > button {
   float: right;
   background-color: var(--grey);
   color: var(--black1);
@@ -1141,11 +1196,11 @@ a.scContentButton:hover {
   margin-top: -2px;
 }
 
-.scBackground {
+body.experimentalui .scBackground {
   background: var(--grey3);
 }
 
-.scTitle {
+body.experimentalui .scTitle {
   padding: 10px;
   margin-top: 3px;
   border-bottom: none;
@@ -1155,50 +1210,50 @@ a.scContentButton:hover {
   color: var(--grey7);
   clear: both;
 }
-.scFolderButtons {
+body.experimentalui .scFolderButtons {
   padding-left: 10px;
   padding-top: 25px;
 }
 
-.scFolderButtonsTitle {
+body.experimentalui .scFolderButtonsTitle {
   display: none;
 }
 
-.scMediaExplorer tbody tr:hover .mediaTitle,
-.scMediaExplorer tbody tr:hover {
+body.experimentalui .scMediaExplorer tbody tr:hover .mediaTitle,
+body.experimentalui .scMediaExplorer tbody tr:hover {
   cursor: pointer;
   background: var(--accent) !important;
   color: var(--accentText) !important;
 }
 
-.scMediaExplorer tbody tr:hover button.scMediaActions,
-.scMediaExplorer tbody tr:hover a.scMediaActions {
+body.experimentalui .scMediaExplorer tbody tr:hover button.scMediaActions,
+body.experimentalui .scMediaExplorer tbody tr:hover a.scMediaActions {
   opacity: 1;
   filter: invert(var(--accentInvert));
 }
 
-#FileList {
+body.experimentalui #FileList {
   background: var(--white) !important;
   border-radius: 3px;
   overflow: visible;
   padding-top: 25px !important;
 }
 
-#FileList a.scButton.scButtonList.selected,
-#FileList a.scButton.scButtonGrid.selected {
+body.experimentalui #FileList a.scButton.scButtonList.selected,
+body.experimentalui #FileList a.scButton.scButtonGrid.selected {
   background-color: var(--accent) !important;
   border: 1px solid var(--accent) !important;
   background-image: none !important;
   box-shadow: none !important;
 }
 
-#FileList a.scButton.scButtonList.selected > img,
-#FileList a.scButton.scButtonGrid.selected > img {
+body.experimentalui #FileList a.scButton.scButtonList.selected > img,
+body.experimentalui #FileList a.scButton.scButtonGrid.selected > img {
   filter: invert(var(--accentInvert));
 }
 
-input[type="submit"],
-.scButton {
+body.experimental input[type="submit"],
+body.experimentalui .scButton {
   background-color: var(--grey4);
   color: var(--text);
   font-size: 15px;
@@ -1211,17 +1266,17 @@ input[type="submit"],
   outline-color: var(--accent);
 }
 
-.scButtonPrimary {
+body.experimentalui .scButtonPrimary {
   background: var(--accent) !important;
   color: var(--accentText);
   outline-color: var(--accent);
 }
 
-.scButtonPrimary:hover {
+body.experimentalui .scButtonPrimary:hover {
   filter: brightness(1.07) !important;
 }
 
-.scButtonPrimary:active {
+body.experimentalui .scButtonPrimary:active {
   background: var(--accent) !important;
   color: var(--accentText);
   outline-color: var(--accent);
@@ -1229,48 +1284,47 @@ input[type="submit"],
   box-shadow: none;
 }
 
-.scButton:hover,
-.scSaveBar > .scActions > button:hover {
+body.experimentalui .scButton:hover,
+body.experimentalui .scSaveBar > .scActions > button:hover {
   filter: brightness(1.05);
 }
 
-.scSaveBar > .scActions > button:disabled {
+body.experimentalui .scSaveBar > .scActions > button:disabled {
   opacity: 0.5;
 }
 
-.scSaveBar > .scActions > button.primary {
-  background-color: var(--accent);
-  color: var(--accentText);
+body.experimentalui .scSaveBar > .scActions > button.primary {
+  background-color: var(--accent) !important;
+  color: var(--accentText) !important;
 }
 
-.scSaveBar > .scActions > button.primaryGrouped {
+body.experimentalui .scSaveBar > .scActions > button.primaryGrouped {
   border-radius: var(--radius) 0px 0px var(--radius);
   border-right: 1px solid rgba(0, 0, 0, 0.2);
   margin-right: 0px;
 }
 
-.scSaveBar > .scActions > button.grouped {
+body.experimentalui .scSaveBar > .scActions > button.grouped {
   margin: 0px;
   margin-top: -2px;
   padding: 7px 10px 8px 10px;
   margin-right: 5px;
-  background-color: var(--accent);
-  color: var(--accentText);
+  background-color: var(--accent) !important;
   border-radius: 0px var(--radius) var(--radius) 0px;
 }
 
-.scPopup {
+body.experimentalui .scPopup {
   background-color: var(--white);
   border-radius: var(--radius);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
 
-.scPopup > table > tbody > tr[id^="ContextMenu_"] > td {
+body.experimentalui .scPopup > table > tbody > tr[id^="ContextMenu_"] > td {
   padding-top: 7px;
   padding-bottom: 7px;
 }
 
-.scEditorTabControlsHolder > .scMoreMenu {
+body.experimentalui .scEditorTabControlsHolder > .scMoreMenu {
   width: 240px;
   height: fit-content;
   background-color: var(--white);
@@ -1284,7 +1338,7 @@ input[type="submit"],
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
 
-.scEditorTabControlsHolder > .scMoreMenu > li {
+body.experimentalui .scEditorTabControlsHolder > .scMoreMenu > li {
   background: 0 0;
   border: 0;
   display: block;
@@ -1299,93 +1353,83 @@ input[type="submit"],
   padding: 8px 20px;
 }
 
-.scEditorTabControlsHolder > .scMoreMenu > li:hover {
+body.experimentalui .scEditorTabControlsHolder > .scMoreMenu > li:first-child {
+  border-top-left-radius: var(--radius);
+  border-top-right-radius: var(--radius);
+}
+
+body.experimentalui .scEditorTabControlsHolder > .scMoreMenu > li:last-child {
+  border-bottom-left-radius: var(--radius);
+  border-bottom-right-radius: var(--radius);
+}
+
+body.experimentalui .scEditorTabControlsHolder > .scMoreMenu > li:hover {
   background-color: var(--grey5);
 }
 
-.scEditorTabControlsHolder > .scMoreMenu > li.separator {
+body.experimentalui .scEditorTabControlsHolder > .scMoreMenu > li.separator {
   border-top: 1px solid var(--grey9);
 }
 
-.scEditorTabControlsHolder > .scMoreMenu > li.danger {
+body.experimentalui .scEditorTabControlsHolder > .scMoreMenu > li.danger {
   color: var(--accent);
 }
 
-.scEditorTabControlsHolder > .scMoreMenu > li.danger:hover {
+body.experimentalui .scEditorTabControlsHolder > .scMoreMenu > li.danger:hover {
   background-color: var(--accent);
   color: var(--accentText);
 }
 
 /* Gallery Frame */
 
-.scGalleryFrame {
+body.experimentalui .scGalleryFrame {
   border-radius: var(--radius);
   box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.versionNumSelected,
-.scMenuItemIcon_Hover,
-.scMenuItemCaption_Hover,
-.scMenuItemHotkey_Hover,
-.scMenuPanelItemSelected,
-.scMenuPanelItemSelected_Hover,
-.scMenuPanelItem_Hover,
-.sc-gallery-option-content-active {
+body.experimentalui .versionNumSelected,
+body.experimentalui .scMenuItemIcon_Hover,
+body.experimentalui .scMenuItemCaption_Hover,
+body.experimentalui .scMenuItemHotkey_Hover,
+body.experimentalui .scMenuPanelItemSelected,
+body.experimentalui .scMenuPanelItemSelected_Hover,
+body.experimentalui .scMenuPanelItem_Hover,
+body.experimentalui .sc-gallery-option-content-active {
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
 }
 
-.scMenuPanelItem_Hover > table > tbody > tr > td:last-child > div > div {
+body.experimentalui
+  .scMenuPanelItem_Hover
+  > table
+  > tbody
+  > tr
+  > td:last-child
+  > div
+  > div {
   color: var(--accentText) !important;
 }
 
 /*Hack for SC extention links */
 
-.sc-ext-gotofield,
-.sc-ext-resetfield,
-.sc-ext-goToDatasource-button,
-.scEditorFieldLabelAdministrator {
+body.experimentalui .sc-ext-gotofield,
+body.experimentalui .sc-ext-resetfield,
+body.experimentalui .sc-ext-goToDatasource-button,
+body.experimentalui .scEditorFieldLabelAdministrator {
   display: none !important;
   transition: ease-out 0.1s;
 }
 
-.scEditorFieldLabel:hover .sc-ext-gotofield,
-.scEditorFieldLabel:hover .sc-ext-resetfield,
-.scEditorFieldLabel:hover .sc-ext-goToDatasource-button,
-.scEditorFieldLabel:hover .scEditorFieldLabelAdministrator {
+body.experimentalui .scEditorFieldLabel:hover .sc-ext-gotofield,
+body.experimentalui .scEditorFieldLabel:hover .sc-ext-resetfield,
+body.experimentalui .scEditorFieldLabel:hover .sc-ext-goToDatasource-button,
+body.experimentalui .scEditorFieldLabel:hover .scEditorFieldLabelAdministrator {
   display: inline !important;
 }
 
-.scVerticalImagedTabstrip > div.selected,
-.scVerticalImagedTabstrip > div.selected:hover {
+body.experimentalui .scVerticalImagedTabstrip > div.selected,
+body.experimentalui .scVerticalImagedTabstrip > div.selected:hover {
   background-color: var(--grey3) !important;
-}
-
-/*
-* Dialog
-*/
-
-/* .ui-widget-header,
-.scFormDialogHeader {
-  background-color: var(--accent) !important;
-  color: var(--accentText) !important;
-} */
-
-.ui-progressbar-value {
-  background-color: var(--accent) !important;
-}
-
-.ui-progressbar-indeterminate.ui-progressbar {
-  background-color: var(--accent) !important;
-}
-
-.zg-delightful-droppable.hovered {
-  background-color: #0f7ec254;
-}
-
-.sxa-toolbox-droppable.toolbox-dropping .inner,
-.sxa-toolbox-div.toolbox-dropping .inner {
-  background-color: var(--accent);
 }
 
 /* @keyframes preloading {
@@ -1397,29 +1441,29 @@ input[type="submit"],
   }
 }
 
-.scMediaThumbnail {
+body.experimentalui .scMediaThumbnail {
   background: url(chrome-extension://__MSG_@@extension_id__/images/media_loader.jpg) !important;
   background-position: 0px center;
   background-size: cover !important;
   animation: preloading 2s linear infinite;
 } */
 
-a.scContentTreeNodeActive {
+body.experimentalui a.scContentTreeNodeActive {
   background-color: var(--accent);
   color: var(--accentText);
   border-radius: var(--radius);
   padding: 4px 8px 8px 8px;
 }
 
-a.scContentTreeNodeActive > .scContentTreeNodeTitle {
+body.experimentalui a.scContentTreeNodeActive > .scContentTreeNodeTitle {
   color: var(--accentText);
 }
 
-a.scContentTreeNodeActive > img {
+body.experimentalui a.scContentTreeNodeActive > img {
   filter: brightness(var(--iconBrightness)) contrast(var(--iconContrast));
 }
 
-.scOpenItem {
+body.experimentalui .scOpenItem {
   background-color: var(--accent);
   color: var(--accentText) !important;
   padding: 3px 5px;
@@ -1427,28 +1471,28 @@ a.scContentTreeNodeActive > img {
   font-weight: 600;
 }
 
-.sc-label,
-[data-sc-id="ReferenceContentSearchBorder"] {
+/* body.experimentalui .sc-label, */
+body.experimentalui [data-sc-id="ReferenceContentSearchBorder"] {
   background-color: var(--accent);
   color: var(--accentText);
 }
 
-.scPreviewButton.focus {
+body.experimentalui .scPreviewButton.focus {
   outline: 0px solid var(--accent);
   box-shadow: 0 0 0 2.5px var(--accent) !important;
 }
 
-.scScrollbox {
+body.experimentalui .scScrollbox {
   border-radius: var(--radius);
 }
 
-.scLink:hover {
+body.experimentalui .scLink:hover {
   background-color: var(--accent);
   color: var(--accentText);
 }
 
 /* RTE */
-.reEditorModesCell {
+body.experimentalui .reEditorModesCell {
   background-color: var(--black5);
   height: 30px;
   border-top: 2px solid var(--accent) !important;
@@ -1456,11 +1500,62 @@ a.scContentTreeNodeActive > img {
 
 /* UI Dialog */
 
+body.experimentalui .ui-progressbar-value {
+  background-color: var(--accent) !important;
+}
+
+body.experimentalui .ui-progressbar-indeterminate.ui-progressbar {
+  background-color: var(--accent) !important;
+}
+
+body.experimentalui .zg-delightful-droppable.hovered {
+  background-color: #0f7ec254;
+}
+
+body.experimentalui .sxa-toolbox-droppable.toolbox-dropping .inner,
+body.experimentalui .sxa-toolbox-div.toolbox-dropping .inner {
+  background-color: var(--accent);
+}
+
+/* .ui-dialog .ui-dialog-titlebar,
+body.experimentalui .ui-dialog .ui-dialog-titlebar + .DialogHeader,
+body.experimentalui .scFormDialogHeader,
+body.experimentalui .scDialogHeader,
+body.experimentalui .ui-widget-header {
+  color: var(--accentText);
+  background-color: var(--accent);
+} */
+
+body.experimentalui nobr:first-child > .scTabActive,
+body.experimentalui nobr:first-child > .scTabActive_Hover {
+  border-left: 1px solid var(--accent);
+}
+
+body.experimentalui nobr:last-child > .scTabActive,
+body.experimentalui nobr:last-child > .scTabActive_Hover {
+  border-right: 1px solid var(--accent);
+}
+
+body.experimentalui .scTabActive,
+body.experimentalui .scTabActive_Hover {
+  background-color: var(--accent);
+  color: var(--accentText);
+  border-top: 1px solid var(--accent);
+}
+
+body.experimentalui .scTabActive:after,
+body.experimentalui .scTabActive_Hover:after {
+  background: var(--accent);
+}
+
+body.experimentalui .scTabstrip {
+  border-bottom: 2px solid var(--accent);
+}
 /* .ui-widget-content,
-.ui-dialog {
+body.experimentalui 
   border-radius: 5px !important;
 }
-#scModal .header,
-.ui-dialog-titlebar {
+body.experimentalui #scModal .header,
+body.experimentalui .ui-dialog-titlebar {
   border-radius: 5px 5px 0px 0px !important;
 } */

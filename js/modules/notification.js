@@ -19,9 +19,7 @@ const checkNotification = () => {
         });
     }
   } else {
-    console.info(
-      "Sitecore Author Toolbox: Notification only works over https protocol."
-    );
+    console.info("Sitecore Author Toolbox: Notification only works over https protocol.");
   }
 };
 

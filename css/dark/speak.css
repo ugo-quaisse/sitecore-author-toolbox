@@ -1,138 +1,135 @@
-body.dark_sat #Editor_contentIframe body {
+body.satDark #Editor_contentIframe body {
   color: #fff;
 }
 
-body.dark_sat .sc-dialogHeader {
+body.satDark .sc-dialogHeader {
   background-color: var(--black1) !important;
 }
 
-body.dark_sat .sc-applicationContent,
-body.dark_sat .sc-applicationContent-main {
+body.satDark .sc-applicationContent,
+body.satDark .sc-applicationContent-main {
   color: var(--black1) !important;
   border-color: var(--text) !important;
   background-color: var(--black2) !important;
 }
-body.dark_sat .sc-controlpanel-box-content {
+body.satDark .sc-controlpanel-box-content {
   background-color: var(--black3);
 }
-body.dark_sat .sc-controlpanel-box-content li {
+body.satDark .sc-controlpanel-box-content li {
   border-bottom: 1px solid var(--black4) !important;
 }
-body.dark_sat .sc-applicationHeader-row2 {
+body.satDark .sc-applicationHeader-row2 {
   background-color: #2b2b2b !important;
   border-bottom: 1px solid var(--black4);
 }
-body.dark_sat .sc-controlpanel-box-header h4 {
+body.satDark .sc-controlpanel-box-header h4 {
   color: var(--text) !important;
 }
-body.dark_sat .sc-dialogFooter {
+body.satDark .sc-dialogFooter {
   background-color: var(--black1) !important;
   border-bottom: 1px solid var(--black1) !important;
   border-top: 0px solid var(--black3) !important;
 }
-body.dark_sat .sc-dialogContent-toolbar {
+body.satDark .sc-dialogContent-toolbar {
   background-color: var(--black2) !important;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
 }
-body.dark_sat .sc-dialogContent-main {
+body.satDark .sc-dialogContent-main {
   color: var(--text) !important;
   border-color: var(--text) !important;
 }
-body.dark_sat .sc .sc-backbutton.btn {
+body.satDark .sc .sc-backbutton.btn {
   color: var(--white);
 }
-body.dark_sat .sc .sc-text-largetitle {
+body.satDark .sc .sc-text-largetitle {
   color: var(--text) !important;
 }
 
-body.dark_sat .sc-launchpad-item .icon {
+body.satDark .sc-launchpad-item .icon {
   background-color: var(--black3) !important;
   background-image: none !important;
   border: 1px var(--black4) solid !important;
 }
 
-body.dark_sat .sc .sc-border[data-sc-id="AnalyticsFallback"] {
+body.satDark .sc .sc-border[data-sc-id="AnalyticsFallback"] {
   background-color: var(--black3) !important;
 }
 
-body.dark_sat .sc-togglebutton-text {
+body.satDark .sc-togglebutton-text {
   color: var(--black2) !important;
 }
-body.dark_sat .btn-primary > .sc-button-text {
+body.satDark .btn-primary > .sc-button-text {
   color: var(--white) !important;
 }
 
-body.dark_sat .sc-iconList-wrap .sc-iconList-item {
+body.satDark .sc-iconList-wrap .sc-iconList-item {
   border: 1px solid var(--black4);
   background: var(--black2);
 }
 
-body.dark_sat form.sc-uploader {
+body.satDark form.sc-uploader {
   background-color: var(--black2) !important;
   border: 2px dashed var(--black6);
 }
 
-body.dark_sat .sc .sc-smartpanel {
+body.satDark .sc .sc-smartpanel {
   background: #212121 !important;
 }
 
-body.dark_sat .sc .sc-smartpanel-buttons,
-body.dark_sat .sc .sc-smartpanel-header {
+body.satDark .sc .sc-smartpanel-buttons,
+body.satDark .sc .sc-smartpanel-header {
   background-color: var(--black2) !important;
   border: 1px solid var(--black3) !important;
 }
-body.dark_sat .sc-listcontrol-body {
+body.satDark .sc-listcontrol-body {
   background-color: var(--black3) !important;
 }
-body.dark_sat .sc-listcontrol .sc-table {
+body.satDark .sc-listcontrol .sc-table {
   background-color: var(--black3) !important;
 }
-body.dark_sat .form-control {
+body.satDark .form-control {
   background-color: var(--black1) !important;
   border: 1px solid var(--black1) !important;
 }
-body.dark_sat .sc-dialogWindow-header {
+body.satDark .sc-dialogWindow-header {
   background-color: var(--black2) !important;
 }
 
-body.dark_sat .sc .sc-menu .menuroot,
-body.dark_sat .sc-dialogContent-navigation {
+body.satDark .sc .sc-menu .menuroot,
+body.satDark .sc-dialogContent-navigation {
   background-color: var(--black3);
   border-color: var(--black3);
 }
 
-body.dark_sat
-  div.sc-navigation-content
-  section.sc-dialogContent-main
-  div[data-sc-id="InfoBorderBox"] {
+body.satDark div.sc-navigation-content section.sc-dialogContent-main div[data-sc-id="InfoBorderBox"] {
   background-color: var(--black3);
 }
 
-body.dark_sat .btn-primary:active,
-body.dark_sat .btn-primary {
+body.satDark .btn-primary:active,
+body.satDark .btn-primary {
   background: var(--blue);
 }
 
-body.dark_sat .btn-primary:hover {
+body.satDark .btn-primary:hover {
   background: var(--darkblue);
 }
 
-body.dark_sat .sc .sc-messageBar .alert.alert-error {
+body.satDark .sc .sc-messageBar .alert.alert-error {
   color: #ffffff;
   background-color: #8b1913;
 }
-body.dark_sat .sc-listcontrol .sc-listcontrol-body .table tr td,
+body.satDark .sc-listcontrol .sc-listcontrol-body .table tr td,
 .sc-listcontrol .sc-listcontrol-body .sc-table tr td,
-body.dark_sat .sc-listcontrol .empty {
+body.satDark .sc-listcontrol .empty {
   color: var(--text);
 }
 
-body.dark_sat .sc-advancedExpander .sc-advancedExpander-header,
-body.dark_sat .sc-ChartComposites {
+body.satDark .sc-advancedExpander .sc-advancedExpander-header,
+body.satDark .sc-ChartComposites {
   background: var(--black1) !important;
 }
 
-body.dark_sat .sc-advancedExpander .sc-advancedExpander-body {
+body.satDark .sc-advancedExpander .sc-advancedExpander-body {
   background: var(--black3) !important;
   border-left: 1px solid var(--black3);
   border-right: 1px solid var(--black3);
@@ -140,155 +137,117 @@ body.dark_sat .sc-advancedExpander .sc-advancedExpander-body {
   color: var(--text);
 }
 
-body.dark_sat .sc span.dynatree-expander,
-body.dark_sat .sc span.dynatree-checkbox {
+body.satDark .sc span.dynatree-expander,
+body.satDark .sc span.dynatree-checkbox {
   filter: invert(1);
 }
 
-body.dark_sat .sc-applicationHeader-row2 {
+body.satDark .sc-applicationHeader-row2 {
   background-color: var(--black1) !important;
 }
-body.dark_sat .sc .sc-tabcontrol > .nav-tabs > li > a {
+body.satDark .sc .sc-tabcontrol > .nav-tabs > li > a {
   background-color: var(--black1);
   border: 1px solid var(--black2);
 }
-body.dark_sat .sc .sc-tabcontrol > .nav-tabs > li > a:hover {
+body.satDark .sc .sc-tabcontrol > .nav-tabs > li > a:hover {
   background-color: var(--black3);
 }
-body.dark_sat div[data-sc-id="OverviewBorderPadding"] .row {
+body.satDark div[data-sc-id="OverviewBorderPadding"] .row {
   background: var(--black3);
   border-bottom: 1px solid var(--black2);
 }
-body.dark_sat div.sc-border[data-sc-id="InfoPhotoImageBorder"] img {
+body.satDark div.sc-border[data-sc-id="InfoPhotoImageBorder"] img {
   background: var(--black4) !important;
   border: 15px solid var(--black3);
 }
 
-body.dark_sat .sc .sc-timeline div.timeline-content {
+body.satDark .sc .sc-timeline div.timeline-content {
   background: var(--black2);
 }
-body.dark_sat .sc .sc-timeline div.timeline-axis {
+body.satDark .sc .sc-timeline div.timeline-axis {
   background: var(--black2);
 }
-body.dark_sat .sc .sc-timeline div.timeline-axis-text,
-body.dark_sat span.sc-text[data-sc-id="LatestVisitHeader"],
-body.dark_sat span.sc-text[data-sc-id="StatsHeader"],
-body.dark_sat span.sc-text[data-sc-id="DetailsHeader"],
-body.dark_sat
-  div[data-sc-id="OverviewBorderPadding"]
-  .row
-  > div:nth-child(even),
-body.dark_sat div[data-sc-id="OverviewBorderPadding"] .row > div {
+body.satDark .sc .sc-timeline div.timeline-axis-text,
+body.satDark span.sc-text[data-sc-id="LatestVisitHeader"],
+body.satDark span.sc-text[data-sc-id="StatsHeader"],
+body.satDark span.sc-text[data-sc-id="DetailsHeader"],
+body.satDark div[data-sc-id="OverviewBorderPadding"] .row > div:nth-child(even),
+body.satDark div[data-sc-id="OverviewBorderPadding"] .row > div {
   color: var(--text);
 }
-body.dark_sat .sc-backbutton-text {
+body.satDark .sc-backbutton-text {
   color: var(--text) !important;
 }
-body.dark_sat .sc-advancedExpander.open .sc-advancedExpander-header > table {
+body.satDark .sc-advancedExpander.open .sc-advancedExpander-header > table {
   background: var(--black4);
 }
-body.dark_sat .sc-advancedExpander.open .sc-advancedExpander-header {
+body.satDark .sc-advancedExpander.open .sc-advancedExpander-header {
   border-left: 5px solid var(--blue);
 }
-body.dark_sat .sc .sc-timeline .timeline-era.era-0 {
+body.satDark .sc .sc-timeline .timeline-era.era-0 {
   background-color: var(--blue);
   color: var(--blue);
 }
-body.dark_sat .sc .sc-tabcontrol.subTab > .nav-tabs {
+body.satDark .sc .sc-tabcontrol.subTab > .nav-tabs {
   background: var(--black4);
   border: 1px solid var(--black4);
 }
-body.dark_sat .sc .sc-tabcontrol.subTab > .nav-tabs > li > a {
+body.satDark .sc .sc-tabcontrol.subTab > .nav-tabs > li > a {
   background: var(--black4);
 }
-body.dark_sat .sc .sc-tabcontrol.subTab > .nav-tabs > li > a:hover {
+body.satDark .sc .sc-tabcontrol.subTab > .nav-tabs > li > a:hover {
   background: var(--black3);
 }
-body.dark_sat .sc .sc-tabcontrol.subTab > .nav-tabs > li.active > a:before,
-body.dark_sat .sc .sc-tabcontrol.subTab > .nav-tabs > li.active > a:after {
+body.satDark .sc .sc-tabcontrol.subTab > .nav-tabs > li.active > a:before,
+body.satDark .sc .sc-tabcontrol.subTab > .nav-tabs > li.active > a:after {
   border-top-color: var(--black4);
 }
-body.dark_sat
-  .sc
-  .sc-tabcontrol.subTab
-  > .nav-tabs
-  > li.active
-  > a:hover:before,
-body.dark_sat
-  .sc
-  .sc-tabcontrol.subTab
-  > .nav-tabs
-  > li.active
-  > a:hover:after {
+body.satDark .sc .sc-tabcontrol.subTab > .nav-tabs > li.active > a:hover:before,
+body.satDark .sc .sc-tabcontrol.subTab > .nav-tabs > li.active > a:hover:after {
   border-top-color: var(--black3);
 }
-body.dark_sat .sc-listcontrol .sc-table tbody tr th,
+body.satDark .sc-listcontrol .sc-table tbody tr th,
 .sc-listcontrol .sc-table thead th {
   background: var(--black5);
 }
-body.dark_sat .sc-listcontrol .sc-table tbody tr td a[href] {
+body.satDark .sc-listcontrol .sc-table tbody tr td a[href] {
   color: var(--blue) !important;
 }
-body.dark_sat .sc-actionpanel .sc-foldout ul > li .sc-action-text {
+body.satDark .sc-actionpanel .sc-foldout ul > li .sc-action-text {
   color: var(--black1);
 }
-body.dark_sat
-  .sc-ChartComposites
-  .sc-advancedExpander.open
-  .sc-advancedExpander-header
-  > table,
-body.dark_sat
-  .sc-ChartComposites
-  .sc-advancedExpander
-  .sc-advancedExpander-header
-  > table,
-body.dark_sat
-  .sc-ExperienceAnalyticsListControl
-  .sc-advancedExpander.open
-  .sc-advancedExpander-header
-  > table,
-body.dark_sat
-  .sc-ExperienceAnalyticsListControl
-  .sc-advancedExpander
-  .sc-advancedExpander-header
-  > table,
-body.dark_sat .sc-advancedExpander {
+body.satDark .sc-ChartComposites .sc-advancedExpander.open .sc-advancedExpander-header > table,
+body.satDark .sc-ChartComposites .sc-advancedExpander .sc-advancedExpander-header > table,
+body.satDark .sc-ExperienceAnalyticsListControl .sc-advancedExpander.open .sc-advancedExpander-header > table,
+body.satDark .sc-ExperienceAnalyticsListControl .sc-advancedExpander .sc-advancedExpander-header > table,
+body.satDark .sc-advancedExpander {
   background: var(--black2);
 }
 
-body.dark_sat div[data-sc-id="OverallTitleRow"],
-body.dark_sat div[data-sc-id="ActivityTitleRow"],
-body.dark_sat div[data-sc-id="OverallKPIRow"],
-body.dark_sat div[data-sc-id="IndividualKPIRow"],
-body.dark_sat .sc div[data-sc-id="PreviousMonthTitleBorder"],
-body.dark_sat .sc div[data-sc-id="CurrentMonthTitleBorder"],
-body.dark_sat .sc div[data-sc-id="PreviousBestGuessingTitleBorder"],
-body.dark_sat .sc div[data-sc-id="CurrentBestGuessingTitleBorder"],
-body.dark_sat .sc div[data-sc-id="PreviousEffectTitleBorder"],
-body.dark_sat .sc div[data-sc-id="CurrentEffectTitleBorder"],
-body.dark_sat .sc div[data-sc-id="PreviousActiveUsersTitleBorder"],
-body.dark_sat .sc div[data-sc-id="CurrentActiveUsersTitleBorder"],
-body.dark_sat .sc span[data-sc-id="CurrentPeriodTitle"],
-body.dark_sat .sc span[data-sc-id="PreviousPeriodTitle"] {
+body.satDark div[data-sc-id="OverallTitleRow"],
+body.satDark div[data-sc-id="ActivityTitleRow"],
+body.satDark div[data-sc-id="OverallKPIRow"],
+body.satDark div[data-sc-id="IndividualKPIRow"],
+body.satDark .sc div[data-sc-id="PreviousMonthTitleBorder"],
+body.satDark .sc div[data-sc-id="CurrentMonthTitleBorder"],
+body.satDark .sc div[data-sc-id="PreviousBestGuessingTitleBorder"],
+body.satDark .sc div[data-sc-id="CurrentBestGuessingTitleBorder"],
+body.satDark .sc div[data-sc-id="PreviousEffectTitleBorder"],
+body.satDark .sc div[data-sc-id="CurrentEffectTitleBorder"],
+body.satDark .sc div[data-sc-id="PreviousActiveUsersTitleBorder"],
+body.satDark .sc div[data-sc-id="CurrentActiveUsersTitleBorder"],
+body.satDark .sc span[data-sc-id="CurrentPeriodTitle"],
+body.satDark .sc span[data-sc-id="PreviousPeriodTitle"] {
   background: var(--black3);
 }
 
-body.dark_sat .sc-ChartComposites .sc-advancedExpander-header {
+body.satDark .sc-ChartComposites .sc-advancedExpander-header {
   border-bottom: 1px solid var(--black2);
 }
-body.dark_sat
-  .sc-ChartComposites
-  .sc-advancedExpander
-  .sc-advancedExpander-header
-  > table
-  .sc-advancedExpander-header-title,
-.sc-ExperienceAnalyticsListControl
-  .sc-advancedExpander
-  .sc-advancedExpander-header
-  > table
-  .sc-advancedExpander-header-title {
+body.satDark .sc-ChartComposites .sc-advancedExpander .sc-advancedExpander-header > table .sc-advancedExpander-header-title,
+.sc-ExperienceAnalyticsListControl .sc-advancedExpander .sc-advancedExpander-header > table .sc-advancedExpander-header-title {
   color: var(--text);
 }
-body.dark_sat .sc-applicationContent-navigation {
+body.satDark .sc-applicationContent-navigation {
   background-color: var(--black3);
 }

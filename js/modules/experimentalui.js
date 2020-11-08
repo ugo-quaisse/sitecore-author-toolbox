@@ -36,7 +36,7 @@ const initExperimentalUi = (storage) => {
 
   //Load CSS
   if (storage.feature_experimentalui) {
-    document.body.classList.add("experimentalui");
+    document.body.classList.add("satExperimentalUi");
     getAccentColor();
   }
   if (storage.feature_contrast_icons === false) {
@@ -52,7 +52,7 @@ const insertSavebar = () => {
   //If preview mode
   let scPrimaryBtn = global.hasModePreview
     ? `<button class="primary scExitButton" onclick="javascript:return scForm.invoke('contenteditor:closepreview', event)">Close Panel</button>`
-    : `<button id="scPublishMenuMore" class="grouped" type="button">▾</button>
+    : `<button id="scPublishMenuMore" class="grouped" type="button"><span class="scPublishMenuMoreArrow">▾</span></button>
             <ul class="scPublishMenu">             
             <li onclick="javascript:return scForm.invoke('item:setpublishing', event)">Unpublish...</li>
             <li onclick="javascript:return scForm.postEvent(this,event,'item:publishingviewer(id=)')">Scheduler...</li>
@@ -282,12 +282,11 @@ const getAccentColor = () => {
   let color, text, brightness, invert;
   let storage = localStorage.getItem("scColorPicker");
   let root = document.documentElement;
-
   if (storage) {
     color = storage;
     text = setTextColour(color);
     text == "#ffffff" ? (brightness = 10) : (brightness = 0);
-    text == "#ffffff" ? (invert = 1) : (invert = 0);
+    text == "#ffffff" ? (invert = 0) : (invert = 1);
 
     root.style.setProperty("--accent", color);
     root.style.setProperty("--accentText", text);
@@ -428,9 +427,6 @@ const setInsertIcon = (treeNode) => {
   let activeClass = "";
   id == active ? (activeClass = "scInsertItemIconInverted") : false;
 
-  //Span text around a div to support text-overflow elipsis
-  //a.querySelector("span").innerHTML = itemIcon.outerHTML + `<div class="scItemName">` + itemName + `</div>`;
-
   //Remove existing Insert Icons
   document.querySelectorAll(".scInsertItemIcon").forEach((el) => {
     el.remove();
@@ -484,7 +480,7 @@ const setInsertIcon = (treeNode) => {
 const initInsertIcon = () => {
   let contentTree = document.querySelector(".scContentTree");
   let treeNode = document.querySelector(".scContentTreeContainer");
-  let node, nodeIcon, nodeContent;
+  let node, nodeId, nodeIcon, nodeContent;
   if (treeNode) {
     treeNode.addEventListener("mouseover", (event) => {
       if (event.path[1].classList.contains("scContentTreeNodeNormal") || event.path[1].classList.contains("scContentTreeNodeActive")) {
@@ -497,9 +493,21 @@ const initInsertIcon = () => {
       }
       //Updating html structure to allow text-overflow and avoid icons overlap
       if (node && !node.classList.contains("scNoOverlap")) {
+        nodeId = node.getAttribute("id").replace("Tree_Node_", "");
         nodeIcon = node.querySelector("span > img").src;
         nodeContent = node.querySelector("span").innerText;
-        node.querySelector("span").innerHTML = `<img src="` + nodeIcon + `" width="16" height="16" class="scContentTreeNodeIcon" alt="" border="0"><div>` + nodeContent + `</div>`;
+        node.querySelector("span").innerHTML =
+          `<img src="` +
+          nodeIcon +
+          `" width="16" height="16" class="scContentTreeNodeIcon" alt="" border="0"><div ondblclick="javascript:return scForm.postEvent(this,event,'item:rename(id={` +
+          nodeId.replace(
+            // eslint-disable-next-line prefer-named-capture-group
+            /([0-z]{8})([0-z]{4})([0-z]{4})([0-z]{4})([0-z]{12})/u,
+            "$1-$2-$3-$4-$5"
+          ) +
+          `})')">` +
+          nodeContent +
+          `</div>`;
         node.classList.add("scNoOverlap");
       }
     });
@@ -596,7 +604,9 @@ const initEventListeners = () => {
 
     //Publish menu
     if (document.querySelector(".scPublishMenu")) {
-      event.target.id == "scPublishMenuMore" ? document.querySelector(".scPublishMenu").classList.toggle("visible") : document.querySelector(".scPublishMenu").classList.remove("visible");
+      event.target.id == "scPublishMenuMore" || event.target.className == "scPublishMenuMoreArrow"
+        ? document.querySelector(".scPublishMenu").classList.toggle("visible")
+        : document.querySelector(".scPublishMenu").classList.remove("visible");
     }
 
     //More menu

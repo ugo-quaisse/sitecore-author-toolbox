@@ -108,18 +108,12 @@ const initMediaExplorer = (isExperimental = false) => {
   for (let item of mediaItems) {
     mediaId = item ? item.getAttribute("id") : false;
     //.replace("&h=72", "&h=300").replace("&w=72", "&w=300")
-    mediaThumbnail = item.querySelector(".scMediaBorder > img")
-      ? item.querySelector(".scMediaBorder > img").getAttribute("src").replace("&h=72", "&h=150").replace("&w=72", "&w=150")
-      : false;
-    mediaImage = item.querySelector(".scMediaBorder > img")
-      ? item.querySelector(".scMediaBorder > img").getAttribute("src").replace("&h=72", "").replace("&thn=1", "").replace("&w=72", "").replace("bc=white&", "")
-      : false;
+    mediaThumbnail = item.querySelector(".scMediaBorder > img") ? item.querySelector(".scMediaBorder > img").getAttribute("src").replace("&h=72", "&h=150").replace("&w=72", "&w=150") : false;
+    mediaImage = item.querySelector(".scMediaBorder > img") ? item.querySelector(".scMediaBorder > img").getAttribute("src").replace("&h=72", "").replace("&thn=1", "").replace("&w=72", "").replace("bc=white&", "") : false;
     mediaTitle = item.querySelector(".scMediaTitle") ? item.querySelector(".scMediaTitle").innerText : "--";
     mediaDimensions = item.querySelector(".scMediaDetails") ? item.querySelector(".scMediaDetails").innerText : "--";
     mediaWarning = item.querySelector(".scMediaValidation") ? item.querySelector(".scMediaValidation").innerText : "--";
-    mediaWarning = mediaWarning.includes(" warning")
-      ? mediaWarning.split(" warning")[0] + " warning" + setPlural(mediaWarning.split(" warning")[0])
-      : mediaWarning;
+    mediaWarning = mediaWarning.includes(" warning") ? mediaWarning.split(" warning")[0] + " warning" + setPlural(mediaWarning.split(" warning")[0]) : mediaWarning;
     //iconWarningMedia
     mediaUsage = item.querySelector(".scMediaUsages") ? item.querySelector(".scMediaUsages").innerText : "not used";
     mediaFolder = mediaImage.includes("/folder.png") ? "Folder" : "--";
@@ -193,16 +187,12 @@ const initMediaExplorer = (isExperimental = false) => {
 
   if (scMediaSortPos != null) {
     setTimeout(function () {
-      document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos]
-        ? document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos].click()
-        : false;
+      document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos] ? document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos].click() : false;
     }, 250);
   }
   if (scMediaSortOrder == -1) {
     setTimeout(function () {
-      document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos]
-        ? document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos].click()
-        : false;
+      document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos] ? document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos].click() : false;
     }, 270);
   }
 };

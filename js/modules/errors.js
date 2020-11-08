@@ -14,9 +14,9 @@ const initGroupedErrors = (storage) => {
 
     //Prepare HTML
     var scMessageErrors =
-      '<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' +
+      `<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(` +
       global.iconError +
-      ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">';
+      `)"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">`;
 
     for (let item of scErrors) {
       if (item.getAttribute("src") != "/sitecore/shell/themes/standard/images/bullet_square_yellow.png") {

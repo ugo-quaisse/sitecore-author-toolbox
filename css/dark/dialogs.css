@@ -3,129 +3,129 @@
  * dialogs.css
  */
 
-body.dark_sat form {
+body.satDark form {
   color: var(--text) !important;
 }
 
-body.dark_sat .scFormDialogFooter {
+body.satDark .scFormDialogFooter {
   background-color: var(--black1) !important;
   border-top: 1px solid var(--black3) !important;
 }
 
-body.dark_sat .scDialogMessage {
+body.satDark .scDialogMessage {
   color: #cccccc !important;
 }
 
-body.dark_sat .DialogHeaderDescription {
+body.satDark .DialogHeaderDescription {
   padding: 10px 75px 10px 15px;
-  background-color: var(--black2);
+  background-color: var(--black1);
   color: var(--black9);
 }
 
-body.dark_sat .NoProfilesText {
+body.satDark .NoProfilesText {
   color: var(--black6);
 }
 
 /* jquery overwrite */
 
-body.dark_sat .ui-dialog {
+body.satDark .ui-dialog {
   box-shadow: 0 5px 50px rgb(0, 0, 0) !important;
 }
 
-body.dark_sat .ui-dialog-titlebar,
-body.dark_sat .ui-dialog .ui-dialog-titlebar {
+body.satDark .ui-dialog-titlebar,
+body.satDark .ui-dialog .ui-dialog-titlebar {
   background-color: var(--black1) !important;
 }
 
-body.dark_sat .scFormDialogHeader .DialogHeader,
-body.dark_sat .ui-dialog .ui-dialog-titlebar + .DialogHeader {
+body.satDark .scFormDialogHeader .DialogHeader,
+body.satDark .ui-dialog .ui-dialog-titlebar + .DialogHeader {
   background: var(--black1) !important;
   color: #fff;
 }
 
-body.dark_sat .ui-widget-content {
+body.satDark .ui-widget-content {
   background-color: var(--black2) !important;
 }
 
-body.dark_sat .scFormDialogHeader,
-body.dark_sat .scDialogHeader,
-body.dark_sat .ui-widget-header {
+body.satDark .scFormDialogHeader,
+body.satDark .scDialogHeader,
+body.satDark .ui-widget-header {
   color: var(--white);
   background-color: var(--black1) !important;
 }
 
-body.dark_sat .ui-progressbar-value {
+body.satDark .ui-progressbar-value {
   background-color: #00b6ff !important;
 }
 
-body.dark_sat .scNavButton:hover,
-body.dark_sat .scCalendarYearLeftCell:hover,
-body.dark_sat .scCalendarYearRightCell:hover {
+body.satDark .scNavButton:hover,
+body.satDark .scCalendarYearLeftCell:hover,
+body.satDark .scCalendarYearRightCell:hover {
   background: #e3e3e3;
 }
 
-body.dark_sat .scOverlay,
-body.dark_sat .ui-widget-overlay {
-  background: rgba(255, 255, 255, 0.05) !important;
+body.satDark .scOverlay,
+body.satDark .ui-widget-overlay {
+  background: rgba(255, 255, 255, 0.3) !important;
 }
 
-body.dark_sat #SettingsPane {
+body.satDark #SettingsPane {
   background: var(--black) !important;
 }
 
-body.dark_sat #FooterRow {
+body.satDark #FooterRow {
   border-top: 1px solid var(--black2);
 }
-body.dark_sat #Editors,
-body.dark_sat #MainPanel,
-body.dark_sat .scValidatorPanel,
-body.dark_sat .scEditorSections {
+body.satDark #Editors,
+body.satDark #MainPanel,
+body.satDark .scValidatorPanel,
+body.satDark .scEditorSections {
   background-color: var(--black3) !important;
 }
 
-body.dark_sat #FooterRow {
+body.satDark #FooterRow {
   background: var(--black2) !important;
 }
-body.dark_sat #Renderings,
-body.dark_sat #placeholders {
+body.satDark #Renderings,
+body.satDark #placeholders {
   color: var(--black5);
 }
-body.dark_sat .scEditorInformation {
+body.satDark .scEditorInformation {
   background-color: var(--lightblue) !important;
 }
-body.dark_sat .standardWindowCaption {
+body.satDark .standardWindowCaption {
   background-color: var(--black1) !important;
 }
-body.dark_sat .spe-secured-app .scEditorWarningOption {
+body.satDark .spe-secured-app .scEditorWarningOption {
   color: #897a2e !important;
 }
-body.dark_sat .top-row {
+body.satDark .top-row {
   background-color: var(--black3) !important;
 }
-body.dark_sat .sc-kpi {
+body.satDark .sc-kpi {
   background-color: var(--black2) !important;
 }
-body.dark_sat .pick-button,
-body.dark_sat .display-off,
-body.dark_sat .item-picker {
+body.satDark .pick-button,
+body.satDark .display-off,
+body.satDark .item-picker {
   background-color: var(--black1) !important;
 }
-body.dark_sat .pick-button:hover {
+body.satDark .pick-button:hover {
   background-color: #69a8d0 !important;
 }
 
-body.dark_sat .scEditHtmlButtons {
+body.satDark .scEditHtmlButtons {
   background: var(--black2);
   border-top: #333 1px solid;
 }
 
-body.dark_sat .sc .sc-smartpanel-wrapper {
+body.satDark .sc .sc-smartpanel-wrapper {
   background: var(--black2);
   color: var(--text);
 }
 
-body.dark_sat .sc .sc-smartpanel-buttons,
-body.dark_sat .sc .sc-smartpanel-header {
+body.satDark .sc .sc-smartpanel-buttons,
+body.satDark .sc .sc-smartpanel-header {
   background: var(--black1);
   color: var(--text);
 }

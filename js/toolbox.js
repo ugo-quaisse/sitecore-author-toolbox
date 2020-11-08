@@ -42,7 +42,7 @@ chrome.storage.sync.get((storage) => {
     /**
      * Load extra JS and CSS
      */
-    document.body.classList.add("loaded");
+    document.body.classList.add("satExtension");
     loadJsFile("js/inject.js");
 
     /**
@@ -963,6 +963,48 @@ chrome.storage.sync.get((storage) => {
       : false;
 
     /**
+     * Tooltip components
+     */
+    if (!global.isRibbon && !global.isModalDialogs) {
+      target = document.querySelector("body");
+      observer = new MutationObserver(function (mutation) {
+        mutation.forEach(function (el) {
+          if (el.addedNodes[0]) {
+            var node = el.addedNodes[0];
+            var title;
+            if (el.addedNodes[0].className == "scInsertionHandle") {
+              // eslint-disable-next-line newline-per-chained-call
+              title = node.getAttribute("title").toLowerCase().split("'")[1].split("'")[0];
+              node.insertAdjacentHTML("beforeend", "<span class='scAddRendering'>Add component here</span>");
+              if (title != null && title != "") {
+                node.setAttribute("data-tooltip", "Placeholder: " + title);
+                node.classList.add("t-top");
+                node.classList.add("t-md");
+                node.removeAttribute("title");
+              }
+            } else if (el.addedNodes[0] && el.addedNodes[0].className == "scSortingHandle") {
+              // eslint-disable-next-line newline-per-chained-call
+              title = node.getAttribute("title").toLowerCase().split("'")[1].split("'")[0];
+              node.insertAdjacentHTML("beforeend", "<span class='scAddRendering'>Move component here</span>");
+              if (title != null && title != "") {
+                node.setAttribute("data-tooltip", "Placeholder: " + title);
+                node.classList.add("t-top");
+                node.classList.add("t-md");
+                node.removeAttribute("title");
+              }
+            }
+          }
+        });
+      });
+      //Observer
+      target
+        ? observer.observe(target, {
+            childList: true,
+          })
+        : false;
+    }
+
+    /**
      * Tooltip bar
      */
     target = document.querySelector(".scChromeControls");
@@ -1037,7 +1079,7 @@ chrome.storage.sync.get((storage) => {
       (storage.feature_darkmode && storage.feature_darkmode_auto && global.isInsertPage && currentColorScheme() == "dark")
     ) {
       //Experience Editor buttons
-      document.body.classList.add("dark_sat");
+      document.body.classList.add("satDark");
       // loadCssFile("css/dark/experience.min.css");
     }
 

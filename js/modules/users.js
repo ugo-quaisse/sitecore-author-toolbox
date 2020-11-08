@@ -10,8 +10,7 @@ export { getGravatar };
 const getGravatar = (email, size = "170", type = "robohash") => {
   //Type = [ 404 | mp | identicon | monsterid | wavatar | retro | robohash | blank ]
   var md5 = calcMD5(email);
-  var link =
-    "https://www.gravatar.com/avatar/" + md5 + "?s=" + size + "&d=" + type;
+  var link = "https://www.gravatar.com/avatar/" + md5 + "?s=" + size + "&d=" + type;
 
   return link;
 };

@@ -25,10 +25,7 @@ const insertLaunchpadIcon = (storage, currentScheme) => {
   if (storage.feature_launchpad_tiles) {
     //Inject CSS
     loadCssFile("css/tilelaunchpad.min.css");
-    if (
-      (storage.feature_darkmode && !storage.feature_darkmode_auto) ||
-      (storage.feature_darkmode && storage.feature_darkmode_auto && currentScheme == "dark")
-    ) {
+    if ((storage.feature_darkmode && !storage.feature_darkmode_auto) || (storage.feature_darkmode && storage.feature_darkmode_auto && currentScheme == "dark")) {
       loadCssFile("css/dark/tilelaunchpad.min.css");
     }
   }

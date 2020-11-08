@@ -1,15 +1,15 @@
-body.dark_sat ::-webkit-scrollbar {
+body.satDark ::-webkit-scrollbar {
   width: 12px !important;
   height: 12px !important;
 }
 
-body.dark_sat ::-webkit-scrollbar-thumb {
+body.satDark ::-webkit-scrollbar-thumb {
   border-radius: 0px !important;
   background: var(--black5) !important;
   box-shadow: none !important;
 }
 
-body.dark_sat ::-webkit-scrollbar-track {
+body.satDark ::-webkit-scrollbar-track {
   border-radius: 0px !important;
   box-shadow: none !important;
 }

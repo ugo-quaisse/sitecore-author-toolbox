@@ -1,12 +1,12 @@
-body.dark_sat .sc {
+body.satDark .sc {
   background-color: var(--black2) !important;
 }
 
-body.dark_sat .scGalleryOuterFrame {
+body.satDark .scGalleryOuterFrame {
   border: 1px solid var(--black9);
 }
 
-body.dark_sat .scGalleryInnerFrame {
+body.satDark .scGalleryInnerFrame {
   background: var(--black9);
   border: 1px solid var(--black6);
 }

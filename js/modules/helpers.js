@@ -15,24 +15,7 @@
 
 import * as global from "./global.js";
 
-export {
-  consoleLog,
-  loadCssFile,
-  loadJsFile,
-  exeJsCode,
-  currentColorScheme,
-  initDarkMode,
-  initDarkModeEditor,
-  autoDarkMode,
-  sitecoreItemJson,
-  fetchTimeout,
-  getScItemData,
-  setPlural,
-  setTextColour,
-  repositionElement,
-  startDrag,
-  calcMD5,
-};
+export { consoleLog, loadCssFile, loadJsFile, exeJsCode, currentColorScheme, initDarkMode, initDarkModeEditor, autoDarkMode, sitecoreItemJson, fetchTimeout, getScItemData, setPlural, setTextColour, repositionElement, startDrag, calcMD5 };
 
 /**
  * Show message in console
@@ -84,18 +67,7 @@ const consoleLog = (message, color = "yellow") => {
       break;
   }
 
-  global.debug
-    ? console.info(
-        "%c " + message + " ",
-        "font-size: " +
-          fontSize +
-          "; background: " +
-          bgColor +
-          "; color: " +
-          txtColor +
-          "; border-radius:5px; padding 3px;"
-      )
-    : false;
+  global.debug ? console.info("%c " + message + " ", "font-size: " + fontSize + "; background: " + bgColor + "; color: " + txtColor + "; border-radius:5px; padding 3px;") : false;
 };
 
 /**
@@ -134,10 +106,7 @@ const exeJsCode = (code) => {
  */
 const currentColorScheme = () => {
   let color = "light";
-  if (
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
+  if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
     color = "dark";
   } else {
     color = "light";
@@ -174,10 +143,16 @@ const initDarkMode = (storage) => {
       !global.isAdmin &&
       currentColorScheme() == "dark")
   ) {
-    document.body.classList.add("dark_sat");
-    navigator.platform.indexOf("Win") == 0
-      ? loadCssFile("css/dark/scrollbars.min.css")
-      : false;
+    document.body.classList.add("satDark");
+    //Add correct bg color for jquerymodal window
+    try {
+      window.frameElement.parentNode.querySelector(".ui-dialog-titlebar").style.backgroundColor = "#111";
+      // eslint-disable-next-line no-catch-shadow
+    } catch (e) {
+      //Error
+    }
+    //Add custom csss for scrollbar on windows
+    navigator.platform.indexOf("Win") == 0 ? loadCssFile("css/dark/scrollbars.min.css") : false;
 
     return true;
   }
@@ -189,12 +164,7 @@ const initDarkMode = (storage) => {
 // eslint-disable-next-line consistent-return
 const initDarkModeEditor = (storage) => {
   let darkModeTheme = "default";
-  if (
-    (storage.feature_darkmode && !storage.feature_darkmode_auto) ||
-    (storage.feature_darkmode &&
-      storage.feature_darkmode_auto &&
-      currentColorScheme() == "dark")
-  ) {
+  if ((storage.feature_darkmode && !storage.feature_darkmode_auto) || (storage.feature_darkmode && storage.feature_darkmode_auto && currentColorScheme() == "dark")) {
     darkModeTheme = "ayu-dark";
     loadCssFile("css/dark/ayu-dark.css");
   }
@@ -209,9 +179,7 @@ const autoDarkMode = (storage) => {
   if (storage.feature_darkmode && storage.feature_darkmode_auto) {
     const scheme = window.matchMedia("(prefers-color-scheme: dark)");
     scheme.addEventListener("change", () => {
-      scheme.matches
-        ? document.body.classList.add("dark_sat")
-        : document.body.classList.remove("dark_sat");
+      scheme.matches ? document.body.classList.add("satDark") : document.body.classList.remove("satDark");
     });
   }
 };
@@ -240,24 +208,9 @@ const sitecoreItemJson = (itemID, languageID, versionID) => {
 
     //Save data
     chrome.storage.sync.set({ scData }, function () {
-      global.debug
-        ? console.info(
-            "%c [Write] Item : " + itemID + " ",
-            "font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;"
-          )
-        : false;
-      global.debug
-        ? console.info(
-            "%c [Write] Language : " + languageID + " ",
-            "font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;"
-          )
-        : false;
-      global.debug
-        ? console.info(
-            "%c [Write] Version : " + versionID + " ",
-            "font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;"
-          )
-        : false;
+      global.debug ? console.info("%c [Write] Item : " + itemID + " ", "font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;") : false;
+      global.debug ? console.info("%c [Write] Language : " + languageID + " ", "font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;") : false;
+      global.debug ? console.info("%c [Write] Version : " + versionID + " ", "font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;") : false;
 
       return scData;
     });
@@ -272,40 +225,15 @@ const getScItemData = () => {
   var dom = document.querySelectorAll(".scEditorQuickInfo  > tbody > tr");
 
   for (var tr of dom) {
-    tr.cells[0].innerText == "Item ID:" && tr.cells[1].querySelector("input")
-      ? (scItem.id = tr.cells[1].querySelector("input").value.toLowerCase())
-      : false;
-    tr.cells[0].innerText == "Item name:" && tr.cells[1]
-      ? (scItem.name = tr.cells[1].innerText.toLowerCase())
-      : false;
-    tr.cells[0].innerText == "Item path:" && tr.cells[1].querySelector("input")
-      ? (scItem.path = tr.cells[1].querySelector("input").value.toLowerCase())
-      : false;
-    tr.cells[0].innerText == "Template:" && tr.cells[1].querySelector("a")
-      ? (scItem.template = tr.cells[1]
-          .querySelector("a")
-          .innerText.toLowerCase())
-      : false;
-    tr.cells[0].innerText == "Template:" && tr.cells[1].querySelector("input")
-      ? (scItem.templateId = tr.cells[1]
-          .querySelector("input")
-          .value.toLowerCase())
-      : false;
-    tr.cells[0].innerText == "Created from:" && tr.cells[1]
-      ? (scItem.from = tr.cells[1].innerText.toLowerCase())
-      : false;
-    tr.cells[0].innerText == "Item owner:" && tr.cells[1].querySelector("input")
-      ? (scItem.owner = tr.cells[1].querySelector("input").value.toLowerCase())
-      : false;
-    scItem.language = document.querySelector("#scLanguage")
-      ? document.querySelector("#scLanguage").value.toLowerCase()
-      : "en";
-    scItem.version = document.querySelector(
-      ".scEditorHeaderVersionsVersion > span"
-    )
-      ? document.querySelector(".scEditorHeaderVersionsVersion > span")
-          .innerText
-      : "1";
+    tr.cells[0].innerText == "Item ID:" && tr.cells[1].querySelector("input") ? (scItem.id = tr.cells[1].querySelector("input").value.toLowerCase()) : false;
+    tr.cells[0].innerText == "Item name:" && tr.cells[1] ? (scItem.name = tr.cells[1].innerText.toLowerCase()) : false;
+    tr.cells[0].innerText == "Item path:" && tr.cells[1].querySelector("input") ? (scItem.path = tr.cells[1].querySelector("input").value.toLowerCase()) : false;
+    tr.cells[0].innerText == "Template:" && tr.cells[1].querySelector("a") ? (scItem.template = tr.cells[1].querySelector("a").innerText.toLowerCase()) : false;
+    tr.cells[0].innerText == "Template:" && tr.cells[1].querySelector("input") ? (scItem.templateId = tr.cells[1].querySelector("input").value.toLowerCase()) : false;
+    tr.cells[0].innerText == "Created from:" && tr.cells[1] ? (scItem.from = tr.cells[1].innerText.toLowerCase()) : false;
+    tr.cells[0].innerText == "Item owner:" && tr.cells[1].querySelector("input") ? (scItem.owner = tr.cells[1].querySelector("input").value.toLowerCase()) : false;
+    scItem.language = document.querySelector("#scLanguage") ? document.querySelector("#scLanguage").value.toLowerCase() : "en";
+    scItem.version = document.querySelector(".scEditorHeaderVersionsVersion > span") ? document.querySelector(".scEditorHeaderVersionsVersion > span").innerText : "1";
   }
 
   return scItem;
@@ -356,11 +284,7 @@ function startDrag() {
         window.addEventListener(
           "mouseup",
           function () {
-            contextmenu.removeEventListener(
-              "mousemove",
-              repositionElement,
-              false
-            );
+            contextmenu.removeEventListener("mousemove", repositionElement, false);
           },
           false
         );
@@ -381,10 +305,7 @@ const setTextColour = (hex) => {
   rgb[2] = bigint & 255;
 
   // http://www.w3.org/TR/AERT#color-contrast
-  const brightness = Math.round(
-    (parseInt(rgb[0]) * 299 + parseInt(rgb[1]) * 587 + parseInt(rgb[2]) * 114) /
-      1000
-  );
+  const brightness = Math.round((parseInt(rgb[0]) * 299 + parseInt(rgb[1]) * 587 + parseInt(rgb[2]) * 114) / 1000);
   const textColour = brightness > 170 ? "#111111" : "#ffffff";
 
   return textColour;
@@ -398,33 +319,7 @@ const setTextColour = (hex) => {
  * See http://pajhome.org.uk/site/legal.html for details.
  */
 
-let srt,
-  a,
-  b,
-  c,
-  d,
-  e,
-  f,
-  g,
-  h,
-  i,
-  j,
-  k,
-  l,
-  m,
-  n,
-  o,
-  p,
-  q,
-  r,
-  s,
-  t,
-  u,
-  v,
-  w,
-  x,
-  y,
-  z;
+let srt, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z;
 
 /*
  * Convert a 32-bit number to a hex string with ls-byte first
@@ -432,10 +327,7 @@ let srt,
 var hex_chr = "0123456789abcdef";
 function rhex(num) {
   var str = "";
-  for (var j = 0; j <= 3; j++)
-    str +=
-      hex_chr.charAt((num >> (j * 8 + 4)) & 0x0f) +
-      hex_chr.charAt((num >> (j * 8)) & 0x0f);
+  for (var j = 0; j <= 3; j++) str += hex_chr.charAt((num >> (j * 8 + 4)) & 0x0f) + hex_chr.charAt((num >> (j * 8)) & 0x0f);
 
   return str;
 }
@@ -448,8 +340,7 @@ function str2blks_MD5(str) {
   var nblk = ((str.length + 8) >> 6) + 1;
   var blks = new Array(nblk * 16);
   for (var i = 0; i < nblk * 16; i++) blks[i] = 0;
-  for (i = 0; i < str.length; i++)
-    blks[i >> 2] |= str.charCodeAt(i) << ((i % 4) * 8);
+  for (i = 0; i < str.length; i++) blks[i >> 2] |= str.charCodeAt(i) << ((i % 4) * 8);
   blks[i >> 2] |= 0x80 << ((i % 4) * 8);
   blks[nblk * 16 - 2] = str.length * 8;
 

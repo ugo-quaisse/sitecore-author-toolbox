@@ -1,29 +1,29 @@
-body.dark_sat .sc-applicationContent-main {
+body.satDark .sc-applicationContent-main {
   background-color: #2b2b2b;
 }
 
-body.dark_sat .sc-launchpad-item {
+body.satDark .sc-launchpad-item {
   border-color: #353535;
   background-color: #1f1f1f;
   color: #eee;
 }
 
-body.dark_sat .sc-launchpad-item:hover {
+body.satDark .sc-launchpad-item:hover {
   border-color: #020202;
   background-color: #0e0e0e;
   color: #eee;
 }
 
-body.dark_sat .sc .sc-border[data-sc-id="AnalyticsFallback"] {
+body.satDark .sc .sc-border[data-sc-id="AnalyticsFallback"] {
   background: #1f1f1f;
   color: #fff;
 }
 
-body.dark_sat .sc .sc-text-largetitle {
+body.satDark .sc .sc-text-largetitle {
   color: #969696;
 }
 
-body.dark_sat .sc .sc-border[data-sc-id="FallbackMessageWrap"] {
+body.satDark .sc .sc-border[data-sc-id="FallbackMessageWrap"] {
   border-color: #474747;
   color: #969696;
 }

@@ -1,112 +1,108 @@
-body.dark_sat a,
-body.dark_sat a:active,
-body.dark_sat a:visited {
+body.satDark a,
+body.satDark a:active,
+body.satDark a:visited {
   color: var(--text);
 }
 
-body.dark_sat a:link {
+body.satDark a:link {
   color: var(--text) !important;
 }
 
-body.dark_sat #Editor_contentIframe a,
-body.dark_sat #Editor_contentIframe a:active,
-body.dark_sat #Editor_contentIframe a:visited {
+body.satDark #Editor_contentIframe a,
+body.satDark #Editor_contentIframe a:active,
+body.satDark #Editor_contentIframe a:visited {
   color: var(--blue) !important;
 }
 
-body.dark_sat .scButtons > .scButton {
+body.satDark .scButtons > .scButton {
   background-image: linear-gradient(var(--blue) 0%, var(--blue) 100%);
 }
 
-body.dark_sat .scInstantSearch {
+body.satDark .scInstantSearch {
   background-color: #111111 !important;
   color: #cccccc !important;
   border: 1px solid #222222 !important;
 }
-body.dark_sat .scInstantSearch:focus {
+body.satDark .scInstantSearch:focus {
   background-color: var(--white) !important;
   color: #333333 !important;
 }
-body.dark_sat .scInstantSearch::placeholder {
+body.satDark .scInstantSearch::placeholder {
   color: #777 !important;
 }
 
-body.dark_sat input:not([type]),
-body.dark_sat input[type="text"]:not(.scInstantSearch),
-body.dark_sat input[type="password"],
-body.dark_sat input[type="file"],
-body.dark_sat select,
-body.dark_sat textarea {
+body.satDark input:not([type]),
+body.satDark input[type="text"]:not(.scInstantSearch),
+body.satDark input[type="password"],
+body.satDark input[type="file"],
+body.satDark select,
+body.satDark textarea {
   color: var(--text) !important;
   background-color: var(--black2) !important;
   border: 1px solid var(--black4) !important;
 }
 
-body.dark_sat input:not([type]):focus,
-body.dark_sat input[type="text"]:focus,
-body.dark_sat input[type="password"]:focus,
-body.dark_sat input[type="file"]:focus,
-body.dark_sat select:focus,
-body.dark_sat textarea:focus {
+body.satDark input:not([type]):focus,
+body.satDark input[type="text"]:focus,
+body.satDark input[type="password"]:focus,
+body.satDark input[type="file"]:focus,
+body.satDark select:focus,
+body.satDark textarea:focus {
   border: 1px solid rgba(14, 99, 156, 0.8) !important;
   box-shadow: 0 0 4px rgba(14, 99, 156, 0.3) !important;
 }
 
-body.dark_sat input[disabled]:not([type]),
-body.dark_sat input[type="text"][disabled],
-body.dark_sat input[type="password"][disabled],
-body.dark_sat input[type="file"][disabled],
-body.dark_sat input[readonly]:not([type]),
-body.dark_sat input[type="text"][readonly],
-body.dark_sat input[type="password"][readonly] select[disabled] {
+body.satDark input[disabled]:not([type]),
+body.satDark input[type="text"][disabled],
+body.satDark input[type="password"][disabled],
+body.satDark input[type="file"][disabled],
+body.satDark input[readonly]:not([type]),
+body.satDark input[type="text"][readonly],
+body.satDark input[type="password"][readonly] select[disabled] {
   background-color: #e3e3e3;
 }
 
-body.dark_sat input[disabled],
-body.dark_sat select[disabled] {
+body.satDark input[disabled],
+body.satDark select[disabled] {
   background-color: #e3e3e3;
 }
-body.dark_sat .scHorizontalLine {
+body.satDark .scHorizontalLine {
   background-color: #dbdbdb;
 }
 
-body.dark_sat .scBlackHorizontalLine {
+body.satDark .scBlackHorizontalLine {
   background-color: black;
 }
 
-body.dark_sat .scFormTable > tbody > tr > td:first-child {
+body.satDark .scFormTable > tbody > tr > td:first-child {
   color: var(--text);
 }
 
 /* buttons*/
-body.dark_sat #CancelButton,
-body.dark_sat #Cancel {
+body.satDark #CancelButton,
+body.satDark #Cancel {
   background: var(--black3) !important;
   color: var(--white);
 }
 
-body.dark_sat .scButton,
-body.dark_sat input[type="submit"] {
+body.satDark .scButton,
+body.satDark input[type="submit"] {
   border: 1px solid var(--black1) !important;
   background-color: var(--black2) !important;
   background: linear-gradient(to bottom, var(--text) 0%, var(--text) 100%);
 }
 
-body.dark_sat .scButton:hover,
-body.dark_sat input[type="submit"]:hover {
+body.satDark .scButton:hover,
+body.satDark input[type="submit"]:hover {
   border-color: var(--black) !important;
   background-color: var(--black) !important;
   color: var(--blue) !important;
 }
 
-body.dark_sat .scButton:active,
-body.dark_sat input[type="submit"]:active {
+body.satDark .scButton:active,
+body.satDark input[type="submit"]:active {
   background-color: #d1d1d1;
-  background-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    transparent 100%
-  );
+  background-image: linear-gradient(to bottom, transparent 0%, transparent 100%);
   background-repeat: repeat-x;
   box-shadow: inset 0 0px 6px transparent !important;
   background-image: none;
@@ -115,9 +111,9 @@ body.dark_sat input[type="submit"]:active {
   color: var(--text) !important;
 }
 
-body.dark_sat .scButton[disabled],
-body.dark_sat .scButton[disabled]:hover,
-body.dark_sat .scButton[disabled]:active {
+body.satDark .scButton[disabled],
+body.satDark .scButton[disabled]:hover,
+body.satDark .scButton[disabled]:active {
   background-color: #d1d1d1;
   background-image: none;
   opacity: 0.4;
@@ -126,693 +122,661 @@ body.dark_sat .scButton[disabled]:active {
   color: #5e5e5e;
 }
 
-body.dark_sat .scButtonPrimary,
-body.dark_sat input[type="submit"].scButtonPrimary {
-  background-repeat: repeat-x;
-  border-color: var(--lightblue) !important;
-  box-shadow: inset 0 1px #5dbadf;
-  color: var(--text);
-  background-color: var(--blue);
-  background-image: linear-gradient(
-    to bottom,
-    var(--blue) 0%,
-    var(--blue) 100%
-  );
-  border-radius: 4px;
+body.satDark .scButtonPrimary,
+body.satDark input[type="submit"].scButtonPrimary {
+  color: var(--text) !important;
+  border-color: var(--blue) !important;
+  box-shadow: inset 0 1px transparent;
+  background-color: var(--blue) !important;
+  background-image: none;
 }
 
-body.dark_sat .scButtonPrimary:hover,
-body.dark_sat input[type="submit"].scButtonPrimary:hover {
-  background-repeat: repeat-x;
+body.satDark .scButtonPrimary:hover,
+body.satDark input[type="submit"].scButtonPrimary:hover {
   color: var(--text) !important;
   border-color: var(--lightblue);
-  background-color: var(--blue);
-  background-position: 0 0;
-  background-image: linear-gradient(
-    to bottom,
-    var(--blue) 0%,
-    var(--blue) 100%
-  );
+  background-color: var(--lightblue);
+  background-image: none;
 }
 
-body.dark_sat .scButtonPrimary:active,
-body.dark_sat input[type="submit"].scButtonPrimary:active {
-  background-color: var(--blue);
-  background-image: linear-gradient(
-    to bottom,
-    var(--blue) 0%,
-    var(--blue) 100%
-  );
-  box-shadow: inset 0 3px 3px var(--blue);
-  border-color: var(--blue);
+body.satDark .scButtonPrimary:active,
+body.satDark input[type="submit"].scButtonPrimary:active {
+  color: var(--text) !important;
+  border-color: var(--lightblue);
+  background-color: var(--lightblue);
+  background-image: none;
 }
 
-body.dark_sat .ie9 .scButton:hover,
-body.dark_sat .ie9 input[type="submit"]:hover {
+body.satDark .ie9 .scButton:hover,
+body.satDark .ie9 input[type="submit"]:hover {
   background: #f0f0f0;
 }
 
-body.dark_sat .ie9 .scButton:active,
-body.dark_sat .ie9 input[type="submit"]:active {
+body.satDark .ie9 .scButton:active,
+body.satDark .ie9 input[type="submit"]:active {
   background: #d9d9d9;
 }
 
-body.dark_sat .ie9 .scButtonPrimary:hover {
+body.satDark .ie9 .scButtonPrimary:hover {
   background: var(--blue);
 }
 
-body.dark_sat .ie9 .scButtonPrimary:active {
+body.satDark .ie9 .scButtonPrimary:active {
   background: var(--blue);
 }
 
-body.dark_sat .scWizardSmallIcon {
+body.satDark .scWizardSmallIcon {
   border: 2px solid white;
 }
 
-body.dark_sat .scWizardButtons {
+body.satDark .scWizardButtons {
   background-color: var(--black1) !important;
   border-top: 1px solid var(--black3) !important;
 }
 
-body.dark_sat .scWizardFirstPageLeftPanel,
-body.dark_sat .scWizardLastPageLeftPanel {
+body.satDark .scWizardFirstPageLeftPanel,
+body.satDark .scWizardLastPageLeftPanel {
   background: #123960;
 }
 
-body.dark_sat .scWizardFirstPageContent,
-body.dark_sat .scWizardLastPageContent {
+body.satDark .scWizardFirstPageContent,
+body.satDark .scWizardLastPageContent {
   background: white;
 }
 
-body.dark_sat .scCalendarDay {
+body.satDark .scCalendarDay {
   color: #969696;
 }
 
-body.dark_sat .scCalendarSelected {
+body.satDark .scCalendarSelected {
   background-color: #d0ebf6;
   color: var(--black1);
 }
 
-body.dark_sat td.scCalendarCell:hover,
-body.dark_sat td.scCalendarToday:hover {
+body.satDark td.scCalendarCell:hover,
+body.satDark td.scCalendarToday:hover {
   background-color: #e3e3e3;
   color: var(--black1);
 }
 
-body.dark_sat .scCalendarCellOtherMonth {
+body.satDark .scCalendarCellOtherMonth {
   color: #969696;
 }
 
-body.dark_sat .scCalendarTodayCell {
+body.satDark .scCalendarTodayCell {
   border-top: 1px solid #f0f0f0;
 }
 
-body.dark_sat .scDatePickerComboBox[disabled] .scComboboxDropDown,
-body.dark_sat .scTimePickerComboBox[disabled] .scComboboxDropDown {
+body.satDark .scDatePickerComboBox[disabled] .scComboboxDropDown,
+body.satDark .scTimePickerComboBox[disabled] .scComboboxDropDown {
   background-color: #e3e3e3;
 }
 
-body.dark_sat .scDatePickerComboBox[disabled] .scComboboxEdit,
-body.dark_sat .scTimePickerComboBox[disabled] .scComboboxEdit {
+body.satDark .scDatePickerComboBox[disabled] .scComboboxEdit,
+body.satDark .scTimePickerComboBox[disabled] .scComboboxEdit {
   background-color: #e3e3e3 !important;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075) !important;
 }
 
-body.dark_sat .scTimePicker a:hover {
+body.satDark .scTimePicker a:hover {
   background-color: #e3e3e3;
   color: var(--black1);
 }
 
-body.dark_sat .scTimePicker a:active {
+body.satDark .scTimePicker a:active {
   background-color: #d0ebf6;
 }
 
-body.dark_sat .scCombobuttonMain {
+body.satDark .scCombobuttonMain {
   color: white;
 }
 
-body.dark_sat .scCombobuttonEditorMain {
+body.satDark .scCombobuttonEditorMain {
   border: 1px solid #f0cca5;
 
   color: black;
 }
 
-body.dark_sat .scCombobuttonEditorMain_Disabled {
+body.satDark .scCombobuttonEditorMain_Disabled {
   border: 1px solid #f0cca5;
 }
 
-body.dark_sat .scCombobuttonMain_Down,
-body.dark_sat .scCombobuttonEditorMain_Down {
+body.satDark .scCombobuttonMain_Down,
+body.satDark .scCombobuttonEditorMain_Down {
   border: 1px solid #4a4a4a;
 
   color: white;
 }
 
-body.dark_sat .scCombobuttonMain_Hover,
-body.dark_sat .scCombobuttonEditorMain_Hover {
+body.satDark .scCombobuttonMain_Hover,
+body.satDark .scCombobuttonEditorMain_Hover {
   border: 1px solid #242424;
 
   color: white;
 }
 
-body.dark_sat .scCombobuttonMain_Hot,
-body.dark_sat .scCombobuttonEditorMain_Hot {
+body.satDark .scCombobuttonMain_Hot,
+body.satDark .scCombobuttonEditorMain_Hot {
   border: 1px solid #242424;
 
   color: white;
 }
 
-body.dark_sat .scCombobuttonEditorDrop {
+body.satDark .scCombobuttonEditorDrop {
   border: 1px solid #f0cca5;
 }
 
-body.dark_sat .scCombobuttonEditorDrop_Disabled {
+body.satDark .scCombobuttonEditorDrop_Disabled {
   border: 1px solid #f0cca5;
 }
 
-body.dark_sat .scCombobuttonDrop_Down,
-body.dark_sat .scCombobuttonEditorDrop_Down {
+body.satDark .scCombobuttonDrop_Down,
+body.satDark .scCombobuttonEditorDrop_Down {
   border: 1px solid #242424;
   border-left: 1px solid #6e7475;
 }
 
-body.dark_sat .scCombobuttonDrop_Hover,
-body.dark_sat .scCombobuttonEditorDrop_Hover {
+body.satDark .scCombobuttonDrop_Hover,
+body.satDark .scCombobuttonEditorDrop_Hover {
   border: 1px solid #242424;
   border-left: 1px solid #6e7475;
 }
 
-body.dark_sat .scCombobuttonDrop_Hot,
-body.dark_sat .scCombobuttonEditorDrop_Hot {
+body.satDark .scCombobuttonDrop_Hot,
+body.satDark .scCombobuttonEditorDrop_Hot {
   border: 1px solid #242424;
   border-left: 1px solid #6e7475;
 }
 
-body.dark_sat .scContentEditorItemInformationLine {
+body.satDark .scContentEditorItemInformationLine {
   color: black;
 }
 
-body.dark_sat .scContentEditorItemInformationHeader {
+body.satDark .scContentEditorItemInformationHeader {
   color: white;
 }
 
-body.dark_sat .scContentLabel {
+body.satDark .scContentLabel {
   color: #6487dc;
 }
 
-body.dark_sat a.scContentLabelLink,
-body.dark_sat a.scContentLabelLink:active,
-body.dark_sat a.scContentLabelLink:visited {
+body.satDark a.scContentLabelLink,
+body.satDark a.scContentLabelLink:active,
+body.satDark a.scContentLabelLink:visited {
   color: #6487dc;
 }
 
-body.dark_sat a.scContentLabelLink:hover {
+body.satDark a.scContentLabelLink:hover {
   color: #6487dc;
 }
 
-body.dark_sat .scContentControl[disabled] .scComboboxEdit,
-body.dark_sat .scContentControl[disabled] .scComboboxDropDown {
+body.satDark .scContentControl[disabled] .scComboboxEdit,
+body.satDark .scContentControl[disabled] .scComboboxDropDown {
   background-color: #181818 !important;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
 
-body.dark_sat .scContentControl_Active {
+body.satDark .scContentControl_Active {
   background: white;
   color: black;
 }
 
-body.dark_sat .scContentControlComboControl {
+body.satDark .scContentControlComboControl {
   border: 1px solid var(--text) !important;
   color: black;
 }
 
-body.dark_sat .scContentControlChecklist {
+body.satDark .scContentControlChecklist {
   background: var(--black1) !important;
   border: 1px solid var(--black) !important;
 }
 
-body.dark_sat .scTreelistEx {
+body.satDark .scTreelistEx {
   border: 1px solid var(--black2) !important;
   background: var(--black1);
 }
 
-body.dark_sat .ie .scTreeListHalfPart {
+body.satDark .ie .scTreeListHalfPart {
   height: calc(100% - 1px);
 }
 
-body.dark_sat .scContentControlChecklist_Active {
+body.satDark .scContentControlChecklist_Active {
   background: white;
   color: black;
 }
 
-body.dark_sat .scContentControlHtml {
+body.satDark .scContentControlHtml {
   border: 1px solid #191919 !important;
 }
 
-body.dark_sat .scContentControlHtmlToolbarButton,
-body.dark_sat .scContentControlHtmlToolbarButton:link,
-body.dark_sat .scContentControlHtmlToolbarButton:visited,
-body.dark_sat .scContentControlHtmlToolbarButton:hover,
-body.dark_sat .scContentControlHtmlToolbarButton:active {
+body.satDark .scContentControlHtmlToolbarButton,
+body.satDark .scContentControlHtmlToolbarButton:link,
+body.satDark .scContentControlHtmlToolbarButton:visited,
+body.satDark .scContentControlHtmlToolbarButton:hover,
+body.satDark .scContentControlHtmlToolbarButton:active {
   color: #303030;
 }
 
-body.dark_sat .scContentControlHtmlToolbarButton:active {
+body.satDark .scContentControlHtmlToolbarButton:active {
   border-color: #ddcf9b #c1a877 #dfd8bd #c1a877;
 }
 
-body.dark_sat .scContentControlHtmlToolbarButton:hover {
+body.satDark .scContentControlHtmlToolbarButton:hover {
   border-color: #ddcf9b #c1a877 #dfd8bd #c1a877;
 }
 
-body.dark_sat .scContentControlIFrame {
+body.satDark .scContentControlIFrame {
   border: 1px solid var(--text) !important;
   color: black;
 }
 
-body.dark_sat .scContentControlIFrame_Active {
+body.satDark .scContentControlIFrame_Active {
   color: black;
 }
-body.dark_sat .scContentControlImagePane {
+body.satDark .scContentControlImagePane {
   border: 1px solid var(--black3) !important;
 }
 
-body.dark_sat .scContentControlImageImage {
+body.satDark .scContentControlImageImage {
   padding: 8px 12px !important;
   background-color: var(--black2) !important;
   border: 0px !important;
 }
 
-body.dark_sat .scContentControlImageDetails {
+body.satDark .scContentControlImageDetails {
   color: var(--black8);
   background-color: #272727;
 }
 
-body.dark_sat .scContentControlAttachment {
+body.satDark .scContentControlAttachment {
   background: transparent;
   border: 1px solid var(--text) !important;
   color: black;
 }
 
-body.dark_sat .scContentControlAttachment_Active {
+body.satDark .scContentControlAttachment_Active {
   background: transparent;
   color: black;
 }
 
-body.dark_sat .scContentControlAttachmentPane {
+body.satDark .scContentControlAttachmentPane {
   background: #e9e9e9;
   color: black;
 }
 
-body.dark_sat .scContentControlAttachmentImage {
+body.satDark .scContentControlAttachmentImage {
   background: white;
   border: 1px solid #e3e3e3;
 }
 
-body.dark_sat .scMultilistNav a:nth-of-type(2) {
+body.satDark .scMultilistNav a:nth-of-type(2) {
   border-right: 1px solid var(--text) !important;
 }
 
-body.dark_sat .scMultilistNav a:nth-of-type(4) {
+body.satDark .scMultilistNav a:nth-of-type(4) {
   border-right: 1px solid var(--text) !important;
 }
 
-body.dark_sat .scContentControlMultilistCaption {
+body.satDark .scContentControlMultilistCaption {
   color: #666;
 }
 
-body.dark_sat .scContentControlTree {
+body.satDark .scContentControlTree {
   border: 1px solid var(--black1) !important;
 }
 
-body.dark_sat .scContentControlTreeListHelp {
+body.satDark .scContentControlTreeListHelp {
   background-color: var(--black2) !important;
   border: 1px solid var(--black1) !important;
 }
 
-body.dark_sat .scContentControlMultilistHelp {
+body.satDark .scContentControlMultilistHelp {
   background-color: var(--black2) !important;
   border: 1px solid #212121 !important;
 }
 
-body.dark_sat .scContentControlSecurity {
+body.satDark .scContentControlSecurity {
   border: 1px solid var(--text) !important;
   color: black;
 }
 
-body.dark_sat .scContentControlSecurity_Active {
+body.satDark .scContentControlSecurity_Active {
   color: black;
 }
 
-body.dark_sat .scContentHeaderLabel {
+body.satDark .scContentHeaderLabel {
   color: white;
 }
 
-body.dark_sat a.scHyperlinkButton {
+body.satDark a.scHyperlinkButton {
   color: var(--blue);
   border-right: 1px solid var(--text) !important;
 }
 
-body.dark_sat .scWhiteBackground {
+body.satDark .scWhiteBackground {
   background-color: var(--text);
 }
 
-body.dark_sat .scGreyBackground {
+body.satDark .scGreyBackground {
   background-color: #f0f0f0;
 }
 
-body.dark_sat .scListviewItemReport_Selected {
+body.satDark .scListviewItemReport_Selected {
   background: #f6d2ab;
   border: 1px solid #f0cca5;
   color: #46448d;
 }
 
-body.dark_sat .scListviewItemIcons {
+body.satDark .scListviewItemIcons {
   border: 1px solid #e3e3e3;
 }
 
-body.dark_sat .scListviewItemIcons:hover {
+body.satDark .scListviewItemIcons:hover {
   background: #e3e3e3;
 }
 
-body.dark_sat .scListviewItemIcons_Selected {
+body.satDark .scListviewItemIcons_Selected {
   background: #aadbee;
   color: #46448d;
   border: 1px solid #e3e3e3;
 }
 
-body.dark_sat .scListviewItemList:hover {
+body.satDark .scListviewItemList:hover {
   background: #e3e3e3;
 }
 
-body.dark_sat .scListviewItemList_Selected {
+body.satDark .scListviewItemList_Selected {
   background: #aadbee;
   color: #46448d;
 }
 
-body.dark_sat .scListviewItemDetailsCell_Selected {
+body.satDark .scListviewItemDetailsCell_Selected {
   background-color: #d0ebf6;
 }
-body.dark_sat .scListviewItemThumbnails_Selected {
+body.satDark .scListviewItemThumbnails_Selected {
   background: #f8d5a6;
   border: 1px solid #f6d2ab;
   color: #46448d;
 }
 
-body.dark_sat .scListviewViewDetailsHeader {
+body.satDark .scListviewViewDetailsHeader {
   background-color: var(--black);
   border-right: 1px solid var(--black1) !important;
   border-top: 1px solid var(--black1) !important;
 }
 
-body.dark_sat .scListviewViewDetailsHeader:first-child {
+body.satDark .scListviewViewDetailsHeader:first-child {
   border-left: 1px solid var(--text) !important;
 }
 
-body.dark_sat .scListviewViewDetailsHeaderHover {
+body.satDark .scListviewViewDetailsHeaderHover {
   background-color: var(--black);
   border-right: 1px solid var(--black1) !important;
 }
 
-body.dark_sat .scMenu,
-body.dark_sat .scPopup {
+body.satDark .scMenu,
+body.satDark .scPopup {
   background-color: #202020 !important;
   filter: drop-shadow(2px 4px 7px rgba(0, 0, 0, 0.2)) !important;
 }
 
-body.dark_sat .scPopup > .scMenu {
+body.satDark .scPopup > .scMenu {
   background-color: var(--black2) !important;
 }
 
-body.dark_sat .scMenuItemHotkey {
+body.satDark .scMenuItemHotkey {
   filter: invert(1) !important;
 }
 
-body.dark_sat .scMenuPanelItem_Hover div b,
-body.dark_sat .scMenuPanelItem_Hover div {
+body.satDark .scMenuPanelItem_Hover div b,
+body.satDark .scMenuPanelItem_Hover div {
   color: var(--white) !important;
 }
 
-body.dark_sat .scMenuItemIcon_Hover,
-body.dark_sat .scMenuItemCaption_Hover,
-body.dark_sat .scMenuItemHotkey_Hover,
-body.dark_sat .scMenuPanelItemSelected_Hover,
-body.dark_sat .scMenuPanelItem_Hover {
+body.satDark .scMenuItemIcon_Hover,
+body.satDark .scMenuItemCaption_Hover,
+body.satDark .scMenuItemHotkey_Hover,
+body.satDark .scMenuPanelItemSelected_Hover,
+body.satDark .scMenuPanelItem_Hover {
   background-color: var(--blue) !important;
   color: var(--white) !important;
 }
 
-body.dark_sat .scMenuItemIcon_Disabled,
-body.dark_sat .scMenuItemCaption_Disabled,
-body.dark_sat .scMenuItemHotkey_Disabled {
+body.satDark .scMenuItemIcon_Disabled,
+body.satDark .scMenuItemCaption_Disabled,
+body.satDark .scMenuItemHotkey_Disabled {
   color: var(--text) !important;
 }
 
-body.dark_sat .scMenuDividerIcon {
+body.satDark .scMenuDividerIcon {
   background-color: #323232 !important;
 }
 
-body.dark_sat .scMenuDividerCaption {
+body.satDark .scMenuDividerCaption {
   background-color: #323232 !important;
 }
 
-body.dark_sat .scMenuDividerHotkey {
+body.satDark .scMenuDividerHotkey {
   background-color: #323232 !important;
 }
 
-body.dark_sat .versionNumSelected,
-body.dark_sat .scMenuPanelItemSelected {
+body.satDark .versionNumSelected,
+body.satDark .scMenuPanelItemSelected {
   background-color: var(--darkblue) !important;
 }
 
-body.dark_sat
-  .scMenuPanelItemSelected_Hover
-  > table
-  > tbody
-  > tr
-  > td
-  > div
-  > div
-  > b,
-body.dark_sat
-  .scMenuPanelItemSelected
-  > table
-  > tbody
-  > tr
-  > td
-  > div
-  > div
-  > b {
+body.satDark .scMenuPanelItemSelected_Hover > table > tbody > tr > td > div > div > b,
+body.satDark .scMenuPanelItemSelected > table > tbody > tr > td > div > div > b {
   color: var(--white) !important;
 }
 
-body.dark_sat .scDarkBorderCell {
+body.satDark .scDarkBorderCell {
   border: 1px solid #d4d0c8;
 }
 
-body.dark_sat .scScrollbox {
+body.satDark .scScrollbox {
   background-color: var(--black2) !important;
   border: 1px solid var(--black2) !important;
 }
 
-body.dark_sat .scStretchAbsolute {
+body.satDark .scStretchAbsolute {
   background-color: var(--black2) !important;
 }
 
-body.dark_sat .Row td.DataCell {
+body.satDark .Row td.DataCell {
   border: 1px solid var(--black2);
 }
 
-body.dark_sat .scAccessViewerRight > img,
-body.dark_sat .scSecurityItem > img,
-body.dark_sat .scAccessRights > img {
+body.satDark .scAccessViewerRight > img,
+body.satDark .scSecurityItem > img,
+body.satDark .scAccessRights > img {
   filter: invert(1);
 }
 
-body.dark_sat .scTreeview .nodeSelected,
-body.dark_sat .scTreeview .nodeSelected_Hover {
+body.satDark .scTreeview .nodeSelected,
+body.satDark .scTreeview .nodeSelected_Hover {
   background-color: var(--blue) !important;
 }
-body.dark_sat .scTreeview .header,
-body.dark_sat .scTreeview .scTreeHeader {
+body.satDark .scTreeview .header,
+body.satDark .scTreeview .scTreeHeader {
   background-color: var(--black2) !important;
 }
-body.dark_sat .scTreeview .scTreeItem.hover {
+body.satDark .scTreeview .scTreeItem.hover {
   background-color: var(--black4) !important;
 }
 
-body.dark_sat .scStretch {
+body.satDark .scStretch {
   background-color: #111;
 }
 
-body.dark_sat .scSpinEditInput {
+body.satDark .scSpinEditInput {
   border-top: 1px solid #7f9db9;
   border-left: 1px solid #7f9db9;
   border-bottom: 1px solid #7f9db9;
 }
 
-body.dark_sat .scTabstripTopTabs {
+body.satDark .scTabstripTopTabs {
   border-top: 2px solid #fffbe9;
   background: #fffbe9;
 }
 
-body.dark_sat .scTabstripTopTabs_Tab {
+body.satDark .scTabstripTopTabs_Tab {
   color: #817e73;
 }
 
-body.dark_sat .scTabstripTopTabs_TabHover {
+body.satDark .scTabstripTopTabs_TabHover {
   color: #f93;
 }
 
-body.dark_sat .scTabstripTopTabs_ActiveTabHover {
+body.satDark .scTabstripTopTabs_ActiveTabHover {
   color: #f93;
 }
 
-body.dark_sat .scTabstripBottomTabs {
+body.satDark .scTabstripBottomTabs {
   border-bottom: 2px solid #fffbe9;
   background: #fffbe9;
 }
 
-body.dark_sat .scTabstripBottomTabs_Tab {
+body.satDark .scTabstripBottomTabs_Tab {
   color: #817e73;
 }
 
-body.dark_sat .scTabstripBottomTabs_TabHover {
+body.satDark .scTabstripBottomTabs_TabHover {
   color: #f93;
 }
 
-body.dark_sat .scTabstripBottomTabs_ActiveTabHover {
+body.satDark .scTabstripBottomTabs_ActiveTabHover {
   color: #f93;
 }
 
-body.dark_sat .scTabstripButtons {
+body.satDark .scTabstripButtons {
   border: 3px solid #fffbe9;
   background: #fffbe9;
 }
 
-body.dark_sat .scTabstripButtons_Tab {
+body.satDark .scTabstripButtons_Tab {
   color: #817e73;
 }
 
-body.dark_sat .scTabstripButtons_TabHover {
+body.satDark .scTabstripButtons_TabHover {
   color: #f93;
 }
 
-body.dark_sat .scTabstripButtons_ActiveTab {
+body.satDark .scTabstripButtons_ActiveTab {
   border: 1px solid #316ac5;
 }
 
-body.dark_sat .scTabstripButtons_ActiveTabHover {
+body.satDark .scTabstripButtons_ActiveTabHover {
   color: #f93;
 
   border: 1px solid #316ac5;
 }
 
-body.dark_sat .scTaskboxCaption {
+body.satDark .scTaskboxCaption {
   color: #0148b2;
   background: #c5d2f0;
 }
 
-body.dark_sat .scTaskboxBody {
+body.satDark .scTaskboxBody {
   background: white;
 }
 
-body.dark_sat .scTaskOption {
+body.satDark .scTaskOption {
   color: white;
 }
 
-body.dark_sat .scTaskOption_Hover {
+body.satDark .scTaskOption_Hover {
   color: white;
 }
 
-body.dark_sat .scToolbar {
+body.satDark .scToolbar {
   background: #f0f0f0;
 }
 
-body.dark_sat .scToolbutton,
-body.dark_sat .scToolbutton_Disabled,
-body.dark_sat .scToolbutton_Down,
-body.dark_sat .scToolbutton_Down_Hover,
-body.dark_sat .scToolbutton_Hover,
-body.dark_sat .scToolbutton_Hot {
+body.satDark .scToolbutton,
+body.satDark .scToolbutton_Disabled,
+body.satDark .scToolbutton_Down,
+body.satDark .scToolbutton_Down_Hover,
+body.satDark .scToolbutton_Hover,
+body.satDark .scToolbutton_Hot {
   color: #474747;
 }
 
-body.dark_sat .scToolbutton:last-of-type,
-body.dark_sat .scToolbutton_Disabled:last-of-type,
-body.dark_sat .scToolbutton_Down:last-of-type,
-body.dark_sat .scToolbutton_Down_Hoverlast-of-type,
-body.dark_sat .scToolbutton_Hoverlast-of-type,
-body.dark_sat .scToolbutton_Hotlast-of-type {
+body.satDark .scToolbutton:last-of-type,
+body.satDark .scToolbutton_Disabled:last-of-type,
+body.satDark .scToolbutton_Down:last-of-type,
+body.satDark .scToolbutton_Down_Hoverlast-of-type,
+body.satDark .scToolbutton_Hoverlast-of-type,
+body.satDark .scToolbutton_Hotlast-of-type {
   margin-right: 0;
 }
 
-body.dark_sat .scToolbutton_Down {
+body.satDark .scToolbutton_Down {
   background: #e3e3e3;
 }
 
-body.dark_sat .scToolbutton_Down_Hover {
+body.satDark .scToolbutton_Down_Hover {
   background: #e3e3e3;
 }
 
-body.dark_sat .scToolbutton_Hot {
+body.satDark .scToolbutton_Hot {
   background: #e3e3e3;
 }
 
-body.dark_sat .scFieldCaption {
+body.satDark .scFieldCaption {
   color: #666;
 }
 
-body.dark_sat .scTaskTitle {
+body.satDark .scTaskTitle {
   color: white;
 }
 
-body.dark_sat .scTaskHeadline {
+body.satDark .scTaskHeadline {
   color: #d6dff5;
 }
 
-body.dark_sat .scTaskWhatDoYouWantToDo {
+body.satDark .scTaskWhatDoYouWantToDo {
   color: #e9e9e9;
 }
 
-body.dark_sat .scInspectorSection {
+body.satDark .scInspectorSection {
   color: #666;
 }
 
-body.dark_sat .scInspectorKey {
+body.satDark .scInspectorKey {
   color: #666;
 }
 
-body.dark_sat .scInspectorText {
+body.satDark .scInspectorText {
   color: #666;
 }
 
-body.dark_sat a.scInspectorTaglist,
-body.dark_sat a:hover.scInspectorTaglist,
-body.dark_sat a:active.scInspectorTaglist,
-body.dark_sat a:visited.scInspectorTaglist {
+body.satDark a.scInspectorTaglist,
+body.satDark a:hover.scInspectorTaglist,
+body.satDark a:active.scInspectorTaglist,
+body.satDark a:visited.scInspectorTaglist {
   color: Black;
 }
 
-body.dark_sat .scWizardHeader {
+body.satDark .scWizardHeader {
   color: var(--text);
   background-color: #2b2b2b;
 }
 
-body.dark_sat .scRollOver2_Hover {
+body.satDark .scRollOver2_Hover {
   background: #edb078;
 }
 
-body.dark_sat .scRollover,
-body.dark_sat .scRollover_Hover {
+body.satDark .scRollover,
+body.satDark .scRollover_Hover {
   color: var(--blue);
 }
 
-body.dark_sat .scSectionLeft {
+body.satDark .scSectionLeft {
   background-color: #474747;
 }
 
-body.dark_sat .scSectionCenter {
+body.satDark .scSectionCenter {
   color: var(--text);
 
   background-color: #474747;
@@ -820,72 +784,72 @@ body.dark_sat .scSectionCenter {
   border-left: 5px solid #dc291e;
 }
 
-body.dark_sat .scSectionRight {
+body.satDark .scSectionRight {
   background-color: #474747;
 }
 
-body.dark_sat .scCollapsed .scSectionCenter {
+body.satDark .scCollapsed .scSectionCenter {
   background-color: #969696;
   border-left: 5px solid #969696;
 }
 
-body.dark_sat .scCollapsed .scSectionRight {
+body.satDark .scCollapsed .scSectionRight {
   background-color: #969696;
 }
 
-body.dark_sat .scCommandbarContainer {
+body.satDark .scCommandbarContainer {
   border-bottom: 1px solid #e3e3e3;
 }
 
-body.dark_sat .scCommand_Hover {
+body.satDark .scCommand_Hover {
   cursor: pointer;
   background-color: #e3e3e3;
 }
 
-body.dark_sat input[type="text"][readonly].scComboboxEdit {
+body.satDark input[type="text"][readonly].scComboboxEdit {
   background: #181818 !important;
   border-color: #202020 !important;
 }
 
-body.dark_sat .scComboboxDropDown {
+body.satDark .scComboboxDropDown {
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 
   background-color: #181818 !important;
   border: 1px solid #1f1f1f !important;
 }
 
-body.dark_sat .scComboboxDropDown:hover {
+body.satDark .scComboboxDropDown:hover {
   background-color: var(--black3) !important;
 }
 
-body.dark_sat .scInformationBar {
+body.satDark .scInformationBar {
   border-bottom: 1px solid var(--black6);
 }
 
-body.dark_sat .scContentControlLayout_Active {
+body.satDark .scContentControlLayout_Active {
   background: #e9e9e9;
 }
 
-body.dark_sat .scContentControlLayoutDevice_Active {
+body.satDark .scContentControlLayoutDevice_Active {
   background: #e9e9e9;
 }
 
-body.dark_sat .scTabstrip {
+body.satDark .scTabstrip {
   border-bottom: 2px solid #474747;
 }
 
-body.dark_sat .scTabs {
+body.satDark .scTabs {
   background-color: var(--black1) !important;
 }
 
-body.dark_sat .scTabPage {
+body.satDark .scTabPage {
   border: 1px solid var(--black3) !important;
 }
 
-body.dark_sat .scTab,
-body.dark_sat .scTab_Hover,
-body.dark_sat .scTabActive,
-body.dark_sat .scTabActive_Hover {
+body.satDark .scTab,
+body.satDark .scTab_Hover,
+body.satDark .scTabActive,
+body.satDark .scTabActive_Hover {
   background-color: var(--black3) !important;
 
   color: #5e5e5e;
@@ -894,129 +858,128 @@ body.dark_sat .scTabActive_Hover {
   border-right: 1px solid var(--black3) !important;
 }
 
-body.dark_sat .scTabActive,
-body.dark_sat .scTabActive_Hover {
+body.satDark .scTabActive,
+body.satDark .scTabActive_Hover {
   background-color: #474747 !important;
   color: var(--text);
 
   border: 1px solid #474747 !important;
 }
 
-body.dark_sat .scTab_Hover {
+body.satDark .scTab_Hover {
   background-color: #e3e3e3;
 }
 
-body.dark_sat nobr:first-child > .scTab,
-body.dark_sat nobr:first-child > .scTab_Hover {
+body.satDark nobr:first-child > .scTab,
+body.satDark nobr:first-child > .scTab_Hover {
   border-left: 1px solid var(--black3) !important;
 }
 
-body.dark_sat nobr:first-child > .scTabActive,
-body.dark_sat nobr:first-child > .scTabActive_Hover {
+body.satDark nobr:first-child > .scTabActive,
+body.satDark nobr:first-child > .scTabActive_Hover {
   border-left: 1px solid #474747;
 }
 
-body.dark_sat nobr:last-child > .scTabActive,
-body.dark_sat nobr:last-child > .scTabActive_Hover {
+body.satDark nobr:last-child > .scTabActive,
+body.satDark nobr:last-child > .scTabActive_Hover {
   border-right: 1px solid #474747;
 }
 
-body.dark_sat .scVerticalTabstrip .scVerticalTabs {
+body.satDark .scVerticalTabstrip .scVerticalTabs {
   border-right: 1px solid #474747;
 }
 
-body.dark_sat .scVerticalTabstrip .scVerticalTabs a,
-body.dark_sat .scVerticalTabstrip .scVerticalTabs span.header {
+body.satDark .scVerticalTabstrip .scVerticalTabs a,
+body.satDark .scVerticalTabstrip .scVerticalTabs span.header {
   border: 1px solid var(--black3) !important;
 }
 
-body.dark_sat .scVerticalTabstrip .scVerticalTabs a:last-child {
+body.satDark .scVerticalTabstrip .scVerticalTabs a:last-child {
   border-bottom: 1px solid var(--black3) !important;
 }
 
-body.dark_sat .scVerticalTabstrip .scVerticalTabs a.active,
-body.dark_sat .scVerticalTabstrip .scVerticalTabs a.active:hover {
+body.satDark .scVerticalTabstrip .scVerticalTabs a.active,
+body.satDark .scVerticalTabstrip .scVerticalTabs a.active:hover {
   background-color: #474747;
   color: var(--text);
   border: 1px solid #474747;
 }
 
-body.dark_sat .scVerticalTabstrip .scVerticalTabs a:hover {
+body.satDark .scVerticalTabstrip .scVerticalTabs a:hover {
   background-color: #207da2 !important;
   color: var(--black1) !important;
 }
 
-body.dark_sat .scViewerHeadline {
+body.satDark .scViewerHeadline {
   border-top: 1px solid #b6b8cb;
   border-bottom: 1px solid #cdcedb;
   color: white;
 }
 
-body.dark_sat #scLightbox {
+body.satDark #scLightbox {
   border: solid 1px #868686;
   background: white;
 }
 
-body.dark_sat #scOverlay {
+body.satDark #scOverlay {
   background-color: #000;
 }
 
-body.dark_sat #SearchBox {
+body.satDark #SearchBox {
   color: var(--text) !important;
   background: #5e5e5e;
   box-shadow: none;
 }
 
-body.dark_sat #SearchBox.focus {
+body.satDark #SearchBox.focus {
   background-color: #2b2b2b;
 }
 
 /* Content Tree */
 
-body.dark_sat .scContentTree {
-  background: var(--black2) !important;
+body.satDark .scContentTree {
+  background-color: var(--black1) !important;
+  background-image: unset;
 }
 
-body.dark_sat .scContentTreeNode > img {
+body.satDark .scContentTreeNode > img {
   filter: invert(1) brightness(0.5);
 }
 
-body.dark_sat a.scContentTreeNodeStatic,
-body.dark_sat a.scContentTreeNodeStatic:visited,
-body.dark_sat a.scContentTreeNodeStatic:hover,
-body.dark_sat a.scContentTreeNodeStatic:active {
+body.satDark a.scContentTreeNodeStatic,
+body.satDark a.scContentTreeNodeStatic:visited,
+body.satDark a.scContentTreeNodeStatic:hover,
+body.satDark a.scContentTreeNodeStatic:active {
   color: var(--black6);
 }
 
-body.dark_sat a.scContentTreeNodeNormal:hover,
-body.dark_sat a.scContentTreeNodeActive,
-body.dark_sat a.scContentTreeNodeNormal.scDragHover {
+body.satDark a.scContentTreeNodeNormal:hover,
+body.satDark a.scContentTreeNodeActive,
+body.satDark a.scContentTreeNodeNormal.scDragHover {
   background-color: var(--blue) !important;
 }
 
-body.dark_sat a.scContentTreeNodeActive > span {
+body.satDark a.scContentTreeNodeActive > span {
   color: rgba(255, 255, 255, 0.7) !important;
 }
 
-body.dark_sat a.scContentTreeNodeActive {
+body.satDark a.scContentTreeNodeActive {
   background-color: var(--blue) !important;
   color: rgba(255, 255, 255, 0.7) !important;
 }
 
-body.dark_sat .scContentTreeNodeGlyph:hover {
+body.satDark .scContentTreeNodeGlyph:hover {
   background-color: #e3e3e3;
 }
 
-body.dark_sat .scContentTreeNodeGutterFlyout {
+body.satDark .scContentTreeNodeGutterFlyout {
   border: 1px solid var(--black1);
-
   background-color: var(--black);
-
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.175);
 }
 
-body.dark_sat .scContentTreeNodeGutterButton:hover,
-body.dark_sat .scContentTreeNodeGutterButton:visited {
+body.satDark .scContentTreeNodeGutterButton:hover,
+body.satDark .scContentTreeNodeGutterButton:visited {
   background-color: #e3e3e3;
 }
 
@@ -1024,84 +987,84 @@ body.dark_sat .scContentTreeNodeGutterButton:visited {
  * Treeview.
  */
 
-body.dark_sat .scTreeview .header {
+body.satDark .scTreeview .header {
   background-color: #5e5e5e;
 
   color: var(--text);
 }
 
-body.dark_sat .scTreeview .header:before {
+body.satDark .scTreeview .header:before {
   border-right: 1px solid #fff;
 }
 
-body.dark_sat .scTreeview .scTreeHeader {
+body.satDark .scTreeview .scTreeHeader {
   background-color: #5e5e5e;
 }
 
-body.dark_sat .scTreeHeader .scTreeHeaderItem:first-of-type .header:before {
+body.satDark .scTreeHeader .scTreeHeaderItem:first-of-type .header:before {
   border-right: 0px solid #fff;
 }
 
-body.dark_sat .scTreeview .value {
+body.satDark .scTreeview .value {
   border-left: solid 1px #e3e3e3;
 }
 
-body.dark_sat .scTreeview .glyph {
+body.satDark .scTreeview .glyph {
   filter: invert(1);
 }
 
-body.dark_sat .scTreeview .glyph:hover {
+body.satDark .scTreeview .glyph:hover {
   background-color: #e3e3e3;
 }
 
-body.dark_sat .scTreeview .nodeSelected,
-body.dark_sat .scTreeview .nodeSelected_Hover {
+body.satDark .scTreeview .nodeSelected,
+body.satDark .scTreeview .nodeSelected_Hover {
   background-color: #d0ebf6;
 }
 
-body.dark_sat .scTreeview .scTreeItem.hover {
+body.satDark .scTreeview .scTreeItem.hover {
   background-color: #e3e3e3;
 }
 
-body.dark_sat .scAccessViewerRight:hover {
+body.satDark .scAccessViewerRight:hover {
   background-color: #e3e3e3;
 }
 
-body.dark_sat .scAccessViewerRight:active,
-body.dark_sat .scAccessViewerRight:focus {
+body.satDark .scAccessViewerRight:active,
+body.satDark .scAccessViewerRight:focus {
   background-color: #d0ebf6;
 }
 
-body.dark_sat .scActionLink,
-body.dark_sat .scActionLink:link,
-body.dark_sat .scActionLink:hover,
-body.dark_sat .scActionLink:active {
+body.satDark .scActionLink,
+body.satDark .scActionLink:link,
+body.satDark .scActionLink:hover,
+body.satDark .scActionLink:active {
   color: #186bf9;
 }
 
-body.dark_sat .scApplicationFooter {
+body.satDark .scApplicationFooter {
   background-color: var(--black);
   border-top: 1px solid var(--black1);
 }
 
-body.dark_sat .scWorkBoxMainHeader {
+body.satDark .scWorkBoxMainHeader {
   background-color: #474747;
 }
 
-body.dark_sat .scWorkBoxMainHeader.scCollapsed {
+body.satDark .scWorkBoxMainHeader.scCollapsed {
   background-color: #969696;
 }
 
-body.dark_sat .scPaneHeader {
+body.satDark .scPaneHeader {
   color: #fff;
   border-left: 5px solid #dc291e;
 }
 
-body.dark_sat .scCollapsed .scPaneHeader {
+body.satDark .scCollapsed .scPaneHeader {
   border-left: 5px solid #969696;
 }
 
-body.dark_sat .SecurityLegend {
+body.satDark .SecurityLegend {
   background-color: var(--black);
   border-top: 1px solid var(--black1) !important;
   overflow: hidden;
@@ -1110,506 +1073,502 @@ body.dark_sat .SecurityLegend {
 
 /* Ribbon > Configure > Icons */
 
-body.dark_sat #Icons .scRibbonToolbarLargeIconButton:hover {
+body.satDark #Icons .scRibbonToolbarLargeIconButton:hover {
   background-color: #e3e3e3;
 }
 
-body.dark_sat #Presets .scRibbonToolbarLargeTextButton:hover {
+body.satDark #Presets .scRibbonToolbarLargeTextButton:hover {
   background-color: #e3e3e3;
 }
 
-body.dark_sat .scProgressIndicator32 {
+body.satDark .scProgressIndicator32 {
   background-color: var(--text);
   color: transparent;
 }
 
-body.dark_sat .sc-text-bold {
+body.satDark .sc-text-bold {
   font-weight: 600;
   color: var(--black1);
 }
 
-body.dark_sat .scListControl > tbody:first-child > tr:first-child,
-body.dark_sat .scListControl > thead,
-body.dark_sat .scListControlHead {
+body.satDark .scListControl > tbody:first-child > tr:first-child,
+body.satDark .scListControl > thead,
+body.satDark .scListControlHead {
   background-color: #5e5e5e !important;
   color: white;
 }
 
-body.dark_sat .scListControl > tbody > tr:nth-child(odd) {
+body.satDark .scListControl > tbody > tr:nth-child(odd) {
   background-color: var(--black2) !important;
 }
 
-body.dark_sat .scListControl > tbody > tr:nth-child(even) {
+body.satDark .scListControl > tbody > tr:nth-child(even) {
   background-color: var(--black3) !important;
 }
 
-body.dark_sat .scListControl > tbody > tr:hover {
+body.satDark .scListControl > tbody > tr:hover {
   background-color: var(--black4) !important;
 }
 
-body.dark_sat .scListControl > thead th,
-body.dark_sat .scListControl > tbody > tr > td {
+body.satDark .scListControl > thead th,
+body.satDark .scListControl > tbody > tr > td {
   border: 1px solid var(--black2) !important;
 }
 
-body.dark_sat .scListControl > thead th,
-body.dark_sat .scListControl > tbody:first-child > tr:first-child > td {
+body.satDark .scListControl > thead th,
+body.satDark .scListControl > tbody:first-child > tr:first-child > td {
   border: 1px solid #5e5e5e;
 }
 
-body.dark_sat .scListControl > thead th:after,
-body.dark_sat .scListControl > tbody:first-child > tr:first-child > td:after {
+body.satDark .scListControl > thead th:after,
+body.satDark .scListControl > tbody:first-child > tr:first-child > td:after {
   background: #5e5e5e right center;
 }
 
-body.dark_sat .scListControl > thead th:last-child:after,
-body.dark_sat
-  .scListControl
-  > tbody:first-child
-  > tr:first-child
-  > td:last-child:after {
+body.satDark .scListControl > thead th:last-child:after,
+body.satDark .scListControl > tbody:first-child > tr:first-child > td:last-child:after {
   background: none;
 }
 
 /* Notification and warnings */
 
-body.dark_sat .scEditorWarning {
+body.satDark .scEditorWarning {
   background-color: #fce99c;
   color: #897b2f;
 }
 
-body.dark_sat .scWizardWarning {
+body.satDark .scWizardWarning {
   background-color: #fefae6;
   color: #e0b406;
   padding: 10px;
 }
 
-body.dark_sat .scMessageBar.scWarning {
+body.satDark .scMessageBar.scWarning {
   background-color: var(--verydarkblue) !important;
   color: rgba(255, 255, 255, 0.7) !important;
 }
 
-body.dark_sat .scMessageBar.scWarning .scMessageBarIcon {
+body.satDark .scMessageBar.scWarning .scMessageBarIcon {
   background-color: var(--darkblue) !important;
 }
 
-body.dark_sat .scMessageBar.scInformation {
+body.satDark .scMessageBar.scInformation {
   background-color: var(--verydarkblue) !important;
   color: rgba(255, 255, 255, 0.7) !important;
 }
 
-body.dark_sat .scMessageBar.scInformation .scMessageBarIcon {
+body.satDark .scMessageBar.scInformation .scMessageBarIcon {
   background-color: var(--darkblue) !important;
 }
 
-body.dark_sat .scMessageBar.scError {
+body.satDark .scMessageBar.scError {
   background-color: var(--darkred) !important;
   color: rgba(255, 255, 255, 0.7) !important;
 }
 
-body.dark_sat .scMessageBar.scError .scMessageBarIcon {
+body.satDark .scMessageBar.scError .scMessageBarIcon {
   background-color: var(--red) !important;
 }
 
-body.dark_sat .scMessageBar.scOrange {
+body.satDark .scMessageBar.scOrange {
   background-color: var(--darkred) !important;
   color: rgba(255, 255, 255, 0.7) !important;
 }
 
-body.dark_sat .scMessageBar.scOrange .scMessageBarIcon {
+body.satDark .scMessageBar.scOrange .scMessageBarIcon {
   background-color: var(--red) !important;
 }
 
-body.dark_sat .scMessageBar.scError .scDetailsLink:after {
+body.satDark .scMessageBar.scError .scDetailsLink:after {
   border-top-color: rgb(139, 25, 19);
 }
 
-body.dark_sat
-  .scMessageBar.scError
-  .scMessageBarTextContainer.scExpanded
-  .scDetailsLink:after {
+body.satDark .scMessageBar.scError .scMessageBarTextContainer.scExpanded .scDetailsLink:after {
   border-top-color: transparent;
   border-bottom-color: rgb(139, 25, 19);
 }
 
-body.dark_sat span.sc-ext-fieldSearchClear {
+body.satDark span.sc-ext-fieldSearchClear {
   border-top: 6px solid var(--black1) !important;
   border-right: 6px solid var(--black1) !important;
   border-bottom: 6px solid var(--black1) !important;
 }
-body.dark_sat .Metro {
+body.satDark .Metro {
   background-color: #0e0e0e !important;
 }
-body.dark_sat .reMode_html span,
-body.dark_sat .reMode_selected.reMode_html span {
+body.satDark .reMode_html span,
+body.satDark .reMode_selected.reMode_html span {
   color: var(--black3) !important;
 }
-body.dark_sat .reMode_design span,
-body.dark_sat .reMode_selected.reMode_design span {
+body.satDark .reMode_design span,
+body.satDark .reMode_selected.reMode_design span {
   color: var(--black8) !important;
 }
-body.dark_sat .reContentCell,
-body.dark_sat .reContentCell iframe {
+body.satDark .reContentCell,
+body.satDark .reContentCell iframe {
   background-color: var(--grey1) !important;
   color: var(--white) !important;
 }
-body.dark_sat .Row {
+body.satDark .Row {
   background-color: var(--black2) !important;
 }
-body.dark_sat .Row:nth-child(odd) {
+body.satDark .Row:nth-child(odd) {
   background-color: var(--black3) !important;
 }
-body.dark_sat .Row:hover,
-body.dark_sat .Row:nth-child(odd):hover {
+body.satDark .Row:hover,
+body.satDark .Row:nth-child(odd):hover {
   background-color: var(--black) !important;
 }
 
-body.dark_sat a.scTileItem {
+body.satDark a.scTileItem {
   background-color: var(--black2) !important;
   border: 1px solid var(--black1) !important;
   border-radius: 4px;
 }
 
-body.dark_sat a.scTileItem:hover {
+body.satDark a.scTileItem:hover {
   background-color: var(--black3) !important;
 }
-body.dark_sat div.content {
-  background-color: #0f0f0f !important;
+body.satDark div.content {
+  background-color: var(--black2) !important;
 }
-body.dark_sat .search-box {
+body.satDark .search-box {
   background-color: var(--black2) !important;
   border: 1px solid var(--black2) !important;
 }
-body.dark_sat .btn-search {
+body.satDark .btn-search {
   background-color: var(--black2) !important;
   background-image: url("chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.png");
   box-shadow: inset 0 1px transparent;
 }
-body.dark_sat .btn-search,
-body.dark_sat .btn-clear {
+body.satDark .btn-search,
+body.satDark .btn-clear {
   border-left: 1px solid var(--black3) !important;
   box-shadow: none;
 }
-body.dark_sat .BlogPostArea:hover,
-body.dark_sat .ie .BlogPostArea.hover {
+body.satDark .BlogPostArea:hover,
+body.satDark .ie .BlogPostArea.hover {
   background-color: #212121;
 }
-body.dark_sat .sideMask {
+body.satDark .sideMask {
   background-color: #0f0f0f;
 }
-body.dark_sat .filters .filter {
+body.satDark .filters .filter {
   border: 1px solid transparent;
   background-color: var(--black3) !important;
 }
-body.dark_sat .filters .filter .icon {
+body.satDark .filters .filter .icon {
   border-right: 1px solid #212121;
 }
-body.dark_sat .filters .filter .remove {
+body.satDark .filters .filter .remove {
   border-left: 1px solid #212121;
 }
-body.dark_sat #grid-content .post_float {
+body.satDark #grid-content .post_float {
   background-color: var(--black2) !important;
   border: 1px solid var(--black1);
   border-radius: 4px;
 }
-body.dark_sat #grid-content .post_float:hover {
+body.satDark #grid-content .post_float:hover {
   background-color: var(--black3) !important;
 }
-body.dark_sat .pagination li a {
+body.satDark .pagination li a {
   background-color: var(--black2) !important;
 }
-body.dark_sat .pagination li a:hover {
+body.satDark .pagination li a:hover {
   background-color: var(--black3) !important;
 }
-body.dark_sat .pagination li.active a {
+body.satDark .pagination li.active a {
   background-color: #dc2a1e;
 }
-body.dark_sat .pagination li:last-of-type a {
+body.satDark .pagination li:last-of-type a {
   border-right: 1px solid var(--black2) !important;
 }
-body.dark_sat .sc-button-text,
-body.dark_sat .sc .btn {
+body.satDark .sc-button-text,
+body.satDark .sc .btn {
   color: var(--black5) !important;
 }
-body.dark_sat .sc .btn .btn-primary {
+body.satDark .sc .btn .btn-primary {
   color: var(--text) !important;
 }
-body.dark_sat #sitecorAuthorToolboxFav {
+body.satDark #sitecorAuthorToolboxFav {
   box-shadow: rgba(0, 0, 0, 0.5) 0px -10px 10px 0px;
 }
-body.dark_sat a.scItemThumbnailSelected,
-body.dark_sat a.scItemThumbnail:hover {
+body.satDark a.scItemThumbnailSelected,
+body.satDark a.scItemThumbnail:hover {
   background-color: var(--darkblue) !important;
   border: 1px solid var(--darkblue);
 }
 
-body.dark_sat a.scItemThumbnail:hover > span.scDisplayName {
+body.satDark a.scItemThumbnail:hover > span.scDisplayName {
   color: var(--black3) !important;
 }
 
-body.dark_sat .ff #Right {
+body.satDark .ff #Right {
   background-color: var(--black1) !important;
 }
 
-body.dark_sat .selected .mode,
-body.dark_sat .selected .mode:hover,
-body.dark_sat .selected .mode:active {
+body.satDark .selected .mode,
+body.satDark .selected .mode:hover,
+body.satDark .selected .mode:active {
   background-color: var(--darkblue) !important;
   border: 1px solid var(--darkblue);
 }
 
-body.dark_sat .main-column {
+body.satDark .main-column {
   border: 1px solid var(--black3);
 }
 
-body.dark_sat .section-header {
+body.satDark .section-header {
   color: var(--text) !important;
   border-bottom: 0px solid var(--black3);
 }
 
-body.dark_sat .reContentCell {
+body.satDark .reContentCell {
   border: 1px solid #0f0f0f !important;
 }
-body.dark_sat .scChecked {
+body.satDark .scChecked {
   background-color: var(--darkblue);
 }
 
-body.dark_sat .scStartMenu,
-body.dark_sat .scStartMenuPrograms {
+body.satDark .scStartMenu,
+body.satDark .scStartMenuPrograms {
   background-color: var(--black2) !important;
 }
 
-body.dark_sat .scStartMenuRightFolder:hover,
-body.dark_sat .scStartMenuProgramsMenu:hover,
-body.dark_sat .scStartMenuLeftOption:hover {
+body.satDark .scStartMenuRightFolder:hover,
+body.satDark .scStartMenuProgramsMenu:hover,
+body.satDark .scStartMenuLeftOption:hover {
   background-color: var(--darkblue);
 }
 
-body.dark_sat .scStartMenuDivider {
+body.satDark .scStartMenuDivider {
   filter: invert(1);
 }
 
-body.dark_sat #DatabaseSelector.scToolbutton {
+body.satDark #DatabaseSelector.scToolbutton {
   color: var(--text);
 }
-body.dark_sat .scEditorInformationHelp,
-body.dark_sat .scEditorInformationTitle {
+body.satDark .scEditorInformationHelp,
+body.satDark .scEditorInformationTitle {
   color: var(--text);
 }
-body.dark_sat #StatusBar .status-bar-panel {
+body.satDark #StatusBar .status-bar-panel {
   background-color: #212121;
 }
-body.dark_sat .sc .sc-border[data-sc-id="FallbackMessageWrap"] {
+body.satDark .sc .sc-border[data-sc-id="FallbackMessageWrap"] {
   color: var(--text);
 }
-body.dark_sat .scWindowFrame {
+body.satDark .scWindowFrame {
   border: 1px solid var(--black2) !important;
 }
-body.dark_sat .sb_down,
-body.dark_sat .sb_up,
-body.dark_sat .remove,
-body.dark_sat .display-value {
+body.satDark .sb_down,
+body.satDark .sb_up,
+body.satDark .remove,
+body.satDark .display-value {
   filter: invert(1);
 }
-body.dark_sat .filters .filter .icon {
+body.satDark .filters .filter .icon {
   border-right: 1px solid var(--black2) !important;
 }
-body.dark_sat .filters .filter .display-name {
+body.satDark .filters .filter .display-name {
   color: var(--text) !important;
 }
-body.dark_sat form {
+body.satDark form {
   color: var(--text) !important;
 }
-body.dark_sat .scLineHover {
+body.satDark .scLineHover {
   background-color: #289bc8 !important;
 }
-body.dark_sat .right-column {
+body.satDark .right-column {
   background-color: var(--black2) !important;
 }
-body.dark_sat #SectionHeader {
+body.satDark #SectionHeader {
   color: var(--text) !important;
 }
-body.dark_sat .mode:hover {
+body.satDark .mode:hover {
   background-color: var(--darkblue);
   border: 1px solid var(--darkblue) !important;
 }
-body.dark_sat #FileList a:hover,
-body.dark_sat #FileList a:active,
-body.dark_sat #FileList a.highlight {
+body.satDark #FileList a:hover,
+body.satDark #FileList a:active,
+body.satDark #FileList a.highlight {
   background: var(--darkblue) !important;
   color: var(--white) !important;
 }
-body.dark_sat .sc-uploader-content {
+body.satDark .sc-uploader-content {
   border: 0px dashed var(--blue) !important;
 }
-body.dark_sat select[disabled] > option {
+body.satDark select[disabled] > option {
   color: var(--black8) !important;
 }
-body.dark_sat #SearchResult {
+body.satDark #SearchResult {
   background-color: var(--black2) !important;
 }
-body.dark_sat #SearchResult,
-body.dark_sat #Log {
+body.satDark #SearchResult,
+body.satDark #Log {
   color: var(--text) !important;
 }
-body.dark_sat .highlight,
-body.dark_sat .side li a:hover,
-body.dark_sat .side li a.facetClickSelected {
+body.satDark .highlight,
+body.satDark .side li a:hover,
+body.satDark .side li a.facetClickSelected {
   background-color: var(--blue) !important;
 }
 
-body.dark_sat .sc ul.dynatree-container a:hover,
-body.dark_sat .sc span.dynatree-active a,
-body.dark_sat .sc span.dynatree-active a:hover {
+body.satDark .sc ul.dynatree-container a:hover,
+body.satDark .sc span.dynatree-active a,
+body.satDark .sc span.dynatree-active a:hover {
   background-color: var(--blue) !important;
 }
 
-body.dark_sat .scTitle {
+body.satDark .scTitle {
   border-bottom: 1px solid var(--black3);
 }
 
-body.dark_sat .scTileItemDetailsHeader,
-body.dark_sat a.scButton {
+body.satDark .scTileItemDetailsHeader,
+body.satDark a.scButton {
   color: rgba(255, 255, 255, 0.8);
 }
 
-body.dark_sat #FileList a.scButton {
+body.satDark #FileList a.scButton {
   background: var(--blue);
 }
 
-body.dark_sat .liveUrlBadge {
+body.satDark .liveUrlBadge {
   background-color: var(--blue);
   color: rgba(255, 255, 255, 0.7);
 }
 
-body.dark_sat .liveUrlBadge:hover {
+body.satDark .liveUrlBadge:hover {
   background-color: transparent;
   border: 1px solid var(--blue);
   color: rgba(255, 255, 255, 0.7);
 }
 
-body.dark_sat .liveStatusRed {
+body.satDark .liveStatusRed {
   color: var(--lightred);
 }
 
-body.dark_sat .liveStatusGreen {
+body.satDark .liveStatusGreen {
   color: var(--lightgreen);
 }
 
-body.dark_sat .sc-launchpad-item .sc-launchpad-text {
+body.satDark .sc-launchpad-item .sc-launchpad-text {
   color: var(--text);
 }
-body.dark_sat .wbNotification {
+body.satDark .wbNotification {
   background-color: var(--red);
 }
 
-body.dark_sat a.scResult:hover {
+body.satDark a.scResult:hover {
   background-color: var(--blue) !important;
 }
 
-body.dark_sat
-  .scContentControlCheckbox:checked
-  + .scContentControlCheckboxLabel::before {
+body.satDark .scContentControlCheckbox:checked + .scContentControlCheckboxLabel::before {
   background-color: var(--blue) !important;
 }
 
-body.dark_sat .scContentControlCheckboxLabel::before {
+body.satDark .scContentControlCheckboxLabel::before {
   background-color: #666 !important;
 }
 
-body.dark_sat .sc-dialogContent {
+body.satDark .sc-dialogContent {
   color: var(--text);
 }
 
-body.dark_sat .sc-listcontrol-tile-content {
+body.satDark .sc-listcontrol-tile-content {
   background: var(--black2) !important;
 }
 
-body.dark_sat #scModal {
+body.satDark #scModal {
   color: var(--text) !important;
   background-color: hsla(0, 0%, 7%, 0.7) !important;
 }
 
-body.dark_sat #scModal .item:hover {
+body.satDark #scModal .item:hover {
   background-color: var(--black5);
 }
 
-body.dark_sat #scModal .footer {
+body.satDark #scModal .footer {
   background-color: var(--black1) !important;
   color: var(--text) !important;
   border-top: 1px solid var(--black2) !important;
 }
 
-body.dark_sat .scButtonExtended {
+body.satDark .scButtonExtended {
   border: 1px solid var(--black1) !important;
   background-color: var(--black1) !important;
   box-shadow: inset 0 1px transparent;
 }
 
-body.dark_sat .scBackground {
+body.satDark .scBackground {
   background: var(--black);
 }
 
-body.dark_sat .scMediaExplorer {
+body.satDark .scMediaExplorer {
   color: var(--black7);
 }
 
-body.dark_sat .scTiles .scTileItem:nth-child(odd),
-body.dark_sat .scMediaExplorer tbody tr:nth-child(odd) {
+body.satDark .scTiles .scTileItem:nth-child(odd),
+body.satDark .scMediaExplorer tbody tr:nth-child(odd) {
   background: var(--black);
 }
 
-body.dark_sat .scTiles .scTileItem:nth-child(even),
-body.dark_sat .scMediaExplorer tbody tr:nth-child(even) {
+body.satDark .scTiles .scTileItem:nth-child(even),
+body.satDark .scMediaExplorer tbody tr:nth-child(even) {
   background: var(--black1);
 }
 
-body.dark_sat .scMediaExplorer th {
+body.satDark .scMediaExplorer th {
   border-top: 1px solid var(--black3);
   color: var(--text);
 }
 
-body.dark_sat .scMediaExplorer td.mediaArrow,
-body.dark_sat .scMediaExplorer .mediaTitle {
+body.satDark .scMediaExplorer td.mediaArrow,
+body.satDark .scMediaExplorer .mediaTitle {
   color: var(--text);
 }
 
-body.dark_sat .scMediaExplorer tbody tr:hover .mediaTitle,
-body.dark_sat .scMediaExplorer tbody tr:hover {
+body.satDark .scMediaExplorer tbody tr:hover .mediaTitle,
+body.satDark .scMediaExplorer tbody tr:hover {
   background: var(--black4) !important;
   color: var(--text) !important;
 }
 
-body.dark_sat .scMediaExplorer thead tr {
+body.satDark .scMediaExplorer thead tr {
   background: var(--black1);
   color: var(--text);
 }
 
-body.dark_sat .scMediaExplorer thead tr:hover {
+body.satDark .scMediaExplorer thead tr:hover {
   background: var(--black3);
 }
 
-body.dark_sat .scMediaExplorer thead tr .mediaSelected {
+body.satDark .scMediaExplorer thead tr .mediaSelected {
   background: var(--black3) !important;
   color: var(--text);
 }
 
-body.dark_sat .scMediaExplorer thead tr th:hover {
+body.satDark .scMediaExplorer thead tr th:hover {
   background: var(--black3) !important;
   color: var(--text);
 }
 
-body.dark_sat .scMediaExplorer td > img.scMediaPreview {
+body.satDark .scMediaExplorer td > img.scMediaPreview {
   background: var(--black1);
   border: 1px solid var(--black);
 }
 
-body.dark_sat #FileList a.scButton.scButtonGrid.selected,
-body.dark_sat #FileList a.scButton.scButtonList.selected {
+body.satDark #FileList a.scButton.scButtonGrid.selected,
+body.satDark #FileList a.scButton.scButtonList.selected {
   background-color: var(--blue) !important;
   border: 1px solid var(--blue) !important;
 }
 
-body.dark_sat .scIconCopy {
+body.satDark .scIconCopy {
   filter: invert(1);
+}
+
+body.satDark .sc .sc-border[data-sc-id="AnalyticsFallback"] {
+  background: var(--black3) !important;
+  color: var(--text) !important;
 }

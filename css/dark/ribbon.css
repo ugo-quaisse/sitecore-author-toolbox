@@ -2,113 +2,113 @@
  * Sitecore Dark Mode UI, by Ugo Quaisse
  * ribbon.css
  */
-body.dark_sat #RibbonPanel {
+body.satDark #RibbonPanel {
   border-bottom: 1px solid #333333 !important;
 }
 
-body.dark_sat .RibbonPanel {
+body.satDark .RibbonPanel {
   border-bottom: 1px solid #333333 !important;
 }
 
-body.dark_sat .scRibbon {
+body.satDark .scRibbon {
   background-color: #333333 !important;
 }
 
-body.dark_sat .scRibbon a {
+body.satDark .scRibbon a {
   color: var(--text) !important;
 }
 
-body.dark_sat .scRibbon a.scRibbonNavigatorButtonsNormal,
-body.dark_sat .scRibbon a.scRibbonNavigatorButtonsActive,
-body.dark_sat .scRibbon a.scRibbonNavigatorButtonsContextualNormal,
-body.dark_sat .scRibbon a.scRibbonNavigatorButtonsContextualActive {
+body.satDark .scRibbon a.scRibbonNavigatorButtonsNormal,
+body.satDark .scRibbon a.scRibbonNavigatorButtonsActive,
+body.satDark .scRibbon a.scRibbonNavigatorButtonsContextualNormal,
+body.satDark .scRibbon a.scRibbonNavigatorButtonsContextualActive {
   color: var(--text) !important;
 }
 
-body.dark_sat .scRibbon a.scRibbonNavigatorButtonsContextualNormal {
+body.satDark .scRibbon a.scRibbonNavigatorButtonsContextualNormal {
   color: white !important;
 }
 
-body.dark_sat .scRibbon a.scRibbonNavigatorButtonsContextualActive {
+body.satDark .scRibbon a.scRibbonNavigatorButtonsContextualActive {
   color: var(--black1) !important;
   background-color: var(--grey12) !important;
 }
 
-body.dark_sat .scRibbonToolbar {
+body.satDark .scRibbonToolbar {
   border-bottom: 1px solid #111111 !important;
 }
 
-body.dark_sat .contentEditor .scRibbonToolbar {
+body.satDark .contentEditor .scRibbonToolbar {
   background-color: var(--black2) !important;
 }
 
-body.dark_sat .scRibbonToolbarStrip,
-body.dark_sat .scRibbonToolbarContextualStrip {
+body.satDark .scRibbonToolbarStrip,
+body.satDark .scRibbonToolbarContextualStrip {
   background-color: var(--black2) !important;
 }
 
 /* chunks */
 
-body.dark_sat .scRibbon .chunk {
+body.satDark .scRibbon .chunk {
   background-color: var(--black2) !important;
   border-right: 1px solid #111111 !important;
 }
 
-body.dark_sat .lang_ja_jp .scRibbonToolbarStrip,
-body.dark_sat .lang_ja_jp .scRibbonToolbarContextualStrip {
+body.satDark .lang_ja_jp .scRibbonToolbarStrip,
+body.satDark .lang_ja_jp .scRibbonToolbarContextualStrip {
   background-color: var(--grey12) !important;
 }
 
-body.dark_sat .scRibbon .chunk .caption {
+body.satDark .scRibbon .chunk .caption {
   color: #555 !important;
 }
 
-body.dark_sat .scRibbon .chunk .caption a {
+body.satDark .scRibbon .chunk .caption a {
   color: #666 !important;
 }
 
-body.dark_sat .scRibbon .chunk .caption .glyph {
+body.satDark .scRibbon .chunk .caption .glyph {
   filter: brightness(0.5);
 }
 
-body.dark_sat .scRibbon .chunk .caption .glyph:hover {
+body.satDark .scRibbon .chunk .caption .glyph:hover {
   background-color: #e3e3e3 !important;
 }
 
 /*buttons*/
 
-body.dark_sat .scRibbonToolbarLargeButtonDisabled,
-body.dark_sat .scRibbonToolbarLargeGalleryButtonDisabled,
-body.dark_sat .scRibbonToolbarLargeComboButtonDisabled,
-body.dark_sat .scRibbonToolbarSmallGalleryButtonDisabled,
-body.dark_sat .scRibbonToolbarSmallButtonDisabled {
+body.satDark .scRibbonToolbarLargeButtonDisabled,
+body.satDark .scRibbonToolbarLargeGalleryButtonDisabled,
+body.satDark .scRibbonToolbarLargeComboButtonDisabled,
+body.satDark .scRibbonToolbarSmallGalleryButtonDisabled,
+body.satDark .scRibbonToolbarSmallButtonDisabled {
   color: #d6d6d6 !important;
 }
 
-body.dark_sat .scRibbonToolbarSeperatorLine {
+body.satDark .scRibbonToolbarSeperatorLine {
   border-left: 1px solid #e5e7ea !important;
   background: #9ea3a6 !important;
 }
 
-body.dark_sat .scRibbonToolbarText {
+body.satDark .scRibbonToolbarText {
   background-color: #111111 !important;
   border: 1px solid #111111 !important;
 }
 
-body.dark_sat .scRibbonToolbarScrollbox {
+body.satDark .scRibbonToolbarScrollbox {
   color: black !important;
 }
 
-body.dark_sat .scRibbonSelect {
+body.satDark .scRibbonSelect {
   background: #e7eaf1 !important;
   border: 1px solid #b1bbc6 !important;
 }
 
-body.dark_sat .scRibbonToolbarToolButtonGroup {
+body.satDark .scRibbonToolbarToolButtonGroup {
   border: 1px solid #a0a0a0 !important;
 }
 
-body.dark_sat .scRibbon a.scRibbonToolbarToolButton {
+body.satDark .scRibbon a.scRibbonToolbarToolButton {
   border-left: 1px solid #e0e0e0 !important;
   border-top: 1px solid #e0e0e0 !important;
   border-right: 1px solid #c9c9c9 !important;
@@ -116,15 +116,15 @@ body.dark_sat .scRibbon a.scRibbonToolbarToolButton {
   color: #303030 !important;
 }
 
-body.dark_sat .scRibbon a.scRibbonToolbarToolButton:active {
+body.satDark .scRibbon a.scRibbonToolbarToolButton:active {
   background: #ebeced !important;
 }
 
-body.dark_sat .scRibbon a.scRibbonToolbarToolButton:hover {
+body.satDark .scRibbon a.scRibbonToolbarToolButton:hover {
   background: #ebeced !important;
 }
 
-body.dark_sat .scRibbonToolbarToolButtonDisabled {
+body.satDark .scRibbonToolbarToolButtonDisabled {
   border-left: 1px solid #e0e0e0 !important;
   border-top: 1px solid #e0e0e0 !important;
   border-right: 1px solid #c9c9c9 !important;
@@ -132,193 +132,197 @@ body.dark_sat .scRibbonToolbarToolButtonDisabled {
   color: #8d8d8d !important;
 }
 
-body.dark_sat .scRibbon a.scRibbonToolbarLargeTextButtonDown {
+body.satDark .scRibbon a.scRibbonToolbarLargeTextButtonDown {
   border: 1px solid !important;
   border-color: #8e8165 #9f937c #868686 #9f937c !important;
   color: black !important;
 }
 
-body.dark_sat .scRibbonToolbarLargeTextButtonDisabled {
+body.satDark .scRibbonToolbarLargeTextButtonDisabled {
   color: #8d8d8d !important;
 }
 
-body.dark_sat .scRibbonLargeImageButtonIcon {
+body.satDark .scRibbonLargeImageButtonIcon {
   border: 1px solid #e9e9e9 !important;
   background-color: White !important;
 }
 
-body.dark_sat .scRibbonLargeImageButtonDisabled .scRibbonLargeImageButtonIcon {
+body.satDark .scRibbonLargeImageButtonDisabled .scRibbonLargeImageButtonIcon {
   background-color: #dfdfdf !important;
 }
 
 /*End Large Image Button*/
 
-body.dark_sat .scRibbon a.scRibbonToolbarLargeIconButton {
+body.satDark .scRibbon a.scRibbonToolbarLargeIconButton {
   color: #303030 !important;
 }
 
-body.dark_sat .scRibbonToolbarLargeIconButtonDisabled {
+body.satDark .scRibbonToolbarLargeIconButtonDisabled {
   color: #8d8d8d !important;
 }
 
-body.dark_sat .scRibbon a.scRibbonToolbarLargeIconButtonDown {
+body.satDark .scRibbon a.scRibbonToolbarLargeIconButtonDown {
   border-color: #8e8165 #9f937c #868686 #9f937c !important;
   color: black !important;
 }
 
-body.dark_sat .scRibbonToolbarSmallCheckButtonDisabled {
+body.satDark .scRibbonToolbarSmallCheckButtonDisabled {
   color: #8d8d8d !important;
 }
 
-body.dark_sat .scRibbonToolbarSmallInputBoxDisabled {
+body.satDark .scRibbonToolbarSmallInputBoxDisabled {
   color: #8d8d8d !important;
 }
 
-body.dark_sat .scRibbonToolbarSmallInputBoxInput,
-body.dark_sat .scRibbonToolbarSmallInputBoxInputDisabled {
+body.satDark .scRibbonToolbarSmallInputBoxInput,
+body.satDark .scRibbonToolbarSmallInputBoxInputDisabled {
   border: 1px solid #898989 !important;
 }
 
-body.dark_sat .scRibbonToolbarSmallInputBoxInputDisabled {
+body.satDark .scRibbonToolbarSmallInputBoxInputDisabled {
   background: #e0e0e0 !important;
 }
 
-body.dark_sat .scRibbonToolbarSmallDropDownBox,
-body.dark_sat .scRibbonToolbarSmallDropDownBoxDisabled {
+body.satDark .scRibbonToolbarSmallDropDownBox,
+body.satDark .scRibbonToolbarSmallDropDownBoxDisabled {
   color: #303030 !important;
 }
 
-body.dark_sat .scRibbonToolbarSmallDropDownBoxDisabled {
+body.satDark .scRibbonToolbarSmallDropDownBoxDisabled {
   color: #8d8d8d !important;
 }
 
-body.dark_sat .scRibbonToolbarSmallDropDownBoxInput {
+body.satDark .scRibbonToolbarSmallDropDownBoxInput {
   border: 1px solid #898989 !important;
 }
 
-body.dark_sat .scRibbonToolbarSmallComboButtonDisabled {
+body.satDark .scRibbonToolbarSmallComboButtonDisabled {
   color: #8d8d8d !important;
 }
 
-body.dark_sat .scRibbonToolbarSmallComboButtonLeftDisabled {
+body.satDark .scRibbonToolbarSmallComboButtonLeftDisabled {
   color: #8d8d8d !important;
 }
 
-body.dark_sat .scRibbon a.scRibbonToolbarSmallComboButtonLeft {
+body.satDark .scRibbon a.scRibbonToolbarSmallComboButtonLeft {
   color: var(--text) !important;
 }
 
-body.dark_sat .scRibbon a.scRibbonToolbarSmallComboButtonRight {
+body.satDark .scRibbon a.scRibbonToolbarSmallComboButtonRight {
   color: #303030 !important;
 }
 
-body.dark_sat .scRibbonGalleryList {
-  background-color: #111111 !important;
+body.satDark .scRibbonGalleryList {
+  background-color: var(--black1) !important;
+  border: 1px solid var(--black1) !important;
 }
 
-body.dark_sat .scVariationLabel {
-  background-color: #3eada3 !important;
+body.satDark .scRibbonPanelButtons {
+  border: 1px solid var(--black2) !important;
+}
 
+body.satDark .scVariationLabel {
+  background-color: #3eada3 !important;
   color: White !important;
 }
 
-body.dark_sat .scRibbonToolbarSmallButtonDisabled .scVariationLabel {
+body.satDark .scRibbonToolbarSmallButtonDisabled .scVariationLabel {
   background-color: #86a8a5 !important;
 }
 
 /* active styles*/
-body.dark_sat .scRibbon a.scRibbonNavigatorButtonsActive,
-body.dark_sat .scRibbon a.scRibbonNavigatorButtonsContextualNormal:active,
-body.dark_sat .scRibbon a.scRibbonNavigatorButtonsNormal:active,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeButton:active,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeButtonDown:active,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeGalleryButton:active,
-body.dark_sat .scRibbonToolbarLargeComboButtonDown,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeComboButtonTop:active,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeComboButtonBottom:active,
-body.dark_sat a.scRibbonToolbarSmallButton:active,
-body.dark_sat a.scRibbonToolbarSmallButtonDown,
-body.dark_sat a.scRibbonToolbarSmallButtonDown:active,
-body.dark_sat .scRibbon a.scRibbonToolbarSmallGalleryButton:active,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeTextButton:active,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeTextButtonDown:active,
-body.dark_sat .scRibbonLargeImageButton:active,
-body.dark_sat .scRibbonLargeImageButtonDown:active,
-body.dark_sat .scRibbonLargeImageButtonDown,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeIconButton:active,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeIconButtonDown:active,
-body.dark_sat .scRibbon a.scRibbonToolbarSmallComboButtonLeft:active,
-body.dark_sat .scRibbon a.scRibbonToolbarSmallComboButtonRight:active {
+body.satDark .scRibbon a.scRibbonNavigatorButtonsActive,
+body.satDark .scRibbon a.scRibbonNavigatorButtonsContextualNormal:active,
+body.satDark .scRibbon a.scRibbonNavigatorButtonsNormal:active,
+body.satDark .scRibbon a.scRibbonToolbarLargeButton:active,
+body.satDark .scRibbon a.scRibbonToolbarLargeButtonDown:active,
+body.satDark .scRibbon a.scRibbonToolbarLargeGalleryButton:active,
+body.satDark .scRibbonToolbarLargeComboButtonDown,
+body.satDark .scRibbon a.scRibbonToolbarLargeComboButtonTop:active,
+body.satDark .scRibbon a.scRibbonToolbarLargeComboButtonBottom:active,
+body.satDark a.scRibbonToolbarSmallButton:active,
+body.satDark a.scRibbonToolbarSmallButtonDown,
+body.satDark a.scRibbonToolbarSmallButtonDown:active,
+body.satDark .scRibbon a.scRibbonToolbarSmallGalleryButton:active,
+body.satDark .scRibbon a.scRibbonToolbarLargeTextButton:active,
+body.satDark .scRibbon a.scRibbonToolbarLargeTextButtonDown:active,
+body.satDark .scRibbonLargeImageButton:active,
+body.satDark .scRibbonLargeImageButtonDown:active,
+body.satDark .scRibbonLargeImageButtonDown,
+body.satDark .scRibbon a.scRibbonToolbarLargeIconButton:active,
+body.satDark .scRibbon a.scRibbonToolbarLargeIconButtonDown:active,
+body.satDark .scRibbon a.scRibbonToolbarSmallComboButtonLeft:active,
+body.satDark .scRibbon a.scRibbonToolbarSmallComboButtonRight:active {
   background-color: var(--black2) !important;
   color: var(--text) !important;
 }
 
 /* down styles*/
 
-body.dark_sat .scRibbon a.scRibbonToolbarLargeButtonDown,
-body.dark_sat .scRibbonToolbarLargeComboButtonDown,
-body.dark_sat a.scRibbonToolbarSmallButtonDown,
-body.dark_sat .scRibbonLargeImageButtonDown {
+body.satDark .scRibbon a.scRibbonToolbarLargeButtonDown,
+body.satDark .scRibbonToolbarLargeComboButtonDown,
+body.satDark a.scRibbonToolbarSmallButtonDown,
+body.satDark .scRibbonLargeImageButtonDown {
   background-color: var(--blue) !important;
   color: var(--black1) !important;
 }
 
-body.dark_sat .scRibbon a.scRibbonToolbarLargeButtonDown > span,
-body.dark_sat .scRibbonToolbarLargeComboButtonDown > span,
-body.dark_sat a.scRibbonToolbarSmallButtonDown > span,
-body.dark_sat .scRibbonLargeImageButtonDown > span {
+body.satDark .scRibbon a.scRibbonToolbarLargeButtonDown > span,
+body.satDark .scRibbonToolbarLargeComboButtonDown > span,
+body.satDark a.scRibbonToolbarSmallButtonDown > span,
+body.satDark .scRibbonLargeImageButtonDown > span {
   color: var(--black1) !important;
 }
 
-body.dark_sat .scRibbon a.scRibbonToolbarLargeButtonDown:hover > span,
-body.dark_sat .scRibbonToolbarLargeComboButtonDown:hover > span,
-body.dark_sat a.scRibbonToolbarSmallButtonDown:hover > span,
-body.dark_sat .scRibbonLargeImageButtonDown:hover > span {
+body.satDark .scRibbon a.scRibbonToolbarLargeButtonDown:hover > span,
+body.satDark .scRibbonToolbarLargeComboButtonDown:hover > span,
+body.satDark a.scRibbonToolbarSmallButtonDown:hover > span,
+body.satDark .scRibbonLargeImageButtonDown:hover > span {
   color: var(--text) !important;
 }
 
 /* hover styles*/
-body.dark_sat .scRibbon a.scRibbonNavigatorButtonsContextualNormal:hover,
-body.dark_sat .scRibbon a.scRibbonNavigatorButtonsNormal:hover,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeButton:hover,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeButton:hover,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeButtonDown:hover,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeGalleryButton:hover,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeGalleryButton:hover,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeComboButtonTop:hover,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeComboButtonTop:hover,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeComboButtonBottom:hover,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeComboButtonBottom:hover,
-body.dark_sat a.scRibbonToolbarSmallButton:hover,
-body.dark_sat .scRibbonToolbarSmallButton:hover,
-body.dark_sat a.scRibbonToolbarSmallButtonDown:hover,
-body.dark_sat .scRibbon a.scRibbonToolbarSmallGalleryButton:hover,
-body.dark_sat .scRibbon a.scRibbonToolbarSmallGalleryButton:hover,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeTextButton:hover,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeTextButton:hover,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeTextButtonDown:hover,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeTextButtonDown:hover,
-body.dark_sat .scRibbonLargeImageButton:hover,
-body.dark_sat .scRibbonLargeImageButtonDown:hover,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeIconButton:hover,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeIconButtonDown:hover,
-body.dark_sat .scRibbon a.scRibbonToolbarLargeIconButtonDown:hover,
-body.dark_sat .scRibbon a.scRibbonToolbarSmallComboButtonLeft:hover,
-body.dark_sat .scRibbon a.scRibbonToolbarSmallComboButtonLeft:hover,
-body.dark_sat .scRibbon a.scRibbonToolbarSmallComboButtonRight:hover,
-body.dark_sat .scRibbon a.scRibbonToolbarSmallComboButtonRight:hover,
-body.dark_sat .scRibbonToolbarLargeComboButtonDown:hover {
+body.satDark .scRibbon a.scRibbonNavigatorButtonsContextualNormal:hover,
+body.satDark .scRibbon a.scRibbonNavigatorButtonsNormal:hover,
+body.satDark .scRibbon a.scRibbonToolbarLargeButton:hover,
+body.satDark .scRibbon a.scRibbonToolbarLargeButton:hover,
+body.satDark .scRibbon a.scRibbonToolbarLargeButtonDown:hover,
+body.satDark .scRibbon a.scRibbonToolbarLargeGalleryButton:hover,
+body.satDark .scRibbon a.scRibbonToolbarLargeGalleryButton:hover,
+body.satDark .scRibbon a.scRibbonToolbarLargeComboButtonTop:hover,
+body.satDark .scRibbon a.scRibbonToolbarLargeComboButtonTop:hover,
+body.satDark .scRibbon a.scRibbonToolbarLargeComboButtonBottom:hover,
+body.satDark .scRibbon a.scRibbonToolbarLargeComboButtonBottom:hover,
+body.satDark a.scRibbonToolbarSmallButton:hover,
+body.satDark .scRibbonToolbarSmallButton:hover,
+body.satDark a.scRibbonToolbarSmallButtonDown:hover,
+body.satDark .scRibbon a.scRibbonToolbarSmallGalleryButton:hover,
+body.satDark .scRibbon a.scRibbonToolbarSmallGalleryButton:hover,
+body.satDark .scRibbon a.scRibbonToolbarLargeTextButton:hover,
+body.satDark .scRibbon a.scRibbonToolbarLargeTextButton:hover,
+body.satDark .scRibbon a.scRibbonToolbarLargeTextButtonDown:hover,
+body.satDark .scRibbon a.scRibbonToolbarLargeTextButtonDown:hover,
+body.satDark .scRibbonLargeImageButton:hover,
+body.satDark .scRibbonLargeImageButtonDown:hover,
+body.satDark .scRibbon a.scRibbonToolbarLargeIconButton:hover,
+body.satDark .scRibbon a.scRibbonToolbarLargeIconButtonDown:hover,
+body.satDark .scRibbon a.scRibbonToolbarLargeIconButtonDown:hover,
+body.satDark .scRibbon a.scRibbonToolbarSmallComboButtonLeft:hover,
+body.satDark .scRibbon a.scRibbonToolbarSmallComboButtonLeft:hover,
+body.satDark .scRibbon a.scRibbonToolbarSmallComboButtonRight:hover,
+body.satDark .scRibbon a.scRibbonToolbarSmallComboButtonRight:hover,
+body.satDark .scRibbonToolbarLargeComboButtonDown:hover {
   background-color: var(--blue) !important;
   color: var(--white) !important;
 }
 
-body.dark_sat .scRibbonToolbarLargeButtonDown:hover > span,
-body.dark_sat .scRibbonToolbarLargeButton:hover > span,
-body.dark_sat .scRibbonToolbarSmallButton:hover > span,
-body.dark_sat .scRibbonToolbarSmallButtonDown:hover > span,
-body.dark_sat .scRibbonToolbarSmallComboButtonRight:hover > span,
-body.dark_sat .scRibbonToolbarSmallComboButtonLeft:hover > span,
-body.dark_sat .scRibbonToolbarLargeComboButtonBottom:hover > span,
-body.dark_sat .scRibbonToolbarLargeComboButtonDown:hover > span {
+body.satDark .scRibbonToolbarLargeButtonDown:hover > span,
+body.satDark .scRibbonToolbarLargeButton:hover > span,
+body.satDark .scRibbonToolbarSmallButton:hover > span,
+body.satDark .scRibbonToolbarSmallButtonDown:hover > span,
+body.satDark .scRibbonToolbarSmallComboButtonRight:hover > span,
+body.satDark .scRibbonToolbarSmallComboButtonLeft:hover > span,
+body.satDark .scRibbonToolbarLargeComboButtonBottom:hover > span,
+body.satDark .scRibbonToolbarLargeComboButtonDown:hover > span {
   color: var(--text) !important;
 }

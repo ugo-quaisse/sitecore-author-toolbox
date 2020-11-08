@@ -17,10 +17,7 @@ const addHelpIcons = () => {
       // eslint-disable-next-line require-unicode-regexp
       // eslint-disable-next-line prefer-named-capture-group
       let text = elem.getAttribute("title").replace(/(<([^>]+)>)/u, "");
-      elem.insertAdjacentHTML(
-        "beforebegin",
-        `<div style="display:inline; margin-right: 5px; float:left" class="t-right t-sm" data-tooltip="` + text + `">` + helpLink + `</div>`
-      );
+      elem.insertAdjacentHTML("beforebegin", `<div style="display:inline; margin-right: 5px; float:left" class="t-right t-sm" data-tooltip="` + text + `">` + helpLink + `</div>`);
       elem.removeAttribute("title");
     }
   });

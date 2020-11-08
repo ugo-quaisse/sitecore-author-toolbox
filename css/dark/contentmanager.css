@@ -1,84 +1,93 @@
-body.dark_sat .scWindowBorder1 {
+body.satDark .scWindowBorder1 {
   border: 1px solid #5e5e5e;
 }
 
-body.dark_sat .scWindowBorder3 {
+body.satDark .scWindowBorder3 {
   background: #4e4e4e;
+}
+
+body.satDark .scEditorHeader {
+  background-color: var(--black1) !important;
+}
+
+body.satDark #TreeSearch {
+  background-color: var(--black1) !important;
+  border: 1px var(--black1) !important;
 }
 
 /* Caption */
 
-body.dark_sat .scWindowBorder3 {
+body.satDark .scWindowBorder3 {
   background-color: var(--black2) !important;
 }
-body.dark_sat .scCaption {
+body.satDark .scCaption {
   background-color: var(--black2) !important;
-  position: relative;
 }
 
-body.dark_sat .scEditorHeaderTitle:hover {
+body.satDark .scEditorHeaderTitle:hover {
   background-color: var(--blue);
   color: var(--black1) !important;
 }
 
-body.dark_sat .scEditorHeaderProfileCardIcon {
+body.satDark .scEditorHeaderProfileCardIcon {
   border: 1px solid #e3e3e3;
 }
 
-body.dark_sat .scEditorHeaderSeperatorLine {
+body.satDark .scEditorHeaderSeperatorLine {
   background: none repeat scroll 0 0 White;
   border-left: 1px solid #b9b9b9;
 }
 
 /* editor header buttons */
 
-body.dark_sat a.scEditorHeaderButton {
+body.satDark a.scEditorHeaderButton {
+  background: unset;
   background-color: var(--black1) !important;
+  box-shadow: unset;
 }
 
-body.dark_sat a.scEditorHeaderButton:hover,
-body.dark_sat a.scEditorHeaderButton:active {
+body.satDark a.scEditorHeaderButton:hover,
+body.satDark a.scEditorHeaderButton:active {
   background-color: var(--text);
 }
 
-body.dark_sat a.scEditorHeaderButton:active {
+body.satDark a.scEditorHeaderButton:active {
   box-shadow: inset 0 1px 3px #ccc;
 }
 
-body.dark_sat .scEditorHeaderNavigatorField:hover,
-body.dark_sat a.scEditorHeaderNavigatorSection:hover {
+body.satDark .scEditorHeaderNavigatorField:hover,
+body.satDark a.scEditorHeaderNavigatorSection:hover {
   background-color: #69a8d0;
   color: var(--black3);
 }
 
-body.dark_sat a.scEditorHeaderNavigatorSection {
+body.satDark a.scEditorHeaderNavigatorSection {
   border-top: 1px solid #f0f0f0;
 }
 
-body.dark_sat .scEditorPanelCell {
+body.satDark .scEditorPanelCell {
   background: #cccccc;
 }
 
-body.dark_sat .scEditorSections {
+body.satDark .scEditorSections {
   background-color: #191919 !important;
 }
 
-body.dark_sat .scEditorSectionCaptionExpanded,
-body.dark_sat .scEditorSectionCaptionCollapsed {
+body.satDark .scEditorSectionCaptionExpanded,
+body.satDark .scEditorSectionCaptionCollapsed {
   background-color: var(--darkblue);
-
   color: var(--white);
 }
 
-body.dark_sat .scEditorSectionCaptionExpanded {
+body.satDark .scEditorSectionCaptionExpanded {
   border-left: 5px solid var(--blue) !important;
 }
 
-body.dark_sat .scEditorSectionCaptionExpanded::selection {
+body.satDark .scEditorSectionCaptionExpanded::selection {
   background-color: var(--darkblue);
 }
 
-body.dark_sat .scEditorSectionCaptionCollapsed {
+body.satDark .scEditorSectionCaptionCollapsed {
   background-color: var(--black1) !important;
 
   border-bottom: 1px solid var(--black3) !important;
@@ -86,177 +95,177 @@ body.dark_sat .scEditorSectionCaptionCollapsed {
   color: var(--black8) !important;
 }
 
-body.dark_sat .scEditorSectionCaptionCollapsed::selection {
+body.satDark .scEditorSectionCaptionCollapsed::selection {
   background-color: var(--black1);
 }
 
-body.dark_sat .scEditorFieldLabelDisabled {
+body.satDark .scEditorFieldLabelDisabled {
   color: var(--black9);
 }
 
-body.dark_sat .scEditorFieldLabelAdministrator {
+body.satDark .scEditorFieldLabelAdministrator {
   color: var(--black9);
   font-weight: normal;
 }
 
-body.dark_sat .scEditorFieldLabelLink,
-body.dark_sat .scEditorFieldLabelLink:link,
-body.dark_sat .scEditorFieldLabelLink:active,
-body.dark_sat .scEditorFieldLabelLink:hover,
-body.dark_sat .scEditorFieldLabelLink:visited {
+body.satDark .scEditorFieldLabelLink,
+body.satDark .scEditorFieldLabelLink:link,
+body.satDark .scEditorFieldLabelLink:active,
+body.satDark .scEditorFieldLabelLink:hover,
+body.satDark .scEditorFieldLabelLink:visited {
   color: var(--black3) !important;
 
   color: #cccccc !important;
 }
 
-body.dark_sat .scEditorFieldMenu {
+body.satDark .scEditorFieldMenu {
   border: 1px solid #f0cca5;
   color: black;
 }
 
-body.dark_sat .scEditorTranslateButton {
+body.satDark .scEditorTranslateButton {
   background: #f8d5a6;
   border: 1px solid #f0cca5;
   color: black;
 }
 
-body.dark_sat .scGalleryFrame {
+body.satDark .scGalleryFrame {
   filter: drop-shadow(2px 4px 12px var(--black1)) !important;
 }
 
-body.dark_sat .scCombobuttonMain {
+body.satDark .scCombobuttonMain {
   color: #b9b9b9;
 }
 
-body.dark_sat .scEditorFieldMarkerBarCellGrey {
+body.satDark .scEditorFieldMarkerBarCellGrey {
   border-left-color: #bbbbbb;
 }
 
-body.dark_sat .scEditorFieldMarkerBarCellYellow {
+body.satDark .scEditorFieldMarkerBarCellYellow {
   border-left-color: #fbc200;
 }
 
-body.dark_sat .scEditorFieldMarkerBarCellRed {
+body.satDark .scEditorFieldMarkerBarCellRed {
   border-left-color: #9f1d16 !important;
 }
 
-body.dark_sat a.scContentButton {
+body.satDark a.scContentButton {
   color: var(--blue) !important;
 
   border-right: 1px solid #ccc;
 }
 
-body.dark_sat .scContentButtonDisabled {
+body.satDark .scContentButtonDisabled {
   color: var(--black9);
 }
 
 /* Template */
 
-body.dark_sat .scTemplateTreeTemplateActive,
-body.dark_sat .scTemplateTreeTemplate:hover {
+body.satDark .scTemplateTreeTemplateActive,
+body.satDark .scTemplateTreeTemplate:hover {
   background: #edb078;
 }
 
-body.dark_sat .scTemplateTreeSections {
+body.satDark .scTemplateTreeSections {
   border: 1px solid var(--black9);
 }
 
-body.dark_sat .scTemplateTreeSection {
+body.satDark .scTemplateTreeSection {
   border: 1px solid #c9c9c9;
 }
 
-body.dark_sat .scTemplateTreeSectionNameActive,
-body.dark_sat .scTemplateTreeSectionName:hover {
+body.satDark .scTemplateTreeSectionNameActive,
+body.satDark .scTemplateTreeSectionName:hover {
   background: #edb078;
 }
 
-body.dark_sat .scTemplateTreeSectionField,
-body.dark_sat .scTemplateTreeSectionField:link,
-body.dark_sat .scTemplateTreeSectionField:active,
-body.dark_sat .scTemplateTreeSectionField:hover,
-body.dark_sat .scTemplateTreeSectionField:visited,
-body.dark_sat .scTemplateTreeSectionFieldActive,
-body.dark_sat .scTemplateTreeSectionFieldActive:link,
-body.dark_sat .scTemplateTreeSectionFieldActive:active,
-body.dark_sat .scTemplateTreeSectionFieldActive:hover,
-body.dark_sat .scTemplateTreeSectionFieldActive:visited {
+body.satDark .scTemplateTreeSectionField,
+body.satDark .scTemplateTreeSectionField:link,
+body.satDark .scTemplateTreeSectionField:active,
+body.satDark .scTemplateTreeSectionField:hover,
+body.satDark .scTemplateTreeSectionField:visited,
+body.satDark .scTemplateTreeSectionFieldActive,
+body.satDark .scTemplateTreeSectionFieldActive:link,
+body.satDark .scTemplateTreeSectionFieldActive:active,
+body.satDark .scTemplateTreeSectionFieldActive:hover,
+body.satDark .scTemplateTreeSectionFieldActive:visited {
   border: 1px solid #c9c9c9;
 }
 
-body.dark_sat .scTemplateTreeSectionFieldDetails {
+body.satDark .scTemplateTreeSectionFieldDetails {
   color: var(--black9);
 }
 
-body.dark_sat .scTemplateTreeSectionFieldActive,
-body.dark_sat .scTemplateTreeSectionField:hover {
+body.satDark .scTemplateTreeSectionFieldActive,
+body.satDark .scTemplateTreeSectionField:hover {
   background: #edb078;
 }
 
-body.dark_sat .scTemplateTreeStandardValues {
+body.satDark .scTemplateTreeStandardValues {
   border: 1px solid var(--black9);
 }
 
-body.dark_sat .scTemplateTreeStandardValuesEditActive,
-body.dark_sat .scTemplateTreeStandardValuesEdit:hover {
+body.satDark .scTemplateTreeStandardValuesEditActive,
+body.satDark .scTemplateTreeStandardValuesEdit:hover {
   background: #edb078;
 }
 
-body.dark_sat .scTemplateTreeMasters {
+body.satDark .scTemplateTreeMasters {
   border: 1px solid var(--black9);
 }
 
-body.dark_sat .scTemplateTreeMasterActive,
-body.dark_sat .scTemplateTreeMaster:hover {
+body.satDark .scTemplateTreeMasterActive,
+body.satDark .scTemplateTreeMaster:hover {
   background: #edb078;
 }
 
 /* Pager */
 
-body.dark_sat .scPager {
+body.satDark .scPager {
   background-color: var(--black1) !important;
 
   border-top: 2px solid #6b120d !important;
 }
 
-body.dark_sat a.scPagerButtonNormal,
-body.dark_sat a.scPagerButtonActive {
+body.satDark a.scPagerButtonNormal,
+body.satDark a.scPagerButtonActive {
   color: #cccccc !important;
 }
 
-body.dark_sat .scPagerButtonNormal:hover {
+body.satDark .scPagerButtonNormal:hover {
   color: #131313 !important;
   background-color: #e3e3e3;
 }
 
-body.dark_sat a.scPagerButtonActive {
+body.satDark a.scPagerButtonActive {
   background-color: #212121 !important;
 }
 
-body.dark_sat .scRibbonToolbarKeyCodeSmallButton {
+body.satDark .scRibbonToolbarKeyCodeSmallButton {
   border: 1px solid var(--black6);
   background: white;
 }
 
-body.dark_sat .scRibbonToolbarKeyCodeLargeButton {
+body.satDark .scRibbonToolbarKeyCodeLargeButton {
   border: 1px solid var(--black6);
   background: white;
 }
 
-body.dark_sat .scEditorGrid {
+body.satDark .scEditorGrid {
   background-color: #212121 !important;
 }
 
-body.dark_sat #EditorTabs {
+body.satDark #EditorTabs {
   background-color: transparent !important;
 
   border-bottom: 1px solid var(--black3) !important;
 }
 
-body.dark_sat #EditorFrames {
+body.satDark #EditorFrames {
   background-color: var(--black1) !important;
 }
 
-body.dark_sat #BTAddNewSearch {
+body.satDark #BTAddNewSearch {
   background-color: var(--black3) !important;
   color: #131313;
 
@@ -264,17 +273,16 @@ body.dark_sat #BTAddNewSearch {
 
   box-shadow: inset 0 1px transparent !important;
   text-shadow: transparent;
-  background-image: url("chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.png"),
-    linear-gradient(to bottom, transparent 0%, transparent 100%) !important;
+  background-image: url("chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.png"), linear-gradient(to bottom, transparent 0%, transparent 100%) !important;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-body.dark_sat a#BTAddNewSearch:hover {
+body.satDark a#BTAddNewSearch:hover {
   background-color: var(--black1) !important;
 }
 
-body.dark_sat a#BTAddNewSearch:active {
+body.satDark a#BTAddNewSearch:active {
   background-image: none !important;
   background-color: var(--black1) !important;
   background-repeat: no-repeat;
@@ -282,148 +290,148 @@ body.dark_sat a#BTAddNewSearch:active {
   border-color: #bdbdbd;
 }
 
-body.dark_sat a.scRibbonEditorTabNormal,
-body.dark_sat a.scRibbonEditorTabActive {
+body.satDark a.scRibbonEditorTabNormal,
+body.satDark a.scRibbonEditorTabActive {
   color: #5e5e5e;
 
   background-color: #323232 !important;
   border-right: transparent !important;
 }
 
-body.dark_sat a.scRibbonEditorTabActive {
+body.satDark a.scRibbonEditorTabActive {
   background-color: #323232 !important;
 }
 
-body.dark_sat a.scRibbonEditorTabNormal:hover {
+body.satDark a.scRibbonEditorTabNormal:hover {
   background-color: #e3e3e3;
 }
 
-body.dark_sat .scEditorTabHeaderNormal,
-body.dark_sat .scEditorTabHeaderActive {
+body.satDark .scEditorTabHeaderNormal,
+body.satDark .scEditorTabHeaderActive {
   color: var(--text) !important;
 }
 
-body.dark_sat .scEditorTabHeaderActive {
+body.satDark .scEditorTabHeaderActive {
   background-color: var(--black1) !important;
   color: var(--black9) !important;
 }
 
-body.dark_sat #BTAddNewSearch > .scEditorTabHeaderNormal {
+body.satDark #BTAddNewSearch > .scEditorTabHeaderNormal {
   background-color: transparent !important;
 }
 
-body.dark_sat .scEditorTabHeaderNormal {
+body.satDark .scEditorTabHeaderNormal {
   background-color: var(--black3) !important;
 }
 
 /* Validator bar */
 
-body.dark_sat .scValidatorPanel {
+body.satDark .scValidatorPanel {
   background: var(--black1) !important;
 }
 
 /* search */
 
-body.dark_sat #SearchPanel {
+body.satDark #SearchPanel {
   border-bottom: 1px solid var(--black3) !important;
 }
 
-body.dark_sat .scSearchCategory {
+body.satDark .scSearchCategory {
   border-right: 1px solid var(--black3);
 }
 
-body.dark_sat .scSearchLink:hover,
-body.dark_sat .scSearchLink:active {
+body.satDark .scSearchLink:hover,
+body.satDark .scSearchLink:active {
   background-color: var(--black1);
   color: #cccccc;
 }
 
-body.dark_sat .scSearchLinkDetails {
+body.satDark .scSearchLinkDetails {
   color: var(--black9);
 }
 
-body.dark_sat .scSearchHeader {
+body.satDark .scSearchHeader {
   border-bottom: 1px solid var(--black3);
 }
 
-body.dark_sat #TreeSearch {
+body.satDark #TreeSearch {
   color: #969696;
 }
 
-body.dark_sat .scSearchEntireTree a {
+body.satDark .scSearchEntireTree a {
   color: Blue;
 }
 
 /* =Field error */
 
-body.dark_sat .scEditorFieldMarkerInputCell iframe {
+body.satDark .scEditorFieldMarkerInputCell iframe {
   color: #cccccc !important;
   border: 1px solid var(--black2) !important;
   background: #171717 !important;
 }
 
-body.dark_sat .defaultFieldEditorsFrameContainer > html > body {
+body.satDark .defaultFieldEditorsFrameContainer > html > body {
   background-color: #191919 !important;
 }
 
-body.dark_sat .scContentControlTreelist .scScrollbox,
-body.dark_sat .scContentControlTreelist_Active .scScrollbox {
+body.satDark .scContentControlTreelist .scScrollbox,
+body.satDark .scContentControlTreelist_Active .scScrollbox {
   border: 1px solid #191919;
 }
 
-body.dark_sat .scProfileHeader .scSelectPresetLinkDisabled {
+body.satDark .scProfileHeader .scSelectPresetLinkDisabled {
   color: var(--black9);
 }
 
-body.dark_sat .scContentDragMarker {
+body.satDark .scContentDragMarker {
   background: #008ef4;
 }
 
-body.dark_sat #EditorTop {
+body.satDark #EditorTop {
   filter: invert(1);
 }
 
-body.dark_sat .splitter-bar {
+body.satDark .splitter-bar {
   background-color: var(--black3) !important;
 }
 
-body.dark_sat .splitter-bar:before,
-body.dark_sat .splitter-bar:after {
+body.satDark .splitter-bar:before,
+body.satDark .splitter-bar:after {
   background-color: #0e0e0e !important;
 }
 
-body.dark_sat .splitter-bar:hover {
+body.satDark .splitter-bar:hover {
   background-color: var(--blue) !important;
 }
 
-body.dark_sat #ContentTreePanel {
+body.satDark #ContentTreePanel {
   width: 150px;
   background-color: var(--black2) !important;
 }
 
-body.dark_sat .scConditionContainer {
+body.satDark .scConditionContainer {
   background-color: #446693;
   color: White;
 }
 
-body.dark_sat #saveAnimation {
+body.satDark #saveAnimation {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.175);
 }
 
-body.dark_sat .scNavButton:hover,
-body.dark_sat .scCalendarYearLeftCell:hover,
-body.dark_sat .scCalendarYearRightCell:hover {
+body.satDark .scNavButton:hover,
+body.satDark .scCalendarYearLeftCell:hover,
+body.satDark .scCalendarYearRightCell:hover {
   background: #e3e3e3;
   cursor: pointer;
 }
 
 body .Metro .reDialog .reTool:hover,
-body.dark_sat .Metro .reToolbar .reTool:hover,
-body.dark_sat .Metro .reModule .reTool:hover {
+body.satDark .Metro .reToolbar .reTool:hover,
+body.satDark .Metro .reModule .reTool:hover {
   background: #e3e3e3 !important;
 }
 
-body.dark_sat .reEditorModesCell {
+body.satDark .reEditorModesCell {
   background-color: #474747;
 
   border-top: 2px solid #dc291e !important;
@@ -453,12 +461,12 @@ body .Metro.RadEditor .reEditorModes .reMode_selected {
   border: 1px solid var(--black1) !important;
 }
 
-body.dark_sat #EditorBottom {
+body.satDark #EditorBottom {
   border-top: 2px solid #dc291e !important;
 }
 
-body.dark_sat #EditorBottom,
-body.dark_sat .reModule.reStatistic {
+body.satDark #EditorBottom,
+body.satDark .reModule.reStatistic {
   background-color: #474747 !important;
   color: var(--text) !important;
 }
@@ -475,7 +483,7 @@ body .RadWindow_Metro .rwControlButtons a {
 }
 
 body .RadTabStripTop_Metro .rtsLevel1,
-body.dark_sat .RadTabStrip_Metro .rtsLevel1 .rtsUL {
+body.satDark .RadTabStrip_Metro .rtsLevel1 .rtsUL {
   background-color: #474747;
   color: var(--text);
 }
@@ -485,48 +493,48 @@ body .Metro .reToolbar .reTool.reTool_selected:hover {
   background-color: #aadbee;
 }
 
-body.dark_sat .reAjaxspell_wrapper {
+body.satDark .reAjaxspell_wrapper {
   background-color: #fefae6 !important;
 }
 
-body.dark_sat .reAjaxspell_wrapper label {
+body.satDark .reAjaxspell_wrapper label {
   color: #e0b406 !important;
 }
 
-body.dark_sat .Metro .reAjaxspell_button {
+body.satDark .Metro .reAjaxspell_button {
   color: #2b2b2b !important;
   background: #f0f0f0 !important;
 }
 
-body.dark_sat .scElementHover:hover {
+body.satDark .scElementHover:hover {
   background: var(--blue);
 }
 
-body.dark_sat .scSearchOptionName:hover {
+body.satDark .scSearchOptionName:hover {
   background: #e3e3e3;
 }
 
-body.dark_sat .scEditorSectionPanel,
-body.dark_sat .scEditorSections {
+body.satDark .scEditorSectionPanel,
+body.satDark .scEditorSections {
   border-top: 1px solid var(--black3);
   background-color: var(--black2);
 }
-body.dark_sat #scEditorTabs {
+body.satDark #scEditorTabs {
   background-color: var(--black1);
 }
-body.dark_sat #scEditorTabs > ul > li {
+body.satDark #scEditorTabs > ul > li {
   border: 1px solid var(--black3);
   background: var(--black3);
   color: var(--black8);
 }
-body.dark_sat #scEditorTabs > ul > li:hover {
+body.satDark #scEditorTabs > ul > li:hover {
   color: var(--black6);
 }
-body.dark_sat .scEditorTabEmpty {
+body.satDark .scEditorTabEmpty {
   background-color: var(--black1) !important;
   border-bottom: 1px solid var(--black3) !important;
 }
-body.dark_sat .scEditorTabSelected {
+body.satDark .scEditorTabSelected {
   color: var(--text) !important;
   background-color: var(--black2) !important;
   border-bottom: 0px solid var(--black2) !important;
@@ -534,7 +542,7 @@ body.dark_sat .scEditorTabSelected {
   border-right: 0px solid var(--black2) !important;
 }
 
-body.dark_sat #ContentWrapper,
-body.dark_sat #Editor_contentIframe > html > body {
+body.satDark #ContentWrapper,
+body.satDark #Editor_contentIframe > html > body {
   color: var(--text) !important;
 }

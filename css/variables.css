@@ -70,6 +70,7 @@
   --iconContrast: 2;
 }
 
-:root body.dark_sat {
-  --text: #fff !important;
+:root body.satDark {
+  --text: #c0c0c0 !important;
+  --grey5: #2b2b2b !important;
 }

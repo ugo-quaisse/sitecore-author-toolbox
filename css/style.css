@@ -1,6 +1,6 @@
 @import url("variables.min.css");
 @import url("experimentalui.min.css");
-@import url("css/tooltip.min.css");
+@import url("tooltip.min.css");
 @import url("dark/default.min.css");
 @import url("dark/ribbon.min.css");
 @import url("dark/contentmanager.min.css");
@@ -16,7 +16,7 @@ form#ContentEditorForm {
   transition-delay: 0.3s;
 }
 
-body.loaded form#ContentEditorForm {
+body.satExtension form#ContentEditorForm {
   filter: blur(0px) brightness(1) grayscale(0);
 }
 
@@ -43,9 +43,7 @@ body.contentEditor:after {
   height: 56px;
   width: 96px;
   position: absolute;
-  background: transparent
-    url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner32.gif")
-    no-repeat center center;
+  background: transparent url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner32.gif") no-repeat center center;
   background-color: #ffffff;
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.175);
@@ -54,11 +52,11 @@ body.contentEditor:after {
   transition-delay: 0.2s;
 }
 
-body.loaded.contentEditor {
+body.satExtension.contentEditor {
   background-color: #fff !important;
 }
 
-body.loaded.contentEditor:after {
+body.satExtension.contentEditor:after {
   opacity: 0;
   visibility: hidden;
 }
@@ -72,10 +70,6 @@ button:active {
 .scWorkboxPanel,
 .scWindowBorder1 {
   border: 0px solid !important;
-}
-
-.ui-widget-overlay {
-  background: var(--black) !important;
 }
 
 ul.sc-accountInformation {
@@ -367,9 +361,7 @@ div#Languages img {
   height: 56px;
   width: 96px;
   position: absolute;
-  background: transparent
-    url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner32.gif")
-    no-repeat center center;
+  background: transparent url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner32.gif") no-repeat center center;
   background-color: #ffffff;
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.175);
@@ -459,13 +451,11 @@ div#Languages img {
 
 .DesktopArea > iframe {
   background-color: rgba(0, 0, 0, 0.5) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 22px 70px 4px rgba(0, 0, 0, 0.56), 0 0 0 1px rgba(0, 0, 0, 0) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 22px 70px 4px rgba(0, 0, 0, 0.56), 0 0 0 1px rgba(0, 0, 0, 0) !important;
 }
 
 #scWebEditRibbon {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 22px 70px 4px rgba(0, 0, 0, 0.56), 0 0 0 1px rgba(0, 0, 0, 0) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 22px 70px 4px rgba(0, 0, 0, 0.56), 0 0 0 1px rgba(0, 0, 0, 0) !important;
 }
 
 /*Custom folder Content Editor*/
@@ -818,8 +808,7 @@ a.scTileItem .scTileItemIconImage {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.175);
   font-family: RobotoDraft, Roboto, Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 14px;
-  background: url(chrome-extension://__MSG_@@extension_id__/images/rocket.svg)
-    center left #333 no-repeat;
+  background: url(chrome-extension://__MSG_@@extension_id__/images/rocket.svg) center left #333 no-repeat;
   background-size: 9%;
   background-position-x: 18px;
   position: fixed;
@@ -1289,8 +1278,7 @@ ul.scAccountMenu li:after {
   opacity: 0.9;
   width: 16px;
   height: 16px;
-  background: url("chrome-extension://__MSG_@@extension_id__/images/dialog_close.png")
-    no-repeat center center;
+  background: url("chrome-extension://__MSG_@@extension_id__/images/dialog_close.png") no-repeat center center;
   z-index: 100;
   cursor: pointer;
 }
@@ -1302,8 +1290,7 @@ ul.scAccountMenu li:after {
   opacity: 0.9;
   width: 16px;
   height: 16px;
-  background: url("chrome-extension://__MSG_@@extension_id__/images/dialog_maximize.png")
-    no-repeat center center;
+  background: url("chrome-extension://__MSG_@@extension_id__/images/dialog_maximize.png") no-repeat center center;
   z-index: 100;
   cursor: pointer;
 }
@@ -1443,11 +1430,6 @@ ul.scAccountMenu li:after {
   box-shadow: none !important;
 }
 
-#FileList a.scButton.scButtonList.selected > img,
-#FileList a.scButton.scButtonGrid.selected > img {
-  filter: invert(1);
-}
-
 #SearchPanel .scBurgerMenu {
   width: 14px;
   opacity: 0.8;
@@ -1479,8 +1461,7 @@ ul.scAccountMenu li:after {
 }
 
 #Page > #Shadow {
-  transition: width 0.5s ease-in-out, height 0.5s ease-in-out,
-    border 0.5s ease-in-out, border-radius 0.5s ease-in-out;
+  transition: width 0.5s ease-in-out, height 0.5s ease-in-out, border 0.5s ease-in-out, border-radius 0.5s ease-in-out;
   margin-right: 0px;
   margin-bottom: 0px;
   margin: auto;
@@ -1498,9 +1479,7 @@ ul.scAccountMenu li:after {
 
 .scGalleryFrame iframe,
 #Page iframe {
-  background: transparent
-    url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner32.gif")
-    no-repeat center center;
+  background: transparent url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner32.gif") no-repeat center center;
   background-size: 32px;
   transition: border-radius 0.5s ease-in-out;
   border: 0px !important;

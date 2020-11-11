@@ -99,9 +99,7 @@ const toggleSection = (elem, name, experimental = false) => {
       if (tab != elem) {
         //Inactive tab
         tab.classList.remove("scEditorTabSelected");
-        sectionPanel
-          ? sectionPanel.setAttribute("style", "display: none !important")
-          : false;
+        sectionPanel ? sectionPanel.setAttribute("style", "display: none !important") : false;
         section.classList.add("scEditorSectionCaptionCollapsed");
         section.classList.remove("scEditorSectionCaptionExpanded");
         scSections.value += encodeURI("&" + tab.innerText + "=1");
@@ -116,9 +114,7 @@ const toggleSection = (elem, name, experimental = false) => {
 
         if (isExperimental) {
           //X Scroll to
-          let container = document
-            .querySelector("#scEditorTabs")
-            .getBoundingClientRect();
+          let container = document.querySelector("#scEditorTabs").getBoundingClientRect();
           let x1 = container.left;
           let x2 = container.right;
           let m = container.width / 2 + x1;
@@ -128,11 +124,8 @@ const toggleSection = (elem, name, experimental = false) => {
 
           //Tabs to be scrolled
           let tabsSection = document.querySelector("#scEditorTabs > ul");
-          let currentOffset =
-            tabsSection.currentStyle || window.getComputedStyle(tabsSection);
-          currentOffset = parseFloat(
-            currentOffset.marginLeft.replace("px", "")
-          );
+          let currentOffset = tabsSection.currentStyle || window.getComputedStyle(tabsSection);
+          currentOffset = parseFloat(currentOffset.marginLeft.replace("px", ""));
           let tabs = tabsSection.getBoundingClientRect();
           let tabsWidth = tabsSection.scrollWidth;
 
@@ -148,16 +141,10 @@ const toggleSection = (elem, name, experimental = false) => {
           tabsSection.setAttribute("style", "margin-left: " + calc + "px");
         }
       } else {
-        section.innerText =
-          section.innerText == "Quick Info" ? "QuickInfo" : section.innerText;
+        section.innerText = section.innerText == "Quick Info" ? "QuickInfo" : section.innerText;
         console.info("No table section for " + section.innerText);
         // eslint-disable-next-line no-undef
-        scForm.postRequest(
-          "",
-          "",
-          "",
-          'ToggleSection("' + section.innerText + '","1")'
-        );
+        scForm.postRequest("", "", "", 'ToggleSection("' + section.innerText + '","1")');
       }
     }
   }
@@ -178,93 +165,50 @@ const togglePip = (video) => {
 };
 
 const toggleMediaIframe = (url) => {
-  var features =
-    "dialogWidth:1200px;dialogHeight:700px;help:no;scroll:auto;resizable:yes;maximizable:yes;closable:yes;center:yes;status:no;header:;autoIncreaseHeight:yes;forceDialogSize:no";
+  var features = "dialogWidth:1200px;dialogHeight:700px;help:no;scroll:auto;resizable:yes;maximizable:yes;closable:yes;center:yes;status:no;header:;autoIncreaseHeight:yes;forceDialogSize:no";
   // eslint-disable-next-line no-undef
   scSitecore.prototype.showModalDialog(url, "", features, "", "");
 };
 
 const fadeEditorFrames = () => {
   let divResults = document.querySelector(".scInstantSearchResults");
-  divResults.setAttribute(
-    "style",
-    "height:0px; opacity: 0; visibility: hidden; top: 43px;"
-  );
+  divResults.setAttribute("style", "height:0px; opacity: 0; visibility: hidden; top: 43px;");
 
   document.querySelector("#EditorFrames").setAttribute("style", "opacity:0.6");
-  document
-    .querySelector(".scContentTreeContainer")
-    .setAttribute("style", "opacity:0.6");
-  document.querySelectorAll(
-    ".scEditorTabHeaderNormal, .scEditorTabHeaderActive > span"
-  )[0].innerText = "Loading...";
+  document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:0.6");
+  document.querySelectorAll(".scEditorTabHeaderNormal, .scEditorTabHeaderActive > span")[0].innerText = "Loading...";
   var timeout = setTimeout(function () {
     document.querySelector("#EditorFrames").setAttribute("style", "opacity:1");
-    document
-      .querySelector(".scContentTreeContainer")
-      .setAttribute("style", "opacity:1");
+    document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:1");
   }, 8000);
 };
 
 const insertPage = (scItem, scItemName) => {
-  document.querySelector(".scOverlay")
-    ? document
-        .querySelector(".scOverlay")
-        .setAttribute("style", "visibility:visible")
-    : false;
+  document.querySelector(".scOverlay") ? document.querySelector(".scOverlay").setAttribute("style", "visibility:visible") : false;
   document.querySelector("#scModal").setAttribute("data-scItem", scItem);
-  document
-    .querySelector("#scModal")
-    .setAttribute("data-scItemName", scItemName);
-  scItemName != undefined
-    ? (document.querySelector("#scModal > .header > .title").innerHTML =
-        "Insert")
-    : false;
-  document
-    .querySelector("#scModal")
-    .setAttribute(
-      "style",
-      "opacity:1; visibility:visible; top: calc(50% - 550px/2)"
-    );
+  document.querySelector("#scModal").setAttribute("data-scItemName", scItemName);
+  scItemName != undefined ? (document.querySelector("#scModal > .header > .title").innerHTML = "Insert") : false;
+  document.querySelector("#scModal").setAttribute("style", "opacity:1; visibility:visible; top: calc(50% - 550px/2)");
   document.querySelector("#scModal > .main").innerHTML = "";
-  document
-    .querySelector("#scModal > .preload")
-    .setAttribute("style", "opacity:1");
+  document.querySelector("#scModal > .preload").setAttribute("style", "opacity:1");
 };
 
 const insertPageClose = () => {
   setTimeout(function () {
-    document
-      .querySelector(".scOverlay")
-      .setAttribute("style", "visibility:hidden");
-    document
-      .querySelector("#scModal")
-      .setAttribute(
-        "style",
-        "opacity:0; visibility:hidden; top: calc(50% - 550px/2 - 20px)"
-      );
+    document.querySelector(".scOverlay").setAttribute("style", "visibility:hidden");
+    document.querySelector("#scModal").setAttribute("style", "opacity:0; visibility:hidden; top: calc(50% - 550px/2 - 20px)");
   }, 10);
 };
 
 const showSitecoreMenu = () => {
-  let dock = document.querySelector(".scDockTop")
-    ? document.querySelector(".scDockTop")
-    : document
-        .querySelector("iframe")
-        .contentWindow.document.querySelector(".scDockTop");
+  let dock = document.querySelector(".scDockTop") ? document.querySelector(".scDockTop") : document.querySelector("iframe").contentWindow.document.querySelector(".scDockTop");
   dock ? dock.classList.toggle("showSitecoreMenu") : false;
 
-  let icon = document.querySelector("#scSitecoreMenu")
-    ? document.querySelector("#scSitecoreMenu")
-    : document
-        .querySelector("iframe")
-        .contentWindow.document.querySelector("#scSitecoreMenu");
+  let icon = document.querySelector("#scSitecoreMenu") ? document.querySelector("#scSitecoreMenu") : document.querySelector("iframe").contentWindow.document.querySelector("#scSitecoreMenu");
   icon ? icon.classList.toggle("scSitecoreMenu") : false;
 
   if (dock) {
-    dock.classList.contains("showSitecoreMenu")
-      ? localStorage.setItem("scSitecoreMenu", true)
-      : localStorage.setItem("scSitecoreMenu", false);
+    dock.classList.contains("showSitecoreMenu") ? localStorage.setItem("scSitecoreMenu", true) : localStorage.setItem("scSitecoreMenu", false);
   }
 };
 
@@ -276,18 +220,12 @@ const copyContent = (value, targetClass) => {
   navigator.clipboard.writeText(value).then(
     function () {
       let target = document.querySelector(".copyCount_" + targetClass);
-      let targetMessage = document.querySelector(
-        ".copyCountMessage_" + targetClass
-      );
+      let targetMessage = document.querySelector(".copyCountMessage_" + targetClass);
       let saveMessage = document.querySelector(".saveMessage");
-      saveMessage
-        ? (saveMessage.innerHTML = "Copied")
-        : (targetMessage.innerHTML = "Copied!");
+      saveMessage ? (saveMessage.innerHTML = "Copied") : (targetMessage.innerHTML = "Copied!");
       saveMessage ? saveMessage.classList.add("visible") : false;
       setTimeout(function () {
-        saveMessage
-          ? saveMessage.classList.remove("visible")
-          : (targetMessage.innerHTML = "");
+        saveMessage ? saveMessage.classList.remove("visible") : (targetMessage.innerHTML = "");
       }, 1000);
     },
     function (err) {
@@ -309,12 +247,8 @@ var asc = 0;
  */
 function sortTable(col, title, pos) {
   //Variables
-  document.querySelector(".mediaSortOrder")
-    ? document.querySelector(".mediaSortOrder").remove()
-    : false;
-  document.querySelector(".mediaSelected")
-    ? document.querySelector(".mediaSelected").classList.remove("mediaSelected")
-    : false;
+  document.querySelector(".mediaSortOrder") ? document.querySelector(".mediaSortOrder").remove() : false;
+  document.querySelector(".mediaSelected") ? document.querySelector(".mediaSelected").classList.remove("mediaSelected") : false;
   asc == 2 ? (asc = -1) : (asc = 2);
   var table = document.querySelectorAll(".scMediaExplorer");
   var head = document.querySelector(".scMediaExplorer > thead > tr");
@@ -333,9 +267,7 @@ function sortTable(col, title, pos) {
     arr[i].title = cells[2].outerHTML;
     arr[i].name = cells[2].innerText;
     arr[i].info = cells[3].outerHTML;
-    arr[i].datainfo = cells[3].innerText
-      .replace("items", "")
-      .replace("item", "");
+    arr[i].datainfo = cells[3].innerText.replace("items", "").replace("item", "");
     arr[i].type = cells[4].outerHTML;
     arr[i].datatype = cells[4].innerText;
     arr[i].size = cells[5].outerHTML;
@@ -378,10 +310,7 @@ function sortTable(col, title, pos) {
   }
 
   //Add sort icon to column
-  head.cells[pos].innerHTML =
-    asc == -1
-      ? title + ` <span class="mediaSortOrder">▼</span>`
-      : title + ` <span class="mediaSortOrder">▲</span>`;
+  head.cells[pos].innerHTML = asc == -1 ? title + ` <span class="mediaSortOrder">▼</span>` : title + ` <span class="mediaSortOrder">▲</span>`;
   head.cells[pos].classList.add("mediaSelected");
 
   localStorage.setItem("scMediaSortPos", pos);
@@ -451,10 +380,7 @@ function getParentNode(int = 1, tabLoadingTitle) {
     if (elem.classList) {
       if (elem.classList.contains("scContentTreeNode")) {
         count++;
-        if (
-          count == 1 + int &&
-          elem.querySelector(".scContentTreeNodeNormal")
-        ) {
+        if (count == 1 + int && elem.querySelector(".scContentTreeNodeNormal")) {
           var parentScId = elem
             .querySelector(".scContentTreeNodeNormal")
             .getAttribute("id")
@@ -465,18 +391,10 @@ function getParentNode(int = 1, tabLoadingTitle) {
               "$1-$2-$3-$4-$5"
             );
 
-          document
-            .querySelector("#svgAnimation")
-            .setAttribute("style", "opacity:1");
-          document
-            .querySelector("#EditorFrames")
-            .setAttribute("style", "opacity:0");
-          document
-            .querySelector(".scContentTreeContainer")
-            .setAttribute("style", "opacity:0.5");
-          document.querySelectorAll(
-            ".scEditorTabHeaderNormal, .scEditorTabHeaderActive > span"
-          )[0] = tabLoadingTitle;
+          document.querySelector("#svgAnimation").setAttribute("style", "opacity:1");
+          document.querySelector("#EditorFrames").setAttribute("style", "opacity:0");
+          document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:0.5");
+          document.querySelectorAll(".scEditorTabHeaderNormal, .scEditorTabHeaderActive > span")[0] = tabLoadingTitle;
 
           // eslint-disable-next-line no-undef
           return scForm.invoke("item:load(id={" + parentScId + "})");
@@ -501,21 +419,13 @@ function changeDevicePreview(iframeId, device, orientation = "v") {
 
   //Rotate icons
   if (orientation == "v") {
-    document
-      .querySelectorAll(
-        "#scRotateDeviceButton > img, #scMobileDeviceButton > img, #scTabletDeviceButton > img"
-      )
-      .forEach(function (elem) {
-        elem.setAttribute("style", "transform: rotate(0deg);");
-      });
+    document.querySelectorAll("#scRotateDeviceButton > img, #scMobileDeviceButton > img, #scTabletDeviceButton > img").forEach(function (elem) {
+      elem.setAttribute("style", "transform: rotate(0deg);");
+    });
   } else if (orientation == "h") {
-    document
-      .querySelectorAll(
-        "#scRotateDeviceButton > img, #scMobileDeviceButton > img, #scTabletDeviceButton > img"
-      )
-      .forEach(function (elem) {
-        elem.setAttribute("style", "transform: rotate(90deg);");
-      });
+    document.querySelectorAll("#scRotateDeviceButton > img, #scMobileDeviceButton > img, #scTabletDeviceButton > img").forEach(function (elem) {
+      elem.setAttribute("style", "transform: rotate(90deg);");
+    });
   }
 
   //Switch to device
@@ -535,11 +445,9 @@ function changeDevicePreview(iframeId, device, orientation = "v") {
       updatePreviewSize(iframeId, ratio);
 
       //Enable rotate
-      document
-        .querySelectorAll("#scRotateDeviceButton")
-        .forEach(function (elem) {
-          elem.disabled = false;
-        });
+      document.querySelectorAll("#scRotateDeviceButton").forEach(function (elem) {
+        elem.disabled = false;
+      });
       break;
 
     case "tablet":

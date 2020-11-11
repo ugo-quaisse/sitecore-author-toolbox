@@ -16,21 +16,22 @@ import { consoleLog, loadCssFile, loadJsFile, exeJsCode, currentColorScheme, ini
 import { showSnackbar } from "./modules/snackbar.js";
 import { checkWorkbox } from "./modules/workbox.js";
 import { checkUrlStatus } from "./modules/url.js";
-import { checkNotification, sendNotification } from "./modules/notification.js";
+import { resumeFromWhereYouLeftOff, historyNavigation } from "./modules/history.js";
+import { checkNotificationPermissions, sendNotification } from "./modules/notification.js";
 import { findCountryName } from "./modules/language.js";
-import { sitecoreAuthorToolbox } from "./modules/contenteditor.js";
-import { getGravatar } from "./modules/users.js";
-import { initInstantSearch } from "./modules/instantsearch.js";
-import { insertModal, insertPanel } from "./modules/menu.js";
+import { sitecoreAuthorToolbox, initCharsCount, initCheckboxes } from "./modules/contenteditor.js";
+import { initGravatarImage, initUserMenu } from "./modules/users.js";
+import { initInstantSearch, enhancedSitecoreSearch } from "./modules/search.js";
+import { insertModal, insertPanel } from "./modules/insert.js";
 import { initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons } from "./modules/media.js";
-import { initExperimentalUi, insertSavebar, initInsertIcon, initGutter, initColorPicker, initSitecoreMenu, initUserMenu, initContrastedIcons, initSvgAnimation, initEventListeners } from "./modules/experimentalui.js";
+import { initExperimentalUi, insertSavebar, initInsertIcon, initGutter, initColorPicker, initSitecoreMenu, initContrastedIcons, initSvgAnimation, initEventListeners, initRteTooltips } from "./modules/experimentalui.js";
 import { initFavorites } from "./modules/favorites.js";
 import { initGroupedErrors } from "./modules/errors.js";
 import { insertPreviewButton, listenPreviewTab } from "./modules/preview.js";
 import { insertLaunchpadIcon, insertLaunchpadMenu } from "./modules/launchpad.js";
 
 /**
- * Get all user's settings from storage
+ * Get all user's settings from chrome storage
  */
 chrome.storage.sync.get((storage) => {
   /*
@@ -39,137 +40,40 @@ chrome.storage.sync.get((storage) => {
    ************************
    */
   if (global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isCss && !global.isUploadManager) {
-    /**
-     * Load extra JS and CSS
-     */
+    consoleLog("Content Editor detected", "red");
     document.body.classList.add("satExtension");
     loadJsFile("js/inject.js");
-
-    /**
-     * Dark mode
-     */
+    checkNotificationPermissions();
+    initUserMenu(storage);
     initDarkMode(storage);
     autoDarkMode(storage);
-
-    /**
-     * Browser notification
-     */
-    checkNotification();
-
-    /**
-     * Contrasted Icons
-     */
+    initExperimentalUi(storage);
     initContrastedIcons(storage);
 
-    /**
-     * Content Editor application
+    /*
+     **********************************
+     * 1. Content Editor Application  *
+     **********************************
      */
-    if (global.isContentEditor || global.isLaunchpad) {
-      consoleLog("**** Content Editor / Launchpage ****", "yellow");
-
-      /**
-       * Experimental UI
-       */
-      storage.feature_experimentalui == undefined ? (storage.feature_experimentalui = false) : false;
-
-      if (!global.isLaunchpad && storage.feature_experimentalui) {
-        //Variables
+    if (global.isContentEditor) {
+      consoleLog("**** Content Editor ****", "yellow");
+      if (storage.feature_experimentalui) {
         let ScItem = getScItemData();
-
-        //Init UI
-        initExperimentalUi(storage);
         initSvgAnimation();
         insertSavebar();
         insertModal(ScItem.id, ScItem.language, ScItem.version);
         insertPanel();
         initInsertIcon();
         initGutter();
-        initUserMenu();
         initColorPicker();
         initSitecoreMenu();
         initEventListeners();
       }
-
-      /**
-       * Instant Search
-       */
       initInstantSearch(storage);
-
-      /**
-       * Back/Previous buttons
-       */
-      window.onpopstate = function (event) {
-        if (event.state && event.state.id != "") {
-          //Store a local value to tell toolboxscript we are changing item from back/previous button, so no need to add #hash as it's already performed by the browser
-          localStorage.setItem("scBackPrevious", true);
-          exeJsCode(`scForm.invoke("item:load(id=` + event.state.id + `,language=` + event.state.language + `,version=` + event.state.version + `)");`);
-        }
-      };
-
-      /**
-       * Resume from where you left
-       */
-      if (!global.hasRedirectionOther && !global.isLaunchpad) {
-        //fo parameters is the default Sitecore behaviour to open a specific item
-
-        storage.feature_reloadnode == undefined ? (storage.feature_reloadnode = true) : false;
-        if (storage.scData != undefined && !global.urlParams.get("fo") && !global.urlParams.get("ro")) {
-          //If Hash detected in the URL
-          if (global.scUrlHash != "") {
-            temp = global.scUrlHash.split("_");
-            storage.scItemID = temp[0];
-            storage.scLanguage = temp[1];
-            storage.scVersion = temp[2];
-            storage.scSource = "Hash";
-          } else {
-            //Get scData from storage
-            var scData = storage.scData;
-            for (var domain in scData) {
-              // eslint-disable-next-line no-prototype-builtins
-              if (
-                // eslint-disable-next-line no-prototype-builtins
-                scData.hasOwnProperty(domain) &&
-                domain == window.location.origin
-              ) {
-                storage.scItemID = scData[domain].scItemID;
-                storage.scLanguage = scData[domain].scLanguage;
-                storage.scVersion = scData[domain].scVersion;
-                storage.scSource = "Storage";
-              }
-            }
-          }
-
-          //Security check
-          storage.scLanguage == undefined ? (storage.scLanguage = "en") : false;
-
-          //Reload from where you left off
-          if (storage.scItemID && storage.feature_reloadnode === true) {
-            consoleLog("[Read " + storage.scSource + "] Item : " + storage.scItemID, "beige");
-            consoleLog("[Read " + storage.scSource + "] Language : " + storage.scLanguage, "beige");
-            consoleLog("[Read " + storage.scSource + "] Version : " + storage.scVersion, "beige");
-            consoleLog("*** Redirection ***", "yellow");
-            exeJsCode(`scForm.invoke("item:load(id=` + storage.scItemID + `,language=` + storage.scLanguage + `,version=` + storage.scVersion + `)");`);
-          }
-
-          sitecoreAuthorToolbox();
-        } else {
-          sitecoreAuthorToolbox();
-        }
-      }
-
-      /**
-       * Favorites bar
-       */
+      historyNavigation();
+      resumeFromWhereYouLeftOff(storage);
       initFavorites(storage);
-
-      /**
-       * Show Snackbar
-       */
       showSnackbar();
-
-      /**
-       * Workbox badge
-       */
       checkWorkbox(storage);
     }
 
@@ -180,144 +84,34 @@ chrome.storage.sync.get((storage) => {
      * 2. Sitecore pages  *
      ************************
      */
-
-    if (global.isDesktop && !global.isGalleryFavorites && !global.isXmlControl) {
-      consoleLog("**** Desktop Shell ****", "orange");
-      insertLaunchpadMenu(storage, currentColorScheme());
-
-      if (storage.feature_experimentalui) {
-        initExperimentalUi(storage);
-        initUserMenu();
-        initColorPicker();
-        initSitecoreMenu();
-      }
-    }
-
-    if (global.isLaunchpad) {
-      consoleLog("**** Launchpad ****", "orange");
-      insertLaunchpadIcon(storage, currentColorScheme());
+    if ((global.isDesktop && !global.isGalleryFavorites && !global.isXmlControl) || global.isLaunchpad) {
+      consoleLog("**** Launchpad - Desktop Shell ****", "orange");
+      insertLaunchpadIcon(storage);
+      insertLaunchpadMenu(storage);
+      checkWorkbox(storage);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /*
      ************************
-     * 3. Sitecore frames  *
+     * 3. Sitecore iframes  *
      ************************
      */
-
     if (global.isSearch) {
       consoleLog("**** Internal Search ****", "orange");
-
-      //Add listener on search result list
-      var target = document.querySelector("#results");
-      var observer = new MutationObserver(function () {
-        var resultsDiv = document.querySelector("#results");
-        var BlogPostArea = resultsDiv.querySelectorAll(".BlogPostArea");
-
-        for (var line of BlogPostArea) {
-          var BlogPostFooter = line.querySelector(".BlogPostFooter");
-
-          var getFullpath = line.querySelector(".BlogPostViews > a > img").getAttribute("title");
-          getFullpath = getFullpath.split(" - ");
-          getFullpath = getFullpath[1].toLowerCase();
-          if (getFullpath.includes("/home/")) {
-            getFullpath = getFullpath.split("/home/");
-            getFullpath = "/" + getFullpath[1];
-          }
-          var getNumLanguages = line.querySelector(".BlogPostHeader > span").getAttribute("title");
-
-          //Inject HTML
-          var html = '<div class="BlogPostExtra BlogPostContent" style="padding: 5px 0 0px 78px; color: #0769d6"><strong>Sitecore path:</strong> ' + getFullpath + " <strong>Languages available:</strong> " + getNumLanguages + "</div>";
-          getFullpath ? BlogPostFooter.insertAdjacentHTML("afterend", html) : false;
-          //TODO Buttons, open in CE and open in EE
-        }
-      });
-
-      //Observer
-      target
-        ? observer.observe(target, {
-            attributes: false,
-            childList: true,
-            characterData: false,
-            subtree: false,
-          })
-        : false;
+      enhancedSitecoreSearch();
     } else if (global.isPreviewTab) {
       consoleLog("**** Preview tab ****", "orange");
-      initExperimentalUi(storage);
       insertPreviewButton(storage);
       listenPreviewTab(storage);
-    } else if (global.isDialog) {
+    } else if (global.isDialog || global.isLockedItems) {
       consoleLog("**** Dialog UI ****", "orange");
-      initExperimentalUi(storage);
     } else if (global.isFieldEditor) {
       consoleLog("**** Field editor ****", "orange");
-      storage.feature_contenteditor == undefined ? (storage.feature_contenteditor = true) : false;
-      storage.feature_contenteditor ? loadCssFile("css/checkbox.min.css") : false;
-
-      initExperimentalUi(storage);
-
-      storage.feature_charscount == undefined ? (storage.feature_charscount = true) : false;
-
-      if (storage.feature_charscount) {
-        /*
-         * Add a characters count next to each input and textarea field
-         */
-        var scTextFields = document.querySelectorAll("input, textarea, checkbox");
-        var countHtml, labelHtml;
-        var chars = 0;
-        var charsText;
-
-        //On load
-        for (var field of scTextFields) {
-          if (field.className == "scContentControl" || field.className == "scContentControlMemo") {
-            field.setAttribute("style", "padding-right: 70px !important");
-            field.parentElement.setAttribute("style", "position:relative !important");
-            chars = field.value.length;
-            if (chars > 1) {
-              charsText = chars + " chars";
-            } else {
-              charsText = chars + " char";
-            }
-            countHtml = '<div id="chars_' + field.id + '" style="position: absolute; bottom: 1px; right: 1px; padding: 6px 10px; border-radius: 4px; line-height: 20px; opacity:0.5;">' + charsText + "</div>";
-            field.insertAdjacentHTML("afterend", countHtml);
-          } else if (field.className == "scContentControlCheckbox") {
-            //Add label
-            labelHtml = '<label for="' + field.id + '" class="scContentControlCheckboxLabel"></label>';
-            field.insertAdjacentHTML("afterend", labelHtml);
-          }
-        }
-
-        // var scStylesList = document.querySelectorAll(".styles-list input[type=checkbox]");
-
-        // //On load
-        // for (var checkbox of scStylesList) {
-        //     //Add label
-        //     labelHtml = '<label for="' + field.id + '" class="scContentControlCheckboxLabel"></label>';
-        //     checkbox.insertAdjacentHTML('afterend', labelHtml);
-        // }
-
-        //On keyup
-        document.addEventListener(
-          "keyup",
-          function (event) {
-            if (event.target.localName == "input" || event.target.localName == "textarea") {
-              chars = event.target.value.length;
-              if (chars > 1) {
-                charsText = chars + " chars";
-              } else {
-                charsText = chars + " char";
-              }
-
-              if (document.querySelector("#chars_" + event.target.id)) {
-                document.querySelector("#chars_" + event.target.id).innerText = charsText;
-              }
-            }
-          },
-          false
-        );
-      }
+      initCheckboxes(storage);
+      initCharsCount(storage);
+      initGroupedErrors(storage);
 
       /*
        * Enhanced Bucket List Select Box (multilist)
@@ -351,120 +145,36 @@ chrome.storage.sync.get((storage) => {
           }
         });
       }
-
-      /**
-       * Grouped errors
-       */
-      initGroupedErrors(storage);
     } else if (global.isSourceBrowser) {
       consoleLog("**** Source Browser ****", "orange");
     } else if (global.isMediaFolder) {
       consoleLog("**** Media Folder ****", "orange");
-
-      /**
-       * Media folder
-       */
-      storage.feature_dragdrop == undefined ? (storage.feature_dragdrop = true) : false;
-      initExperimentalUi(storage);
-      initDarkMode(storage);
-      autoDarkMode(storage);
       initMediaCounter();
       initMediaDragDrop();
       initMediaViewButtons();
-
-      //Media Library explorer
-      if (localStorage.getItem("scMediaView") == "list") {
-        initMediaExplorer(storage.feature_experimentalui);
-      }
-
-      //Show Media Library explorer
-      document.querySelector("#FileList") ? document.querySelector("#FileList").setAttribute("style", "display:block") : false;
+      initMediaExplorer(storage);
     } else if (global.isExperienceProfile) {
       consoleLog("**** Experience Profile ****", "orange");
-      storage.feature_gravatarimage == undefined ? (storage.feature_gravatarimage = true) : false;
-
-      if (storage.feature_gravatarimage) {
-        //Listener
-        target = document.querySelector("body");
-        observer = new MutationObserver(function () {
-          let InfoPhotoImage = document.querySelector("img[data-sc-id=InfoPhotoImage]");
-          let InfoEmailLink = document.querySelector("a[data-sc-id=InfoEmailLink]");
-
-          // InfoPhotoImage ? console.log(InfoPhotoImage.src) : false;
-          // InfoEmailLink ? console.log(InfoEmailLink.innerHTML) : false;
-
-          if (InfoPhotoImage && InfoEmailLink) {
-            if (InfoEmailLink.innerHTML.includes("@") && !InfoPhotoImage.src.includes("www.gravatar.com")) {
-              InfoPhotoImage.src = getGravatar(InfoEmailLink.innerHTML, 170);
-
-              //Add https://www.fullcontact.com/developer-portal/ api to get more information
-              // fetch('https://api.fullcontact.com/v3/person.enrich', {
-              //   method: 'POST',
-              //   headers: {
-              //     "Authorization": "Bearer " + local.fullcontactApiKey
-              //   },
-              //   body: JSON.stringify({
-              //     "email": "ugo.quaisse@gmail.com"
-              //     })
-              // })
-              // .then(res => res)
-              // .then(res => console.log(res));
-
-              observer.disconnect();
-            }
-          }
-        });
-
-        //Observer publish
-        target
-          ? observer.observe(target, {
-              attributes: false,
-              childList: true,
-              characterData: true,
-              subtree: true,
-            })
-          : false;
-      }
+      initGravatarImage(storage);
     } else if (global.isRichTextEditor || global.isHtmlEditor) {
       consoleLog("**** Rich Text Editor ****", "orange");
+      initRteTooltips(storage);
       storage.feature_rtecolor == undefined ? (storage.feature_rtecolor = true) : false;
       storage.feature_darkmode == undefined ? (storage.feature_darkmode = false) : false;
       storage.feature_darkmode_auto == undefined ? (storage.feature_darkmode_auto = false) : false;
 
-      initExperimentalUi(storage);
-
-      if (storage.feature_experimentalui) {
-        //Tooltips
-        setTimeout(function () {
-          document.querySelectorAll("ul.Metro > li > a").forEach(function (el) {
-            let parent = el.parentElement;
-            let type = el.getAttribute("class");
-            if (type != "reDropdown") {
-              parent.setAttribute("data-tooltip", el.getAttribute("title"));
-              parent.classList.add("t-bottom");
-              parent.classList.add("t-xs");
-              el.removeAttribute("title");
-            }
-          });
-        }, 500);
-      }
-
       if (storage.feature_rtecolor) {
         var contentIframe;
-
         //Which HTML editor
         contentIframe = global.isRichTextEditor ? document.querySelector("#Editor_contentIframe") : document.querySelector("#ctl00_ctl00_ctl05_Html");
-
         if (contentIframe) {
           //RTE Tabs
           let reTextArea = global.isRichTextEditor ? document.querySelector(".reTextArea") : false;
-
           /*
            * Codemirror css
            */
           loadCssFile("css/codemirror.min.css");
           let darkModeTheme = initDarkModeEditor(storage);
-
           //Extra variables
           if (global.isRichTextEditor) {
             reTextArea.insertAdjacentHTML("afterend", '<input type="hidden" class="scDarkMode" value="' + darkModeTheme + '" />');
@@ -473,7 +183,6 @@ chrome.storage.sync.get((storage) => {
             contentIframe.insertAdjacentHTML("afterend", '<input type="hidden" class="scDarkMode" value="' + darkModeTheme + '" />');
             contentIframe.insertAdjacentHTML("afterend", '<input type="hidden" class="scEditor" value="htmlEditor" />');
           }
-
           /*
            * Codemirror librairires
            */
@@ -486,21 +195,18 @@ chrome.storage.sync.get((storage) => {
       globalLogo ? globalLogo.setAttribute("target", "_parent") : false;
     } else if (global.isEditorFolder) {
       consoleLog("**** Editors folder ****", "orange");
-      initExperimentalUi(storage);
     } else if (global.isGalleryVersion) {
       consoleLog("**** Versions menu ****", "orange");
-      initExperimentalUi(storage);
     } else if (global.isGalleryLinks) {
       consoleLog("**** Links menu ****", "orange");
-      initExperimentalUi(storage);
-
-      let datasources = new Set();
-      document.querySelectorAll("#Links > a.scLink").forEach(function (elem) {
-        // eslint-disable-next-line newline-per-chained-call
-        elem.getAttribute("title").toLowerCase().includes("'__final renderings'") && !elem.innerText.toLowerCase().includes("/sitecore/system/") && !elem.innerText.toLowerCase().includes("/rendering variants/")
-          ? datasources.add(elem.innerText)
-          : false;
-      });
+      //TO DO get list of renderings
+      // let datasources = new Set();
+      // document.querySelectorAll("#Links > a.scLink").forEach(function (elem) {
+      //   // eslint-disable-next-line newline-per-chained-call
+      //   elem.getAttribute("title").toLowerCase().includes("'__final renderings'") && !elem.innerText.toLowerCase().includes("/sitecore/system/") && !elem.innerText.toLowerCase().includes("/rendering variants/")
+      //     ? datasources.add(elem.innerText)
+      //     : false;
+      // });
     } else if (global.isLayoutDetails) {
       consoleLog("**** Layout Details ****", "orange");
 
@@ -510,7 +216,6 @@ chrome.storage.sync.get((storage) => {
       });
     } else if (global.isGalleryLanguage) {
       consoleLog("**** Languages menu ****", "orange");
-      initExperimentalUi(storage);
 
       storage.feature_flags == undefined ? (storage.feature_flags = true) : false;
 
@@ -574,8 +279,8 @@ chrome.storage.sync.get((storage) => {
 
       if (storage.feature_flags) {
         //Listener ScrollablePanelLanguages
-        target = document.querySelector("body");
-        observer = new MutationObserver(function () {
+        let target = document.querySelector("body");
+        let observer = new MutationObserver(function () {
           var tdlanguage;
           var label = document.querySelectorAll("div[data-sc-id=CheckBoxListLanguages] > table:last-child")[0];
 
@@ -756,8 +461,8 @@ chrome.storage.sync.get((storage) => {
     /**
      * > 10. Publish notification
      */
-    target = document.querySelector("#LastPage");
-    observer = new MutationObserver(function () {
+    let target = document.querySelector("#LastPage");
+    let observer = new MutationObserver(function () {
       storage.feature_notification == undefined ? (storage.feature_notification = true) : false;
       storage.feature_experimentalui == undefined ? (storage.feature_experimentalui = false) : false;
 
@@ -850,10 +555,6 @@ chrome.storage.sync.get((storage) => {
    */
   if ((global.isEditMode && !global.isLoginPage) || (global.isPreviewMode && !global.isLoginPage)) {
     consoleLog("Experience Editor detected", "red");
-
-    /*
-     * Load extra CSS
-     */
     document.body.classList.add("loaded");
     loadJsFile("js/inject.js");
 
@@ -936,8 +637,8 @@ chrome.storage.sync.get((storage) => {
     /**
      * Component datasource to CE
      */
-    target = document.querySelector(".scChromeDropDown");
-    observer = new MutationObserver(function () {
+    let target = document.querySelector(".scChromeDropDown");
+    let observer = new MutationObserver(function () {
       let scChromeDropDownRow = document.querySelectorAll(".scChromeDropDownRow");
       let scLanguage = document.querySelector("#scLanguage").value;
       let scVersion = "";

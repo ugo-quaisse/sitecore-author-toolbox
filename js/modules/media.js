@@ -74,22 +74,24 @@ const getImageInfo = (imageUrl, imageId, jsonObject) => {
 /**
  * Init Media Library Explorer
  */
-const initMediaExplorer = (isExperimental = false) => {
-  let mediaItems = document.querySelectorAll("#FileList > a:not(.scButton)");
-  mediaItems.forEach((el) => {
-    el.remove();
-  });
-  let mediaId, mediaThumbnail, mediaImage, mediaTitle, mediaDimensions, mediaWarning, mediaUsage, mediaFolder, mediaArrow, mediaClass, mediaClick, showDownload;
-  let mediaItemsJson = {};
-  let scMediaThumbnailSize = localStorage.getItem("scMediaThumbnailSize") ? localStorage.getItem("scMediaThumbnailSize") : 25;
+const initMediaExplorer = (storage) => {
+  if (localStorage.getItem("scMediaView") == "list") {
+    let isExperimental = storage.feature_experimentalui;
+    let mediaItems = document.querySelectorAll("#FileList > a:not(.scButton)");
+    mediaItems.forEach((el) => {
+      el.remove();
+    });
+    let mediaId, mediaThumbnail, mediaImage, mediaTitle, mediaDimensions, mediaWarning, mediaUsage, mediaFolder, mediaArrow, mediaClass, mediaClick, showDownload;
+    let mediaItemsJson = {};
+    let scMediaThumbnailSize = localStorage.getItem("scMediaThumbnailSize") ? localStorage.getItem("scMediaThumbnailSize") : 25;
 
-  getAccentColor();
+    getAccentColor();
 
-  // prettier-ignore
-  let mediaExplorer =
-    `<input id="mediaThumbnailSize" class="mediaThumbnailSize" type ="range" min ="25" max="150" step ="5" value ="` +
-    scMediaThumbnailSize +
-    `" onchange="updateMediaThumbnails(this.value)"/>
+    // prettier-ignore
+    let mediaExplorer =
+      `<input id="mediaThumbnailSize" class="mediaThumbnailSize" type ="range" min ="25" max="150" step ="5" value ="` +
+      scMediaThumbnailSize +
+      `" onchange="updateMediaThumbnails(this.value)"/>
 
       <table class="scMediaExplorer">
         <thead>
@@ -105,44 +107,44 @@ const initMediaExplorer = (isExperimental = false) => {
         </thead>
         <tbody>`;
 
-  for (let item of mediaItems) {
-    mediaId = item ? item.getAttribute("id") : false;
-    //.replace("&h=72", "&h=300").replace("&w=72", "&w=300")
-    mediaThumbnail = item.querySelector(".scMediaBorder > img") ? item.querySelector(".scMediaBorder > img").getAttribute("src").replace("&h=72", "&h=150").replace("&w=72", "&w=150") : false;
-    mediaImage = item.querySelector(".scMediaBorder > img") ? item.querySelector(".scMediaBorder > img").getAttribute("src").replace("&h=72", "").replace("&thn=1", "").replace("&w=72", "").replace("bc=white&", "") : false;
-    mediaTitle = item.querySelector(".scMediaTitle") ? item.querySelector(".scMediaTitle").innerText : "--";
-    mediaDimensions = item.querySelector(".scMediaDetails") ? item.querySelector(".scMediaDetails").innerText : "--";
-    mediaWarning = item.querySelector(".scMediaValidation") ? item.querySelector(".scMediaValidation").innerText : "--";
-    mediaWarning = mediaWarning.includes(" warning") ? mediaWarning.split(" warning")[0] + " warning" + setPlural(mediaWarning.split(" warning")[0]) : mediaWarning;
-    //iconWarningMedia
-    mediaUsage = item.querySelector(".scMediaUsages") ? item.querySelector(".scMediaUsages").innerText : "not used";
-    mediaFolder = mediaImage.includes("/folder.png") ? "Folder" : "--";
-    mediaClass = mediaImage.includes("/folder.png") ? "scMediaFolder" : "scMediaPreview";
-    mediaArrow = mediaImage.includes("/folder.png") && mediaDimensions.toLowerCase() != "0 items" ? "▶" : " ";
-    mediaUsage = mediaImage.includes("/folder.png") ? "--" : mediaUsage;
-    showDownload = mediaImage.includes("/folder.png") ? "hidden" : "visible";
-    mediaClick = item ? item.getAttribute("onclick") : false;
+    for (let item of mediaItems) {
+      mediaId = item ? item.getAttribute("id") : false;
+      //.replace("&h=72", "&h=300").replace("&w=72", "&w=300")
+      mediaThumbnail = item.querySelector(".scMediaBorder > img") ? item.querySelector(".scMediaBorder > img").getAttribute("src").replace("&h=72", "&h=150").replace("&w=72", "&w=150") : false;
+      mediaImage = item.querySelector(".scMediaBorder > img") ? item.querySelector(".scMediaBorder > img").getAttribute("src").replace("&h=72", "").replace("&thn=1", "").replace("&w=72", "").replace("bc=white&", "") : false;
+      mediaTitle = item.querySelector(".scMediaTitle") ? item.querySelector(".scMediaTitle").innerText : "--";
+      mediaDimensions = item.querySelector(".scMediaDetails") ? item.querySelector(".scMediaDetails").innerText : "--";
+      mediaWarning = item.querySelector(".scMediaValidation") ? item.querySelector(".scMediaValidation").innerText : "--";
+      mediaWarning = mediaWarning.includes(" warning") ? mediaWarning.split(" warning")[0] + " warning" + setPlural(mediaWarning.split(" warning")[0]) : mediaWarning;
+      //iconWarningMedia
+      mediaUsage = item.querySelector(".scMediaUsages") ? item.querySelector(".scMediaUsages").innerText : "not used";
+      mediaFolder = mediaImage.includes("/folder.png") ? "Folder" : "--";
+      mediaClass = mediaImage.includes("/folder.png") ? "scMediaFolder" : "scMediaPreview";
+      mediaArrow = mediaImage.includes("/folder.png") && mediaDimensions.toLowerCase() != "0 items" ? "▶" : " ";
+      mediaUsage = mediaImage.includes("/folder.png") ? "--" : mediaUsage;
+      showDownload = mediaImage.includes("/folder.png") ? "hidden" : "visible";
+      mediaClick = item ? item.getAttribute("onclick") : false;
 
-    //Build a JSON object
-    mediaItemsJson[mediaId] = {
-      id: mediaId,
-      title: mediaTitle,
-      dimensions: mediaDimensions,
-      warning: mediaWarning,
-      usage: mediaUsage,
-      type: "--",
-      size: "--",
-    };
+      //Build a JSON object
+      mediaItemsJson[mediaId] = {
+        id: mediaId,
+        title: mediaTitle,
+        dimensions: mediaDimensions,
+        warning: mediaWarning,
+        usage: mediaUsage,
+        type: "--",
+        size: "--",
+      };
 
-    //Item ID
-    let itemId = mediaClick.split("{")[1].split("}")[0];
+      //Item ID
+      let itemId = mediaClick.split("{")[1].split("}")[0];
 
-    //Invert color icons
-    let invert = isExperimental ? "t-invert" : "";
+      //Invert color icons
+      let invert = isExperimental ? "t-invert" : "";
 
-    //Prepare html table
-    // prettier-ignore
-    mediaExplorer += `
+      //Prepare html table
+      // prettier-ignore
+      mediaExplorer += `
       <tr id="mediaItem_` + mediaId + `">
         <td class="mediaArrow" onclick="` + mediaClick + `">` + mediaArrow + `</td>
         <td class="mediaThumbnail" onclick="` + mediaClick + `"><img src='` + mediaThumbnail + `' style="width: ` + scMediaThumbnailSize + `px !important; min-height: ` + scMediaThumbnailSize + `px !important" class="` + mediaClass + ` scMediaThumbnail" loading="lazy"/></td>
@@ -167,33 +169,34 @@ const initMediaExplorer = (isExperimental = false) => {
         </td>
       </tr>`;
 
-    //Get size and type from URL
-    mediaFolder != "Folder" ? getImageInfo(mediaImage, mediaId, mediaItemsJson[mediaId]) : "Folder";
-  }
-  mediaExplorer += `</tbody></table>`;
+      //Get size and type from URL
+      mediaFolder != "Folder" ? getImageInfo(mediaImage, mediaId, mediaItemsJson[mediaId]) : "Folder";
+    }
+    mediaExplorer += `</tbody></table>`;
 
-  //Insert list view
-  document.querySelectorAll(".scTitle").forEach((el) => {
-    el.innerText.toLowerCase().includes("media") ? el.insertAdjacentHTML("afterend", mediaExplorer) : false;
-  });
+    //Insert list view
+    document.querySelectorAll(".scTitle").forEach((el) => {
+      el.innerText.toLowerCase().includes("media") ? el.insertAdjacentHTML("afterend", mediaExplorer) : false;
+    });
 
-  //Buttom view
-  document.querySelector(".scButtonGrid") ? document.querySelector(".scButtonGrid").classList.remove("selected") : false;
-  document.querySelector(".scButtonList") ? document.querySelector(".scButtonList").classList.add("selected") : false;
+    //Buttom view
+    document.querySelector(".scButtonGrid") ? document.querySelector(".scButtonGrid").classList.remove("selected") : false;
+    document.querySelector(".scButtonList") ? document.querySelector(".scButtonList").classList.add("selected") : false;
 
-  //Sort
-  let scMediaSortPos = localStorage.getItem("scMediaSortPos") ? localStorage.getItem("scMediaSortPos") : null;
-  let scMediaSortOrder = localStorage.getItem("scMediaSortOrder") ? localStorage.getItem("scMediaSortOrder") : 2;
+    //Sort
+    let scMediaSortPos = localStorage.getItem("scMediaSortPos") ? localStorage.getItem("scMediaSortPos") : null;
+    let scMediaSortOrder = localStorage.getItem("scMediaSortOrder") ? localStorage.getItem("scMediaSortOrder") : 2;
 
-  if (scMediaSortPos != null) {
-    setTimeout(function () {
-      document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos] ? document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos].click() : false;
-    }, 250);
-  }
-  if (scMediaSortOrder == -1) {
-    setTimeout(function () {
-      document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos] ? document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos].click() : false;
-    }, 270);
+    if (scMediaSortPos != null) {
+      setTimeout(function () {
+        document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos] ? document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos].click() : false;
+      }, 250);
+    }
+    if (scMediaSortOrder == -1) {
+      setTimeout(function () {
+        document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos] ? document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos].click() : false;
+      }, 270);
+    }
   }
 };
 

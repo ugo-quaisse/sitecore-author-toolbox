@@ -8,7 +8,7 @@ body.satDark .sc-dialogHeader {
 
 body.satDark .sc-applicationContent,
 body.satDark .sc-applicationContent-main {
-  color: var(--black1) !important;
+  color: var(--text) !important;
   border-color: var(--text) !important;
   background-color: var(--black2) !important;
 }

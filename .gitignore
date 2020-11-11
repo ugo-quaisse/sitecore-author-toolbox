@@ -1,5 +1,3 @@
-config.codekit3
-build/
 *.zip
 *.DS_Store
 js/modules/local.js

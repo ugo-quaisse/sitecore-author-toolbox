@@ -1,7 +1,7 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
-import { exeJsCode, getScItemData, setTextColour } from "./helpers.js";
+import { getScItemData, setTextColour } from "./helpers.js";
 
 export {
   initExperimentalUi,
@@ -17,12 +17,12 @@ export {
   getAccentColor,
   initColorPicker,
   initSitecoreMenu,
-  initUserMenu,
   initGutter,
   getParentNode,
   initContrastedIcons,
   initSvgAnimation,
   initEventListeners,
+  initRteTooltips,
 };
 
 /**
@@ -42,6 +42,10 @@ const initExperimentalUi = (storage) => {
   if (storage.feature_contrast_icons === false) {
     document.documentElement.style.setProperty("--iconBrightness", 1);
     document.documentElement.style.setProperty("--iconContrast", 1);
+  }
+  if (document.querySelector("#experimentalUiSwitch")) {
+    //check the box and force trigger an event
+    document.querySelector("#experimentalUiSwitch") ? (document.querySelector("#experimentalUiSwitch").checked = true) : (document.querySelector("#experimentalUiSwitch").checked = false);
   }
 };
 
@@ -183,6 +187,7 @@ const insertMoreButton = () => {
         <li onclick="javascript:return scForm.postEvent(this,event,'item:rename')">Rename item</li>
         <li onclick="javascript:return scForm.invoke('item:duplicate')">Duplicate</li>
         <li class="separator" onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor')">Edit in Experience Editor...</li>
+        <li onclick="javascript:return scForm.invoke('item:setlayoutdetails', event)">Presentation details...</li>
         <li class="separator" onclick="javascript:return scForm.postEvent(this,event,'item:sethelp')">Help texts</li>
         <li id="scInfoButton">Item details</li>
         <li onclick="javascript:return scForm.postEvent(this,event,'item:executescript(id=` +
@@ -259,7 +264,7 @@ const insertLockButton = (locked = false) => {
 };
 
 /**
- * Init Sitecore ribbon
+ * Get last status of Sitecore Ribbon (Open or Close)
  */
 const initSitecoreMenu = () => {
   let storage = localStorage.getItem("scSitecoreMenu");
@@ -304,7 +309,7 @@ const getAccentColor = () => {
 };
 
 /**
- * Init Color Picker
+ * Add Color Picker into top bar (Experimental UI)
  */
 const initColorPicker = () => {
   let color, text, brightness, invert;
@@ -341,78 +346,6 @@ const initColorPicker = () => {
 
       localStorage.setItem("scColorPicker", color);
     });
-  }
-};
-
-/**
- * Init Sitecore User Menu
- */
-const initUserMenu = () => {
-  let accountInformation = document.querySelector(".sc-accountInformation");
-  let startButton = document.querySelector(".sc-globalHeader-startButton");
-
-  if (accountInformation) {
-    let dialogParamsLarge = "center:yes; help:no; resizable:yes; scroll:yes; status:no; dialogMinHeight:200; dialogMinWidth:300; dialogWidth:1100; dialogHeight:700; header:";
-
-    //Add app name
-    let htmlApp = `<div class="sc-globalheader-appName" onclick="javascript:return scForm.invoke('contenteditor:home', event)">Content Editor</div>`;
-    startButton ? startButton.insertAdjacentHTML("afterend", htmlApp) : false;
-
-    //Add Notification and arrow icons
-    //prettier-ignore
-    let htmlIcon =
-      `<span class="t-bottom t-sm" data-tooltip="Workbox notification"><img loading="lazy" id="scNotificationBell" onclick="javascript:scSitecore.prototype.showModalDialog('` + global.workboxPage.replace("&sc_bw=1", "&sc_bw=0") + `', '', '` + dialogParamsLarge + `Workbox', null, null); false" src="` + global.iconBell + `" class="scIconMenu" accesskey="w" /></span>
-       <span class="t-bottom t-sm" data-tooltip="Toggle ribbon"><img loading="lazy" id="scSitecoreMenu" onclick="showSitecoreMenu()" src="` + global.iconDownArrow + `" class="scIconMenu" accesskey="a" /></span>`;
-    accountInformation.insertAdjacentHTML("afterbegin", htmlIcon);
-
-    //Get User Name and add extra id to avatar
-    let accountUser = accountInformation.querySelectorAll("li")[1].innerText.trim();
-    accountInformation.querySelector("li").remove();
-    accountInformation.querySelector("li").innerHTML = accountInformation.querySelector("li > img").outerHTML;
-    accountInformation.querySelector("li > img").setAttribute("id", "globalHeaderUserPortrait");
-
-    //Generate menu
-    let htmlMenu =
-      `<ul class="scAccountMenu">
-        <li onclick="javascript:return scForm.invoke('item:myitems', event)">My locked items</li>    
-        <li onclick="javascript:return scForm.invoke('preferences:changeuserinformation', event)">My account (` +
-      accountUser +
-      `)</li>
-            <li onclick="javascript:return scForm.invoke('security:changepassword', event) ">Change Password</li>
-            <li onclick="javascript:return scForm.invoke('shell:useroptions', event)">Application Options</li>
-            <li onclick="window.open('` +
-      global.launchpadPage +
-      `')">Sitecore Author Toolbox Options</li>
-            <li onclick="javascript:return scForm.invoke('preferences:changeregionalsettings', event)">Region and Languages</li>
-            <li onclick="javascript:return scForm.invoke('system:showlicenses', event)">Licences</li>
-            <li onclick="javascript:return scForm.invoke('system:showabout', event)">Licence details</li>
-            <li onclick="javascript:return scForm.invoke('contenteditor:close', event)">Log out</li>
-        </ul>`;
-    accountInformation.insertAdjacentHTML("afterbegin", htmlMenu);
-
-    //Listeners
-    document.addEventListener("keydown", (event) => {
-      if (event.ctrlKey && event.key === "Shift") {
-        exeJsCode(`showSitecoreMenu()`);
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    });
-
-    //Events
-    if (document.querySelector(".scAccountMenu")) {
-      document.addEventListener("click", (event) => {
-        event.srcElement.id == "globalHeaderUserPortrait"
-          ? document.querySelector(".scAccountMenu").setAttribute("style", "visibility: visible; top: 50px; opacity: 1;")
-          : document.querySelector(".scAccountMenu").setAttribute("style", "visibility: hidden; top: 40px; opacity: 0;");
-      });
-    }
-
-    if (document.querySelector("#DesktopLinks")) {
-      document.querySelector("#DesktopLinks").addEventListener("click", () => {
-        document.querySelector(".scAccountMenu").setAttribute("style", "visibility: hidden; top: 40px; opacity: 0;");
-      });
-    }
   }
 };
 
@@ -535,7 +468,7 @@ const initInsertIcon = () => {
 };
 
 /**
- * Insert Gutter
+ * Insert Sitecore Gutter in Content Tree
  */
 const initGutter = () => {
   let treeNode = document.querySelector(".scContentTreeContainer");
@@ -579,7 +512,7 @@ const initSvgAnimation = () => {
 };
 
 /**
- * Init contrasted Icons
+ * Check if User enable Contrasted Icons (only works with Experimental UI)
  */
 const initContrastedIcons = (storage) => {
   if (storage.feature_contrast_icons === false) {
@@ -589,7 +522,7 @@ const initContrastedIcons = (storage) => {
 };
 
 /**
- * Init contrasted Icons
+ * Init Experimental Event Listeners
  */
 const initEventListeners = () => {
   document.addEventListener("click", (event) => {
@@ -635,4 +568,24 @@ const initEventListeners = () => {
       event.target.className == "scOverlay" ? document.querySelector("#scModal").setAttribute("style", "opacity:0; visibility: hidden; top: calc(50% - 550px/2 - 10px)") : false;
     }
   });
+};
+
+/**
+ * Add tooltips to RTE Editor buttons
+ */
+const initRteTooltips = (storage) => {
+  if (storage.feature_experimentalui) {
+    setTimeout(function () {
+      document.querySelectorAll("ul.Metro > li > a").forEach(function (el) {
+        let parent = el.parentElement;
+        let type = el.getAttribute("class");
+        if (type != "reDropdown") {
+          parent.setAttribute("data-tooltip", el.getAttribute("title"));
+          parent.classList.add("t-bottom");
+          parent.classList.add("t-xs");
+          el.removeAttribute("title");
+        }
+      });
+    }, 500);
+  }
 };

@@ -80,6 +80,9 @@ export const iconMobile = chrome.runtime.getURL("images/preview_mobile.svg");
 export const iconTablet = chrome.runtime.getURL("images/preview_tablet.svg");
 export const iconWeb = chrome.runtime.getURL("images/preview_web.svg");
 export const iconRotate = chrome.runtime.getURL("images/preview_rotate.svg");
+export const iconSun = chrome.runtime.getURL("images/sun.svg");
+export const iconMoon = chrome.runtime.getURL("images/moon.svg");
+export const iconOwl = chrome.runtime.getURL("images/owl.svg");
 
 export let timeout;
 export const isSitecore = windowLocationHref.includes("/sitecore/");
@@ -103,6 +106,7 @@ export const isMediaLibrary = windowLocationHref.includes("he=media+library");
 export const isMediaBrowser = windowLocationHref.includes("sitecore.shell.applications.media.mediabrowser");
 export const isSourceBrowser = windowLocationHref.includes("sitecore.shell.applications.dialogs.selectrenderingdatasource");
 export const isMediaFolder = windowLocationHref.includes("media%20folder.aspx");
+export const isLockedItems = windowLocationHref.includes("lockeditems.aspx");
 export const isMediaUpload = windowLocationHref.includes("/applications/dialogs/uploadmediadialog");
 export const isUploadManager = windowLocationHref.includes("/uploadmanager/");
 export const isPublishWindow = windowLocationHref.includes("/applications/publish.aspx");

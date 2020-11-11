@@ -34,7 +34,7 @@ const getRelatedMedia = (sitecoreItemID, scLanguage, scVersion) => {
 };
 
 /**
- * Get insert menu for an item
+ * Insert Panel HTML to be used with other features
  */
 const insertPanel = () => {
   let htmlPanel = '<div id="scPanel"><div class="preload">' + global.svgAnimation + " </div></div>";
@@ -42,7 +42,7 @@ const insertPanel = () => {
 };
 
 /**
- * Get insert menu for an item
+ * Insert basic Insert Modal Window
  */
 const insertModal = (sitecoreItemID, scLanguage, scVersion, scItemName = "", mutationObserver = true) => {
   var ajax = new XMLHttpRequest();

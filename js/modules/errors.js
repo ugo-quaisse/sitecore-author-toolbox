@@ -10,7 +10,7 @@ const initGroupedErrors = (storage) => {
   if (storage.feature_errors) {
     var count = 0;
     var scErrors = document.getElementsByClassName("scValidationMarkerIcon");
-    var scEditorID = document.querySelector("#MainPanel");
+    var scEditorID = document.querySelector(".scEditorPanel");
 
     //Prepare HTML
     var scMessageErrors =
@@ -62,7 +62,7 @@ const initGroupedErrors = (storage) => {
 
         //Add errors
         count > 0 ? scEditorID.insertAdjacentHTML("beforebegin", scMessageErrors) : false;
-      }, 1500);
+      }, 1000);
     });
 
     //Observer

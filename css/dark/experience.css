@@ -30,7 +30,7 @@ body.satDark #Editors,
 body.satDark #MainPanel,
 body.satDark .scValidatorPanel,
 body.satDark .scEditorSections {
-  background-color: var(--black2) !important;
+  background-color: var(--black1) !important;
 }
 
 body.satDark #FooterRow {

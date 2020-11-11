@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-new */
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
-export { checkNotification, sendNotification };
+export { checkNotificationPermissions, sendNotification };
 
 /**
- * Check notification permission
+ * Check if User granted notification permission
  */
-const checkNotification = () => {
+const checkNotificationPermissions = () => {
   let url = new URL(window.location.href);
   if (url.protocol == "https:") {
     if (Notification.permission !== "granted") {

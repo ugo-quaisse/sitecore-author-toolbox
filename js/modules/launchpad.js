@@ -12,22 +12,19 @@ export { insertLaunchpadIcon, insertLaunchpadMenu };
 /**
  * Insert Launchpad icons
  */
-const insertLaunchpadIcon = (storage, currentScheme) => {
+const insertLaunchpadIcon = (storage) => {
   storage.feature_launchpad == undefined ? (storage.feature_launchpad = true) : false;
   storage.feature_launchpad_tiles == undefined ? (storage.feature_launchpad_tiles = false) : false;
 
-  if (storage.feature_launchpad) {
+  if (storage.feature_launchpad && global.isLaunchpad) {
     let launchpadCol = document.querySelectorAll(".last");
     //prettier-ignore
     let html = `<div class="sc-launchpad-group"><header class="sc-launchpad-group-title">` + global.launchpadGroupTitle + `</header><div class="sc-launchpad-group-row"><a href="#" onclick="window.location.href='` + global.launchpadPage + `?launchpad=true&url=` + global.windowLocationHref + `'" class="sc-launchpad-item" title="` + global.launchpadTitle + `"><span class="icon"><img loading="lazy" src="` + global.launchpadIcon + `" width="48" height="48" alt="` + global.launchpadTitle + `"></span><span class="sc-launchpad-text">` + global.launchpadTitle + `</span></a></div></div>`;
     launchpadCol[0].insertAdjacentHTML("afterend", html);
   }
   if (storage.feature_launchpad_tiles) {
-    //Inject CSS
     loadCssFile("css/tilelaunchpad.min.css");
-    if ((storage.feature_darkmode && !storage.feature_darkmode_auto) || (storage.feature_darkmode && storage.feature_darkmode_auto && currentScheme == "dark")) {
-      loadCssFile("css/dark/tilelaunchpad.min.css");
-    }
+    loadCssFile("css/dark/tilelaunchpad.min.css");
   }
 };
 

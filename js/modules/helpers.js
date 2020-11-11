@@ -18,7 +18,7 @@ import * as global from "./global.js";
 export { consoleLog, loadCssFile, loadJsFile, exeJsCode, currentColorScheme, initDarkMode, initDarkModeEditor, autoDarkMode, sitecoreItemJson, fetchTimeout, getScItemData, setPlural, setTextColour, repositionElement, startDrag, calcMD5 };
 
 /**
- * Show message in console
+ * Show colored log message in console
  */
 const consoleLog = (message, color = "yellow") => {
   let bgColor, txtColor, fontSize;
@@ -144,6 +144,13 @@ const initDarkMode = (storage) => {
       currentColorScheme() == "dark")
   ) {
     document.body.classList.add("satDark");
+
+    if (document.querySelector("#darkModeSwitch")) {
+      //check the box and force trigger an event
+      document.querySelector("#darkModeSwitch") ? (document.querySelector("#darkModeSwitch").checked = true) : (document.querySelector("#darkModeSwitch").checked = false);
+      document.querySelector("#darkModeSwitch").dispatchEvent(new Event("change"));
+    }
+
     //Add correct bg color for jquerymodal window
     try {
       window.frameElement.parentNode.querySelector(".ui-dialog-titlebar").style.backgroundColor = "#111";
@@ -173,13 +180,16 @@ const initDarkModeEditor = (storage) => {
 };
 
 /**
- * IAuto dark mode
+ * Auto dark mode
  */
 const autoDarkMode = (storage) => {
   if (storage.feature_darkmode && storage.feature_darkmode_auto) {
     const scheme = window.matchMedia("(prefers-color-scheme: dark)");
     scheme.addEventListener("change", () => {
       scheme.matches ? document.body.classList.add("satDark") : document.body.classList.remove("satDark");
+      scheme.matches ? (document.querySelector("#darkModeSwitch").checked = true) : (document.querySelector("#darkModeSwitch").checked = false);
+      //trigger an event
+      document.querySelector("#darkModeSwitch").dispatchEvent(new Event("change"));
     });
   }
 };
@@ -218,7 +228,7 @@ const sitecoreItemJson = (itemID, languageID, versionID) => {
 };
 
 /**
- *  Create a new object with Sitecore Actime item (From Quickinfo)
+ *  Sitecore current item (From Quickinfo)
  */
 const getScItemData = () => {
   var scItem = {};

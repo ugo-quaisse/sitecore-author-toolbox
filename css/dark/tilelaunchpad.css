@@ -1,5 +1,6 @@
 body.satDark .sc-applicationContent-main {
   background-color: #2b2b2b;
+  color: var(--text);
 }
 
 body.satDark .sc-launchpad-item {

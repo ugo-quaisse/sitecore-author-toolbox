@@ -64,6 +64,7 @@ body.satExperimentalUi .saveMessage {
   transform: translate(-50%, 0);
   transition: all cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.4s;
   box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
+  display: block !important;
 }
 
 body.satExperimentalUi .saveMessage.visible {
@@ -375,6 +376,10 @@ body.satExperimentalUi #Editors select:not([multiple]) {
   min-height: 34px !important;
   border-radius: 0px !important;
   /*-webkit-appearance: initial;*/
+}
+
+body.satExperimentalUi .scEditorHeaderQuickInfoInput {
+  border: none !important;
 }
 
 body.satExperimentalUi .scContentControlSelectedList {
@@ -1335,6 +1340,11 @@ body.satExperimentalUi .scMenuPanelItem_Hover,
 body.satExperimentalUi .sc-gallery-option-content-active {
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
+}
+
+body.satExperimentalUi .versionNumSelected {
+  font-size: 18px;
+  font-weight: bold;
 }
 
 body.satExperimentalUi .scMenuPanelItem_Hover > table > tbody > tr > td:last-child > div > div {

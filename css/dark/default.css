@@ -8,6 +8,10 @@ body.satDark a:link {
   color: var(--text) !important;
 }
 
+body.satDark .scStartbar {
+  background-color: var(--black3) !important;
+}
+
 body.satDark #Editor_contentIframe a,
 body.satDark #Editor_contentIframe a:active,
 body.satDark #Editor_contentIframe a:visited {
@@ -18,8 +22,13 @@ body.satDark .scButtons > .scButton {
   background-image: linear-gradient(var(--blue) 0%, var(--blue) 100%);
 }
 
+body.satDark .sc-border[data-sc-id="AnalyticsFallback"] {
+  background-color: var(--black1) !important;
+  color: var(--text) !important;
+}
+
 body.satDark .scInstantSearch {
-  background-color: #111111 !important;
+  background-color: var(--black1) !important;
   color: #cccccc !important;
   border: 1px solid #222222 !important;
 }
@@ -39,7 +48,7 @@ body.satDark select,
 body.satDark textarea {
   color: var(--text) !important;
   background-color: var(--black2) !important;
-  border: 1px solid var(--black4) !important;
+  border: 1px solid var(--black3) !important;
 }
 
 body.satDark input:not([type]):focus,
@@ -58,14 +67,12 @@ body.satDark input[type="password"][disabled],
 body.satDark input[type="file"][disabled],
 body.satDark input[readonly]:not([type]),
 body.satDark input[type="text"][readonly],
-body.satDark input[type="password"][readonly] select[disabled] {
-  background-color: #e3e3e3;
-}
-
+body.satDark input[type="password"][readonly] select[disabled],
 body.satDark input[disabled],
 body.satDark select[disabled] {
-  background-color: #e3e3e3;
+  background-color: var(--black4);
 }
+
 body.satDark .scHorizontalLine {
   background-color: #dbdbdb;
 }
@@ -807,15 +814,14 @@ body.satDark .scCommand_Hover {
 }
 
 body.satDark input[type="text"][readonly].scComboboxEdit {
-  background: #181818 !important;
-  border-color: #202020 !important;
+  background: var(--black2) !important;
+  border-color: var(--black3) !important;
 }
 
 body.satDark .scComboboxDropDown {
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-
-  background-color: #181818 !important;
-  border: 1px solid #1f1f1f !important;
+  background-color: var(--black2) !important;
+  border: 1px solid var(--black3) !important;
 }
 
 body.satDark .scComboboxDropDown:hover {
@@ -1355,8 +1361,9 @@ body.satDark .scEditorInformationTitle {
 body.satDark #StatusBar .status-bar-panel {
   background-color: #212121;
 }
-body.satDark .sc .sc-border[data-sc-id="FallbackMessageWrap"] {
-  color: var(--text);
+body.satDark .sc-border[data-sc-id="FallbackHeader"],
+body.satDark .sc-border[data-sc-id="FallbackMessageWrap"] {
+  color: var(--text) !important;
 }
 body.satDark .scWindowFrame {
   border: 1px solid var(--black2) !important;
@@ -1465,6 +1472,10 @@ body.satDark a.scResult:hover {
 
 body.satDark .scContentControlCheckbox:checked + .scContentControlCheckboxLabel::before {
   background-color: var(--blue) !important;
+}
+
+body.satDark .scDarkModeCheckbox:checked + .scDarkModeCheckbox::before {
+  background-color: var(--black) !important;
 }
 
 body.satDark .scContentControlCheckboxLabel::before {

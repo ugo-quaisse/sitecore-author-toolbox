@@ -5,9 +5,10 @@ import { loadCssFile, loadJsFile, sitecoreItemJson, getScItemData, currentColorS
 import { checkUrlStatus } from "./url.js";
 import { addHelpIcons, checkHelpLink } from "./help.js";
 import { findCountryName } from "./language.js";
+import { initGroupedErrors } from "./errors.js";
 import { insertSavebar, insertBreadcrumb, insertLanguageButton, insertVersionButton, insertMoreButton } from "./experimentalui.js";
 
-export { sitecoreAuthorToolbox };
+export { sitecoreAuthorToolbox, initCharsCount, initCheckboxes };
 
 /*
  * Main function executed when the Content Editor refreshes
@@ -25,7 +26,6 @@ const sitecoreAuthorToolbox = () => {
     let scVersion = document.querySelector(".scEditorHeaderVersionsVersion > span");
     scVersion ? (scVersion = scVersion.innerText) : false;
     let scActiveTab = document.querySelector(".scEditorTabHeaderActive");
-    var scErrors = document.querySelectorAll(" .scValidationMarkerIcon ");
     let isTranslateMode = false;
     var scEditorHeaderVersionsLanguage = document.querySelector(".scEditorHeaderVersionsLanguage");
     let currentScheme = currentColorScheme();
@@ -194,7 +194,7 @@ const sitecoreAuthorToolbox = () => {
               var url = new URL(sitecoreItemPath);
               cell1.innerHTML = "Live URL:";
               //prettier-ignore
-              cell2.innerHTML = `<a href="` + sitecoreItemPath + `" target="_blank">` + url.origin + url.pathname + ` <img src="` + global.iconExternalLink + `" style="width: 14px; vertical-align: text-top;" /></a>`;
+              cell2.innerHTML = `<a href="` + sitecoreItemPath + `" target="_blank">` + url.origin + url.pathname + ` <img src="` + global.iconExternalLink + `" style="width: 14px; vertical-align: text-top;" class="scIconCopy" /></a>`;
             }
 
             //Is dark mode on?
@@ -349,142 +349,12 @@ const sitecoreAuthorToolbox = () => {
     /**
      * Grouped Errors
      */
-    storage.feature_errors == undefined ? (storage.feature_errors = true) : false;
-    if (storage.feature_errors) {
-      count = 0;
-      //Prepare HTML
-      var scMessageErrors =
-        '<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' +
-        global.iconError +
-        ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">';
-
-      for (let item of scErrors) {
-        if (item.getAttribute("src") != "/sitecore/shell/themes/standard/images/bullet_square_yellow.png") {
-          scMessageErrors += '<li class="scMessageBarOptionBullet" onclick="' + item.getAttribute("onclick") + '" style="cursor:pointer;">' + item.getAttribute("title") + "</li>";
-          count++;
-        }
-      }
-      scMessageErrors += "</ul></div></div>";
-
-      //Insert message bar into Sitecore Content Editor
-      if (!document.querySelector("#scMessageBarError") && count > 0) {
-        scEditorID.insertAdjacentHTML("afterend", scMessageErrors);
-      }
-
-      //Update on change/unblur
-      let timer, element;
-      var target = document.querySelector(".scValidatorPanel");
-      var observer = new MutationObserver(function () {
-        timer ? clearTimeout(timer) : false;
-        timer = setTimeout(function () {
-          //Delete all errors
-          element = document.querySelector("#scMessageBarError");
-          element ? element.parentNode.removeChild(element) : false;
-
-          count = 0;
-          //Current errors
-          scErrors = document.querySelectorAll(" .scValidationMarkerIcon ");
-
-          //Prepare HTML
-          var scMessageErrors =
-            '<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' +
-            global.iconError +
-            ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">';
-
-          for (let item of scErrors) {
-            if (item.getAttribute("src") != "/sitecore/shell/themes/standard/images/bullet_square_yellow.png") {
-              scMessageErrors += '<li class="scMessageBarOptionBullet" onclick="' + item.getAttribute("onclick") + '" style="cursor:pointer;">' + item.getAttribute("title") + "</li>";
-              count++;
-            }
-          }
-          scMessageErrors += "</ul></div></div>";
-
-          //Add errors
-          count > 0 ? scEditorID.insertAdjacentHTML("afterend", scMessageErrors) : false;
-        }, 1500);
-      });
-
-      //Observer
-      target
-        ? observer.observe(target, {
-            attributes: true,
-            childList: true,
-            characterData: true,
-          })
-        : false;
-    }
+    initGroupedErrors(storage);
 
     /**
      * Character counter and Copy to clipboard
      */
-    storage.feature_charscount == undefined ? (storage.feature_charscount = true) : false;
-    if (storage.feature_charscount) {
-      var scTextFields = document.querySelectorAll("input, textarea");
-      var countHtml, labelHtml, copyHtml, charsText, chars;
-      var copyCount = 0;
-
-      loadCssFile("css/tooltip.min.css");
-
-      //On load
-      for (var field of scTextFields) {
-        //Copy to clipboard
-        if (field.className == "scEditorHeaderQuickInfoInput" || field.className == "scEditorHeaderQuickInfoInputID") {
-          field.setAttribute("style", "width: calc(100%-16px); margin-left:2px; display: none");
-          field.classList.add("copyCount_" + copyCount);
-          //prettier-ignore
-          copyHtml = `<span onclick="copyContent('` + field.value + `', '` + copyCount + `')" class="copyCountSpan_` + copyCount + `">` + field.value + `</span> <a class="t-top t-sm" data-tooltip="Copy" onclick="copyContent('` + field.value + `', '` + copyCount + `')"><img src="` + global.iconCopy + `" class="scIconCopy" /></a> <span class="copyCountMessage_` + copyCount + `"></span>`;
-          field.value != "[unknown]" ? field.insertAdjacentHTML("beforebegin", copyHtml) : field.insertAdjacentHTML("beforebegin", `<span>` + field.value + `</span>`);
-          copyCount++;
-        }
-
-        //Character counter
-        if (field.className == "scContentControl" || field.className == "scContentControlMemo") {
-          field.setAttribute("style", "padding-right: 70px !important");
-          field.parentElement.setAttribute("style", "position:relative !important");
-          chars = field.value.length;
-          if (chars > 1) {
-            charsText = chars + " chars";
-          } else {
-            charsText = chars + " char";
-          }
-          countHtml = '<div id="chars_' + field.id + '" class="scCharCount" style="position: absolute; bottom: 1px; right: 1px; padding: 6px 10px; border-radius: 4px; line-height: 20px; opacity:0.5;">' + charsText + "</div>";
-          //Add div
-          field.insertAdjacentHTML("afterend", countHtml);
-        } else if (field.className == "scContentControlCheckbox") {
-          //Add label
-          labelHtml = '<label for="' + field.id + '" class="scContentControlCheckboxLabel"></label>';
-          field.insertAdjacentHTML("afterend", labelHtml);
-        } else if (field.className == "scContentControlImage") {
-          // scContentButtons = field.parentElement.parentElement.querySelector(".scContentButtons");
-          // var scUploadMediaUrl = '/sitecore/client/Applications/Dialogs/UploadMediaDialog?ref=list&ro=sitecore://master/%3flang%3den&fo=sitecore://master/';
-          // //Add label
-          // uploadText = '<a href="#" class="scContentButton" onclick="javascript:scSitecore.prototype.showModalDialog(\'' + scUploadMediaUrl + '\', \'\', \'\', null, null); false">Upload Image</a>';
-          // scContentButtons.insertAdjacentHTML( 'afterbegin', uploadText );
-        }
-      }
-
-      //Listener
-      document.addEventListener(
-        "keyup",
-        function (event) {
-          if (event.target.localName == "input" || event.target.localName == "textarea") {
-            chars = event.target.value.length;
-            if (chars > 1) {
-              charsText = chars + " chars";
-            } else {
-              charsText = chars + " char";
-            }
-
-            //if(global.debug) { console.log('Input text: '+event.target.id+" -> "+charsText); }
-
-            if (document.querySelector("#chars_" + event.target.id)) {
-              document.querySelector("#chars_" + event.target.id).innerText = charsText;
-            }
-          }
-        },
-        false
-      );
-    }
+    initCharsCount(storage);
 
     /**
      * Translate Mode
@@ -494,7 +364,7 @@ const sitecoreAuthorToolbox = () => {
     if (storage.feature_translatemode) {
       var scEditorPanel = document.querySelector(".scEditorPanel");
       var scEditorSectionPanel = document.querySelectorAll(".scEditorSectionPanel .scEditorSectionPanelCell")[1];
-      scTextFields = scEditorPanel.querySelectorAll("input, textarea, select");
+      var scTextFields = scEditorPanel.querySelectorAll("input, textarea, select");
       count = 0;
 
       //Detect if Translate Mode is on
@@ -505,7 +375,7 @@ const sitecoreAuthorToolbox = () => {
       }
 
       if (isTranslateMode) {
-        for (field of scTextFields) {
+        for (var field of scTextFields) {
           if (field.className == "scContentControl" || field.className == "scContentControlMemo" || field.className == "scContentControlImage" || (field.className.includes("scCombobox") && !field.className.includes("scComboboxEdit"))) {
             tdMiddle = null;
 
@@ -789,14 +659,7 @@ const sitecoreAuthorToolbox = () => {
      */
     storage.feature_contenteditor == undefined ? (storage.feature_contenteditor = true) : false;
     if (storage.feature_contenteditor == true) {
-      /**
-       * Custom checkboxes to IOS like style
-       */
-      var link = document.createElement("link");
-      link.type = "text/css";
-      link.rel = "stylesheet";
-      link.href = chrome.runtime.getURL("css/checkbox.min.css");
-      document.getElementsByTagName("head")[0].appendChild(link);
+      initCheckboxes(storage);
 
       /**
        * Select Content tab for content
@@ -834,8 +697,8 @@ const sitecoreAuthorToolbox = () => {
       /*
        * Search enhancements
        */
-      target = document.querySelector("#SearchResult");
-      observer = new MutationObserver(function () {
+      let target = document.querySelector("#SearchResult");
+      let observer = new MutationObserver(function () {
         var SearchResultHolder = document.querySelector("#SearchResult");
         var scSearchLink = SearchResultHolder.querySelectorAll(".scSearchLink");
         var scSearchListExtra = document.querySelector(".scSearchListExtra");
@@ -923,4 +786,68 @@ const sitecoreAuthorToolbox = () => {
       document.querySelector(".scContentTreeContainer") ? document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:1") : false;
     }, 100);
   }); //end of Chrome.Storage
+};
+
+/*
+ * Add characters counter
+ */
+const initCharsCount = (storage) => {
+  storage.feature_charscount == undefined ? (storage.feature_charscount = true) : false;
+  if (storage.feature_charscount) {
+    /*
+     * Add a characters count next to each input and textarea field
+     */
+    var scTextFields = document.querySelectorAll("input, textarea, checkbox");
+    var countHtml, labelHtml;
+    var chars = 0;
+    var charsText;
+
+    //On load
+    for (var field of scTextFields) {
+      if (field.className == "scContentControl" || field.className == "scContentControlMemo") {
+        field.setAttribute("style", "padding-right: 70px !important");
+        field.parentElement.setAttribute("style", "position:relative !important");
+        chars = field.value.length;
+        if (chars > 1) {
+          charsText = chars + " chars";
+        } else {
+          charsText = chars + " char";
+        }
+        countHtml = '<div id="chars_' + field.id + '" style="position: absolute; bottom: 1px; right: 1px; padding: 6px 10px; border-radius: 4px; line-height: 20px; opacity:0.5;">' + charsText + "</div>";
+        field.insertAdjacentHTML("afterend", countHtml);
+      } else if (field.className == "scContentControlCheckbox") {
+        //Add label
+        labelHtml = '<label for="' + field.id + '" class="scContentControlCheckboxLabel"></label>';
+        field.insertAdjacentHTML("afterend", labelHtml);
+      }
+    }
+
+    //On keyup
+    document.addEventListener(
+      "keyup",
+      function (event) {
+        if (event.target.localName == "input" || event.target.localName == "textarea") {
+          chars = event.target.value.length;
+          if (chars > 1) {
+            charsText = chars + " chars";
+          } else {
+            charsText = chars + " char";
+          }
+
+          if (document.querySelector("#chars_" + event.target.id)) {
+            document.querySelector("#chars_" + event.target.id).innerText = charsText;
+          }
+        }
+      },
+      false
+    );
+  }
+};
+
+/*
+ * Change style of checkboxes to ios-like switch
+ */
+const initCheckboxes = (storage) => {
+  storage.feature_contenteditor == undefined ? (storage.feature_contenteditor = true) : false;
+  storage.feature_contenteditor ? loadCssFile("css/checkbox.min.css") : false;
 };

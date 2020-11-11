@@ -10,14 +10,20 @@
 @import url("dark/experience.min.css");
 @import url("dark/experimentalui.min.css");
 
+section.sc-applicationContent-main,
 form#ContentEditorForm {
   filter: blur(7px) brightness(0.1) grayscale(1);
   transition: all ease-in-out 0.1s;
   transition-delay: 0.3s;
 }
 
+body.satExtension section.sc-applicationContent-main,
 body.satExtension form#ContentEditorForm {
   filter: blur(0px) brightness(1) grayscale(0);
+}
+
+body.satExtension .saveMessage {
+  display: none;
 }
 
 body.contentEditor {
@@ -81,6 +87,10 @@ div.scSaveBar {
   background-color: #fff;
 }
 
+.scStartbar {
+  transition: all ease-in-out 0.2s;
+}
+
 #svgAnimation,
 #EditorFrames {
   opacity: 0;
@@ -120,6 +130,10 @@ div#Languages img {
 /* Media Explorer */
 .scBackground > #FileList {
   display: none;
+}
+
+body.satExtension .scBackground > #FileList {
+  display: block;
 }
 
 #FileList a.scButton {
@@ -1181,6 +1195,7 @@ ul.sc-accountInformation li:last-child:after {
 #globalHeaderUserPortrait {
   border: 3px solid transparent;
   margin-right: 2px;
+  cursor: pointer;
 }
 
 #globalHeaderUserPortrait:hover {
@@ -1193,7 +1208,7 @@ ul.sc-accountInformation li:last-child:after {
   right: 5px;
   top: 40px;
   text-align: left;
-  width: fit-content;
+  width: max-content;
   min-width: 245px;
   background-color: hsla(0, 0%, 7%, 0.7);
   z-index: 100 !important;
@@ -1204,6 +1219,12 @@ ul.sc-accountInformation li:last-child:after {
   opacity: 0;
   transition: all ease-in-out 0.2s;
   padding: 0px !important;
+}
+
+.scAccountMenu.open {
+  visibility: visible;
+  top: 50px;
+  opacity: 1;
 }
 
 #scRibbonToggle {
@@ -1218,6 +1239,7 @@ ul.scAccountMenu li {
   font-weight: 600;
   font-size: 14px;
 }
+ul.scAccountMenu li.separator,
 ul.scAccountMenu li:last-child {
   border-top: 0.5px solid rgba(255, 255, 255, 0.2);
 }
@@ -1449,6 +1471,7 @@ ul.scAccountMenu li:after {
 }
 
 /* Preview mode */
+
 #ContentEditor {
   background-color: var(--grey4);
 }
@@ -1561,4 +1584,117 @@ ul.scAccountMenu li:after {
   max-height: 80%;
   vertical-align: middle;
   transition: all 0.2s ease-in-out;
+}
+
+/* User Menu switches */
+
+.darkModeWrapper {
+  padding: 2px 0px;
+}
+
+.darkModeSwitch,
+.experimentalUiSwitch {
+  padding: 0px 15px 0px 0px;
+}
+
+.experimentalUiSwitchText {
+  width: 25px;
+  font-weight: 100;
+  font-size: 12px;
+  display: inline-block;
+}
+
+.scDarkModeCheckboxLabel,
+.scExperimentalCheckboxLabel {
+  display: inline-block;
+  margin: 0px 0px 0px 5px;
+  width: 40px;
+  height: 20px;
+  text-indent: -150%;
+  clip: rect(0 0 0 0);
+  color: transparent;
+  user-select: none;
+  vertical-align: middle;
+}
+.scDarkModeCheckboxLabel::before,
+.scDarkModeCheckboxLabel::after,
+.scExperimentalCheckboxLabel::before,
+.scExperimentalCheckboxLabel::after {
+  content: "";
+  display: block;
+  position: absolute;
+  cursor: pointer;
+}
+.scDarkModeCheckboxLabel::before,
+.scExperimentalCheckboxLabel::before {
+  width: 100%;
+  height: 100%;
+  max-width: 40px !important;
+  max-height: 20px !important;
+  background-color: #cccccc;
+  border-radius: 9999em;
+  -webkit-transition: background-color 0.15s ease;
+  transition: background-color 0.15s ease;
+}
+.scDarkModeCheckboxLabel::after,
+.scExperimentalCheckboxLabel::after {
+  width: 16px;
+  height: 16px;
+  top: 2px;
+  left: 3px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.45);
+  -webkit-transition: left 0.15s ease;
+  transition: left 0.15s ease;
+  cursor: pointer !important;
+  position: relative;
+}
+.scDarkModeCheckbox:checked + .scDarkModeCheckboxLabel::before {
+  background-color: var(--black);
+}
+
+.scExperimentalCheckbox:checked + .scExperimentalCheckboxLabel::before {
+  background-color: #6edc60;
+}
+.scDarkModeCheckbox:checked + .scDarkModeCheckboxLabel::after,
+.scExperimentalCheckbox:checked + .scExperimentalCheckboxLabel::after {
+  left: 21px;
+}
+
+input.scDarkModeCheckbox,
+input.scExperimentalCheckbox {
+  display: none !important;
+}
+
+.darkModeIcon {
+  width: 16px !important;
+  height: 16px !important;
+  filter: invert(1);
+  vertical-align: middle;
+  margin: 0px 3px !important;
+  transition: all ease-in-out 0.2s;
+}
+
+.darkModeIconSun,
+.darkModeIconMoon {
+  margin-top: 0px;
+  opacity: 1;
+}
+
+.darkModeIconMoon {
+  margin-left: -23px !important;
+}
+
+.darkModeIconSun.set,
+.darkModeIconMoon.set {
+  margin-top: 10px;
+  opacity: 0;
+}
+
+.darkModeIconSun.rise,
+.darkModeIconMoon.rise {
+  margin-top: 0px;
+  opacity: 1;
+  transition-delay: 0.2s;
 }

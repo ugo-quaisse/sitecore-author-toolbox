@@ -16,10 +16,7 @@
 
 const currentColorScheme = () => {
   let color = "light";
-  if (
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
+  if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
     color = "dark";
   } else {
     color = "light";
@@ -28,17 +25,14 @@ const currentColorScheme = () => {
   return color;
 };
 
-chrome.storage.sync.get(
-  ["feature_darkmode", "feature_darkmode_auto"],
-  function (result) {
-    if (result.feature_darkmode && result.feature_darkmode_auto) {
-      const scheme = window.matchMedia("(prefers-color-scheme: dark)");
-      scheme.addEventListener("change", () => {
-        window.location.reload();
-      });
-    }
+chrome.storage.sync.get(["feature_darkmode", "feature_darkmode_auto"], function (result) {
+  if (result.feature_darkmode && result.feature_darkmode_auto) {
+    const scheme = window.matchMedia("(prefers-color-scheme: dark)");
+    scheme.addEventListener("change", () => {
+      window.location.reload();
+    });
   }
-);
+});
 
 document.body.onload = function () {
   //Extension version
@@ -126,9 +120,7 @@ document.body.onload = function () {
   chrome.storage.sync.get(["feature_urls"], function (result) {
     //it should be !result.feature_urls = checked
     if (!chrome.runtime.error && result.feature_urls != undefined) {
-      result.feature_urls
-        ? (document.getElementById("feature_urls").checked = true)
-        : false;
+      result.feature_urls ? (document.getElementById("feature_urls").checked = true) : false;
     } else {
       document.getElementById("feature_urls").checked = true;
     }
@@ -165,30 +157,18 @@ document.body.onload = function () {
   });
   //Dark Mode
   var scheme = currentColorScheme();
-  chrome.storage.sync.get(
-    ["feature_darkmode", "feature_darkmode_auto"],
-    function (result) {
-      if (
-        (result.feature_darkmode && !result.feature_darkmode_auto) ||
-        (result.feature_darkmode &&
-          result.feature_darkmode_auto &&
-          scheme == "dark")
-      ) {
-        document.getElementById("feature_darkmode").checked = true;
-        document.querySelector("html").classList.add("dark");
-      } else if (
-        result.feature_darkmode &&
-        result.feature_darkmode_auto &&
-        scheme == "light"
-      ) {
-        document.getElementById("feature_darkmode").checked = true;
-        document.querySelector("html").classList.add("light");
-      } else {
-        document.getElementById("feature_darkmode").checked = false;
-        document.getElementById("feature_darkmode_auto").disabled = true;
-      }
+  chrome.storage.sync.get(["feature_darkmode", "feature_darkmode_auto"], function (result) {
+    if ((result.feature_darkmode && !result.feature_darkmode_auto) || (result.feature_darkmode && result.feature_darkmode_auto && scheme == "dark")) {
+      document.getElementById("feature_darkmode").checked = true;
+      document.querySelector("html").classList.add("dark");
+    } else if (result.feature_darkmode && result.feature_darkmode_auto && scheme == "light") {
+      document.getElementById("feature_darkmode").checked = true;
+      document.querySelector("html").classList.add("light");
+    } else {
+      document.getElementById("feature_darkmode").checked = false;
+      document.getElementById("feature_darkmode_auto").disabled = true;
     }
-  );
+  });
   //Dark mode Auto bar
   chrome.storage.sync.get(["feature_darkmode_auto"], function (result) {
     if (result.feature_darkmode_auto) {
@@ -390,9 +370,7 @@ document.body.onload = function () {
 //Experimental UI contrasted icons
 chrome.storage.sync.get(["feature_contrast_icons"], function (result) {
   if (result.feature_contrast_icons != undefined) {
-    result.feature_contrast_icons
-      ? (document.querySelector("#feature_contrast_icons").checked = true)
-      : false;
+    result.feature_contrast_icons ? (document.querySelector("#feature_contrast_icons").checked = true) : false;
   } else {
     document.querySelector("#feature_contrast_icons").checked = false;
   }
@@ -401,9 +379,7 @@ chrome.storage.sync.get(["feature_contrast_icons"], function (result) {
 //Launchpad tiles
 chrome.storage.sync.get(["feature_launchpad_tiles"], function (result) {
   if (result.feature_launchpad_tiles != undefined) {
-    result.feature_launchpad_tiles
-      ? (document.querySelector("#feature_launchpad_tiles").checked = true)
-      : false;
+    result.feature_launchpad_tiles ? (document.querySelector("#feature_launchpad_tiles").checked = true) : false;
   } else {
     document.querySelector("#feature_launchpad_tiles").checked = false;
   }
@@ -518,21 +494,10 @@ document.querySelector("#set_domains").onclick = function (event) {
         let cdUrl = new URL(currentCD.value);
 
         if (cmUrl.protocol == "https:" && cdUrl.protocol == "http:") {
-          alert(
-            "Warning!\nLive status might not work as expected. You will probably face a mixed-content issue as your CM and CD are using a different protocol (https vs http) \n\n" +
-              cmUrl.origin +
-              "\n" +
-              cdUrl.origin
-          );
+          alert("Warning!\nLive status might not work as expected. You will probably face a mixed-content issue as your CM and CD are using a different protocol (https vs http) \n\n" + cmUrl.origin + "\n" + cdUrl.origin);
           error = true;
         } else if (currentCM.value == currentCD.value) {
-          alert(
-            "CM #" +
-              parseInt(domainId + 1) +
-              " and CD #" +
-              parseInt(domainId + 1) +
-              " are the exact same URL, please verify."
-          );
+          alert("CM #" + parseInt(domainId + 1) + " and CD #" + parseInt(domainId + 1) + " are the exact same URL, please verify.");
           error = true;
         } else {
           //Add domain to JsonString
@@ -578,122 +543,74 @@ document.querySelector("#set").onclick = function (event) {
   event.preventDefault();
 
   //URLs
-  chrome.storage.sync.set(
-    { feature_urls: document.getElementById("feature_urls").checked },
-    function () {
-      console.info(
-        "--> Urls: " + document.getElementById("feature_urls").checked
-      );
-    }
-  );
+  chrome.storage.sync.set({ feature_urls: document.getElementById("feature_urls").checked }, function () {
+    console.info("--> Urls: " + document.getElementById("feature_urls").checked);
+  });
   //Flags
-  chrome.storage.sync.set(
-    { feature_flags: document.getElementById("feature_flags").checked },
-    function () {
-      console.info(
-        "--> Flags: " + document.getElementById("feature_flags").checked
-      );
-    }
-  );
+  chrome.storage.sync.set({ feature_flags: document.getElementById("feature_flags").checked }, function () {
+    console.info("--> Flags: " + document.getElementById("feature_flags").checked);
+  });
   //Errors
-  chrome.storage.sync.set(
-    { feature_errors: document.getElementById("feature_errors").checked },
-    function () {
-      console.info(
-        "--> Errors: " + document.getElementById("feature_errors").checked
-      );
-    }
-  );
+  chrome.storage.sync.set({ feature_errors: document.getElementById("feature_errors").checked }, function () {
+    console.info("--> Errors: " + document.getElementById("feature_errors").checked);
+  });
   //Notificattion
   chrome.storage.sync.set(
     {
-      feature_notification: document.getElementById("feature_notification")
-        .checked,
+      feature_notification: document.getElementById("feature_notification").checked,
     },
     function () {
-      console.info(
-        "--> Notifications: " +
-          document.getElementById("feature_notification").checked
-      );
+      console.info("--> Notifications: " + document.getElementById("feature_notification").checked);
     }
   );
   //Dark mode
-  chrome.storage.sync.set(
-    { feature_darkmode: document.getElementById("feature_darkmode").checked },
-    function () {
-      console.info(
-        "--> Dark mode:" + document.getElementById("feature_darkmode").checked
-      );
-      if (document.getElementById("feature_darkmode").checked) {
-        document.querySelector("html").classList.remove("light");
-        document.querySelector("html").classList.add("dark");
-      } else {
-        document.querySelector("html").classList.remove("dark");
-        document.querySelector("html").classList.add("light");
-      }
+  chrome.storage.sync.set({ feature_darkmode: document.getElementById("feature_darkmode").checked }, function () {
+    console.info("--> Dark mode:" + document.getElementById("feature_darkmode").checked);
+    if (document.getElementById("feature_darkmode").checked) {
+      document.querySelector("html").classList.remove("light");
+      document.querySelector("html").classList.add("dark");
+    } else {
+      document.querySelector("html").classList.remove("dark");
+      document.querySelector("html").classList.add("light");
     }
-  );
+  });
   //Dark mode auto
   chrome.storage.sync.set(
     {
-      feature_darkmode_auto: document.getElementById("feature_darkmode_auto")
-        .checked,
+      feature_darkmode_auto: document.getElementById("feature_darkmode_auto").checked,
     },
     function () {
-      console.info(
-        "--> Dark Mode Auto: " +
-          document.getElementById("feature_darkmode_auto").checked
-      );
+      console.info("--> Dark Mode Auto: " + document.getElementById("feature_darkmode_auto").checked);
     }
   );
   //Favorites
-  chrome.storage.sync.set(
-    { feature_favorites: document.getElementById("feature_favorites").checked },
-    function () {
-      console.info(
-        "--> Favorites: " + document.getElementById("feature_favorites").checked
-      );
-    }
-  );
+  chrome.storage.sync.set({ feature_favorites: document.getElementById("feature_favorites").checked }, function () {
+    console.info("--> Favorites: " + document.getElementById("feature_favorites").checked);
+  });
   //Reload from where you left
   chrome.storage.sync.set(
     {
       feature_reloadnode: document.getElementById("feature_reloadnode").checked,
     },
     function () {
-      console.info(
-        "--> Reload: " + document.getElementById("feature_reloadnode").checked
-      );
+      console.info("--> Reload: " + document.getElementById("feature_reloadnode").checked);
     }
   );
   //Launchpad
-  chrome.storage.sync.set(
-    { feature_launchpad: document.getElementById("feature_launchpad").checked },
-    function () {
-      console.info(
-        "--> Launchpad: " + document.getElementById("feature_launchpad").checked
-      );
-    }
-  );
+  chrome.storage.sync.set({ feature_launchpad: document.getElementById("feature_launchpad").checked }, function () {
+    console.info("--> Launchpad: " + document.getElementById("feature_launchpad").checked);
+  });
   //RTL
-  chrome.storage.sync.set(
-    { feature_rtl: document.getElementById("feature_rtl").checked },
-    function () {
-      console.info(
-        "--> RTL: " + document.getElementById("feature_rtl").checked
-      );
-    }
-  );
+  chrome.storage.sync.set({ feature_rtl: document.getElementById("feature_rtl").checked }, function () {
+    console.info("--> RTL: " + document.getElementById("feature_rtl").checked);
+  });
   //Chars count
   chrome.storage.sync.set(
     {
       feature_charscount: document.getElementById("feature_charscount").checked,
     },
     function () {
-      console.info(
-        "--> Character counter: " +
-          document.getElementById("feature_charscount").checked
-      );
+      console.info("--> Character counter: " + document.getElementById("feature_charscount").checked);
     }
   );
   //Auto Expand
@@ -702,188 +619,117 @@ document.querySelector("#set").onclick = function (event) {
       feature_autoexpand: document.getElementById("feature_autoexpand").checked,
     },
     function () {
-      console.info(
-        "--> Auto Expand: " +
-          document.getElementById("feature_autoexpand").checked
-      );
+      console.info("--> Auto Expand: " + document.getElementById("feature_autoexpand").checked);
     }
   );
   //Translation mode
   chrome.storage.sync.set(
     {
-      feature_translatemode: document.getElementById("feature_translatemode")
-        .checked,
+      feature_translatemode: document.getElementById("feature_translatemode").checked,
     },
     function () {
-      console.info(
-        "--> Translation Mode: " +
-          document.getElementById("feature_translatemode").checked
-      );
+      console.info("--> Translation Mode: " + document.getElementById("feature_translatemode").checked);
     }
   );
   //Content Editor
   chrome.storage.sync.set(
     {
-      feature_contenteditor: document.getElementById("feature_contenteditor")
-        .checked,
+      feature_contenteditor: document.getElementById("feature_contenteditor").checked,
     },
     function () {
-      console.info(
-        "--> Content Editor: " +
-          document.getElementById("feature_contenteditor").checked
-      );
+      console.info("--> Content Editor: " + document.getElementById("feature_contenteditor").checked);
     }
   );
   //Experience Editor
   chrome.storage.sync.set(
     {
-      feature_experienceeditor: document.getElementById(
-        "feature_experienceeditor"
-      ).checked,
+      feature_experienceeditor: document.getElementById("feature_experienceeditor").checked,
     },
     function () {
-      console.info(
-        "--> Experience Editor " +
-          document.getElementById("feature_experienceeditor").checked
-      );
+      console.info("--> Experience Editor " + document.getElementById("feature_experienceeditor").checked);
     }
   );
   //CE Tabs
-  chrome.storage.sync.set(
-    { feature_cetabs: document.getElementById("feature_cetabs").checked },
-    function () {
-      console.info(
-        "--> CE Tabs: " + document.getElementById("feature_cetabs").checked
-      );
-    }
-  );
+  chrome.storage.sync.set({ feature_cetabs: document.getElementById("feature_cetabs").checked }, function () {
+    console.info("--> CE Tabs: " + document.getElementById("feature_cetabs").checked);
+  });
   //RTE Color
-  chrome.storage.sync.set(
-    { feature_rtecolor: document.getElementById("feature_rtecolor").checked },
-    function () {
-      console.info(
-        "--> RTE Color: " + document.getElementById("feature_rtecolor").checked
-      );
-    }
-  );
+  chrome.storage.sync.set({ feature_rtecolor: document.getElementById("feature_rtecolor").checked }, function () {
+    console.info("--> RTE Color: " + document.getElementById("feature_rtecolor").checked);
+  });
   //Fancy message bar
   chrome.storage.sync.set(
     {
       feature_messagebar: document.getElementById("feature_messagebar").checked,
     },
     function () {
-      console.info(
-        "--> Fancy message bar: " +
-          document.getElementById("feature_messagebar").checked
-      );
+      console.info("--> Fancy message bar: " + document.getElementById("feature_messagebar").checked);
     }
   );
   //Workflow notifications
-  chrome.storage.sync.set(
-    { feature_workbox: document.getElementById("feature_workbox").checked },
-    function () {
-      console.info(
-        "--> Workflow notifications: " +
-          document.getElementById("feature_workbox").checked
-      );
-    }
-  );
+  chrome.storage.sync.set({ feature_workbox: document.getElementById("feature_workbox").checked }, function () {
+    console.info("--> Workflow notifications: " + document.getElementById("feature_workbox").checked);
+  });
   //Live URL Status
-  chrome.storage.sync.set(
-    { feature_urlstatus: document.getElementById("feature_urlstatus").checked },
-    function () {
-      console.info(
-        "--> Live Urls Status: " +
-          document.getElementById("feature_urlstatus").checked
-      );
-    }
-  );
+  chrome.storage.sync.set({ feature_urlstatus: document.getElementById("feature_urlstatus").checked }, function () {
+    console.info("--> Live Urls Status: " + document.getElementById("feature_urlstatus").checked);
+  });
   //Right click
   chrome.storage.sync.set(
     {
-      feature_contextmenu: document.getElementById("feature_contextmenu")
-        .checked,
+      feature_contextmenu: document.getElementById("feature_contextmenu").checked,
     },
     function () {
-      console.info(
-        "--> Right click menu: " +
-          document.getElementById("feature_contextmenu").checked
-      );
+      console.info("--> Right click menu: " + document.getElementById("feature_contextmenu").checked);
     }
   );
   //Experience Profile
   chrome.storage.sync.set(
     {
-      feature_gravatarimage: document.getElementById("feature_gravatarimage")
-        .checked,
+      feature_gravatarimage: document.getElementById("feature_gravatarimage").checked,
     },
     function () {
-      console.info(
-        "--> Experience Profile: " +
-          document.getElementById("feature_gravatarimage").checked
-      );
+      console.info("--> Experience Profile: " + document.getElementById("feature_gravatarimage").checked);
     }
   );
   //Help link
-  chrome.storage.sync.set(
-    { feature_helplink: document.getElementById("feature_helplink").checked },
-    function () {
-      console.info(
-        "--> Help link: " + document.getElementById("feature_helplink").checked
-      );
-    }
-  );
+  chrome.storage.sync.set({ feature_helplink: document.getElementById("feature_helplink").checked }, function () {
+    console.info("--> Help link: " + document.getElementById("feature_helplink").checked);
+  });
   //Instant Search
   chrome.storage.sync.set(
     {
-      feature_instantsearch: document.getElementById("feature_instantsearch")
-        .checked,
+      feature_instantsearch: document.getElementById("feature_instantsearch").checked,
     },
     function () {
-      console.info(
-        "--> Instant Search: " +
-          document.getElementById("feature_instantsearch").checked
-      );
+      console.info("--> Instant Search: " + document.getElementById("feature_instantsearch").checked);
     }
   );
   //Launchpad tiles
   chrome.storage.sync.set(
     {
-      feature_launchpad_tiles: document.getElementById(
-        "feature_launchpad_tiles"
-      ).checked,
+      feature_launchpad_tiles: document.getElementById("feature_launchpad_tiles").checked,
     },
     function () {
-      console.info(
-        "--> Launchpad tiles: " +
-          document.getElementById("feature_launchpad_tiles").checked
-      );
+      console.info("--> Launchpad tiles: " + document.getElementById("feature_launchpad_tiles").checked);
     }
   );
   //Experimental UI
   chrome.storage.sync.set(
     {
-      feature_experimentalui: document.getElementById("feature_experimentalui")
-        .checked,
+      feature_experimentalui: document.getElementById("feature_experimentalui").checked,
     },
     function () {
-      console.info(
-        "--> Experimental UI: " +
-          document.getElementById("feature_experimentalui").checked
-      );
+      console.info("--> Experimental UI: " + document.getElementById("feature_experimentalui").checked);
     }
   );
   //Contrasted icons
   chrome.storage.sync.set(
     {
-      feature_contrast_icons: document.getElementById("feature_contrast_icons")
-        .checked,
+      feature_contrast_icons: document.getElementById("feature_contrast_icons").checked,
     },
     function () {
-      console.info(
-        "--> Contrasted icons: " +
-          document.getElementById("feature_contrast_icons").checked
-      );
+      console.info("--> Contrasted icons: " + document.getElementById("feature_contrast_icons").checked);
     }
   );
 
@@ -894,9 +740,7 @@ document.querySelector("#set").onclick = function (event) {
 
   //Reload sitecore
   if (!fromLaunchpad) {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (
-      arrayOfTabs
-    ) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (arrayOfTabs) {
       var code = "window.location.reload();";
       chrome.tabs.executeScript(arrayOfTabs[0].id, { code });
       document.querySelector("#set").innerHTML = "Saving...";

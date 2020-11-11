@@ -4,8 +4,11 @@ import * as global from "./global.js";
 import { exeJsCode } from "./helpers.js";
 import { pathToBreadcrumb } from "./experimentalui.js";
 
-export { initInstantSearch, instantSearch };
+export { initInstantSearch, instantSearch, enhancedSitecoreSearch };
 
+/**
+ * Add Search box to Sitecore Header
+ */
 const initInstantSearch = (storage) => {
   storage.feature_instantsearch == undefined ? (storage.feature_instantsearch = true) : false;
   if (!global.isLaunchpad && storage.feature_instantsearch) {
@@ -18,6 +21,9 @@ const initInstantSearch = (storage) => {
   }
 };
 
+/**
+ * Setup and perform instant search
+ */
 const instantSearch = () => {
   // Variables
   const scInstantSearch = document.querySelector(".scInstantSearch");
@@ -227,4 +233,44 @@ const instantSearch = () => {
       false
     );
   }
+};
+
+/**
+ * Add new stuff to classic Sitecore Search results
+ */
+const enhancedSitecoreSearch = () => {
+  //Add listener on search result list
+  var target = document.querySelector("#results");
+  var observer = new MutationObserver(function () {
+    var resultsDiv = document.querySelector("#results");
+    var BlogPostArea = resultsDiv.querySelectorAll(".BlogPostArea");
+
+    for (var line of BlogPostArea) {
+      var BlogPostFooter = line.querySelector(".BlogPostFooter");
+
+      var getFullpath = line.querySelector(".BlogPostViews > a > img").getAttribute("title");
+      getFullpath = getFullpath.split(" - ");
+      getFullpath = getFullpath[1].toLowerCase();
+      if (getFullpath.includes("/home/")) {
+        getFullpath = getFullpath.split("/home/");
+        getFullpath = "/" + getFullpath[1];
+      }
+      var getNumLanguages = line.querySelector(".BlogPostHeader > span").getAttribute("title");
+
+      //Inject HTML
+      var html = '<div class="BlogPostExtra BlogPostContent" style="padding: 5px 0 0px 78px; color: #0769d6"><strong>Sitecore path:</strong> ' + getFullpath + " <strong>Languages available:</strong> " + getNumLanguages + "</div>";
+      getFullpath ? BlogPostFooter.insertAdjacentHTML("afterend", html) : false;
+      //TODO Buttons, open in CE and open in EE
+    }
+  });
+
+  //Observer
+  target
+    ? observer.observe(target, {
+        attributes: false,
+        childList: true,
+        characterData: false,
+        subtree: false,
+      })
+    : false;
 };

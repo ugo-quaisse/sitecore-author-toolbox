@@ -15,6 +15,10 @@ body.satDark #TreeSearch {
   border: 1px var(--black1) !important;
 }
 
+body.satDark div.scSaveBar {
+  background-color: var(--black2);
+}
+
 /* Caption */
 
 body.satDark .scWindowBorder3 {
@@ -65,38 +69,24 @@ body.satDark a.scEditorHeaderNavigatorSection {
   border-top: 1px solid #f0f0f0;
 }
 
+body.satDark .scEditorPanel {
+  background-color: var(--black1) !important;
+}
+
 body.satDark .scEditorPanelCell {
   background: #cccccc;
 }
 
-body.satDark .scEditorSections {
-  background-color: #191919 !important;
-}
-
-body.satDark .scEditorSectionCaptionExpanded,
-body.satDark .scEditorSectionCaptionCollapsed {
-  background-color: var(--darkblue);
+body.satDark .scEditorSectionCaptionExpanded {
+  border-left: 5px solid #dc291e !important;
+  border-bottom: 1px solid var(--black1) !important;
   color: var(--white);
 }
 
-body.satDark .scEditorSectionCaptionExpanded {
-  border-left: 5px solid var(--blue) !important;
-}
-
-body.satDark .scEditorSectionCaptionExpanded::selection {
-  background-color: var(--darkblue);
-}
-
 body.satDark .scEditorSectionCaptionCollapsed {
-  background-color: var(--black1) !important;
-
-  border-bottom: 1px solid var(--black3) !important;
-
+  background-color: var(--black2) !important;
+  border-bottom: 1px solid var(--black1) !important;
   color: var(--black8) !important;
-}
-
-body.satDark .scEditorSectionCaptionCollapsed::selection {
-  background-color: var(--black1);
 }
 
 body.satDark .scEditorFieldLabelDisabled {
@@ -387,6 +377,10 @@ body.satDark .scContentDragMarker {
   background: #008ef4;
 }
 
+body.satDark .scEditorHeaderQuickInfoInput {
+  border: none !important;
+}
+
 body.satDark #EditorTop {
   filter: invert(1);
 }
@@ -516,8 +510,8 @@ body.satDark .scSearchOptionName:hover {
 
 body.satDark .scEditorSectionPanel,
 body.satDark .scEditorSections {
-  border-top: 1px solid var(--black3);
-  background-color: var(--black2);
+  border-top: 1px solid var(--black1);
+  background-color: var(--black1);
 }
 body.satDark #scEditorTabs {
   background-color: var(--black1);

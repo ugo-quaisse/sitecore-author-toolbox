@@ -2,7 +2,7 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
-import { consoleLog } from "./helpers.js";
+import { log } from "./helpers.js";
 
 export { cleanCountryName, findCountryName, initFlagRibbonEE, initLanguageMenuEE, initLanguageMenuCE, initFlagsPublishingWindow, initFlagsPublish };
 
@@ -90,7 +90,7 @@ const initFlagRibbonEE = (storage) => {
  * Add flags and sort language menu from Experience Editor
  */
 const initLanguageMenuEE = (storage) => {
-  consoleLog("**** Languages menu EE ****", "yellow");
+  log("**** Languages menu EE ****", "yellow");
   storage.feature_flags == undefined ? (storage.feature_flags = true) : false;
 
   if (storage.feature_flags) {
@@ -132,7 +132,7 @@ const initLanguageMenuEE = (storage) => {
  * Add flags and sort language menu from Experience Editor
  */
 const initLanguageMenuCE = (storage) => {
-  consoleLog("**** Languages menu CE ****", "yellow");
+  log("**** Languages menu CE ****", "yellow");
   storage.feature_flags == undefined ? (storage.feature_flags = true) : false;
 
   if (storage.feature_flags) {

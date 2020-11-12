@@ -6,7 +6,7 @@
  */
 export const queryString = window.location.search.toLowerCase();
 export const urlParams = new URLSearchParams(queryString);
-export const debug = !!urlParams.has("debugsat");
+export const debug = !!urlParams.has("debug");
 export const showSnackbar = true;
 export const extensionVersion = chrome.runtime.getManifest().version;
 export const extensionId = chrome.runtime.getURL("something").split("chrome-extension://")[1].split("/something")[0];

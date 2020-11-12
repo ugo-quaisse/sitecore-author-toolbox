@@ -12,7 +12,7 @@
  * Load modules
  */
 import * as global from "./modules/global.js";
-import { consoleLog, loadJsFile, initDarkMode, autoDarkMode, getScItemData } from "./modules/helpers.js";
+import { log, loadJsFile, initDarkMode, autoDarkMode, getScItemData } from "./modules/helpers.js";
 import { showSnackbar } from "./modules/snackbar.js";
 import { workboxNotifications } from "./modules/workbox.js";
 import { resumeFromWhereYouLeftOff, historyNavigation } from "./modules/history.js";
@@ -43,7 +43,7 @@ chrome.storage.sync.get((storage) => {
    **********************
    */
   if (global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isCss && !global.isUploadManager) {
-    consoleLog("Sitecore detected", "red");
+    log("Sitecore detected", "red");
     document.body.classList.add("satExtension");
     loadJsFile("js/inject.js");
     checkNotificationPermissions();
@@ -63,7 +63,7 @@ chrome.storage.sync.get((storage) => {
      **********************
      */
     if (global.isContentEditor) {
-      consoleLog("**** CE ****", "yellow");
+      log("**** CE ****", "yellow");
       let ScItem = getScItemData();
       resumeFromWhereYouLeftOff(storage);
       initInstantSearch(storage);
@@ -72,7 +72,7 @@ chrome.storage.sync.get((storage) => {
       historyNavigation();
       showSnackbar();
       if (storage.feature_experimentalui) {
-        consoleLog("**** Experimental ****", "yellow");
+        log("**** Experimental ****", "yellow");
         initSvgAnimation();
         insertSavebar();
         insertModal(ScItem.id, ScItem.language, ScItem.version);
@@ -91,7 +91,7 @@ chrome.storage.sync.get((storage) => {
      ************************
      */
     if ((global.isDesktop && !global.isGalleryFavorites && !global.isXmlControl) || global.isLaunchpad) {
-      consoleLog("**** Launchpad - Desktop Shell ****", "orange");
+      log("**** Launchpad - Desktop Shell ****", "orange");
       initLaunchpadIcon(storage);
       initLaunchpadMenu(storage);
       workboxNotifications(storage);
@@ -103,58 +103,58 @@ chrome.storage.sync.get((storage) => {
      ************************
      */
     if (global.isPreviewTab) {
-      consoleLog("**** Preview tab ****", "orange");
+      log("**** Preview tab ****", "orange");
       initPreviewButton(storage);
       listenPreviewTab(storage);
     } else if (global.isMediaFolder) {
-      consoleLog("**** Media Folder ****", "orange");
+      log("**** Media Folder ****", "orange");
       initMediaCounter();
       initMediaDragDrop();
       initMediaViewButtons();
       initMediaExplorer(storage);
     } else if (global.isFieldEditor) {
-      consoleLog("**** Field editor ****", "orange");
+      log("**** Field editor ****", "orange");
       initCheckboxes(storage);
       initCharsCount(storage);
       initGroupedErrors(storage);
       enhancedBucketLists();
     } else if (global.isExperienceProfile) {
-      consoleLog("**** Experience Profile ****", "orange");
+      log("**** Experience Profile ****", "orange");
       initGravatarImage(storage);
     } else if (global.isRichTextEditor || global.isHtmlEditor) {
-      consoleLog("**** Rich Text Editor ****", "orange");
+      log("**** Rich Text Editor ****", "orange");
       initRteTooltips(storage);
       initSyntaxHighlighterRte(storage);
     } else if ((global.isContentEditorApp && storage.feature_experimentalui) || (global.isContentEditorApp && storage.feature_instantsearch)) {
       //Change logo href target on Desktop mode if
       document.querySelector("#globalLogo") ? document.querySelector("#globalLogo").setAttribute("target", "_parent") : false;
     } else if (global.isSearch) {
-      consoleLog("**** Internal Search ****", "orange");
+      log("**** Internal Search ****", "orange");
       enhancedSitecoreSearch();
     } else if (global.isGalleryLanguage) {
-      consoleLog("**** Languages menu ****", "orange");
+      log("**** Languages menu ****", "orange");
       initLanguageMenuCE(storage);
     } else if (global.isPublishDialog) {
-      consoleLog("**** Publishing window ****", "orange");
+      log("**** Publishing window ****", "orange");
       initFlagsPublishingWindow(storage);
     } else if (global.isPublishWindow) {
-      consoleLog("**** Publish / Rebuild / Package ****", "orange");
+      log("**** Publish / Rebuild / Package ****", "orange");
       initPublishCheckboxes(storage);
       initFlagsPublish(storage);
     } else if (global.isEditorFolder) {
-      consoleLog("**** Editors folder ****", "orange");
+      log("**** Editors folder ****", "orange");
     } else if (global.isGalleryVersion) {
-      consoleLog("**** Versions menu ****", "orange");
+      log("**** Versions menu ****", "orange");
     } else if (global.isLayoutDetails) {
-      consoleLog("**** Layout Details ****", "orange");
+      log("**** Layout Details ****", "orange");
     } else if (global.isXmlControl && !global.isRichText) {
-      consoleLog("**** XML Control (Window) ****", "orange");
+      log("**** XML Control (Window) ****", "orange");
     } else if (global.isDialog || global.isLockedItems) {
-      consoleLog("**** Dialog UI ****", "orange");
+      log("**** Dialog UI ****", "orange");
     } else if (global.isSourceBrowser) {
-      consoleLog("**** Source Browser ****", "orange");
+      log("**** Source Browser ****", "orange");
     } else if (global.isGalleryLinks) {
-      consoleLog("**** Links menu ****", "orange");
+      log("**** Links menu ****", "orange");
     }
   }
 
@@ -164,7 +164,7 @@ chrome.storage.sync.get((storage) => {
    *******************************
    */
   if ((global.isEditMode && !global.isLoginPage) || (global.isPreviewMode && !global.isLoginPage)) {
-    consoleLog("Experience Editor detected", "red");
+    log("Experience Editor detected", "red");
     document.body.classList.add("satExtension");
     loadJsFile("js/inject.js");
     checkNotificationPermissions();
@@ -179,13 +179,13 @@ chrome.storage.sync.get((storage) => {
      ************************
      */
     if (global.isRibbon) {
-      consoleLog("**** EE Ribbon ****", "orange");
+      log("**** EE Ribbon ****", "orange");
       initFlagRibbonEE(storage);
     } else if (global.isGalleryLanguageExpEd) {
-      consoleLog("**** Language Menu ****", "orange");
+      log("**** Language Menu ****", "orange");
       initLanguageMenuEE(storage);
     } else {
-      consoleLog("**** Page in EE ****", "orange");
+      log("**** Page in EE ****", "orange");
       storeCurrentPageEE();
       toolbarEditInCE();
       addComponentTooltip();

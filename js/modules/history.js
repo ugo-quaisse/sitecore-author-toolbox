@@ -1,7 +1,7 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
-import { consoleLog, exeJsCode } from "./helpers.js";
+import { log, exeJsCode } from "./helpers.js";
 
 export { resumeFromWhereYouLeftOff, historyNavigation };
 
@@ -43,10 +43,10 @@ const resumeFromWhereYouLeftOff = (storage) => {
 
       //Reload from where you left off
       if (storage.scItemID && storage.feature_reloadnode === true) {
-        consoleLog("[Read " + storage.scSource + "] Item : " + storage.scItemID, "beige");
-        consoleLog("[Read " + storage.scSource + "] Language : " + storage.scLanguage, "beige");
-        consoleLog("[Read " + storage.scSource + "] Version : " + storage.scVersion, "beige");
-        consoleLog("*** Redirection ***", "yellow");
+        log("[Read " + storage.scSource + "] Item : " + storage.scItemID, "beige");
+        log("[Read " + storage.scSource + "] Language : " + storage.scLanguage, "beige");
+        log("[Read " + storage.scSource + "] Version : " + storage.scVersion, "beige");
+        log("*** Redirection ***", "yellow");
         exeJsCode(`scForm.invoke("item:load(id=` + storage.scItemID + `,language=` + storage.scLanguage + `,version=` + storage.scVersion + `)");`);
       }
     }

@@ -15,12 +15,12 @@
 
 import * as global from "./global.js";
 
-export { consoleLog, loadCssFile, loadJsFile, exeJsCode, currentColorScheme, initDarkMode, initDarkModeEditor, autoDarkMode, sitecoreItemJson, fetchTimeout, getScItemData, setPlural, setTextColour, repositionElement, startDrag, calcMD5 };
+export { log, loadCssFile, loadJsFile, exeJsCode, currentColorScheme, initDarkMode, initDarkModeEditor, autoDarkMode, sitecoreItemJson, fetchTimeout, getScItemData, setPlural, setTextColour, repositionElement, startDrag, calcMD5 };
 
 /**
  * Show colored log message in console
  */
-const consoleLog = (message, color = "yellow") => {
+const log = (message, color = "yellow") => {
   let bgColor, txtColor, fontSize;
 
   switch (color) {

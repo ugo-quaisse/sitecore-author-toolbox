@@ -1,7 +1,7 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
-import { consoleLog, loadCssFile, sitecoreItemJson, getScItemData, currentColorScheme } from "./helpers.js";
+import { log, loadCssFile, sitecoreItemJson, getScItemData, currentColorScheme } from "./helpers.js";
 import { checkUrlStatus } from "./url.js";
 import { addHelpIcons, checkHelpLink } from "./help.js";
 import { findCountryName } from "./language.js";
@@ -845,7 +845,7 @@ const initPublishCheckboxes = (storage) => {
  * Triggers functions when refreshing Content Editor
  */
 const refreshContentEditor = () => {
-  consoleLog("*** Update UI ***", "yellow");
+  log("*** Update UI ***", "yellow");
   let target = document.querySelector("#scLanguage");
   let observer = new MutationObserver(function (mutations) {
     let scQuickInfo = document.querySelector(".scEditorHeaderQuickInfoInput");

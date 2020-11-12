@@ -5,12 +5,12 @@ import * as global from "./global.js";
 import { sendNotification } from "./notification.js";
 import { setPlural } from "./helpers.js";
 
-export { checkWorkbox };
+export { workboxNotifications };
 
 /**
  * Check how many items are pending in the user's workbox
  */
-const checkWorkbox = (storage) => {
+const workboxNotifications = (storage) => {
   storage.feature_workbox == undefined ? (storage.feature_workbox = true) : false;
   if (storage.feature_workbox) {
     var wfNotification = 0;

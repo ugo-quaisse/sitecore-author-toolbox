@@ -27,7 +27,7 @@ const initGroupedErrors = (storage) => {
     scMessageErrors += "</ul></div></div>";
 
     //Insert message bar into Sitecore Content Editor
-    if (count > 0) {
+    if (count > 0 && !document.querySelector("#scMessageBarError")) {
       scEditorID.insertAdjacentHTML("beforebegin", scMessageErrors);
     }
 

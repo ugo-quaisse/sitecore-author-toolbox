@@ -45,12 +45,12 @@ media {
   background-image: linear-gradient(45deg, #f7d871 25%, #fffbe5 25%, #fffbe5 50%, #f7d871 50%, #f7d871 75%, #fffbe5 75%, #fffbe5 100%);
   background-size: 40px 40px;
   background-position: 0% 0%;
-  background-image: 0.5s ease-in-out;
   opacity: 0.9;
   display: block;
   padding: 9px;
   text-align: center;
   margin-top: -25px !important;
+  position: absolute !important;
 }
 
 .scInsertionHandle:hover,

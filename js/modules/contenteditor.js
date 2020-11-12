@@ -1,14 +1,15 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
-import { loadCssFile, loadJsFile, sitecoreItemJson, getScItemData, currentColorScheme } from "./helpers.js";
+import { consoleLog, loadCssFile, sitecoreItemJson, getScItemData, currentColorScheme } from "./helpers.js";
 import { checkUrlStatus } from "./url.js";
 import { addHelpIcons, checkHelpLink } from "./help.js";
 import { findCountryName } from "./language.js";
 import { initGroupedErrors } from "./errors.js";
 import { insertSavebar, insertBreadcrumb, insertLanguageButton, insertVersionButton, insertMoreButton } from "./experimentalui.js";
+import { initSyntaxHighlighterScriban } from "./rte.js";
 
-export { sitecoreAuthorToolbox, initCharsCount, initCheckboxes };
+export { sitecoreAuthorToolbox, initCharsCount, initCheckboxes, initPublishCheckboxes, refreshContentEditor };
 
 /*
  * Main function executed when the Content Editor refreshes
@@ -20,7 +21,7 @@ const sitecoreAuthorToolbox = () => {
   chrome.storage.sync.get((storage) => {
     //Function variables
     var count = 0;
-    let scEditorID = document.querySelector(".scEditorHeader");
+    let scEditorID = document.querySelector(".scEditorPanel");
     let scQuickInfo = document.querySelector(".scEditorHeaderQuickInfoInput");
     let scLanguageMenu = document.querySelector(".scEditorHeaderVersionsLanguage");
     let scVersion = document.querySelector(".scEditorHeaderVersionsVersion > span");
@@ -45,7 +46,7 @@ const sitecoreAuthorToolbox = () => {
           '<div id="scMessageBarUrl" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' +
           global.icon +
           ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Sitecore Author Toolbox help</div><div class="scMessageBarText">To fully enjoy Sitecore Author Toolbox, please enable <b>Title bar</b> and <b>Quick info section</b> under <b>Application Options</b>.<br />Alternatively, try to open the <b>Quick Info section</b> down below, if visible..</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="" onclick="javascript:return scForm.postEvent(this,event,\'shell:useroptions\')" class="scMessageBarOption">Open Application Options</a>.</li></ul></div></div>';
-        scEditorID.insertAdjacentHTML("afterend", scMessage);
+        scEditorID.insertAdjacentHTML("beforebegin", scMessage);
       }
     } else {
       //Variables
@@ -183,7 +184,7 @@ const sitecoreAuthorToolbox = () => {
             </div>`;
 
             //Insert message bar into Sitecore Content Editor
-            !document.querySelector("#scMessageBarLiveUrl") ? scEditorID.insertAdjacentHTML("afterend", scMessage) : false;
+            !document.querySelector("#scMessageBarLiveUrl") ? scEditorID.insertAdjacentHTML("beforebegin", scMessage) : false;
 
             //Insert link into Quickinfo table
             var table = document.querySelector(".scEditorQuickInfo");
@@ -436,7 +437,7 @@ const sitecoreAuthorToolbox = () => {
             "&tl=" +
             fieldLeftLang.toLowerCase() +
             "&text=Hello Sitecore');\">Use Google Translate</span></li></ul></div></div>";
-          scEditorID.insertAdjacentHTML("afterend", scMessage);
+          scEditorID.insertAdjacentHTML("beforebegin", scMessage);
         }
       }
     }
@@ -446,10 +447,9 @@ const sitecoreAuthorToolbox = () => {
      */
     storage.feature_cetabs == undefined ? (storage.feature_cetabs = false) : false;
     if (storage.feature_cetabs) {
-      var scEditorTabs = document.querySelector(".scEditorPanel > #scEditorTabs");
+      var scEditorTabs = document.querySelector("div#scEditorTabs");
       var scEditorHeader = document.querySelector(".scEditorHeader");
       var scMessageBar = document.querySelectorAll(".scMessageBar");
-      scMessageBar = scMessageBar[scMessageBar.length - 1];
       var scEditorSectionCaption = document.querySelectorAll(".scEditorSectionCaptionCollapsed, .scEditorSectionCaptionExpanded");
       var sectionActiveCount = false;
 
@@ -509,7 +509,7 @@ const sitecoreAuthorToolbox = () => {
       scEditorTabs += '<li class="scEditorTabEmpty"></li></ul></div>';
 
       //Add tabs to Content Editor
-      if (scMessageBar) {
+      if (scMessageBar.length - 1 > 0) {
         scMessageBar.insertAdjacentHTML("afterend", scEditorTabs);
       } else if (scEditorHeader) {
         scEditorHeader.insertAdjacentHTML("afterend", scEditorTabs);
@@ -649,7 +649,7 @@ const sitecoreAuthorToolbox = () => {
             ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">' +
             lockedBy +
             ' locked this item.</div><div class="scMessageBarText">Nobody can edit this page until you unlock it.</div><ul class="scMessageBarOptions"><li class="scMessageBarOptionBullet"><a href="#" onclick="javascript:return scForm.postEvent(this,event,\'item:checkin\')" class="scMessageBarOption">Unlock this item</a></li></ul></div></div>';
-          scEditorID.insertAdjacentHTML("afterend", scMessage);
+          scEditorID.insertAdjacentHTML("beforebegin", scMessage);
         }
       }
     }, 100);
@@ -734,33 +734,7 @@ const sitecoreAuthorToolbox = () => {
      */
     if (ScItem.template) {
       if (ScItem.template.includes("/experience accelerator/scriban") || ScItem.template.includes("/experience accelerator/generic meta rendering/html snippet")) {
-        storage.feature_rtecolor == undefined ? (storage.feature_rtecolor = true) : false;
-
-        if (storage.feature_rtecolor) {
-          //Variables
-          let darkModeTheme = "default";
-
-          //Get Scriban template field
-          let scribanTemplate = document.querySelector("textarea");
-          scribanTemplate.setAttribute("style", "min-height: 300px; resize: vertical; overflow: auto; margin: 0px; padding-right: 0px !important; font-family: monospace;");
-
-          //delete scCharCount
-          let charCount = document.querySelector("textarea").nextSibling;
-          charCount.getAttribute("class") == "scCharCount" ? charCount.remove() : false;
-
-          //Inject codemirror
-          loadCssFile("css/codemirror.min.css");
-
-          if ((storage.feature_darkmode && !storage.feature_darkmode_auto) || (storage.feature_darkmode && storage.feature_darkmode_auto && currentScheme == "dark")) {
-            darkModeTheme = "ayu-dark";
-            loadCssFile("css/dark/ayu-dark.css");
-          }
-
-          scribanTemplate.insertAdjacentHTML("afterend", '<input type="hidden" class="scDarkMode" value="' + darkModeTheme + '" />');
-          scribanTemplate.insertAdjacentHTML("afterend", '<input type="hidden" class="scEditor" value="scribanTemplate" />');
-
-          loadJsFile("js/bundle.min.js");
-        }
+        initSyntaxHighlighterScriban(storage);
       }
     }
 
@@ -845,9 +819,78 @@ const initCharsCount = (storage) => {
 };
 
 /*
- * Change style of checkboxes to ios-like switch
+ * Change style of checkboxes to ios-like switch in editor
  */
 const initCheckboxes = (storage) => {
   storage.feature_contenteditor == undefined ? (storage.feature_contenteditor = true) : false;
   storage.feature_contenteditor ? loadCssFile("css/checkbox.min.css") : false;
+};
+
+/*
+ * Change style of checkboxes to ios-like switch in publish window
+ */
+const initPublishCheckboxes = (storage) => {
+  if (storage.feature_contenteditor === true) {
+    //Add #PublishingTargets input[type=checkbox] if needed
+    document.querySelectorAll("#PublishChildrenPane input[type=checkbox]").forEach(function (checkbox) {
+      checkbox.classList.add("scContentControlCheckbox");
+      let labelHtml = '<label for="' + checkbox.id + '" class="scContentControlCheckboxLabel"></label>';
+      checkbox.insertAdjacentHTML("afterend", labelHtml);
+    });
+    initCheckboxes(storage);
+  }
+};
+
+/*
+ * Triggers functions when refreshing Content Editor
+ */
+const refreshContentEditor = () => {
+  consoleLog("*** Update UI ***", "yellow");
+  let target = document.querySelector("#scLanguage");
+  let observer = new MutationObserver(function (mutations) {
+    let scQuickInfo = document.querySelector(".scEditorHeaderQuickInfoInput");
+
+    /**
+     * Update hash in URL, update pushsate history, update link if 2nd tab opened
+     */
+    if (scQuickInfo) {
+      var sitecoreItemID = scQuickInfo.getAttribute("value");
+      // eslint-disable-next-line newline-per-chained-call
+      var scLanguage = document.querySelector("#scLanguage").getAttribute("value").toLowerCase();
+      let scVersion = document.querySelector(".scEditorHeaderVersionsVersion > span");
+      scVersion != null ? (scVersion = scVersion.innerText) : (scVersion = 1);
+      var locaStorage = localStorage.getItem("scBackPrevious");
+
+      //Add hash to URL
+      if (!global.hasRedirection && !global.hasRedirectionOther && !global.hasModePreview) {
+        if (locaStorage != "true") {
+          var state = {
+            sitecore: true,
+            id: sitecoreItemID,
+            language: scLanguage,
+            version: scVersion,
+          };
+          history.pushState(state, undefined, "#" + sitecoreItemID + "_" + scLanguage + "_" + scVersion);
+        } else {
+          localStorage.removeItem("scBackPrevious");
+        }
+      }
+    }
+
+    /**
+     * Hide preview mode
+     */
+    setTimeout(() => {
+      document.querySelectorAll("#EditorTabControls_Preview").forEach((elem) => {
+        elem.remove();
+      });
+    }, 500);
+
+    //Execute a bunch of actions everytime the UI is refreshed
+    mutations.forEach(function (e) {
+      "attributes" == e.type && sitecoreAuthorToolbox();
+    });
+  });
+  //Observer UI
+  target ? observer.observe(target, { attributes: true }) : false;
 };

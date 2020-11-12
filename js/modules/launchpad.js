@@ -7,12 +7,12 @@
 import * as global from "./global.js";
 import { loadCssFile } from "./helpers.js";
 
-export { insertLaunchpadIcon, insertLaunchpadMenu };
+export { initLaunchpadIcon, initLaunchpadMenu };
 
 /**
  * Insert Launchpad icons
  */
-const insertLaunchpadIcon = (storage) => {
+const initLaunchpadIcon = (storage) => {
   storage.feature_launchpad == undefined ? (storage.feature_launchpad = true) : false;
   storage.feature_launchpad_tiles == undefined ? (storage.feature_launchpad_tiles = false) : false;
 
@@ -31,7 +31,7 @@ const insertLaunchpadIcon = (storage) => {
 /**
  * Insert Launchpad Menu
  */
-const insertLaunchpadMenu = (storage) => {
+const initLaunchpadMenu = (storage) => {
   storage.feature_launchpad == undefined ? (storage.feature_launchpad = true) : false;
 
   if (storage.feature_launchpad) {

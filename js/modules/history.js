@@ -2,7 +2,6 @@
 
 import * as global from "./global.js";
 import { consoleLog, exeJsCode } from "./helpers.js";
-import { sitecoreAuthorToolbox } from "./contenteditor.js";
 
 export { resumeFromWhereYouLeftOff, historyNavigation };
 
@@ -50,10 +49,6 @@ const resumeFromWhereYouLeftOff = (storage) => {
         consoleLog("*** Redirection ***", "yellow");
         exeJsCode(`scForm.invoke("item:load(id=` + storage.scItemID + `,language=` + storage.scLanguage + `,version=` + storage.scVersion + `)");`);
       }
-
-      sitecoreAuthorToolbox();
-    } else {
-      sitecoreAuthorToolbox();
     }
   }
 };

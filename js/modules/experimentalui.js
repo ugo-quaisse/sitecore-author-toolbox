@@ -22,7 +22,6 @@ export {
   initContrastedIcons,
   initSvgAnimation,
   initEventListeners,
-  initRteTooltips,
 };
 
 /**
@@ -568,24 +567,4 @@ const initEventListeners = () => {
       event.target.className == "scOverlay" ? document.querySelector("#scModal").setAttribute("style", "opacity:0; visibility: hidden; top: calc(50% - 550px/2 - 10px)") : false;
     }
   });
-};
-
-/**
- * Add tooltips to RTE Editor buttons
- */
-const initRteTooltips = (storage) => {
-  if (storage.feature_experimentalui) {
-    setTimeout(function () {
-      document.querySelectorAll("ul.Metro > li > a").forEach(function (el) {
-        let parent = el.parentElement;
-        let type = el.getAttribute("class");
-        if (type != "reDropdown") {
-          parent.setAttribute("data-tooltip", el.getAttribute("title"));
-          parent.classList.add("t-bottom");
-          parent.classList.add("t-xs");
-          el.removeAttribute("title");
-        }
-      });
-    }, 500);
-  }
 };

@@ -6,12 +6,12 @@
 
 import * as global from "./global.js";
 
-export { insertPreviewButton, listenPreviewTab };
+export { initPreviewButton, listenPreviewTab };
 
 /**
  * Insert Preview buttons
  */
-const insertPreviewButton = (storage) => {
+const initPreviewButton = (storage) => {
   let iframeId = window.frameElement.getAttribute("id");
   let container = parent.document.querySelector("#EditorTabs");
   let activeTab = parent.document.querySelector("#EditorTabs > a.scRibbonEditorTabActive").innerText.toLowerCase();
@@ -39,7 +39,7 @@ const insertPreviewButton = (storage) => {
 const listenPreviewTab = (storage) => {
   let target = parent.document.querySelector("[id^='FPreview']");
   let observer = new MutationObserver(function (mutation) {
-    mutation[0].target.style.display != "none" ? insertPreviewButton(storage) : parent.document.querySelector(".scPreviewButton").classList.remove("focus");
+    mutation[0].target.style.display != "none" ? initPreviewButton(storage) : parent.document.querySelector(".scPreviewButton").classList.remove("focus");
   });
 
   //Observer

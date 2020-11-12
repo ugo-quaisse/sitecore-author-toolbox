@@ -121,30 +121,10 @@ const currentColorScheme = () => {
 // eslint-disable-next-line consistent-return
 const initDarkMode = (storage) => {
   if (
-    (storage.feature_darkmode &&
-      !storage.feature_darkmode_auto &&
-      !global.isTelerikUi &&
-      !global.isExperienceEditor &&
-      !global.isAdminCache &&
-      !global.isContentHome &&
-      !global.isLoginPage &&
-      !global.isEditMode &&
-      !global.isRules &&
-      !global.isAdmin) ||
-    (storage.feature_darkmode &&
-      storage.feature_darkmode_auto &&
-      !global.isTelerikUi &&
-      !global.isExperienceEditor &&
-      !global.isAdminCache &&
-      !global.isContentHome &&
-      !global.isLoginPage &&
-      !global.isEditMode &&
-      !global.isRules &&
-      !global.isAdmin &&
-      currentColorScheme() == "dark")
+    (storage.feature_darkmode && !storage.feature_darkmode_auto && !global.isTelerikUi && !global.isAdminCache && !global.isContentHome && !global.isLoginPage && !global.isRules && !global.isAdmin) ||
+    (storage.feature_darkmode && storage.feature_darkmode_auto && !global.isTelerikUi && !global.isAdminCache && !global.isContentHome && !global.isLoginPage && !global.isRules && !global.isAdmin && currentColorScheme() == "dark")
   ) {
     document.body.classList.add("satDark");
-
     if (document.querySelector("#darkModeSwitch")) {
       //check the box and force trigger an event
       document.querySelector("#darkModeSwitch") ? (document.querySelector("#darkModeSwitch").checked = true) : (document.querySelector("#darkModeSwitch").checked = false);

@@ -179,12 +179,13 @@ chrome.storage.sync.get((storage) => {
      ************************
      */
     if (global.isRibbon) {
-      consoleLog("**** Ribbon ****", "yellow");
+      consoleLog("**** EE Ribbon ****", "orange");
       initFlagRibbonEE(storage);
     } else if (global.isGalleryLanguageExpEd) {
+      consoleLog("**** Language Menu ****", "orange");
       initLanguageMenuEE(storage);
     } else {
-      consoleLog("**** Page in EE ****", "yellow");
+      consoleLog("**** Page in EE ****", "orange");
       storeCurrentPageEE();
       toolbarEditInCE();
       addComponentTooltip();

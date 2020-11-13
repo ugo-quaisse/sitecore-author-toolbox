@@ -23,7 +23,7 @@ import { initGravatarImage, initUserMenu } from "./modules/users.js";
 import { initInstantSearch, enhancedSitecoreSearch } from "./modules/search.js";
 import { insertModal, insertPanel } from "./modules/insert.js";
 import { initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons } from "./modules/media.js";
-import { initExperimentalUi, insertSavebar, initInsertIcon, initGutter, initColorPicker, initSitecoreMenu, initContrastedIcons, initSvgAnimation, initEventListeners } from "./modules/experimentalui.js";
+import { initExperimentalUi, initInsertIcon, initGutter, initColorPicker, initSitecoreMenu, initContrastedIcons, initSvgAnimation, initEventListeners } from "./modules/experimentalui.js";
 import { initFavorites } from "./modules/favorites.js";
 import { initGroupedErrors } from "./modules/errors.js";
 import { enhancedBucketLists } from "./modules/buckets.js";
@@ -55,7 +55,7 @@ chrome.storage.sync.get((storage) => {
     initContrastedIcons(storage);
     initAutoExpandTree(storage);
     initTreeGutterTooltips();
-    refreshContentEditor();
+    refreshContentEditor(storage);
 
     /*
      **********************
@@ -74,7 +74,6 @@ chrome.storage.sync.get((storage) => {
       if (storage.feature_experimentalui) {
         log("**** Experimental ****", "yellow");
         initSvgAnimation();
-        insertSavebar();
         insertModal(ScItem.id, ScItem.language, ScItem.version);
         insertPanel();
         initInsertIcon();
@@ -130,7 +129,7 @@ chrome.storage.sync.get((storage) => {
       document.querySelector("#globalLogo") ? document.querySelector("#globalLogo").setAttribute("target", "_parent") : false;
     } else if (global.isSearch) {
       log("**** Internal Search ****", "orange");
-      enhancedSitecoreSearch();
+      enhancedSitecoreSearch(storage);
     } else if (global.isGalleryLanguage) {
       log("**** Languages menu ****", "orange");
       initLanguageMenuCE(storage);
@@ -141,6 +140,11 @@ chrome.storage.sync.get((storage) => {
       log("**** Publish / Rebuild / Package ****", "orange");
       initPublishCheckboxes(storage);
       initFlagsPublish(storage);
+    } else if (global.isUserOptions) {
+      log("**** User options ****", "orange");
+      document.querySelectorAll(".scTabs > div > fieldset > div").forEach(function (elem) {
+        elem.innerText == "Quick info section" ? elem.setAttribute("style", "color:red; font-weight:bold") : false;
+      });
     } else if (global.isEditorFolder) {
       log("**** Editors folder ****", "orange");
     } else if (global.isGalleryVersion) {
@@ -184,6 +188,8 @@ chrome.storage.sync.get((storage) => {
     } else if (global.isGalleryLanguageExpEd) {
       log("**** Language Menu ****", "orange");
       initLanguageMenuEE(storage);
+    } else if (global.isInsertPage) {
+      log("**** Indert Page ****", "orange");
     } else {
       log("**** Page in EE ****", "orange");
       storeCurrentPageEE();

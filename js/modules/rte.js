@@ -1,7 +1,7 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
-import { loadCssFile, loadJsFile, initDarkModeEditor } from "./helpers.js";
+import { loadCssFile, loadJsFile, initDarkModeEditor, getScItemData } from "./helpers.js";
 
 export { initRteTooltips, initSyntaxHighlighterRte, initSyntaxHighlighterScriban };
 
@@ -57,22 +57,27 @@ const initSyntaxHighlighterRte = (storage) => {
  * Add syntax highlight to Scriban fields
  */
 const initSyntaxHighlighterScriban = (storage) => {
-  storage.feature_rtecolor == undefined ? (storage.feature_rtecolor = true) : false;
-  if (storage.feature_rtecolor) {
-    //Variables
-    let darkModeTheme = "default";
-    //   darkModeTheme = "ayu-dark";
-    //Get Scriban template field
-    let scribanTemplate = document.querySelector("textarea");
-    scribanTemplate.setAttribute("style", "min-height: 300px; resize: vertical; overflow: auto; margin: 0px; padding-right: 0px !important; font-family: monospace;");
-    //delete scCharCount
-    let charCount = document.querySelector("textarea").nextSibling;
-    charCount.getAttribute("class") == "scCharCount" ? charCount.remove() : false;
-    //Inject codemirror
-    loadCssFile("css/codemirror.min.css");
-    loadCssFile("css/dark/ayu-dark.css");
-    loadJsFile("js/bundle.min.js");
-    scribanTemplate.insertAdjacentHTML("afterend", '<input type="hidden" class="scDarkMode" value="' + darkModeTheme + '" />');
-    scribanTemplate.insertAdjacentHTML("afterend", '<input type="hidden" class="scEditor" value="scribanTemplate" />');
+  let ScItem = getScItemData();
+  if (ScItem.template) {
+    if (ScItem.template.includes("/experience accelerator/scriban") || ScItem.template.includes("/experience accelerator/generic meta rendering/html snippet")) {
+      storage.feature_rtecolor == undefined ? (storage.feature_rtecolor = true) : false;
+      if (storage.feature_rtecolor) {
+        //Variables
+        let darkModeTheme = "default";
+        //   darkModeTheme = "ayu-dark";
+        //Get Scriban template field
+        let scribanTemplate = document.querySelector("textarea");
+        scribanTemplate.setAttribute("style", "min-height: 300px; resize: vertical; overflow: auto; margin: 0px; padding-right: 0px !important; font-family: monospace;");
+        //delete scCharCount
+        let charCount = document.querySelector("textarea").nextSibling;
+        charCount.getAttribute("class") == "scCharCount" ? charCount.remove() : false;
+        //Inject codemirror
+        loadCssFile("css/codemirror.min.css");
+        loadCssFile("css/dark/ayu-dark.css");
+        loadJsFile("js/bundle.min.js");
+        scribanTemplate.insertAdjacentHTML("afterend", '<input type="hidden" class="scDarkMode" value="' + darkModeTheme + '" />');
+        scribanTemplate.insertAdjacentHTML("afterend", '<input type="hidden" class="scEditor" value="scribanTemplate" />');
+      }
+    }
   }
 };

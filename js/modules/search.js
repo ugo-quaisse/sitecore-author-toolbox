@@ -4,7 +4,7 @@ import * as global from "./global.js";
 import { exeJsCode } from "./helpers.js";
 import { pathToBreadcrumb } from "./experimentalui.js";
 
-export { initInstantSearch, instantSearch, enhancedSitecoreSearch };
+export { initInstantSearch, instantSearch, enhancedSitecoreSearch, enhancedTreeSearch };
 
 /**
  * Add Search box to Sitecore Header
@@ -238,39 +238,81 @@ const instantSearch = () => {
 /**
  * Add new stuff to classic Sitecore Search results
  */
-const enhancedSitecoreSearch = () => {
-  //Add listener on search result list
-  var target = document.querySelector("#results");
-  var observer = new MutationObserver(function () {
-    var resultsDiv = document.querySelector("#results");
-    var BlogPostArea = resultsDiv.querySelectorAll(".BlogPostArea");
+const enhancedSitecoreSearch = (storage) => {
+  storage.feature_contenteditor == undefined ? (storage.feature_contenteditor = true) : false;
+  if (storage.feature_contenteditor == true) {
+    //Add listener on search result list
+    var target = document.querySelector("#results");
+    var observer = new MutationObserver(function () {
+      var resultsDiv = document.querySelector("#results");
+      var BlogPostArea = resultsDiv.querySelectorAll(".BlogPostArea");
 
-    for (var line of BlogPostArea) {
-      var BlogPostFooter = line.querySelector(".BlogPostFooter");
+      for (var line of BlogPostArea) {
+        var BlogPostFooter = line.querySelector(".BlogPostFooter");
 
-      var getFullpath = line.querySelector(".BlogPostViews > a > img").getAttribute("title");
-      getFullpath = getFullpath.split(" - ");
-      getFullpath = getFullpath[1].toLowerCase();
-      if (getFullpath.includes("/home/")) {
-        getFullpath = getFullpath.split("/home/");
-        getFullpath = "/" + getFullpath[1];
+        var getFullpath = line.querySelector(".BlogPostViews > a > img").getAttribute("title");
+        getFullpath = getFullpath.split(" - ");
+        getFullpath = getFullpath[1].toLowerCase();
+        if (getFullpath.includes("/home/")) {
+          getFullpath = getFullpath.split("/home/");
+          getFullpath = "/" + getFullpath[1];
+        }
+        var getNumLanguages = line.querySelector(".BlogPostHeader > span").getAttribute("title");
+
+        //Inject HTML
+        var html = '<div class="BlogPostExtra BlogPostContent" style="padding: 5px 0 0px 78px; color: #0769d6"><strong>Sitecore path:</strong> ' + getFullpath + " <strong>Languages available:</strong> " + getNumLanguages + "</div>";
+        getFullpath ? BlogPostFooter.insertAdjacentHTML("afterend", html) : false;
+        //TODO Buttons, open in CE and open in EE
       }
-      var getNumLanguages = line.querySelector(".BlogPostHeader > span").getAttribute("title");
+    });
 
-      //Inject HTML
-      var html = '<div class="BlogPostExtra BlogPostContent" style="padding: 5px 0 0px 78px; color: #0769d6"><strong>Sitecore path:</strong> ' + getFullpath + " <strong>Languages available:</strong> " + getNumLanguages + "</div>";
-      getFullpath ? BlogPostFooter.insertAdjacentHTML("afterend", html) : false;
-      //TODO Buttons, open in CE and open in EE
-    }
-  });
+    //Observer
+    target
+      ? observer.observe(target, {
+          attributes: false,
+          childList: true,
+          characterData: false,
+          subtree: false,
+        })
+      : false;
+  }
+};
 
-  //Observer
-  target
-    ? observer.observe(target, {
-        attributes: false,
-        childList: true,
-        characterData: false,
-        subtree: false,
-      })
-    : false;
+/**
+ * Add new stuff to classic Tree Search results
+ */
+const enhancedTreeSearch = (storage) => {
+  storage.feature_contenteditor == undefined ? (storage.feature_contenteditor = true) : false;
+  if (storage.feature_contenteditor == true) {
+    let target = document.querySelector("#SearchResult");
+    let observer = new MutationObserver(function () {
+      var SearchResultHolder = document.querySelector("#SearchResult");
+      var scSearchLink = SearchResultHolder.querySelectorAll(".scSearchLink");
+      var scSearchListExtra = document.querySelector(".scSearchListExtra");
+
+      for (var line of scSearchLink) {
+        var getFullpath = line.getAttribute("title").toLowerCase();
+        if (getFullpath.includes("/home/")) {
+          getFullpath = getFullpath.split("/home/");
+          getFullpath = "/" + getFullpath[1];
+        }
+
+        //Inject HTML
+        var html = ' <span class="scSearchListExtra">' + getFullpath + "</span>";
+        if (getFullpath && scSearchListExtra == null) {
+          line.innerHTML += html;
+        }
+      }
+    });
+
+    //Observer
+    target
+      ? observer.observe(target, {
+          attributes: false,
+          childList: true,
+          characterData: false,
+          subtree: false,
+        })
+      : false;
+  }
 };

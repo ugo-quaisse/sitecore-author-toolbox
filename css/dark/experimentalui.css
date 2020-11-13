@@ -98,6 +98,12 @@ body.satExperimentalUi.satDark a.scContentButton {
   color: var(--accent) !important;
 }
 
+body.satExperimentalUi.satDark a.scContentButton:hover {
+  color: var(--accentText) !important;
+  background-color: var(--accent);
+  text-decoration: none;
+}
+
 body.satExperimentalUi.satDark #scModal {
   background-color: var(--black1) !important;
 }
@@ -167,6 +173,7 @@ body.satExperimentalUi.satDark .scEditorTabSelected {
 
 body.satExperimentalUi.satDark .scEditorTabSelected:hover {
   border-top: 3px solid var(--accent) !important;
+  background-color: var(--black2) !important;
 }
 
 body.satExperimentalUi.satDark .scEditorSectionPanel {

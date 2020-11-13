@@ -28,23 +28,20 @@ export {
  * Init Experimental UI
  */
 const initExperimentalUi = (storage) => {
-  //Hide search
-  let SearchPanel = document.querySelector("#SearchPanel");
-  //prettier-ignore
-  SearchPanel ? (SearchPanel.innerHTML = `<button class="scMenuButton" type="button"><img src="` + global.iconMenu + `" class="scBurgerMenu"/></button> <div class="scBurgerMenuTitle t-top t-sm" data-tooltip="Go back home" onclick="javascript:return scForm.invoke('contenteditor:home', event)" title="Go back Home">Content</div>`) : false;
-
-  //Load CSS
   if (storage.feature_experimentalui) {
+    //Hide search
+    let SearchPanel = document.querySelector("#SearchPanel");
+    //prettier-ignore
+    SearchPanel ? (SearchPanel.innerHTML = `<button class="scMenuButton" type="button"><img src="` + global.iconMenu + `" class="scBurgerMenu"/></button> <div class="scBurgerMenuTitle t-top t-sm" data-tooltip="Go back home" onclick="javascript:return scForm.invoke('contenteditor:home', event)" title="Go back Home">Content</div>`) : false;
     document.body.classList.add("satExperimentalUi");
+    if (document.querySelector("#experimentalUiSwitch")) {
+      document.querySelector("#experimentalUiSwitch") ? (document.querySelector("#experimentalUiSwitch").checked = true) : (document.querySelector("#experimentalUiSwitch").checked = false);
+    }
     getAccentColor();
   }
   if (storage.feature_contrast_icons === false) {
     document.documentElement.style.setProperty("--iconBrightness", 1);
     document.documentElement.style.setProperty("--iconContrast", 1);
-  }
-  if (document.querySelector("#experimentalUiSwitch")) {
-    //check the box and force trigger an event
-    document.querySelector("#experimentalUiSwitch") ? (document.querySelector("#experimentalUiSwitch").checked = true) : (document.querySelector("#experimentalUiSwitch").checked = false);
   }
 };
 
@@ -159,7 +156,7 @@ const insertLanguageButton = (scItemId, scLanguage = "EN", scVersion = 1) => {
   //document.querySelector("#scLanguageIframe").contentWindow.document.body.querySelector(".scGalleryContent13").scrollTop = 0;
 
   //Remove old
-  document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;
+  //document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;
 };
 
 /**
@@ -168,11 +165,6 @@ const insertLanguageButton = (scItemId, scLanguage = "EN", scVersion = 1) => {
 const insertMoreButton = () => {
   let container = document.querySelector(".scEditorTabControlsHolder");
   let ScItem = getScItemData();
-  // let button = `
-  // <button class="scEditorHeaderButton" id="scInfoButton" title="Quick Info" type="button">
-  // <img src="` + global.iconInfo + `" class="scLanguageIcon">
-  // </button>`;
-
   //prettier-ignore
   let button =
     `<button class="scEditorHeaderButton" id="scMoreButton" title="More actions" type="button">
@@ -215,7 +207,7 @@ const insertMoreButton = () => {
     </div>`;
   panel ? (panel.innerHTML = html) : false;
 
-  document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;
+  //document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;
 };
 
 /**
@@ -236,7 +228,7 @@ const insertVersionButton = (scItemId, scLanguage = "EN", scVersion = 1) => {
   body && !document.querySelector("#scVersionIframe") ? body.insertAdjacentHTML("beforeend", iframe) : false;
 
   //Remove old button
-  document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;
+  //document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;
 };
 
 /**

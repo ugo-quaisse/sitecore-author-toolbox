@@ -781,8 +781,9 @@ a.scTileItem .scTileItemIconImage {
   border-radius: 0px 0px 0px 0px;
 }
 #scEditorTabs > ul > li:hover {
-  border-top: 1px solid red;
+  border-top: 2px solid red !important;
   color: #333;
+  border-bottom: 0px solid #ccc !important;
 }
 .scEditorTab > .scEditorTabClose {
   position: relative;

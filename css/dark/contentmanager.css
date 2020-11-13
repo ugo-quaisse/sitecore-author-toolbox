@@ -355,18 +355,18 @@ body.satDark .scSearchEntireTree a {
 /* =Field error */
 
 body.satDark .scEditorFieldMarkerInputCell iframe {
-  color: #cccccc !important;
-  border: 1px solid var(--black2) !important;
-  background: #171717 !important;
+  color: var(--text) !important;
+  border: 1px solid var(--black3) !important;
+  background: var(--black2) !important;
 }
 
 body.satDark .defaultFieldEditorsFrameContainer > html > body {
-  background-color: #191919 !important;
+  background-color: var(--black2) !important;
 }
 
 body.satDark .scContentControlTreelist .scScrollbox,
 body.satDark .scContentControlTreelist_Active .scScrollbox {
-  border: 1px solid #191919;
+  border: 1px solid var(--black2);
 }
 
 body.satDark .scProfileHeader .scSelectPresetLinkDisabled {
@@ -377,8 +377,9 @@ body.satDark .scContentDragMarker {
   background: #008ef4;
 }
 
-body.satDark .scEditorHeaderQuickInfoInput {
-  border: none !important;
+body.satDark .scEditorHeaderQuickInfoInput,
+body.satDark .scEditorHeaderQuickInfoInputID {
+  border-width: 0px !important;
 }
 
 body.satDark #EditorTop {

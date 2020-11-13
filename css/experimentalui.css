@@ -82,6 +82,10 @@ body.satExperimentalUi .sc-globalheader-appName {
   cursor: pointer;
 }
 
+body.satExperimentalUi .scEditorTabControls {
+  display: none;
+}
+
 /* Sitecore hide */
 
 body.satExperimentalUi .scValidatorPanel,
@@ -114,7 +118,6 @@ body.satExperimentalUi #EditorTabs {
 body.satExperimentalUi #EditorFrames {
   margin-top: 56px;
   height: calc(100% - 115px);
-  padding-top: 30px;
 }
 
 body.satExperimentalUi #SearchPanel {
@@ -380,7 +383,7 @@ body.satExperimentalUi #Editors select:not([multiple]) {
 }
 
 body.satExperimentalUi .scEditorHeaderQuickInfoInput {
-  border: none !important;
+  border-width: 0px !important;
 }
 
 body.satExperimentalUi .scContentControlSelectedList {
@@ -686,7 +689,7 @@ body.satExperimentalUi #scEditorTabs {
   background-color: transparent;
   margin: 0px 20px 0px 20px;
   overflow-x: hidden;
-  padding: 0px;
+  padding: 20px 0px 0px 0px;
 }
 
 body.satExperimentalUi #scEditorTabs > ul {

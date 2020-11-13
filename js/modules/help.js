@@ -2,12 +2,12 @@
 
 import * as global from "./global.js";
 
-export { addHelpIcons, checkHelpLink, checkUrlType, checkIconType };
+export { checkHelpLink, checkUrlType, checkIconType };
 
 /**
  * Loop trhough fields and add help icon
  */
-const addHelpIcons = () => {
+const addHelptextIcons = () => {
   document.querySelectorAll(".scEditorFieldLabel").forEach(function (elem) {
     //prettier-ignore
     let helpLink = elem.querySelector(".scEditorFieldLabelLink")
@@ -64,32 +64,35 @@ const checkUrlType = (host) => {
 /**
  * Check if helpl exist
  */
-const checkHelpLink = (item, language, version) => {
-  if (item) {
-    let itemUrl = `sitecore/shell/default.aspx?xmlcontrol=SetHelp&id=${item}&la=${language}&vs=${version}`;
-    var ajax = new XMLHttpRequest();
-    ajax.timeout = 7000;
-    ajax.open("GET", itemUrl, true);
-    // eslint-disable-next-line consistent-return
-    ajax.onreadystatechange = function () {
-      if (ajax.readyState === 4 && ajax.status == "200") {
-        let dom = new DOMParser().parseFromString(ajax.responseText, "text/html");
-        let link = dom.querySelector("#Link").value;
-        let short = dom.querySelector("#ShortDescription").value;
-        let long = dom.querySelector("#LongDescription").innerHTML;
-        let title = short ? `<div class="scMessageBarTitle">` + short + `</div>` : `<div class="scMessageBarTitle">Documentation and help available</div>`;
-        let text = long ? `<div class="scMessageBarText">` + long + `</div>` : ``;
+// eslint-disable-next-line max-params
+const checkHelpLink = (item, language, version, storage) => {
+  storage.feature_helplink == undefined ? (storage.feature_helplink = true) : false;
+  if (storage.feature_helplink) {
+    if (item) {
+      let itemUrl = `sitecore/shell/default.aspx?xmlcontrol=SetHelp&id=${item}&la=${language}&vs=${version}`;
+      var ajax = new XMLHttpRequest();
+      ajax.timeout = 7000;
+      ajax.open("GET", itemUrl, true);
+      // eslint-disable-next-line consistent-return
+      ajax.onreadystatechange = function () {
+        if (ajax.readyState === 4 && ajax.status == "200") {
+          let dom = new DOMParser().parseFromString(ajax.responseText, "text/html");
+          let link = dom.querySelector("#Link").value;
+          let short = dom.querySelector("#ShortDescription").value;
+          let long = dom.querySelector("#LongDescription").innerHTML;
+          let title = short ? `<div class="scMessageBarTitle">` + short + `</div>` : `<div class="scMessageBarTitle">Documentation and help available</div>`;
+          let text = long ? `<div class="scMessageBarText">` + long + `</div>` : ``;
 
-        if (link) {
-          try {
-            let url = new URL(link);
-            let titleHelp = document.querySelector(".scEditorHeaderTitleHelp");
-            titleHelp && url.href ? (titleHelp.innerHTML = "<a href='" + url.href + "' target='_blank'>" + titleHelp.innerText + "</a>") : false;
-            let scEditorID = document.querySelector(".scEditorHeader");
-            let service = checkUrlType(url.host);
-            let icon = checkIconType(url.host);
-            //prettier-ignore
-            let scMessage = `<div id="scMessageBarUrl" class="scMessageBar scInformation">
+          if (link) {
+            try {
+              let url = new URL(link);
+              let titleHelp = document.querySelector(".scEditorHeaderTitleHelp");
+              titleHelp && url.href ? (titleHelp.innerHTML = "<a href='" + url.href + "' target='_blank'>" + titleHelp.innerText + "</a>") : false;
+              let scEditorID = document.querySelector(".scEditorHeader");
+              let service = checkUrlType(url.host);
+              let icon = checkIconType(url.host);
+              //prettier-ignore
+              let scMessage = `<div id="scMessageBarUrl" class="scMessageBar scInformation">
             <div class="scMessageBarIcon" style="background-image:url(` + icon + `)"></div>
               <div class="scMessageBarTextContainer">
                 ` + title + `
@@ -99,19 +102,21 @@ const checkHelpLink = (item, language, version) => {
                 </ul>
               </div>
             </div>`;
-            scEditorID.insertAdjacentHTML("afterend", scMessage);
-          } catch (error) {
-            //error
-            console.info("Sitecore Author Toolbox:", "The url " + link + " is not a valid link.");
+              scEditorID.insertAdjacentHTML("afterend", scMessage);
+            } catch (error) {
+              //error
+              console.info("Sitecore Author Toolbox:", "The url " + link + " is not a valid link.");
+            }
+
+            return link;
           }
-
-          return link;
         }
-      }
-    };
+      };
 
-    setTimeout(function () {
-      ajax.send(null);
-    }, 1000);
+      setTimeout(function () {
+        ajax.send(null);
+      }, 1000);
+    }
+    addHelptextIcons();
   }
 };

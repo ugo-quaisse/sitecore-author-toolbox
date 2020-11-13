@@ -134,6 +134,7 @@ export const isRibbon = windowLocationHref.includes("/ribbon.aspx");
 export const isDialogConfirm = windowLocationHref.includes("/experienceeditor/dialogs/confirm/");
 export const isInsertPage = windowLocationHref.includes("/dialogs/insertpage/");
 export const isDialog = windowLocationHref.includes("/dialogs/");
+export const isUserOptions = windowLocationHref.includes("changeuseroptions");
 export const isCreateUser = windowLocationHref.includes("createnewuser");
 export const isPersonalization = windowLocationHref.includes("dialogs.personalization");
 export const isRules = windowLocationHref.includes("rules.aspx");

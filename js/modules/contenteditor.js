@@ -1,8 +1,8 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
-import { log, loadCssFile, sitecoreItemJson, getScItemData, currentColorScheme } from "./helpers.js";
-import { checkUrlStatus } from "./url.js";
+import { log, loadCssFile, sitecoreItemJson, getScItemData } from "./helpers.js";
+import { initLiveUrl } from "./url.js";
 import { checkHelpLink } from "./help.js";
 import { findCountryName } from "./language.js";
 import { initGroupedErrors } from "./errors.js";
@@ -13,7 +13,7 @@ import { initRTL } from "./rtl.js";
 import { enhancedTreeSearch } from "./search.js";
 import { initTranslateMode } from "./translate.js";
 
-export { sitecoreAuthorToolbox, initCharsCount, initCheckboxes, initPublishCheckboxes, refreshContentEditor };
+export { sitecoreAuthorToolbox, initCharsCount, initCheckboxes, initPublishCheckboxes, refreshContentEditor, openFolderTab };
 
 /*
  * Main function executed when the Content Editor refreshes
@@ -27,11 +27,8 @@ const sitecoreAuthorToolbox = (storage) => {
   scVersion ? (scVersion = scVersion.innerText) : false;
   let scActiveTab = document.querySelector(".scEditorTabHeaderActive");
   var scEditorHeaderVersionsLanguage = document.querySelector(".scEditorHeaderVersionsLanguage");
-  let currentScheme = currentColorScheme();
-  let darkMode = false;
 
   if (scEditorHeaderVersionsLanguage) {
-    var scLanguageTxtLong = scEditorHeaderVersionsLanguage.getAttribute("title"); //French : framçais
     var scLanguageTxtShort = scEditorHeaderVersionsLanguage.innerText; //French
   }
 
@@ -51,22 +48,9 @@ const sitecoreAuthorToolbox = (storage) => {
     let ScItem = getScItemData();
     var temp = document.getElementsByClassName("scEditorHeaderQuickInfoInput");
     var sitecoreItemID = ScItem.id;
-    var sitecoreItemPath = ScItem.path + "/";
     var sitecoreItemPathOriginal = ScItem.path + "/";
-    sitecoreItemPath = sitecoreItemPath.split("/home/");
-    var sitecoreSite = sitecoreItemPath[0].toLowerCase();
-    sitecoreSite = sitecoreSite.split("/");
-    sitecoreSite = sitecoreSite.slice(-1)[0];
-
-    var isContent = sitecoreItemPathOriginal.includes("/sitecore/content/");
     var isMedia = sitecoreItemPathOriginal.includes("/sitecore/media library/");
-    var isData = sitecoreItemPathOriginal.includes("/data/");
-    var isSettings = sitecoreItemPathOriginal.includes("/settings/");
-    var isPresentation = sitecoreItemPathOriginal.includes("/presentation/");
-    var isEmailTemplate = sitecoreItemPathOriginal.includes("/sitecore/content/email/");
-
     var scLanguage = document.querySelector("#scLanguage").value.toLowerCase();
-    var scUrl = window.location.origin + "/?sc_itemid=" + sitecoreItemID + "&sc_mode=normal&sc_lang=" + scLanguage + "&sc_version=" + scVersion;
     var scFlag, tabbedFlag;
 
     /**
@@ -80,173 +64,22 @@ const sitecoreAuthorToolbox = (storage) => {
       insertLanguageButton(ScItem.id, ScItem.language, ScItem.version);
     }
 
-    /**
-     * > 1. Live URLs
-     */
-    //Generating Live URLs (xxxsxa_sitexxx will be replace later by active site)
-    if (sitecoreItemPath[1] != undefined) {
-      sitecoreItemPath = encodeURI(window.location.origin + "/" + scLanguage + "/" + sitecoreItemPath[1] + "?sc_site=xxxsxa_sitexxx&sc_mode=normal").toLowerCase();
-    } else {
-      sitecoreItemPath = encodeURI(window.location.origin + "/" + scLanguage + "/?sc_site=xxxsxa_sitexxx&sc_mode=normal").toLowerCase();
-    }
-
-    //Excluding data, why not having it for media? (replace Media Library by -/media)
-    //or link to media /sitecore/-/media/552be56d277c49a5b57846859150d531.ashx
-    if (isContent && !isData && !isPresentation && !isSettings && !isEmailTemplate) {
-      //Get user preference
-      storage.feature_urls == undefined ? (storage.feature_urls = true) : false;
-      storage.feature_urlstatus == undefined ? (storage.feature_urlstatus = true) : false;
-
-      //Stored data (Json)
-      var liveUrl;
-      var domains = storage.domain_manager;
-      var envBadge = "CM server";
-      var barStyle = "scWarning";
-
-      //Loop through domains, if current domain = key, then create new link for live
-      for (var domain in domains) {
-        if (window.location.origin == domain) {
-          liveUrl = domains[domain];
-          break;
-        }
-      }
-
-      //If not added yet
-      if (!document.querySelector("#scMessageBarUrl") && storage.feature_urls) {
-        //Get cookie sxa_site
-        chrome.runtime.sendMessage({ greeting: "sxa_site" }, function (response) {
-          //Is website in cookie different than quick info
-          if (response.farewell != null) {
-            var site_quickinfo = sitecoreSite.toLowerCase();
-            var site_cookie = response.farewell.toLowerCase();
-            var isSameSite = site_cookie.includes(site_quickinfo);
-          }
-
-          // if(ScItem.baseUrl != undefined) {
-
-          //     console.log(sitecoreItemPath);
-
-          //     sitecoreItemPath = sitecoreItemPath.replace("sc_site=xxxsxa_sitexxx&", "");
-          //     sitecoreItemPath = sitecoreItemPath.replace("?sc_mode=normal", "");
-          //     sitecoreItemPath = sitecoreItemPath.replace("&sc_mode=normal", "");
-          //     sitecoreItemPath = sitecoreItemPath.replace(window.location.origin, ScItem.baseUrl);
-          //     scUrl = scUrl.replace(window.location.origin, ScItem.baseUrl);
-          //     console.log(ScItem.baseUrl);
-
-          // }
-
-          if (response.farewell != null && isSameSite && liveUrl == undefined) {
-            sitecoreItemPath = sitecoreItemPath.replace("xxxsxa_sitexxx", response.farewell);
-          } else if (liveUrl == undefined) {
-            sitecoreItemPath = sitecoreItemPath.replace("sc_site=xxxsxa_sitexxx&", "");
-          } else if (liveUrl != undefined) {
-            //Generating CD/Live URLs
-            sitecoreItemPath = sitecoreItemPath.replace("sc_site=xxxsxa_sitexxx&", "");
-            sitecoreItemPath = sitecoreItemPath.replace("?sc_mode=normal", "");
-            sitecoreItemPath = sitecoreItemPath.replace(window.location.origin, liveUrl);
-            //Generating CD?Live URLS with SitecoreID
-            scUrl = scUrl.replace(window.location.origin, liveUrl);
-            scUrl = scUrl.replace("&sc_mode=normal", "");
-            //Badge with server name
-            envBadge = "CD/Live server";
-          }
-
-          //Experimentation
-          storage.feature_experimentalui == undefined ? (storage.feature_experimentalui = false) : false;
-          storage.feature_experimentalui ? (barStyle = "scSuccess") : false;
-          document.querySelector(".scPreviewButton") ? document.querySelector(".scPreviewButton").setAttribute("style", "display: block") : false;
-
-          //Prepare HTML (scInformation scWarning scError)
-          //prettier-ignore
-          scMessage = `<div id="scMessageBarLiveUrl" class="scMessageBar ` + barStyle + `">
-            <div class="scMessageBarIcon" style="background-image:url(` + global.icon + `)"></div>
-            <div class="scMessageBarTextContainer">
-              <div class="scMessageBarTitle">Sitecore Live URL
-              <span class="liveUrlBadge" onclick="location.href = '` + global.launchpadPage + `?configure_domains=true&launchpad=true&url=` + global.windowLocationHref + `'" title="Click to configure your domains">` + envBadge + `</span>
-              <span class="liveUrlStatus"></span>
-              </div>
-              <div class="scMessageBarText">To preview this page in <b>"` + scLanguageTxtLong + `".</b></div>
-              <ul class="scMessageBarOptions" style="margin:0px">
-              <li class="scMessageBarOptionBullet"><a href="` + sitecoreItemPath + `" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this link</a> or try <a href="` + scUrl + `" target="_blank" class="scMessageBarOption">this alternative link</a></li>
-              </ul>
-              </div>
-            </div>`;
-
-          //Insert message bar into Sitecore Content Editor
-          !document.querySelector("#scMessageBarLiveUrl") ? scEditorPanel.insertAdjacentHTML("beforebegin", scMessage) : false;
-
-          //Insert link into Quickinfo table
-          var table = document.querySelector(".scEditorQuickInfo");
-          if (table) {
-            var row = table.insertRow(-1);
-            var cell1 = row.insertCell(0);
-            var cell2 = row.insertCell(1);
-            var url = new URL(sitecoreItemPath);
-            cell1.innerHTML = "Live URL:";
-            //prettier-ignore
-            cell2.innerHTML = `<a href="` + sitecoreItemPath + `" target="_blank">` + url.origin + url.pathname + ` <img src="` + global.iconExternalLink + `" style="width: 14px; vertical-align: text-top;" class="scIconCopy" /></a>`;
-          }
-
-          //Is dark mode on?
-          (storage.feature_darkmode && !storage.feature_darkmode_auto) || (storage.feature_darkmode && storage.feature_darkmode_auto && currentScheme == "dark") ? (darkMode = true) : false;
-
-          /**
-           * Live status
-           */
-          if (storage.feature_urlstatus && !isMedia) {
-            chrome.runtime.sendMessage(
-              {
-                greeting: "get_pagestatus",
-                url: sitecoreItemPath,
-                source: null,
-                dark: darkMode,
-                experimental: true,
-              },
-              (response) => {
-                checkUrlStatus(response.status, null, darkMode, storage.feature_experimentalui);
-              }
-            );
-          } else {
-            //Automatically switch to Folder tab
-            let activeTab = document.querySelector("#EditorTabs > .scRibbonEditorTabActive").innerText.toLowerCase();
-            if (activeTab == "search") {
-              document.querySelectorAll("#EditorTabs > a").forEach(function (e) {
-                e.innerText.toLowerCase() == "folder" ? e.click() : false;
-              });
-            }
-            //Update preview button
-            storage.feature_experimentalui ? (document.querySelector(".scPreviewButton").innerText = "No preview available") : false;
-          }
-        }); // End cookie
-      }
-    } else if (isData) {
-      storage.feature_urls == undefined ? (storage.feature_urls = true) : false;
-      storage.feature_messagebar == undefined ? (storage.feature_messagebar = true) : false;
-
-      //If not added yet
-      if (!document.getElementById("scMessageBarInfo") && storage.feature_urls && storage.feature_messagebar) {
-        //Experimental mode
-        document.querySelector(".scPreviewButton") ? document.querySelector(".scPreviewButton").setAttribute("style", "display: none") : false;
-      }
-    }
+    initLiveUrl(storage);
+    openFolderTab(storage);
   }
 
   initRTL(storage);
   initTabSections(storage);
   initGroupedErrors(storage);
   initCharsCount(storage);
+  initCopyToClipboard(storage);
   initSyntaxHighlighterScriban(storage);
   checkHelpLink(sitecoreItemID, scLanguage, scVersion, storage);
   initFancyMessageBars(storage);
   initCheckboxes(storage);
   initTranslateMode(storage);
   enhancedTreeSearch(storage);
-
-  /**
-   * Change Title window
-   */
-  let ScItem = getScItemData();
-  ScItem.name ? (window.document.title = "" + ScItem.name.capitalize() + " (" + scLanguage.toUpperCase() + ")") : false;
+  changeTitleWindow(storage);
 
   /**
    * Insert Flag (In Active Tab) + Version Number
@@ -367,6 +200,20 @@ const sitecoreAuthorToolbox = (storage) => {
     document.querySelector("#EditorFrames") ? document.querySelector("#EditorFrames").setAttribute("style", "opacity:1") : false;
     document.querySelector(".scContentTreeContainer") ? document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:1") : false;
   }, 100);
+};
+
+/**
+ * Automatically switch to Folder tab
+ */
+const openFolderTab = (storage) => {
+  storage.feature_contenteditor == undefined ? (storage.feature_contenteditor = true) : false;
+  if (storage.feature_contenteditor == true) {
+    if (document.querySelector("#EditorTabs > .scRibbonEditorTabActive").innerText.toLowerCase() == "search") {
+      document.querySelectorAll("#EditorTabs > a").forEach(function (e) {
+        e.innerText.toLowerCase() == "folder" ? e.click() : false;
+      });
+    }
+  }
 };
 
 /**
@@ -513,6 +360,8 @@ const initCharsCount = (storage) => {
     var chars = 0;
     var charsText;
 
+    //TODO, add scAdditionalParameters input
+
     //On load
     for (var field of scTextFields) {
       if (field.className == "scContentControl" || field.className == "scContentControlMemo") {
@@ -555,6 +404,39 @@ const initCharsCount = (storage) => {
   }
 };
 
+/*
+ * Add icons to quick info section to copy to clipboard
+ */
+const initCopyToClipboard = (storage) => {
+  storage.feature_contenteditor == undefined ? (storage.feature_contenteditor = true) : false;
+  if (storage.feature_contenteditor == true) {
+    var scTextFields = document.querySelectorAll("input, textarea, checkbox");
+    var copyHtml;
+    var copyCount = 0;
+    for (var field of scTextFields) {
+      //Copy to clipboard
+      if (field.className == "scEditorHeaderQuickInfoInput" || field.className == "scEditorHeaderQuickInfoInputID") {
+        field.setAttribute("style", "width: calc(100%-16px); margin-left:2px; display: none");
+        field.classList.add("copyCount_" + copyCount);
+        //prettier-ignore
+        copyHtml = `<span onclick="copyContent('` + field.value + `', '` + copyCount + `')" class="copyCountSpan_` + copyCount + `">` + field.value + `</span> <a class="t-top t-sm" data-tooltip="Copy" onclick="copyContent('` + field.value + `', '` + copyCount + `')"><img src="` + global.iconCopy + `" class="scIconCopy" /></a> <span class="copyCountMessage_` + copyCount + `"></span>`;
+        field.value != "[unknown]" ? field.insertAdjacentHTML("beforebegin", copyHtml) : field.insertAdjacentHTML("beforebegin", `<span>` + field.value + `</span>`);
+        copyCount++;
+      }
+    }
+  }
+};
+
+/*
+ * Change title of browser tab / window
+ */
+const changeTitleWindow = (storage) => {
+  storage.feature_contenteditor == undefined ? (storage.feature_contenteditor = true) : false;
+  if (storage.feature_contenteditor == true) {
+    let ScItem = getScItemData();
+    ScItem.name ? (window.document.title = "" + ScItem.name.capitalize() + " (" + ScItem.language.toUpperCase() + ")") : false;
+  }
+};
 /*
  * Change style of checkboxes to ios-like switch in editor
  */

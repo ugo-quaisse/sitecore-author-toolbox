@@ -102,7 +102,7 @@ const initUserMenu = (storage) => {
     //prettier-ignore
     let htmlMenu =
       `<ul class="scAccountMenu"> 
-          <li onclick="javascript:return scForm.invoke('preferences:changeuserinformation', event)">Edit my profile (` + accountUser + `)</li>
+          <li onclick="javascript:return scForm.invoke('preferences:changeuserinformation', event)">My profile (` + accountUser + `)</li>
           <li onclick="javascript:return scForm.invoke('security:changepassword', event) ">Change Password</li>
           <li onclick="javascript:return scForm.invoke('preferences:changeregionalsettings', event)">Languages</li>
           <li onclick="javascript:return scForm.invoke('shell:useroptions', event)">Sitecore Options</li>

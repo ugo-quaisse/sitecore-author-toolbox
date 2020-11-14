@@ -361,3 +361,76 @@ sup a {
   text-decoration: none;
   font-size: 10px;
 }
+
+/* Checkbox */
+
+html.light div.scFeature {
+  color: #000;
+}
+
+html.dark div.scFeature {
+  color: #ccc;
+}
+
+input.scCheckbox {
+  display: none !important;
+}
+
+label.scLabel {
+  margin: 0px 0px 0px 5px;
+  width: 38px;
+  height: 20px;
+  text-indent: -150%;
+  clip: rect(0 0 0 0);
+  color: transparent;
+  user-select: none;
+  vertical-align: middle;
+  float: right;
+}
+label.scLabel::before,
+label.scLabel::after {
+  content: "";
+  display: block;
+  position: absolute;
+  cursor: pointer;
+  z-index: -1;
+}
+label.scLabel::before {
+  width: 100%;
+  height: 100%;
+  max-width: 38px !important;
+  max-height: 20px !important;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 9999em;
+  transition: background-color 0.15s ease;
+}
+label.scLabel::after {
+  width: 18px;
+  height: 18px;
+  top: 1px;
+  left: 0px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.45);
+  transition: left 0.15s ease;
+  cursor: pointer !important;
+  position: relative;
+}
+input.scCheckbox:checked + label.scLabel::before {
+  background-color: #6edc60;
+}
+
+input.scCheckbox:checked + label.scLabel::after {
+  left: 20px;
+}
+
+input.scCheckbox:disabled + label.scLabel::before {
+  opacity: 0.4;
+  background-color: #ccc;
+  cursor: not-allowed !important;
+}
+
+input.scCheckbox:disabled + label.scLabel::after {
+  opacity: 0.7;
+  cursor: not-allowed !important;
+}

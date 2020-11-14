@@ -303,7 +303,7 @@ const getAccentColor = () => {
  * Add Color Picker into top bar (Experimental UI)
  */
 const initColorPicker = () => {
-  let color, text, brightness, invert;
+  let color, text, brightness, invert, borderAlpha;
 
   //prettier-ignore
   let input = `<input type="color" id="scAccentColor" name="scAccentColor" value="` + getAccentColor() + `" class="t-bottom t-sm" data-tooltip="Your accent color">`;
@@ -317,14 +317,16 @@ const initColorPicker = () => {
       color = colorPicker.value;
       text = setTextColour(color);
       text == "#ffffff" ? (brightness = 10) : (brightness = 0);
-      text == "#ffffff" ? (invert = 1) : (invert = 0);
-
+      text == "#ffffff" ? (invert = 0) : (invert = 1);
+      text == "#ffffff" ? (borderAlpha = "rgba(255, 255, 255, 0.4)") : (borderAlpha = "rgba(0, 0, 0, 0.4)");
+      console.log(invert);
       //Root
       let root = document.documentElement;
       root.style.setProperty("--accent", color);
       root.style.setProperty("--accentText", text);
       root.style.setProperty("--accentBrightness", brightness);
       root.style.setProperty("--accentInvert", invert);
+      root.style.setProperty("--accentBorder", borderAlpha);
 
       //Iframes
       document.querySelectorAll("iframe").forEach(function (e) {
@@ -333,6 +335,7 @@ const initColorPicker = () => {
         iframe.style.setProperty("--accentText", text);
         iframe.style.setProperty("--accentBrightness", brightness);
         iframe.style.setProperty("--accentInvert", invert);
+        root.style.setProperty("--accentBorder", borderAlpha);
       });
 
       localStorage.setItem("scColorPicker", color);

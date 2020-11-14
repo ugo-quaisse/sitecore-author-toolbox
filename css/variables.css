@@ -37,6 +37,7 @@
   --accentText: #ffffff;
   --accentBrightness: 50;
   --accentInvert: 0;
+  --accentBorder: rgba(255, 255, 255, 0.4);
   --radius: 3px;
 
   --messageSuccessBgIcon: #8ce99a;

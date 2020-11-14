@@ -2,11 +2,6 @@ body.satExperimentalUi.satDark a:link {
   color: inherit !important;
 }
 
-body.satExperimentalUi.satDark .scContentTree {
-  background-color: var(--black2) !important;
-  background-image: unset;
-}
-
 body.satExperimentalUi.satDark .scBackground,
 body.satExperimentalUi.satDark .scEditorTabHeaderActive,
 body.satExperimentalUi.satDark #EditorTabs {
@@ -35,10 +30,6 @@ body.satExperimentalUi.satDark .scSaveBar > .scActions > .scPublishMenu > li:hov
 
 body.satExperimentalUi.satDark .scEditorTabControlsHolder > .scMoreMenu > li.separator {
   border-top: 1px solid var(--black3);
-}
-
-body.satExperimentalUi.satDark .scPublishMenuMoreArrow {
-  filter: invert(var(--accentInvert));
 }
 
 /* Message bars */
@@ -152,28 +143,29 @@ body.satExperimentalUi.satDark .scEditorTab {
   background: var(--black3) !important;
 }
 
-body.satExperimentalUi.satDark #scEditorTabs > ul > li {
-  border: 1px solid var(--black2);
+body.satExperimentalUi.satDark .scEditorTabSelected {
+  background-color: var(--black2) !important;
 }
 
-body.satExperimentalUi.satDark #scEditorTabs > ul > li:hover {
+body.satExperimentalUi.satDark #scEditorTabs > ul > li {
+  border: 1px solid var(--black2);
+  border-bottom: 0px solid var(--black2);
+}
+
+body.satExperimentalUi.satDark #scEditorTabs > ul > li:not(.scEditorTabEmpty):hover {
   color: var(--text) !important;
   background: var(--black3) !important;
   border-top: 2px solid var(--accent);
 }
 
+body.satExperimentalUi.satDark #scEditorTabs > ul > li.scEditorTabSelected:hover {
+  background: var(--black2) !important;
+  border-top: 3px solid var(--accent) !important;
+}
+
 body.satExperimentalUi.satDark #BTAddNewSearch {
   background-color: var(--black2) !important;
   border: 0px solid var(--black2) !important;
-}
-
-body.satExperimentalUi.satDark .scEditorTabSelected {
-  background-color: var(--black2) !important;
-}
-
-body.satExperimentalUi.satDark .scEditorTabSelected:hover {
-  border-top: 3px solid var(--accent) !important;
-  background-color: var(--black2) !important;
 }
 
 body.satExperimentalUi.satDark .scEditorSectionPanel {
@@ -196,12 +188,8 @@ body.satExperimentalUi.satDark .scEditorSectionPanelCell {
   padding: 20px 20px 20px 15px;
 }
 
-body.satExperimentalUi.satDark .scEditorSections {
-  border-top: 0px;
-  background-color: var(--black0) !important;
-}
-
 body.satExperimentalUi.satDark .scEditorTabEmpty {
+  background-color: var(--black1) !important;
   border-bottom: 0px !important;
 }
 
@@ -304,4 +292,8 @@ body.satExperimentalUi.satDark .scMenuPanelItem_Hover,
 body.satExperimentalUi.satDark .sc-gallery-option-content-active {
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
+}
+
+body.satExperimentalUisatDark .scContentControlCheckbox:checked + .scContentControlCheckboxLabel::before {
+  background-color: var(--accent) !important;
 }

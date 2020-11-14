@@ -705,10 +705,10 @@ body.satExperimentalUi #scEditorTabs > ul::-webkit-scrollbar {
   border-radius: var(--radius);
 }
 
-body.satExperimentalUi #scEditorTabs > ul > li {
+body.satExperimentalUi #scEditorTabs > ul > li:not(.scEditorTabEmpty) {
   background-color: transparent;
-  border: 1px solid #e2e2e2;
-  border-bottom: 0px solid #e2e2e2;
+  border: 1px solid transparent;
+  border-bottom: 0px solid transparent !important;
   padding: 7px 12px 7px 12px;
   font-size: 14px;
   font-weight: 400;
@@ -735,6 +735,10 @@ body.satExperimentalUi .scEditorTabSelected:hover {
 }
 
 body.satExperimentalUi .scEditorTabEmpty {
+  padding: 0px 3px !important;
+}
+
+body.satExperimentalUi .scEditorTabEmpty:hover {
   padding: 0px 3px !important;
 }
 
@@ -922,7 +926,7 @@ body.satExperimentalUi .scEditorSectionCaptionExpanded {
   border: 0px;
   border-bottom: 0px solid #e1e1e1;
   font-size: 14px;
-  border-left: 0px solid #dc291e;
+  border-left: none !important;
 }
 
 body.satExperimentalUi .scEditorSectionCaptionCollapsed {
@@ -932,6 +936,10 @@ body.satExperimentalUi .scEditorSectionCaptionCollapsed {
 
 body.satExperimentalUi .scEditorSectionCaptionCollapsed:hover {
   background-color: var(--black8);
+}
+
+body.satExperimentalUi .scEditorSectionCaptionExpanded > img {
+  filter: invert(var(--accentInvert));
 }
 
 body.satExperimentalUi .scEditorSectionCaptionGlyph {
@@ -1143,6 +1151,10 @@ body.satExperimentalUi .scSaveBar > .scActions > button {
   margin-top: -2px;
 }
 
+body.satExperimentalUi .scPublishMenuMoreArrow {
+  filter: invert(var(--accentInvert));
+}
+
 body.satExperimentalUi .scBackground {
   background: var(--grey3);
 }
@@ -1247,7 +1259,7 @@ body.satExperimentalUi .scSaveBar > .scActions > button.primary {
 
 body.satExperimentalUi .scSaveBar > .scActions > button.primaryGrouped {
   border-radius: var(--radius) 0px 0px var(--radius);
-  border-right: 1px solid rgba(255, 255, 255, 0.4);
+  border-right: 1px solid var(--accentBorder);
   margin-right: 0px;
 }
 

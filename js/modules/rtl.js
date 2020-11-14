@@ -14,7 +14,6 @@ const initRTL = (storage) => {
     //Get active language
     let temp = scLanguageTxtShort.split(" (");
     let scFlag = temp[0].toUpperCase();
-    console.log(scFlag);
 
     if (global.rteLanguages.includes(scFlag)) {
       //RTL

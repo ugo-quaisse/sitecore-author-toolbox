@@ -19,62 +19,56 @@ export { sitecoreAuthorToolbox, initCharsCount, initCheckboxes, initPublishCheck
  * Main function executed when the Content Editor refreshes
  */
 const sitecoreAuthorToolbox = (storage) => {
-  var count = 0;
+  let count = 0;
+  let scEditorHeader = document.querySelector(".scEditorHeader");
   let scEditorPanel = document.querySelector(".scEditorPanel");
   let scQuickInfo = document.querySelector("div[id^='QuickInfo_']");
   let scLanguageMenu = document.querySelector(".scEditorHeaderVersionsLanguage");
-  let scVersion = document.querySelector(".scEditorHeaderVersionsVersion > span");
-  scVersion ? (scVersion = scVersion.innerText) : false;
   let scActiveTab = document.querySelector(".scEditorTabHeaderActive");
-  var scEditorHeaderVersionsLanguage = document.querySelector(".scEditorHeaderVersionsLanguage");
-
-  if (scEditorHeaderVersionsLanguage) {
-    var scLanguageTxtShort = scEditorHeaderVersionsLanguage.innerText; //French
-  }
-
+  let scEditorHeaderVersionsLanguage = document.querySelector(".scEditorHeaderVersionsLanguage");
+  let scLanguageTxtShort = scEditorHeaderVersionsLanguage ? scEditorHeaderVersionsLanguage.innerText : false;
+  let ScItem = getScItemData();
+  let temp = document.getElementsByClassName("scEditorHeaderQuickInfoInput");
+  let sitecoreItemPathOriginal = ScItem.path + "/";
+  let isMedia = sitecoreItemPathOriginal.includes("/sitecore/media library/");
+  let scFlag, tabbedFlag, scMessage;
   /*
    * If no Quick info displayed, fallback message
    */
   if (!scQuickInfo) {
-    if (!document.querySelector("#scMessageBarUrl") && scEditorPanel) {
-      var scMessage =
+    if (!document.querySelector("#scMessageBarUrl")) {
+      scMessage =
         '<div id="scMessageBarUrl" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' +
-        global.icon +
-        ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Sitecore Author Toolbox help</div><div class="scMessageBarText">To fully enjoy Sitecore Author Toolbox, please enable <b>Title bar</b> and <b>Quick info section</b> under <b>Application Options</b>.<br />Alternatively, try to open the <b>Quick Info section</b> down below, if visible..</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="" onclick="javascript:return scForm.postEvent(this,event,\'shell:useroptions\')" class="scMessageBarOption">Open Application Options</a>.</li></ul></div></div>';
-      scEditorPanel.insertAdjacentHTML("afterend", scMessage);
+        global.iconError +
+        ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Oh no... Sitecore Author Toolbox</div><div class="scMessageBarText">To fully enjoy Sitecore Author Toolbox, please enable <b>Title bar</b> and <b>Quick info section</b> under <b>Application Options</b>.<br />Alternatively, try to open the <b>Quick Info section</b> down below, if visible..</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="" onclick="javascript:return scForm.postEvent(this,event,\'shell:useroptions\')" class="scMessageBarOption">Change my settings</a></li></ul></div></div>';
+      if (scEditorHeader) {
+        scEditorHeader.insertAdjacentHTML("afterend", scMessage);
+      } else {
+        scEditorPanel.insertAdjacentHTML("afterbegin", scMessage);
+      }
     }
-  } else {
-    //Variables
-    let ScItem = getScItemData();
-    var temp = document.getElementsByClassName("scEditorHeaderQuickInfoInput");
-    var sitecoreItemID = ScItem.id;
-    var sitecoreItemPathOriginal = ScItem.path + "/";
-    var isMedia = sitecoreItemPathOriginal.includes("/sitecore/media library/");
-    var scLanguage = document.querySelector("#scLanguage").value.toLowerCase();
-    var scFlag, tabbedFlag;
-
-    /**
-     * Experimetal UI
-     */
-    if (storage.feature_experimentalui) {
-      insertSavebar();
-      insertBreadcrumb(ScItem.path);
-      insertMoreButton();
-      insertVersionButton(ScItem.id, ScItem.language, ScItem.version);
-      insertLanguageButton(ScItem.id, ScItem.language, ScItem.version);
-    }
-
-    initLiveUrl(storage);
-    openFolderTab(storage);
   }
 
-  initRTL(storage);
+  /**
+   * Experimetal UI
+   */
+  if (storage.feature_experimentalui) {
+    insertSavebar();
+    insertBreadcrumb(ScItem.path);
+    insertMoreButton();
+    insertVersionButton(ScItem.id, ScItem.language, ScItem.version);
+    insertLanguageButton(ScItem.id, ScItem.language, ScItem.version);
+  }
+
   initTabSections(storage);
+  openFolderTab(storage);
+  initLiveUrl(storage);
   initGroupedErrors(storage);
+  initRTL(storage);
   initCharsCount(storage);
   initCopyToClipboard(storage);
   initSyntaxHighlighterScriban(storage);
-  checkHelpLink(sitecoreItemID, scLanguage, scVersion, storage);
+  checkHelpLink(ScItem.id, ScItem.language, ScItem.version, storage);
   initFancyMessageBars(storage);
   initCheckboxes(storage);
   initTranslateMode(storage);
@@ -92,7 +86,7 @@ const sitecoreAuthorToolbox = (storage) => {
   if (scEditorHeaderVersionsVersion) {
     var scVersionTitle = scEditorHeaderVersionsVersion.getAttribute("title");
     temp = scVersionTitle.split("of");
-    var versionTotal = temp[1].replace(".", "").trim();
+    var versionTotal = temp[1] ? temp[1].replace(".", "").trim() : temp[0].replace(".", "").trim();
     var versionNumber = temp[0].replace("Version", "").trim();
     versionNumber < versionTotal
       ? (scEditorHeaderVersionsVersion.querySelector("span").innerText = scVersionTitle.replace("Version", "⚠️ Version").replace(".", " ▾"))
@@ -183,13 +177,13 @@ const sitecoreAuthorToolbox = (storage) => {
    * Update Favorite Item ID
    */
   let sitecorAuthorToolboxFav = document.querySelector("#sitecorAuthorToolboxFav");
-  let scFavoritesUrl = "../default.aspx?xmlcontrol=Gallery.Favorites&id=" + sitecoreItemID + "&la=en&vs=1";
+  let scFavoritesUrl = "../default.aspx?xmlcontrol=Gallery.Favorites&id=" + ScItem.id + "&la=en&vs=1";
   sitecorAuthorToolboxFav ? (sitecorAuthorToolboxFav.src = scFavoritesUrl) : false;
 
   /**
    * Save data in storage
    */
-  sitecoreItemJson(sitecoreItemID, scLanguage, scVersion);
+  sitecoreItemJson(ScItem.id, ScItem.language, ScItem.version);
 
   /**
    * Change UI opacity back to normal
@@ -311,7 +305,6 @@ const initFancyMessageBars = (storage) => {
 
           //Unicorded
           if (isUnicorned) {
-            scWarning.classList.add("scInformation");
             // eslint-disable-next-line newline-per-chained-call
             scWarningTextBar.innerHTML = scWarningTextBar.innerHTML.replace("<br><br>", "<br>").replace("<br><b>Predicate", " <b>Predicate").replace("Changes to this item will be written to disk so they can be shared with others.<br>", "");
             scWarningIcon.setAttribute("style", "background-image: url(" + global.iconUnicorn + ");");

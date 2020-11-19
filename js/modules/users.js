@@ -1,6 +1,6 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 import * as global from "./global.js";
-import { exeJsCode, calcMD5 } from "./helpers.js";
+import { exeJsCode, calcMD5, currentColorScheme } from "./helpers.js";
 
 export { getGravatar, initGravatarImage, initUserMenu };
 
@@ -70,6 +70,7 @@ const initGravatarImage = (storage) => {
  */
 const initUserMenu = (storage) => {
   let accountInformation = document.querySelector(".sc-accountInformation");
+  let scGlobalHeader = document.querySelector(".sc-globalHeader-loginInfo");
   let startButton = document.querySelector(".sc-globalHeader-startButton");
 
   if (accountInformation) {
@@ -101,19 +102,47 @@ const initUserMenu = (storage) => {
 
     //prettier-ignore
     let htmlMenu =
-      `<ul class="scAccountMenu"> 
-          <li onclick="javascript:return scForm.invoke('preferences:changeuserinformation', event)">My profile (` + accountUser + `)</li>
-          <li onclick="javascript:return scForm.invoke('security:changepassword', event) ">Change Password</li>
-          <li onclick="javascript:return scForm.invoke('preferences:changeregionalsettings', event)">Languages</li>
-          <li onclick="javascript:return scForm.invoke('shell:useroptions', event)">Sitecore Options</li>
-          <li onclick="window.open('` + global.launchpadPage + `')" >Sitecore Author Toolbox Options</li>
+      `<div class="scAccountMenu">
+        <div class="scAccountMenuWrapper">
+        <div class="scAccountColumn scAccountGroup1">
+          <ul> 
+            <li onclick="javascript:return scForm.invoke('preferences:changeuserinformation', event)">My profile (` + accountUser + `)</li>
+            <li onclick="javascript:return scForm.invoke('security:changepassword', event) ">Change Password</li>
+            <li onclick="javascript:return scForm.invoke('preferences:changeregionalsettings', event)">Languages</li>
+            <li onclick="javascript:return scForm.invoke('shell:useroptions', event)">Sitecore Options</li>
           
-          <li id="scMenuListDarkMode" class="separator">Dark Mode</li>
-          <li id="scMenuListExperimentalUi" >Experimental UI Mode</li>
-          
-          <li onclick="javascript:return scForm.invoke('contenteditor:close', event)">Log out</li>
-        </ul>`;
-    accountInformation.insertAdjacentHTML("afterbegin", htmlMenu);
+            <li onclick="javascript:goToSubmenu(1)" id="scSkip" class="separator opensubmenu">Dark Mode <span id="scSkip" class="darkMenuHint">Light</span></li>
+            <li onclick="javascript:goToSubmenu(2)" id="scSkip" class="opensubmenu">Theme <span id="scSkip" class="themeMenuHint">Classic</span></li> 
+            <li onclick="window.open('` + global.launchpadPage + `')">Extension Options</li>
+
+            <li onclick="javascript:return scForm.invoke('contenteditor:close', event)">Log out</li>
+          </ul>
+        </div>
+
+        <div class="scAccountSub">
+          <div class="scAccountColumn scAccountGroup2">
+            <ul>
+              <li onclick="javascript:goToSubmenu(0)" id="scSkip" class="backsubmenu">Dark Mode</li>
+              <li>Light <input type="radio" id="darkmodeRadio" name="darkMode" value="light" checked></li>
+              <li>Dark <input type="radio" id="darkmodeRadio" name="darkMode" value="dark"></li>
+              <li>Automatic <input type="radio" id="darkmodeRadio" name="darkMode" value="auto"></li>
+            </ul>
+          </div>
+          <div class="scAccountColumn scAccountGroup2">
+            <ul>
+              <li onclick="javascript:goToSubmenu(0)" id="scSkip" class="backsubmenu">Theme</li>
+              <li>Classic <input type="radio" id="interfaceRadio" name="interface" value="classic" checked></li>
+              <li>Experimental UI <input type="radio" id="interfaceRadio" name="interface" value="experimental"></li>
+            </ul>
+          </div>
+        </div>
+        </div>
+      </div>`;
+    scGlobalHeader.insertAdjacentHTML("afterbegin", htmlMenu);
+
+    //Resize menu
+    let height = document.querySelectorAll(".scAccountMenu > .scAccountMenuWrapper > .scAccountColumn > ul")[0].offsetHeight;
+    document.querySelector(".scAccountMenu").setAttribute("style", "height:" + height + "px");
 
     //Listeners
     document.addEventListener("keydown", (event) => {
@@ -127,7 +156,7 @@ const initUserMenu = (storage) => {
     //Events
     if (document.querySelector(".scAccountMenu")) {
       document.addEventListener("click", (elem) => {
-        if (elem.target.id != "darkModeSwitch" && elem.target.id != "experimentalUiSwitch" && elem.target.id != "scSkip") {
+        if (elem.target.id != "darkModeSwitch" && elem.target.id != "experimentalUiSwitch" && elem.target.id != "scSkip" && elem.target.id != "darkmodeRadio" && elem.target.id != "interfaceRadio") {
           elem.target.id == "globalHeaderUserPortrait" ? document.querySelector(".scAccountMenu").classList.toggle("open") : document.querySelector(".scAccountMenu").classList.remove("open");
         }
       });
@@ -135,7 +164,7 @@ const initUserMenu = (storage) => {
 
     if (document.querySelector("#DesktopLinks")) {
       document.querySelector("#DesktopLinks").addEventListener("click", () => {
-        document.querySelector(".scAccountMenu").classList.toggle("open");
+        document.querySelector(".scAccountMenu").classList.remove("open");
       });
     }
 
@@ -146,103 +175,109 @@ const initUserMenu = (storage) => {
       }
     });
 
-    initDarkSwitch();
-    initExperimentalSwitch();
+    initDarkSwitchEvents();
+    initInterfaceEvents();
   }
 };
 
 /**
- * Insert Dark Checkbox Switch into User Menu
+ * Init Dark Radio Switch events
  */
-const initDarkSwitch = () => {
-  //prettier-ignore
-  let dark =
-    `<span class="darkModeSwitch">    
-      <input id="darkModeSwitch" class="scDarkModeCheckbox" value="darkmode" type="checkbox">
-      <label id="scSkip" for="darkModeSwitch" class="scDarkModeCheckboxLabel"></label>
-      <img class="darkModeIcon darkModeIconSun rise" src='` +
-    global.iconSun +
-    `' />
-      <img class="darkModeIcon darkModeIconMoon set" src='` +
-    global.iconMoon +
-    `' />
-    </span>`;
-  let menu = document.querySelector("#scMenuListDarkMode");
-  menu ? menu.insertAdjacentHTML("beforeend", dark) : false;
-
-  //Listener on change
-  let darkModeSwitch = document.querySelector("#darkModeSwitch");
-  if (darkModeSwitch) {
-    darkModeSwitch.addEventListener("change", () => {
-      //Update main window
-      darkModeSwitch.checked ? document.body.classList.add("satDark") : document.body.classList.remove("satDark");
-      //Update all iframes
-      document.querySelectorAll("iframe").forEach(function (iframe) {
-        if (iframe.contentDocument.body) {
-          darkModeSwitch.checked ? iframe.contentDocument.body.classList.add("satDark") : iframe.contentDocument.body.classList.remove("satDark");
-          iframe.contentDocument.querySelectorAll("iframe").forEach(function (iframe) {
-            darkModeSwitch.checked ? iframe.contentDocument.body.classList.add("satDark") : iframe.contentDocument.body.classList.remove("satDark");
-          });
-        }
-      });
-      //Update icons
-      if (darkModeSwitch.checked === true) {
-        document.querySelector(".darkModeIconSun").classList.remove("rise");
-        document.querySelector(".darkModeIconSun").classList.add("set");
-        document.querySelector(".darkModeIconMoon").classList.remove("set");
-        document.querySelector(".darkModeIconMoon").classList.add("rise");
-      } else {
-        document.querySelector(".darkModeIconSun").classList.remove("set");
-        document.querySelector(".darkModeIconSun").classList.add("rise");
-        document.querySelector(".darkModeIconMoon").classList.remove("rise");
-        document.querySelector(".darkModeIconMoon").classList.add("set");
-      }
-    });
-  }
-};
-
-/**
- * Insert Experimental Checkbox Switch into User Menu
- */
-const initExperimentalSwitch = () => {
-  //prettier-ignore
-  let dark = `<span class="experimentalUiSwitch">    
-      <input id="experimentalUiSwitch" class="scExperimentalCheckbox" value="darkmode" type="checkbox">
-      <label id="scSkip" for="experimentalUiSwitch" class="scExperimentalCheckboxLabel"></label>
-      <div class="experimentalUiSwitchText">OFF</div>
-    </span>`;
-  let menu = document.querySelector("#scMenuListExperimentalUi");
-  menu ? menu.insertAdjacentHTML("beforeend", dark) : false;
-
-  //Listener on change
-  let experimentalUiSwitch = document.querySelector("#experimentalUiSwitch");
-  if (experimentalUiSwitch) {
-    experimentalUiSwitch.addEventListener("change", () => {
-      //Update main window
-      experimentalUiSwitch.checked ? document.body.classList.add("satExperimentalUi") : document.body.classList.remove("satExperimentalUi");
-      //Update all iframes
-      document.querySelectorAll("iframe").forEach(function (iframe) {
-        experimentalUiSwitch.checked ? iframe.contentDocument.body.classList.add("satExperimentalUi") : iframe.contentDocument.body.classList.remove("satDark");
-        iframe.contentDocument.querySelectorAll("iframe").forEach(function (iframe) {
-          experimentalUiSwitch.checked ? iframe.contentDocument.body.classList.add("satExperimentalUi") : iframe.contentDocument.body.classList.remove("satExperimentalUi");
+const initDarkSwitchEvents = () => {
+  document.querySelectorAll("#darkmodeRadio").forEach(function (radio) {
+    radio.onclick = function () {
+      if (radio.value == "dark" || (radio.value == "auto" && currentColorScheme() == "dark")) {
+        //main
+        document.body.classList.add("satDark");
+        //iframes
+        document.querySelectorAll("iframe").forEach(function (iframe) {
+          if (iframe.contentDocument.body) {
+            iframe.contentDocument.body.classList.add("satDark");
+            iframe.contentDocument.querySelectorAll("iframe").forEach(function (iframe) {
+              iframe.contentDocument.body.classList.add("satDark");
+            });
+          }
         });
-      });
-      //Update icons
-      if (experimentalUiSwitch.checked === true) {
-        document.querySelector(".experimentalUiSwitchText").innerText = "ON";
-        //Save as global
-      } else {
-        document.querySelector(".experimentalUiSwitchText").innerText = "OFF";
+        //hint
+        radio.value == "auto" ? (document.querySelector(".darkMenuHint").innerText = "Auto") : (document.querySelector(".darkMenuHint").innerText = "On");
+        //Storage
+        chrome.storage.sync.set({
+          feature_darkmode: true,
+          feature_darkmode_auto: radio.value == "auto",
+        });
+      } else if (radio.value == "light") {
+        //main
+        document.body.classList.remove("satDark");
+        //iframes
+        document.querySelectorAll("iframe").forEach(function (iframe) {
+          if (iframe.contentDocument.body) {
+            iframe.contentDocument.body.classList.remove("satDark");
+            iframe.contentDocument.querySelectorAll("iframe").forEach(function (iframe) {
+              iframe.contentDocument.body.classList.remove("satDark");
+            });
+          }
+        });
+        //hint
+        document.querySelector(".darkMenuHint").innerText = "Light";
+        //Storage
+        chrome.storage.sync.set({
+          feature_darkmode: false,
+          feature_darkmode_auto: false,
+        });
       }
-      //Save in User's chrome storage
-      chrome.storage.sync.set({
-        feature_experimentalui: experimentalUiSwitch.checked,
-        feature_cetabs: experimentalUiSwitch.checked,
-      });
+    };
+  });
+};
+
+/**
+ * Init Interface Switch events
+ */
+const initInterfaceEvents = () => {
+  document.querySelectorAll("#interfaceRadio").forEach(function (radio) {
+    radio.onclick = function () {
+      if (radio.value == "classic") {
+        //main
+        document.body.classList.remove("satExperimentalUi");
+        //iframes
+        document.querySelectorAll("iframe").forEach(function (iframe) {
+          if (iframe.contentDocument.body) {
+            iframe.contentDocument.body.classList.remove("satExperimentalUi");
+            iframe.contentDocument.querySelectorAll("iframe").forEach(function (iframe) {
+              iframe.contentDocument.body.classList.remove("satExperimentalUi");
+            });
+          }
+        });
+        //hint
+        document.querySelector(".themeMenuHint").innerText = "Classic";
+        //Storage
+        chrome.storage.sync.set({
+          feature_experimentalui: false,
+          feature_cetabs: false,
+        });
+      } else if (radio.value == "experimental") {
+        //main
+        document.body.classList.add("satExperimentalUi");
+        //iframes
+        document.querySelectorAll("iframe").forEach(function (iframe) {
+          if (iframe.contentDocument.body) {
+            iframe.contentDocument.body.classList.add("satExperimentalUi");
+            iframe.contentDocument.querySelectorAll("iframe").forEach(function (iframe) {
+              iframe.contentDocument.body.classList.add("satExperimentalUi");
+            });
+          }
+        });
+        //hint
+        document.querySelector(".themeMenuHint").innerText = "Experimental UI";
+        //Storage
+        chrome.storage.sync.set({
+          feature_experimentalui: true,
+          feature_cetabs: true,
+        });
+      }
       //Reload view
       setTimeout(function () {
         location.reload();
-      }, 100);
-    });
-  }
+      }, 10);
+    };
+  });
 };

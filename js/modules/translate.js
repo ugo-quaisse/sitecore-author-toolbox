@@ -13,6 +13,7 @@ const initTranslateMode = (storage) => {
   if (storage.feature_translatemode) {
     let isTranslateMode = false;
     let scEditorPanel = document.querySelector(".scEditorPanel");
+    let scQuickInfo = document.querySelector("div[id^='QuickInfo_']");
     let scEditorSectionPanel = document.querySelectorAll(".scEditorSectionPanel .scEditorSectionPanelCell")[1];
     let scTextFields = scEditorPanel.querySelectorAll("input, textarea, select");
     let scEditorHeaderVersionsLanguage = document.querySelector(".scEditorHeaderVersionsLanguage");
@@ -90,7 +91,7 @@ const initTranslateMode = (storage) => {
           "&tl=" +
           fieldLeftLang.toLowerCase() +
           "&text=Hello Sitecore');\">Use Google Translate</span></li></ul></div></div>";
-        scEditorPanel.insertAdjacentHTML("afterend", scMessage);
+        scQuickInfo.insertAdjacentHTML("beforebegin", scMessage);
       }
     }
   }

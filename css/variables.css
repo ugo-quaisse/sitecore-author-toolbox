@@ -24,6 +24,7 @@
   --grey10: #f0f1f3;
   --grey11: #dddddd;
   --grey12: #f7f7f7;
+  --grey13: #343434;
 
   --lightblue: #1e81ef;
   --blue: #0b84ff;
@@ -65,6 +66,7 @@
   --darkred: #6b120f;
 
   --white: #fff;
+  --whiteFaded: rgba(255, 255, 255, 0.2);
   --text: #47474e;
 
   --iconBrightness: 0.1;

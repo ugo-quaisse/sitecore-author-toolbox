@@ -34,8 +34,9 @@ const initExperimentalUi = (storage) => {
     //prettier-ignore
     SearchPanel ? (SearchPanel.innerHTML = `<button class="scMenuButton" type="button"><img src="` + global.iconMenu + `" class="scBurgerMenu"/></button> <div class="scBurgerMenuTitle t-top t-sm" data-tooltip="Go back home" onclick="javascript:return scForm.invoke('contenteditor:home', event)" title="Go back Home">Content</div>`) : false;
     document.body.classList.add("satExperimentalUi");
-    if (document.querySelector("#experimentalUiSwitch")) {
-      document.querySelector("#experimentalUiSwitch") ? (document.querySelector("#experimentalUiSwitch").checked = true) : (document.querySelector("#experimentalUiSwitch").checked = false);
+    if (document.querySelector("#interfaceRadio[value='experimental']")) {
+      document.querySelector("#interfaceRadio[value='experimental']").checked = true;
+      document.querySelector(".themeMenuHint").innerText = "Experimental UI";
     }
     getAccentColor();
   }
@@ -283,7 +284,6 @@ const getAccentColor = () => {
     text = setTextColour(color);
     text == "#ffffff" ? (brightness = 10) : (brightness = 0);
     text == "#ffffff" ? (invert = 0) : (invert = 1);
-
     root.style.setProperty("--accent", color);
     root.style.setProperty("--accentText", text);
     root.style.setProperty("--accentBrightness", brightness);

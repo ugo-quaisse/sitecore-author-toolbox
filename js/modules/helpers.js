@@ -120,15 +120,14 @@ const currentColorScheme = () => {
  */
 // eslint-disable-next-line consistent-return
 const initDarkMode = (storage) => {
-  if (
-    (storage.feature_darkmode && !storage.feature_darkmode_auto && !global.isTelerikUi && !global.isAdminCache && !global.isContentHome && !global.isLoginPage && !global.isRules && !global.isAdmin) ||
-    (storage.feature_darkmode && storage.feature_darkmode_auto && !global.isTelerikUi && !global.isAdminCache && !global.isContentHome && !global.isLoginPage && !global.isRules && !global.isAdmin && currentColorScheme() == "dark")
-  ) {
+  if ((storage.feature_darkmode && !storage.feature_darkmode_auto) || (storage.feature_darkmode && storage.feature_darkmode_auto && currentColorScheme() == "dark")) {
     document.body.classList.add("satDark");
-    if (document.querySelector("#darkModeSwitch")) {
-      //check the box and force trigger an event
-      document.querySelector("#darkModeSwitch") ? (document.querySelector("#darkModeSwitch").checked = true) : (document.querySelector("#darkModeSwitch").checked = false);
-      document.querySelector("#darkModeSwitch").dispatchEvent(new Event("change"));
+    if (storage.feature_darkmode_auto && document.querySelector("#darkmodeRadio[value='auto']")) {
+      document.querySelector("#darkmodeRadio[value='auto']").checked = true;
+      document.querySelector("#darkmodeRadio[value='auto']").dispatchEvent(new Event("click"));
+    } else if (document.querySelector("#darkmodeRadio[value='dark']")) {
+      document.querySelector("#darkmodeRadio[value='dark']").checked = true;
+      document.querySelector("#darkmodeRadio[value='dark']").dispatchEvent(new Event("click"));
     }
 
     //Add correct bg color for jquerymodal window
@@ -166,10 +165,12 @@ const autoDarkMode = (storage) => {
   if (storage.feature_darkmode && storage.feature_darkmode_auto) {
     const scheme = window.matchMedia("(prefers-color-scheme: dark)");
     scheme.addEventListener("change", () => {
-      scheme.matches ? document.body.classList.add("satDark") : document.body.classList.remove("satDark");
-      scheme.matches ? (document.querySelector("#darkModeSwitch").checked = true) : (document.querySelector("#darkModeSwitch").checked = false);
-      //trigger an event
-      document.querySelector("#darkModeSwitch").dispatchEvent(new Event("change"));
+      if (document.querySelector("#darkModeSwitch")) {
+        scheme.matches ? document.body.classList.add("satDark") : document.body.classList.remove("satDark");
+        scheme.matches ? (document.querySelector("#darkModeSwitch").checked = true) : (document.querySelector("#darkModeSwitch").checked = false);
+        //trigger an event
+        document.querySelector("#darkModeSwitch").dispatchEvent(new Event("change"));
+      }
     });
   }
 };

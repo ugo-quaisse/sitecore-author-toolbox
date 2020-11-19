@@ -74,6 +74,7 @@ ul.sc-accountInformation {
 
 div.scSaveBar {
   background-color: #fff;
+  display: none;
 }
 
 .scStartbar {
@@ -767,13 +768,13 @@ a.scTileItem .scTileItemIconImage {
   transition: all 0.1s;
   border-radius: 0px 0px 0px 0px;
 }
+#scEditorTabs > ul > li:not(.scEditorTabEmpty):hover {
+  border-top: 2px solid red;
+}
 #scEditorTabs > ul > li.scEditorTabSelected:not(.scEditorTabEmpty):hover {
   border-top: 3px solid red !important;
 }
 
-#scEditorTabs > ul > li:not(.scEditorTabEmpty):hover {
-  border-top: 2px solid red !important;
-}
 .scEditorTab > .scEditorTabClose {
   position: relative;
   right: -13px;
@@ -936,15 +937,15 @@ a.scTileItem .scTileItemIconImage {
   margin: unset !important;
 }
 
-select.scContentControl {
+body.satExtension select.scContentControl {
   height: 30px !important;
 }
 
-input:not([type]):focus,
-input[type="text"]:focus,
-input[type="password"]:focus,
-select:focus,
-textarea:focus {
+body.satExtension input:not([type]):focus,
+body.satExtension input[type="text"]:focus,
+body.satExtension input[type="password"]:focus,
+body.satExtension select:focus,
+body.satExtension textarea:focus {
   border: 1px solid rgba(14, 99, 156, 0.8) !important;
   outline: 0 !important;
   box-shadow: 0 0 4px rgba(14, 99, 156, 0.3) !important;
@@ -1193,22 +1194,26 @@ ul.sc-accountInformation li:last-child:after {
   transition: all ease-out 0.2s;
 }
 
+#scRibbonToggle {
+  z-index: 1 !important;
+}
+
 .scAccountMenu {
   position: absolute;
   right: 5px;
   top: 40px;
-  text-align: left;
-  width: max-content;
-  min-width: 245px;
+  width: 300px;
+  height: 200px;
   background-color: hsla(0, 0%, 7%, 0.7);
   z-index: 100 !important;
   border-radius: 5px;
   backdrop-filter: blur(20px);
-  box-shadow: 0px 5px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 5px 40px rgba(0, 0, 0, 0.3);
   visibility: hidden;
   opacity: 0;
-  transition: all ease-in-out 0.2s;
   padding: 0px !important;
+  overflow: hidden;
+  transition: all ease-in-out 0.2s;
 }
 
 .scAccountMenu.open {
@@ -1217,11 +1222,39 @@ ul.sc-accountInformation li:last-child:after {
   opacity: 1;
 }
 
-#scRibbonToggle {
-  z-index: 1 !important;
+.scAccountMenuWrapper {
+  width: 600px;
+  height: 100%;
+  margin-left: 0px;
+  transition: margin-left ease-in-out 0.2s;
 }
 
-ul.scAccountMenu li {
+.scAccountSub {
+  float: left;
+  width: 300px;
+}
+
+.scAccountGroup1 {
+  top: 0px;
+  width: 300px;
+}
+
+.scAccountGroup2 {
+  top: 0px;
+  width: 300px;
+  position: absolute;
+  opacity: 0;
+}
+
+.scAccountColumn {
+  transition: opacity ease-in-out 0.3s;
+}
+.scAccountColumn > ul {
+  float: left;
+  width: 300px;
+}
+
+.scAccountColumn > ul > li {
   display: inherit !important;
   padding: 15px 30px !important;
   line-height: normal !important;
@@ -1229,27 +1262,95 @@ ul.scAccountMenu li {
   font-weight: 600;
   font-size: 14px;
 }
-ul.scAccountMenu li.separator,
-ul.scAccountMenu li:last-child {
+
+.scAccountColumn > ul > li.opensubmenu:after {
+  background: url("chrome-extension://__MSG_@@extension_id__/images/submenu.svg") no-repeat center center;
+  width: 16px;
+  height: 16px;
+  content: "";
+  float: right;
+  filter: invert(1);
+}
+
+.scAccountColumn > ul > li.backsubmenu {
+  font-size: 16px;
+}
+.scAccountColumn > ul > li.backsubmenu:before {
+  background: url("chrome-extension://__MSG_@@extension_id__/images/submenu.svg") no-repeat center center;
+  width: 16px;
+  height: 16px;
+  content: "";
+  float: left;
+  margin-top: 5px;
+  margin-right: 10px;
+  vertical-align: middle;
+  filter: invert(1);
+  transform: rotate(180deg);
+}
+
+.scAccountColumn > ul > li > a {
+  color: var(--white);
+}
+
+.scAccountColumn > ul > li > span {
+  color: var(--black8);
+  font-size: 12px;
+  padding-left: 5px;
+  font-weight: 400;
+}
+
+.scAccountColumn > ul > li > a:hover {
+  text-decoration: none;
+}
+
+.scAccountColumn > ul > li.separator,
+.scAccountGroup1 > ul > li:last-child {
   border-top: 0.5px solid rgba(255, 255, 255, 0.2);
 }
 
-ul.scAccountMenu li:hover {
-  background-color: #0b84ff;
+.scAccountColumn > ul > li:hover {
+  background-color: rgba(255, 255, 255, 0.1);
   cursor: pointer !important;
 }
 
-ul.scAccountMenu li:hover:first-child {
+.scAccountColumn > ul > li:hover:first-child {
   border-radius: 5px 5px 0px 0px;
 }
-ul.scAccountMenu li:hover:last-child {
+.scAccountColumn > ul > li:hover:last-child {
   border-radius: 0px 0px 5px 5px;
 }
 
-ul.scAccountMenu li:last-child:after,
-ul.scAccountMenu li:after {
-  content: "" !important;
-  display: none !important;
+.scAccountColumn input[type="radio"] {
+  float: right;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  border: 2px solid var(--white);
+  vertical-align: -2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.scAccountColumn input[type="radio"]::before {
+  display: block;
+  content: " ";
+  width: 10px;
+  height: 10px;
+  border-radius: 6px;
+  background-color: var(--blue);
+  font-size: 1.2em;
+  transform: translate(3px, 3px) scale(0);
+  transform-origin: center;
+  transition: all 0.1s ease-in;
+}
+
+.scAccountColumn input[type="radio"]:checked {
+  border: 2px solid var(--blue);
+}
+.scAccountColumn input[type="radio"]:checked::before {
+  transform: translate(3px, 3px) scale(1);
+  transition: all 0.1s cubic-bezier(0.25, 0.25, 0.56, 2);
 }
 
 .scCaption {
@@ -1652,8 +1753,8 @@ ul.scAccountMenu li:after {
   left: 21px;
 }
 
-input.scDarkModeCheckbox,
-input.scExperimentalCheckbox {
+body.satExtension input.scDarkModeCheckbox,
+body.satExtension input.scExperimentalCheckbox {
   display: none !important;
 }
 

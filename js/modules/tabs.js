@@ -9,8 +9,8 @@ const initTabSections = (storage) => {
   storage.feature_cetabs == undefined ? (storage.feature_cetabs = false) : false;
   if (storage.feature_cetabs) {
     let scQuickInfo = document.querySelector("div[id^='QuickInfo_']");
-    let scEditorHeader = document.querySelector(".scEditorHeader");
     let scEditorPanel = document.querySelector(".scEditorPanel");
+    let scEditorHeader = document.querySelector(".scEditorHeader");
     let scEditorTabs = document.querySelector("div#scEditorTabs");
     let scMessageBar = document.querySelectorAll(".scMessageBar");
     let scEditorSectionCaption = document.querySelectorAll(".scEditorSectionCaptionCollapsed, .scEditorSectionCaptionExpanded");
@@ -73,10 +73,10 @@ const initTabSections = (storage) => {
     scEditorTabs += '<li class="scEditorTabEmpty"></li></ul></div>';
 
     //Add tabs to Content Editor, depending if we already have a message bar
-    if (scMessageBar.length > 0) {
-      scMessageBar[scMessageBar.length - 1].insertAdjacentHTML("afterend", scEditorTabs);
-    } else if (scQuickInfo) {
+    if (scQuickInfo) {
       scQuickInfo.insertAdjacentHTML("beforebegin", scEditorTabs);
+    } else if (scMessageBar.length > 0) {
+      scMessageBar[scMessageBar.length - 1].insertAdjacentHTML("afterend", scEditorTabs);
     } else if (scEditorHeader) {
       scEditorPanel.insertAdjacentHTML("afterend", scEditorTabs);
     }

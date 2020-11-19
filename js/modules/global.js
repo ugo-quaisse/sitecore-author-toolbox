@@ -41,6 +41,7 @@ export const iconRefresh = chrome.runtime.getURL("images/refresh.svg");
 export const iconParent = chrome.runtime.getURL("images/parent.svg");
 export const iconInfo = chrome.runtime.getURL("images/info.svg");
 export const iconCopy = chrome.runtime.getURL("images/copy.svg");
+export const iconSubmenu = chrome.runtime.getURL("images/submenu.svg");
 export const iconEmpty = chrome.runtime.getURL("images/empty.svg");
 export const iconForbidden = chrome.runtime.getURL("images/forbidden.svg");
 export const iconFields = chrome.runtime.getURL("images/fields.svg");

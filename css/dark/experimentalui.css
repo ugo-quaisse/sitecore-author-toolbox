@@ -34,37 +34,38 @@ body.satExperimentalUi.satDark .scEditorTabControlsHolder > .scMoreMenu > li.sep
 
 /* Message bars */
 
+body.satExperimentalUi.satDark .scMessageBar {
+  color: var(--whiteFaded) !important;
+}
+
 body.satExperimentalUi.satDark .scMessageBar.scSuccess {
   background-color: #044740 !important;
-  color: #96c2bd !important;
-}
-
-body.satExperimentalUi.satDark .scSuccess > .scMessageBarIcon {
-  background-color: #1f6860 !important;
-}
-
-body.satExperimentalUi.satDark .scSuccess > .scMessageBarTextContainer > .scMessageBar a,
-body.satExperimentalUi.satDark .scSuccess > .scMessageBarTextContainer > .scMessageBarOption,
-body.satExperimentalUi.satDark .scSuccess > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet {
-  color: #96c2bd !important;
-  text-decoration-color: #96c2bd !important;
 }
 
 body.satExperimentalUi.satDark .scMessageBar.scWarning {
-  background-color: var(--verydarkblue) !important;
-  color: var(--grey8) !important;
+  background-color: #61520d !important;
 }
 
-body.satExperimentalUi.satDark .scWarning > .scMessageBarIcon {
-  border-radius: 3px 0px 0px 3px;
-  background-color: var(--messageWarningBgIcon) !important;
+body.satExperimentalUi.satDark .scMessageBar.scError {
+  background-color: #6b120f !important;
 }
 
-body.satExperimentalUi.satDark .scWarning > .scMessageBarTextContainer > .scMessageBar a,
-body.satExperimentalUi.satDark .scWarning > .scMessageBarTextContainer > .scMessageBarOption,
-body.satExperimentalUi.satDark .scWarning > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet {
-  color: var(--grey8) !important;
-  text-decoration-color: rgba(0, 0, 0, 0.15) !important;
+body.satExperimentalUi.satDark .scMessageBar.scInformation {
+  background-color: #040b47 !important;
+}
+
+body.satExperimentalUi.satDark .scMessageBarIcon {
+  background-color: var(--whiteFaded) !important;
+}
+
+body.satExperimentalUi.satDark .scMessageBarTextContainer > .scMessageBarTitle,
+body.satExperimentalUi.satDark .scMessageBarTextContainer > .scMessageBarText,
+body.satExperimentalUi.satDark .scMessageBarTextContainer > .scMessageBar a,
+body.satExperimentalUi.satDark .scMessageBarTextContainer .scMessageBarOption,
+body.satExperimentalUi.satDark .scMessageBarTextContainer .scMessageBarOptions > .scMessageBarOptionBullet {
+  color: var(--white) !important;
+  text-decoration-color: var(--white) !important;
+  opacity: 0.7;
 }
 
 /* Ends */
@@ -155,7 +156,6 @@ body.satExperimentalUi.satDark #scEditorTabs > ul > li {
 body.satExperimentalUi.satDark #scEditorTabs > ul > li:not(.scEditorTabEmpty):hover {
   color: var(--text) !important;
   background: var(--black3) !important;
-  border-top: 2px solid var(--accent);
 }
 
 body.satExperimentalUi.satDark #scEditorTabs > ul > li.scEditorTabSelected:hover {
@@ -296,4 +296,13 @@ body.satExperimentalUi.satDark .sc-gallery-option-content-active {
 
 body.satExperimentalUisatDark .scContentControlCheckbox:checked + .scContentControlCheckboxLabel::before {
   background-color: var(--accent) !important;
+}
+
+body.satExperimentalUi.satDark .scContentControlImageImage > iframe {
+  background: var(--grey2) url(chrome-extension://__MSG_@@extension_id__/images/backgroundImage.svg) center 70% no-repeat !important;
+  background-size: 7% !important;
+}
+
+body.satExperimentalUi.satDark .scContentControlImageDetails {
+  background-color: var(--grey2);
 }

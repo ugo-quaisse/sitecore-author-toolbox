@@ -125,6 +125,7 @@ chrome.storage.sync.get((storage) => {
       initRteTooltips(storage);
       initSyntaxHighlighterRte(storage);
     } else if ((global.isContentEditorApp && storage.feature_experimentalui) || (global.isContentEditorApp && storage.feature_instantsearch)) {
+      log("**** Content Editor App ****", "orange");
       //Change logo href target on Desktop mode if
       document.querySelector("#globalLogo") ? document.querySelector("#globalLogo").setAttribute("target", "_parent") : false;
     } else if (global.isSearch) {
@@ -144,6 +145,7 @@ chrome.storage.sync.get((storage) => {
       log("**** User options ****", "orange");
       document.querySelectorAll(".scTabs > div > fieldset > div").forEach(function (elem) {
         elem.innerText == "Quick info section" ? elem.setAttribute("style", "color:red; font-weight:bold") : false;
+        elem.innerText == "Item title bar" ? elem.setAttribute("style", "color:red; font-weight:bold") : false;
       });
     } else if (global.isEditorFolder) {
       log("**** Editors folder ****", "orange");

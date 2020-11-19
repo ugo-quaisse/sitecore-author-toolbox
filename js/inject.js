@@ -500,3 +500,23 @@ function changePreviewRotation(iframeId) {
     }
   }
 }
+
+/**
+ * Show submenu in user menu account
+ */
+function goToSubmenu(id, width = 300) {
+  let height = document.querySelectorAll(".scAccountMenu > .scAccountMenuWrapper .scAccountColumn > ul")[id].offsetHeight;
+  let count = 0;
+
+  id == 0 ? document.querySelector(".scAccountMenuWrapper").setAttribute("style", "margin-left:0px") : document.querySelector(".scAccountMenuWrapper").setAttribute("style", "margin-left:-" + width + "px");
+  document.querySelectorAll(".scAccountMenu > .scAccountMenuWrapper .scAccountColumn").forEach(function (elem) {
+    if (count == id) {
+      elem.setAttribute("style", "opacity:1; visibility:visible;");
+    } else {
+      elem.setAttribute("style", "opacity:0; visibility:hidden;");
+    }
+    count++;
+  });
+
+  document.querySelector(".scAccountMenu").setAttribute("style", "height:" + height + "px");
+}

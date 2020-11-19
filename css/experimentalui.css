@@ -257,7 +257,7 @@ body.satExperimentalUi #scAccentColor::-webkit-color-swatch-wrapper {
   padding: 0;
 }
 
-body.satExperimentalUi ul.scAccountMenu li:hover {
+body.satExperimentalUi .scAccountColumn > ul > li:hover {
   background-color: var(--accent);
   color: var(--accentText);
 }
@@ -714,6 +714,14 @@ body.satExperimentalUi #scEditorTabs > ul > li:not(.scEditorTabEmpty) {
   font-weight: 400;
 }
 
+body.satExperimentalUi #scEditorTabs > ul > li:not(.scEditorTabEmpty):hover {
+  border-top: 2px solid var(--accent) !important;
+}
+
+body.satExperimentalUi #scEditorTabs > ul > li.scEditorTabSelected:not(.scEditorTabEmpty):hover {
+  border-top: 3px solid var(--accent) !important;
+}
+
 body.satExperimentalUi .scEditorTab {
   background-color: var(--grey5) !important;
 }
@@ -789,6 +797,19 @@ body.satExperimentalUi #BTAddNewSearch:hover {
 }
 
 /* Message bar */
+body.satExperimentalUi .scMessageBar {
+  border-radius: var(--radius) !important;
+}
+
+body.satExperimentalUi .scMessageBar .scMessageBarIcon {
+  background-position: center 19px !important;
+  padding: 7px !important;
+  border-top-left-radius: var(--radius) !important;
+  border-bottom-left-radius: var(--radius) !important;
+  border-top-right-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
+
 body.satExperimentalUi .scMessageBar .scMessageBarTextContainer .scMessageBarText {
   margin: 7px 0px 0px 0px;
 }
@@ -980,8 +1001,8 @@ body.satExperimentalUi .scEditorSectionPanelCell {
 body.satExperimentalUi a.scContentButton {
   color: var(--accent);
   border: 1px solid transparent !important;
-  margin: 8px 8px 0px 0px !important;
-  padding: 5px !important;
+  margin: 0px 5px 0px 5px !important;
+  padding: 3px !important;
   border-radius: var(--radius);
   text-decoration: none;
 }
@@ -1068,6 +1089,7 @@ body.satExperimentalUi .scSaveBar {
   border-left: 0px;
   z-index: 1000;
   padding: 13px;
+  display: block;
 }
 
 body.satExperimentalUi .scSaveBar > .scBreadcrumb {
@@ -1078,6 +1100,7 @@ body.satExperimentalUi .scSaveBar > .scBreadcrumb {
   font-size: 13px;
   color: var(--text);
   max-width: 60%;
+  width: -webkit-fill-available;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1440,10 +1463,6 @@ body.satExperimentalUi .scPreviewButton.focus {
   box-shadow: 0 0 0 2.5px var(--accent) !important;
 }
 
-body.satExperimentalUi .scScrollbox {
-  border-radius: var(--radius);
-}
-
 body.satExperimentalUi .scLink:hover {
   background-color: var(--accent);
   color: var(--accentText);
@@ -1509,11 +1528,3 @@ body.satExperimentalUi .scTabActive_Hover:after {
 body.satExperimentalUi .scTabstrip {
   border-bottom: 2px solid var(--accent);
 }
-/* .ui-widget-content,
-body.satExperimentalUi 
-  border-radius: 5px !important;
-}
-body.satExperimentalUi #scModal .header,
-body.satExperimentalUi .ui-dialog-titlebar {
-  border-radius: 5px 5px 0px 0px !important;
-} */

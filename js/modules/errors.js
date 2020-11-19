@@ -4,16 +4,18 @@ import * as global from "./global.js";
 
 export { initGroupedErrors };
 
-const initGroupedErrors = (storage) => {
-  //Variables
-  storage.feature_errors == undefined ? (storage.feature_errors = true) : false;
-  if (storage.feature_errors) {
-    var count = 0;
-    var scErrors = document.getElementsByClassName("scValidationMarkerIcon");
-    var scEditorID = document.querySelector(".scEditorPanel");
+const getErrors = () => {
+  let scErrors = document.getElementsByClassName("scValidationMarkerIcon");
+  let scMessageErrors = false;
+  let count = 0;
 
+  for (let item of scErrors) {
+    item.getAttribute("src") != "/sitecore/shell/themes/standard/images/bullet_square_yellow.png" ? count++ : false;
+  }
+
+  if (count > 0) {
     //Prepare HTML
-    var scMessageErrors =
+    scMessageErrors =
       `<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(` +
       global.iconError +
       `)"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">`;
@@ -21,14 +23,29 @@ const initGroupedErrors = (storage) => {
     for (let item of scErrors) {
       if (item.getAttribute("src") != "/sitecore/shell/themes/standard/images/bullet_square_yellow.png") {
         scMessageErrors += '<li class="scMessageBarOptionBullet" onclick="' + item.getAttribute("onclick") + '" style="cursor:pointer;">' + item.getAttribute("title") + "</li>";
-        count++;
       }
     }
     scMessageErrors += "</ul></div></div>";
+  }
+
+  return scMessageErrors;
+};
+
+const initGroupedErrors = (storage) => {
+  //Variables
+  storage.feature_errors == undefined ? (storage.feature_errors = true) : false;
+  if (storage.feature_errors) {
+    let scQuickInfo = document.querySelector("div[id^='QuickInfo_']");
+    let scEditorTabs = document.querySelector("div#scEditorTabs");
+    let scMessageErrors = getErrors();
 
     //Insert message bar into Sitecore Content Editor
-    if (count > 0 && !document.querySelector("#scMessageBarError")) {
-      scEditorID.insertAdjacentHTML("beforebegin", scMessageErrors);
+    if (scMessageErrors != false && !document.querySelector("#scMessageBarError")) {
+      if (scEditorTabs) {
+        scEditorTabs.insertAdjacentHTML("beforebegin", scMessageErrors);
+      } else if (scQuickInfo) {
+        scQuickInfo.insertAdjacentHTML("beforebegin", scMessageErrors);
+      }
     }
 
     //Update on change/unblur
@@ -41,27 +58,16 @@ const initGroupedErrors = (storage) => {
         element = document.querySelector("#scMessageBarError");
         element ? element.parentNode.removeChild(element) : false;
 
-        count = 0;
-        //Current errors
-        scErrors = document.querySelectorAll(" .scValidationMarkerIcon ");
-
-        //Prepare HTML
-        var scMessageErrors =
-          '<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(' +
-          global.iconError +
-          ')"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">';
-
-        for (let item of scErrors) {
-          if (item.getAttribute("src") != "/sitecore/shell/themes/standard/images/bullet_square_yellow.png") {
-            //prettier-ignore
-            scMessageErrors += '<li class="scMessageBarOptionBullet" onclick="' + item.getAttribute("onclick") + '" style="cursor:pointer;">' + item.getAttribute("title") + "</li>";
-            count++;
-          }
-        }
-        scMessageErrors += "</ul></div></div>";
+        let scMessageErrors = getErrors();
 
         //Add errors
-        count > 0 ? scEditorID.insertAdjacentHTML("beforebegin", scMessageErrors) : false;
+        if (scMessageErrors != false) {
+          if (scEditorTabs) {
+            scEditorTabs.insertAdjacentHTML("beforebegin", scMessageErrors);
+          } else if (scQuickInfo) {
+            scQuickInfo.insertAdjacentHTML("beforebegin", scMessageErrors);
+          }
+        }
       }, 1000);
     });
 

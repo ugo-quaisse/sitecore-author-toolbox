@@ -20,7 +20,8 @@ const initLiveUrl = (storage) => {
   var sitecoreSite = sitecoreItemPath[0].toLowerCase();
   sitecoreSite = sitecoreSite.split("/");
   sitecoreSite = sitecoreSite.slice(-1)[0];
-  let scEditorPanel = document.querySelector(".scEditorPanel");
+  let scQuickInfo = document.querySelector("div[id^='QuickInfo_']");
+  let scEditorTabs = document.querySelector("div#scEditorTabs");
   var isContent = sitecoreItemPathOriginal.includes("/sitecore/content/");
   var isMedia = sitecoreItemPathOriginal.includes("/sitecore/media library/");
   var isData = sitecoreItemPathOriginal.includes("/data/");
@@ -120,7 +121,13 @@ const initLiveUrl = (storage) => {
             </div>`;
 
         //Insert message bar into Sitecore Content Editor
-        !document.querySelector("#scMessageBarLiveUrl") ? scEditorPanel.insertAdjacentHTML("beforebegin", scMessage) : false;
+        if (!document.querySelector("#scMessageBarLiveUrl")) {
+          if (scEditorTabs) {
+            scEditorTabs.insertAdjacentHTML("beforebegin", scMessage);
+          } else if (scQuickInfo) {
+            scQuickInfo.insertAdjacentHTML("beforebegin", scMessage);
+          }
+        }
 
         //Insert link into Quickinfo table
         liveUrlQuickInfo(sitecoreItemPath);

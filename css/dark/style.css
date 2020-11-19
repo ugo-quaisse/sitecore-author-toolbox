@@ -30,7 +30,7 @@ body.satDark .sc-border[data-sc-id="AnalyticsFallback"] {
 body.satDark .scInstantSearch {
   background-color: var(--black1) !important;
   color: #cccccc !important;
-  border: 1px solid #222222 !important;
+  border-color: var(--black2) !important;
 }
 body.satDark .scInstantSearch:focus {
   background-color: var(--white) !important;
@@ -48,7 +48,7 @@ body.satDark select,
 body.satDark textarea {
   color: var(--text) !important;
   background-color: var(--black2) !important;
-  border: 1px solid var(--black3);
+  border-color: var(--black3);
 }
 
 body.satDark .scContentControlHtml {
@@ -69,7 +69,7 @@ body.satDark input[type="password"]:focus,
 body.satDark input[type="file"]:focus,
 body.satDark select:focus,
 body.satDark textarea:focus {
-  border: 1px solid rgba(14, 99, 156, 0.8) !important;
+  border-color: rgba(14, 99, 156, 0.8) !important;
   box-shadow: 0 0 4px rgba(14, 99, 156, 0.3) !important;
 }
 
@@ -111,7 +111,7 @@ body.satDark #Cancel {
 
 body.satDark .scButton,
 body.satDark input[type="submit"] {
-  border: 1px solid var(--black1) !important;
+  border-color: var(--black1) !important;
   background-color: var(--black2) !important;
   background: linear-gradient(to bottom, var(--text) 0%, var(--text) 100%);
 }
@@ -351,8 +351,9 @@ body.satDark .scContentControlComboControl {
 }
 
 body.satDark .scContentControlChecklist {
-  background: var(--black1) !important;
-  border: 1px solid var(--black) !important;
+  color: var(--text) !important;
+  background: var(--black2) !important;
+  border-color: var(--black3) !important;
 }
 
 body.satDark .scTreelistEx {
@@ -390,7 +391,7 @@ body.satDark .scContentControlHtmlToolbarButton:hover {
 }
 
 body.satDark .scContentControlIFrame {
-  border: 1px solid var(--text) !important;
+  border-color: var(--text) !important;
   color: black;
 }
 
@@ -398,12 +399,15 @@ body.satDark .scContentControlIFrame_Active {
   color: black;
 }
 body.satDark .scContentControlImagePane {
-  border: 1px solid var(--black3) !important;
+  border-color: var(--black3) !important;
 }
 
 body.satDark .scContentControlImageImage {
-  padding: 8px 12px !important;
   background-color: var(--black2) !important;
+  border: 0px !important;
+}
+
+body.satDark .scContentControlImageImage > iframe {
   border: 0px !important;
 }
 
@@ -450,13 +454,17 @@ body.satDark .scContentControlTree {
 }
 
 body.satDark .scContentControlTreeListHelp {
-  background-color: var(--black2) !important;
-  border: 1px solid var(--black1) !important;
+  background-color: var(--black3) !important;
+  border-color: var(--black1) !important;
+}
+
+body.satDark .scContentControlMultilistBox {
+  border: 1px solid var(--black3) !important;
 }
 
 body.satDark .scContentControlMultilistHelp {
   background-color: var(--black2) !important;
-  border: 1px solid #212121 !important;
+  border: 1px solid var(--black3) !important;
 }
 
 body.satDark .scContentControlSecurity {
@@ -600,7 +608,7 @@ body.satDark .scDarkBorderCell {
 
 body.satDark .scScrollbox {
   background-color: var(--black2) !important;
-  border: 1px solid var(--black2) !important;
+  border-color: var(--black3) !important;
 }
 
 body.satDark .scStretchAbsolute {
@@ -1166,40 +1174,40 @@ body.satDark .scWizardWarning {
   padding: 10px;
 }
 
+/* Message bars */
+
+body.satDark .scMessageBar {
+  color: var(--whiteFaded) !important;
+}
+
+body.satDark .scMessageBar.scSuccess {
+  background-color: #044740 !important;
+}
+
 body.satDark .scMessageBar.scWarning {
-  background-color: var(--verydarkblue) !important;
-  color: rgba(255, 255, 255, 0.7) !important;
-}
-
-body.satDark .scMessageBar.scWarning .scMessageBarIcon {
-  background-color: var(--darkblue) !important;
-}
-
-body.satDark .scMessageBar.scInformation {
-  background-color: var(--verydarkblue) !important;
-  color: rgba(255, 255, 255, 0.7) !important;
-}
-
-body.satDark .scMessageBar.scInformation .scMessageBarIcon {
-  background-color: var(--darkblue) !important;
+  background-color: #61520d !important;
 }
 
 body.satDark .scMessageBar.scError {
-  background-color: var(--darkred) !important;
-  color: rgba(255, 255, 255, 0.7) !important;
+  background-color: #6b120f !important;
 }
 
-body.satDark .scMessageBar.scError .scMessageBarIcon {
-  background-color: var(--red) !important;
+body.satDark .scMessageBar.scInformation {
+  background-color: #040b47 !important;
 }
 
-body.satDark .scMessageBar.scOrange {
-  background-color: var(--darkred) !important;
-  color: rgba(255, 255, 255, 0.7) !important;
+body.satDark .scMessageBarIcon {
+  background-color: var(--whiteFaded) !important;
 }
 
-body.satDark .scMessageBar.scOrange .scMessageBarIcon {
-  background-color: var(--red) !important;
+body.satDark .scMessageBarTextContainer > .scMessageBarTitle,
+body.satDark .scMessageBarTextContainer > .scMessageBarText,
+body.satDark .scMessageBarTextContainer > .scMessageBar a,
+body.satDark .scMessageBarTextContainer .scMessageBarOption,
+body.satDark .scMessageBarTextContainer .scMessageBarOptions > .scMessageBarOptionBullet {
+  color: var(--white) !important;
+  text-decoration-color: var(--white) !important;
+  opacity: 0.7;
 }
 
 body.satDark .scMessageBar.scError .scDetailsLink:after {
@@ -1458,14 +1466,12 @@ body.satDark #FileList a.scButton {
 }
 
 body.satDark .liveUrlBadge {
-  background-color: var(--blue);
+  background-color: var(--whiteFaded);
   color: rgba(255, 255, 255, 0.7);
 }
 
 body.satDark .liveUrlBadge:hover {
-  background-color: transparent;
-  border: 1px solid var(--blue);
-  color: rgba(255, 255, 255, 0.7);
+  opacity: 0.8;
 }
 
 body.satDark .liveStatusRed {
@@ -1993,7 +1999,7 @@ body.satDark a.scEditorHeaderButton:active {
 
 body.satDark .scEditorHeaderNavigatorField:hover,
 body.satDark a.scEditorHeaderNavigatorSection:hover {
-  background-color: #69a8d0;
+  background-color: var(--blue) !important;
   color: var(--black3);
 }
 
@@ -2013,6 +2019,7 @@ body.satDark .scEditorSectionCaptionExpanded {
   border-left: 5px solid #dc291e !important;
   border-bottom: 1px solid var(--black1) !important;
   color: var(--white);
+  background-color: var(--grey13);
 }
 
 body.satDark .scEditorSectionCaptionCollapsed {
@@ -2288,8 +2295,8 @@ body.satDark .scSearchEntireTree a {
 
 body.satDark .scEditorFieldMarkerInputCell iframe {
   color: var(--text) !important;
-  border: 1px solid var(--black3) !important;
   background: var(--black2) !important;
+  border-color: var(--black3) !important;
 }
 
 body.satDark .defaultFieldEditorsFrameContainer > html > body {
@@ -2298,7 +2305,7 @@ body.satDark .defaultFieldEditorsFrameContainer > html > body {
 
 body.satDark .scContentControlTreelist .scScrollbox,
 body.satDark .scContentControlTreelist_Active .scScrollbox {
-  border: 1px solid var(--black2);
+  border-color: var(--black2);
 }
 
 body.satDark .scProfileHeader .scSelectPresetLinkDisabled {
@@ -2443,7 +2450,8 @@ body.satDark .scSearchOptionName:hover {
 
 body.satDark .scEditorSectionPanel,
 body.satDark .scEditorSections {
-  border-bottom: 1px solid var(--black1);
+  border-color: var(--black1) !important;
+  border-width: 1px 0px 0px 0px !important;
 }
 body.satDark #scEditorTabs {
   background-color: var(--black1);
@@ -2463,9 +2471,6 @@ body.satDark .scEditorTabEmpty {
 body.satDark .scEditorTabSelected {
   color: var(--text) !important;
   background-color: var(--black2) !important;
-  border-bottom: 0px solid var(--black2) !important;
-  border-left: 0px solid var(--black2) !important;
-  border-right: 0px solid var(--black2) !important;
 }
 
 body.satDark #ContentWrapper,
@@ -3103,4 +3108,18 @@ body.satDark .sc-dialogContent {
 
 body.satDark .sc-listcontrol-tile-content {
   background: var(--black2) !important;
+}
+
+body.satDark #RibbonContainer {
+  border-color: var(--black1) !important;
+}
+
+body.satDark .scFlexColumnContainer,
+body.satDark .scFlexContent {
+  background-color: var(--black2) !important;
+}
+body.satDark .scContentControlChecklist {
+  color: var(--text) !important;
+  background: var(--black2) !important;
+  border-color: var(--grey) !important;
 }

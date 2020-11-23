@@ -1,7 +1,8 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
-import { loadCssFile, loadJsFile, initDarkModeEditor, getScItemData } from "./helpers.js";
+import { loadCssFile, loadJsFile, getScItemData } from "./helpers.js";
+import { initDarkModeEditor } from "./dark.js";
 
 export { initRteTooltips, initSyntaxHighlighterRte, initSyntaxHighlighterScriban };
 

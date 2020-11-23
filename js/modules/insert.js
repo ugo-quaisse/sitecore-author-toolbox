@@ -91,10 +91,7 @@ const insertModal = (sitecoreItemID, scLanguage, scVersion, scItemName = "", mut
       //Item name
       scItemName != "" ? (ScItem.name = scItemName.toLowerCase()) : false;
 
-      if (jsonOptions.subitems && document.querySelector("#scSitecoreMenu")) {
-        //If empty
-        jsonOptions.subitems.length == 0 ? document.querySelector("#scSitecoreMenu").setAttribute("style", "opacity:0.2; visibility:visible") : document.querySelector("#scSitecoreMenu").setAttribute("style", "visibility:visible");
-
+      if (jsonOptions.subitems) {
         //If empty
         jsonOptions.subitems.length == 0
           ? (menuTiles = '<div class="scNoResult"><img src=" ' + global.iconForbidden + ' " style="width:128px; opacity:0.5;" /><br />Nothing to insert under "' + ScItem.name.capitalize() + '" node.</div>')
@@ -106,15 +103,9 @@ const insertModal = (sitecoreItemID, scLanguage, scVersion, scItemName = "", mut
             '<div class="item"><a href="#" onclick="insertPageClose(); ' + options[2] + '"><img loading="lazy" src="' + iconTemp + '" onerror="this.onerror=null;this.src=\'' + global.iconDocument + "'\"/><br />" + options[0] + "</a></div>";
         }
       }
-      let htmlMenuInner =
-        '<div class="header"><span class="title">Insert under ' +
-        ScItem.name +
-        '</span> <span class="maximize"></span> <span class="close"></span></div><div class="main"> ' +
-        menuTiles +
-        ' </div><div class="preload"> ' +
-        global.svgAnimation +
-        " </div>";
-      let htmlMenu = '<div class="scOverlay"></div><div id="scModal">' + htmlMenuInner + "</div>";
+      //prettier-ignore
+      let htmlMenuInner = `<div class="header"><span class="title">Insert under ` + ScItem.name + `</span> <span class="maximize"></span> <span class="close"></span></div><div class="main">` + menuTiles + `</div><div class="preload">` + global.svgAnimation + `</div>`;
+      let htmlMenu = `<div class="scOverlay"></div><div id="scModal">` + htmlMenuInner + `</div>`;
 
       scModal ? (scModal.innerHTML = htmlMenuInner) : document.querySelector("body").insertAdjacentHTML("beforeend", htmlMenu);
 

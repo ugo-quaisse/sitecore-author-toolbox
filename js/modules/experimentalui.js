@@ -16,7 +16,7 @@ export {
   initInsertIcon,
   getAccentColor,
   initColorPicker,
-  initSitecoreMenu,
+  initSitecoreRibbon,
   initGutter,
   getParentNode,
   initContrastedIcons,
@@ -61,7 +61,7 @@ const insertSavebar = () => {
             </ul>
             <button class="primary primaryGrouped" onclick="javascript:return scForm.postEvent(this,event,'item:publish(id=)')">Save and Publish</button>`;
 
-  let scLiveyBtn = !global.hasModePreview ? `<button class="scPreviewButton" onclick="javascript:return scForm.invoke('contenteditor:preview', event)">Preview</button>` : ``;
+  let scLiveyBtn = !global.hasModePreview && getScItemData().path.includes("/home") ? `<button class="scPreviewButton" onclick="javascript:return scForm.invoke('contenteditor:preview', event)">Preview</button>` : ``;
 
   //Save Bar
   //prettier-ignore
@@ -258,17 +258,17 @@ const insertLockButton = (locked = false) => {
 /**
  * Get last status of Sitecore Ribbon (Open or Close)
  */
-const initSitecoreMenu = () => {
-  let storage = localStorage.getItem("scSitecoreMenu");
+const initSitecoreRibbon = () => {
+  let storage = localStorage.getItem("scSitecoreRibbon");
   let dock = document.querySelector(".scDockTop");
-  let icon = document.querySelector("#scSitecoreMenu");
+  let icon = document.querySelector("#scSitecoreRibbon");
 
   if (storage == "true") {
-    dock ? dock.classList.add("showSitecoreMenu") : false;
-    icon ? icon.classList.add("scSitecoreMenu") : false;
+    dock ? dock.classList.add("showSitecoreRibbon") : false;
+    icon ? icon.classList.add("scSitecoreRibbon") : false;
   } else {
-    dock ? dock.classList.remove("showSitecoreMenu") : false;
-    icon ? icon.classList.remove("scSitecoreMenu") : false;
+    dock ? dock.classList.remove("showSitecoreRibbon") : false;
+    icon ? icon.classList.remove("scSitecoreRibbon") : false;
   }
 };
 
@@ -402,7 +402,7 @@ const setInsertIcon = (treeNode) => {
 };
 
 /**
- * Init Insert Icon
+ * Init Insert action icons (create, edit in EE) in content tree when you hover an item
  */
 const initInsertIcon = () => {
   let contentTree = document.querySelector(".scContentTree");

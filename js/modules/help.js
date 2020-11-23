@@ -2,7 +2,7 @@
 
 import * as global from "./global.js";
 
-export { checkHelpLink, checkUrlType, checkIconType };
+export { addHelptextIcons, checkHelpLink, checkUrlType, checkIconType };
 
 /**
  * Loop trhough fields and add help icon

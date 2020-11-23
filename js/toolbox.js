@@ -12,18 +12,20 @@
  * Load modules
  */
 import * as global from "./modules/global.js";
-import { log, loadJsFile, initDarkMode, autoDarkMode, getScItemData } from "./modules/helpers.js";
+import { log, loadJsFile, getScItemData } from "./modules/helpers.js";
+import { initDarkMode, detectSwitchDarkMode } from "./modules/dark.js";
+import { addHelptextIcons } from "./modules/help.js";
 import { showSnackbar } from "./modules/snackbar.js";
 import { workboxNotifications } from "./modules/workbox.js";
 import { resumeFromWhereYouLeftOff, historyNavigation } from "./modules/history.js";
 import { checkNotificationPermissions, checkPublishNotification } from "./modules/notification.js";
 import { initFlagRibbonEE, initLanguageMenuEE, initLanguageMenuCE, initFlagsPublishingWindow, initFlagsPublish } from "./modules/language.js";
 import { initCharsCount, initCheckboxes, initPublishCheckboxes, refreshContentEditor } from "./modules/contenteditor.js";
-import { initGravatarImage, initUserMenu } from "./modules/users.js";
+import { initAppName, initGravatarImage, initUserMenu } from "./modules/users.js";
 import { initInstantSearch, enhancedSitecoreSearch } from "./modules/search.js";
 import { insertModal, insertPanel } from "./modules/insert.js";
 import { initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons } from "./modules/media.js";
-import { initExperimentalUi, initInsertIcon, initGutter, initColorPicker, initSitecoreMenu, initContrastedIcons, initSvgAnimation, initEventListeners } from "./modules/experimentalui.js";
+import { initExperimentalUi, initInsertIcon, initGutter, initColorPicker, initSitecoreRibbon, initContrastedIcons, initSvgAnimation, initEventListeners } from "./modules/experimentalui.js";
 import { initFavorites } from "./modules/favorites.js";
 import { initGroupedErrors } from "./modules/errors.js";
 import { enhancedBucketLists } from "./modules/buckets.js";
@@ -50,12 +52,15 @@ chrome.storage.sync.get((storage) => {
     checkPublishNotification(storage);
     initUserMenu(storage);
     initDarkMode(storage);
-    autoDarkMode(storage);
+    detectSwitchDarkMode(storage);
     initExperimentalUi(storage);
     initContrastedIcons(storage);
     initAutoExpandTree(storage);
     initTreeGutterTooltips();
     refreshContentEditor(storage);
+    if (storage.feature_experimentalui && !global.isLaunchpad) {
+      initColorPicker();
+    }
 
     /*
      **********************
@@ -73,13 +78,13 @@ chrome.storage.sync.get((storage) => {
       showSnackbar();
       if (storage.feature_experimentalui) {
         log("**** Experimental ****", "yellow");
+        initAppName(storage, "Content Editor");
         initSvgAnimation();
         insertModal(ScItem.id, ScItem.language, ScItem.version);
         insertPanel();
         initInsertIcon();
         initGutter();
-        initColorPicker();
-        initSitecoreMenu();
+        initSitecoreRibbon();
         initEventListeners();
       }
     }
@@ -89,11 +94,44 @@ chrome.storage.sync.get((storage) => {
      * 2. Sitecore pages  *
      ************************
      */
-    if ((global.isDesktop && !global.isGalleryFavorites && !global.isXmlControl) || global.isLaunchpad) {
-      log("**** Launchpad - Desktop Shell ****", "orange");
+    if (global.isLaunchpad) {
+      log("**** Launchpad ****", "orange");
+      initAppName(storage, "Launchpad");
       initLaunchpadIcon(storage);
+    } else if (global.isDesktop && !global.isGalleryFavorites && !global.isXmlControl) {
+      log("**** Desktop Shell ****", "orange");
+      initAppName(storage, "Sitecore Desktop");
       initLaunchpadMenu(storage);
       workboxNotifications(storage);
+    } else if (global.isUserManager) {
+      log("**** User Manager ****", "orange");
+      initAppName(storage, "User Manager");
+    } else if (global.isSecurityEditor) {
+      log("**** Security Editor ****", "orange");
+      initAppName(storage, "Security Editor");
+    } else if (global.isAccessViewer) {
+      log("**** Access Viewer ****", "orange");
+      initAppName(storage, "Access Viewer");
+    } else if (global.isDomainManager) {
+      log("**** Domain Manager ****", "orange");
+      initAppName(storage, "Domain Manager");
+    } else if (global.isRoleManager) {
+      log("**** Role Manager ****", "orange");
+      initAppName(storage, "Role Manager");
+    } else if (global.isPowerShellIse) {
+      log("**** PowerShell ISE ****", "orange");
+      initAppName(storage, "PowerShell ISE");
+    } else if (global.isPowerShellReports) {
+      log("**** PowerShell Reports ****", "orange");
+      initAppName(storage, "PowerShell Reports");
+    } else if (global.isRecycleBin) {
+      log("**** Recycle Bin ****", "orange");
+      initAppName(storage, "Recycle Bin");
+    } else if (global.isWorkbox) {
+      log("**** Workbox ****", "orange");
+      initAppName(storage, "Workbox");
+    } else {
+      log("**** Non identified ****", "orange");
     }
 
     /*
@@ -116,6 +154,7 @@ chrome.storage.sync.get((storage) => {
       initCheckboxes(storage);
       initCharsCount(storage);
       initGroupedErrors(storage);
+      addHelptextIcons();
       enhancedBucketLists();
     } else if (global.isExperienceProfile) {
       log("**** Experience Profile ****", "orange");
@@ -175,7 +214,7 @@ chrome.storage.sync.get((storage) => {
     loadJsFile("js/inject.js");
     checkNotificationPermissions();
     initDarkMode(storage);
-    autoDarkMode(storage);
+    detectSwitchDarkMode(storage);
     initExperimentalUi(storage);
     initContrastedIcons(storage);
 

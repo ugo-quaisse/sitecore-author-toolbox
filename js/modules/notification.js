@@ -2,7 +2,7 @@
 /* eslint-disable no-new */
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
-import { currentColorScheme } from "./helpers.js";
+import { currentColorScheme } from "./dark.js";
 import { checkUrlStatus } from "./url.js";
 
 export { checkNotificationPermissions, sendNotification, checkPublishNotification };

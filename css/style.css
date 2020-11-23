@@ -56,8 +56,8 @@ body.satExtension.contentEditor:after {
   visibility: hidden;
 }
 
-button:focus,
-button:active {
+body.satExtension button:focus,
+body.satExtension button:active {
   outline: 0px solid transparent;
   box-shadow: 0 0 0 2.5px #0974ff !important;
 }
@@ -333,11 +333,19 @@ body.satExtension .scBackground > #FileList {
   filter: brightness(1.5);
 }
 
-.scSystemButtons {
+#SwitchMenu {
   display: none;
 }
 
-#scPageExtendersForm {
+/* .scSystemButtons {
+  opacity: 0;
+}
+
+.scSystemButtons:hover {
+  opacity: 1;
+} */
+
+div#scPageExtendersForm {
   border-bottom: 1px solid #666;
 }
 
@@ -616,6 +624,11 @@ a.scTileItem .scTileItemIconImage {
 
 .sc-dialogContent-toolbar-back {
   display: none;
+}
+
+.sc-dialogContent {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
 }
 
 #scWebEditRibbon,
@@ -1092,6 +1105,7 @@ body.satExtension textarea:focus {
   cursor: pointer;
   text-align: left;
   border: none;
+  margin: 0px;
   text-transform: capitalize;
 }
 
@@ -1209,15 +1223,16 @@ ul.sc-accountInformation li:last-child:after {
   border-radius: 5px;
   backdrop-filter: blur(20px);
   box-shadow: 0px 5px 40px rgba(0, 0, 0, 0.3);
-  visibility: hidden;
+  visibility: hidden !important;
   opacity: 0;
   padding: 0px !important;
   overflow: hidden;
   transition: all ease-in-out 0.2s;
+  display: unset !important;
 }
 
 .scAccountMenu.open {
-  visibility: visible;
+  visibility: visible !important;
   top: 50px;
   opacity: 1;
 }
@@ -1250,6 +1265,7 @@ ul.sc-accountInformation li:last-child:after {
   transition: opacity ease-in-out 0.3s;
 }
 .scAccountColumn > ul {
+  padding: 0px;
   float: left;
   width: 300px;
 }
@@ -1328,6 +1344,7 @@ ul.sc-accountInformation li:last-child:after {
   border-radius: 10px;
   border: 2px solid var(--white);
   vertical-align: -2px;
+  margin-top: 0px;
   outline: none;
   cursor: pointer;
 }

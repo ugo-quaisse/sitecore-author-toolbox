@@ -15,7 +15,7 @@
 
 import * as global from "./global.js";
 
-export { log, loadCssFile, loadJsFile, exeJsCode, currentColorScheme, initDarkMode, initDarkModeEditor, autoDarkMode, sitecoreItemJson, fetchTimeout, getScItemData, setPlural, setTextColour, repositionElement, startDrag, calcMD5 };
+export { log, loadCssFile, loadJsFile, exeJsCode, sitecoreItemJson, fetchTimeout, getScItemData, setPlural, setTextColour, repositionElement, startDrag, calcMD5 };
 
 /**
  * Show colored log message in console
@@ -99,80 +99,6 @@ const exeJsCode = (code) => {
   script.textContent = code;
   (document.head || document.documentElement).appendChild(script);
   script.remove();
-};
-
-/**
- * Get active OS color Scheme
- */
-const currentColorScheme = () => {
-  let color = "light";
-  if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-    color = "dark";
-  } else {
-    color = "light";
-  }
-
-  return color;
-};
-
-/**
- * Is Dark Mode
- */
-// eslint-disable-next-line consistent-return
-const initDarkMode = (storage) => {
-  if ((storage.feature_darkmode && !storage.feature_darkmode_auto) || (storage.feature_darkmode && storage.feature_darkmode_auto && currentColorScheme() == "dark")) {
-    document.body.classList.add("satDark");
-    if (storage.feature_darkmode_auto && document.querySelector("#darkmodeRadio[value='auto']")) {
-      document.querySelector("#darkmodeRadio[value='auto']").checked = true;
-      document.querySelector("#darkmodeRadio[value='auto']").dispatchEvent(new Event("click"));
-    } else if (document.querySelector("#darkmodeRadio[value='dark']")) {
-      document.querySelector("#darkmodeRadio[value='dark']").checked = true;
-      document.querySelector("#darkmodeRadio[value='dark']").dispatchEvent(new Event("click"));
-    }
-
-    //Add correct bg color for jquerymodal window
-    try {
-      window.frameElement.parentNode.querySelector(".ui-dialog-titlebar").style.backgroundColor = "#111";
-      // eslint-disable-next-line no-catch-shadow
-    } catch (e) {
-      //Error
-    }
-    //Add custom csss for scrollbar on windows
-    navigator.platform.indexOf("Win") == 0 ? loadCssFile("css/dark/scrollbars.min.css") : false;
-
-    return true;
-  }
-};
-
-/**
- * Is Dark Mode for Editor
- */
-// eslint-disable-next-line consistent-return
-const initDarkModeEditor = (storage) => {
-  let darkModeTheme = "default";
-  if ((storage.feature_darkmode && !storage.feature_darkmode_auto) || (storage.feature_darkmode && storage.feature_darkmode_auto && currentColorScheme() == "dark")) {
-    darkModeTheme = "ayu-dark";
-    loadCssFile("css/dark/ayu-dark.css");
-  }
-
-  return darkModeTheme;
-};
-
-/**
- * Auto dark mode
- */
-const autoDarkMode = (storage) => {
-  if (storage.feature_darkmode && storage.feature_darkmode_auto) {
-    const scheme = window.matchMedia("(prefers-color-scheme: dark)");
-    scheme.addEventListener("change", () => {
-      if (document.querySelector("#darkModeSwitch")) {
-        scheme.matches ? document.body.classList.add("satDark") : document.body.classList.remove("satDark");
-        scheme.matches ? (document.querySelector("#darkModeSwitch").checked = true) : (document.querySelector("#darkModeSwitch").checked = false);
-        //trigger an event
-        document.querySelector("#darkModeSwitch").dispatchEvent(new Event("change"));
-      }
-    });
-  }
 };
 
 /**

@@ -9,6 +9,13 @@ body.satExperimentalUi {
   color: var(--grey1) !important;
 }
 
+body.satExperimentalUi .scStartButton {
+  background: transparent url("chrome-extension://__MSG_@@extension_id__/images/sitecore_logo.svg") no-repeat center center !important;
+  background-color: var(--accent) !important;
+  z-index: auto;
+  cursor: pointer;
+}
+
 body.satExperimentalUi button:focus,
 body.satExperimentalUi button:active {
   outline: 0px solid var(--accent);
@@ -40,8 +47,15 @@ body.satExperimentalUi #scPanel h3 {
   margin: auto;
 }
 
-body.satExperimentalUi #scPageExtendersForm {
+body.satExperimentalUi div#scPageExtendersForm {
   border-bottom: 3px solid var(--accent);
+}
+
+body.satExperimentalUi .scStartMenuProgramsMenu:hover,
+body.satExperimentalUi .scStartMenuRightFolder:hover,
+body.satExperimentalUi .scStartMenuLeftOption:hover {
+  background-color: var(--accent);
+  color: var(--accentText);
 }
 
 body.satExperimentalUi .visible {
@@ -157,15 +171,11 @@ body.satExperimentalUi .wbNotificationMenu {
 }
 
 body.satExperimentalUi #scSitecoreRibbon {
-  width: 40px;
-  height: 20px;
+  width: 16px;
+  height: 10px;
   cursor: pointer;
   position: relative;
-  top: 5px;
-  border-radius: 20px;
   transition: all 0.1s ease 0s;
-  background: var(--white);
-  border: 1px solid var(--white);
   outline: 0;
 }
 
@@ -230,11 +240,11 @@ body.satExperimentalUi #scModal .header .close {
   filter: brightness(var(--accentBrightness));
 }
 
-body.satExperimentalUi .showSitecoreMenu {
+body.satExperimentalUi .showSitecoreRibbon {
   display: block !important;
 }
 
-body.satExperimentalUi .scSitecoreMenu {
+body.satExperimentalUi .scSitecoreRibbon {
   transform: rotate(180deg);
 }
 
@@ -1090,6 +1100,8 @@ body.satExperimentalUi .scSaveBar {
   z-index: 1000;
   padding: 13px;
   display: block;
+  min-width: 400px;
+  overflow: auto;
 }
 
 body.satExperimentalUi .scSaveBar > .scBreadcrumb {
@@ -1231,7 +1243,7 @@ body.satExperimentalUi #FileList a.scButton.scButtonGrid.selected {
 
 body.satExperimentalUi #FileList a.scButton.scButtonList.selected > img,
 body.satExperimentalUi #FileList a.scButton.scButtonGrid.selected > img {
-  background-color: var(--accent) !important;
+  filter: invert(1);
 }
 
 body.experimental input[type="submit"],
@@ -1252,6 +1264,9 @@ body.satExperimentalUi .scButtonPrimary {
   background: var(--accent) !important;
   color: var(--accentText);
   outline-color: var(--accent);
+  box-shadow: unset;
+  border: unset;
+  background-image: unset;
 }
 
 body.satExperimentalUi .scButtonPrimary:hover {
@@ -1428,8 +1443,9 @@ body.satExperimentalUi .scMediaThumbnail {
   background-size: cover !important;
   animation: preloading 2s linear infinite;
 } */
-
-body.satExperimentalUi a.scContentTreeNodeActive {
+body.satExperimentalUi a.scContentTreeNodeNormal:hover,
+body.satExperimentalUi a.scContentTreeNodeActive,
+body.satExperimentalUi a.scContentTreeNodeNormal.scDragHover {
   background-color: var(--accent);
   color: var(--accentText);
   border-radius: var(--radius);

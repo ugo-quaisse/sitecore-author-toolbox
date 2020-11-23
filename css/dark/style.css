@@ -987,16 +987,16 @@ body.satDark a.scContentTreeNodeStatic:active {
 body.satDark a.scContentTreeNodeNormal:hover,
 body.satDark a.scContentTreeNodeActive,
 body.satDark a.scContentTreeNodeNormal.scDragHover {
-  background-color: var(--blue) !important;
+  background-color: var(--blue);
 }
 
 body.satDark a.scContentTreeNodeActive > span {
-  color: rgba(255, 255, 255, 0.7) !important;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 body.satDark a.scContentTreeNodeActive {
-  background-color: var(--blue) !important;
-  color: rgba(255, 255, 255, 0.7) !important;
+  background-color: var(--blue);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 body.satDark .scContentTreeNodeGlyph:hover {
@@ -1639,15 +1639,12 @@ body.satDark .scRibbon a.scRibbonNavigatorButtonsContextualNormal {
 }
 
 body.satDark .scRibbon a.scRibbonNavigatorButtonsContextualActive {
-  color: var(--black1) !important;
-  background-color: var(--grey12) !important;
+  color: var(--text) !important;
+  background-color: var(--black1) !important;
 }
 
 body.satDark .scRibbonToolbar {
-  border-bottom: 1px solid #111111 !important;
-}
-
-body.satDark .contentEditor .scRibbonToolbar {
+  border-bottom: 1px solid var(--black1) !important;
   background-color: var(--black2) !important;
 }
 
@@ -3117,9 +3114,4 @@ body.satDark #RibbonContainer {
 body.satDark .scFlexColumnContainer,
 body.satDark .scFlexContent {
   background-color: var(--black2) !important;
-}
-body.satDark .scContentControlChecklist {
-  color: var(--text) !important;
-  background: var(--black2) !important;
-  border-color: var(--grey) !important;
 }

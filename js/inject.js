@@ -174,13 +174,15 @@ const fadeEditorFrames = () => {
   let divResults = document.querySelector(".scInstantSearchResults");
   divResults.setAttribute("style", "height:0px; opacity: 0; visibility: hidden; top: 43px;");
 
-  document.querySelector("#EditorFrames").setAttribute("style", "opacity:0.6");
-  document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:0.6");
-  document.querySelectorAll(".scEditorTabHeaderNormal, .scEditorTabHeaderActive > span")[0].innerText = "Loading...";
-  var timeout = setTimeout(function () {
-    document.querySelector("#EditorFrames").setAttribute("style", "opacity:1");
-    document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:1");
-  }, 8000);
+  if (document.querySelector("#EditorFrames")) {
+    document.querySelector("#EditorFrames").setAttribute("style", "opacity:0.6");
+    document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:0.6");
+    document.querySelectorAll(".scEditorTabHeaderNormal, .scEditorTabHeaderActive > span")[0].innerText = "Loading...";
+    var timeout = setTimeout(function () {
+      document.querySelector("#EditorFrames").setAttribute("style", "opacity:1");
+      document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:1");
+    }, 8000);
+  }
 };
 
 const insertPage = (scItem, scItemName) => {
@@ -200,15 +202,26 @@ const insertPageClose = () => {
   }, 10);
 };
 
-const showSitecoreMenu = () => {
+const showSitecoreRibbon = () => {
+  //Update Ribbons
+  if (document.querySelector(".scDockTop")) {
+    document.querySelector(".scDockTop").classList.toggle("showSitecoreRibbon");
+  } else {
+    document.querySelectorAll("iframe").forEach(function (iframe) {
+      iframe.contentWindow.document.querySelector(".scDockTop") ? iframe.contentWindow.document.querySelector(".scDockTop").classList.toggle("showSitecoreRibbon") : false;
+    });
+  }
+
+  //Update icon and local storage
   let dock = document.querySelector(".scDockTop") ? document.querySelector(".scDockTop") : document.querySelector("iframe").contentWindow.document.querySelector(".scDockTop");
-  dock ? dock.classList.toggle("showSitecoreMenu") : false;
-
-  let icon = document.querySelector("#scSitecoreMenu") ? document.querySelector("#scSitecoreMenu") : document.querySelector("iframe").contentWindow.document.querySelector("#scSitecoreMenu");
-  icon ? icon.classList.toggle("scSitecoreMenu") : false;
-
   if (dock) {
-    dock.classList.contains("showSitecoreMenu") ? localStorage.setItem("scSitecoreMenu", true) : localStorage.setItem("scSitecoreMenu", false);
+    if (dock.classList.contains("showSitecoreRibbon")) {
+      localStorage.setItem("scSitecoreRibbon", true);
+      document.querySelector("#scSitecoreRibbon").classList.add("scSitecoreRibbon");
+    } else {
+      localStorage.setItem("scSitecoreRibbon", false);
+      document.querySelector("#scSitecoreRibbon").classList.remove("scSitecoreRibbon");
+    }
   }
 };
 
@@ -511,9 +524,9 @@ function goToSubmenu(id, width = 300) {
   id == 0 ? document.querySelector(".scAccountMenuWrapper").setAttribute("style", "margin-left:0px") : document.querySelector(".scAccountMenuWrapper").setAttribute("style", "margin-left:-" + width + "px");
   document.querySelectorAll(".scAccountMenu > .scAccountMenuWrapper .scAccountColumn").forEach(function (elem) {
     if (count == id) {
-      elem.setAttribute("style", "opacity:1; visibility:visible;");
+      elem.setAttribute("style", "opacity:1; z-index:1");
     } else {
-      elem.setAttribute("style", "opacity:0; visibility:hidden;");
+      elem.setAttribute("style", "opacity:0; z-index:0");
     }
     count++;
   });

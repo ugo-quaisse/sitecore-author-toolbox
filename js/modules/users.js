@@ -1,8 +1,9 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 import * as global from "./global.js";
-import { exeJsCode, calcMD5, currentColorScheme } from "./helpers.js";
+import { exeJsCode, calcMD5 } from "./helpers.js";
+import { currentColorScheme } from "./dark.js";
 
-export { getGravatar, initGravatarImage, initUserMenu };
+export { getGravatar, initGravatarImage, initAppName, initUserMenu };
 
 /**
  * Get Gravatar image from an email
@@ -68,26 +69,33 @@ const initGravatarImage = (storage) => {
 /**
  * Attach Dropdown User Menu to the profil image
  */
+const initAppName = (storage, name = "Content Editor") => {
+  if (storage.feature_experimentalui) {
+    //Add app name
+    let startButton = document.querySelector(".sc-globalHeader-startButton");
+    let htmlApp = `<div class="sc-globalheader-appName" onclick="javascript:return scForm.invoke('contenteditor:home', event)">` + name + `</div>`;
+    startButton ? startButton.insertAdjacentHTML("afterend", htmlApp) : false;
+  }
+};
+
+/**
+ * Attach Dropdown User Menu to the profil image
+ */
 const initUserMenu = (storage) => {
   let accountInformation = document.querySelector(".sc-accountInformation");
   let scGlobalHeader = document.querySelector(".sc-globalHeader-loginInfo");
-  let startButton = document.querySelector(".sc-globalHeader-startButton");
 
   if (accountInformation) {
     let accountUser = accountInformation.querySelectorAll("li")[1].innerText.trim();
 
     if (storage.feature_experimentalui) {
-      //Add app name
-      let htmlApp = `<div class="sc-globalheader-appName" onclick="javascript:return scForm.invoke('contenteditor:home', event)">Content Editor</div>`;
-      startButton ? startButton.insertAdjacentHTML("afterend", htmlApp) : false;
-
       //Add Notification and arrow icons
       let dialogParamsLarge = "center:yes; help:no; resizable:yes; scroll:yes; status:no; dialogMinHeight:200; dialogMinWidth:300; dialogWidth:1100; dialogHeight:700; header:";
 
       //prettier-ignore
       let htmlIcon =
         `<span class="t-bottom t-sm" data-tooltip="Workbox notification"><img loading="lazy" id="scNotificationBell" onclick="javascript:scSitecore.prototype.showModalDialog('` + global.workboxPage.replace("&sc_bw=1", "&sc_bw=0") + `', '', '` + dialogParamsLarge + `Workbox', null, null); false" src="` + global.iconBell + `" class="scIconMenu" accesskey="w" /></span>
-       <span class="t-bottom t-sm" data-tooltip="Toggle ribbon"><img loading="lazy" id="scSitecoreMenu" onclick="showSitecoreMenu()" src="` + global.iconDownArrow + `" class="scIconMenu" accesskey="a" /></span>`;
+       <span class="t-bottom t-sm" data-tooltip="Toggle ribbon"><img loading="lazy" id="scSitecoreRibbon" onclick="showSitecoreRibbon()" src="` + global.iconDownArrow + `" class="scIconMenu" accesskey="a" /></span>`;
       accountInformation.insertAdjacentHTML("afterbegin", htmlIcon);
 
       //Add new Avatar icon
@@ -147,7 +155,7 @@ const initUserMenu = (storage) => {
     //Listeners
     document.addEventListener("keydown", (event) => {
       if (event.ctrlKey && event.key === "Shift") {
-        exeJsCode(`showSitecoreMenu()`);
+        exeJsCode(`showSitecoreRibbon()`);
         event.preventDefault();
         event.stopPropagation();
       }
@@ -204,6 +212,25 @@ const initDarkSwitchEvents = () => {
         chrome.storage.sync.set({
           feature_darkmode: true,
           feature_darkmode_auto: radio.value == "auto",
+        });
+      } else if (radio.value == "auto" && currentColorScheme() == "light") {
+        //main
+        document.body.classList.remove("satDark");
+        //iframes
+        document.querySelectorAll("iframe").forEach(function (iframe) {
+          if (iframe.contentDocument.body) {
+            iframe.contentDocument.body.classList.remove("satDark");
+            iframe.contentDocument.querySelectorAll("iframe").forEach(function (iframe) {
+              iframe.contentDocument.body.classList.remove("satDark");
+            });
+          }
+        });
+        //hint
+        document.querySelector(".darkMenuHint").innerText = "Auto";
+        //Storage
+        chrome.storage.sync.set({
+          feature_darkmode: true,
+          feature_darkmode_auto: true,
         });
       } else if (radio.value == "light") {
         //main

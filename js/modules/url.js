@@ -3,7 +3,8 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
-import { getScItemData, currentColorScheme } from "./helpers.js";
+import { getScItemData } from "./helpers.js";
+import { currentColorScheme } from "./dark.js";
 
 export { initLiveUrl, checkUrlStatus };
 

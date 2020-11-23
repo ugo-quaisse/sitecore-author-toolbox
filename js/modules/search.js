@@ -11,7 +11,7 @@ export { initInstantSearch, instantSearch, enhancedSitecoreSearch, enhancedTreeS
  */
 const initInstantSearch = (storage) => {
   storage.feature_instantsearch == undefined ? (storage.feature_instantsearch = true) : false;
-  if (!global.isLaunchpad && storage.feature_instantsearch) {
+  if (storage.feature_instantsearch) {
     let globalHeader = document.querySelector(".sc-globalHeader");
     let html = '<input type="text" class="scInstantSearch scIgnoreModified" placeholder="Search for content or media" tabindex="1" accesskey="f">';
     let htmlResult = '<ul class="scInstantSearchResults"></ul>';
@@ -29,6 +29,12 @@ const instantSearch = () => {
   const scInstantSearch = document.querySelector(".scInstantSearch");
   const divResults = document.querySelector(".scInstantSearchResults");
   let globalTimeout = null;
+
+  //From where
+  let fromWhere = "default";
+  if (global.isDesktop && !global.isGalleryFavorites && !global.isXmlControl) {
+    fromWhere = "desktop";
+  }
 
   if (scInstantSearch && divResults) {
     // On blur
@@ -130,6 +136,7 @@ const instantSearch = () => {
                 let category, title, href, img, text, scItem, scLanguage, scVersion, showCat;
                 let html = "";
                 let count = 0;
+                let command;
                 const dom = new DOMParser().parseFromString(ajax.responseText, "text/html");
                 const results = dom.querySelectorAll(".scSearchResultsTable > tbody > tr");
 
@@ -178,24 +185,18 @@ const instantSearch = () => {
 
                   // Append
                   if (category.toLowerCase() == "content" || category.toLowerCase() == "media library" || category.toLowerCase() == "direct hit") {
+                    //Title
                     showCat ? (html += "<h1>" + category + "</h1>") : false;
-                    html +=
-                      "<li onclick='fadeEditorFrames(); setTimeout(function() { scForm.invoke(\"item:load(id=" +
-                      scItem +
-                      ",language=" +
-                      scLanguage +
-                      ",version=" +
-                      scVersion +
-                      ')") }, 150)\' class="scInstantRow" tabindex="0" role="link" data-scitem="' +
-                      scItem +
-                      '" data-language="' +
-                      scLanguage +
-                      '" data-version="' +
-                      scVersion +
-                      '">';
-                    html += '<h2 title="' + title + '">' + text + "</h2>";
-                    html += '<p title="' + title + '"><img loading="lazy" src="' + img + '" onerror="this.onerror=null;this.src=\'' + global.iconInstantSearchGeneric + "';\"/> " + pathToBreadcrumb(title, ">", false) + "</p>";
-                    html += "</li>";
+                    //Link
+                    command =
+                      fromWhere == "default"
+                        ? `onclick='fadeEditorFrames(); setTimeout(function() { scForm.invoke("item:load(id=` + scItem + `,language=` + scLanguage + `,version=` + scVersion + `)") }, 150)'`
+                        : `onclick='location.href="/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#` + scItem + `_` + scLanguage + `_` + scVersion + `"'`;
+                    //prettier-ignore
+                    html += `<li ` + command + ` class="scInstantRow" tabindex="0" role="link" data-scitem="` + scItem + `" data-language="` + scLanguage + `" data-version="` + scVersion + `">
+                      <h2 title="` + title + `">` + text + `</h2>
+                        <p title="` + title + `"><img loading="lazy" src="` + img + `" onerror="this.onerror=null;this.src='` + global.iconInstantSearchGeneric + `';"/> ` + pathToBreadcrumb(title, ">", false) + `</p>
+                      </li>`;
                     count++;
                   }
                 }

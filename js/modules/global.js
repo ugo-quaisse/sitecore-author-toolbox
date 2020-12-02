@@ -1,3 +1,4 @@
+/* eslint-disable require-unicode-regexp */
 /* eslint-disable array-element-newline */
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
@@ -60,6 +61,10 @@ export const iconPublish = chrome.runtime.getURL("images/publish.svg");
 export const iconAdd = chrome.runtime.getURL("images/add.svg");
 export const iconDownArrow = chrome.runtime.getURL("images/down-arrow.svg");
 export const iconExternalLink = chrome.runtime.getURL("images/external-link.svg");
+export const iconWindowClose = chrome.runtime.getURL("images/window_close.svg");
+export const iconWindowMax = chrome.runtime.getURL("images/window_max.svg");
+export const iconWindowMin = chrome.runtime.getURL("images/window_min.svg");
+
 export const urlLoader = chrome.runtime.getURL("images/ajax-loader.gif");
 export const urlLoaderiFrame = chrome.runtime.getURL("images/ajax-loader-iframe.gif");
 export const urlLoaderDark = chrome.runtime.getURL("images/ajax-loader-dark.gif");
@@ -70,7 +75,7 @@ export const iconEE = chrome.runtime.getURL("images/sat.png");
 export const iconCE = chrome.runtime.getURL("images/ce.png");
 export const iconED = chrome.runtime.getURL("images/editable.png");
 export const rteLanguages = ["ARABIC", "HEBREW", "PERSIAN", "URDU", "SINDHI"];
-export const windowLocationHref = window.location.href.toLowerCase();
+export const windowLocationHref = window.location.href.replace(/&amp;/g, "&").toLowerCase();
 export const launchpadPage = chrome.runtime.getURL("options.html");
 export const launchpadIcon = chrome.runtime.getURL("images/icon.png");
 export const launchpadGroupTitle = "Sitecore Author Toolbox";
@@ -105,6 +110,7 @@ export const isGalleryFavorites = windowLocationHref.includes("gallery.favorites
 export const isAdminCache = windowLocationHref.includes("/admin/cache.aspx");
 export const isAdmin = windowLocationHref.includes("/admin/");
 export const isMediaLibrary = windowLocationHref.includes("he=media+library");
+export const isWindowedMode = windowLocationHref.includes("?he=") || windowLocationHref.includes("&he=");
 export const isMediaBrowser = windowLocationHref.includes("sitecore.shell.applications.media.mediabrowser");
 export const isSourceBrowser = windowLocationHref.includes("sitecore.shell.applications.dialogs.selectrenderingdatasource");
 export const isMediaFolder = windowLocationHref.includes("media%20folder.aspx");

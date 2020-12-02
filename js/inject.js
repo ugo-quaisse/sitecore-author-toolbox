@@ -212,15 +212,25 @@ const showSitecoreRibbon = () => {
     });
   }
 
-  //Update icon and local storage
   let dock = document.querySelector(".scDockTop") ? document.querySelector(".scDockTop") : document.querySelector("iframe").contentWindow.document.querySelector(".scDockTop");
   if (dock) {
+    //Update icon and local storage
     if (dock.classList.contains("showSitecoreRibbon")) {
       localStorage.setItem("scSitecoreRibbon", true);
       document.querySelector("#scSitecoreRibbon").classList.add("scSitecoreRibbon");
     } else {
       localStorage.setItem("scSitecoreRibbon", false);
       document.querySelector("#scSitecoreRibbon").classList.remove("scSitecoreRibbon");
+    }
+    //Update title bar on Desktop
+    if (dock.classList.contains("showSitecoreRibbon")) {
+      document.querySelectorAll("iframe").forEach(function (iframe) {
+        iframe.contentWindow.document.querySelector(".titleBarDesktop") ? iframe.contentWindow.document.querySelector(".titleBarDesktop").classList.add("hide") : false;
+      });
+    } else {
+      document.querySelectorAll("iframe").forEach(function (iframe) {
+        iframe.contentWindow.document.querySelector(".titleBarDesktop") ? iframe.contentWindow.document.querySelector(".titleBarDesktop").classList.remove("hide") : false;
+      });
     }
   }
 };

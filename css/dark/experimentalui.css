@@ -299,36 +299,68 @@ body.satExperimentalUi.satDark .scContentControlImageDetails {
 }
 
 /* hover styles*/
-body.satDark .scRibbon a.scRibbonNavigatorButtonsContextualNormal:hover,
-body.satDark .scRibbon a.scRibbonNavigatorButtonsNormal:hover,
-body.satDark .scRibbon a.scRibbonToolbarLargeButton:hover,
-body.satDark .scRibbon a.scRibbonToolbarLargeButton:hover,
-body.satDark .scRibbon a.scRibbonToolbarLargeButtonDown:hover,
-body.satDark .scRibbon a.scRibbonToolbarLargeGalleryButton:hover,
-body.satDark .scRibbon a.scRibbonToolbarLargeGalleryButton:hover,
-body.satDark .scRibbon a.scRibbonToolbarLargeComboButtonTop:hover,
-body.satDark .scRibbon a.scRibbonToolbarLargeComboButtonTop:hover,
-body.satDark .scRibbon a.scRibbonToolbarLargeComboButtonBottom:hover,
-body.satDark .scRibbon a.scRibbonToolbarLargeComboButtonBottom:hover,
-body.satDark a.scRibbonToolbarSmallButton:hover,
-body.satDark .scRibbonToolbarSmallButton:hover,
-body.satDark a.scRibbonToolbarSmallButtonDown:hover,
-body.satDark .scRibbon a.scRibbonToolbarSmallGalleryButton:hover,
-body.satDark .scRibbon a.scRibbonToolbarSmallGalleryButton:hover,
-body.satDark .scRibbon a.scRibbonToolbarLargeTextButton:hover,
-body.satDark .scRibbon a.scRibbonToolbarLargeTextButton:hover,
-body.satDark .scRibbon a.scRibbonToolbarLargeTextButtonDown:hover,
-body.satDark .scRibbon a.scRibbonToolbarLargeTextButtonDown:hover,
-body.satDark .scRibbonLargeImageButton:hover,
-body.satDark .scRibbonLargeImageButtonDown:hover,
-body.satDark .scRibbon a.scRibbonToolbarLargeIconButton:hover,
-body.satDark .scRibbon a.scRibbonToolbarLargeIconButtonDown:hover,
-body.satDark .scRibbon a.scRibbonToolbarLargeIconButtonDown:hover,
-body.satDark .scRibbon a.scRibbonToolbarSmallComboButtonLeft:hover,
-body.satDark .scRibbon a.scRibbonToolbarSmallComboButtonLeft:hover,
-body.satDark .scRibbon a.scRibbonToolbarSmallComboButtonRight:hover,
-body.satDark .scRibbon a.scRibbonToolbarSmallComboButtonRight:hover,
-body.satDark .scRibbonToolbarLargeComboButtonDown:hover {
+body.satExperimentalUi.satDark .scRibbon a.scRibbonNavigatorButtonsContextualNormal:hover,
+body.satExperimentalUi.satDark .scRibbon a.scRibbonNavigatorButtonsNormal:hover,
+body.satExperimentalUi.satDark .scRibbon a.scRibbonToolbarLargeButton:hover,
+body.satExperimentalUi.satDark .scRibbon a.scRibbonToolbarLargeButton:hover,
+body.satExperimentalUi.satDark .scRibbon a.scRibbonToolbarLargeButtonDown:hover,
+body.satExperimentalUi.satDark .scRibbon a.scRibbonToolbarLargeGalleryButton:hover,
+body.satExperimentalUi.satDark .scRibbon a.scRibbonToolbarLargeGalleryButton:hover,
+body.satExperimentalUi.satDark .scRibbon a.scRibbonToolbarLargeComboButtonTop:hover,
+body.satExperimentalUi.satDark .scRibbon a.scRibbonToolbarLargeComboButtonTop:hover,
+body.satExperimentalUi.satDark .scRibbon a.scRibbonToolbarLargeComboButtonBottom:hover,
+body.satExperimentalUi.satDark .scRibbon a.scRibbonToolbarLargeComboButtonBottom:hover,
+body.satExperimentalUi.satDark a.scRibbonToolbarSmallButton:hover,
+body.satExperimentalUi.satDark .scRibbonToolbarSmallButton:hover,
+body.satExperimentalUi.satDark a.scRibbonToolbarSmallButtonDown:hover,
+body.satExperimentalUi.satDark .scRibbon a.scRibbonToolbarSmallGalleryButton:hover,
+body.satExperimentalUi.satDark .scRibbon a.scRibbonToolbarSmallGalleryButton:hover,
+body.satExperimentalUi.satDark .scRibbon a.scRibbonToolbarLargeTextButton:hover,
+body.satExperimentalUi.satDark .scRibbon a.scRibbonToolbarLargeTextButton:hover,
+body.satExperimentalUi.satDark .scRibbon a.scRibbonToolbarLargeTextButtonDown:hover,
+body.satExperimentalUi.satDark .scRibbon a.scRibbonToolbarLargeTextButtonDown:hover,
+body.satExperimentalUi.satDark .scRibbonLargeImageButton:hover,
+body.satExperimentalUi.satDark .scRibbonLargeImageButtonDown:hover,
+body.satExperimentalUi.satDark .scRibbon a.scRibbonToolbarLargeIconButton:hover,
+body.satExperimentalUi.satDark .scRibbon a.scRibbonToolbarLargeIconButtonDown:hover,
+body.satExperimentalUi.satDark .scRibbon a.scRibbonToolbarLargeIconButtonDown:hover,
+body.satExperimentalUi.satDark .scRibbon a.scRibbonToolbarSmallComboButtonLeft:hover,
+body.satExperimentalUi.satDark .scRibbon a.scRibbonToolbarSmallComboButtonLeft:hover,
+body.satExperimentalUi.satDark .scRibbon a.scRibbonToolbarSmallComboButtonRight:hover,
+body.satExperimentalUi.satDark .scRibbon a.scRibbonToolbarSmallComboButtonRight:hover,
+body.satExperimentalUi.satDark .scRibbonToolbarLargeComboButtonDown:hover {
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
+}
+
+body.satExperimentalUi.satDark .scStretch {
+  background-color: var(--black2) !important;
+}
+
+body.satExperimentalUi.satDark #Renderings > div,
+body.satExperimentalUi.satDark #Placeholders > div {
+  color: var(--text);
+}
+
+body.satExperimentalUi.satDark .scVerticalTabstrip .scVerticalTabs a.active,
+body.satExperimentalUi.satDark .scVerticalTabstrip .scVerticalTabs a.active:hover,
+body.satExperimentalUi.satDark .selected .mode,
+body.satExperimentalUi.satDark .selected .mode:hover,
+body.satExperimentalUi.satDark .selected .mode:active,
+body.satExperimentalUi.satDark input[type="submit"],
+body.satExperimentalUi.satDark .scButton,
+body.satExperimentalUi.satDark .scButton:hover,
+body.satExperimentalUi.satDark input[type="submit"]:hover,
+body.satExperimentalUi.satDark #Renderings > div:hover,
+body.satExperimentalUi.satDark #Placeholders > div:hover,
+body.satExperimentalUi.satDark .scVerticalTabstrip .scVerticalTabs a:hover {
+  background-color: var(--accent) !important;
+  color: var(--accentText) !important;
+}
+
+body.satExperimentalUi.satDark .scButton[disabled],
+body.satExperimentalUi.satDark .scButton[disabled]:active,
+body.satExperimentalUi.satDark .scButton[disabled]:hover {
+  color: var(--black) !important;
+  background-color: var(--black5) !important;
 }

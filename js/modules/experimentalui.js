@@ -22,6 +22,7 @@ export {
   initContrastedIcons,
   initSvgAnimation,
   initEventListeners,
+  initTitleBarDesktop,
 };
 
 /**
@@ -31,8 +32,11 @@ const initExperimentalUi = (storage) => {
   if (storage.feature_experimentalui) {
     //Hide search
     let SearchPanel = document.querySelector("#SearchPanel");
+    let urlParams = new URLSearchParams(window.location.search);
+    let contentTitle = urlParams.has("he") ? urlParams.get("he") : "Content";
+    //Change content tree title
     //prettier-ignore
-    SearchPanel ? (SearchPanel.innerHTML = `<button class="scMenuButton" type="button"><img src="` + global.iconMenu + `" class="scBurgerMenu"/></button> <div class="scBurgerMenuTitle t-top t-sm" data-tooltip="Go back home" onclick="javascript:return scForm.invoke('contenteditor:home', event)" title="Go back Home">Content</div>`) : false;
+    SearchPanel ? (SearchPanel.innerHTML = `<button class="scMenuButton" type="button"><img src="` + global.iconMenu + `" class="scBurgerMenu"/></button> <div class="scBurgerMenuTitle t-top t-sm" data-tooltip="Go back home" onclick="javascript:return scForm.invoke('contenteditor:home', event)" title="Go back Home">` + contentTitle + `</div>`) : false;
     document.body.classList.add("satExperimentalUi");
     if (document.querySelector("#interfaceRadio[value='experimental']")) {
       document.querySelector("#interfaceRadio[value='experimental']").checked = true;
@@ -562,4 +566,24 @@ const initEventListeners = () => {
       event.target.className == "scOverlay" ? document.querySelector("#scModal").setAttribute("style", "opacity:0; visibility: hidden; top: calc(50% - 550px/2 - 10px)") : false;
     }
   });
+};
+
+/**
+ * Add title bar to windows on Desktop mode
+ */
+const initTitleBarDesktop = () => {
+  //Icons
+  let close = `<img onclick="javascript:return scForm.postEvent(this,event,'javascript:scWin.closeWindow()')" src="` + global.iconWindowClose + `" class="windowIcon" title="Close"/>`;
+  let max = `<img onclick="javascript:return scForm.postEvent(this,event,'javascript:scWin.maximizeWindow()')" src="` + global.iconWindowMax + `" class="windowIcon" title="Maximize"/>`;
+  let min = `<img onclick="javascript:return scForm.postEvent(this,event, 'javascript:scWin.minimizeWindow()')"src="` + global.iconWindowMin + `" class="windowIcon" title="Minimize"/>`;
+  //Dock
+  let dock = document.querySelector(".scDockTop");
+  dock && global.isWindowedMode
+    ? dock.insertAdjacentHTML("beforebegin", `<div class="titleBarDesktop scWindowHandle" ondblclick="javascript:scWin.maximizeWindow();"><span class="titleBarText">New window</span> ` + close + max + min + `</div>`)
+    : false;
+  if (dock.classList.contains("showSitecoreRibbon") && document.querySelector(".titleBarDesktop")) {
+    document.querySelector(".titleBarDesktop").classList.add("hide");
+  } else if (document.querySelector(".titleBarDesktop")) {
+    document.querySelector(".titleBarDesktop").classList.remove("hide");
+  }
 };

@@ -141,6 +141,8 @@ body.satExperimentalUi #SearchPanel {
   font-size: 16px;
   font-weight: bold;
   border-bottom: 1px solid var(--grey);
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 body.satExperimentalUi input[type="color"] {
@@ -677,7 +679,7 @@ body.satExperimentalUi #scLanguageIframe,
 body.satExperimentalUi #scVersionIframe {
   position: fixed;
   background-color: var(--white);
-  top: 0px !important;
+  top: 144px !important;
   right: -420px !important;
   left: unset !important;
   width: 400px !important;
@@ -1101,7 +1103,8 @@ body.satExperimentalUi .scSaveBar {
   padding: 13px;
   display: block;
   min-width: 400px;
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 body.satExperimentalUi .scSaveBar > .scBreadcrumb {
@@ -1246,7 +1249,7 @@ body.satExperimentalUi #FileList a.scButton.scButtonGrid.selected > img {
   filter: invert(1);
 }
 
-body.experimental input[type="submit"],
+body.satExperimentalUi input[type="submit"],
 body.satExperimentalUi .scButton {
   background-color: var(--grey4);
   color: var(--text);
@@ -1447,9 +1450,9 @@ body.satExperimentalUi a.scContentTreeNodeNormal:hover,
 body.satExperimentalUi a.scContentTreeNodeActive,
 body.satExperimentalUi a.scContentTreeNodeNormal.scDragHover {
   background-color: var(--accent);
-  color: var(--accentText);
+  color: var(--accentText) !important;
   border-radius: var(--radius);
-  padding: 4px 8px 8px 8px;
+  padding: 3px 8px 8px 8px;
 }
 
 body.satExperimentalUi a.scContentTreeNodeActive > .scContentTreeNodeTitle {
@@ -1543,4 +1546,42 @@ body.satExperimentalUi .scTabActive_Hover:after {
 
 body.satExperimentalUi .scTabstrip {
   border-bottom: 2px solid var(--accent);
+}
+
+/**
+* Desktop mode
+*/
+body.satExperimentalUi .titleBarDesktop {
+  cursor: move;
+  background-color: var(--grey2);
+  border-top: 1px solid rgba(0, 0, 0, 0.3) !important;
+  color: var(--grey);
+  text-align: center;
+  font-size: 12px;
+  padding: 6px;
+  border: 0px;
+  display: block;
+  transition: all ease-in-out 0.1s;
+}
+body.satExperimentalUi .titleBarDesktop:hover {
+  background-color: var(--grey13);
+}
+body.satExperimentalUi .titleBarDesktop.hide {
+  display: none;
+}
+body.satExperimentalUi .titleBarText {
+  margin-left: 85px;
+}
+body.satExperimentalUi .titleBarDesktop .windowIcon {
+  position: unset;
+  float: right;
+  margin: 2px 8px;
+  right: 0px;
+  top: 0px;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+body.satExperimentalUi .titleBarDesktop .windowIcon:hover {
+  opacity: 1;
 }

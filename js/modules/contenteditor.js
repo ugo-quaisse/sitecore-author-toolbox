@@ -428,6 +428,7 @@ const changeTitleWindow = (storage) => {
   if (storage.feature_contenteditor == true) {
     let ScItem = getScItemData();
     ScItem.name ? (window.document.title = "" + ScItem.name.capitalize() + " (" + ScItem.language.toUpperCase() + ")") : false;
+    ScItem.name && document.querySelector(".titleBarText") ? (document.querySelector(".titleBarText").innerText = "" + ScItem.name.capitalize() + " (" + ScItem.language.toUpperCase() + ")") : false;
   }
 };
 /*

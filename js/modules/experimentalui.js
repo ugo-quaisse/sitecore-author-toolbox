@@ -44,6 +44,7 @@ const initExperimentalUi = (storage) => {
     }
     getAccentColor();
   }
+  storage.feature_contrast_icons == undefined ? (storage.feature_contrast_icons = false) : false;
   if (storage.feature_contrast_icons === false) {
     document.documentElement.style.setProperty("--iconBrightness", 1);
     document.documentElement.style.setProperty("--iconContrast", 1);

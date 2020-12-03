@@ -279,6 +279,7 @@ const initInterfaceEvents = () => {
         //Storage
         chrome.storage.sync.set({
           feature_experimentalui: false,
+          feature_contrast_icons: false,
           feature_cetabs: false,
         });
       } else if (radio.value == "experimental") {
@@ -298,6 +299,7 @@ const initInterfaceEvents = () => {
         //Storage
         chrome.storage.sync.set({
           feature_experimentalui: true,
+          feature_contrast_icons: false,
           feature_cetabs: true,
         });
       }

@@ -5,6 +5,7 @@
 /**
  * Global variables declaration
  */
+export const windowLocationHref = window.location.href.replace(/&amp;/g, "&").toLowerCase();
 export const queryString = window.location.search.toLowerCase();
 export const urlParams = new URLSearchParams(queryString);
 export const debug = !!urlParams.has("debug");
@@ -64,7 +65,6 @@ export const iconExternalLink = chrome.runtime.getURL("images/external-link.svg"
 export const iconWindowClose = chrome.runtime.getURL("images/window_close.svg");
 export const iconWindowMax = chrome.runtime.getURL("images/window_max.svg");
 export const iconWindowMin = chrome.runtime.getURL("images/window_min.svg");
-
 export const urlLoader = chrome.runtime.getURL("images/ajax-loader.gif");
 export const urlLoaderiFrame = chrome.runtime.getURL("images/ajax-loader-iframe.gif");
 export const urlLoaderDark = chrome.runtime.getURL("images/ajax-loader-dark.gif");
@@ -74,8 +74,8 @@ export const iconChrome = chrome.runtime.getURL("images/chrome.png");
 export const iconEE = chrome.runtime.getURL("images/sat.png");
 export const iconCE = chrome.runtime.getURL("images/ce.png");
 export const iconED = chrome.runtime.getURL("images/editable.png");
+
 export const rteLanguages = ["ARABIC", "HEBREW", "PERSIAN", "URDU", "SINDHI"];
-export const windowLocationHref = window.location.href.replace(/&amp;/g, "&").toLowerCase();
 export const launchpadPage = chrome.runtime.getURL("options.html");
 export const launchpadIcon = chrome.runtime.getURL("images/icon.png");
 export const launchpadGroupTitle = "Sitecore Author Toolbox";

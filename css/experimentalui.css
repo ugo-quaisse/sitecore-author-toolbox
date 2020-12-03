@@ -279,10 +279,11 @@ body.satExperimentalUi .scEditorFieldMarker {
 }
 
 body.satExperimentalUi .scLanguageIcon,
+body.satExperimentalUi .scMediaIcon,
 body.satExperimentalUi .scVersionIcon {
-  width: 16px;
-  height: 16px;
-  vertical-align: sub;
+  width: 16px !important;
+  height: 16px !important;
+  vertical-align: sub !important;
 }
 
 body.satExperimentalUi .scEditorQuickInfo {
@@ -1584,4 +1585,8 @@ body.satExperimentalUi .titleBarDesktop .windowIcon {
 
 body.satExperimentalUi .titleBarDesktop .windowIcon:hover {
   opacity: 1;
+}
+
+body.satExperimentalUi .scIconCopy {
+  vertical-align: middle;
 }

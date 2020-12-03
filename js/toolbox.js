@@ -99,11 +99,13 @@ chrome.storage.sync.get((storage) => {
       log("**** Launchpad ****", "orange");
       initAppName(storage, "Launchpad");
       initLaunchpadIcon(storage);
+      showSnackbar();
     } else if (global.isDesktop && !global.isGalleryFavorites && !global.isXmlControl) {
       log("**** Desktop Shell ****", "orange");
       initAppName(storage, "Sitecore Desktop");
       initLaunchpadMenu(storage);
       workboxNotifications(storage);
+      showSnackbar();
     } else if (global.isUserManager) {
       log("**** User Manager ****", "orange");
       initAppName(storage, "User Manager");
@@ -133,6 +135,7 @@ chrome.storage.sync.get((storage) => {
       initAppName(storage, "Workbox");
     } else {
       log("**** Non identified ****", "orange");
+      log(global.windowLocationHref, "green");
     }
 
     /*

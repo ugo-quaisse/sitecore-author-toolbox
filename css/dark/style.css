@@ -1463,6 +1463,12 @@ body.satDark a.scButton {
 
 body.satDark #FileList a.scButton {
   background: var(--blue);
+  box-shadow: unset !important;
+  background-color: var(--black) !important;
+}
+
+body.satDark #FileList a.scButton > img.scIcon {
+  filter: invert(1);
 }
 
 body.satDark .liveUrlBadge {
@@ -2356,7 +2362,7 @@ body.satDark .scCalendarYearRightCell:hover {
   cursor: pointer;
 }
 
-body .Metro .reDialog .reTool:hover,
+body.satDark .Metro .reDialog .reTool:hover,
 body.satDark .Metro .reToolbar .reTool:hover,
 body.satDark .Metro .reModule .reTool:hover {
   background: #e3e3e3 !important;
@@ -2368,25 +2374,25 @@ body.satDark .reEditorModesCell {
   border-top: 2px solid #dc291e !important;
 }
 
-body .reEditorModes span {
+body.satDark .reEditorModes span {
   color: #cccccc !important;
 }
 
-body .Metro.RadEditor .reEditorModes a {
+body.satDark .Metro.RadEditor .reEditorModes a {
   color: var(--text) !important;
   background-color: #474747;
   border: 1px solid #474747;
 }
 
-body .Metro.RadEditor .reEditorModes a:hover {
+body.satDark .Metro.RadEditor .reEditorModes a:hover {
   border: 1px solid #474747;
 }
 
-body .Metro.RadEditor .reEditorModes a.reMode_selected:hover {
+body.satDark .Metro.RadEditor .reEditorModes a.reMode_selected:hover {
   border: 1px solid #e5e5e5;
 }
 
-body .Metro.RadEditor .reEditorModes .reMode_selected {
+body.satDark .Metro.RadEditor .reEditorModes .reMode_selected {
   background-color: var(--black1) !important;
   color: var(--white) !important;
   border: 1px solid var(--black1) !important;
@@ -2402,25 +2408,25 @@ body.satDark .reModule.reStatistic {
   color: var(--text) !important;
 }
 
-body .RadWindow_Metro .rwTopLeft,
-body .RadWindow_Metro .rwTopRight,
-body .RadWindow_Metro .rwTitlebar,
-body .RadWindow_Metro .rwTopResize {
+body.satDark .RadWindow_Metro .rwTopLeft,
+body.satDark .RadWindow_Metro .rwTopRight,
+body.satDark .RadWindow_Metro .rwTitlebar,
+body.satDark .RadWindow_Metro .rwTopResize {
   background: #2b2b2b;
 }
 
-body .RadWindow_Metro .rwControlButtons a {
+body.satDark .RadWindow_Metro .rwControlButtons a {
   background-color: #2b2b2b;
 }
 
-body .RadTabStripTop_Metro .rtsLevel1,
+body.satDark .RadTabStripTop_Metro .rtsLevel1,
 body.satDark .RadTabStrip_Metro .rtsLevel1 .rtsUL {
   background-color: #474747;
   color: var(--text);
 }
 
-body .Metro .reToolbar .reTool.reTool_selected,
-body .Metro .reToolbar .reTool.reTool_selected:hover {
+body.satDark .Metro .reToolbar .reTool.reTool_selected,
+body.satDark .Metro .reToolbar .reTool.reTool_selected:hover {
   background-color: #aadbee;
 }
 
@@ -2738,7 +2744,7 @@ body.satDark .sc .sc-messageBar .alert.alert-error {
   background-color: #8b1913;
 }
 body.satDark .sc-listcontrol .sc-listcontrol-body .table tr td,
-.sc-listcontrol .sc-listcontrol-body .sc-table tr td,
+body.satDark .sc-listcontrol .sc-listcontrol-body .sc-table tr td,
 body.satDark .sc-listcontrol .empty {
   color: var(--text);
 }
@@ -3114,4 +3120,8 @@ body.satDark #RibbonContainer {
 body.satDark .scFlexColumnContainer,
 body.satDark .scFlexContent {
   background-color: var(--black2) !important;
+}
+
+body.satDark .scMediaIcon {
+  filter: invert(1);
 }

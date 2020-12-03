@@ -91,8 +91,10 @@ const checkHelpLink = (item, language, version, storage) => {
               let scEditorID = document.querySelector(".scEditorHeader");
               let service = checkUrlType(url.host);
               let icon = checkIconType(url.host);
+              let scMessageBarHelp = document.querySelector(".scMessageBarHelp");
+
               //prettier-ignore
-              let scMessage = `<div id="scMessageBarUrl" class="scMessageBar scInformation">
+              let scMessage = `<div id="scMessageBarUrl" class="scMessageBar scInformation scMessageBarHelp">
             <div class="scMessageBarIcon" style="background-image:url(` + icon + `)"></div>
               <div class="scMessageBarTextContainer">
                 ` + title + `
@@ -102,7 +104,7 @@ const checkHelpLink = (item, language, version, storage) => {
                 </ul>
               </div>
             </div>`;
-              scEditorID.insertAdjacentHTML("afterend", scMessage);
+              !scMessageBarHelp ? scEditorID.insertAdjacentHTML("afterend", scMessage) : false;
             } catch (error) {
               //error
               console.info("Sitecore Author Toolbox:", "The url " + link + " is not a valid link.");

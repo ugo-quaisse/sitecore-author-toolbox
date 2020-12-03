@@ -10,13 +10,15 @@ export { showSnackbar };
 const showSnackbar = () => {
   //Snackbar settings
   let snackbarHtml = `
-    <b>Sitecore Author Toolbox is updated!</b><br />
-    A new "preview mode" is available in Content Editor (Presentation tab), give it a try!`;
-  let html =
-    `<div class="snackbar">` + snackbarHtml + `<button onclick="window.open('https://uquaisse.io/sitecore-cms/new-preview-mode-in-sitecore-author-toolbox-4-0/')">READ&nbsp;MORE</button><button id="sbDismiss">DISMISS</button></div>`;
+    <b>Sitecore Author Toolbox 5.0</b><br />
+    Experimental UI theme is available for Desktop mode!<br />Click "READ" to find out more about it.`;
+  let html = `<div class="snackbar">` + snackbarHtml + `<button onclick="window.open('https://uquaisse.io/sitecore-cms/sitecore-experimental-ui-for-desktop-mode/')">READ</button><button id="sbDismiss">DISMISS</button></div>`;
+
+  //Is Snackbar is already visible in a parent frame?
+  let parentSnackbar = parent.document.querySelector(".snackbar");
 
   //Show Snackbar
-  if (!global.isLaunchpad && global.showSnackbar && localStorage.getItem("sbDismiss") != global.extensionVersion) {
+  if (!parentSnackbar && global.showSnackbar && localStorage.getItem("sbDismiss") != global.extensionVersion) {
     document.querySelector("body").insertAdjacentHTML("beforeend", html);
 
     //Add listener on click #sbDismiss

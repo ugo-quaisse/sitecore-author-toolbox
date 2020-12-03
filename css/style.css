@@ -1,7 +1,7 @@
 form#ContentEditorForm {
   filter: blur(7px) brightness(0.1) grayscale(1);
   transition: all ease-in-out 0.1s;
-  transition-delay: 0.3s;
+  transition-delay: 0.2s;
 }
 section.sc-applicationContent-main {
   opacity: 0;
@@ -325,7 +325,7 @@ body.satExtension .scBackground > #FileList {
 }
 
 .scIconCopy {
-  vertical-align: middle;
+  vertical-align: baseline;
   cursor: pointer;
   width: 16px;
 }
@@ -439,6 +439,14 @@ div#scPageExtendersForm {
   width: 100%;
   height: 100%;
   border-collapse: separate;
+}
+
+.scLanguageIcon,
+.scMediaIcon,
+.scVersionIcon {
+  width: 16px !important;
+  height: 16px !important;
+  vertical-align: sub !important;
 }
 
 div#Languages img {
@@ -819,7 +827,7 @@ a.scTileItem .scTileItemIconImage {
 .snackbar {
   animation: slide 0.4s forwards;
   transition: right ease-in-out 0.4s;
-  bottom: 45px;
+  bottom: 60px;
   right: -800px;
   color: #fff;
   max-width: 500px;
@@ -835,6 +843,7 @@ a.scTileItem .scTileItemIconImage {
   line-height: 22px;
   padding: 18px 24px 18px 88px;
   border-radius: 3px;
+  box-sizing: unset;
   z-index: 99999999999;
 }
 

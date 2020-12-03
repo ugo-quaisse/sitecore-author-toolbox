@@ -158,13 +158,13 @@ const initMediaExplorer = (storage) => {
         <td class="left" onclick="` + mediaClick + `">` + mediaUsage + `</td>
         <td class="center">  
           <a download href="` + mediaImage + `" class="scMediaActions t-sm t-top ` + invert + `" data-tooltip="Download" style="visibility: ` + showDownload + `">
-            <img src="` + global.iconDownload + `" class="scLanguageIcon">
+            <img src="` + global.iconDownload + `" class="scMediaIcon">
           </a>
           <button class="scMediaActions t-sm t-top ` + invert + `" data-tooltip="Publish" type="button" onclick="javascript:return scForm.postEvent(this,event,'item:publish(id={` + itemId + `})')">
-            <img src="` + global.iconPublish + `" class="scLanguageIcon">
+            <img src="` + global.iconPublish + `" class="scMediaIcon">
           </button>
           <button class="scMediaActions t-sm t-top ` + invert + `" data-tooltip="Delete" type="button" onclick="javascript:return scForm.postEvent(this,event,'item:delete(id={` + itemId + `})')">
-            <img src="` + global.iconBin + `" class="scLanguageIcon">
+            <img src="` + global.iconBin + `" class="scMediaIcon">
           </button>
         </td>
       </tr>`;

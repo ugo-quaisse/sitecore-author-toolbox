@@ -2,6 +2,7 @@
 
 import * as global from "./global.js";
 import { log, exeJsCode } from "./helpers.js";
+import { sitecoreAuthorToolbox } from "./contenteditor.js";
 
 export { resumeFromWhereYouLeftOff, historyNavigation };
 
@@ -48,7 +49,13 @@ const resumeFromWhereYouLeftOff = (storage) => {
         log("[Read " + storage.scSource + "] Version : " + storage.scVersion, "beige");
         log("*** Redirection ***", "yellow");
         exeJsCode(`scForm.invoke("item:load(id=` + storage.scItemID + `,language=` + storage.scLanguage + `,version=` + storage.scVersion + `)");`);
+      } else {
+        //There is no redirection, so we force a UI refresh
+        sitecoreAuthorToolbox(storage);
       }
+    } else {
+      //There is no redirection, so we force a UI refresh
+      sitecoreAuthorToolbox(storage);
     }
   }
 };

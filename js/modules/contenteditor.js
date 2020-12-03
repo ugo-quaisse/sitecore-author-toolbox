@@ -43,7 +43,7 @@ const sitecoreAuthorToolbox = (storage) => {
         ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Oh no... Sitecore Author Toolbox</div><div class="scMessageBarText">To fully enjoy Sitecore Author Toolbox, please enable <b>Title bar</b> and <b>Quick info section</b> under <b>Application Options</b>.<br />Alternatively, try to open the <b>Quick Info section</b> down below, if visible..</div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><a href="" onclick="javascript:return scForm.postEvent(this,event,\'shell:useroptions\')" class="scMessageBarOption">Change my settings</a></li></ul></div></div>';
       if (scEditorHeader) {
         scEditorHeader.insertAdjacentHTML("afterend", scMessage);
-      } else {
+      } else if (scEditorPanel) {
         scEditorPanel.insertAdjacentHTML("afterbegin", scMessage);
       }
     }
@@ -201,7 +201,7 @@ const sitecoreAuthorToolbox = (storage) => {
  */
 const openFolderTab = (storage) => {
   storage.feature_contenteditor == undefined ? (storage.feature_contenteditor = true) : false;
-  if (storage.feature_contenteditor == true) {
+  if (storage.feature_contenteditor == true && document.querySelector("#EditorTabs > .scRibbonEditorTabActive")) {
     if (document.querySelector("#EditorTabs > .scRibbonEditorTabActive").innerText.toLowerCase() == "search") {
       document.querySelectorAll("#EditorTabs > a").forEach(function (e) {
         e.innerText.toLowerCase() == "folder" ? e.click() : false;

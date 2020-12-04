@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="485px" height="127px" viewBox="0 0 485 127" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Artboard</title>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Clouds" transform="translate(0.000000, 1.000000)" fill="#FFFFFF">
+            <ellipse id="Oval" cx="45.5" cy="72.587276" rx="45.5" ry="28.1343284"></ellipse>
+            <ellipse id="Oval" transform="translate(92.756299, 65.068144) rotate(-13.000000) translate(-92.756299, -65.068144) " cx="92.7562994" cy="65.0681444" rx="35.4468947" ry="28.1791116"></ellipse>
+            <ellipse id="Oval" transform="translate(136.422894, 69.397127) rotate(-13.000000) translate(-136.422894, -69.397127) " cx="136.422894" cy="69.3971268" rx="28.9568294" ry="28.1787864"></ellipse>
+            <ellipse id="Oval" transform="translate(163.051579, 46.940660) rotate(-13.000000) translate(-163.051579, -46.940660) " cx="163.051579" cy="46.9406605" rx="23.4650616" ry="23.806172"></ellipse>
+            <ellipse id="Oval" transform="translate(208.939946, 46.743819) rotate(13.000000) translate(-208.939946, -46.743819) " cx="208.939946" cy="46.7438186" rx="41.4377118" ry="26.722053"></ellipse>
+            <ellipse id="Oval" transform="translate(231.085467, 46.851721) rotate(13.000000) translate(-231.085467, -46.851721) " cx="231.085467" cy="46.8517205" rx="28.9566477" ry="23.8064371"></ellipse>
+            <ellipse id="Oval" transform="translate(272.731740, 54.389739) rotate(-22.000000) translate(-272.731740, -54.389739) " cx="272.73174" cy="54.3897388" rx="35.3528818" ry="31.1810409"></ellipse>
+            <ellipse id="Oval" transform="translate(244.477154, 27.679104) rotate(-22.000000) translate(-244.477154, -27.679104) " cx="244.477154" cy="27.6791045" rx="22.4067779" ry="19.9753242"></ellipse>
+            <ellipse id="Oval" transform="translate(329.520560, 73.013447) rotate(4.000000) translate(-329.520560, -73.013447) " cx="329.52056" cy="73.0134467" rx="58.9914684" ry="31.0496713"></ellipse>
+            <ellipse id="Oval" transform="translate(394.446850, 78.148116) rotate(-11.000000) translate(-394.446850, -78.148116) " cx="394.44685" cy="78.1481163" rx="41.4554391" ry="36.4221073"></ellipse>
+            <ellipse id="Oval" cx="443.44685" cy="72.3272208" rx="41.4554391" ry="36.4221073"></ellipse>
+            <rect id="Rectangle" x="6.82121026e-13" y="56.0947386" width="485" height="70" rx="16"></rect>
+        </g>
+    </g>
+</svg>

@@ -4,6 +4,7 @@ import * as global from "./global.js";
 import { getScItemData, setTextColour } from "./helpers.js";
 
 export {
+  initOnboarding,
   initExperimentalUi,
   insertSavebar,
   insertBreadcrumb,
@@ -23,6 +24,51 @@ export {
   initSvgAnimation,
   initEventListeners,
   initTitleBarDesktop,
+};
+
+/**
+ * Experimental UI Onboarding
+ */
+const initOnboarding = () => {
+  if (!localStorage.getItem("scWelcome")) {
+    if (!document.querySelector(".scWelcome")) {
+      setTimeout(function () {
+        let html = `
+        <div class="scWelcome">
+          <div class="header">
+            <div class="logo"></div>
+            <div class="clouds"></div>
+          </div>
+          <div class="content">
+            <h2>Experimental UI Theme</h2>
+            <h3>Sitecore Author Toolbox extension</h3>
+            <p><b>What is that?</b><br />Experimental UI is a new theme for Sitecore with the same features as the standard Sitecore UI. It comes with a simple and clean interface that will help authors to focus more on their content and accelerate their workflow.</p>
+            <p><b>Where is the ribbon?</b><br />You can click the little arrow/chevron on the top right to toggle the ribbon. Alternatively, you can press CTRL + SHIFT.</p>
+            <button id="scWelcomeClose">Ok, let's use it!</button>
+            <p class="switch" id="scWelcomeSwitch"><u>Switch back to classic Sitecore</u></p>
+          </div>
+        </div>
+        <div class="scWelcomeOverlay"></div>`;
+        document.querySelector("body").insertAdjacentHTML("beforeend", html);
+        window.focus();
+
+        //Add listener on click
+        document.querySelector("#scWelcomeClose").addEventListener("click", function () {
+          localStorage.setItem("scWelcome", true);
+          document.querySelector(".scWelcome").remove();
+          document.querySelector(".scWelcomeOverlay") ? document.querySelector(".scWelcomeOverlay").remove() : false;
+        });
+        document.querySelector("#scWelcomeSwitch").addEventListener("click", function () {
+          document.querySelectorAll("#interfaceRadio")[0] ? document.querySelectorAll("#interfaceRadio")[0].click() : false;
+          parent.document.querySelectorAll("#interfaceRadio")[0] ? parent.document.querySelectorAll("#interfaceRadio")[0].click() : false;
+        });
+        document.querySelector(".scWelcomeOverlay").addEventListener("click", function () {
+          document.querySelector(".scWelcome").remove();
+          document.querySelector(".scWelcomeOverlay") ? document.querySelector(".scWelcomeOverlay").remove() : false;
+        });
+      }, 1000);
+    }
+  }
 };
 
 /**

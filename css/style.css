@@ -382,7 +382,7 @@ div#scPageExtendersForm {
 }
 
 .scOverlay {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.3);
   margin: 0;
   padding: 0;
   border: 0;
@@ -393,6 +393,112 @@ div#scPageExtendersForm {
   left: 0;
   z-index: 9;
   visibility: hidden;
+}
+
+.scWelcomeOverlay {
+  background: rgba(0, 0, 0, 0.6);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100001;
+}
+
+.scWelcome {
+  position: absolute;
+  width: 450px;
+  height: 650px;
+  left: calc(50% - 450px / 2);
+  top: calc(50% - 650px / 2);
+  padding: 0px;
+  z-index: 100002;
+  text-align: center;
+  font-size: 20px;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.5);
+  border-radius: var(--radius);
+  background-color: var(--white);
+}
+
+.scWelcome .header {
+  background-image: linear-gradient(233deg, #f5515f 0%, #ee3524 82%);
+  width: 100%;
+  height: 200px;
+  border-radius: var(--radius);
+}
+
+.scWelcome .clouds {
+  background-image: url("chrome-extension://__MSG_@@extension_id__/images/clouds.svg");
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  position: relative;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  margin-top: -200px;
+  z-index: 100003;
+}
+
+.scWelcome .logo {
+  background-image: url("chrome-extension://__MSG_@@extension_id__/images/icon.svg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-position: center 85px;
+  background-size: 50% 50%;
+  position: relative;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 100004;
+}
+
+.scWelcome .content p {
+  padding: 10px 20px;
+  font-size: 15px;
+  text-align: center;
+  line-height: 26px;
+  font-weight: 300;
+}
+
+.scWelcome .content h2 {
+  padding: 5px 20px;
+  font-family: Helvetica;
+  font-size: 30px;
+  text-align: center;
+  font-weight: 100;
+}
+.scWelcome .content h3 {
+  font-size: 14px;
+  color: #9c9c9c;
+  padding-bottom: 15px;
+  font-weight: 100;
+}
+.scWelcome .content .switch {
+  padding: 15px 0px 0px 0px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.scWelcome button {
+  background-color: #4989f4;
+  color: var(--white);
+  border-radius: 20px;
+  margin: auto;
+  font-size: 16px;
+  border-radius: 50px;
+  padding: 10px 20px;
+  margin: 20px 0px 0px 0px;
+  box-shadow: none;
+  border: none;
+  cursor: pointer;
+}
+.scWelcome button:hover {
+  filter: brightness(1.05);
 }
 
 #BTAddNewSearch {
@@ -844,7 +950,7 @@ a.scTileItem .scTileItemIconImage {
   padding: 18px 24px 18px 88px;
   border-radius: 3px;
   box-sizing: unset;
-  z-index: 99999999999;
+  z-index: 100000;
 }
 
 .snackbar > b {

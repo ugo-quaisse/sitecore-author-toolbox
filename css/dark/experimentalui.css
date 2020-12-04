@@ -83,7 +83,7 @@ body.satExperimentalUi.satDark .splitter-bar:hover::before {
 
 body.satExperimentalUi.satDark .scOverlay,
 body.satExperimentalUi.satDark .ui-widget-overlay {
-  background: rgba(0, 0, 0, 0.2) !important;
+  background: rgba(0, 0, 0, 0.3) !important;
 }
 
 body.satExperimentalUi.satDark a.scContentButton {

@@ -11,8 +11,8 @@ const showSnackbar = () => {
   //Snackbar settings
   let snackbarHtml = `
     <b>Sitecore Author Toolbox 5.0</b><br />
-    Experimental UI theme is available for Desktop mode!<br />Click "READ" to find out more about it.`;
-  let html = `<div class="snackbar">` + snackbarHtml + `<button onclick="window.open('https://uquaisse.io/sitecore-cms/sitecore-experimental-ui-for-desktop-mode/')">READ</button><button id="sbDismiss">DISMISS</button></div>`;
+    Experimental UI theme is available for Desktop mode!<br />Click "TRY IT" to try it now!`;
+  let html = `<div class="snackbar">` + snackbarHtml + `<button id="sbAction" onclick='javascript:document.querySelectorAll("#interfaceRadio")[1].click()'>TRY IT</button><button id="sbDismiss">DISMISS</button></div>`;
 
   //Is Snackbar is already visible in a parent frame?
   let parentSnackbar = parent.document.querySelector(".snackbar");
@@ -22,7 +22,7 @@ const showSnackbar = () => {
     document.querySelector("body").insertAdjacentHTML("beforeend", html);
 
     //Add listener on click #sbDismiss
-    document.querySelector("#sbDismiss").addEventListener("click", function () {
+    document.querySelector("#sbAction, #sbDismiss").addEventListener("click", function () {
       localStorage.setItem("sbDismiss", global.extensionVersion);
       document.querySelector(".snackbar").setAttribute("style", "display: none");
     });

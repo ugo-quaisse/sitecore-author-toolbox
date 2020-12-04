@@ -38,6 +38,8 @@ This extension will help you to save a lot of time by providing a set of handy t
 * Translate Mode Copy Button
 * Experience Editor Quick Tabs
 * Experience Profile Gravatar image
+* Media Library revamped
+* New preview mode (Mobile, Tablet, Desktop)
 
 ## How to install
 

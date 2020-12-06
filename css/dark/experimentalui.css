@@ -364,3 +364,9 @@ body.satExperimentalUi.satDark .scButton[disabled]:hover {
   color: var(--black) !important;
   background-color: var(--black5) !important;
 }
+
+body.satExperimentalUi.satDark .scCalendarUI {
+  filter: invert(1);
+  background-color: #e5e4e4 !important;
+  border: 1px solid #ccc !important;
+}

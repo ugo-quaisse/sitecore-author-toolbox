@@ -13,7 +13,7 @@ import { initRTL } from "./rtl.js";
 import { enhancedTreeSearch } from "./search.js";
 import { initTranslateMode } from "./translate.js";
 
-export { sitecoreAuthorToolbox, initCharsCount, initCheckboxes, initPublishCheckboxes, refreshContentEditor, openFolderTab };
+export { sitecoreAuthorToolbox, initCharsCount, initCheckboxes, initDatePicker, initPublishCheckboxes, refreshContentEditor, openFolderTab };
 
 /*
  * Main function executed when the Content Editor refreshes
@@ -71,6 +71,7 @@ const sitecoreAuthorToolbox = (storage) => {
   checkHelpLink(ScItem.id, ScItem.language, ScItem.version, storage);
   initFancyMessageBars(storage);
   initCheckboxes(storage);
+  initDatePicker(storage);
   initTranslateMode(storage);
   enhancedTreeSearch(storage);
   changeTitleWindow(storage);
@@ -437,6 +438,20 @@ const changeTitleWindow = (storage) => {
 const initCheckboxes = (storage) => {
   storage.feature_contenteditor == undefined ? (storage.feature_contenteditor = true) : false;
   storage.feature_contenteditor ? loadCssFile("css/checkbox.min.css") : false;
+};
+
+/*
+ * Change style of date picker
+ */
+const initDatePicker = (storage) => {
+  if (storage.feature_experimentalui) {
+    document.querySelectorAll("table.scDatePickerComboBox > tbody > tr > td > img.scComboboxDropDown").forEach((img) => {
+      img.src = global.iconCalendar;
+      img.removeAttribute("onmouseover");
+      img.removeAttribute("onmouseout");
+      img.classList.add("scCalendarUI");
+    });
+  }
 };
 
 /*

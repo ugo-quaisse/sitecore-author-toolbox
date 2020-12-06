@@ -1590,3 +1590,21 @@ body.satExperimentalUi .titleBarDesktop .windowIcon:hover {
 body.satExperimentalUi .scIconCopy {
   vertical-align: middle;
 }
+
+body.satExperimentalUi .scCalendarSelected {
+  background-color: var(--accent);
+  color: var(--accentText);
+}
+
+body.satExperimentalUi .scCalendarUI {
+  position: absolute;
+  border: 1px solid var(--grey14);
+  border-left: none;
+  background: var(--grey15);
+  margin-top: -17px;
+  margin-left: -5px;
+  padding: 8px;
+  border-radius: 0px;
+  box-shadow: unset;
+  width: 16px;
+}

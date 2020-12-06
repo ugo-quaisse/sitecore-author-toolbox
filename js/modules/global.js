@@ -74,6 +74,7 @@ export const iconChrome = chrome.runtime.getURL("images/chrome.png");
 export const iconEE = chrome.runtime.getURL("images/sat.png");
 export const iconCE = chrome.runtime.getURL("images/ce.png");
 export const iconED = chrome.runtime.getURL("images/editable.png");
+export const iconCalendar = chrome.runtime.getURL("images/calendar.svg");
 
 export const rteLanguages = ["ARABIC", "HEBREW", "PERSIAN", "URDU", "SINDHI"];
 export const launchpadPage = chrome.runtime.getURL("options.html");

@@ -62,16 +62,20 @@ body.satExtension button:active {
   box-shadow: 0 0 0 2.5px #0974ff !important;
 }
 
-.sc-globalHeader-loginInfo {
+body.satExtension .sc-globalHeader-loginInfo {
   padding: 0px 15px;
 }
 
-.sc-globalHeader-content .col2:last-child {
+body.satExtension .sc-globalHeader-content .col2:last-child {
   padding: 0px;
 }
 
-.scWorkboxPanel,
-.scWindowBorder1 {
+body.satExtension .sc-text-largetitle {
+  color: var(--text);
+}
+
+body.satExtension .scWorkboxPanel,
+body.satExtension .scWindowBorder1 {
   border: 0px solid !important;
 }
 
@@ -85,48 +89,48 @@ div.scSaveBar {
   display: none;
 }
 
-.scStartbar {
+body.satExtension .scStartbar {
   transition: all ease-in-out 0.2s;
 }
 
-#svgAnimation,
-#EditorFrames {
+body.satExtension #svgAnimation,
+body.satExtension #EditorFrames {
   opacity: 0;
 }
 
-#scCreatePlus {
+body.satExtension #scCreatePlus {
   visibility: hidden;
 }
 
-#scModal {
+body.satExtension #scModal {
   visibility: hidden;
   opacity: 0;
   transition: all ease-in-out 0.2s;
 }
 
-#ResultText {
+body.satExtension #ResultText {
   background-color: transparent !important;
 }
 
-div#Languages img {
+body.satExtension div#Languages img {
   display: block !important;
   width: 32px;
 }
 
-.scTitle {
+body.satExtension .scTitle {
   min-height: 20px;
 }
 
-.scFolderButtons {
+body.satExtension .scFolderButtons {
   padding-top: 25px !important;
 }
 
-.scFolderButtonsTitle {
+body.satExtension .scFolderButtonsTitle {
   display: none;
 }
 
 /* Media Explorer */
-.scBackground > #FileList {
+body.satExtension .scBackground > #FileList {
   display: none;
 }
 
@@ -181,7 +185,7 @@ body.satExtension .scBackground > #FileList {
   margin: -25px 25px 1px 0px;
 }
 
-.scMediaExplorer {
+body.satExtension .scMediaExplorer {
   width: 100%;
   color: var(--black7);
 }
@@ -341,7 +345,7 @@ body.satExtension .scBackground > #FileList {
   filter: brightness(1.5);
 }
 
-#SwitchMenu {
+body.satExtension #SwitchMenu {
   display: none;
 }
 
@@ -364,12 +368,12 @@ div#scPageExtendersForm {
 /**
  * Custom CSS
  */
-.ui-widget-overlay {
+body.satExtension .ui-widget-overlay {
   background: rgba(0, 0, 0, 0.2) !important;
   opacity: 1 !important;
 }
 
-.ui-widget-overlay:after {
+body.satExtension .ui-widget-overlay:after {
   content: "";
   position: fixed;
   top: 50%;
@@ -389,7 +393,7 @@ div#scPageExtendersForm {
   visibility: visible;
 }
 
-.scOverlay {
+body.satExtension .scOverlay {
   background: rgba(0, 0, 0, 0.3);
   margin: 0;
   padding: 0;
@@ -403,7 +407,7 @@ div#scPageExtendersForm {
   visibility: hidden;
 }
 
-.scWelcomeOverlay {
+body.satExtension .scWelcomeOverlay {
   background: rgba(0, 0, 0, 0.6);
   margin: 0;
   padding: 0;
@@ -416,7 +420,7 @@ div#scPageExtendersForm {
   z-index: 100001;
 }
 
-.scWelcome {
+body.satExtension .scWelcome {
   position: absolute;
   width: 450px;
   height: 650px;
@@ -431,14 +435,14 @@ div#scPageExtendersForm {
   background-color: var(--white);
 }
 
-.scWelcome .header {
+body.satExtension .scWelcome .header {
   background-image: linear-gradient(233deg, #f5515f 0%, #ee3524 82%);
   width: 100%;
   height: 200px;
   border-radius: var(--radius);
 }
 
-.scWelcome .clouds {
+body.satExtension .scWelcome .clouds {
   background-image: url("chrome-extension://__MSG_@@extension_id__/images/clouds.svg");
   background-position: center bottom;
   background-repeat: no-repeat;
@@ -450,7 +454,7 @@ div#scPageExtendersForm {
   z-index: 100003;
 }
 
-.scWelcome .logo {
+body.satExtension .scWelcome .logo {
   background-image: url("chrome-extension://__MSG_@@extension_id__/images/icon.svg");
   background-position: center center;
   background-repeat: no-repeat;
@@ -463,7 +467,7 @@ div#scPageExtendersForm {
   z-index: 100004;
 }
 
-.scWelcome .content p {
+body.satExtension .scWelcome .content p {
   padding: 10px 20px;
   font-size: 15px;
   text-align: center;
@@ -471,20 +475,20 @@ div#scPageExtendersForm {
   font-weight: 300;
 }
 
-.scWelcome .content h2 {
+body.satExtension .scWelcome .content h2 {
   padding: 5px 20px;
   font-family: Helvetica;
   font-size: 30px;
   text-align: center;
   font-weight: 100;
 }
-.scWelcome .content h3 {
+body.satExtension .scWelcome .content h3 {
   font-size: 14px;
   color: #9c9c9c;
   padding-bottom: 15px;
   font-weight: 100;
 }
-.scWelcome .content .switch {
+body.satExtension .scWelcome .content .switch {
   padding: 15px 0px 0px 0px;
   text-align: center;
   cursor: pointer;
@@ -492,7 +496,7 @@ div#scPageExtendersForm {
   font-weight: 400;
 }
 
-.scWelcome button {
+body.satExtension .scWelcome button {
   background-color: #4989f4;
   color: var(--white);
   border-radius: 20px;
@@ -505,7 +509,7 @@ div#scPageExtendersForm {
   border: none;
   cursor: pointer;
 }
-.scWelcome button:hover {
+body.satExtension .scWelcome button:hover {
   filter: brightness(1.05);
 }
 
@@ -563,7 +567,7 @@ div#scPageExtendersForm {
   vertical-align: sub !important;
 }
 
-div#Languages img {
+body.satExtension div#Languages img {
   display: block;
   width: 32px;
 }
@@ -583,7 +587,7 @@ div#Languages img {
 
 /* Let's spice up the UI with some shadow! */
 
-.DesktopArea > iframe {
+body.satExtension .DesktopArea > iframe {
   background-color: rgba(0, 0, 0, 0.5) !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 22px 70px 4px rgba(0, 0, 0, 0.56), 0 0 0 1px rgba(0, 0, 0, 0) !important;
 }
@@ -652,7 +656,7 @@ a.scTileItem .scTileItemIconImage {
 /**
  * Formely onlonad
  */
-#scProgress {
+body.satExtension #scProgress {
   position: absolute;
   color: rgba(255, 255, 255, 0.3);
   font-size: 40px;
@@ -661,7 +665,7 @@ a.scTileItem .scTileItemIconImage {
   right: 10px;
 }
 
-#scPreloader {
+body.satExtension #scPreloader {
   background-color: #222222;
   width: 150px;
   height: 150px;
@@ -847,12 +851,12 @@ a.scTileItem .scTileItemIconImage {
   cursor: ew-resize;
 }
 
-.dark {
+body.satExtension .dark {
   background-color: #222222 !important;
   color: #cccccc !important;
 }
 
-.dark:hover {
+body.satExtension .dark:hover {
   color: #ffffff !important;
 }
 .splitter-bar::before,
@@ -878,7 +882,7 @@ a.scTileItem .scTileItemIconImage {
 .scEditorSectionPanelCell {
   padding-top: 20px;
 }
-#scEditorTabs {
+body.satExtension #scEditorTabs {
   display: flex;
   align-items: stretch;
   list-style: none;
@@ -942,7 +946,7 @@ a.scTileItem .scTileItemIconImage {
   color: #ccc;
 }
 
-.snackbar {
+body.satExtension .snackbar {
   animation: slide 0.4s forwards;
   transition: right ease-in-out 0.4s;
   bottom: 60px;
@@ -965,12 +969,12 @@ a.scTileItem .scTileItemIconImage {
   z-index: 100000;
 }
 
-.snackbar > b {
+body.satExtension .snackbar > b {
   display: contents;
   font-weight: bold;
 }
 
-.snackbar > button {
+body.satExtension .snackbar > button {
   background-color: transparent !important;
   border: none !important;
   color: #dc291d;
@@ -1037,7 +1041,7 @@ a.scTileItem .scTileItemIconImage {
   border: 1px solid #897a2f;
 }
 
-.launchpadBadge {
+body.satExtension .launchpadBadge {
   position: absolute;
   margin-left: 35px;
   margin-top: -10px;
@@ -1139,7 +1143,7 @@ body.satExtension textarea:focus {
   margin-top: -30px;
 }
 
-.pulseAnimate {
+body.satExtension .pulseAnimate {
   animation: pulse 1.1s ease-out infinite;
 }
 
@@ -1509,7 +1513,7 @@ ul.sc-accountInformation li:last-child:after {
   background-color: #2b2b2b !important;
 }
 
-#scModal {
+body.satExtension #scModal {
   position: absolute;
   width: 720px;
   height: 550px;
@@ -1643,7 +1647,7 @@ ul.sc-accountInformation li:last-child:after {
   font-size: 14px;
 }
 
-#scPanel {
+body.satExtension #scPanel {
   position: fixed;
   background-color: var(--white);
   top: 0px !important;
@@ -1678,7 +1682,7 @@ ul.sc-accountInformation li:last-child:after {
   top: calc(50% - 100px);
 }
 
-.CodeMirror {
+body.satExtension .CodeMirror {
   height: 500px !important;
   border: 1px solid #cccccc !important;
 }
@@ -1707,7 +1711,7 @@ ul.sc-accountInformation li:last-child:after {
   cursor: pointer;
 }
 
-.scOpenParent {
+body.satExtension .scOpenParent {
   margin-top: -25px;
   margin-left: -10px;
   text-align: right;
@@ -1715,11 +1719,11 @@ ul.sc-accountInformation li:last-child:after {
 
 /* Preview mode */
 
-#ContentEditor {
+body.satExtension #ContentEditor {
   background-color: var(--grey4);
 }
 
-#Page {
+body.satExtension #Page {
   background-color: var(--grey4);
   transition: transform 0.5s ease-in-out;
   height: 100%;
@@ -1831,7 +1835,7 @@ ul.sc-accountInformation li:last-child:after {
 
 /* User Menu switches */
 
-.darkModeWrapper {
+body.satExtension .darkModeWrapper {
   padding: 2px 0px;
 }
 
@@ -1910,7 +1914,7 @@ body.satExtension input.scExperimentalCheckbox {
   display: none !important;
 }
 
-.darkModeIcon {
+body.satExtension .darkModeIcon {
   width: 16px !important;
   height: 16px !important;
   filter: invert(1);
@@ -1919,24 +1923,24 @@ body.satExtension input.scExperimentalCheckbox {
   transition: all ease-in-out 0.2s;
 }
 
-.darkModeIconSun,
-.darkModeIconMoon {
+body.satExtension .darkModeIconSun,
+body.satExtension .darkModeIconMoon {
   margin-top: 0px;
   opacity: 1;
 }
 
-.darkModeIconMoon {
+body.satExtension .darkModeIconMoon {
   margin-left: -23px !important;
 }
 
-.darkModeIconSun.set,
-.darkModeIconMoon.set {
+body.satExtension .darkModeIconSun.set,
+body.satExtension .darkModeIconMoon.set {
   margin-top: 10px;
   opacity: 0;
 }
 
-.darkModeIconSun.rise,
-.darkModeIconMoon.rise {
+body.satExtension .darkModeIconSun.rise,
+body.satExtension .darkModeIconMoon.rise {
   margin-top: 0px;
   opacity: 1;
   transition-delay: 0.2s;

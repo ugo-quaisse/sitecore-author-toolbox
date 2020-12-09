@@ -3014,9 +3014,10 @@ body.satDark #scCrossPiece {
   background-color: var(--black2) !important;
 }
 
+body.satEE .scExpTab,
 body.satDark .scExpTab {
   background-color: var(--black2) !important;
-  color: var(--text) !important;
+  color: var(--grey) !important;
 }
 body.satDark #sxa-toolbox.sxa-mobile-toolbox .sxa-toolbox-header,
 body.satDark #sxa-toolbox.sxa-mobile-toolbox .sxa-toolbox-expander {
@@ -3105,6 +3106,9 @@ body.satDark #RibbonContainer {
   border-color: var(--black1) !important;
 }
 
+body.satEE .scEditableTab,
+body.satEE .scContentEditorTab,
+body.satEE .scNormalModeTab,
 body.satDark .scEditableTab,
 body.satDark .scContentEditorTab,
 body.satDark .scNormalModeTab,

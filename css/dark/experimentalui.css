@@ -6,10 +6,12 @@ body.satExperimentalUi.satDark .scBackground,
 body.satExperimentalUi.satDark .scEditorTabHeaderActive,
 body.satExperimentalUi.satDark #EditorTabs {
   background-color: var(--black2) !important;
+  color: var(--text);
 }
 
 body.satExperimentalUi.satDark #FileList {
   background: var(--black1) !important;
+  color: var(--text);
 }
 
 body.satExperimentalUi.satDark #FileList a {
@@ -20,6 +22,7 @@ body.satExperimentalUi.satDark #FileList a {
 body.satExperimentalUi.satDark .scSaveBar > .scActions > .scPublishMenu,
 body.satExperimentalUi.satDark .scEditorTabControlsHolder > .scMoreMenu {
   background-color: var(--black1) !important;
+  color: var(--text);
 }
 
 body.satExperimentalUi.satDark .scEditorTabControlsHolder > .scMoreMenu > li:hover,
@@ -98,11 +101,13 @@ body.satExperimentalUi.satDark a.scContentButton:hover > button {
 
 body.satExperimentalUi.satDark #scModal {
   background-color: var(--black1) !important;
+  color: var(--text);
 }
 
 body.satExperimentalUi.satDark #SearchPanel {
   padding: 17px;
   background-color: var(--black1) !important;
+  color: var(--text);
 }
 
 body.satExperimentalUi.satDark .scSaveBar {
@@ -166,6 +171,7 @@ body.satExperimentalUi.satDark #scEditorTabs > ul > li.scEditorTabSelected:hover
 body.satExperimentalUi.satDark #BTAddNewSearch {
   background-color: var(--black2) !important;
   border: 0px solid var(--black2) !important;
+  color: var(--text);
 }
 
 body.satExperimentalUi.satDark .scEditorSectionPanel {
@@ -335,6 +341,7 @@ body.satExperimentalUi.satDark .scRibbonToolbarLargeComboButtonDown:hover {
 
 body.satExperimentalUi.satDark .scStretch {
   background-color: var(--black2) !important;
+  color: var(--text);
 }
 
 body.satExperimentalUi.satDark #Renderings > div,

@@ -116,6 +116,10 @@ body.satExperimentalUi .sc-global-logo {
   background-size: 105%;
 }
 
+body.satExperimentalUi .sc-global-logo:hover {
+  background-position: center center;
+}
+
 body.satExperimentalUi #ContentEditor {
   margin-left: -1px;
 }

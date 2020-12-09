@@ -92,6 +92,10 @@ Install node modules
 npm install
 ```
 
+## Where to start
+
+Main program execution is located under https://github.com/ugo-quaisse/sitecore-author-toolbox/blob/master/js/toolbox.js
+
 ## Support
 
 The official support Twitter account for the library is at <https://twitter.com/uquaisse>.

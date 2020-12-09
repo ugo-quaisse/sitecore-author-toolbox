@@ -1,15 +1,9 @@
-body.satDark a,
-body.satDark a:active,
-body.satDark a:visited {
-  color: var(--text);
-}
-
-body.satDark a:link {
-  color: var(--text) !important;
-}
-
 body.satDark .scStartbar {
   background-color: var(--black3) !important;
+}
+
+body.satDark #ribbonPageShadow {
+  background: var(--black);
 }
 
 body.satDark #Editor_contentIframe a,
@@ -243,7 +237,7 @@ body.satDark .scTimePickerComboBox[disabled] .scComboboxEdit {
 }
 
 body.satDark .scTimePicker a:hover {
-  background-color: #e3e3e3;
+  background-color: var(--darkblue);
   color: var(--black1);
 }
 
@@ -1405,9 +1399,6 @@ body.satDark .filters .filter .icon {
 body.satDark .filters .filter .display-name {
   color: var(--text) !important;
 }
-body.satDark form {
-  color: var(--text) !important;
-}
 body.satDark .scLineHover {
   background-color: #289bc8 !important;
 }
@@ -2484,11 +2475,6 @@ body.satDark #Editor_contentIframe > html > body {
  * Sitecore Dark Mode UI, by Ugo Quaisse
  * dialogs.css
  */
-
-body.satDark form {
-  color: var(--text) !important;
-}
-
 body.satDark .scFormDialogFooter {
   background-color: var(--black1) !important;
   border-top: 1px solid var(--black3) !important;
@@ -2559,7 +2545,6 @@ body.satDark #FooterRow {
   border-top: 1px solid var(--black2);
 }
 body.satDark #Editors,
-body.satDark #MainPanel,
 body.satDark .scValidatorPanel,
 body.satDark .scEditorSections {
   background-color: var(--black1) !important;
@@ -2944,8 +2929,10 @@ body.satDark .sc-ribbon .pressed .sc-chunk-button-label {
 
 body.satDark .sc-ribbon .sc-chunk-button:hover,
 body.satDark .sc-ribbon .sc-chunk-button-dropdown:hover,
-body.satDark .sc-ribbon .sc-chunk-gallerybutton:hover {
-  background-color: var(--blue) !important;
+body.satDark .sc-ribbon .sc-chunk-gallerybutton:hover,
+body.satDark .sc-ribbon .sc-chunk-button-small:hover,
+body.satDark .sc-quickbar-button:hover {
+  background-color: var(--black4) !important;
 }
 body.satDark .sc-ribbon .sc-chunk-button:hover .sc-chunk-button-label,
 body.satDark .sc-ribbon .sc-chunk-button-dropdown:hover .sc-chunk-button-label,
@@ -3001,7 +2988,6 @@ body.satDark iframe.scSpeakWebEditRibbon {
 }
 body.satDark #sxa-toolbox {
   background-color: var(--black2) !important;
-  border-left: 0px solid transparent !important;
 }
 body.satDark .sc-dialogWindow-header {
   background: var(--black1) !important;
@@ -3078,15 +3064,12 @@ body.satDark .sc-insertItem-container.selected {
   border-right-color: var(--black1) !important;
 }
 body.satDark .btn-default:hover {
-  background-image: linear-gradient(to bottom, #289bc8 0%, var(--darkblue) 100%);
+  background-image: unset;
   color: var(--white) !important;
-  text-shadow: 0 1px 0 transparent;
-  border-color: #175973;
-  box-shadow: inset 0 1px #5dbadf;
-  background-color: #289bc8;
-}
-body.satDark .sc-ribbon .sc-chunk-button-small:hover {
-  background-color: var(--blue) !important;
+  text-shadow: unset;
+  border-color: unset;
+  box-shadow: unset;
+  background-color: var(--blue);
 }
 
 body.satDark .scFormDialogFooter {
@@ -3117,6 +3100,9 @@ body.satDark #RibbonContainer {
   border-color: var(--black1) !important;
 }
 
+body.satDark .scEditableTab,
+body.satDark .scContentEditorTab,
+body.satDark .scNormalModeTab,
 body.satDark .scFlexColumnContainer,
 body.satDark .scFlexContent {
   background-color: var(--black2) !important;
@@ -3124,4 +3110,19 @@ body.satDark .scFlexContent {
 
 body.satDark .scMediaIcon {
   filter: invert(1);
+}
+
+body.satDark .scWelcome .content {
+  background-color: var(--white) !important;
+}
+
+body.satDark #sxa-toolbox #sxa-toolbox-root ul li {
+  background: var(--black2);
+  border-bottom: 1px solid var(--black2);
+  color: var(--text);
+}
+
+body.satDark #sxa-toolbox #sxa-toolbox-root ul li:hover {
+  background: var(--black3);
+  border-bottom: 1px solid var(--black3);
 }

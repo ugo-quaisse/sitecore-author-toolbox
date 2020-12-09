@@ -147,6 +147,7 @@ const addComponentTooltip = () => {
  * add extra buttons to Experience Editor
  */
 const addExtraButtons = (storage) => {
+  storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;
   var pagemodeEdit = document.querySelector(".pagemode-edit");
   !pagemodeEdit ? (pagemodeEdit = document.querySelector(".on-page-editor")) : false;
   !pagemodeEdit ? (pagemodeEdit = document.querySelector(".experience-editor")) : false;
@@ -204,7 +205,7 @@ const addExtraButtons = (storage) => {
   if (storage.feature_experienceeditor && !global.isRibbon) {
     //prettier-ignore
     let html = '<div class="scNormalModeTab"><span class="t-right t-sm" data-tooltip="Open in Normal Mode"><a href="' + linkNormalMode + '" target="_blank"><img loading="lazy" src="' + global.iconChrome + '"/></a></span></div>';
-    pagemodeEdit ? pagemodeEdit.insertAdjacentHTML("afterend", html) : false;
+    pagemodeEdit ? pagemodeEdit.insertAdjacentHTML("beforeend", html) : false;
   }
 
   /*
@@ -212,12 +213,12 @@ const addExtraButtons = (storage) => {
    */
   if (storage.feature_experienceeditor && !global.isRibbon) {
     let html =
-      '<div class="scContentEditorTab"><span class="t-right t-sm" data-tooltip="Open in Content Editor"><a href="' +
+      `<div class="scContentEditorTab"><span class="t-right t-sm" data-tooltip="Open in Content Editor"><a href="` +
       window.location.origin +
-      '/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1"><img loading="lazy" src="' +
+      `/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1"><img loading="lazy" src="` +
       global.iconCE +
-      '"/></a></span></div>';
-    pagemodeEdit ? pagemodeEdit.insertAdjacentHTML("afterend", html) : false;
+      `"/></a></span></div>`;
+    pagemodeEdit ? pagemodeEdit.insertAdjacentHTML("beforeend", html) : false;
   }
 
   /*
@@ -225,10 +226,10 @@ const addExtraButtons = (storage) => {
    */
   if (storage.feature_experienceeditor && !global.isRibbon) {
     let html =
-      '<div class="scEditableTab"><span class="t-right t-sm" data-tooltip="Show/hide editable content"><a onclick="showEditableContent()"><img loading="lazy" src="' +
+      `<div class="scEditableTab"><span class="t-right t-sm" data-tooltip="Show/hide editable content"><a onclick="showEditableContent()"><img loading="lazy" src="` +
       global.iconED +
-      '" id="scEditableImg" class="grayscaleClass"/></a></span></div>';
-    pagemodeEdit ? pagemodeEdit.insertAdjacentHTML("afterend", html) : false;
+      `" id="scEditableImg" class="grayscaleClass"/></a></span></div>`;
+    pagemodeEdit ? pagemodeEdit.insertAdjacentHTML("beforeend", html) : false;
   }
   //document.querySelectorAll("[contenteditable]").forEach( function(e) { e.classList.add("scFrameYellow"); })
 };
@@ -237,7 +238,8 @@ const addExtraButtons = (storage) => {
  * Reset Experience Editor CSS
  */
 const resetExperienceEditor = (storage) => {
+  storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;
   if (storage.feature_experienceeditor) {
-    loadCssFile("css/reset.min.css");
+    loadCssFile("css/experienceeditor.min.css");
   }
 };

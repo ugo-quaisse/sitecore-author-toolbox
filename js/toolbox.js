@@ -20,7 +20,7 @@ import { workboxNotifications } from "./modules/workbox.js";
 import { resumeFromWhereYouLeftOff, historyNavigation } from "./modules/history.js";
 import { checkNotificationPermissions, checkPublishNotification } from "./modules/notification.js";
 import { initFlagRibbonEE, initLanguageMenuEE, initLanguageMenuCE, initFlagsPublishingWindow, initFlagsPublish } from "./modules/language.js";
-import { initCharsCount, initCheckboxes, initPublishCheckboxes, refreshContentEditor } from "./modules/contenteditor.js";
+import { initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, initPublishCheckboxes, refreshContentEditor } from "./modules/contenteditor.js";
 import { initAppName, initGravatarImage, initUserMenu } from "./modules/users.js";
 import { initInstantSearch, enhancedSitecoreSearch } from "./modules/search.js";
 import { insertModal, insertPanel } from "./modules/insert.js";
@@ -58,9 +58,7 @@ chrome.storage.sync.get((storage) => {
     initAutoExpandTree(storage);
     initTreeGutterTooltips();
     refreshContentEditor(storage);
-    if (storage.feature_experimentalui && !global.isLaunchpad) {
-      initColorPicker();
-    }
+    !global.isLaunchpad ? initColorPicker(storage) : false;
 
     /*
      **********************
@@ -75,7 +73,7 @@ chrome.storage.sync.get((storage) => {
       initFavorites(storage);
       workboxNotifications(storage);
       historyNavigation();
-      showSnackbar();
+      showSnackbar(storage);
       if (storage.feature_experimentalui) {
         log("**** Experimental ****", "yellow");
         initAppName(storage, "Content Editor");
@@ -100,13 +98,13 @@ chrome.storage.sync.get((storage) => {
       log("**** Launchpad ****", "orange");
       initAppName(storage, "Launchpad");
       initLaunchpadIcon(storage);
-      showSnackbar();
+      showSnackbar(storage);
     } else if (global.isDesktop && !global.isGalleryFavorites && !global.isXmlControl) {
       log("**** Desktop Shell ****", "orange");
       initAppName(storage, "Sitecore Desktop");
       initLaunchpadMenu(storage);
       workboxNotifications(storage);
-      showSnackbar();
+      showSnackbar(storage);
     } else if (global.isUserManager) {
       log("**** User Manager ****", "orange");
       initAppName(storage, "User Manager");
@@ -157,6 +155,8 @@ chrome.storage.sync.get((storage) => {
     } else if (global.isFieldEditor) {
       log("**** Field editor ****", "orange");
       initCheckboxes(storage);
+      initDateTimeField(storage);
+      initPasswordField(storage);
       initCharsCount(storage);
       initGroupedErrors(storage);
       addHelptextIcons();
@@ -231,14 +231,16 @@ chrome.storage.sync.get((storage) => {
     if (global.isRibbon) {
       log("**** EE Ribbon ****", "orange");
       initFlagRibbonEE(storage);
+      storeCurrentPageEE();
+      initUserMenu(storage, "EE");
+      initColorPicker(storage);
     } else if (global.isGalleryLanguageExpEd) {
       log("**** Language Menu ****", "orange");
       initLanguageMenuEE(storage);
     } else if (global.isInsertPage) {
-      log("**** Indert Page ****", "orange");
+      log("**** Insert Page ****", "orange");
     } else {
       log("**** Page in EE ****", "orange");
-      storeCurrentPageEE();
       toolbarEditInCE();
       addComponentTooltip();
       addToolbarTooltip();

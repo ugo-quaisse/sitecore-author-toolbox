@@ -122,7 +122,6 @@ const sitecoreItemJson = (itemID, languageID, versionID) => {
         scVersion: versionID,
       };
     }
-
     //Save data
     chrome.storage.sync.set({ scData }, function () {
       global.debug ? console.info("%c [Write] Item : " + itemID + " ", "font-size:12px; background: #cdc4ba; color: black; border-radius:5px; padding 3px;") : false;

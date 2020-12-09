@@ -235,6 +235,16 @@ const showSitecoreRibbon = () => {
   }
 };
 
+const showSitecoreRibbonEE = () => {
+  document.querySelector("[data-sc-id='QuickRibbon']").click();
+  let status = document.querySelector("[data-sc-id='QuickRibbon'] > div").classList;
+  if (document.querySelector("[data-sc-id='QuickRibbon'] > div").classList.contains("navigate_down")) {
+    document.querySelector("#scSitecoreRibbon").classList.remove("scSitecoreRibbon");
+  } else if (document.querySelector("[data-sc-id='QuickRibbon'] > div").classList.contains("navigate_up")) {
+    document.querySelector("#scSitecoreRibbon").classList.add("scSitecoreRibbon");
+  }
+};
+
 const showLanguageMenu = () => {
   console.log("Languages");
 };

@@ -62,6 +62,14 @@ body.satExtension button:active {
   box-shadow: 0 0 0 2.5px #0974ff !important;
 }
 
+.sc-globalHeader-loginInfo {
+  padding: 0px 15px;
+}
+
+.sc-globalHeader-content .col2:last-child {
+  padding: 0px;
+}
+
 .scWorkboxPanel,
 .scWindowBorder1 {
   border: 0px solid !important;
@@ -756,7 +764,7 @@ a.scTileItem .scTileItemIconImage {
 
 .scEditableTab {
   position: fixed;
-  top: 310px;
+  top: 318px;
   background-color: var(--grey12);
   padding: 10px 12px 7px 12px;
   z-index: 10000;
@@ -826,6 +834,10 @@ a.scTileItem .scTileItemIconImage {
 
 .scExpTab:hover {
   padding-top: 8px;
+}
+
+.QuickRibbonHide {
+  opacity: 0;
 }
 
 .tabHandle {
@@ -1282,6 +1294,7 @@ body.satExtension textarea:focus {
   vertical-align: middle;
   opacity: 1;
   transition: all ease-out 0.1s;
+  box-sizing: unset;
 }
 
 .scIconMenu:hover {
@@ -1316,6 +1329,11 @@ ul.sc-accountInformation li:last-child:after {
   border: 3px solid transparent;
   margin-right: 2px;
   cursor: pointer;
+  height: unset;
+  width: unset;
+  margin: unset;
+  margin-left: 10px;
+  margin-right: 2px;
 }
 
 #globalHeaderUserPortrait:hover {

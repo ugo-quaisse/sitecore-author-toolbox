@@ -48,7 +48,9 @@ const resumeFromWhereYouLeftOff = (storage) => {
         log("[Read " + storage.scSource + "] Language : " + storage.scLanguage, "beige");
         log("[Read " + storage.scSource + "] Version : " + storage.scVersion, "beige");
         log("*** Redirection ***", "yellow");
+        //exeJsCode(`scForm.setModified(false, '` + storage.scItemID + `');`)
         exeJsCode(`scForm.invoke("item:load(id=` + storage.scItemID + `,language=` + storage.scLanguage + `,version=` + storage.scVersion + `)");`);
+        // sitecoreAuthorToolbox(storage);
       } else {
         //There is no redirection, so we force a UI refresh
         sitecoreAuthorToolbox(storage);

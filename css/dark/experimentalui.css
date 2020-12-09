@@ -1,5 +1,5 @@
 body.satExperimentalUi.satDark a:link {
-  color: inherit !important;
+  color: inherit;
 }
 
 body.satExperimentalUi.satDark .scBackground,
@@ -90,7 +90,7 @@ body.satExperimentalUi.satDark a.scContentButton {
   color: var(--accent) !important;
 }
 
-body.satExperimentalUi.satDark a.scContentButton:hover {
+body.satExperimentalUi.satDark a.scContentButton:hover > button {
   color: var(--accentText) !important;
   background-color: var(--accent);
   text-decoration: none;
@@ -347,15 +347,28 @@ body.satExperimentalUi.satDark .scVerticalTabstrip .scVerticalTabs a.active:hove
 body.satExperimentalUi.satDark .selected .mode,
 body.satExperimentalUi.satDark .selected .mode:hover,
 body.satExperimentalUi.satDark .selected .mode:active,
-body.satExperimentalUi.satDark input[type="submit"],
-body.satExperimentalUi.satDark .scButton,
-body.satExperimentalUi.satDark .scButton:hover,
 body.satExperimentalUi.satDark input[type="submit"]:hover,
 body.satExperimentalUi.satDark #Renderings > div:hover,
 body.satExperimentalUi.satDark #Placeholders > div:hover,
 body.satExperimentalUi.satDark .scVerticalTabstrip .scVerticalTabs a:hover {
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
+}
+
+body.satExperimentalUi.satDark input[type="submit"],
+body.satExperimentalUi.satDark .scButton {
+  background-color: var(--black5) !important;
+  color: var(--text) !important;
+}
+
+body.satExperimentalUi.satDark .scButtonPrimary {
+  background-color: var(--accent) !important;
+  color: var(--accentText) !important;
+}
+
+body.satExperimentalUi.satDark .scButtonPrimary:hover,
+body.satExperimentalUi.satDark .scButton:hover {
+  filter: brightness(1.1);
 }
 
 body.satExperimentalUi.satDark .scButton[disabled],
@@ -365,8 +378,42 @@ body.satExperimentalUi.satDark .scButton[disabled]:hover {
   background-color: var(--black5) !important;
 }
 
+body.satExperimentalUi.satDark .sc-quickbar-item,
+body.satExperimentalUi.satDark .sc-quickbar-tab,
+body.satExperimentalUi.satDark .sc-breadcrumb-item-path {
+  color: var(--text) !important;
+}
+
+body.satExperimentalUi.satDark .sc-ribbon .pressed {
+  background-color: var(--accent) !important;
+  color: var(--accentText) !important;
+  border-radius: var(--radius);
+  box-shadow: unset;
+  border: 1px solid transparent;
+  background-image: unset;
+}
+
+body.satExperimentalUi.satDark .sc-ribbon .pressed .sc-chunk-button-label {
+  color: var(--white);
+}
+
+body.satExperimentalUi.satDark .sc-ribbon .pressed > div {
+  filter: brightness(5);
+}
+
 body.satExperimentalUi.satDark .scCalendarUI {
   filter: invert(1);
   background-color: #e5e4e4 !important;
-  border: 1px solid #ccc !important;
+  border: 1px solid var(--grey) !important;
+}
+
+body.satExperimentalUi.satDark div.scPasswordUI {
+  filter: invert(1);
+  background-color: #e5e4e4 !important;
+  border: 1px solid var(--grey) !important;
+}
+
+body.satExperimentalUi.satDark ul.dynatree-container,
+body.satExperimentalUi.satDark div.content {
+  background-color: var(--black2) !important;
 }

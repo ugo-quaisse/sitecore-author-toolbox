@@ -110,7 +110,7 @@ body.satExperimentalUi .scDockBottom {
 
 /* Global containers */
 
-body.satExperimentalUi #globalLogo {
+body.satExperimentalUi .sc-global-logo {
   background: url(chrome-extension://__MSG_@@extension_id__/images/square-logo.svg) center center no-repeat;
   background-color: var(--accent);
   background-size: 105%;
@@ -1020,11 +1020,6 @@ body.satExperimentalUi a.scContentButton {
   text-decoration: none;
 }
 
-body.satExperimentalUi a.scContentButton:hover {
-  color: var(--accentText) !important;
-  background-color: var(--accent);
-  text-decoration: none;
-}
 /*Instant Search */
 body.satExperimentalUi .scInstantSearchResults > li:focus,
 body.satExperimentalUi .scInstantSearchResults > li:hover {
@@ -1591,20 +1586,85 @@ body.satExperimentalUi .scIconCopy {
   vertical-align: middle;
 }
 
-body.satExperimentalUi .scCalendarSelected {
+body.satExperimentalUi #sxa-toolbox #sxa-toolbox-root ul li:hover,
+body.satExperimentalUi .scCalendarSelected,
+body.satExperimentalUi .scCalendarToday:hover,
+body.satExperimentalUi .scTimePicker a:hover {
   background-color: var(--accent);
   color: var(--accentText);
 }
 
 body.satExperimentalUi .scCalendarUI {
-  position: absolute;
+  position: relative;
   border: 1px solid var(--grey14);
   border-left: none;
   background: var(--grey15);
-  margin-top: -17px;
-  margin-left: -5px;
+  margin-left: -1px;
   padding: 8px;
   border-radius: 0px;
   box-shadow: unset;
   width: 16px;
+}
+
+body.satExperimentalUi input.scPasswordUI {
+  text-indent: 35px;
+}
+
+body.satExperimentalUi div.scPasswordUI {
+  position: absolute;
+  border: 1px solid var(--grey14);
+  border-right: none;
+  background: var(--grey15);
+  height: 16px;
+  padding: 8px;
+  border-radius: 0px;
+  box-shadow: unset;
+  width: 16px;
+  z-index: 10;
+}
+
+body.satExperimentalUi .btn-primary,
+body.satExperimentalUi .sc-quickbar-tab:hover {
+  background-color: var(--accent) !important;
+  color: var(--accentText) !important;
+  border-radius: var(--radius);
+  box-shadow: unset;
+  border: 1px solid transparent;
+  background-image: unset;
+}
+
+body.satExperimentalUi .sc-ribbon .pressed {
+  background-color: var(--grey) !important;
+  color: var(--black1) !important;
+}
+
+body.satExperimentalUi .sc-quickbar-tab {
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
+
+body.satExperimentalUi .sc-quickbar-tab:hover {
+  border-bottom: 0px solid transparent !important;
+}
+
+body.satExperimentalUi .btn-default {
+  background-color: var(--grey) !important;
+  color: var(--black1) !important;
+  border-radius: var(--radius);
+  box-shadow: unset;
+  border: 1px solid transparent;
+  background-image: unset;
+}
+
+body.satExperimentalUi .btn-primary:hover,
+body.satExperimentalUi .btn-default:hover {
+  filter: brightness(1.1);
+}
+
+body.satExperimentalUi span.dynatree-active a,
+body.satExperimentalUi span.dynatree-active a:hover,
+body.satExperimentalUi ul.dynatree-container a:hover {
+  background-color: var(--accent) !important;
+  color: var(--accentText) !important;
+  border-radius: var(--radius);
 }

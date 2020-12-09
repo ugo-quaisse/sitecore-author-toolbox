@@ -23,12 +23,12 @@ const currentColorScheme = () => {
 const initDarkMode = (storage) => {
   if ((storage.feature_darkmode && !storage.feature_darkmode_auto) || (storage.feature_darkmode && storage.feature_darkmode_auto && currentColorScheme() == "dark")) {
     document.body.classList.add("satDark");
-    if (storage.feature_darkmode_auto && document.querySelector("#darkmodeRadio[value='auto']")) {
-      document.querySelector("#darkmodeRadio[value='auto']").checked = true;
-      document.querySelector("#darkmodeRadio[value='auto']").dispatchEvent(new Event("click"));
-    } else if (document.querySelector("#darkmodeRadio[value='dark']")) {
-      document.querySelector("#darkmodeRadio[value='dark']").checked = true;
-      document.querySelector("#darkmodeRadio[value='dark']").dispatchEvent(new Event("click"));
+    if (storage.feature_darkmode_auto && document.querySelector(".darkmodeRadio[value='auto']")) {
+      document.querySelector(".darkmodeRadio[value='auto']").checked = true;
+      document.querySelector(".darkmodeRadio[value='auto']").dispatchEvent(new Event("click"));
+    } else if (document.querySelector(".darkmodeRadio[value='dark']")) {
+      document.querySelector(".darkmodeRadio[value='dark']").checked = true;
+      document.querySelector(".darkmodeRadio[value='dark']").dispatchEvent(new Event("click"));
     }
 
     //Add correct bg color for jquerymodal window
@@ -42,9 +42,9 @@ const initDarkMode = (storage) => {
     navigator.platform.indexOf("Win") == 0 ? loadCssFile("css/dark/scrollbars.min.css") : false;
   } else if (storage.feature_darkmode && storage.feature_darkmode_auto && currentColorScheme() == "light") {
     document.body.classList.remove("satDark");
-    if (storage.feature_darkmode_auto && document.querySelector("#darkmodeRadio[value='auto']")) {
-      document.querySelector("#darkmodeRadio[value='auto']").checked = true;
-      document.querySelector("#darkmodeRadio[value='auto']").dispatchEvent(new Event("click"));
+    if (storage.feature_darkmode_auto && document.querySelector(".darkmodeRadio[value='auto']")) {
+      document.querySelector(".darkmodeRadio[value='auto']").checked = true;
+      document.querySelector(".darkmodeRadio[value='auto']").dispatchEvent(new Event("click"));
     }
   }
 };
@@ -70,10 +70,12 @@ const detectSwitchDarkMode = (storage) => {
   if (storage.feature_darkmode && storage.feature_darkmode_auto) {
     const scheme = window.matchMedia("(prefers-color-scheme: dark)");
     scheme.addEventListener("change", () => {
-      if (document.querySelector("#darkmodeRadio")) {
+      if (document.querySelector(".darkmodeRadio")) {
         scheme.matches ? document.body.classList.add("satDark") : document.body.classList.remove("satDark");
         //trigger an event
-        document.querySelector("#darkmodeRadio[value='auto']").dispatchEvent(new Event("click"));
+        document.querySelector(".darkmodeRadio[value='auto']").dispatchEvent(new Event("click"));
+      } else {
+        scheme.matches ? document.body.classList.add("satDark") : document.body.classList.remove("satDark");
       }
     });
   }

@@ -59,8 +59,8 @@ const initOnboarding = () => {
           document.querySelector(".scWelcomeOverlay") ? document.querySelector(".scWelcomeOverlay").remove() : false;
         });
         document.querySelector("#scWelcomeSwitch").addEventListener("click", function () {
-          document.querySelectorAll("#interfaceRadio")[0] ? document.querySelectorAll("#interfaceRadio")[0].click() : false;
-          parent.document.querySelectorAll("#interfaceRadio")[0] ? parent.document.querySelectorAll("#interfaceRadio")[0].click() : false;
+          document.querySelectorAll(".interfaceRadio")[0] ? document.querySelectorAll(".interfaceRadio")[0].click() : false;
+          parent.document.querySelectorAll(".interfaceRadio")[0] ? parent.document.querySelectorAll(".interfaceRadio")[0].click() : false;
         });
         document.querySelector(".scWelcomeOverlay").addEventListener("click", function () {
           document.querySelector(".scWelcome").remove();
@@ -84,8 +84,8 @@ const initExperimentalUi = (storage) => {
     //prettier-ignore
     SearchPanel ? (SearchPanel.innerHTML = `<button class="scMenuButton" type="button"><img src="` + global.iconMenu + `" class="scBurgerMenu"/></button> <div class="scBurgerMenuTitle t-top t-sm" data-tooltip="Go back home" onclick="javascript:return scForm.invoke('contenteditor:home', event)" title="Go back Home">` + contentTitle + `</div>`) : false;
     document.body.classList.add("satExperimentalUi");
-    if (document.querySelector("#interfaceRadio[value='experimental']")) {
-      document.querySelector("#interfaceRadio[value='experimental']").checked = true;
+    if (document.querySelector(".interfaceRadio[value='experimental']")) {
+      document.querySelector(".interfaceRadio[value='experimental']").checked = true;
       document.querySelector(".themeMenuHint").innerText = "Experimental UI";
     }
     getAccentColor();
@@ -353,44 +353,46 @@ const getAccentColor = () => {
 /**
  * Add Color Picker into top bar (Experimental UI)
  */
-const initColorPicker = () => {
-  let color, text, brightness, invert, borderAlpha;
+const initColorPicker = (storage) => {
+  if (storage.feature_experimentalui) {
+    let color, text, brightness, invert, borderAlpha;
 
-  //prettier-ignore
-  let input = `<input type="color" id="scAccentColor" name="scAccentColor" value="` + getAccentColor() + `" class="t-bottom t-sm" data-tooltip="Your accent color">`;
-  let menu = document.querySelector(".sc-accountInformation");
-  menu ? menu.insertAdjacentHTML("afterbegin", input) : false;
+    //prettier-ignore
+    let input = `<input type="color" id="scAccentColor" name="scAccentColor" value="` + getAccentColor() + `" class="t-bottom t-sm" data-tooltip="Your accent color">`;
+    let menu = document.querySelector(".sc-accountInformation");
+    menu ? menu.insertAdjacentHTML("afterbegin", input) : false;
 
-  //Listenenr on change
-  let colorPicker = document.querySelector("#scAccentColor");
-  if (colorPicker) {
-    colorPicker.addEventListener("change", () => {
-      color = colorPicker.value;
-      text = setTextColour(color);
-      text == "#ffffff" ? (brightness = 10) : (brightness = 0);
-      text == "#ffffff" ? (invert = 0) : (invert = 1);
-      text == "#ffffff" ? (borderAlpha = "rgba(255, 255, 255, 0.4)") : (borderAlpha = "rgba(0, 0, 0, 0.4)");
-      console.log(invert);
-      //Root
-      let root = document.documentElement;
-      root.style.setProperty("--accent", color);
-      root.style.setProperty("--accentText", text);
-      root.style.setProperty("--accentBrightness", brightness);
-      root.style.setProperty("--accentInvert", invert);
-      root.style.setProperty("--accentBorder", borderAlpha);
-
-      //Iframes
-      document.querySelectorAll("iframe").forEach(function (e) {
-        let iframe = e.contentWindow.document.documentElement;
-        iframe.style.setProperty("--accent", color);
-        iframe.style.setProperty("--accentText", text);
-        iframe.style.setProperty("--accentBrightness", brightness);
-        iframe.style.setProperty("--accentInvert", invert);
+    //Listenenr on change
+    let colorPicker = document.querySelector("#scAccentColor");
+    if (colorPicker) {
+      colorPicker.addEventListener("change", () => {
+        color = colorPicker.value;
+        text = setTextColour(color);
+        text == "#ffffff" ? (brightness = 10) : (brightness = 0);
+        text == "#ffffff" ? (invert = 0) : (invert = 1);
+        text == "#ffffff" ? (borderAlpha = "rgba(255, 255, 255, 0.4)") : (borderAlpha = "rgba(0, 0, 0, 0.4)");
+        console.log(invert);
+        //Root
+        let root = document.documentElement;
+        root.style.setProperty("--accent", color);
+        root.style.setProperty("--accentText", text);
+        root.style.setProperty("--accentBrightness", brightness);
+        root.style.setProperty("--accentInvert", invert);
         root.style.setProperty("--accentBorder", borderAlpha);
-      });
 
-      localStorage.setItem("scColorPicker", color);
-    });
+        //Iframes
+        document.querySelectorAll("iframe").forEach(function (e) {
+          let iframe = e.contentWindow.document.documentElement;
+          iframe.style.setProperty("--accent", color);
+          iframe.style.setProperty("--accentText", text);
+          iframe.style.setProperty("--accentBrightness", brightness);
+          iframe.style.setProperty("--accentInvert", invert);
+          root.style.setProperty("--accentBorder", borderAlpha);
+        });
+
+        localStorage.setItem("scColorPicker", color);
+      });
+    }
   }
 };
 

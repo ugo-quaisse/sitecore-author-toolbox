@@ -3,7 +3,7 @@ import * as global from "./global.js";
 import { exeJsCode, calcMD5 } from "./helpers.js";
 import { currentColorScheme } from "./dark.js";
 
-export { getGravatar, initGravatarImage, initAppName, initUserMenu };
+export { getGravatar, initGravatarImage, initAppName, initWorkboxMenu, initUserPortraitMenu, initRibbonToggleMenu, initUserMenu };
 
 /**
  * Get Gravatar image from an email
@@ -79,38 +79,76 @@ const initAppName = (storage, name = "Content Editor") => {
 };
 
 /**
+ * Attach Workbox notification icon to the header
+ */
+const initWorkboxMenu = (storage) => {
+  if (storage.feature_experimentalui) {
+    let menu = document.querySelector(".sc-accountInformation");
+
+    //Add Notification and arrow icons
+    let dialogParamsLarge = "center:yes; help:no; resizable:yes; scroll:yes; status:no; dialogMinHeight:200; dialogMinWidth:300; dialogWidth:1100; dialogHeight:700; header:";
+
+    //prettier-ignore
+    let htmlIcon = `<span class="t-bottom t-sm" data-tooltip="Workbox notification"><img loading="lazy" id="scNotificationBell" onclick="javascript:scSitecore.prototype.showModalDialog('` + global.workboxPage.replace("&sc_bw=1", "&sc_bw=0") + `', '', '` + dialogParamsLarge + `Workbox', null, null); false" src="` + global.iconBell + `" class="scIconMenu" accesskey="w" /></span>`;
+    menu ? menu.insertAdjacentHTML("afterbegin", htmlIcon) : false;
+  }
+};
+
+/**
+ * Attach ribbon toggle icon to the header
+ */
+const initRibbonToggleMenu = (storage, type = "CE") => {
+  if (storage.feature_experimentalui) {
+    let menu = document.querySelector(".sc-accountInformation");
+    let htmlIcon;
+    if (type == "CE") {
+      htmlIcon = `<span class="t-bottom t-sm" data-tooltip="Toggle ribbon"><img loading="lazy" id="scSitecoreRibbon" onclick="showSitecoreRibbon()" src="` + global.iconDownArrow + `" class="scIconMenu" accesskey="a" /></span>`;
+    } else if (type == "EE") {
+      document.querySelector("[data-sc-id='QuickRibbon']").classList.add("QuickRibbonHide");
+      // document.querySelector("[data-sc-id='QuickRibbon'] > div").setAttribute("style", "opacity: 0;");
+      htmlIcon = `<span class="t-bottom t-sm" data-tooltip="Toggle ribbon"><img loading="lazy" id="scSitecoreRibbon" onclick="showSitecoreRibbonEE()" src="` + global.iconDownArrow + `" class="scIconMenu" accesskey="a" /></span>`;
+    }
+    menu ? menu.insertAdjacentHTML("afterbegin", htmlIcon) : false;
+  }
+};
+
+/**
+ * Attach ribbon toggle icon to the header
+ */
+const initUserPortraitMenu = (storage) => {
+  if (storage.feature_experimentalui) {
+    let accountInformation = document.querySelector(".sc-accountInformation");
+    accountInformation.querySelector("li").remove();
+    accountInformation.querySelector("li").innerHTML = accountInformation.querySelector("li > img").outerHTML;
+    accountInformation.querySelector("li > img").setAttribute("id", "globalHeaderUserPortrait");
+  }
+};
+
+/**
  * Attach Dropdown User Menu to the profil image
  */
-const initUserMenu = (storage) => {
+const initUserMenu = (storage, type = "CE") => {
   let accountInformation = document.querySelector(".sc-accountInformation");
   let scGlobalHeader = document.querySelector(".sc-globalHeader-loginInfo");
+  let htmlMenu;
 
   if (accountInformation) {
     let accountUser = accountInformation.querySelectorAll("li")[1].innerText.trim();
 
     if (storage.feature_experimentalui) {
-      //Add Notification and arrow icons
-      let dialogParamsLarge = "center:yes; help:no; resizable:yes; scroll:yes; status:no; dialogMinHeight:200; dialogMinWidth:300; dialogWidth:1100; dialogHeight:700; header:";
-
-      //prettier-ignore
-      let htmlIcon =
-        `<span class="t-bottom t-sm" data-tooltip="Workbox notification"><img loading="lazy" id="scNotificationBell" onclick="javascript:scSitecore.prototype.showModalDialog('` + global.workboxPage.replace("&sc_bw=1", "&sc_bw=0") + `', '', '` + dialogParamsLarge + `Workbox', null, null); false" src="` + global.iconBell + `" class="scIconMenu" accesskey="w" /></span>
-       <span class="t-bottom t-sm" data-tooltip="Toggle ribbon"><img loading="lazy" id="scSitecoreRibbon" onclick="showSitecoreRibbon()" src="` + global.iconDownArrow + `" class="scIconMenu" accesskey="a" /></span>`;
-      accountInformation.insertAdjacentHTML("afterbegin", htmlIcon);
-
-      //Add new Avatar icon
-      accountInformation.querySelector("li").remove();
-      accountInformation.querySelector("li").innerHTML = accountInformation.querySelector("li > img").outerHTML;
-      accountInformation.querySelector("li > img").setAttribute("id", "globalHeaderUserPortrait");
+      initRibbonToggleMenu(storage, type);
+      initWorkboxMenu(storage);
+      initUserPortraitMenu(storage);
     }
 
     // <li onclick="javascript:return scForm.invoke('system:showlicenses', event)">Licences</li>
     // <li onclick="javascript:return scForm.invoke('system:showabout', event)">Licence details</li>
     //<li onclick="javascript:return scForm.invoke('item:myitems', event)">My locked items</li>
 
-    //prettier-ignore
-    let htmlMenu =
-      `<div class="scAccountMenu">
+    if (type == "CE") {
+      //prettier-ignore
+      htmlMenu =
+        `<div class="scAccountMenu">
         <div class="scAccountMenuWrapper">
         <div class="scAccountColumn scAccountGroup1">
           <ul> 
@@ -131,21 +169,35 @@ const initUserMenu = (storage) => {
           <div class="scAccountColumn scAccountGroup2">
             <ul>
               <li onclick="javascript:goToSubmenu(0)" id="scSkip" class="backsubmenu">Dark Mode</li>
-              <li>Light <input type="radio" id="darkmodeRadio" name="darkMode" value="light" checked></li>
-              <li>Dark <input type="radio" id="darkmodeRadio" name="darkMode" value="dark"></li>
-              <li>Automatic <input type="radio" id="darkmodeRadio" name="darkMode" value="auto"></li>
+              <li>Light <input type="radio" class="darkmodeRadio" name="darkMode" value="light" checked></li>
+              <li>Dark <input type="radio" class="darkmodeRadio" name="darkMode" value="dark"></li>
+              <li>Automatic <input type="radio" class="darkmodeRadio" name="darkMode" value="auto"></li>
             </ul>
           </div>
           <div class="scAccountColumn scAccountGroup2">
             <ul>
               <li onclick="javascript:goToSubmenu(0)" id="scSkip" class="backsubmenu">Theme</li>
-              <li>Classic <input type="radio" id="interfaceRadio" name="interface" value="classic" checked></li>
-              <li>Experimental UI <input type="radio" id="interfaceRadio" name="interface" value="experimental"></li>
+              <li>Classic <input type="radio" class="interfaceRadio" name="interface" value="classic" checked></li>
+              <li>Experimental UI <input type="radio" class="interfaceRadio" name="interface" value="experimental"></li>
             </ul>
           </div>
         </div>
         </div>
       </div>`;
+    } else if (type == "EE") {
+      //prettier-ignore
+      htmlMenu =
+        `<div class="scAccountMenu">
+          <div class="scAccountMenuWrapper">
+            <div class="scAccountColumn scAccountGroup1">
+              <ul> 
+                <li onclick="javascript:return scForm.invoke('preferences:changeuserinformation', event)">My profile (` + accountUser + `)</li>
+                <li onclick="javascript:return scForm.invoke('contenteditor:close', event)">Log out</li>
+              </ul>
+            </div>   
+          </div>
+        </div>`;
+    }
     scGlobalHeader.insertAdjacentHTML("afterbegin", htmlMenu);
 
     //Resize menu
@@ -164,7 +216,7 @@ const initUserMenu = (storage) => {
     //Events
     if (document.querySelector(".scAccountMenu")) {
       document.addEventListener("click", (elem) => {
-        if (elem.target.id != "darkModeSwitch" && elem.target.id != "experimentalUiSwitch" && elem.target.id != "scSkip" && elem.target.id != "darkmodeRadio" && elem.target.id != "interfaceRadio") {
+        if (elem.target.id != "darkModeSwitch" && elem.target.id != "experimentalUiSwitch" && elem.target.id != "scSkip" && elem.target.classList != "darkmodeRadio" && elem.target.classList != "interfaceRadio") {
           elem.target.id == "globalHeaderUserPortrait" ? document.querySelector(".scAccountMenu").classList.toggle("open") : document.querySelector(".scAccountMenu").classList.remove("open");
         }
       });
@@ -192,7 +244,7 @@ const initUserMenu = (storage) => {
  * Init Dark Radio Switch events
  */
 const initDarkSwitchEvents = () => {
-  document.querySelectorAll("#darkmodeRadio").forEach(function (radio) {
+  document.querySelectorAll(".darkmodeRadio").forEach(function (radio) {
     radio.onclick = function () {
       if (radio.value == "dark" || (radio.value == "auto" && currentColorScheme() == "dark")) {
         //main
@@ -260,7 +312,7 @@ const initDarkSwitchEvents = () => {
  * Init Interface Switch events
  */
 const initInterfaceEvents = () => {
-  document.querySelectorAll("#interfaceRadio").forEach(function (radio) {
+  document.querySelectorAll(".interfaceRadio").forEach(function (radio) {
     radio.onclick = function () {
       if (radio.value == "classic") {
         //main

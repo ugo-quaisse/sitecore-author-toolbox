@@ -13,7 +13,7 @@ import { initRTL } from "./rtl.js";
 import { enhancedTreeSearch } from "./search.js";
 import { initTranslateMode } from "./translate.js";
 
-export { sitecoreAuthorToolbox, initCharsCount, initCheckboxes, initDatePicker, initPublishCheckboxes, refreshContentEditor, openFolderTab };
+export { sitecoreAuthorToolbox, initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, initPublishCheckboxes, refreshContentEditor, openFolderTab };
 
 /*
  * Main function executed when the Content Editor refreshes
@@ -71,7 +71,8 @@ const sitecoreAuthorToolbox = (storage) => {
   checkHelpLink(ScItem.id, ScItem.language, ScItem.version, storage);
   initFancyMessageBars(storage);
   initCheckboxes(storage);
-  initDatePicker(storage);
+  initDateTimeField(storage);
+  initPasswordField(storage);
   initTranslateMode(storage);
   enhancedTreeSearch(storage);
   changeTitleWindow(storage);
@@ -441,15 +442,34 @@ const initCheckboxes = (storage) => {
 };
 
 /*
- * Change style of date picker
+ * Change style of date/time picker
  */
-const initDatePicker = (storage) => {
+const initDateTimeField = (storage) => {
   if (storage.feature_experimentalui) {
-    document.querySelectorAll("table.scDatePickerComboBox > tbody > tr > td > img.scComboboxDropDown").forEach((img) => {
+    document.querySelectorAll("table.scTimePickerComboBox > tbody > tr > td > img.scComboboxDropDown, table.scDatePickerComboBox > tbody > tr > td > img.scComboboxDropDown").forEach((img) => {
       img.src = global.iconCalendar;
       img.removeAttribute("onmouseover");
       img.removeAttribute("onmouseout");
       img.classList.add("scCalendarUI");
+    });
+    document.querySelectorAll("table.scDatePickerComboBox > tbody > tr > td > input.scComboboxEdit").forEach((field) => {
+      field.setAttribute("placeholder", "Date");
+    });
+    document.querySelectorAll("table.scTimePickerComboBox > tbody > tr > td > input.scComboboxEdit").forEach((field) => {
+      field.setAttribute("placeholder", "Time");
+    });
+  }
+};
+
+/*
+ * Change style of password field
+ */
+const initPasswordField = (storage) => {
+  if (storage.feature_experimentalui) {
+    let html = `<div class="scPasswordUI"><img src="` + global.iconPassword + `" /></div>`;
+    document.querySelectorAll("input[type=password]").forEach((input) => {
+      input.classList.add("scPasswordUI");
+      input.insertAdjacentHTML("beforebegin", html);
     });
   }
 };

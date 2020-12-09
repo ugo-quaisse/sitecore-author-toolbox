@@ -1981,7 +1981,8 @@ body.satExtension [data-tooltip]:before {
   width: max-content;
   max-width: 400px;
 }
-body.satEE [data-tooltip]:after body.satExtension [data-tooltip]:after {
+body.satEE [data-tooltip]:after,
+body.satExtension [data-tooltip]:after {
   border: 6px solid transparent;
   width: 0;
   content: "";

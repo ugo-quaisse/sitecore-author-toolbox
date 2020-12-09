@@ -33,7 +33,7 @@ import { initRteTooltips, initSyntaxHighlighterRte } from "./modules/rte.js";
 import { initPreviewButton, listenPreviewTab } from "./modules/preview.js";
 import { initLaunchpadIcon, initLaunchpadMenu } from "./modules/launchpad.js";
 import { initAutoExpandTree, initTreeGutterTooltips } from "./modules/contenttree.js";
-import { storeCurrentPageEE, toolbarEditInCE, addToolbarTooltip, addComponentTooltip, addExtraButtons, resetExperienceEditor } from "./modules/experienceeditor.js";
+import { storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor } from "./modules/experienceeditor.js";
 
 /**
  * Get all user's settings from chrome storage
@@ -241,10 +241,10 @@ chrome.storage.sync.get((storage) => {
       log("**** Insert Page ****", "orange");
     } else {
       log("**** Page in EE ****", "orange");
-      toolbarEditInCE();
-      addComponentTooltip();
+      addToolbarEditCE();
       addToolbarTooltip();
-      addExtraButtons(storage);
+      addPlaceholderTooltip();
+      addHideRibbonButton(storage);
       resetExperienceEditor(storage);
     }
   }

@@ -3,7 +3,7 @@
 import * as global from "./global.js";
 import { exeJsCode, loadCssFile, startDrag, sitecoreItemJson } from "./helpers.js";
 
-export { storeCurrentPageEE, toolbarEditInCE, addToolbarTooltip, addComponentTooltip, addExtraButtons, resetExperienceEditor };
+export { storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor };
 
 /**
  * Add button to toolbar to open datasource in CE
@@ -24,7 +24,7 @@ const storeCurrentPageEE = () => {
 /**
  * Add button to toolbar to open datasource in CE
  */
-const toolbarEditInCE = () => {
+const addToolbarEditCE = () => {
   let target = document.querySelector(".scChromeDropDown");
   let observer = new MutationObserver(function () {
     let scChromeDropDownRow = document.querySelectorAll(".scChromeDropDownRow");
@@ -102,9 +102,9 @@ const addToolbarTooltip = () => {
 };
 
 /**
- * Add /Move component tooltip
+ * Add / Move placeholder tooltip
  */
-const addComponentTooltip = () => {
+const addPlaceholderTooltip = () => {
   let target = document.querySelector("body");
   let observer = new MutationObserver(function (mutation) {
     mutation.forEach(function (el) {
@@ -144,9 +144,9 @@ const addComponentTooltip = () => {
 };
 
 /**
- * add extra buttons to Experience Editor
+ * add show/hide tab to Experience Editor
  */
-const addExtraButtons = (storage) => {
+const addHideRibbonButton = (storage) => {
   storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;
   var pagemodeEdit = document.querySelector(".pagemode-edit");
   !pagemodeEdit ? (pagemodeEdit = document.querySelector(".on-page-editor")) : false;
@@ -242,4 +242,9 @@ const resetExperienceEditor = (storage) => {
   if (storage.feature_experienceeditor) {
     loadCssFile("css/experienceeditor.min.css");
   }
+  //Remove satExtension satDark satExperimetalUI from main frame
+  document.body.classList.add("satEE");
+  document.body.classList.remove("satExtension");
+  document.body.classList.remove("satDark");
+  document.body.classList.remove("satExperimentalUi");
 };

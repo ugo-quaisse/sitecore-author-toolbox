@@ -540,7 +540,7 @@ function changePreviewRotation(iframeId) {
 function goToSubmenu(id, width = 300) {
   let height = document.querySelectorAll(".scAccountMenu > .scAccountMenuWrapper .scAccountColumn > ul")[id].offsetHeight;
   let count = 0;
-
+  console.log(height);
   id == 0 ? document.querySelector(".scAccountMenuWrapper").setAttribute("style", "margin-left:0px") : document.querySelector(".scAccountMenuWrapper").setAttribute("style", "margin-left:-" + width + "px");
   document.querySelectorAll(".scAccountMenu > .scAccountMenuWrapper .scAccountColumn").forEach(function (elem) {
     if (count == id) {

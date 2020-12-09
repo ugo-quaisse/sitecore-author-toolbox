@@ -2,33 +2,11 @@ html {
   font-size: 100% !important;
 }
 
-body {
+body.satEE {
   line-height: normal !important;
 }
 
-@keyframes animation {
-  0% {
-    background-position: 0% 0%;
-  }
-
-  100% {
-    background-position: 100% 100%;
-  }
-}
-
-template::before,
-roller::before,
-media::before {
-  content: "[Press save to see this component]";
-  color: var(--lightred);
-}
-
-template,
-media {
-  padding: 15px 1px;
-}
-
-.scAddRendering {
+body.satEE .scAddRendering {
   font-size: 17px !important;
   font-weight: bold !important;
   background-color: #ffffff;
@@ -37,8 +15,8 @@ media {
   color: #666666;
 }
 
-.scInsertionHandle,
-.scSortingHandle {
+body.satEE .scInsertionHandle,
+body.satEE .scSortingHandle {
   left: 0px !important;
   width: 100%;
   z-index: 9050 !important;
@@ -53,20 +31,20 @@ media {
   position: absolute !important;
 }
 
-.scInsertionHandle:hover,
-.scSortingHandle:hover {
+body.satEE .scInsertionHandle:hover,
+body.satEE .scSortingHandle:hover {
   background-image: linear-gradient(45deg, #52cc7e 25%, #eefff4 25%, #eefff4 50%, #52cc7e 50%, #52cc7e 75%, #eefff4 75%, #eefff4 100%);
   opacity: 1;
   z-index: 9051 !important;
 }
 
-.scInsertionHandleLeft,
-.scInsertionHandleCenter,
-.scInsertionHandleRight {
+body.satEE .scInsertionHandleLeft,
+body.satEE .scInsertionHandleCenter,
+body.satEE .scInsertionHandleRight {
   display: none !important;
 }
 
-.view-render-exception {
+body.satEE .view-render-exception {
   background-color: #ffdbdb;
   font-family: monospace;
   line-height: 17px;
@@ -75,7 +53,7 @@ media {
   padding: 50px;
 }
 
-.zg-variant-switcher {
+body.satEE .zg-variant-switcher {
   zoom: 1.1;
   background-color: #f1d500 !important;
   padding: 4px !important;
@@ -83,66 +61,66 @@ media {
   height: 30px !important;
 }
 
-.zg-variant-switcher .zg-variant-list:hover {
+body.satEE .zg-variant-switcher .zg-variant-list:hover {
   background-color: #f1d500 !important;
 }
 
-.zg-variant-switcher.expanded li:hover {
+body.satEE .zg-variant-switcher.expanded li:hover {
   background-color: rgba(241, 213, 0, 0.2) !important;
 }
 
-.zg-variant-switcher .zg-variant-list li.selected {
+body.satEE .zg-variant-switcher .zg-variant-list li.selected {
   font-weight: bold !important;
 }
 
-.zg-variant-toggle-dropdown {
+body.satEE .zg-variant-toggle-dropdown {
   right: 5px !important;
 }
 
-.scChromeToolbar {
+body.satEE .scChromeToolbar {
   box-shadow: none !important;
 }
-.scChromeControls,
-.scChromeDropDown {
+body.satEE .scChromeControls,
+body.satEE .scChromeDropDown {
   box-shadow: 0px 4px 17px 9px rgba(0, 0, 0, 0.3) !important;
   border-radius: 6px !important;
 }
-.scChromeName {
+body.satEE .scChromeName {
   border-radius: 4px 4px 0px 0px !important;
 }
-.scFrameSideHorizontal {
+body.satEE .scFrameSideHorizontal {
   box-shadow: 0px 0px 10px 1px rgba(40, 155, 200, 0.7);
   height: 2px !important;
   background-color: #289bc8 !important;
   transform: translateY(-15%);
 }
-.scFrameSideVertical {
+body.satEE .scFrameSideVertical {
   box-shadow: 0px 0px 10px 1px rgba(40, 155, 200, 0.7);
   width: 2px !important;
   background-color: #289bc8 !important;
   transform: translateX(-15%);
 }
-.scFrameYellow {
+body.satEE .scFrameYellow {
   box-shadow: 0px 0px 10px 1px rgba(241, 213, 0, 0.7);
   background-color: #f1d500 !important;
 }
-.chromeWithDatasource {
+body.satEE .chromeWithDatasource {
   transition: all 0.1s ease-in-out;
 }
-.chromeWithDatasource:hover {
+body.satEE .chromeWithDatasource:hover {
   outline-color: #289bc8;
   position: relative;
   z-index: 1;
   box-shadow: 0px 0px 10px 1px rgba(40, 155, 200, 0.7);
 }
 
-.scEnabledChrome,
-.scEmptyPlaceholder {
+body.satEE .scEnabledChrome,
+body.satEE .scEmptyPlaceholder {
   border: 1px solid transparent;
 }
 
-.scEnabledChrome:hover,
-.scEmptyPlaceholder:hover {
+body.satEE .scEnabledChrome:hover,
+body.satEE .scEmptyPlaceholder:hover {
   box-shadow: 0px 0px 10px 1px rgba(241, 213, 0, 0.7);
   border: 1px solid #f1d500 !important;
 }

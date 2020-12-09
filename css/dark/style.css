@@ -2,6 +2,11 @@ body.satDark .scStartbar {
   background-color: var(--black3) !important;
 }
 
+body.satDark #EditorFrames,
+body.satDark #EditorFrames a {
+  color: var(--text) !important;
+}
+
 body.satDark #ribbonPageShadow {
   background: var(--black);
 }

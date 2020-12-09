@@ -29,6 +29,7 @@ const instantSearch = () => {
   const scInstantSearch = document.querySelector(".scInstantSearch");
   const divResults = document.querySelector(".scInstantSearchResults");
   let globalTimeout = null;
+  let html = "";
 
   //From where
   let fromWhere = "default";
@@ -52,6 +53,15 @@ const instantSearch = () => {
     scInstantSearch.addEventListener("focus", (event) => {
       const chars = event.target.value.length;
       chars >= 2 ? divResults.setAttribute("style", "opacity: 1; visibility: visible; top: 48px;") : false;
+      //Get recent search
+      // html += "<h1>Search history</h1>";
+      // JSON.parse(localStorage.getItem("scSearchTerms")).forEach((elem) => {
+      //   console.log(elem.title);
+      //   html += `<li class="scInstantRow" tabindex="0" role="link"><h2>🕙 ` + elem.title + `</h2></li>`;
+      // });
+      // divResults.innerHTML = "";
+      // divResults.insertAdjacentHTML("afterbegin", html);
+      // divResults.setAttribute("style", "opacity: 1; visibility: visible; top: 48px;");
     });
 
     //Tab index
@@ -116,15 +126,15 @@ const instantSearch = () => {
 
             if (divResults.querySelector(".textLoading")) {
               var loadingTimeout1 = setTimeout(function () {
-                divResults.querySelector(".textLoading").innerText = "Sitecore is processing your request ...";
-              }, 6000);
+                divResults.querySelector(".textLoading").innerText = "Sitecore is processing your request...";
+              }, 5000);
 
               var loadingTimeout2 = setTimeout(function () {
-                divResults.querySelector(".textLoading").innerText = "... Hang tight, it takes a little longer than expected...";
+                divResults.querySelector(".textLoading").innerText = "🐱 Hang tight, it takes a little longer than expected...";
               }, 11000);
 
               var loadingTimeout3 = setTimeout(function () {
-                divResults.querySelector(".textLoading").innerText = "... server is warming up, bear with us :-)";
+                divResults.querySelector(".textLoading").innerText = "⏳ server is busy, bear with us :-)";
               }, 16000);
             }
 
@@ -134,7 +144,6 @@ const instantSearch = () => {
             ajax.onreadystatechange = function () {
               if (ajax.readyState === 4 && ajax.status == "200") {
                 let category, title, href, img, text, scItem, scLanguage, scVersion, showCat;
-                let html = "";
                 let count = 0;
                 let command;
                 const dom = new DOMParser().parseFromString(ajax.responseText, "text/html");
@@ -220,7 +229,7 @@ const instantSearch = () => {
               } else if (ajax.status == "0") {
                 // Populate result
                 divResults.innerHTML = "";
-                divResults.insertAdjacentHTML("afterbegin", '<div class="scInstansSeachLoading"><img src="' + global.iconTimeout + '" width="display: block; margin: auto; width: 60px;" /> Sitecore timeout. Try again...</div>');
+                divResults.insertAdjacentHTML("afterbegin", '<div class="scInstansSeachLoading">💀 Sitecore timeout. Try again...</div>');
               }
 
               loadingTimeout1 != null ? clearTimeout(loadingTimeout1) : false;

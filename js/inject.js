@@ -170,6 +170,22 @@ const toggleMediaIframe = (url) => {
   scSitecore.prototype.showModalDialog(url, "", features, "", "");
 };
 
+const saveSearchTerms = (entryTitle) => {
+  let numResult = 4;
+  // Parse any JSON previously stored in allEntries
+  let existingEntries = JSON.parse(localStorage.getItem("scSearchTerms"));
+  if (existingEntries == null) existingEntries = [];
+  if (existingEntries.length > numResult) {
+    existingEntries.splice(0, existingEntries.length - numResult);
+  }
+  var entry = {
+    title: entryTitle,
+  };
+  // Save allEntries back to local storage
+  existingEntries.push(entry);
+  localStorage.setItem("scSearchTerms", JSON.stringify(existingEntries));
+};
+
 const fadeEditorFrames = () => {
   let divResults = document.querySelector(".scInstantSearchResults");
   divResults.setAttribute("style", "height:0px; opacity: 0; visibility: hidden; top: 43px;");

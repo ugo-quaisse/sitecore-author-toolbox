@@ -1037,16 +1037,6 @@ body.satExperimentalUi .scInstantSearchResults > li:hover > p {
   color: var(--accentText) !important;
 }
 
-body.satExperimentalUi .scInstantSearchResults > li > p > img,
-body.satExperimentalUi .scInstantSearchResults > li > p > img {
-  filter: brightness(10);
-}
-
-body.satExperimentalUi .scInstantSearchResults > li:focus > p > img,
-body.satExperimentalUi .scInstantSearchResults > li:hover > p > img {
-  filter: brightness(var(--accentBrightness));
-}
-
 /*Forms in section*/
 
 body.satExperimentalUi .scEditorFieldLabel {

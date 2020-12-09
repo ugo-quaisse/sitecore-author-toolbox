@@ -1262,13 +1262,15 @@ body.satExtension textarea:focus {
 
 .textLoading,
 .scInstansSeachLoading {
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 600;
   color: var(--white);
-  padding: 0px;
-  margin: 0px;
+  padding: 10px 0px;
+  margin: 10px;
   text-align: center;
-  top: 120px;
+  top: 130px;
   position: relative;
+  opacity: 0.6;
 }
 
 .scCountNodes {

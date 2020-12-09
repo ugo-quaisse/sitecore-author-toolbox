@@ -27,7 +27,7 @@ body.satEE .scSortingHandle {
   display: block;
   padding: 9px;
   text-align: center;
-  margin-top: -25px !important;
+  margin-top: 0px !important;
   position: absolute !important;
 }
 

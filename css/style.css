@@ -70,10 +70,6 @@ body.satExtension .sc-globalHeader-content .col2:last-child {
   padding: 0px;
 }
 
-body.satExtension .sc-text-largetitle {
-  color: var(--text);
-}
-
 body.satExtension .scWorkboxPanel,
 body.satExtension .scWindowBorder1 {
   border: 0px solid !important;
@@ -1651,7 +1647,7 @@ body.satExtension #scPanel {
   position: fixed;
   background-color: var(--white);
   top: 0px !important;
-  right: -420px !important;
+  right: -440px !important;
   left: unset !important;
   width: 400px !important;
   height: -webkit-fill-available !important;

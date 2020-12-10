@@ -247,15 +247,15 @@ const insertMoreButton = () => {
   let html =
     `<div class="content">
       <h2>Item details</h2>
-      <h3>Item ID:</h3> ` + ScItem.id + `
-      <h3>Name:</h3> ` + ScItem.name + `
-      <h3>Path:</h3> ` + ScItem.path + `
-      <h3>Template:</h3> ` + ScItem.template + `
-      <h3>Template ID:</h3> ` + ScItem.templateId + `
-      <h3>From:</h3> ` + ScItem.from + `
-      <h3>Owner:</h3> ` + ScItem.owner + `
-      <h3>Language:</h3> ` + ScItem.language + `
-      <h3>Version:</h3> ` + ScItem.version + `
+      <h3>Item ID:</h3> <span class="itemDetail">` + ScItem.id + `</span>
+      <h3>Name:</h3> <span class="itemDetail">` + ScItem.name + `</span>
+      <h3>Path:</h3> <span class="itemDetail">` + ScItem.path + `</span>
+      <h3>Template:</h3> <span class="itemDetail">` + ScItem.template + `</span>
+      <h3>Template ID:</h3> <span class="itemDetail">` + ScItem.templateId + `</span>
+      <h3>From:</h3> <span class="itemDetail">` + ScItem.from + `</span>
+      <h3>Owner:</h3> <span class="itemDetail">` + ScItem.owner + `</span>
+      <h3>Language:</h3> <span class="itemDetail">` + ScItem.language + `</span>
+      <h3>Version:</h3> <span class="itemDetail">` + ScItem.version + `</span>
     </div>`;
   panel ? (panel.innerHTML = html) : false;
 
@@ -596,7 +596,9 @@ const initEventListeners = () => {
 
     //Quick Info panel
     if (document.querySelector("#scInfoButton")) {
-      event.target.id == "scInfoButton" || event.path[1].id == "scInfoButton" || event.target.id == "scPanel" || event.path[0].className == "content" ? scPanel.classList.toggle("open") : scPanel.classList.remove("open");
+      if (event.path[0].className != "itemDetail" && event.path[0].className != "open") {
+        event.target.id == "scInfoButton" || event.path[1].id == "scInfoButton" || event.target.id == "scPanel" || event.path[0].className == "content" ? scPanel.classList.toggle("open") : scPanel.classList.remove("open");
+      }
     }
 
     //Language menu

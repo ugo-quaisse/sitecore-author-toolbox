@@ -22,6 +22,14 @@ body.satExperimentalUi button:active {
   box-shadow: 0 0 0 2.5px var(--accent) !important;
 }
 
+body.satExperimentalUi #scPanel {
+  padding: 0px 20px;
+}
+
+body.satExperimentalUi #scPanel > .content {
+  padding: 0px;
+}
+
 body.satExperimentalUi #scPanel h1 {
   font-size: 250%;
   font-weight: 700;
@@ -705,12 +713,12 @@ body.satExperimentalUi #scPanel.open {
 body.satExperimentalUi #scEditorTabs {
   background-color: transparent;
   margin: 0px 20px 0px 20px;
-  overflow-x: hidden;
+  overflow-x: scroll;
   padding: 20px 0px 0px 0px;
 }
 
 body.satExperimentalUi #scEditorTabs > ul {
-  overflow-x: scroll;
+  overflow-x: unset;
   transition: margin-left ease-out 0.2s !important;
   width: auto !important;
 }

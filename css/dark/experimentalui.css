@@ -279,6 +279,10 @@ body.satExperimentalUi.satDark #scPanel {
   background-color: var(--black2) !important;
 }
 
+body.satExperimentalUi.satDark .itemDetail {
+  color: var(--text);
+}
+
 body.satExperimentalUi.satDark .versionNumSelected,
 body.satExperimentalUi.satDark .scMenuItemIcon_Hover,
 body.satExperimentalUi.satDark .scMenuItemCaption_Hover,

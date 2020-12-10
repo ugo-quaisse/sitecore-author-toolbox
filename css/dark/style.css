@@ -3014,7 +3014,6 @@ body.satDark #scCrossPiece {
   background-color: var(--black2) !important;
 }
 
-body.satEE .scExpTab,
 body.satDark .scExpTab {
   background-color: var(--black2) !important;
   color: var(--grey) !important;
@@ -3106,15 +3105,16 @@ body.satDark #RibbonContainer {
   border-color: var(--black1) !important;
 }
 
-body.satEE .scEditableTab,
-body.satEE .scContentEditorTab,
-body.satEE .scNormalModeTab,
 body.satDark .scEditableTab,
 body.satDark .scContentEditorTab,
 body.satDark .scNormalModeTab,
 body.satDark .scFlexColumnContainer,
 body.satDark .scFlexContent {
   background-color: var(--black2) !important;
+}
+
+body.satDark .sc-text-largetitle {
+  color: var(--text);
 }
 
 body.satDark .scMediaIcon {

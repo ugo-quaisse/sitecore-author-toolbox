@@ -32,11 +32,13 @@ const addToolbarEditCE = () => {
     let scVersion = "";
 
     for (var row of scChromeDropDownRow) {
-      if (row.getAttribute("title").toLowerCase() == "change associated content") {
-        var id = row.getAttribute("onclick").split("id={")[1].split("}")[0];
-        //prettier-ignore
-        var html = `<a href="#" title="Edit in Content Editor" class="scChromeDropDownRow" onclick="javascript:window.open('/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#{` + id + `}_` + scLanguage.toLowerCase() + `_` + scVersion + `')"><img src="/~/icon/applicationsv2/32x32/window_edit.png" style="width:16px" alt="Edit in Content Editor"><span>Edit in Content Editor</span></a>`;
-        row.insertAdjacentHTML("beforebegin", html);
+      if (row.getAttribute("title")) {
+        if (row.getAttribute("title").toLowerCase() == "change associated content") {
+          var id = row.getAttribute("onclick").split("id={")[1].split("}")[0];
+          //prettier-ignore
+          var html = `<a href="#" title="Edit in Content Editor" class="scChromeDropDownRow" onclick="javascript:window.open('/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#{` + id + `}_` + scLanguage.toLowerCase() + `_` + scVersion + `')"><img src="/~/icon/applicationsv2/32x32/window_edit.png" style="width:16px" alt="Edit in Content Editor"><span>Edit in Content Editor</span></a>`;
+          row.insertAdjacentHTML("beforebegin", html);
+        }
       }
     }
   });

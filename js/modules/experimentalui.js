@@ -344,7 +344,7 @@ const getAccentColor = () => {
     root.style.setProperty("--accent", "#ee3524");
     root.style.setProperty("--accentText", "#ffffff");
     root.style.setProperty("--accentBrightness", 50);
-    root.style.setProperty("--accentInvert", 1);
+    root.style.setProperty("--accentInvert", 0);
   }
 
   return color;

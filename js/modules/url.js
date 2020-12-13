@@ -52,7 +52,7 @@ const initLiveUrl = (storage) => {
     var liveUrl;
     var domains = storage.domain_manager;
     var envBadge = "CM server";
-    var barStyle = storage.feature_experimentalui ? "scSuccess" : "scWarning";
+    var barStyle = storage.feature_experimentalui ? "scNeutral" : "scWarning";
 
     //Loop through domains, if current domain = key, then create new link for live
     for (var domain in domains) {
@@ -111,7 +111,7 @@ const initLiveUrl = (storage) => {
             <div class="scMessageBarIcon" style="background-image:url(` + global.icon + `)"></div>
             <div class="scMessageBarTextContainer">
               <div class="scMessageBarTitle">Sitecore Live URL
-              <span class="liveUrlBadge" onclick="location.href = '` + global.launchpadPage + `?configure_domains=true&launchpad=true&url=` + global.windowLocationHref + `'" title="Click to configure your domains">` + envBadge + `</span>
+              <span class="liveUrlBadge t-sm t-top" onclick="window.open('` + global.launchpadPage + `?configure_domains=true&launchpad=true&url=` + global.windowLocationHref + `')" data-tooltip="Click to configure your domains" title="Click to configure your domains">` + envBadge + `</span>
               <span class="liveUrlStatus"></span>
               </div>
               <div class="scMessageBarText">To preview this page in <b>"` + scLanguageTxtLong + `".</b></div>
@@ -149,6 +149,8 @@ const initLiveUrl = (storage) => {
               experimental: true,
             },
             (response) => {
+              console.log(sitecoreItemPath);
+              console.log(response.status);
               checkUrlStatus(response.status, null, darkMode, storage.feature_experimentalui);
             }
           );
@@ -197,18 +199,15 @@ const checkUrlStatus = (status, source = null, dark, experimental = false) => {
   //Check response
   if (status == "404") {
     html = "<span class='liveStatusRed'><img loading='lazy' src=' " + global.dotRed + "'/> Not published (" + status + ")</span>";
-    // preview = "Live URL (404) <img loading='lazy' src=' " + global.dotRed + "' class='liveUrlDot' />";
-    // disable = true;
     barStyle = "scError";
   } else if (status == "500") {
     html = "<span class='liveStatusRed'><img loading='lazy' src=' " + global.dotRed + "'/> Server error (" + status + ")</span>";
-    // preview = "Live URL (500) <img loading='lazy' src=' " + global.dotRed + "'class='liveUrlDot' />";
-    // disable = true;
     barStyle = "scError";
+  } else if (status == undefined) {
+    html = "<span class='liveStatusRed'><img loading='lazy' src=' " + global.dotRed + "'/> URL doesn't exist (" + status + ")</span>";
+    barStyle = "scWarning";
   } else {
     html = "<span class='liveStatusGreen'><img loading='lazy' src=' " + global.dotGreen + "'/> Published</span>";
-    // preview = "Live URL <img loading='lazy' src=' " + global.dotGreen + "'class='liveUrlDot' />";
-    // disable = false;
     barStyle = "scSuccess";
   }
 

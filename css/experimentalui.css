@@ -878,6 +878,34 @@ body.satExperimentalUi .scWarning > .scMessageBarTextContainer > .scMessageBarOp
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
+body.satExperimentalUi .scWarning .liveUrlBadge {
+  background-color: var(--messageWarningLink);
+}
+
+body.satExperimentalUi .scMessageBar.scNeutral {
+  margin: 20px;
+  border-radius: 0px var(--radius) var(--radius) 0px;
+  background-color: var(--grey) !important;
+  color: var(--black5) !important;
+  font-size: 14px;
+}
+
+body.satExperimentalUi .scNeutral > .scMessageBarIcon {
+  border-radius: var(--radius) 0px 0px var(--radius);
+  background-color: var(--black9) !important;
+}
+
+body.satExperimentalUi .scNeutral > .scMessageBarTextContainer > .scMessageBar a,
+body.satExperimentalUi .scNeutral > .scMessageBarTextContainer > .scMessageBarOption,
+body.satExperimentalUi .scNeutral > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet {
+  color: var(--black5) !important;
+  text-decoration-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+body.satExperimentalUi .scNeutral .liveUrlBadge {
+  background-color: var(--black5);
+}
+
 body.satExperimentalUi .scMessageBar.scError {
   margin: 20px;
   border-radius: 0px var(--radius) var(--radius) 0px;
@@ -896,6 +924,10 @@ body.satExperimentalUi .scError > .scMessageBarTextContainer > .scMessageBarOpti
 body.satExperimentalUi .scError > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet {
   color: var(--messageDangerLink) !important;
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+body.satExperimentalUi .scError .liveUrlBadge {
+  background-color: var(--messageDangerLink);
 }
 
 body.satExperimentalUi .scMessageBar.scInformation {
@@ -918,6 +950,10 @@ body.satExperimentalUi .scInformation > .scMessageBarTextContainer > .scMessageB
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
+body.satExperimentalUi .scInformation .liveUrlBadge {
+  background-color: var(--messageInfoLink);
+}
+
 body.satExperimentalUi .scMessageBar.scSuccess {
   margin: 20px;
   border-radius: 0px var(--radius) var(--radius) 0px;
@@ -938,13 +974,19 @@ body.satExperimentalUi .scSuccess > .scMessageBarTextContainer > .scMessageBarOp
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
+body.satExperimentalUi .scSuccess .liveUrlBadge {
+  background-color: var(--messageSuccessLink);
+}
+
 body.satExperimentalUi .liveUrlBadge {
-  background-color: var(--accent) !important;
-  color: var(--messageWarningBar) !important;
+  color: var(--white);
   font-size: 10px;
   padding: 1px 5px;
-  visibility: hidden;
-  display: none;
+}
+
+body.satExperimentalUi .liveUrlBadge:hover {
+  filter: brightness(1.1);
+  border-color: inherit;
 }
 
 body.satExperimentalUi .scMessageBarTextContainer {

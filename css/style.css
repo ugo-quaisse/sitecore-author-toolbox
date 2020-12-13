@@ -1176,7 +1176,7 @@ body.satExtension .pulseAnimate {
   height: fit-content;
   max-height: 90vh;
   min-height: 30vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   text-align: center;
 }
@@ -1568,7 +1568,7 @@ body.satExtension #scModal {
 
 #scModal .main {
   height: calc(100% - 75px);
-  overflow: scroll;
+  overflow: auto;
 }
 
 #scModal .noResult {
@@ -1660,7 +1660,7 @@ body.satExtension #scPanel {
 #scPanel > .content {
   padding: 0px 20px 20px 20px;
   font-size: 15px;
-  overflow: scroll;
+  overflow: auto;
   word-break: break-all;
   white-space: nowrap;
 }

@@ -205,12 +205,6 @@ body.satExperimentalUi.satDark a.scContentTreeNodeNormal:hover > span {
   background-color: var(--black3) !important;
 }
 
-body.satExperimentalUi.satDark .scTreeview .icon,
-body.satExperimentalUi.satDark .scTreeview .icon_Hover,
-body.satExperimentalUi.satDark #scModal .item > a > img {
-  filter: grayscale(1) brightness(0.4) contrast(2) invert(1);
-}
-
 body.satExperimentalUi.satDark .scInsertItemIcon,
 body.satExperimentalUi.satDark .scEditItemIcon {
   filter: invert(0);

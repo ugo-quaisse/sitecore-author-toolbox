@@ -22,6 +22,16 @@ body.satExperimentalUi button:active {
   box-shadow: 0 0 0 2.5px var(--accent) !important;
 }
 
+body.satExperimentalUi .scTreeview .nodeNormal {
+  color: var(--text);
+}
+
+body.satExperimentalUi .scTreeview .nodeSelected,
+body.satExperimentalUi .scTreeview .nodeSelected_Hover {
+  background-color: var(--accent) !important;
+  color: var(--accentText) !important;
+}
+
 body.satExperimentalUi #scPanel {
   padding: 0px 20px;
 }
@@ -713,7 +723,7 @@ body.satExperimentalUi #scPanel.open {
 body.satExperimentalUi #scEditorTabs {
   background-color: transparent;
   margin: 0px 20px 0px 20px;
-  overflow-x: scroll;
+  overflow-x: auto;
   padding: 20px 0px 0px 0px;
 }
 
@@ -1316,6 +1326,15 @@ body.satExperimentalUi .scPopup {
   background-color: var(--white);
   border-radius: var(--radius);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  padding: 5px;
+}
+
+body.satExperimentalUi .sc-insertItem-container.selected,
+body.satExperimentalUi .sc-insertItem-container.selected .sc-display-name,
+body.satExperimentalUi .scChecked {
+  background-color: var(--accent);
+  color: var(--accentText) !important;
+  border-color: transparent;
 }
 
 body.satExperimentalUi .scPopup > table > tbody > tr[id^="ContextMenu_"] > td {

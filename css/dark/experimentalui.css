@@ -50,6 +50,10 @@ body.satExperimentalUi.satDark .scMessageBar {
   color: var(--whiteFaded) !important;
 }
 
+body.satExperimentalUi.satDark .scMessageBar.scNeutral {
+  background-color: #333333 !important;
+}
+
 body.satExperimentalUi.satDark .scMessageBar.scSuccess {
   background-color: #044740 !important;
 }
@@ -68,6 +72,10 @@ body.satExperimentalUi.satDark .scMessageBar.scInformation {
 
 body.satExperimentalUi.satDark .scMessageBarIcon {
   background-color: var(--whiteFaded) !important;
+}
+
+body.satExperimentalUi.satDark .liveUrlBadge {
+  background-color: var(--whiteFaded);
 }
 
 body.satExperimentalUi.satDark .scMessageBarTextContainer > .scMessageBarTitle,

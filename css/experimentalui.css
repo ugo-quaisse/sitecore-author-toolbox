@@ -5,7 +5,6 @@
 
 body.satExperimentalUi {
   -webkit-font-smoothing: antialiased;
-  /* font-size: 12px; */
   color: var(--grey1) !important;
 }
 
@@ -885,14 +884,14 @@ body.satExperimentalUi .scWarning .liveUrlBadge {
 body.satExperimentalUi .scMessageBar.scNeutral {
   margin: 20px;
   border-radius: 0px var(--radius) var(--radius) 0px;
-  background-color: var(--grey) !important;
+  background-color: var(--grey4) !important;
   color: var(--black5) !important;
   font-size: 14px;
 }
 
 body.satExperimentalUi .scNeutral > .scMessageBarIcon {
   border-radius: var(--radius) 0px 0px var(--radius);
-  background-color: var(--black9) !important;
+  background-color: var(--grey) !important;
 }
 
 body.satExperimentalUi .scNeutral > .scMessageBarTextContainer > .scMessageBar a,
@@ -903,7 +902,8 @@ body.satExperimentalUi .scNeutral > .scMessageBarTextContainer > .scMessageBarOp
 }
 
 body.satExperimentalUi .scNeutral .liveUrlBadge {
-  background-color: var(--black5);
+  background-color: var(--grey);
+  color: var(--black5);
 }
 
 body.satExperimentalUi .scMessageBar.scError {
@@ -980,7 +980,7 @@ body.satExperimentalUi .scSuccess .liveUrlBadge {
 
 body.satExperimentalUi .liveUrlBadge {
   color: var(--white);
-  font-size: 10px;
+  font-size: 12px;
   padding: 1px 5px;
 }
 
@@ -1730,4 +1730,9 @@ body.satExperimentalUi ul.dynatree-container a:hover {
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
   border-radius: var(--radius);
+}
+
+body.satExperimentalUi .menu-item a.active {
+  background-color: var(--accent) !important;
+  color: var(--accentText) !important;
 }

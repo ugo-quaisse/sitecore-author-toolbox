@@ -1,7 +1,19 @@
-body.satDark .scStartbar {
+body.satDark .scStartbar,
+body.satDark .sc-fullWidth {
   background-color: var(--black3) !important;
 }
 
+body.satDark .modal-body,
+body.satDark .popover-content {
+  background-color: var(--black2);
+  color: var(--text);
+}
+
+body.satDark .sc-applicationContent-info .sc-border,
+body.satDark .sc-applicationContent-info {
+  background-color: var(--black3);
+  color: var(--text);
+}
 body.satDark #EditorFrames,
 body.satDark #EditorFrames a {
   color: var(--text) !important;
@@ -951,6 +963,8 @@ body.satDark #scLightbox {
   background: white;
 }
 
+body.satDark .modal-backdrop,
+body.satDark .modal-backdrop.fade.in,
 body.satDark #scOverlay {
   background-color: #000;
 }

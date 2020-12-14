@@ -3,7 +3,7 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
-import { getScItemData } from "./helpers.js";
+import { getScItemData, log } from "./helpers.js";
 import { currentColorScheme } from "./dark.js";
 
 export { initLiveUrl, checkUrlStatus };
@@ -51,7 +51,7 @@ const initLiveUrl = (storage) => {
     //Stored data (Json)
     var liveUrl;
     var domains = storage.domain_manager;
-    var envBadge = "CM server";
+    var envBadge = "CM Server";
     var barStyle = storage.feature_experimentalui ? "scNeutral" : "scWarning";
 
     //Loop through domains, if current domain = key, then create new link for live
@@ -99,7 +99,7 @@ const initLiveUrl = (storage) => {
           scUrl = scUrl.replace(window.location.origin, liveUrl);
           scUrl = scUrl.replace("&sc_mode=normal", "");
           //Badge with server name
-          envBadge = "CD/Live server";
+          envBadge = "Live";
         }
 
         //Experimentation
@@ -111,7 +111,7 @@ const initLiveUrl = (storage) => {
             <div class="scMessageBarIcon" style="background-image:url(` + global.icon + `)"></div>
             <div class="scMessageBarTextContainer">
               <div class="scMessageBarTitle">Sitecore Live URL
-              <span class="liveUrlBadge t-sm t-top" onclick="window.open('` + global.launchpadPage + `?configure_domains=true&launchpad=true&url=` + global.windowLocationHref + `')" data-tooltip="Click to configure your domains" title="Click to configure your domains">` + envBadge + `</span>
+              <span class="liveUrlBadge t-sm t-top hide" onclick="window.open('` + global.launchpadPage + `?configure_domains=true&launchpad=true&url=` + global.windowLocationHref + `')" data-tooltip="Click to configure your domains" title="Click to configure your domains">` + envBadge + `</span>
               <span class="liveUrlStatus"></span>
               </div>
               <div class="scMessageBarText">To preview this page in <b>"` + scLanguageTxtLong + `".</b></div>
@@ -122,11 +122,21 @@ const initLiveUrl = (storage) => {
             </div>`;
 
         //Insert message bar into Sitecore Content Editor
-        if (!document.querySelector("#scMessageBarLiveUrl")) {
-          if (scEditorTabs) {
-            scEditorTabs.insertAdjacentHTML("beforebegin", scMessage);
-          } else if (scQuickInfo) {
-            scQuickInfo.insertAdjacentHTML("beforebegin", scMessage);
+        if (
+          !document.querySelector("#scMessageBarLiveUrl") &&
+          ScItem.template != "/sitecore/templates/project/sitecore/tenant" &&
+          ScItem.template != "/sitecore/templates/project/sitecore/site" &&
+          ScItem.template != "/sitecore/templates/foundation/experience accelerator/multisite/mediavirtualfolder" &&
+          ScItem.template != "/sitecore/templates/system/dictionary/dictionary domain"
+        ) {
+          try {
+            if (scEditorTabs) {
+              scEditorTabs.insertAdjacentHTML("beforebegin", scMessage);
+            } else if (scQuickInfo) {
+              scQuickInfo.insertAdjacentHTML("beforebegin", scMessage);
+            }
+          } catch (e) {
+            log(e);
           }
         }
 
@@ -149,8 +159,6 @@ const initLiveUrl = (storage) => {
               experimental: true,
             },
             (response) => {
-              console.log(sitecoreItemPath);
-              console.log(response.status);
               checkUrlStatus(response.status, null, darkMode, storage.feature_experimentalui);
             }
           );
@@ -195,6 +203,9 @@ const checkUrlStatus = (status, source = null, dark, experimental = false) => {
 
   //Preloader
   liveUrlStatus ? (liveUrlStatus.innerHTML = '<img loading="lazy" src="' + urlLoader + '" style="width: 10px; float: initial; margin: unset;"/>') : false;
+
+  //Show badge
+  document.querySelector(".liveUrlBadge") ? document.querySelector(".liveUrlBadge").classList.remove("hide") : false;
 
   //Check response
   if (status == "404") {

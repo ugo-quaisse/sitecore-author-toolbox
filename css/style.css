@@ -7,6 +7,10 @@ section.sc-applicationContent-main {
   opacity: 0;
 }
 
+body.satExtension .hide {
+  display: none;
+}
+
 body.satExtension form#ContentEditorForm {
   filter: blur(0px) brightness(1) grayscale(0);
 }
@@ -1157,7 +1161,7 @@ body.satExtension .pulseAnimate {
   }
 }
 
-.scInstantSearchResults {
+body.satExtension .scInstantSearchResults {
   position: absolute;
   width: 620px;
   padding: 0px;

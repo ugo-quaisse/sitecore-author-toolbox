@@ -112,7 +112,7 @@ export const isGalleryFavorites = windowLocationHref.includes("gallery.favorites
 export const isAdminCache = windowLocationHref.includes("/admin/cache.aspx");
 export const isAdmin = windowLocationHref.includes("/admin/");
 export const isMediaLibrary = windowLocationHref.includes("he=media+library");
-export const isWindowedMode = windowLocationHref.includes("?he=") || windowLocationHref.includes("&he=");
+export const isWindowedMode = urlParams.has("he") && !urlParams.has("sc_bw");
 export const isMediaBrowser = windowLocationHref.includes("sitecore.shell.applications.media.mediabrowser");
 export const isSourceBrowser = windowLocationHref.includes("sitecore.shell.applications.dialogs.selectrenderingdatasource");
 export const isMediaFolder = windowLocationHref.includes("media%20folder.aspx");

@@ -1,3 +1,12 @@
+body.satExperimentalUi.satDark.sc-fullWidth {
+  background-color: var(--black2) !important;
+}
+
+body.satExperimentalUi.satDark .popover-content {
+  background-color: var(--black2);
+  color: var(--text);
+}
+
 body.satExperimentalUi.satDark a:link {
   color: inherit;
 }

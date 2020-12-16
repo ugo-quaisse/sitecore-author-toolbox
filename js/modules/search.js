@@ -29,7 +29,6 @@ const instantSearch = () => {
   const scInstantSearch = document.querySelector(".scInstantSearch");
   const divResults = document.querySelector(".scInstantSearchResults");
   let globalTimeout = null;
-  let html = "";
 
   //From where
   let fromWhere = "default";
@@ -109,6 +108,7 @@ const instantSearch = () => {
         }
 
         if (event.key === "Enter") {
+          console.log("press enter");
           event.preventDefault();
         }
 
@@ -121,7 +121,7 @@ const instantSearch = () => {
             // Preload results
             divResults.setAttribute("style", "opacity: 1; visibility: visible; top: 48px;");
             //divResults.innerHTML = '<div class="scInstantSeachLoading"><img loading="lazy" class="pulseAnimate" src="' + global.iconInstantSearch + '" /><span class="textLoading"><span></div>'
-            divResults.innerHTML = '<div class="preload">' + global.svgAnimation + '</div><span class="textLoading"><span>';
+            divResults.innerHTML = '<div class="preload">' + global.svgAnimation + '</div><br /><span class="textLoading"><span>';
             document.querySelector(".scInstantSearchResults > .preload").setAttribute("style", "opacity:1 !important");
 
             if (divResults.querySelector(".textLoading")) {
@@ -145,6 +145,7 @@ const instantSearch = () => {
               if (ajax.readyState === 4 && ajax.status == "200") {
                 let category, title, href, img, text, scItem, scLanguage, scVersion, showCat;
                 let count = 0;
+                let html = "";
                 let command;
                 const dom = new DOMParser().parseFromString(ajax.responseText, "text/html");
                 const results = dom.querySelectorAll(".scSearchResultsTable > tbody > tr");
@@ -213,23 +214,16 @@ const instantSearch = () => {
                 count == 0 ? (html = '<div class="scInstantSeachLoading">No result for "<u>' + event.target.value + '</u>", try something else.</div>') : false;
 
                 // Populate result
-                divResults.innerHTML = "";
-                divResults.insertAdjacentHTML("afterbegin", html);
+                divResults.innerHTML = html;
               } else if (ajax.status == "500") {
                 // Populate result
-                divResults.innerHTML = "";
-                divResults.insertAdjacentHTML("afterbegin", '<div class="scInstansSeachLoading">Sorry, your Sitecore instance is not compatible with this feature :-(</div>');
+                divResults.innerHTML = `<div class="scInstansSeachLoading">Sorry, your Sitecore instance is not compatible with this feature :-(</div>`;
               } else if (ajax.status == "401") {
                 // Populate result
-                divResults.innerHTML = "";
-                divResults.insertAdjacentHTML(
-                  "afterbegin",
-                  '<div class="scInstansSeachLoading">Your Sitecore session has expired, <a href="#" onclick="javascript:return scForm.postEvent(this,event,\'system:logout\');">clic here to reconnect</a>.</div>'
-                );
+                divResults.innerHTML = `'<div class="scInstansSeachLoading">Your Sitecore session has expired, <a href="#" onclick="javascript:return scForm.postEvent(this,event,'system:logout');">clic here to reconnect</a>.</div>'`;
               } else if (ajax.status == "0") {
                 // Populate result
-                divResults.innerHTML = "";
-                divResults.insertAdjacentHTML("afterbegin", '<div class="scInstansSeachLoading">💀 Sitecore timeout. Try again...</div>');
+                divResults.innerHTML = `<div class="scInstansSeachLoading">💀 Sitecore timeout. Try again...</div>`;
               }
 
               loadingTimeout1 != null ? clearTimeout(loadingTimeout1) : false;

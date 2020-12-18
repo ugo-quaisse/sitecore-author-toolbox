@@ -336,6 +336,12 @@ body.satExtension .scMediaExplorer {
   filter: invert(0);
 }
 
+.scMediaExplorer tbody tr .mediaType > span {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 100px;
+  padding: 2px 8px;
+}
+
 .scIconCopy {
   vertical-align: baseline;
   cursor: pointer;

@@ -342,7 +342,7 @@ const initFancyMessageBars = (storage) => {
 };
 
 /*
- * Add characters counter
+ * Add characters counter and checkbox
  */
 const initCharsCount = (storage) => {
   storage.feature_charscount == undefined ? (storage.feature_charscount = true) : false;
@@ -350,8 +350,8 @@ const initCharsCount = (storage) => {
     /*
      * Add a characters count next to each input and textarea field
      */
-    var scTextFields = document.querySelectorAll("input, textarea, checkbox");
-    var countHtml, labelHtml;
+    var scTextFields = document.querySelectorAll("input, textarea");
+    var countHtml;
     var chars = 0;
     var charsText;
 
@@ -370,10 +370,6 @@ const initCharsCount = (storage) => {
         }
         countHtml = '<div id="chars_' + field.id + '" style="position: absolute; bottom: 1px; right: 1px; padding: 6px 10px; border-radius: 4px; line-height: 20px; opacity:0.5;">' + charsText + "</div>";
         field.insertAdjacentHTML("afterend", countHtml);
-      } else if (field.className == "scContentControlCheckbox") {
-        //Add label
-        labelHtml = '<label for="' + field.id + '" class="scContentControlCheckboxLabel"></label>';
-        field.insertAdjacentHTML("afterend", labelHtml);
       }
     }
 
@@ -438,7 +434,15 @@ const changeTitleWindow = (storage) => {
  */
 const initCheckboxes = (storage) => {
   storage.feature_contenteditor == undefined ? (storage.feature_contenteditor = true) : false;
-  storage.feature_contenteditor ? loadCssFile("css/checkbox.min.css") : false;
+  if (storage.feature_contenteditor) {
+    loadCssFile("css/checkbox.min.css");
+    for (var field of document.querySelectorAll("input[type=checkbox]")) {
+      // if (field.className == "scContentControlCheckbox") {
+      field.classList.add("scContentControlCheckbox");
+      field.insertAdjacentHTML("afterend", `<label for="` + field.id + `" class="scContentControlCheckboxLabel"></label>`);
+      // }
+    }
+  }
 };
 
 /*

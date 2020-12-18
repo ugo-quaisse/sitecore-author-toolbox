@@ -51,7 +51,7 @@ const initLiveUrl = (storage) => {
     //Stored data (Json)
     var liveUrl;
     var domains = storage.domain_manager;
-    var envBadge = "CM Server";
+    var envBadge = "CM server";
     var barStyle = storage.feature_experimentalui ? "scNeutral" : "scWarning";
 
     //Loop through domains, if current domain = key, then create new link for live
@@ -99,7 +99,7 @@ const initLiveUrl = (storage) => {
           scUrl = scUrl.replace(window.location.origin, liveUrl);
           scUrl = scUrl.replace("&sc_mode=normal", "");
           //Badge with server name
-          envBadge = "Live";
+          envBadge = "CD server";
         }
 
         //Experimentation

@@ -199,6 +199,9 @@ chrome.storage.sync.get((storage) => {
       log("**** Layout Details ****", "orange");
     } else if (global.isXmlControl && !global.isRichText) {
       log("**** XML Control (Window) ****", "orange");
+      initCheckboxes(storage);
+      initDateTimeField(storage);
+      initPasswordField(storage);
     } else if (global.isDialog || global.isLockedItems) {
       log("**** Dialog UI ****", "orange");
     } else if (global.isSourceBrowser) {

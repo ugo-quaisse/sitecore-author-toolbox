@@ -59,7 +59,7 @@ const getImageInfo = (imageUrl, imageId, jsonObject) => {
     if (xhr.status == "200") {
       blob = xhr.response;
 
-      document.querySelector(".mediaType_" + imageId).innerHTML = getFileType(blob.type);
+      document.querySelector(".mediaType_" + imageId).innerHTML = `<span>` + getFileType(blob.type) + `</span>`;
       document.querySelector(".mediaSize_" + imageId).innerHTML = bytesToSize(blob.size);
 
       jsonObject.type = getFileType(blob.type);
@@ -152,7 +152,7 @@ const initMediaExplorer = (storage) => {
           <div class="mediaTitle">` + mediaTitle + `</div>
         </td>
         <td class="left" onclick="` + mediaClick + `">` + mediaDimensions + `</td>
-        <td class="mediaType mediaType_` + mediaId + `" onclick="` + mediaClick + `">` + mediaFolder + `</td>
+        <td class="mediaType mediaType_` + mediaId + `" onclick="` + mediaClick + `"><span>` + mediaFolder + `</span></td>
         <td class="mediaSize mediaSize_` + mediaId + `" data-size="0" onclick="` + mediaClick + `">--</td>
         <td class="left" onclick="` + mediaClick + `">` + mediaWarning + `</td>
         <td class="left" onclick="` + mediaClick + `">` + mediaUsage + `</td>

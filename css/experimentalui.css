@@ -395,6 +395,9 @@ body.satExperimentalUi .scContentControlImageDetails {
 }
 
 /*Forms*/
+body.satExperimentalUi #Editors input[type="text"] {
+  min-height: 35px;
+}
 
 body.satExperimentalUi #Editors input:not([type]),
 body.satExperimentalUi #Editors input[type="text"],
@@ -1667,6 +1670,7 @@ body.satExperimentalUi .scCalendarUI {
   border-radius: 0px;
   box-shadow: unset;
   width: 16px;
+  min-height: 17px;
 }
 
 body.satExperimentalUi input.scPasswordUI {

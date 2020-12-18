@@ -351,6 +351,11 @@ body.satExtension .scMediaExplorer {
   filter: brightness(1.5);
 }
 
+.BlogPostExtra {
+  padding: 5px 0 0px 78px;
+  color: #0769d6;
+}
+
 body.satExtension #SwitchMenu {
   display: none;
 }

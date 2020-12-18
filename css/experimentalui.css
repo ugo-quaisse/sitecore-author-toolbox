@@ -307,6 +307,10 @@ body.satExperimentalUi .scVersionIcon {
   vertical-align: sub !important;
 }
 
+body.satExperimentalUi .scMediaIcon {
+  filter: brightness(var(--accentBrightness));
+}
+
 body.satExperimentalUi .scEditorQuickInfo {
   margin: 0px;
   border-spacing: 0px;
@@ -1739,4 +1743,42 @@ body.satExperimentalUi ul.dynatree-container a:hover {
 body.satExperimentalUi .menu-item a.active {
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
+}
+
+body.satExperimentalUi .contentAreaWrapper .pageSection {
+  float: right;
+}
+body.satExperimentalUi .contentAreaWrapper .facets {
+  float: left;
+  padding-left: 5px;
+}
+
+body.satExperimentalUi .contentAreaWrapper .sb_filter {
+  background-color: var(--accent) !important;
+  color: var(--accentText) !important;
+  border-radius: var(--radius);
+  padding: 8px;
+  line-height: unset;
+  height: unset;
+}
+
+body.satExperimentalUi .contentAreaWrapper .sb_filter > span {
+  margin: 10px;
+  filter: brightness(var(--accentBrightness));
+}
+
+body.satExperimentalUi .contentAreaWrapper .side {
+  margin-bottom: 1px;
+}
+
+body.satExperimentalUi .contentAreaWrapper .side li a {
+  padding: 5px;
+}
+
+body.satExperimentalUi .contentAreaWrapper .side li a.facetClickSelected {
+  background-color: var(--grey);
+}
+
+body.satExperimentalUi .BlogPostExtra {
+  color: var(--accent);
 }

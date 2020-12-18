@@ -264,7 +264,7 @@ const enhancedSitecoreSearch = (storage) => {
         var getNumLanguages = line.querySelector(".BlogPostHeader > span").getAttribute("title");
 
         //Inject HTML
-        var html = '<div class="BlogPostExtra BlogPostContent" style="padding: 5px 0 0px 78px; color: #0769d6"><strong>Sitecore path:</strong> ' + getFullpath + " <strong>Languages available:</strong> " + getNumLanguages + "</div>";
+        var html = '<div class="BlogPostExtra BlogPostContent"><strong>Sitecore path:</strong> ' + getFullpath + " <strong>Languages available:</strong> " + getNumLanguages + "</div>";
         getFullpath ? BlogPostFooter.insertAdjacentHTML("afterend", html) : false;
         //TODO Buttons, open in CE and open in EE
       }

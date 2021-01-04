@@ -478,7 +478,7 @@ body.satExtension .scWelcome .logo {
   z-index: 100004;
 }
 
-body.satExtension .scWelcome .content p {
+body.satExtension .scWelcome .scContent p {
   padding: 10px 20px;
   font-size: 15px;
   text-align: center;
@@ -486,20 +486,20 @@ body.satExtension .scWelcome .content p {
   font-weight: 300;
 }
 
-body.satExtension .scWelcome .content h2 {
+body.satExtension .scWelcome .scContent h2 {
   padding: 5px 20px;
   font-family: Helvetica;
   font-size: 30px;
   text-align: center;
   font-weight: 100;
 }
-body.satExtension .scWelcome .content h3 {
+body.satExtension .scWelcome .scContent h3 {
   font-size: 14px;
   color: #666;
   padding-bottom: 15px;
   font-weight: 100;
 }
-body.satExtension .scWelcome .content .switch {
+body.satExtension .scWelcome .scContent .switch {
   padding: 15px 0px 0px 0px;
   text-align: center;
   cursor: pointer;

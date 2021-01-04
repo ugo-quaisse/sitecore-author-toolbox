@@ -39,7 +39,7 @@ const initOnboarding = () => {
             <div class="logo"></div>
             <div class="clouds"></div>
           </div>
-          <div class="content">
+          <div class="scContent">
             <h2>Hello Experimental Theme!</h2>
             <h3>Sitecore Author Toolbox extension</h3>
             <p><b>What is that?</b><br />Experimental UI is a new theme for Sitecore with the same features as Sitecore UI. It comes with a simple and clean interface that will help authors to focus more on their content and accelerate their workflow.</p>

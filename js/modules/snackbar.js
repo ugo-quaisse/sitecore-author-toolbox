@@ -2,7 +2,7 @@
 
 import * as global from "./global.js";
 
-export { showSnackbar };
+export { showSnackbar, showSnackbarSite };
 
 /**
  * Show Materialize-style message bar from bottom-right
@@ -23,10 +23,58 @@ const showSnackbar = (storage) => {
       document.querySelector("body").insertAdjacentHTML("beforeend", html);
 
       //Add listener on click #sbDismiss
-      document.querySelector("#sbAction, #sbDismiss").addEventListener("click", function () {
-        localStorage.setItem("sbDismiss", global.extensionVersion);
-        document.querySelector(".snackbar").setAttribute("style", "display: none");
+      document.querySelectorAll("#sbAction, #sbDismiss").forEach(function (elem) {
+        elem.addEventListener("click", function () {
+          localStorage.setItem("sbDismiss", global.extensionVersion);
+          document.querySelector(".snackbar").setAttribute("style", "display: none");
+        });
       });
     }
+  }
+};
+
+/**
+ * Show Materialize-style message bar from bottom-right
+ */
+const showSnackbarSite = (storage, ScItem) => {
+  //Get SiteName
+  let siteName = ScItem.pathFull.split("/home/")[0].split("/").reverse();
+
+  //Get Site in locastorage
+  let existing = localStorage.getItem("sbDismissSites");
+  existing = existing ? JSON.parse(existing) : {};
+  let length = Object.values(existing).length;
+
+  //Snackbar settings
+  let snackbarHtml =
+    `<b>"` +
+    siteName[0].toUpperCase() +
+    `" site detected</b><br />
+    Are you using any live/CD server?<br />Click "Add site" to configure it now.`;
+  let html =
+    `<div class="snackbarSite">` +
+    snackbarHtml +
+    `<button id="sbActionSite" onclick="window.open('` +
+    global.launchpadPage +
+    `?configure_domains=true&launchpad=true&url=` +
+    global.windowLocationHref +
+    `')">ADD&nbsp;SITE</button><button id="sbDismissSite">DISMISS</button></div>`;
+
+  //Show Snackbar
+
+  if (ScItem.pathFull.includes(`/home/`) && Object.values(existing).indexOf(ScItem.pathFull) === -1) {
+    //Show snackbar
+    document.querySelector(".snackbarSite") ? document.querySelector(".snackbarSite").remove() : false;
+    document.querySelector("body").insertAdjacentHTML("beforeend", html);
+
+    //Add listener on click #sbDismiss
+    document.querySelectorAll("#sbDismissSite").forEach(function (elem) {
+      elem.addEventListener("click", function () {
+        //Create item
+        existing[length++] = ScItem.pathFull;
+        localStorage.setItem("sbDismissSites", JSON.stringify(existing));
+        document.querySelector(".snackbarSite").setAttribute("style", "display: none");
+      });
+    });
   }
 };

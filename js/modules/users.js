@@ -206,7 +206,7 @@ const initUserMenu = (storage, type = "CE") => {
 
     //Listeners
     document.addEventListener("keydown", (event) => {
-      if (event.ctrlKey && event.key === "Shift") {
+      if (event.ctrlKey && event.shiftKey) {
         exeJsCode(`showSitecoreRibbon()`);
         event.preventDefault();
         event.stopPropagation();

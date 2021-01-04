@@ -840,6 +840,8 @@ body.satExperimentalUi #BTAddNewSearch:hover {
 /* Message bar */
 body.satExperimentalUi .scMessageBar {
   border-radius: var(--radius) !important;
+  transition: all ease-in-out 0.3s;
+  transition-delay: 0s;
 }
 
 body.satExperimentalUi .scMessageBar .scMessageBarIcon {
@@ -849,19 +851,29 @@ body.satExperimentalUi .scMessageBar .scMessageBarIcon {
   border-bottom-left-radius: var(--radius) !important;
   border-top-right-radius: 0px !important;
   border-bottom-right-radius: 0px !important;
+  transition: all ease-in-out 0.3s;
+  transition-delay: 0s;
 }
 
 body.satExperimentalUi .scMessageBar .scMessageBarTextContainer .scMessageBarText {
   margin: 7px 0px 0px 0px;
-}
-
-body.satExperimentalUi .scMessageBar .scMessageBarIcon {
-  background-position: center 19px !important;
-  padding: 7px !important;
+  transition: all ease-in-out 0.3s;
+  transition-delay: 0s;
 }
 
 body.satExperimentalUi .scMessageBar > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet > span {
   color: var(--text);
+  transition: all ease-in-out 0.3s;
+  transition-delay: 0s;
+}
+
+body.satExperimentalUi .scMessageBar > .scMessageBarOptions,
+body.satExperimentalUi .scMessageBar > .scMessageBarOptionBullet,
+body.satExperimentalUi .scMessageBar > .scMessageBarOption,
+body.satExperimentalUi .scMessageBar > a,
+body.satExperimentalUi .scMessageBar > .liveUrlBadge {
+  transition: all ease-in-out 0.3s;
+  transition-delay: 0s;
 }
 
 body.satExperimentalUi .scMessageBar.scWarning {

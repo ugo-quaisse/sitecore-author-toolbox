@@ -245,8 +245,8 @@ const resetExperienceEditor = (storage) => {
     loadCssFile("css/experienceeditor.min.css");
   }
   //Remove satExtension satDark satExperimetalUI from main frame
-  document.body.classList.add("satEE");
-  document.body.classList.remove("satExtension");
+  document.body ? document.body.classList.add("satEE") : false;
+  document.body ? document.body.classList.remove("satExtension") : false;
   // document.body.classList.remove("satDark");
   document.body.classList.remove("satExperimentalUi");
 };

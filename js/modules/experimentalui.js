@@ -40,11 +40,11 @@ const initOnboarding = () => {
             <div class="clouds"></div>
           </div>
           <div class="content">
-            <h2>Experimental UI Theme</h2>
+            <h2>Hello Experimental Theme!</h2>
             <h3>Sitecore Author Toolbox extension</h3>
-            <p><b>What is that?</b><br />Experimental UI is a new theme for Sitecore with the same features as the standard Sitecore UI. It comes with a simple and clean interface that will help authors to focus more on their content and accelerate their workflow.</p>
+            <p><b>What is that?</b><br />Experimental UI is a new theme for Sitecore with the same features as Sitecore UI. It comes with a simple and clean interface that will help authors to focus more on their content and accelerate their workflow.</p>
             <p><b>Where is the ribbon?</b><br />You can click the little arrow/chevron on the top right to toggle the ribbon. Alternatively, you can press CTRL + SHIFT.</p>
-            <button id="scWelcomeClose">Ok, let's use it!</button>
+            <button id="scWelcomeClose">Ok, let's start!</button>
             <p class="switch" id="scWelcomeSwitch"><u>Switch back to classic Sitecore</u></p>
           </div>
         </div>
@@ -83,7 +83,7 @@ const initExperimentalUi = (storage) => {
     //Change content tree title
     //prettier-ignore
     SearchPanel ? (SearchPanel.innerHTML = `<button class="scMenuButton" type="button"><img src="` + global.iconMenu + `" class="scBurgerMenu"/></button> <div class="scBurgerMenuTitle t-top t-sm" data-tooltip="Go back home" onclick="javascript:return scForm.invoke('contenteditor:home', event)" title="Go back Home">` + contentTitle + `</div>`) : false;
-    document.body.classList.add("satExperimentalUi");
+    document.body ? document.body.classList.add("satExperimentalUi") : false;
     if (document.querySelector(".interfaceRadio[value='experimental']")) {
       document.querySelector(".interfaceRadio[value='experimental']").checked = true;
       document.querySelector(".themeMenuHint").innerText = "Experimental UI";

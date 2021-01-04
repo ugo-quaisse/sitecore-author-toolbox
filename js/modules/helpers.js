@@ -144,6 +144,7 @@ const getScItemData = () => {
     tr.cells[0].innerText == "Item ID:" && tr.cells[1].querySelector("input") ? (scItem.id = tr.cells[1].querySelector("input").value.toLowerCase()) : false;
     tr.cells[0].innerText == "Item name:" && tr.cells[1] ? (scItem.name = tr.cells[1].innerText.toLowerCase()) : false;
     tr.cells[0].innerText == "Item path:" && tr.cells[1].querySelector("input") ? (scItem.path = tr.cells[1].querySelector("input").value.toLowerCase()) : false;
+    tr.cells[0].innerText == "Item path:" && tr.cells[1].querySelector("input") ? (scItem.pathFull = tr.cells[1].querySelector("input").value.toLowerCase() + `/`) : false;
     tr.cells[0].innerText == "Template:" && tr.cells[1].querySelector("a") ? (scItem.template = tr.cells[1].querySelector("a").innerText.toLowerCase()) : false;
     tr.cells[0].innerText == "Template:" && tr.cells[1].querySelector("input") ? (scItem.templateId = tr.cells[1].querySelector("input").value.toLowerCase()) : false;
     tr.cells[0].innerText == "Created from:" && tr.cells[1] ? (scItem.from = tr.cells[1].innerText.toLowerCase()) : false;

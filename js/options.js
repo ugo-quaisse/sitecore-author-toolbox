@@ -74,7 +74,7 @@ document.body.onload = function () {
       var domain1;
       var domain2 = "";
 
-      for (var i = 0; i < 6; i++) {
+      for (var i = 0; i < 2; i++) {
         if (Array.isArray(domains) == true && domains[i] != undefined) {
           domain1 = domains[i];
           domain2 = result.domain_manager[domain1];
@@ -83,8 +83,11 @@ document.body.onload = function () {
           domain2 = "";
         }
 
+        //html += `<div style="color: #666; font-size:16px; font-weight:bold; padding: 5px 0px; margin:15px 0px; border-bottom: 1px solid rgba(0,0,0,0.1)">Domain URL</div>`;
+
         html +=
-          `<!-- loop start -->
+          `
+          <!-- loop start -->
               <div class="cm_url">
                 <!-- <label for="cm[` +
           i +
@@ -489,15 +492,11 @@ document.querySelector("#set_domains").onclick = function (event) {
 
       if (url.origin != undefined) {
         currentCD.value = url.origin;
-
         let cmUrl = new URL(currentCM.value);
         let cdUrl = new URL(currentCD.value);
 
         if (cmUrl.protocol == "https:" && cdUrl.protocol == "http:") {
           alert("Warning!\nLive status might not work as expected. You will probably face a mixed-content issue as your CM and CD are using a different protocol (https vs http) \n\n" + cmUrl.origin + "\n" + cdUrl.origin);
-          error = true;
-        } else if (currentCM.value == currentCD.value) {
-          alert("CM #" + parseInt(domainId + 1) + " and CD #" + parseInt(domainId + 1) + " are the exact same URL, please verify.");
           error = true;
         } else {
           //Add domain to JsonString
@@ -533,7 +532,6 @@ document.querySelector("#set_domains").onclick = function (event) {
       setTimeout(function () {
         document.querySelector("#set_domains").innerHTML = "Save your domains";
       }, 1500);
-      console.info("--> Domain manager: Saved!");
     });
   }
 };

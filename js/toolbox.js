@@ -46,7 +46,7 @@ chrome.storage.sync.get((storage) => {
    */
   if (global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isCss && !global.isUploadManager) {
     log("Sitecore detected", "red");
-    document.body.classList.add("satExtension");
+    document.body ? document.body.classList.add("satExtension") : false;
     loadJsFile("js/inject.js");
     checkNotificationPermissions();
     checkPublishNotification(storage);
@@ -218,7 +218,7 @@ chrome.storage.sync.get((storage) => {
    */
   if ((global.isEditMode && !global.isLoginPage) || (global.isPreviewMode && !global.isLoginPage)) {
     log("Experience Editor detected", "red");
-    document.body.classList.add("satExtension");
+    document.body ? document.body.classList.add("satExtension") : false;
     loadJsFile("js/inject.js");
     checkNotificationPermissions();
     initDarkMode(storage);

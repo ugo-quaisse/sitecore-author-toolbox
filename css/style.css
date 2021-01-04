@@ -495,7 +495,7 @@ body.satExtension .scWelcome .content h2 {
 }
 body.satExtension .scWelcome .content h3 {
   font-size: 14px;
-  color: #9c9c9c;
+  color: #666;
   padding-bottom: 15px;
   font-weight: 100;
 }
@@ -957,7 +957,8 @@ body.satExtension #scEditorTabs {
   color: #ccc;
 }
 
-body.satExtension .snackbar {
+body.satExtension .snackbar,
+body.satExtension .snackbarSite {
   animation: slide 0.4s forwards;
   transition: right ease-in-out 0.4s;
   bottom: 60px;
@@ -980,12 +981,19 @@ body.satExtension .snackbar {
   z-index: 100000;
 }
 
-body.satExtension .snackbar > b {
+body.satExtension .snackbar > b,
+body.satExtension .snackbarSite > b {
   display: contents;
   font-weight: bold;
 }
 
-body.satExtension .snackbar > button {
+body.satExtension .snackbar > u,
+body.satExtension .snackbarSite > u {
+  display: contents;
+}
+
+body.satExtension .snackbar > button,
+body.satExtension .snackbarSite > button {
   background-color: transparent !important;
   border: none !important;
   color: #dc291d;

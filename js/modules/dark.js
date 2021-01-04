@@ -22,7 +22,7 @@ const currentColorScheme = () => {
 // eslint-disable-next-line consistent-return
 const initDarkMode = (storage) => {
   if ((storage.feature_darkmode && !storage.feature_darkmode_auto) || (storage.feature_darkmode && storage.feature_darkmode_auto && currentColorScheme() == "dark")) {
-    document.body.classList.add("satDark");
+    document.body ? document.body.classList.add("satDark") : false;
     if (storage.feature_darkmode_auto && document.querySelector(".darkmodeRadio[value='auto']")) {
       document.querySelector(".darkmodeRadio[value='auto']").checked = true;
       document.querySelector(".darkmodeRadio[value='auto']").dispatchEvent(new Event("click"));

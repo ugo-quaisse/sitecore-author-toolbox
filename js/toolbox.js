@@ -20,7 +20,7 @@ import { workboxNotifications } from "./modules/workbox.js";
 import { resumeFromWhereYouLeftOff, historyNavigation } from "./modules/history.js";
 import { checkNotificationPermissions, checkPublishNotification } from "./modules/notification.js";
 import { initFlagRibbonEE, initLanguageMenuEE, initLanguageMenuCE, initFlagsPublishingWindow, initFlagsPublish } from "./modules/language.js";
-import { initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, initPublishCheckboxes, refreshContentEditor } from "./modules/contenteditor.js";
+import { initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, refreshContentEditor } from "./modules/contenteditor.js";
 import { initAppName, initGravatarImage, initUserMenu } from "./modules/users.js";
 import { initInstantSearch, enhancedSitecoreSearch } from "./modules/search.js";
 import { insertModal, insertPanel } from "./modules/insert.js";
@@ -183,7 +183,7 @@ chrome.storage.sync.get((storage) => {
       initFlagsPublishingWindow(storage);
     } else if (global.isPublishWindow) {
       log("**** Publish / Rebuild / Package ****", "orange");
-      initPublishCheckboxes(storage);
+      initCheckboxes(storage);
       initFlagsPublish(storage);
     } else if (global.isUserOptions) {
       log("**** User options ****", "orange");

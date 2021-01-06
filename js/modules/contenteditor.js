@@ -13,7 +13,7 @@ import { initRTL } from "./rtl.js";
 import { enhancedTreeSearch } from "./search.js";
 import { initTranslateMode } from "./translate.js";
 
-export { sitecoreAuthorToolbox, initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, initPublishCheckboxes, refreshContentEditor, openFolderTab };
+export { sitecoreAuthorToolbox, initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, refreshContentEditor, openFolderTab };
 
 /*
  * Main function executed when the Content Editor refreshes
@@ -476,21 +476,6 @@ const initPasswordField = (storage) => {
       input.classList.add("scPasswordUI");
       input.insertAdjacentHTML("beforebegin", html);
     });
-  }
-};
-
-/*
- * Change style of checkboxes to ios-like switch in publish window
- */
-const initPublishCheckboxes = (storage) => {
-  if (storage.feature_contenteditor === true) {
-    //Add #PublishingTargets input[type=checkbox] if needed
-    document.querySelectorAll("#PublishChildrenPane input[type=checkbox]").forEach(function (checkbox) {
-      checkbox.classList.add("scContentControlCheckbox");
-      let labelHtml = '<label for="' + checkbox.id + '" class="scContentControlCheckboxLabel"></label>';
-      checkbox.insertAdjacentHTML("afterend", labelHtml);
-    });
-    initCheckboxes(storage);
   }
 };
 

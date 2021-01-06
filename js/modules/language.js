@@ -239,7 +239,7 @@ const initFlagsPublish = (storage) => {
   storage.feature_flags == undefined ? (storage.feature_flags = true) : false;
 
   if (storage.feature_flags) {
-    var label = document.querySelectorAll("#Languages > label");
+    var label = document.querySelectorAll("#Languages > label:not(.scContentControlCheckboxLabel)");
 
     for (let item of label) {
       let tdlanguage = findCountryName(item.innerText.trim());

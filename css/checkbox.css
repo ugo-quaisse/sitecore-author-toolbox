@@ -24,7 +24,6 @@
 .scContentControlCheckboxLabel::after {
   content: "";
   display: block;
-  position: absolute;
   cursor: pointer;
 }
 .scContentControlCheckboxLabel::before {
@@ -36,9 +35,10 @@
   border-radius: 9999em;
   -webkit-transition: background-color 0.15s ease;
   transition: background-color 0.15s ease;
+  position: relative;
 }
 .scContentControlCheckboxLabel::after {
-  top: 0;
+  top: -24px;
   left: 0;
   width: 24px;
   height: 24px;
@@ -50,7 +50,8 @@
   cursor: pointer !important;
   position: relative;
 }
-.scContentControlCheckbox:disabled + .scContentControlCheckboxLabel::before {
+.scContentControlCheckbox:disabled + .scContentControlCheckboxLabel::before,
+.scContentControlCheckbox:disabled + .scContentControlCheckboxLabel::after {
   opacity: 0.5;
 }
 .scContentControlCheckbox:checked + .scContentControlCheckboxLabel::before {

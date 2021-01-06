@@ -8,6 +8,10 @@ body.satExperimentalUi {
   color: var(--grey1) !important;
 }
 
+body.satExperimentalUi.contentEditor {
+  border: none;
+}
+
 body.satExperimentalUi .scStartButton {
   background: transparent url("chrome-extension://__MSG_@@extension_id__/images/sitecore_logo.svg") no-repeat center center !important;
   background-color: var(--accent) !important;

@@ -306,7 +306,7 @@ body.satExperimentalUi.satDark .sc-gallery-option-content-active {
   color: var(--accentText) !important;
 }
 
-body.satExperimentalUisatDark .scContentControlCheckbox:checked + .scContentControlCheckboxLabel::before {
+body.satExperimentalUi.satDark .scContentControlCheckbox:checked + .scContentControlCheckboxLabel::before {
   background-color: var(--accent) !important;
 }
 

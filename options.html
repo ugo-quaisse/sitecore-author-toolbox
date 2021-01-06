@@ -23,10 +23,6 @@
         <div id="intro">
             <h2>Hello, I am<br />Sitecore Author Toolbox</h2>
         </div>
-        <!-- Video-->
-        <div id="video">
-            <!-- <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/f-IT1sLyl44" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
-        </div>
         <!-- Main panel-->
         <div id="main">
             <h4>List of features:</h4>
@@ -79,7 +75,7 @@
                 <div class="scFeature">
                     <input id="feature_urls" name="feature_urls" class="scCheckbox" type="checkbox">
                     <label for="feature_urls" class="scLabel"></label>
-                    Live URL bar <a id="settings">Configure domains &raquo;</a>
+                    Live URL bar <a id="settings">Configure your sites &raquo;</a>
                 </div>
                 <!-- Live URL publication status -->
                 <div class="scFeature">
@@ -92,12 +88,6 @@
                     <input id="feature_errors" name="feature_errors" class="scCheckbox" type="checkbox">
                     <label for="feature_errors" class="scLabel"></label>
                     Grouped errors bar
-                </div>
-                <!-- Help links bar -->
-                <div class="scFeature">
-                    <input id="feature_helplink" name="feature_helplink" class="scCheckbox" type="checkbox">
-                    <label for="feature_helplink" class="scLabel"></label>
-                    Help links bar
                 </div>
                 <!-- Language and versions flags -->
                 <div class="scFeature">
@@ -135,13 +125,18 @@
                     <label for="feature_instantsearch" class="scLabel"></label>
                     Search box
                 </div>
-                
                 <!-- RTL (Arabic, Hebrew, Persian, Urdu, Sindhi) -->
                 <div class="scFeature">
                     <input id="feature_rtl" name="feature_rtl" class="scCheckbox" type="checkbox">
                     <label for="feature_rtl" class="scLabel"></label>
                     RTL (Arabic, Hebrew, Persian, Urdu, Sindhi)
                 </div>
+                <!-- Help links bar -->
+                <div class="scFeature">
+                    <input id="feature_helplink" name="feature_helplink" class="scCheckbox" type="checkbox">
+                    <label for="feature_helplink" class="scLabel"></label>
+                    Help links bar
+                </div>    
                 <!-- Favorites sidebar -->
                 <div class="scFeature">
                     <input id="feature_favorites" name="feature_favorites" class="scCheckbox" type="checkbox">
@@ -207,7 +202,7 @@
                 <div class="scFeature">
                     <input id="feature_launchpad" name="feature_launchpad" class="scCheckbox" type="checkbox">
                     <label for="feature_launchpad" class="scLabel"></label>
-                    Extension settings
+                    Extension icon
                 </div>
                 <!-- Launchpad tiles display  -->
                 <div class="scFeature">
@@ -219,14 +214,17 @@
         </div>
         <!-- Panel domains -->
         <form id="domains">
-            <h4>Your Sitecore domains:</h4>
-            <p><a href="https://uquaisse.io/sat_domains" target="_blank">How to configure your domains?</a></p>
-            <div id="load">
+            <h4>Your Sitecore sites:</h4>
+            <p><a href="https://uquaisse.io/sat_domains" target="_blank">How to configure your sites?</a></p>
+            <div id="sitesList">
+                <!-- Call JS to generate list -->
+            </div>
+            <div id="domainsList">
                 <!-- Call JS to generate list -->
             </div>
             <div id="save_domains">
                 <button id="back">&laquo; Back</button>
-                <button id="set_domains">Save your domains</button>
+                <button id="set_domains">Save your sites</button>
             </div>
     </div>
     <!-- Main saving action -->
@@ -241,7 +239,7 @@
         <p>Version <span id="scVersion"></span> - Post a review <a href="https://chrome.google.com/webstore/detail/mckfcmcdbgkgffdknpkaihjigmcnnbco/publish-accepted?authuser=0&hl=en" target="_blank">here</a>.</p>
     </div>
     </div>
-    <script type="text/javascript" src="js/options.min.js"></script>
+    <script type="text/javascript" src="js/options.js"></script>
 </body>
 
 </html>

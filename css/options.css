@@ -15,7 +15,7 @@ html.light {
 }
 html.dark {
   color: #ffffff;
-  background-color: #2b2b2b;
+  background-color: #222222;
 }
 
 html.dark body {
@@ -90,7 +90,9 @@ label:hover {
 }
 #back,
 #set_domains,
-#set {
+#set,
+.addSite,
+.addDomain {
   cursor: pointer;
   padding: 12px 40px;
   display: inline-block;
@@ -109,11 +111,30 @@ label:hover {
   box-shadow: none;
 }
 
+.addSite,
+.addDomain {
+  clear: both;
+  padding: 5px 15px;
+  margin: 5px auto;
+  display: block;
+  width: fit-content;
+  background: #6edc60;
+  color: #f2fff0;
+}
+
 #set_domains:hover,
+.addSite:hover,
+.addDomain:hover,
 #set:hover {
   background: #474747;
   color: rgb(255, 255, 255);
   border: 0px;
+}
+
+.domain {
+  border: 1px dashed rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  border-radius: 3px;
 }
 
 #back {
@@ -269,16 +290,12 @@ input {
 #domains > p {
   text-align: center;
 }
-#extensionOptions > #domains > #load > p {
+#extensionOptions > #domains > div > p {
   border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
   font-size: 15px;
 }
 
-#domains > #load > #clear {
-  clear: both;
-}
-
-#domains > #load > #arrow {
+#domains > div > div > #arrow {
   float: left;
   text-align: center;
   width: 8%;
@@ -287,9 +304,19 @@ input {
   margin-bottom: 15px;
 }
 
+#domains > div > div > .delete {
+  float: left;
+  text-align: center;
+  width: 8%;
+  height: 35px;
+  background: transparent url("chrome-extension://__MSG_@@extension_id__/images/exit.png") no-repeat 50% center;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
 .cd_url {
-  width: 46%;
-  float: right;
+  width: 42%;
+  float: left;
   margin-bottom: 15px;
 }
 .cd_url > label {
@@ -311,7 +338,7 @@ input {
 }
 
 .cm_url {
-  width: 46%;
+  width: 42%;
   float: left;
   margin-bottom: 15px;
 }

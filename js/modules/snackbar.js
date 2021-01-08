@@ -8,7 +8,8 @@ export { showSnackbar, showSnackbarSite };
  * Show Materialize-style message bar from bottom-right
  */
 const showSnackbar = (storage) => {
-  if (!storage.feature_experimentalui) {
+  let versionIncrement = Number(global.extensionVersion.split(".").pop());
+  if (!storage.feature_experimentalui && versionIncrement == 0) {
     //Snackbar settings
     let snackbarHtml = `
     <b>Sitecore Author Toolbox 5.0</b><br />

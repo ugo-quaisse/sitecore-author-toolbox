@@ -1276,17 +1276,17 @@ body.satDark a.scTileItem:hover {
 body.satDark div.content {
   background-color: var(--black2) !important;
 }
-body.satDark .search-box {
+body.satDark div.content .search-box {
   background-color: var(--black2) !important;
   border: 1px solid var(--black2) !important;
 }
-body.satDark .btn-search {
+body.satDark div.content .btn-search {
   background-color: var(--black2) !important;
   background-image: url("chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.png");
   box-shadow: inset 0 1px transparent;
 }
-body.satDark .btn-search,
-body.satDark .btn-clear {
+body.satDark div.content .btn-search,
+body.satDark div.content .btn-clear {
   border-left: 1px solid var(--black3) !important;
   box-shadow: none;
 }

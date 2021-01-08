@@ -24,7 +24,8 @@ const storeCurrentPageEE = () => {
 /**
  * Add button to toolbar to open datasource in CE
  */
-const addToolbarEditCE = () => {
+const addToolbarEditCE = (storage) => {
+  storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;
   let target = document.querySelector(".scChromeDropDown");
   let observer = new MutationObserver(function () {
     let scChromeDropDownRow = document.querySelectorAll(".scChromeDropDownRow");
@@ -44,7 +45,7 @@ const addToolbarEditCE = () => {
   });
 
   //Observer
-  target
+  storage.feature_experienceeditor && target
     ? observer.observe(target, {
         attributes: false,
         childList: true,
@@ -56,7 +57,8 @@ const addToolbarEditCE = () => {
 /**
  * Add /Move component tooltip
  */
-const addToolbarTooltip = () => {
+const addToolbarTooltip = (storage) => {
+  storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;
   let target = document.querySelector(".scChromeControls");
   let observer = new MutationObserver(function () {
     var scChromeToolbar = document.querySelectorAll(".scChromeToolbar");
@@ -94,7 +96,7 @@ const addToolbarTooltip = () => {
   });
 
   //Observer
-  target
+  storage.feature_experienceeditor && target
     ? observer.observe(target, {
         attributes: true,
         childList: true,
@@ -106,7 +108,8 @@ const addToolbarTooltip = () => {
 /**
  * Add / Move placeholder tooltip
  */
-const addPlaceholderTooltip = () => {
+const addPlaceholderTooltip = (storage) => {
+  storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;
   let target = document.querySelector("body");
   let observer = new MutationObserver(function (mutation) {
     mutation.forEach(function (el) {
@@ -138,7 +141,7 @@ const addPlaceholderTooltip = () => {
     });
   });
   //Observer
-  target
+  storage.feature_experienceeditor && target
     ? observer.observe(target, {
         childList: true,
       })

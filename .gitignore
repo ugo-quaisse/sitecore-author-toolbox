@@ -3,3 +3,4 @@
 js/modules/local.js
 node_modules/
 .vscode/settings.json
+backup_sites.json

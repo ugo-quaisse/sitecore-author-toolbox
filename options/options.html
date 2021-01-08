@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Sitecore Author Toolbox</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/options.min.css">
+    <link rel="stylesheet" type="text/css" href="css/options.css">
 </head>
 
 <body>
@@ -13,12 +13,12 @@
         <!-- Header -->
         <header class="sc-globalHeader" id="scHeader">
             <a href="" id="scBack">
-                <img class="sc-global-logo" src="../images/global_logo.png" />
+                <img class="sc-global-logo" src="../../images/global_logo.png" />
             </a>
         </header>
         <div id="banner">
             <h3 id="bannerTitle">Sitecore Author Toolbox</h3>
-            <img src="images/icon_round.png">
+            <img src="../../images/icon_round.png">
         </div>
         <div id="intro">
             <h2>Hello, I am<br />Sitecore Author Toolbox</h2>
@@ -216,9 +216,16 @@
         <form id="domains">
             <h4>Your Sitecore sites:</h4>
             <p><a href="https://uquaisse.io/sat_domains" target="_blank">How to configure your sites?</a></p>
+            <p>You can use <code>{lang}</code> token if you need to embed language somewhere in your URL.</p>
             <div id="sitesList">
                 <!-- Call JS to generate list -->
+                <input class="importSites" type="file" accept=".json" value="IMPORT (.JSON)" style="display: none;"/>
+                <input class="importSitesVisible" type="button" value="IMPORT (.JSON)"/>
+                <input class="exportSites" type="button" value="EXPORT (.JSON)" />
+                <div class="addDomain">ADD A DOMAIN</div>
+                
             </div>
+            
             <div id="domainsList">
                 <!-- Call JS to generate list -->
             </div>
@@ -236,7 +243,8 @@
         <p>Crafted with ❤️ by <b>Ugo Quaisse</b> (Paris, France)<br>
             Follow me at <a href="https://twitter.com/uquaisse" target="_blank">https://twitter.com/uquaisse</a> or <a href="https://uquaisse.io/?utm_source=browseraction&utm_medium=chrome" target="_blank">https://uquaisse.io</a><br><br>
         </p>
-        <p>Version <span id="scVersion"></span> - Post a review <a href="https://chrome.google.com/webstore/detail/mckfcmcdbgkgffdknpkaihjigmcnnbco/publish-accepted?authuser=0&hl=en" target="_blank">here</a>.</p>
+        <p>Version <span id="scVersion"></span> - Post a review <a href="https://chrome.google.com/webstore/detail/mckfcmcdbgkgffdknpkaihjigmcnnbco/publish-accepted?authuser=0&hl=en" target="_blank">here</a>.<br />
+        👾 You can report a bug by clicking <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/issues/new?assignees=&labels=&template=bug_report.md&title=" target="_blank">here</a></p>
     </div>
     </div>
     <script type="text/javascript" src="js/options.js"></script>

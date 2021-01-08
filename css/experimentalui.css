@@ -384,6 +384,11 @@ body.satExperimentalUi .scEditorTabHeaderActive > span.scEditorTabHeaderModified
   padding-left: 2px;
 }
 
+body.satExperimentalUi .scContentControlChecklist {
+  height: fit-content !important;
+  border: none !important;
+}
+
 body.satExperimentalUi .scContentControlImageImage {
   padding: 0px;
 }
@@ -919,7 +924,8 @@ body.satExperimentalUi .scNeutral > .scMessageBarIcon {
 
 body.satExperimentalUi .scNeutral > .scMessageBarTextContainer > .scMessageBar a,
 body.satExperimentalUi .scNeutral > .scMessageBarTextContainer > .scMessageBarOption,
-body.satExperimentalUi .scNeutral > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet {
+body.satExperimentalUi .scNeutral > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet,
+body.satExperimentalUi .scNeutral > .liveStatusGray {
   color: var(--black5) !important;
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
@@ -944,7 +950,8 @@ body.satExperimentalUi .scError > .scMessageBarIcon {
 
 body.satExperimentalUi .scError > .scMessageBarTextContainer > .scMessageBar a,
 body.satExperimentalUi .scError > .scMessageBarTextContainer > .scMessageBarOption,
-body.satExperimentalUi .scError > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet {
+body.satExperimentalUi .scError > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet,
+body.satExperimentalUi .scError > .liveStatusRed {
   color: var(--messageDangerLink) !important;
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
@@ -992,7 +999,8 @@ body.satExperimentalUi .scSuccess > .scMessageBarIcon {
 
 body.satExperimentalUi .scSuccess > .scMessageBarTextContainer > .scMessageBar a,
 body.satExperimentalUi .scSuccess > .scMessageBarTextContainer > .scMessageBarOption,
-body.satExperimentalUi .scSuccess > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet {
+body.satExperimentalUi .scSuccess > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet,
+body.satExperimentalUi .scSuccess > .liveStatusGreen {
   color: var(--messageSuccessLink) !important;
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
@@ -1619,6 +1627,7 @@ body.satExperimentalUi .scTabActive_Hover {
   background-color: var(--accent);
   color: var(--accentText);
   border-top: 1px solid var(--accent);
+  font-weight: bold;
 }
 
 body.satExperimentalUi .scTabActive:after,

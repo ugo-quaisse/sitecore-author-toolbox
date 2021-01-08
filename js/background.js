@@ -23,7 +23,7 @@ function checkSiteSxa(sender, sendResponse) {
   chrome.cookies.getAll({}, function (cookies) {
     for (var i in cookies) {
       if (cookies[i].domain == url.hostname && cookies[i].name == "sxa_site" && cookies[i].value != "login") {
-        sendResponse({ farewell: cookies[i].value });
+        sendResponse({ farewell: cookies[i].value.toLowerCase() });
         break;
       }
     }

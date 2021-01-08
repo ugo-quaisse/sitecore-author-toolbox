@@ -7,6 +7,7 @@
  */
 export const windowLocationHref = window.location.href.replace(/&amp;/g, "&").toLowerCase();
 export const queryString = window.location.search.toLowerCase();
+export const urlOrigin = new URL(windowLocationHref).origin;
 export const urlParams = new URLSearchParams(queryString);
 export const debug = !!urlParams.has("debug");
 export const showSnackbar = true;
@@ -78,7 +79,7 @@ export const iconCalendar = chrome.runtime.getURL("images/calendar.svg");
 export const iconPassword = chrome.runtime.getURL("images/password.svg");
 
 export const rteLanguages = ["ARABIC", "HEBREW", "PERSIAN", "URDU", "SINDHI"];
-export const launchpadPage = chrome.runtime.getURL("options.html");
+export const launchpadPage = chrome.runtime.getURL("options/options.html");
 export const launchpadIcon = chrome.runtime.getURL("images/icon.png");
 export const launchpadGroupTitle = "Sitecore Author Toolbox";
 export const launchpadTitle = "Options";
@@ -95,6 +96,7 @@ export const iconOwl = chrome.runtime.getURL("images/owl.svg");
 
 export let timeout;
 export const isSitecore = windowLocationHref.includes("/sitecore/");
+export const isSitecoreModule = windowLocationHref.includes("/sitecore%20modules/");
 export let isPreviewMode = document.querySelector(".pagemode-preview");
 !isPreviewMode ? (isPreviewMode = windowLocationHref.includes("sc_mode=preview")) : false;
 export let isEditMode = document.querySelector(".pagemode-edit, .on-page-editor");

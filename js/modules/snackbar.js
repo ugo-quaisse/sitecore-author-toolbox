@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
+import { getSiteUrl } from "./url.js";
 
 export { showSnackbar, showSnackbarSite };
 
@@ -8,28 +10,27 @@ export { showSnackbar, showSnackbarSite };
  * Show Materialize-style message bar from bottom-right
  */
 const showSnackbar = (storage) => {
-  if (!storage.feature_experimentalui) {
-    //Snackbar settings
-    let snackbarHtml = `
-    <b>Sitecore Author Toolbox 5.0</b><br />
-    Experimental UI theme is available for Desktop mode!<br />Click "TRY IT" to activate it now!`;
-    let html = `<div class="snackbar">` + snackbarHtml + `<button id="sbAction" onclick='javascript:document.querySelectorAll(".interfaceRadio")[1].click()'>TRY IT</button><button id="sbDismiss">DISMISS</button></div>`;
+  //Snackbar settings
+  //prettier-ignore
+  let snackbarHtml = `
+    <b>Sitecore Author Toolbox ` + global.extensionVersion + `</b><br />
+    Live URL is now compatible with multisites!<br />Click "TRY IT" to activate it now!`;
+  let html = `<div class="snackbar">` + snackbarHtml + `<button id="sbAction" onclick='javascript:document.querySelectorAll(".interfaceRadio")[1].click()'>TRY IT</button><button id="sbDismiss">DISMISS</button></div>`;
 
-    //Is Snackbar is already visible in a parent frame?
-    let parentSnackbar = parent.document.querySelector(".snackbar");
+  //Is Snackbar is already visible in a parent frame?
+  let parentSnackbar = parent.document.querySelector(".snackbar");
 
-    //Show Snackbar
-    if (!parentSnackbar && global.showSnackbar && localStorage.getItem("sbDismiss") != global.extensionVersion) {
-      document.querySelector("body").insertAdjacentHTML("beforeend", html);
+  //Show Snackbar
+  if (!parentSnackbar && global.showSnackbar && localStorage.getItem("sbDismiss") != global.extensionVersion) {
+    document.querySelector("body").insertAdjacentHTML("beforeend", html);
 
-      //Add listener on click #sbDismiss
-      document.querySelectorAll("#sbAction, #sbDismiss").forEach(function (elem) {
-        elem.addEventListener("click", function () {
-          localStorage.setItem("sbDismiss", global.extensionVersion);
-          document.querySelector(".snackbar").setAttribute("style", "display: none");
-        });
+    //Add listener on click #sbDismiss
+    document.querySelectorAll("#sbAction, #sbDismiss").forEach(function (elem) {
+      elem.addEventListener("click", function () {
+        localStorage.setItem("sbDismiss", global.extensionVersion);
+        document.querySelector(".snackbar").setAttribute("style", "display: none");
       });
-    }
+    });
   }
 };
 
@@ -40,33 +41,28 @@ const showSnackbarSite = (storage, ScItem) => {
   //Get SiteName
   let siteName = ScItem.pathFull.split("/home/")[0].split("/").reverse();
 
+  //Get site in userstorage (settings)
+  let siteUrl = getSiteUrl(storage, ScItem.pathFull);
+
   //Get Site in locastorage
   let existing = localStorage.getItem("sbDismissSites");
   existing = existing ? JSON.parse(existing) : {};
   let length = Object.values(existing).length;
 
   //Snackbar settings
-  let snackbarHtml =
-    `<b>"` +
-    siteName[0].toUpperCase() +
-    `" site detected</b><br />
-    Are you using any live/CD server?<br />Click "Add site" to configure it now.`;
-  let html =
-    `<div class="snackbarSite">` +
-    snackbarHtml +
-    `<button id="sbActionSite" onclick="window.open('` +
-    global.launchpadPage +
-    `?configure_domains=true&launchpad=true&url=` +
-    global.windowLocationHref +
-    `')">ADD&nbsp;SITE</button><button id="sbDismissSite">DISMISS</button></div>`;
+  //prettier0ignore
+  let snackbarHtml = `<b>"` + siteName[0].toUpperCase() + `" site detected</b><br /> Are you using any live/CD server?<br />Click "Add site" to configure it now.`;
+  //prettier-ignore
+  let html = `<div class="snackbarSite">` + snackbarHtml + `<button id="sbActionSite" onclick="addSite('` + global.launchpadPage + `','` + global.urlOrigin + `','` + ScItem.pathFull + `', '` + siteName[0].toUpperCase() + `')">ADD&nbsp;SITE</button><button id="sbDismissSite">DON'T SHOW AGAIN</button></div>`;
+
+  //Hide previous snackbar
+  document.querySelectorAll(".snackbarSite").forEach((div) => {
+    div.remove();
+  });
 
   //Show Snackbar
-
-  if (ScItem.pathFull.includes(`/home/`) && Object.values(existing).indexOf(ScItem.pathFull) === -1) {
-    //Show snackbar
-    document.querySelector(".snackbarSite") ? document.querySelector(".snackbarSite").remove() : false;
+  if (ScItem.pathFull.includes(`/home/`) && Object.values(existing).indexOf(ScItem.pathFull) === -1 && siteUrl == undefined) {
     document.querySelector("body").insertAdjacentHTML("beforeend", html);
-
     //Add listener on click #sbDismiss
     document.querySelectorAll("#sbDismissSite").forEach(function (elem) {
       elem.addEventListener("click", function () {

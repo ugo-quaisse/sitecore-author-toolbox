@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 /* eslint-disable default-param-last */
 /* eslint-disable consistent-return */
 /* eslint-disable newline-before-return */
@@ -556,7 +557,6 @@ function changePreviewRotation(iframeId) {
 function goToSubmenu(id, width = 300) {
   let height = document.querySelectorAll(".scAccountMenu > .scAccountMenuWrapper .scAccountColumn > ul")[id].offsetHeight;
   let count = 0;
-  console.log(height);
   id == 0 ? document.querySelector(".scAccountMenuWrapper").setAttribute("style", "margin-left:0px") : document.querySelector(".scAccountMenuWrapper").setAttribute("style", "margin-left:-" + width + "px");
   document.querySelectorAll(".scAccountMenu > .scAccountMenuWrapper .scAccountColumn").forEach(function (elem) {
     if (count == id) {
@@ -568,4 +568,13 @@ function goToSubmenu(id, width = 300) {
   });
 
   document.querySelector(".scAccountMenu").setAttribute("style", "height:" + height + "px");
+}
+
+/**
+ * Add new site
+ */
+// eslint-disable-next-line max-params
+function addSite(optionPage, urlOrigin, sitePath, siteName) {
+  //prettier-ignore
+  window.open(optionPage + `?configure_domains=true&launchpad=true&url=` + urlOrigin + `&site=` + sitePath + `&name=` + siteName);
 }

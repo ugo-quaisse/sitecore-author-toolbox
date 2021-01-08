@@ -14,7 +14,7 @@ import { enhancedTreeSearch } from "./search.js";
 import { initTranslateMode } from "./translate.js";
 import { showSnackbarSite } from "./snackbar.js";
 
-export { sitecoreAuthorToolbox, initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, initPublishCheckboxes, refreshContentEditor, openFolderTab };
+export { sitecoreAuthorToolbox, initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, refreshContentEditor, openFolderTab };
 
 /*
  * Main function executed when the Content Editor refreshes
@@ -438,7 +438,7 @@ const initCheckboxes = (storage) => {
   storage.feature_contenteditor == undefined ? (storage.feature_contenteditor = true) : false;
   if (storage.feature_contenteditor) {
     loadCssFile("css/checkbox.min.css");
-    for (var field of document.querySelectorAll("input[type=checkbox]")) {
+    for (var field of document.querySelectorAll("*:not(#Languages) > input[type=checkbox]")) {
       // if (field.className == "scContentControlCheckbox") {
       field.classList.add("scContentControlCheckbox");
       field.insertAdjacentHTML("afterend", `<label for="` + field.id + `" class="scContentControlCheckboxLabel"></label>`);
@@ -477,21 +477,6 @@ const initPasswordField = (storage) => {
       input.classList.add("scPasswordUI");
       input.insertAdjacentHTML("beforebegin", html);
     });
-  }
-};
-
-/*
- * Change style of checkboxes to ios-like switch in publish window
- */
-const initPublishCheckboxes = (storage) => {
-  if (storage.feature_contenteditor === true) {
-    //Add #PublishingTargets input[type=checkbox] if needed
-    document.querySelectorAll("#PublishChildrenPane input[type=checkbox]").forEach(function (checkbox) {
-      checkbox.classList.add("scContentControlCheckbox");
-      let labelHtml = '<label for="' + checkbox.id + '" class="scContentControlCheckboxLabel"></label>';
-      checkbox.insertAdjacentHTML("afterend", labelHtml);
-    });
-    initCheckboxes(storage);
   }
 };
 

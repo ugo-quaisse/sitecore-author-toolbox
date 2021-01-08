@@ -1,12 +1,54 @@
+/* eslint-disable array-element-newline */
 /* eslint-disable default-param-last */
 /* eslint-disable max-params */
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
 import { getScItemData, log } from "./helpers.js";
-import { currentColorScheme } from "./dark.js";
 
-export { initLiveUrl, checkUrlStatus };
+export { getSiteUrl, initLiveUrl, checkUrlStatus };
+
+/**
+ * Find and Match site URL with user settings in storage
+ */
+const getSiteUrl = (storage, path) => {
+  //Get SiteName
+  let homePath = path.split("/home/")[0] + "/home/";
+  let liveUrl;
+  // console.log("Current domain ->", global.urlOrigin);
+  // console.log("Current path ->", homePath);
+
+  //Site Manager
+  for (var [domain, values] of Object.entries(storage.site_manager)) {
+    if (domain == global.urlOrigin) {
+      // console.log("-> Domain check OK -> ", domain);
+      // eslint-disable-next-line no-unused-vars
+      for (var [id, site] of Object.entries(values)) {
+        let siteStorage = Object.entries(site)[0][0].slice(-1) != "/" ? Object.entries(site)[0][0] + "/" : Object.entries(site)[0][0];
+        // console.log("--> Site recorded-> ", siteStorage.toLowerCase());
+        // console.log("--> Site tracked-> ", homePath.toLowerCase());
+        if (siteStorage.toLowerCase() == homePath.toLowerCase()) {
+          liveUrl = Object.entries(site)[0][1].slice(-1) == "/" ? decodeURI(Object.entries(site)[0][1].slice(0, -1)) : decodeURI(Object.entries(site)[0][1]);
+          // console.log("--> **Site Manager**", liveUrl);
+          break;
+        }
+      }
+    }
+  }
+
+  //Domain Manager (Deprecated)
+  if (liveUrl == false) {
+    for (domain in storage.domain_manager) {
+      if (window.location.origin == domain) {
+        liveUrl = decodeURI(storage.domain_manager[domain]);
+        // console.log("**Domain Manager**", liveUrl);
+        break;
+      }
+    }
+  }
+
+  return liveUrl;
+};
 
 /**
  * Show live URL of a page
@@ -14,33 +56,26 @@ export { initLiveUrl, checkUrlStatus };
 const initLiveUrl = (storage) => {
   //Variables
   let ScItem = getScItemData();
-  var sitecoreItemID = ScItem.id;
-  var sitecoreItemPath = ScItem.path + "/";
-  var sitecoreItemPathOriginal = ScItem.path + "/";
-  sitecoreItemPath = sitecoreItemPath.split("/home/");
-  var sitecoreSite = sitecoreItemPath[0].toLowerCase();
-  sitecoreSite = sitecoreSite.split("/");
-  sitecoreSite = sitecoreSite.slice(-1)[0];
   let scQuickInfo = document.querySelector("div[id^='QuickInfo_']");
   let scEditorTabs = document.querySelector("div#scEditorTabs");
-  var isContent = sitecoreItemPathOriginal.includes("/sitecore/content/");
-  var isMedia = sitecoreItemPathOriginal.includes("/sitecore/media library/");
-  var isData = sitecoreItemPathOriginal.includes("/data/");
-  var isSettings = sitecoreItemPathOriginal.includes("/settings/");
-  var isPresentation = sitecoreItemPathOriginal.includes("/presentation/");
-  var isEmailTemplate = sitecoreItemPathOriginal.includes("/sitecore/content/email/");
-  var scUrl = window.location.origin + "/?sc_itemid=" + sitecoreItemID + "&sc_mode=normal&sc_lang=" + ScItem.language + "&sc_version=" + ScItem.version;
-  var scEditorHeaderVersionsLanguage = document.querySelector(".scEditorHeaderVersionsLanguage");
-  let currentScheme = currentColorScheme();
-  let darkMode = false;
-  var scLanguageTxtLong = scEditorHeaderVersionsLanguage ? scEditorHeaderVersionsLanguage.getAttribute("title") : false;
-
-  //Generating Live URLs (xxxsxa_sitexxx will be replace later by active site)
-  if (sitecoreItemPath[1] != undefined) {
-    sitecoreItemPath = encodeURI(window.location.origin + "/" + ScItem.language + "/" + sitecoreItemPath[1] + "?sc_site=xxxsxa_sitexxx&sc_mode=normal").toLowerCase();
-  } else {
-    sitecoreItemPath = encodeURI(window.location.origin + "/" + ScItem.language + "/?sc_site=xxxsxa_sitexxx&sc_mode=normal").toLowerCase();
-  }
+  let scEditorHeaderVersionsLanguage = document.querySelector(".scEditorHeaderVersionsLanguage");
+  let scLanguageTxtLong = scEditorHeaderVersionsLanguage ? scEditorHeaderVersionsLanguage.getAttribute("title") : false;
+  let badge = "Loading...";
+  let barStyle = storage.feature_experimentalui ? "scNeutral" : "scWarning";
+  //Live URL
+  let liveUrl = getSiteUrl(storage, ScItem.pathFull);
+  let alternativeUrl = window.location.origin + "/?sc_itemid=" + ScItem.id + "&sc_mode=normal&sc_lang=" + ScItem.language + "&sc_version=" + ScItem.version;
+  //Path
+  let temp = ScItem.pathFull.toLowerCase().split("/home/");
+  //let sitecoreSite = temp[0] == undefined ? "" : temp[0] + "/home/";
+  let sitecorePath = temp[1] == undefined ? "" : temp[1];
+  //template type
+  let isContent = ScItem.pathFull.includes("/sitecore/content/");
+  let isMedia = ScItem.pathFull.includes("/sitecore/media library/");
+  let isData = ScItem.pathFull.includes("/data/");
+  let isSettings = ScItem.pathFull.includes("/settings/");
+  let isPresentation = ScItem.pathFull.includes("/presentation/");
+  let isEmailTemplate = ScItem.pathFull.includes("/sitecore/content/email/");
 
   //Excluding data, presentation, settings, email
   if (isContent && !isData && !isPresentation && !isSettings && !isEmailTemplate) {
@@ -48,58 +83,29 @@ const initLiveUrl = (storage) => {
     storage.feature_urls == undefined ? (storage.feature_urls = true) : false;
     storage.feature_urlstatus == undefined ? (storage.feature_urlstatus = true) : false;
 
-    //Stored data (Json)
-    var liveUrl;
-    var domains = storage.domain_manager;
-    var envBadge = "CM server";
-    var barStyle = storage.feature_experimentalui ? "scNeutral" : "scWarning";
-
-    //Loop through domains, if current domain = key, then create new link for live
-    for (var domain in domains) {
-      if (window.location.origin == domain) {
-        liveUrl = domains[domain];
-        break;
-      }
-    }
+    //Checking user's settings if we have a live URL for this site
+    liveUrl = getSiteUrl(storage, ScItem.pathFull);
 
     //If not added yet
     if (!document.querySelector("#scMessageBarUrl") && storage.feature_urls) {
       //Get cookie sxa_site
       chrome.runtime.sendMessage({ greeting: "sxa_site" }, function (response) {
-        //Is website in cookie different than quick info
-        if (response.farewell != null) {
-          var site_quickinfo = sitecoreSite.toLowerCase();
-          var site_cookie = response.farewell.toLowerCase();
-          var isSameSite = site_cookie.includes(site_quickinfo);
+        //Update live Url
+        if (liveUrl == undefined) {
+          badge = "CM server";
+          liveUrl = window.location.origin + "/" + ScItem.language + "/" + sitecorePath + "?sc_mode=normal&sc_site=xxxsxa_sitexxx";
+        } else {
+          badge = "CD server";
+          liveUrl = liveUrl.includes("{lang}") ? liveUrl.replace("{lang}", ScItem.language) : liveUrl + "/" + ScItem.language + "/" + sitecorePath;
         }
 
-        // if(ScItem.baseUrl != undefined) {
-
-        //     console.log(sitecoreItemPath);
-
-        //     sitecoreItemPath = sitecoreItemPath.replace("sc_site=xxxsxa_sitexxx&", "");
-        //     sitecoreItemPath = sitecoreItemPath.replace("?sc_mode=normal", "");
-        //     sitecoreItemPath = sitecoreItemPath.replace("&sc_mode=normal", "");
-        //     sitecoreItemPath = sitecoreItemPath.replace(window.location.origin, ScItem.baseUrl);
-        //     scUrl = scUrl.replace(window.location.origin, ScItem.baseUrl);
-        //     console.log(ScItem.baseUrl);
-
-        // }
-
-        if (response.farewell != null && isSameSite && liveUrl == undefined) {
-          sitecoreItemPath = sitecoreItemPath.replace("xxxsxa_sitexxx", response.farewell);
-        } else if (liveUrl == undefined) {
-          sitecoreItemPath = sitecoreItemPath.replace("sc_site=xxxsxa_sitexxx&", "");
-        } else if (liveUrl != undefined) {
-          //Generating CD/Live URLs
-          sitecoreItemPath = sitecoreItemPath.replace("sc_site=xxxsxa_sitexxx&", "");
-          sitecoreItemPath = sitecoreItemPath.replace("?sc_mode=normal", "");
-          sitecoreItemPath = sitecoreItemPath.replace(window.location.origin, liveUrl);
-          //Generating CD?Live URLS with SitecoreID
-          scUrl = scUrl.replace(window.location.origin, liveUrl);
-          scUrl = scUrl.replace("&sc_mode=normal", "");
-          //Badge with server name
-          envBadge = "CD server";
+        //Update alternative Url
+        if (response.farewell) {
+          alternativeUrl = alternativeUrl.replace("xxxsxa_sitexxx", response.farewell);
+          liveUrl = liveUrl.replace("xxxsxa_sitexxx", response.farewell);
+        } else {
+          alternativeUrl = alternativeUrl.replace("&sc_site=xxxsxa_sitexxx", "");
+          liveUrl = liveUrl.replace("&sc_site=xxxsxa_sitexxx", "");
         }
 
         //Experimentation
@@ -111,12 +117,13 @@ const initLiveUrl = (storage) => {
             <div class="scMessageBarIcon" style="background-image:url(` + global.icon + `)"></div>
             <div class="scMessageBarTextContainer">
               <div class="scMessageBarTitle">Sitecore Live URL
-              <span class="liveUrlBadge t-sm t-top hide" onclick="window.open('` + global.launchpadPage + `?configure_domains=true&launchpad=true&url=` + global.windowLocationHref + `')" data-tooltip="Click to configure your domains" title="Click to configure your domains">` + envBadge + `</span>
+              <span class="liveUrlLoader">Loading...</span>
+              <span class="liveUrlBadge t-sm t-top hide" onclick="window.open('` + global.launchpadPage + `?configure_domains=true&launchpad=true&url=` + global.windowLocationHref + `')" data-tooltip="Click to configure your domains" title="Click to configure your domains">` + badge + `</span>
               <span class="liveUrlStatus"></span>
               </div>
               <div class="scMessageBarText">To preview this page in <b>"` + scLanguageTxtLong + `".</b></div>
               <ul class="scMessageBarOptions" style="margin:0px">
-              <li class="scMessageBarOptionBullet"><a href="` + sitecoreItemPath + `" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this link</a> or try <a href="` + scUrl + `" target="_blank" class="scMessageBarOption">this alternative link</a></li>
+              <li class="scMessageBarOptionBullet"><a href="` + decodeURI(liveUrl) + `" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this link</a> or try <a href="` + alternativeUrl + `" target="_blank" class="scMessageBarOption">this alternative link</a></li>
               </ul>
               </div>
             </div>`;
@@ -141,10 +148,7 @@ const initLiveUrl = (storage) => {
         }
 
         //Insert link into Quickinfo table
-        liveUrlQuickInfo(sitecoreItemPath);
-
-        //Is dark mode on?
-        (storage.feature_darkmode && !storage.feature_darkmode_auto) || (storage.feature_darkmode && storage.feature_darkmode_auto && currentScheme == "dark") ? (darkMode = true) : false;
+        liveUrlQuickInfo(liveUrl);
 
         /**
          * Live status
@@ -153,13 +157,12 @@ const initLiveUrl = (storage) => {
           chrome.runtime.sendMessage(
             {
               greeting: "get_pagestatus",
-              url: sitecoreItemPath,
+              url: liveUrl,
               source: null,
-              dark: darkMode,
               experimental: true,
             },
             (response) => {
-              checkUrlStatus(response.status, null, darkMode, storage.feature_experimentalui);
+              checkUrlStatus(response.status, null, storage.feature_experimentalui);
             }
           );
         }
@@ -180,29 +183,25 @@ const liveUrlQuickInfo = (sitecoreItemPath) => {
     var url = new URL(sitecoreItemPath);
     cell1.innerHTML = "Live URL:";
     //prettier-ignore
-    cell2.innerHTML = `<a href="` + sitecoreItemPath + `" target="_blank">` + url.origin + url.pathname + ` <img src="` + global.iconExternalLink + `" style="width: 14px; vertical-align: text-top;" class="scIconCopy" /></a>`;
+    cell2.innerHTML = `<a href="` + sitecoreItemPath + `" target="_blank">` + decodeURI(url.origin + url.pathname) + ` <img src="` + global.iconExternalLink + `" style="width: 14px; vertical-align: text-top;" class="scIconCopy" /></a>`;
   }
 };
 
 /**
  * Check HTTP status of a page
  */
-const checkUrlStatus = (status, source = null, dark, experimental = false) => {
-  let liveUrlStatus, html, barStyle, urlLoader;
-
-  //Dark loader
-  urlLoader = dark ? global.urlLoaderDark : global.urlLoader;
+const checkUrlStatus = (status, source = null, experimental = false) => {
+  let liveUrlLoader, liveUrlStatus, html, barStyle;
 
   if (source == null) {
     if (document.querySelector(".sitecoreItemPath")) {
       liveUrlStatus = document.querySelector(".liveUrlStatus");
+      liveUrlLoader = document.querySelector(".liveUrlLoader");
     }
   } else if (source.querySelector(".sitecoreItemPath")) {
     liveUrlStatus = source.querySelector(".liveUrlStatus");
+    liveUrlLoader = source.querySelector(".liveUrlLoader");
   }
-
-  //Preloader
-  liveUrlStatus ? (liveUrlStatus.innerHTML = '<img loading="lazy" src="' + urlLoader + '" style="width: 10px; float: initial; margin: unset;"/>') : false;
 
   //Show badge
   document.querySelector(".liveUrlBadge") ? document.querySelector(".liveUrlBadge").classList.remove("hide") : false;
@@ -212,11 +211,11 @@ const checkUrlStatus = (status, source = null, dark, experimental = false) => {
     html = "<span class='liveStatusRed'><img loading='lazy' src=' " + global.dotRed + "'/> Not published (" + status + ")</span>";
     barStyle = "scError";
   } else if (status == "500") {
-    html = "<span class='liveStatusRed'><img loading='lazy' src=' " + global.dotRed + "'/> Server error (" + status + ")</span>";
+    html = "<span class='liveStatusRed'><img loading='lazy' src=' " + global.dotRed + "'/> Server error (code: " + status + ")</span>";
     barStyle = "scError";
   } else if (status == undefined) {
-    html = "<span class='liveStatusRed'><img loading='lazy' src=' " + global.dotRed + "'/> URL doesn't exist (" + status + ")</span>";
-    barStyle = "scWarning";
+    html = "<span class='liveStatusRed'><img loading='lazy' src=' " + global.dotRed + "'/> This URL doesn't exist, check your settings.</span>";
+    barStyle = "scError";
   } else {
     html = "<span class='liveStatusGreen'><img loading='lazy' src=' " + global.dotGreen + "'/> Published</span>";
     barStyle = "scSuccess";
@@ -224,6 +223,7 @@ const checkUrlStatus = (status, source = null, dark, experimental = false) => {
 
   //Update Dom
   liveUrlStatus != null ? (liveUrlStatus.innerHTML = html) : false;
+  liveUrlStatus != null ? liveUrlLoader.remove() : false;
 
   if (experimental) {
     //Update bar color

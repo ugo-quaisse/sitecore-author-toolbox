@@ -3149,3 +3149,7 @@ body.satDark #sxa-toolbox #sxa-toolbox-root ul li:hover {
   background: var(--black3);
   border-bottom: 1px solid var(--black3);
 }
+
+body.satDark .sc-ribbon .sc-chunk-panel {
+  border: 1px solid var(--black1);
+}

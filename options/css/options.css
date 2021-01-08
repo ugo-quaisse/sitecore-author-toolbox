@@ -88,11 +88,17 @@ label:hover {
 #settings:hover {
   background-color: #474747;
 }
+#sitesList {
+  text-align: center;
+}
 #back,
 #set_domains,
 #set,
 .addSite,
-.addDomain {
+.addDomain,
+.importSites,
+.importSitesVisible,
+.exportSites {
   cursor: pointer;
   padding: 12px 40px;
   display: inline-block;
@@ -111,7 +117,15 @@ label:hover {
   box-shadow: none;
 }
 
-.addSite,
+.addSite {
+  clear: both;
+  padding: 5px 15px;
+  margin: 5px auto;
+  display: block;
+  width: fit-content;
+  background: #4693f8;
+  color: #f2fff0;
+}
 .addDomain {
   clear: both;
   padding: 5px 15px;
@@ -119,6 +133,16 @@ label:hover {
   display: block;
   width: fit-content;
   background: #6edc60;
+  color: #f2fff0;
+}
+
+.importSites,
+.importSitesVisible,
+.exportSites {
+  padding: 10px 15px;
+  margin: 5px;
+  width: fit-content;
+  background: #f7991f;
   color: #f2fff0;
 }
 
@@ -135,6 +159,7 @@ label:hover {
   border: 1px dashed rgba(0, 0, 0, 0.2);
   padding: 10px;
   border-radius: 3px;
+  margin-top: 10px;
 }
 
 #back {
@@ -155,7 +180,7 @@ label:hover {
   z-index: 10;
   transition: height 0.2s ease-in-out;
   background-color: #ca241c;
-  background: url(../images/breadcrumb_red_bg.png);
+  background: url("chrome-extension://__MSG_@@extension_id__/images/breadcrumb_red_bg.png");
   background-repeat: repeat-x;
   top: 0px;
 }
@@ -165,7 +190,7 @@ label:hover {
     right: 0;
     top: 0px;
     display: block;
-    background: url(../images/logo_spiral.png) center right;
+    background: url("chrome-extension://__MSG_@@extension_id__/images/logo_spiral.png") center right;
     background-repeat: no-repeat;
     width: 113px;
     height: 90px;
@@ -256,6 +281,7 @@ input {
   display: none;
   position: fixed;
   top: 0px;
+  z-index: 10;
 }
 .sc-globalHeader {
   color: #ffffff;
@@ -295,7 +321,7 @@ input {
   font-size: 15px;
 }
 
-#domains > div > div > #arrow {
+#domains #arrow {
   float: left;
   text-align: center;
   width: 8%;
@@ -304,7 +330,7 @@ input {
   margin-bottom: 15px;
 }
 
-#domains > div > div > .delete {
+#domains .delete {
   float: left;
   text-align: center;
   width: 8%;

@@ -2,6 +2,7 @@
 
 import * as global from "./global.js";
 import { getScItemData, setTextColour } from "./helpers.js";
+// import { getFiltersCss } from "./colors.js";
 
 export {
   initOnboarding,
@@ -346,6 +347,10 @@ const getAccentColor = () => {
     root.style.setProperty("--accentBrightness", 50);
     root.style.setProperty("--accentInvert", 0);
   }
+
+  // let filtersCss = getFiltersCss(color);
+  // root.style.setProperty("--accentFilters", filtersCss);
+  // console.log("FiltersCSS", filtersCss);
 
   return color;
 };

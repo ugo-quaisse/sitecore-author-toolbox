@@ -1,3 +1,7 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-unused-vars */
+/* eslint-disable newline-per-chained-call */
+/* eslint-disable no-console */
 /* eslint-disable object-property-newline */
 /* eslint-disable space-before-function-paren */
 /* eslint-disable array-element-newline */
@@ -30,75 +34,153 @@ function animateHeader(scroll_pos) {
  * Prepend input fields to add a site
  */
 const deleteSite = (site) => {
-  document.querySelector("#" + site).remove();
+  if (confirm("Are you sure you want to delete this site?") == true) {
+    document.querySelector("#" + site).remove();
+  }
+};
+
+const onReaderLoad = (event) => {
+  console.log(event.target.result);
+  var json = JSON.parse(event.target.result);
+  console.log(json);
+  parseJsonSites(json);
+};
+
+/**
+ * Upload a json file
+ */
+const uploadJson = (event) => {
+  if (document.querySelector(".importSites").files[0].type != "application/json") {
+    alert("Your file is not a valid Json format");
+  } else {
+    var reader = new FileReader();
+    reader.onload = onReaderLoad;
+    reader.readAsText(event.target.files[0]);
+    setTimeout(() => {
+      document.querySelector("#set_domains").click();
+    }, 200);
+  }
+};
+
+/**
+ * Select file
+ */
+const chooseJson = () => {
+  document.querySelector(".importSites").click();
+};
+
+/**
+ * Parse a json and create html
+ */
+const parseJsonSites = (json) => {
+  console.log(json);
+  for (var [domain, values] of Object.entries(json)) {
+    let domainId = addDomain("", domain, true);
+    for (var [id, site] of Object.entries(values)) {
+      addSite(domainId, Object.entries(site)[0][0], Object.entries(site)[0][1], false, "", true);
+    }
+  }
 };
 
 /**
  * Prepend input fields to add a site
  */
-const addSite = (domain, path, cd) => {
-  let countSites = document.querySelectorAll(".site").length + 1;
-  //prettier-ignore
-  let html = `
+// eslint-disable-next-line max-params
+const addSite = (domain, path, cd, autoadd = false, name = "", isImport = "") => {
+  let isExisting = false;
+
+  //Check if sites already exists
+  document.querySelectorAll("#" + domain + " input[name='key']").forEach((elem) => {
+    if (path == elem.value) {
+      !isImport ? alert(`This site "` + elem.value + `"already exist.`) : false;
+      isExisting = true;
+      console.log("Site already exists", elem.value);
+    }
+  });
+
+  if (isExisting == false) {
+    let countSites = document.querySelectorAll(".site").length + 1;
+    //prettier-ignore
+    let html = `
   <div class="site" id="site_` + countSites + `">
   <div class="cm_url">
-    <input name="key" type="url" placeholder="Sitecore path to /home" value="${path}">
+    <input name="key" type="text" placeholder="Sitecore path to /home" value="${decodeURI(path)}">
   </div>
   <div id="arrow">&nbsp;</div>
   <div class="cd_url">
-    <input name="value" type="url" placeholder="CD URL" pattern="https?://.*" value="${cd}">
+    <input name="value" type="url" placeholder="CD URL" pattern="https?://.*" value="${decodeURI(cd)}">
   </div> 
   <div class="delete deleteSite_` + countSites + `" >&nbsp;</div>
   </div>`;
-  document.querySelector("#" + domain + " > .addSite").insertAdjacentHTML("beforebegin", html);
-  //Click event
-  document.querySelector(".deleteSite_" + countSites).addEventListener("click", deleteSite.bind("", "site_" + countSites, "", ""));
+    document.querySelector("#" + domain + " > .addSite").insertAdjacentHTML("beforebegin", html);
+    //style
+    autoadd ? document.querySelector("#site_" + countSites + " input[name='value']").setAttribute("style", "border-color:#6fdd60") : false;
+    //Prompt for URL
+    autoadd ? (document.querySelector("#site_" + countSites + " input[name='value']").value = prompt("Please enter CD/live URL of your " + name + " site")) : false;
+    //Click event
+    document.querySelector(".deleteSite_" + countSites).addEventListener("click", deleteSite.bind("", "site_" + countSites, "", ""));
+  }
 };
 
 /**
  * Prepend input fields to add a domain (deprecated)
  */
-const addDomain = (text) => {
+// eslint-disable-next-line consistent-return
+const addDomain = (text = "", tocreate = undefined, isImport = false) => {
   let isExisting = false;
-  let url = prompt("Please enter a domain URL", text);
+  let url;
+  let returnId;
+
+  if (tocreate === undefined) {
+    url = prompt("Please enter a domain URL", text);
+  } else {
+    url = tocreate;
+  }
+
   if (url !== null) {
     try {
       //Verify if URL is well formatted
       let newUrl = new URL(url);
-      //Get number of domainsand increment
-      let countDomains = document.querySelectorAll(".domain").length + 1;
+      //Get number of domains
+      let countDomains = document.querySelectorAll(".domain").length;
       //Check if domains already exists
       document.querySelectorAll(".domain").forEach((elem) => {
         if (newUrl.origin == elem.dataset.domain) {
-          alert("This domain already exist.");
+          !isImport ? alert("This domain already exist.") : false;
+          returnId = elem.id;
           isExisting = true;
+          console.log("Domain already exists", returnId);
         }
       });
 
       if (isExisting == false) {
+        countDomains++;
         //prettier-ignore
         let html = `
         <div class="domain" id="domain_` + countDomains + `" data-domain="` + newUrl.origin + `">
           <h3>` + countDomains + ` - ` + newUrl.origin + `</h3>
-          <div class="addSite addSite_` + countDomains + `">Add sites</div>
+          <div class="addSite addSite_` + countDomains + `">ADD A SITE</div>
         </div>`;
-        document.querySelector(".addDomain").insertAdjacentHTML("beforebegin", html);
+        document.querySelector("#sitesList").insertAdjacentHTML("beforeend", html);
         //Click event
-        document.querySelector(".addSite_" + countDomains).addEventListener("click", addSite.bind("", "domain_" + countDomains, "", ""));
-        addSite("domain_" + countDomains, "", "");
+        document.querySelector(".addSite_" + countDomains).addEventListener("click", addSite.bind("", "domain_" + countDomains, "", "", false));
+        tocreate === undefined ? addSite("domain_" + countDomains, "", "") : false;
+        returnId = `domain_` + countDomains;
       }
     } catch (error) {
       alert("Your domain is not a valid URL, please try again");
       addDomain(url);
     }
   }
+
+  return returnId;
 };
 
 /**
  * Update features checkbox in option list view
  */
 const toggleFeature = (featureStorage, featureId, defautlState = true) => {
-  console.log("Storage " + featureId + " -> ", featureStorage);
+  //console.log("Storage " + featureId + " -> ", featureStorage);
   if (featureStorage != undefined) {
     featureStorage ? (document.querySelector(featureId).checked = true) : false;
   } else {
@@ -133,10 +215,10 @@ document.body.onload = function () {
     document.querySelector("#settings").click();
   }
 
-  /**
-   * Header animation
-   */
   if (!fromLaunchpad) {
+    /**
+     * Header animation
+     */
     window.addEventListener("scroll", function () {
       if (!ticking) {
         window.requestAnimationFrame(function () {
@@ -202,19 +284,56 @@ document.querySelector("#feature_darkmode").onclick = function () {
 };
 
 /**
- * Click to add/remove domains and sites
+ * Advanced settings panel (sites)
  */
 document.querySelector("#settings").onclick = function () {
   document.querySelector("#main").setAttribute("style", "display:none");
   document.querySelector("#domains").setAttribute("style", "display:block");
   document.querySelector("#save").setAttribute("style", "display:none");
+  document.querySelector(".addDomain").addEventListener("click", addDomain.bind("", "", undefined));
+  document.querySelector(".importSites").addEventListener("change", uploadJson);
+  document.querySelector(".importSitesVisible").addEventListener("click", chooseJson);
+  //Generating list of sites
+  chrome.storage.sync.get(["site_manager"], (storage) => {
+    parseJsonSites(storage.site_manager);
+  });
+
+  setTimeout(function () {
+    //Variables
+    let url = new URL(window.location.href);
+    let newSite = url.searchParams.get("site");
+    let backUrl = url.searchParams.get("url");
+    let nameSite = url.searchParams.get("name");
+    let isDomainExists = false;
+
+    if (newSite) {
+      let domain = new URL(backUrl).origin;
+      //Find the domain in DOM
+      document.querySelectorAll(".domain").forEach((div) => {
+        if (div.dataset.domain == domain) {
+          addSite(div.id, newSite, "", true, nameSite);
+          isDomainExists = true;
+        }
+      });
+      //If does not exists, add it
+      if (!isDomainExists) {
+        let domainId = addDomain("", domain);
+        addSite(domainId, newSite, "", true);
+      }
+      //Add new site and highlight in green the missing part
+    }
+  }, 500);
 };
 
 /**
  * Click to go back to main screen
  */
-document.querySelector("#back").onclick = function () {
+document.querySelector("#back").onclick = function (event) {
   event.preventDefault();
+
+  document.querySelectorAll(".domain").forEach((div) => {
+    div.remove();
+  });
 
   var url = new URL(window.location.href);
   var configureDomains = url.searchParams.get("configure_domains");
@@ -231,147 +350,127 @@ document.querySelector("#back").onclick = function () {
 };
 
 /**
- * Generate list when editing sites
+ * Click to exports domains/sites
  */
-chrome.storage.sync.get(["site_manager"], function (result) {
-  //Add button and heading
-  // document.querySelector("#sitesList").insertAdjacentHTML("afterbegin", `<div id="addSite">Add sites</div>`);
-  document.querySelector("#sitesList").insertAdjacentHTML("afterend", `<div class="addDomain">Add a new domain</div>`);
-  document.querySelector(".addDomain").addEventListener("click", addDomain.bind("", ""));
+document.querySelector(".exportSites").onclick = function (event) {
+  event.preventDefault();
 
-  // document.querySelector("#addSite").addEventListener("click", addSite.bind("", "", ""));
-  if (result.site_manager != undefined) {
-    //Loop to generate sites
-    for (let [path, cd] of Object.entries(result.site_manager)) {
-      addSite(path, cd);
-    }
+  var json = {};
+  var count = 0;
+  var error = false;
+  var domain, key, value;
+
+  document.querySelectorAll(".domain").forEach(function (url) {
+    url.querySelectorAll(".site").forEach(function (site) {
+      //variables
+      domain = url.dataset.domain;
+      key = site.querySelector("input[name='key']").value;
+      value = site.querySelector("input[name='value']").value;
+      error = false;
+      //Sanity check
+      if (key == "") {
+        site.querySelector("input[name='key']").setAttribute("style", "border-color:red");
+        site.querySelector("input[name='value']").setAttribute("style", "border-color:#ccc");
+        error = true;
+      } else if (value == "") {
+        site.querySelector("input[name='key']").setAttribute("style", "border-color:#ccc");
+        site.querySelector("input[name='value']").setAttribute("style", "border-color:red");
+        error = true;
+      } else {
+        try {
+          value = new URL(value).href;
+          //Build object for this domain
+          !json[domain] ? (json[domain] = {}) : false;
+          //Add site to this domain
+          json[domain][count] = { [key]: value };
+          count++;
+          site.querySelector("input[name='key']").setAttribute("style", "border-color:#ccc");
+          site.querySelector("input[name='value']").setAttribute("style", "border-color:#ccc");
+        } catch (e) {
+          site.querySelector("input[name='value']").setAttribute("style", "border-color:red");
+          console.warn(value + " is not a valid URL");
+          error = true;
+        }
+      }
+    });
+  });
+
+  //formData = JSON.stringify(formData);
+  if (error) {
+    alert("You have some errors...");
+  } else {
+    console.log(JSON.stringify(json));
+    let result = JSON.stringify(json, null, 2);
+    let today = new Date().toISOString().slice(0, 10);
+    // Save as file
+    chrome.downloads.download({
+      url: "data:application/json;base64," + btoa(result),
+      filename: "sitecore_author_toolbox_sites_" + today + ".json",
+    });
   }
-});
-
+};
 /**
  * Click to save domains/sites
  */
 document.querySelector("#set_domains").onclick = function (event) {
   event.preventDefault();
 
-  //Variables
-  // var count = 1;
-  // var domainId;
-  // var currentCM, currentCD;
-  // var jsonString = "{";
-  // var error = false;
-  // var empty = true;
+  var json = {};
+  var count = 0;
+  var error = false;
+  var domain, key, value;
 
-  var formData = {};
-
-  //Sites
-  let sites = document.querySelectorAll("form#domains #sitesList input");
-
-  for (var i = 0; i < sites.length; i++) {
-    if (i % 2 == 0) {
-      if (sites[i].value) {
-        formData[sites[i].value] = sites[i + 1].value;
+  document.querySelectorAll(".domain").forEach(function (url) {
+    url.querySelectorAll(".site").forEach(function (site) {
+      //variables
+      domain = url.dataset.domain;
+      key = site.querySelector("input[name='key']").value;
+      value = site.querySelector("input[name='value']").value;
+      //Sanity check
+      if (key == "") {
+        site.querySelector("input[name='key']").setAttribute("style", "border-color:red");
+        site.querySelector("input[name='value']").setAttribute("style", "border-color:#ccc");
+        error = true;
+      } else if (value == "") {
+        site.querySelector("input[name='key']").setAttribute("style", "border-color:#ccc");
+        site.querySelector("input[name='value']").setAttribute("style", "border-color:red");
+        error = true;
+      } else {
+        try {
+          value = new URL(value).href;
+          //Build object for this domain
+          !json[domain] ? (json[domain] = {}) : false;
+          //Add site to this domain
+          json[domain][count] = { [key]: value };
+          count++;
+          site.querySelector("input[name='key']").setAttribute("style", "border-color:#ccc");
+          site.querySelector("input[name='value']").setAttribute("style", "border-color:#ccc");
+        } catch (e) {
+          site.querySelector("input[name='value']").setAttribute("style", "border-color:red");
+          console.warn(value + " is not a valid URL");
+          error = true;
+        }
       }
+    });
+  });
+
+  chrome.storage.sync.set({ site_manager: json }, function () {
+    if (error) {
+      alert("You have some errors...");
+      document.querySelector("#set_domains").innerHTML = "Save your sites";
+    } else {
+      document.querySelector("#sitesList").setAttribute("style", "opacity:0.3");
+      document.querySelector("#set_domains").innerHTML = "Saving...";
+      setTimeout(function () {
+        document.querySelector("#set_domains").innerHTML = "OK!";
+      }, 1000);
+      setTimeout(function () {
+        document.querySelector("#sitesList").setAttribute("style", "opacity:1");
+        document.querySelector("#set_domains").innerHTML = "Save your sites";
+        // location.reload();
+      }, 1500);
     }
-  }
-  //formData = JSON.stringify(formData);
-  console.log(formData);
-
-  // //Parse form
-  // var domains = document.querySelectorAll("form#domains #domainsList input");
-
-  // for (var domain of domains) {
-  //   //Variable
-  //   var url = "";
-
-  //   //Reset CSS
-  //   domain.setAttribute("style", "");
-
-  //   //Domain
-  //   domainId = parseInt(domain.name.split("[")[1].replace("]", ""));
-  //   currentCM = document.querySelector("input[name='cm[" + domainId + "]']");
-  //   currentCD = document.querySelector("input[name='cd[" + domainId + "]']");
-
-  //   if (count % 2 == 1) {
-  //     //CM
-  //     if (currentCM.value != "" && currentCD.value == "") {
-  //       currentCD.setAttribute("style", "border-color:red");
-  //       alert("CD #" + parseInt(domainId + 1) + " is missing");
-  //       error = true;
-  //     } else if (domain.value != "") {
-  //       empty = false;
-  //       try {
-  //         url = new URL(domain.value);
-  //       } catch (e) {
-  //         currentCM.setAttribute("style", "border-color:red");
-  //         alert("CM #" + parseInt(domainId + 1) + " is not a valid URL");
-  //         error = true;
-  //       }
-  //     }
-
-  //     if (url.origin != undefined) {
-  //       currentCM.value = url.origin;
-  //     }
-  //   } else {
-  //     //CD
-  //     if (currentCM.value == "" && currentCD.value != "") {
-  //       alert("CM #" + parseInt(domainId + 1) + " is missing");
-  //       error = true;
-  //     } else if (domain.value != "") {
-  //       empty = false;
-  //       try {
-  //         url = new URL(domain.value);
-  //       } catch (e) {
-  //         currentCD.setAttribute("style", "border-color:red");
-  //         alert("CD #" + parseInt(domainId + 1) + " is not a valid URL");
-  //         error = true;
-  //       }
-  //     }
-
-  //     if (url.origin != undefined) {
-  //       currentCD.value = url.origin;
-  //       let cmUrl = new URL(currentCM.value);
-  //       let cdUrl = new URL(currentCD.value);
-
-  //       if (cmUrl.protocol == "https:" && cdUrl.protocol == "http:") {
-  //         alert("Warning!\nLive status might not work as expected. You will probably face a mixed-content issue as your CM and CD are using a different protocol (https vs http) \n\n" + cmUrl.origin + "\n" + cdUrl.origin);
-  //         error = true;
-  //       } else {
-  //         //Add domain to JsonString
-  //         // console.log(parseInt(domainId+1) + " ---> " +url.origin);
-  //         jsonString += '"' + currentCM.value + '":"' + currentCD.value + '",';
-  //       }
-  //     }
-  //   }
-  //   count++;
-  // }
-  //End for
-
-  //Create Json object for storage
-  // jsonString += "}";
-  // jsonString = jsonString.replace(",}", "}").replace("{}", undefined);
-  // //console.log(error);
-
-  // if (jsonString != "undefined") {
-  //   var json = JSON.parse(jsonString);
-  //   console.log(json);
-  // }
-
-  // if (empty == true) {
-  //   json = "";
-  // }
-
-  // if (error == false) {
-  //   chrome.storage.sync.set({ domain_manager: json }, function () {
-  //     document.querySelector("#set_domains").innerHTML = "Saving...";
-  //     setTimeout(function () {
-  //       document.querySelector("#set_domains").innerHTML = "OK!";
-  //     }, 1000);
-  //     setTimeout(function () {
-  //       document.querySelector("#set_domains").innerHTML = "Save your sites";
-  //     }, 1500);
-  //   });
-  // }
+  });
 };
 
 /**

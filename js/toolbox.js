@@ -244,9 +244,9 @@ chrome.storage.sync.get((storage) => {
       log("**** Insert Page ****", "orange");
     } else {
       log("**** Page in EE ****", "orange");
-      addToolbarEditCE();
-      addToolbarTooltip();
-      addPlaceholderTooltip();
+      addToolbarEditCE(storage);
+      addToolbarTooltip(storage);
+      addPlaceholderTooltip(storage);
       addHideRibbonButton(storage);
       resetExperienceEditor(storage);
     }

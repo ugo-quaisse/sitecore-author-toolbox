@@ -1,12 +1,6 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-unused-vars */
-/* eslint-disable newline-per-chained-call */
-/* eslint-disable no-console */
+/* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
 /* eslint-disable object-property-newline */
-/* eslint-disable space-before-function-paren */
-/* eslint-disable array-element-newline */
-/* eslint-disable require-jsdoc */
-/* eslint-disable radix */
+/* eslint-disable newline-per-chained-call */
 /* eslint-disable no-alert */
 /*
  * Sitecore Author Toolbox
@@ -16,177 +10,11 @@
  * ugo.quaisse@gmail.com
  */
 
-/* eslint no-console: ["error", { allow: ["warn", "error", "log", "info"] }] */
-
 /**
- * Banner animation
+ * Load modules
  */
-// eslint-disable-next-line func-style
-function animateHeader(scroll_pos) {
-  if (scroll_pos >= 90) {
-    document.querySelector("#banner").classList.add("animate");
-  } else {
-    document.querySelector("#banner").classList.remove("animate");
-  }
-}
-
-/**
- * Prepend input fields to add a site
- */
-const deleteSite = (site) => {
-  if (confirm("Are you sure you want to delete this site?") == true) {
-    document.querySelector("#" + site).remove();
-  }
-};
-
-const onReaderLoad = (event) => {
-  console.log(event.target.result);
-  var json = JSON.parse(event.target.result);
-  console.log(json);
-  parseJsonSites(json);
-};
-
-/**
- * Upload a json file
- */
-const uploadJson = (event) => {
-  if (document.querySelector(".importSites").files[0].type != "application/json") {
-    alert("Your file is not a valid Json format");
-  } else {
-    var reader = new FileReader();
-    reader.onload = onReaderLoad;
-    reader.readAsText(event.target.files[0]);
-    setTimeout(() => {
-      document.querySelector("#set_domains").click();
-    }, 200);
-  }
-};
-
-/**
- * Select file
- */
-const chooseJson = () => {
-  document.querySelector(".importSites").click();
-};
-
-/**
- * Parse a json and create html
- */
-const parseJsonSites = (json) => {
-  console.log(json);
-  for (var [domain, values] of Object.entries(json)) {
-    let domainId = addDomain("", domain, true);
-    for (var [id, site] of Object.entries(values)) {
-      addSite(domainId, Object.entries(site)[0][0], Object.entries(site)[0][1], false, "", true);
-    }
-  }
-};
-
-/**
- * Prepend input fields to add a site
- */
-// eslint-disable-next-line max-params
-const addSite = (domain, path, cd, autoadd = false, name = "", isImport = "") => {
-  let isExisting = false;
-
-  //Check if sites already exists
-  document.querySelectorAll("#" + domain + " input[name='key']").forEach((elem) => {
-    if (path == elem.value) {
-      !isImport ? alert(`This site "` + elem.value + `"already exist.`) : false;
-      isExisting = true;
-      console.log("Site already exists", elem.value);
-    }
-  });
-
-  if (isExisting == false) {
-    let countSites = document.querySelectorAll(".site").length + 1;
-    //prettier-ignore
-    let html = `
-  <div class="site" id="site_` + countSites + `">
-  <div class="cm_url">
-    <input name="key" type="text" placeholder="Sitecore path to /home" value="${decodeURI(path)}">
-  </div>
-  <div id="arrow">&nbsp;</div>
-  <div class="cd_url">
-    <input name="value" type="url" placeholder="CD URL" pattern="https?://.*" value="${decodeURI(cd)}">
-  </div> 
-  <div class="delete deleteSite_` + countSites + `" >&nbsp;</div>
-  </div>`;
-    document.querySelector("#" + domain + " > .addSite").insertAdjacentHTML("beforebegin", html);
-    //style
-    autoadd ? document.querySelector("#site_" + countSites + " input[name='value']").setAttribute("style", "border-color:#6fdd60") : false;
-    //Prompt for URL
-    autoadd ? (document.querySelector("#site_" + countSites + " input[name='value']").value = prompt("Please enter CD/live URL of your " + name + " site")) : false;
-    //Click event
-    document.querySelector(".deleteSite_" + countSites).addEventListener("click", deleteSite.bind("", "site_" + countSites, "", ""));
-  }
-};
-
-/**
- * Prepend input fields to add a domain (deprecated)
- */
-// eslint-disable-next-line consistent-return
-const addDomain = (text = "", tocreate = undefined, isImport = false) => {
-  let isExisting = false;
-  let url;
-  let returnId;
-
-  if (tocreate === undefined) {
-    url = prompt("Please enter a domain URL", text);
-  } else {
-    url = tocreate;
-  }
-
-  if (url !== null) {
-    try {
-      //Verify if URL is well formatted
-      let newUrl = new URL(url);
-      //Get number of domains
-      let countDomains = document.querySelectorAll(".domain").length;
-      //Check if domains already exists
-      document.querySelectorAll(".domain").forEach((elem) => {
-        if (newUrl.origin == elem.dataset.domain) {
-          !isImport ? alert("This domain already exist.") : false;
-          returnId = elem.id;
-          isExisting = true;
-          console.log("Domain already exists", returnId);
-        }
-      });
-
-      if (isExisting == false) {
-        countDomains++;
-        //prettier-ignore
-        let html = `
-        <div class="domain" id="domain_` + countDomains + `" data-domain="` + newUrl.origin + `">
-          <h3>` + countDomains + ` - ` + newUrl.origin + `</h3>
-          <div class="addSite addSite_` + countDomains + `">ADD A SITE</div>
-        </div>`;
-        document.querySelector("#sitesList").insertAdjacentHTML("beforeend", html);
-        //Click event
-        document.querySelector(".addSite_" + countDomains).addEventListener("click", addSite.bind("", "domain_" + countDomains, "", "", false));
-        tocreate === undefined ? addSite("domain_" + countDomains, "", "") : false;
-        returnId = `domain_` + countDomains;
-      }
-    } catch (error) {
-      alert("Your domain is not a valid URL, please try again");
-      addDomain(url);
-    }
-  }
-
-  return returnId;
-};
-
-/**
- * Update features checkbox in option list view
- */
-const toggleFeature = (featureStorage, featureId, defautlState = true) => {
-  //console.log("Storage " + featureId + " -> ", featureStorage);
-  if (featureStorage != undefined) {
-    featureStorage ? (document.querySelector(featureId).checked = true) : false;
-  } else {
-    document.querySelector(featureId).checked = defautlState;
-  }
-};
+import { animateHeader, toggleFeature, chooseJson, addSite, addDomain } from "./modules/dom.js";
+import { uploadJson, parseJsonSites } from "./modules/load.js";
 
 /**
  * Main execution
@@ -298,29 +126,13 @@ document.querySelector("#settings").onclick = function () {
     parseJsonSites(storage.site_manager);
   });
 
+  //If a site is passed into the URL
   setTimeout(function () {
-    //Variables
     let url = new URL(window.location.href);
-    let newSite = url.searchParams.get("site");
-    let backUrl = url.searchParams.get("url");
-    let nameSite = url.searchParams.get("name");
-    let isDomainExists = false;
-
-    if (newSite) {
-      let domain = new URL(backUrl).origin;
-      //Find the domain in DOM
-      document.querySelectorAll(".domain").forEach((div) => {
-        if (div.dataset.domain == domain) {
-          addSite(div.id, newSite, "", true, nameSite);
-          isDomainExists = true;
-        }
-      });
-      //If does not exists, add it
-      if (!isDomainExists) {
-        let domainId = addDomain("", domain);
-        addSite(domainId, newSite, "", true);
-      }
-      //Add new site and highlight in green the missing part
+    if (url.searchParams.get("site")) {
+      let domain = new URL(url.searchParams.get("url")).origin;
+      let domainId = addDomain("", domain, true);
+      addSite(domainId, url.searchParams.get("site"), "", true, url.searchParams.get("name"));
     }
   }, 500);
 };

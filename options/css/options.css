@@ -156,10 +156,9 @@ label:hover {
 }
 
 .domain {
-  border: 1px dashed rgba(0, 0, 0, 0.2);
-  padding: 10px;
-  border-radius: 3px;
-  margin-top: 10px;
+  border-top: 2px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 15px;
+  margin-top: 15px;
 }
 
 #back {
@@ -243,12 +242,26 @@ label:hover {
   font-size: 25px;
   line-height: 30px;
   margin: 0px;
+  font-weight: 400;
 }
 #video {
   display: none;
   padding: 20px 0px 0px;
   max-width: 550px;
   margin: auto;
+}
+.domain h3 {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  color: #4693f8;
+  font-size: 23px;
+  text-align: left;
+}
+.domain h3 > i {
+  /* color: #333; */
+  font-weight: 600;
+  font-style: normal;
+  font-size: 15px;
 }
 h4 {
   margin: 20px;
@@ -309,7 +322,7 @@ input {
   padding: 0px 25px;
   margin: auto;
   text-align: left;
-  max-width: 550px;
+  max-width: 800px;
   line-height: 25px;
   display: none;
 }
@@ -325,34 +338,56 @@ input {
   float: left;
   text-align: center;
   width: 8%;
-  height: 35px;
+  height: 71px;
   background: transparent url("chrome-extension://__MSG_@@extension_id__/images/navigate_right.png") no-repeat 50% center;
   margin-bottom: 15px;
+}
+
+#domains .edit {
+  padding: 8px;
+  margin-left: 15px;
+  display: inline;
+  background: transparent url("chrome-extension://__MSG_@@extension_id__/images/ce.png") no-repeat 50% center;
+  cursor: pointer;
 }
 
 #domains .delete {
   float: left;
   text-align: center;
   width: 8%;
-  height: 35px;
+  height: 71px;
   background: transparent url("chrome-extension://__MSG_@@extension_id__/images/exit.png") no-repeat 50% center;
   margin-bottom: 15px;
   cursor: pointer;
 }
 
+.cm_url {
+  width: 50%;
+  float: left;
+  margin-bottom: 15px;
+}
+.cm_url > label {
+  display: block;
+}
+.cm_url > input {
+  display: block;
+  width: -webkit-fill-available;
+  font-size: 14px;
+  padding: 7px;
+  border-radius: 3px;
+  border: 2px solid #ccc;
+  margin: 0px !important;
+}
+
 .cd_url {
-  width: 42%;
+  width: 34%;
   float: left;
   margin-bottom: 15px;
 }
 .cd_url > label {
   display: block;
 }
-.cd_url > label > b {
-  color: #dc291e;
-  font-weight: bold;
-  display: none;
-}
+
 .cd_url > input {
   display: block;
   width: -webkit-fill-available;
@@ -363,27 +398,33 @@ input {
   margin: 0px !important;
 }
 
-.cm_url {
-  width: 42%;
-  float: left;
-  margin-bottom: 15px;
+input[name="key"],
+input[name="value"] {
+  /* background-color: transparent; */
+  border: 0px;
+  border-bottom: 1px solid #ccc;
+  color: #666;
+  text-transform: lowercase;
+  outline: none;
+  transition: border ease-in-out 0.1s;
 }
-.cm_url > label {
-  display: block;
+input[name="key"]:focus,
+input[name="value"]:focus {
+  color: #000;
+  border-color: #4793f8;
 }
-.cm_url > label > b {
-  color: #dc291e;
-  font-weight: bold;
-  display: none;
+
+input[name="key"]::placeholder,
+input[name="value"]::placeholder {
+  color: #ccc;
 }
-.cm_url > input {
-  display: block;
-  width: -webkit-fill-available;
-  font-size: 14px;
-  padding: 7px;
-  border-radius: 3px;
-  border: 2px solid #ccc;
-  margin: 0px !important;
+
+.site label {
+  font-family: "Open Sans", sans-serif;
+  text-align: left;
+  color: #9e9e9e;
+  font-size: 15px;
+  font-weight: 100;
 }
 
 .cm_cd {

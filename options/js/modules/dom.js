@@ -21,7 +21,8 @@ const animateHeader = (scroll_pos) => {
  * Track changes
  */
 const trackChanges = (isImport = true) => {
-  !isImport ? (document.querySelector("#set_domains").innerHTML = document.querySelector("#set_domains").innerHTML + "*") : false;
+  !isImport ? (document.querySelector(".save_sites").innerHTML = document.querySelector(".save_sites").innerHTML.replace("*", "") + "*") : false;
+  !isImport ? (document.querySelector(".trackChanges").value = "1") : false;
 };
 
 /**
@@ -87,10 +88,10 @@ const addDomain = (text = "", tocreate = undefined, isImport = false) => {
         countDomains++;
         //prettier-ignore
         let html = `
-        <div class="domain" id="domain_${countDomains}" data-domain="${newUrl.origin}">
-          <h3><i>${countDomains}.</i> <span class="domainDisplay">${newUrl.origin}</span> <div class="edit editDomain_${countDomains}"></div></h3> 
-          <div class="addSite addSite_${countDomains}">ADD A SITE</div>
-        </div>`;
+        <legend><span class="domainDisplay">${newUrl.origin}</span> <div class="edit editDomain_${countDomains}"></div></legend>
+        <fieldset class="domain" id="domain_${countDomains}" data-domain="${newUrl.origin}">
+        </fieldset>
+        <div class="addSite addSite_${countDomains}">ADD A SITE +</div>`;
         document.querySelector("#sitesList").insertAdjacentHTML("beforeend", html);
         trackChanges(isImport);
         //Click events
@@ -162,14 +163,14 @@ const addSite = (domain, path, cd, autoadd = false, name = "", isImport = "") =>
             <label for="sitePath">Sitecore site path</label>
             <input id="sitePath" name="key" type="text" placeholder="e.g /sitecore/content/home" value="${decodeURI(path)}">
         </div>
-        <div id="arrow">&nbsp;</div>
+        <div class="arrow">➝</div>
         <div class="cd_url">
             <label for="siteUrl">Site URL</label>
             <input id="siteUrl" name="value" type="url" placeholder="e.g https://..." pattern="https?://.*" value="${decodeURI(cd)}"> 
         </div> 
-        <div class="delete deleteSite_${countSites}" >&nbsp;</div>
+        <div class="delete deleteSite_${countSites}" >❌</div>
     </div>`;
-    document.querySelector("#" + domain + " > .addSite").insertAdjacentHTML("beforebegin", html);
+    document.querySelector("#" + domain).insertAdjacentHTML("afterbegin", html);
     trackChanges(isImport);
     //style
     autoadd ? document.querySelector("#site_" + countSites + " input[name='value']").setAttribute("style", "border-color:#6fdd60") : false;

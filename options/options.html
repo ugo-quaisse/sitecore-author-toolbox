@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="light">
+<html class="light" lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -13,21 +13,22 @@
         <!-- Header -->
         <header class="sc-globalHeader" id="scHeader">
             <a href="" id="scBack">
-                <img class="sc-global-logo" src="../../images/global_logo.png" />
+                <img class="sc-global-logo" src="../../images/global_logo.png" alt="Sitecore logo"/>
             </a>
         </header>
+        <!-- Banner -->
         <div id="banner">
             <h3 id="bannerTitle">Sitecore Author Toolbox</h3>
-            <img src="../../images/icon_round.png">
+            <img src="../../images/icon_round.png" alt="Sitecore Author Toolbox logo">
         </div>
         <div id="intro">
             <h2>Hello, I am<br />Sitecore Author Toolbox</h2>
         </div>
+
         <!-- Main panel-->
         <div id="main">
-            <h4>List of features:</h4>
+            <legend>Appearance</legend>
             <fieldset>
-                <legend>Appearance</legend>
                 <!-- Dark mode -->
                 <div class="scFeature"> 
                     <input id="feature_darkmode" name="feature_darkmode" class="scCheckbox" type="checkbox">
@@ -47,8 +48,9 @@
                     Experimental UI
                 </div>  
             </fieldset>
+            <legend>General</legend>
             <fieldset>
-                <legend>General</legend>
+                
                 <!-- Notifications (publish & rebuild) -->
                 <div class="scFeature">
                     <input id="feature_notification" name="feature_notification" class="scCheckbox" type="checkbox">
@@ -68,14 +70,14 @@
                     Workbox badge
                 </div>
             </fieldset>
-            
+            <legend>Content Editor</legend>
             <fieldset>
-                <legend>Content Editor</legend>
+                
                 <!-- Live URL bar  -->
                 <div class="scFeature">
                     <input id="feature_urls" name="feature_urls" class="scCheckbox" type="checkbox">
                     <label for="feature_urls" class="scLabel"></label>
-                    Live URL bar <a id="settings">Configure your sites &raquo;</a>
+                    Publish URL <a class="sitesSettings" id="settings">Configure your sites &raquo;</a>
                 </div>
                 <!-- Live URL publication status -->
                 <div class="scFeature">
@@ -87,7 +89,7 @@
                 <div class="scFeature">
                     <input id="feature_errors" name="feature_errors" class="scCheckbox" type="checkbox">
                     <label for="feature_errors" class="scLabel"></label>
-                    Grouped errors bar
+                    Grouped errors
                 </div>
                 <!-- Language and versions flags -->
                 <div class="scFeature">
@@ -162,8 +164,9 @@
                     Other enhancements
                 </div>
             </fieldset>
+            <legend>Experience Editor</legend>
             <fieldset>
-                <legend>Experience Editor</legend>
+                
                 <!-- Right click to open in EE -->
                 <div class="scFeature">
                     <input id="feature_contextmenu" name="feature_contextmenu" class="scCheckbox" type="checkbox">
@@ -177,8 +180,9 @@
                     Other enhancements
                 </div>
             </fieldset>
+            <legend>Experience Profile</legend>
             <fieldset>
-                <legend>Experience Profile</legend>
+                
                 <!-- Right click to open in EE -->
                 <div class="scFeature">
                     <input id="feature_gravatarimage" name="feature_gravatarimage" class="scCheckbox" type="checkbox">
@@ -186,8 +190,9 @@
                     Gravatar image
                 </div>
             </fieldset>
+            <legend>Experimental features</legend>
             <fieldset>
-                <legend>Experimental features</legend>
+                
                 <!-- <sup><a href="https://uquaisse.io/extension-update/" target="_blank">NEW</a></sup> -->
                 <!-- Contrasted icons for Experimental UI -->
                 <div class="scFeature">
@@ -196,8 +201,9 @@
                     Contrasted icons for Experimental UI
                 </div>
             </fieldset>
+            <legend>Launchpad</legend>
             <fieldset>
-                <legend>Launchpad</legend>
+                
                 <!-- Launchpad extension icon  -->
                 <div class="scFeature">
                     <input id="feature_launchpad" name="feature_launchpad" class="scCheckbox" type="checkbox">
@@ -211,33 +217,29 @@
                     Tiles display
                 </div>
             </fieldset>
+            <div id="save">
+                <button class="save_settings">Save and reload Sitecore</button>
+            </div>
         </div>
         <!-- Panel domains -->
-        <form id="domains">
-            <h4>Your Sitecore sites:</h4>
+        <div id="domains">
             <p><a href="https://uquaisse.io/sat_domains" target="_blank">How to configure your sites?</a></p>
             <p>You can use <code>{lang}</code> token if you need to embed language somewhere in your URL.</p>
-            <div id="sitesList">
-                <!-- Call JS to generate list -->
-                <input class="importSites" type="file" accept=".json" value="IMPORT (.JSON)" style="display: none;"/>
-                <input class="importSitesVisible" type="button" value="IMPORT (.JSON)"/>
-                <input class="exportSites" type="button" value="EXPORT (.JSON)" />
-                <div class="addDomain">ADD A DOMAIN</div>
-                
-            </div>
-            
-            <div id="domainsList">
-                <!-- Call JS to generate list -->
+            <div id="sitesList">     
+                <input class="importSites" type="file" accept=".json" style="display: none;"/>
+                <input class="importSitesVisible" type="button" value="⤒ IMPORT (.JSON)"/>
+                <input class="exportSites" type="button" value="⤓ EXPORT (.JSON)" />
+                <div class="addDomain">ADD A DOMAIN +</div>
+                <!-- List of sites goes here -->
             </div>
             <div id="save_domains">
-                <button id="back">&laquo; Back</button>
-                <button id="set_domains">Save your sites</button>
+                <button class="back">&laquo; Back</button>
+                <button class="save_sites">Save your sites</button>
             </div>
+        </div>
     </div>
-    <!-- Main saving action -->
-    <div id="save">
-        <button id="set">Save and reload Sitecore</button>
-    </div>
+
+    
     <!-- Footer-->
     <div id="footer">
         <p>Crafted with ❤️ by <b>Ugo Quaisse</b> (Paris, France)<br>
@@ -246,8 +248,7 @@
         <p>Version <span id="scVersion"></span> - Post a review <a href="https://chrome.google.com/webstore/detail/mckfcmcdbgkgffdknpkaihjigmcnnbco/publish-accepted?authuser=0&hl=en" target="_blank">here</a>.<br />
         👾 You can report a bug by clicking <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/issues/new?assignees=&labels=&template=bug_report.md&title=" target="_blank">here</a></p>
     </div>
-    </div>
+    <input type="hidden" class="trackChanges" value="0"/>
     <script type="module" src="js/options.js"></script>
 </body>
-
 </html>

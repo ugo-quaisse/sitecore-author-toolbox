@@ -11,7 +11,7 @@ export { parseJsonSites, onReaderLoad, uploadJson };
  * Parse a json and create html
  */
 const parseJsonSites = (json) => {
-  console.log(json);
+  //   console.log(json);
   for (var [domain, values] of Object.entries(json)) {
     let domainId = addDomain("", domain, true);
     for (var [id, site] of Object.entries(values)) {
@@ -41,7 +41,7 @@ const uploadJson = (event) => {
     reader.onload = onReaderLoad;
     reader.readAsText(event.target.files[0]);
     setTimeout(() => {
-      document.querySelector("#set_domains").click();
+      document.querySelector(".save_sites").click();
     }, 200);
   }
 };

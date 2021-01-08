@@ -5,41 +5,42 @@ body {
   font-family: arial, verdana;
   margin: 0px;
   padding: 0px;
-  font-size: 13px;
+  font-size: 12px;
+  font-weight: 600;
   height: 100%;
-  /*transition: all .1s ease-in-out;*/
-}
-html.light {
-  color: #000000;
+  -webkit-font-smoothing: antialiased;
+  color: #131313;
+  font-family: "Open Sans", sans-serif;
   background-color: #f0f0f0;
 }
-html.dark {
-  color: #ffffff;
-  background-color: #222222;
+legend {
+  font-size: 15px;
+  color: #474747;
+  padding: 2px 10px;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-align: left;
+  font-family: "Open Sans", sans-serif;
+  margin-top: 5px;
+}
+fieldset {
+  border: 1px solid #f0f0f0;
+  border-bottom: none;
+  background-color: #fff;
+  border-radius: 0px;
+  padding: 0px;
 }
 
-html.dark body {
-  color: #fff;
+.scFeature {
+  padding: 10px 15px 10px 15px;
+  border-bottom: 1px solid #f0f0f0;
+  font-weight: normal;
+  line-height: 17px;
 }
-
-html.light body > div > div > fieldset {
-  border: 1px solid rgba(56, 83, 97, 0.2);
-  border-radius: 1px;
-}
-html.dark body > div > div > fieldset {
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1px;
-}
-html.light body > div > div > fieldset > legend {
-  color: #000000;
-  font-weight: bold;
-}
-html.dark body > div > div > fieldset > legend {
-  color: #ffffff;
-  font-weight: bold;
-}
-html.dark body > div > div > fieldset > label {
-  color: #ccc;
+.site {
+  padding: 10px 15px 10px 15px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flow-root;
 }
 a {
   color: #dc291e;
@@ -47,9 +48,7 @@ a {
 input[type="checkbox"] {
   cursor: pointer;
 }
-a {
-  color: #dc291e;
-}
+
 label {
   display: inline-block;
   margin-right: 0.5em;
@@ -78,24 +77,15 @@ label:hover {
   text-align: center;
   font-family: "Open Sans", sans-serif;
 }
-#settings {
-  background-color: #dc291e;
-  color: #fff;
-  border-radius: 10px;
-  padding: 2px 6px;
-  cursor: pointer;
-}
-#settings:hover {
-  background-color: #474747;
-}
 #sitesList {
   text-align: center;
 }
-#back,
-#set_domains,
-#set,
+.back,
+.save_sites,
+.save_settings,
 .addSite,
 .addDomain,
+.sitesSettings,
 .importSites,
 .importSitesVisible,
 .exportSites {
@@ -117,14 +107,26 @@ label:hover {
   box-shadow: none;
 }
 
+.addSite,
+.addDomain,
+.sitesSettings,
+.importSites,
+.importSitesVisible,
+.exportSites {
+  padding: 12px 15px;
+  margin: 5px;
+  width: fit-content;
+  background: #f7991f;
+  color: #f2fff0;
+  font-size: 12px;
+}
+
 .addSite {
   clear: both;
   padding: 5px 15px;
-  margin: 5px auto;
+  margin: 15px auto;
   display: block;
-  width: fit-content;
   background: #4693f8;
-  color: #f2fff0;
 }
 .addDomain {
   clear: both;
@@ -133,38 +135,29 @@ label:hover {
   display: block;
   width: fit-content;
   background: #6edc60;
-  color: #f2fff0;
+}
+.sitesSettings {
+  padding: 0px 5px;
+  margin: 0px;
+  font-size: 10px;
+  background: #f7991f !important;
 }
 
-.importSites,
-.importSitesVisible,
-.exportSites {
-  padding: 10px 15px;
-  margin: 5px;
-  width: fit-content;
-  background: #f7991f;
-  color: #f2fff0;
-}
-
-#set_domains:hover,
+.sitesSettings:hover,
+.save_sites:hover,
 .addSite:hover,
 .addDomain:hover,
-#set:hover {
+.save_settings:hover,
+.importSitesVisible:hover,
+.exportSites:hover {
   background: #474747;
   color: rgb(255, 255, 255);
   border: 0px;
 }
-
-.domain {
-  border-top: 2px solid rgba(0, 0, 0, 0.2);
-  padding-bottom: 15px;
-  margin-top: 15px;
-}
-
-#back {
+.back {
   background: #666666;
 }
-#back:hover {
+.back:hover {
   background: #dc291e;
 }
 #banner {
@@ -198,8 +191,9 @@ label:hover {
   }
 }
 @media screen and (max-width: 450px) {
-  #back {
-    margin: 0px 0px 20px 0px;
+  .back {
+    margin: 0px 0px 0px 0px;
+    padding: 12px 20px;
   }
 }
 #banner > img {
@@ -216,6 +210,7 @@ label:hover {
   font-size: 24px;
   transition: all 0.1s ease-in-out;
   opacity: 0;
+  font-weight: 400;
 }
 #banner.animate {
   height: 40px;
@@ -239,10 +234,10 @@ label:hover {
   font-family: "Open Sans", sans-serif;
 }
 #intro > h2 {
-  font-size: 25px;
-  line-height: 30px;
-  margin: 0px;
-  font-weight: 400;
+  font-size: 28px;
+  line-height: 35px;
+  margin: 5px 0px 25px;
+  font-weight: 300;
 }
 #video {
   display: none;
@@ -264,11 +259,10 @@ label:hover {
   font-size: 15px;
 }
 h4 {
-  margin: 20px;
-  font-size: 16px;
+  margin: 15px;
+  font-size: 17px;
   text-align: center;
-  font-family: "Open Sans", sans-serif;
-  font-weight: bold;
+  font-weight: 300;
 }
 #main {
   padding: 0px 25px;
@@ -322,7 +316,7 @@ input {
   padding: 0px 25px;
   margin: auto;
   text-align: left;
-  max-width: 800px;
+  max-width: 550px;
   line-height: 25px;
   display: none;
 }
@@ -334,18 +328,16 @@ input {
   font-size: 15px;
 }
 
-#domains #arrow {
+#domains .arrow {
   float: left;
   text-align: center;
   width: 8%;
-  height: 71px;
-  background: transparent url("chrome-extension://__MSG_@@extension_id__/images/navigate_right.png") no-repeat 50% center;
-  margin-bottom: 15px;
+  padding-top: 27px;
 }
 
 #domains .edit {
   padding: 8px;
-  margin-left: 15px;
+  margin-left: 5px;
   display: inline;
   background: transparent url("chrome-extension://__MSG_@@extension_id__/images/ce.png") no-repeat 50% center;
   cursor: pointer;
@@ -355,16 +347,13 @@ input {
   float: left;
   text-align: center;
   width: 8%;
-  height: 71px;
-  background: transparent url("chrome-extension://__MSG_@@extension_id__/images/exit.png") no-repeat 50% center;
-  margin-bottom: 15px;
   cursor: pointer;
+  padding-top: 27px;
 }
 
 .cm_url {
   width: 50%;
   float: left;
-  margin-bottom: 15px;
 }
 .cm_url > label {
   display: block;
@@ -382,12 +371,10 @@ input {
 .cd_url {
   width: 34%;
   float: left;
-  margin-bottom: 15px;
 }
 .cd_url > label {
   display: block;
 }
-
 .cd_url > input {
   display: block;
   width: -webkit-fill-available;
@@ -400,12 +387,9 @@ input {
 
 input[name="key"],
 input[name="value"] {
-  /* background-color: transparent; */
+  background-color: transparent;
   border: 0px;
-  border-bottom: 1px solid #ccc;
-  color: #666;
   text-transform: lowercase;
-  outline: none;
   transition: border ease-in-out 0.1s;
 }
 input[name="key"]:focus,
@@ -418,23 +402,14 @@ input[name="key"]::placeholder,
 input[name="value"]::placeholder {
   color: #ccc;
 }
-
 .site label {
-  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  color: #131313;
   text-align: left;
-  color: #9e9e9e;
-  font-size: 15px;
-  font-weight: 100;
+  font-size: 12px;
 }
-
-.cm_cd {
-  width: 8%;
-  float: left;
-  text-align: center;
-  font-size: 25px;
-  margin-top: 29px;
-}
-
 #save_domains {
   text-align: center;
   margin: 20px 0px;
@@ -457,15 +432,6 @@ sup a {
 }
 
 /* Checkbox */
-
-html.light div.scFeature {
-  color: #000;
-}
-
-html.dark div.scFeature {
-  color: #ccc;
-}
-
 input.scCheckbox {
   display: none !important;
 }
@@ -487,7 +453,7 @@ label.scLabel::after {
   display: block;
   position: absolute;
   cursor: pointer;
-  z-index: -1;
+  z-index: auto;
 }
 label.scLabel::before {
   width: 100%;

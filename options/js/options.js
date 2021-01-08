@@ -31,7 +31,7 @@ document.body.onload = function () {
   document.querySelector("#scVersion").innerHTML = chrome.runtime.getManifest().version;
 
   if (fromLaunchpad) {
-    document.querySelector("#set").innerHTML = "Save your preferences";
+    document.querySelector(".save_settings").innerHTML = "Save your preferences";
     document.querySelector("#scHeader").style.display = "inherit";
     document.querySelector("#scBack").href = backUrl;
     document.querySelector("#banner").style.top = "50px";
@@ -130,7 +130,7 @@ document.querySelector("#settings").onclick = function () {
   setTimeout(function () {
     let url = new URL(window.location.href);
     if (url.searchParams.get("site")) {
-      let domain = new URL(url.searchParams.get("url")).origin;
+      let domain = new URL(url.searchParams.get("domain")).origin;
       let domainId = addDomain("", domain, true);
       addSite(domainId, url.searchParams.get("site"), "", true, url.searchParams.get("name"));
     }
@@ -140,29 +140,36 @@ document.querySelector("#settings").onclick = function () {
 /**
  * Click to go back to main screen
  */
-document.querySelector("#back").onclick = function (event) {
+document.querySelector(".back").onclick = function (event) {
   event.preventDefault();
+  let reload = true;
 
-  document.querySelectorAll(".domain").forEach((div) => {
-    div.remove();
-  });
+  if (document.querySelector(".trackChanges").value == "1") {
+    if (!confirm("Changes that you made may not be saved.\nContinue without saving?") == true) {
+      reload = false;
+    }
+  }
+  if (reload) {
+    document.querySelectorAll(".domain").forEach((div) => {
+      div.remove();
+    });
 
-  var url = new URL(window.location.href);
-  var configureDomains = url.searchParams.get("configure_domains");
-  var backUrl = url.searchParams.get("url");
-
-  if (configureDomains == "true") {
-    window.open(backUrl + "&sc_bw=1");
-    window.close();
-  } else {
-    document.querySelector("#main").setAttribute("style", "display:block");
-    document.querySelector("#domains").setAttribute("style", "display:none");
-    document.querySelector("#save").setAttribute("style", "display:block");
+    var url = new URL(window.location.href);
+    var configureDomains = url.searchParams.get("configure_domains");
+    var backUrl = url.searchParams.get("url");
+    if (configureDomains == "false") {
+      window.open(backUrl + "&sc_bw=1");
+      window.close();
+    } else {
+      document.querySelector("#main").setAttribute("style", "display:block");
+      document.querySelector("#domains").setAttribute("style", "display:none");
+      document.querySelector("#save").setAttribute("style", "display:block");
+    }
   }
 };
 
 /**
- * Click to exports domains/sites
+ * Click to exports sites
  */
 document.querySelector(".exportSites").onclick = function (event) {
   event.preventDefault();
@@ -222,9 +229,9 @@ document.querySelector(".exportSites").onclick = function (event) {
   }
 };
 /**
- * Click to save domains/sites
+ * Click to save sites
  */
-document.querySelector("#set_domains").onclick = function (event) {
+document.querySelector(".save_sites").onclick = function (event) {
   event.preventDefault();
 
   var json = {};
@@ -269,17 +276,18 @@ document.querySelector("#set_domains").onclick = function (event) {
   chrome.storage.sync.set({ site_manager: json }, function () {
     if (error) {
       alert("You have some errors...");
-      document.querySelector("#set_domains").innerHTML = "Save your sites";
+      document.querySelector(".save_sites").innerHTML = "Save your sites";
     } else {
+      document.querySelector(".trackChanges").value = "0";
       document.querySelector("#sitesList").setAttribute("style", "opacity:0.3");
-      document.querySelector("#set_domains").innerHTML = "Saving...";
+      document.querySelector(".save_sites").innerHTML = "Saving...";
       setTimeout(function () {
-        document.querySelector("#set_domains").innerHTML = "OK!";
+        document.querySelector(".save_sites").innerHTML = "OK!";
       }, 1000);
       setTimeout(function () {
         document.querySelector("#sitesList").setAttribute("style", "opacity:1");
-        document.querySelector("#set_domains").innerHTML = "Save your sites";
-        // location.reload();
+        document.querySelector(".save_sites").innerHTML = "Save your sites";
+        location.reload();
       }, 1500);
     }
   });
@@ -288,7 +296,7 @@ document.querySelector("#set_domains").onclick = function (event) {
 /**
  * Click to save preferences
  */
-document.querySelector("#set").onclick = function (event) {
+document.querySelector(".save_settings").onclick = function (event) {
   event.preventDefault();
 
   let featuresEnabled = {
@@ -338,11 +346,23 @@ document.querySelector("#set").onclick = function (event) {
     });
     buttonLabel = "Save and reload Sitecore";
   }
-  document.querySelector("#set").innerHTML = "Saving...";
+  document.querySelector(".save_settings").innerHTML = "Saving...";
   setTimeout(function () {
-    document.querySelector("#set").innerHTML = "OK!";
+    document.querySelector(".save_settings").innerHTML = "OK!";
   }, 1000);
   setTimeout(function () {
-    document.querySelector("#set").innerHTML = buttonLabel;
+    document.querySelector(".save_settings").innerHTML = buttonLabel;
   }, 1500);
 };
+
+/**
+ * Check if changes are not savec
+ */
+window.addEventListener("beforeunload", function (e) {
+  // Cancel the event
+  e.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
+  // Chrome requires returnValue to be set
+  if (document.querySelector(".trackChanges").value == "1") {
+    e.returnValue = "";
+  }
+});

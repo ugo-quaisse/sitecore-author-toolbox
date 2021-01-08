@@ -11,26 +11,29 @@ export { showSnackbar, showSnackbarSite };
  */
 const showSnackbar = (storage) => {
   //Snackbar settings
-  //prettier-ignore
-  let snackbarHtml = `
+  let versionIncrement = Number(global.extensionVersion.split(".").pop());
+  if (!storage.feature_experimentalui && versionIncrement == 0) {
+    //prettier-ignore
+    let snackbarHtml = `
     <b>Sitecore Author Toolbox ` + global.extensionVersion + `</b><br />
     Live URL is now compatible with multisites!<br />Click "TRY IT" to activate it now!`;
-  let html = `<div class="snackbar">` + snackbarHtml + `<button id="sbAction" onclick='javascript:document.querySelectorAll(".interfaceRadio")[1].click()'>TRY IT</button><button id="sbDismiss">DISMISS</button></div>`;
+    let html = `<div class="snackbar">` + snackbarHtml + `<button id="sbAction" onclick='javascript:document.querySelectorAll(".interfaceRadio")[1].click()'>TRY IT</button><button id="sbDismiss">DISMISS</button></div>`;
 
-  //Is Snackbar is already visible in a parent frame?
-  let parentSnackbar = parent.document.querySelector(".snackbar");
+    //Is Snackbar is already visible in a parent frame?
+    let parentSnackbar = parent.document.querySelector(".snackbar");
 
-  //Show Snackbar
-  if (!parentSnackbar && global.showSnackbar && localStorage.getItem("sbDismiss") != global.extensionVersion) {
-    document.querySelector("body").insertAdjacentHTML("beforeend", html);
+    //Show Snackbar
+    if (!parentSnackbar && global.showSnackbar && localStorage.getItem("sbDismiss") != global.extensionVersion) {
+      document.querySelector("body").insertAdjacentHTML("beforeend", html);
 
-    //Add listener on click #sbDismiss
-    document.querySelectorAll("#sbAction, #sbDismiss").forEach(function (elem) {
-      elem.addEventListener("click", function () {
-        localStorage.setItem("sbDismiss", global.extensionVersion);
-        document.querySelector(".snackbar").setAttribute("style", "display: none");
+      //Add listener on click #sbDismiss
+      document.querySelectorAll("#sbAction, #sbDismiss").forEach(function (elem) {
+        elem.addEventListener("click", function () {
+          localStorage.setItem("sbDismiss", global.extensionVersion);
+          document.querySelector(".snackbar").setAttribute("style", "display: none");
+        });
       });
-    });
+    }
   }
 };
 

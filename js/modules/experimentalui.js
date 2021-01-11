@@ -13,7 +13,6 @@ export {
   insertVersionButton,
   insertMoreButton,
   insertNavigatorButton,
-  insertLockButton,
   pathToBreadcrumb,
   initInsertIcon,
   getAccentColor,
@@ -290,18 +289,6 @@ const insertVersionButton = (scItemId, scLanguage = "EN", scVersion = 1) => {
 const insertNavigatorButton = () => {
   let container = document.querySelector(".scEditorTabControlsHolder");
   let button = `<button class="scEditorHeaderButton" id="scNavigatorButton" type="button"><img src="` + global.iconNotebook + `" class="scLanguageIcon"> ▾</button>`;
-  container ? container.insertAdjacentHTML("afterbegin", button) : false;
-
-  document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;
-};
-
-/**
- * Insert Lock button
- */
-const insertLockButton = (locked = false) => {
-  let icon = locked === false ? global.iconUnlocked : global.iconLocked;
-  let container = document.querySelector(".scEditorTabControlsHolder");
-  let button = `<button onclick="javascript:return scForm.postEvent(this,event,'item:checkout')" class="scEditorHeaderButton" id="scLockButton" title="Lock this item" type="button"><img src="` + icon + `" class="scLanguageIcon"></button>`;
   container ? container.insertAdjacentHTML("afterbegin", button) : false;
 
   document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;

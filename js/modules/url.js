@@ -16,7 +16,7 @@ const getSiteUrl = (storage, path) => {
   let homePath = path.split("/home/")[0] + "/home/";
   let liveUrl;
   // console.log("Current domain ->", global.urlOrigin);
-  // console.log("Current path ->", homePath);
+  // console.log("Current path ->", path);
 
   //Site Manager
   for (var [domain, values] of Object.entries(storage.site_manager)) {
@@ -29,7 +29,7 @@ const getSiteUrl = (storage, path) => {
         // console.log("--> Site tracked-> ", homePath.toLowerCase());
         if (siteStorage.toLowerCase() == homePath.toLowerCase()) {
           liveUrl = Object.entries(site)[0][1].slice(-1) == "/" ? decodeURI(Object.entries(site)[0][1].slice(0, -1)) : decodeURI(Object.entries(site)[0][1]);
-          // console.log("--> **Site Manager**", liveUrl);
+          //console.log("--> **Site Manager**", liveUrl);
           break;
         }
       }
@@ -67,9 +67,8 @@ const initLiveUrl = (storage) => {
   let alternativeUrl = window.location.origin + "/?sc_itemid=" + ScItem.id + "&sc_mode=normal&sc_lang=" + ScItem.language + "&sc_version=" + ScItem.version;
   //Path
   let temp = ScItem.pathFull.toLowerCase().split("/home/");
-  //let sitecoreSite = temp[0] == undefined ? "" : temp[0] + "/home/";
   let sitecorePath = temp[1] == undefined ? "" : temp[1];
-  //template type
+  //Template type
   let isContent = ScItem.pathFull.includes("/sitecore/content/");
   let isMedia = ScItem.pathFull.includes("/sitecore/media library/");
   let isData = ScItem.pathFull.includes("/data/");
@@ -83,9 +82,6 @@ const initLiveUrl = (storage) => {
     storage.feature_urls == undefined ? (storage.feature_urls = true) : false;
     storage.feature_urlstatus == undefined ? (storage.feature_urlstatus = true) : false;
 
-    //Checking user's settings if we have a live URL for this site
-    liveUrl = getSiteUrl(storage, ScItem.pathFull);
-
     //If not added yet
     if (!document.querySelector("#scMessageBarUrl") && storage.feature_urls) {
       //Get cookie sxa_site
@@ -96,7 +92,7 @@ const initLiveUrl = (storage) => {
           liveUrl = window.location.origin + "/" + ScItem.language + "/" + sitecorePath + "?sc_mode=normal&sc_site=xxxsxa_sitexxx";
         } else {
           badge = "CD server";
-          liveUrl = liveUrl.includes("{lang}") ? liveUrl.replace("{lang}", ScItem.language) : liveUrl + "/" + ScItem.language + "/" + sitecorePath;
+          liveUrl = liveUrl.includes("{lang}") ? liveUrl.replace("{lang}", ScItem.language) + "/" + sitecorePath : liveUrl + "/" + ScItem.language + "/" + sitecorePath;
         }
 
         //Update alternative Url
@@ -205,19 +201,18 @@ const checkUrlStatus = (status, source = null, experimental = false) => {
 
   //Show badge
   document.querySelector(".liveUrlBadge") ? document.querySelector(".liveUrlBadge").classList.remove("hide") : false;
-
   //Check response
   if (status == "404") {
-    html = "<span class='liveStatusRed'><img loading='lazy' src=' " + global.dotRed + "'/> Not published (" + status + ")</span>";
+    html = `<span class='liveStatusRed'><img loading='lazy' src='${global.dotRed}'/> Not published (${status})</span>`;
     barStyle = "scError";
   } else if (status == "500") {
-    html = "<span class='liveStatusRed'><img loading='lazy' src=' " + global.dotRed + "'/> Server error (code: " + status + ")</span>";
+    html = `<span class='liveStatusRed'><img loading='lazy' src='${global.dotRed}'/> Server error (code: ${status})</span>`;
     barStyle = "scError";
   } else if (status == undefined) {
-    html = "<span class='liveStatusRed'><img loading='lazy' src=' " + global.dotRed + "'/> This URL doesn't exist, check your settings.</span>";
+    html = `<span class='liveStatusRed'><img loading='lazy' src='${global.dotRed}'/> The domain set doesn't exist, <span onclick="window.open('${global.launchpadPage}?configure_domains=true&launchpad=true&url=${global.windowLocationHref}')"><u>check your settings</u>.</span>`;
     barStyle = "scError";
   } else {
-    html = "<span class='liveStatusGreen'><img loading='lazy' src=' " + global.dotGreen + "'/> Published</span>";
+    html = `<span class='liveStatusGreen'><img loading='lazy' src='${global.dotGreen}'/> Published</span>`;
     barStyle = "scSuccess";
   }
 

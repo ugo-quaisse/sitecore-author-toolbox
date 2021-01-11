@@ -24,6 +24,7 @@ export const iconLock = chrome.runtime.getURL("images/lock.svg");
 export const iconMenu = chrome.runtime.getURL("images/menu.svg");
 export const iconData = chrome.runtime.getURL("images/data.svg");
 export const iconWorkflow = chrome.runtime.getURL("images/workflow.svg");
+export const iconReminder = chrome.runtime.getURL("images/reminder.svg");
 export const iconUnicorn = chrome.runtime.getURL("images/unicorn.svg");
 export const iconUser = chrome.runtime.getURL("images/user.svg");
 export const iconDocument = chrome.runtime.getURL("images/document.svg");

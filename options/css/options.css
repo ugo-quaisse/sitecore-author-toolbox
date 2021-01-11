@@ -21,7 +21,7 @@ legend {
   font-weight: 600;
   text-align: left;
   font-family: "Open Sans", sans-serif;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 fieldset {
   border: 1px solid #f0f0f0;
@@ -37,13 +37,31 @@ fieldset {
   font-weight: normal;
   line-height: 17px;
 }
+.scFeatureName .infoLink {
+  color: #ee3524;
+  font-size: 11px;
+  padding: 0px 5px;
+  cursor: pointer;
+  font-weight: bold;
+  display: none;
+  text-decoration: none;
+}
+.scFeatureName .infoLink:hover {
+  color: #6edc60;
+}
+.scFeatureName .infoLink:after {
+  content: "";
+}
+.scFeatureName:hover .infoLink {
+  display: inline;
+}
 .site {
   padding: 10px 15px 10px 15px;
   border-bottom: 1px solid #f0f0f0;
   display: flow-root;
 }
 a {
-  color: #dc291e;
+  color: #ee3524;
 }
 input[type="checkbox"] {
   cursor: pointer;
@@ -66,18 +84,19 @@ label i {
 }
 label > input:checked + i {
   box-shadow: inset 0 0 0 0.2em #ffffff;
-  background: #dc291e;
+  background: #ee3524;
 }
 label:hover {
   cursor: pointer;
 }
 #message {
-  color: #f20d00;
+  color: #ee3524;
   font-size: 20px;
   text-align: center;
   font-family: "Open Sans", sans-serif;
 }
-#sitesList {
+#sitesList,
+#sitesButtons {
   text-align: center;
 }
 .back,
@@ -99,7 +118,7 @@ label:hover {
   outline: none;
   position: relative;
   color: #fff;
-  background: #dc291e;
+  background: #ee3524;
   border: 0px;
   text-shadow: none;
   border: 0px;
@@ -126,7 +145,7 @@ label:hover {
   padding: 5px 15px;
   margin: 15px auto;
   display: block;
-  background: #4693f8;
+  background: #4989f4;
 }
 .addDomain {
   clear: both;
@@ -141,6 +160,10 @@ label:hover {
   margin: 0px;
   font-size: 10px;
   background: #f7991f !important;
+  text-decoration: none;
+}
+.domainDisplay {
+  text-transform: lowercase;
 }
 
 .sitesSettings:hover,
@@ -280,6 +303,7 @@ h4 {
   text-align: center;
   color: #666666;
   margin-top: -50px;
+  font-weight: 400;
 }
 input {
   margin: 0px 0px 0px 5px !important;
@@ -438,7 +462,7 @@ input.scCheckbox {
 
 label.scLabel {
   margin: 0px 0px 0px 5px;
-  width: 38px;
+  width: 35px;
   height: 20px;
   text-indent: -150%;
   clip: rect(0 0 0 0);
@@ -446,6 +470,7 @@ label.scLabel {
   user-select: none;
   vertical-align: middle;
   float: right;
+  transform: scale(1.1);
 }
 label.scLabel::before,
 label.scLabel::after {
@@ -460,7 +485,7 @@ label.scLabel::before {
   height: 100%;
   max-width: 38px !important;
   max-height: 20px !important;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.2);
   border-radius: 9999em;
   transition: background-color 0.15s ease;
 }
@@ -468,7 +493,7 @@ label.scLabel::after {
   width: 18px;
   height: 18px;
   top: 1px;
-  left: 0px;
+  left: 1px;
   border-radius: 50%;
   background-color: #fff;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.45);
@@ -481,7 +506,7 @@ input.scCheckbox:checked + label.scLabel::before {
 }
 
 input.scCheckbox:checked + label.scLabel::after {
-  left: 20px;
+  left: 16px;
 }
 
 input.scCheckbox:disabled + label.scLabel::before {

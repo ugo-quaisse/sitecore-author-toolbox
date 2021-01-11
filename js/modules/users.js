@@ -152,14 +152,14 @@ const initUserMenu = (storage, type = "CE") => {
         <div class="scAccountMenuWrapper">
         <div class="scAccountColumn scAccountGroup1">
           <ul> 
-            <li onclick="javascript:return scForm.invoke('preferences:changeuserinformation', event)">My profile (` + accountUser + `)</li>
+            <li onclick="javascript:return scForm.invoke('preferences:changeuserinformation', event)">My profile (${accountUser})</li>
             <li onclick="javascript:return scForm.invoke('security:changepassword', event) ">Change Password</li>
             <li onclick="javascript:return scForm.invoke('preferences:changeregionalsettings', event)">Languages</li>
             <li onclick="javascript:return scForm.invoke('shell:useroptions', event)">Sitecore Options</li>
           
             <li onclick="javascript:goToSubmenu(1)" id="scSkip" class="separator opensubmenu">Dark Mode <span id="scSkip" class="darkMenuHint">Light</span></li>
             <li onclick="javascript:goToSubmenu(2)" id="scSkip" class="opensubmenu">Theme <span id="scSkip" class="themeMenuHint">Classic</span></li> 
-            <li onclick="window.open('` + global.launchpadPage + `')">Extension Options</li>
+            <li onclick="window.open('${global.launchpadPage}?launchpad=true')">Extension Options</li>
 
             <li onclick="javascript:return scForm.invoke('contenteditor:close', event)">Log out</li>
           </ul>
@@ -191,7 +191,7 @@ const initUserMenu = (storage, type = "CE") => {
           <div class="scAccountMenuWrapper">
             <div class="scAccountColumn scAccountGroup1">
               <ul> 
-                <li onclick="javascript:return scForm.invoke('preferences:changeuserinformation', event)">My profile (` + accountUser + `)</li>
+                <li onclick="javascript:return scForm.invoke('preferences:changeuserinformation', event)">My profile (${accountUser})</li>
                 <li onclick="javascript:return scForm.invoke('contenteditor:close', event)">Log out</li>
               </ul>
             </div>   

@@ -4,6 +4,8 @@ import * as global from "./global.js";
 import { log, loadCssFile, sitecoreItemJson, getScItemData } from "./helpers.js";
 import { initLiveUrl } from "./url.js";
 import { checkHelpLink } from "./help.js";
+import { checkReminder } from "./reminder.js";
+import { checkLockedItems } from "./lockitems.js";
 import { findCountryName } from "./language.js";
 import { initGroupedErrors } from "./errors.js";
 import { insertSavebar, insertBreadcrumb, insertLanguageButton, insertVersionButton, insertMoreButton } from "./experimentalui.js";
@@ -70,6 +72,8 @@ const sitecoreAuthorToolbox = (storage) => {
   initCopyToClipboard(storage);
   initSyntaxHighlighterScriban(storage);
   checkHelpLink(ScItem.id, ScItem.language, ScItem.version, storage);
+  checkReminder(ScItem.id, ScItem.language, ScItem.version, storage);
+  checkLockedItems(ScItem.id, storage);
   initFancyMessageBars(storage);
   initCheckboxes(storage);
   initDateTimeField(storage);
@@ -218,129 +222,100 @@ const openFolderTab = (storage) => {
  * Fancy message bars
  */
 const initFancyMessageBars = (storage) => {
-  storage.feature_contenteditor == undefined ? (storage.feature_contenteditor = true) : false;
-  if (storage.feature_contenteditor == true) {
-    let scEditorHeader = document.querySelector(".scEditorHeader");
-    setTimeout(function () {
-      //Check who locked the item
-      var scWarnings = document.querySelectorAll(".scWarning");
-      for (var scWarning of scWarnings) {
-        var scWarningText = scWarning.querySelector(".scMessageBarTitle").innerText;
-        var scWarningTextBar = scWarning.querySelector(".scMessageBarText");
-        var scWarningIcon = scWarning.querySelector(".scMessageBarIcon");
-        var isLockMessage = scWarningText.includes(" lock");
-        var isElevateUnlock = scWarningText.includes("Elevated Unlock");
-        var isNotFinalWorkflowStep = scWarningText.includes("is not in the final workflow step.");
-        var isUnicorned = scWarningText.includes("This item is controlled by Unicorn");
-        var isNoVersion = scWarningText.includes("The current item does not have a version");
-        var isProtected = scWarningText.includes("You cannot edit this item because it is protected.");
-        var isPermission = scWarningText.includes("you do not have write access to it.");
-        // eslint-disable-next-line no-unused-vars
-        var isWrongVersion = scWarningText.includes("it has been replaced by a newer version.");
-        var isNoFields = scWarningText.includes("The current item does not contain any fields.");
+  setTimeout(function () {
+    for (let scWarning of document.querySelectorAll(".scWarning")) {
+      var scWarningText = scWarning.querySelector(".scMessageBarTitle").innerText;
+      var scWarningTextBar = scWarning.querySelector(".scMessageBarText");
+      var scWarningIcon = scWarning.querySelector(".scMessageBarIcon");
+      var isLockMessage = scWarningText.includes(" lock");
+      var isElevateUnlock = scWarningText.includes("Elevated Unlock");
+      var isNotFinalWorkflowStep = scWarningText.includes("is not in the final workflow step.");
+      var isUnicorned = scWarningText.includes("This item is controlled by Unicorn");
+      var isNoVersion = scWarningText.includes("The current item does not have a version");
+      var isProtected = scWarningText.includes("You cannot edit this item because it is protected.");
+      var isPermission = scWarningText.includes("you do not have write access to it.");
+      var isNoFields = scWarningText.includes("The current item does not contain any fields.");
 
-        //No version exist
-        isNoVersion ? scWarningIcon.setAttribute("style", "background-image: url(" + global.iconTranslate + ");") : false;
+      //Update UI if experimental UI
+      if (storage.feature_experimentalui) {
+        isNoVersion && document.querySelector(".scSaveBar > .scActions")
+          ? (document.querySelector(".scSaveBar > .scActions").innerHTML = `<button class="primary" onclick="javascript:return scForm.postEvent(this,event,'item:addversion')">Add new version</button>`)
+          : false;
 
-        if (storage.feature_experimentalui) {
-          isNoVersion && document.querySelector(".scSaveBar > .scActions")
-            ? (document.querySelector(".scSaveBar > .scActions").innerHTML = `<button class="primary" onclick="javascript:return scForm.postEvent(this,event,'item:addversion')">Add new version</button>`)
-            : false;
-
-          if (isProtected) {
-            //prettier-ignore
-            document.querySelector(".scEditorPanel").innerHTML =
-              `<div class="scNoVersion">
-              <img src='` + global.iconLocked + `' width="128" /><br />
-              <p>` + scWarningText + `</p><br />
-              <button onclick="javascript:return scForm.postEvent(this,event,'item:togglereadonly')" type="button">Unprotect this item</button>
-            </div>`;
-          }
-
-          // if (isPermission) {
-          //   //prettier-ignore
-          //   document.querySelector(".scEditorPanel").innerHTML =
-          //   `<div class="scNoVersion">
-          //     <img src='` + global.iconLocked + `' width="128" /><br />
-          //     <p>` + scWarningText + `</p><br />
-          //     <button onclick="javascript:history.go(-1)" type="button">Go back</button>
-          //   </div>`;
-          // }
-
-          if (isNoFields) {
-            //prettier-ignore
-            document.querySelector(".scEditorPanel").innerHTML =
-              `<div class="scNoVersion">
-                <img src='` + global.iconFields + `' width="128" /><br />
-                <p>` + scWarningText + `</p><br />
-                <button id="scInfoButton" type="button">Show Item details</button>
-              </div>`;
-          }
-
-          if (isNoVersion) {
-            //prettier-ignore
-            document.querySelector(".scEditorPanel").innerHTML =
-              `<div class="scNoVersion">
-                <img src='` + global.iconLanguage + `' width="128" /><br />
-              <p>` + scWarningText + `</p><br />
-              <button onclick="javascript:return scForm.postEvent(this,event,'item:addversion')" type="button">Add new version</button>
-              </div>`;
-          }
-
-          //Experimental
-          document.querySelector("#scLockButton") ? document.querySelector("#scLockButton > img").setAttribute("src", global.iconLocked) : false;
-          document.querySelector("#scLockButton") ? document.querySelector("#scLockButton").setAttribute("title", `Unlock this item`) : false;
-          document.querySelector("#scLockButton") ? document.querySelector("#scLockButton").setAttribute("onclick", `javascript:return scForm.postEvent(this,event,'item:checkin')`) : false;
+        if (isProtected) {
+          document.querySelector(".scEditorPanel").innerHTML = `<div class="scNoVersion">
+            <img src='${global.iconLocked}' width="128" /><br />
+            <p>${scWarningText}</p><br />
+            <button onclick="javascript:return scForm.postEvent(this,event,'item:togglereadonly')" type="button">Unprotect this item</button>
+          </div>`;
         }
 
-        storage.feature_messagebar == undefined ? (storage.feature_messagebar = false) : false;
-        if (storage.feature_messagebar) {
-          //No version exist
-          //isWrongVersion ? scWarningIcon.setAttribute("style","background-image: url(" + global.iconVersion + ");") : false;
-
-          //Not in final workflow step
-          isNotFinalWorkflowStep ? scWarningIcon.setAttribute("style", "background-image: url(" + global.iconWorkflow + ");") : false;
-
-          //Admin, elevate unlock
-          isElevateUnlock || isProtected || isPermission ? scWarningIcon.setAttribute("style", "background-image: url(" + global.iconLock + ");") : false;
-
-          //Is locked
-          isLockMessage ? scWarningIcon.setAttribute("style", `background-image: url(${global.iconLock});`) : false;
-
-          //Unicorded
-          if (isUnicorned) {
-            // eslint-disable-next-line newline-per-chained-call
-            scWarningTextBar.innerHTML = scWarningTextBar.innerHTML.replace("<br><br>", "<br>").replace("<br><b>Predicate", " <b>Predicate").replace("Changes to this item will be written to disk so they can be shared with others.<br>", "");
-            scWarningIcon.setAttribute("style", "background-image: url(" + global.iconUnicorn + ");");
-          }
+        if (isNoFields) {
+          document.querySelector(".scEditorPanel").innerHTML = `<div class="scNoVersion">
+            <img src='${global.iconFields}' width="128" /><br />
+            <p>${scWarningText}</p><br />
+            <button id="scInfoButton" type="button">Show Item details</button>
+          </div>`;
         }
 
-        //Check if item is locked
-        var isItemLocked = document.querySelector(".scRibbon").innerHTML.includes("Check this item in.");
-
-        if (isItemLocked && !isElevateUnlock && !isLockMessage) {
-          if (isLockMessage) {
-            var temp = scWarningText.split("' ");
-            var lockedBy = temp[0].replace("'", "");
-            lockedBy += " has";
-          } else {
-            lockedBy = "You have";
-          }
-
-          document.querySelector("#scLockMenuText") ? (document.querySelector("#scLockMenuText").innerText = "Unlock item...") : false;
-
-          //Prepare HTML (scInformation scWarning scError)
-          let scMessage =
-            '<div id="scMessageBarUrl" class="scMessageBar scWarning"><div class="scMessageBarIcon" style="background-image:url(' +
-            global.iconLock +
-            ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">' +
-            lockedBy +
-            ' locked this item.</div><div class="scMessageBarText">Nobody can edit this page until you unlock it.</div><ul class="scMessageBarOptions"><li class="scMessageBarOptionBullet"><a href="#" onclick="javascript:return scForm.postEvent(this,event,\'item:checkin\')" class="scMessageBarOption">Unlock this item</a></li></ul></div></div>';
-          scEditorHeader.insertAdjacentHTML("afterend", scMessage);
+        if (isNoVersion) {
+          //prettier-ignore
+          document.querySelector(".scEditorPanel").innerHTML = `<div class="scNoVersion">
+            <img src='${global.iconLanguage}' width="128" /><br />
+            <p>${scWarningText}</p><br />
+            <button onclick="javascript:return scForm.postEvent(this,event,'item:addversion')" type="button">Add new version</button>
+          </div>`;
         }
       }
-    }, 100);
-  }
+
+      //If fancy message bar is enabled
+      storage.feature_messagebar == undefined ? (storage.feature_messagebar = false) : false;
+      if (storage.feature_messagebar) {
+        isNoVersion ? scWarningIcon.setAttribute("style", `background-image: url(${global.iconTranslate});`) : false;
+        isNotFinalWorkflowStep ? scWarningIcon.setAttribute("style", `background-image: url(${global.iconWorkflow});`) : false;
+        isElevateUnlock || isProtected || isPermission ? scWarningIcon.setAttribute("style", `background-image: url(${global.iconLock});`) : false;
+        isLockMessage ? scWarningIcon.setAttribute("style", `background-image: url(${global.iconLock});`) : false;
+        isUnicorned ? scWarningIcon.setAttribute("style", `background-image: url(${global.iconUnicorn});`) : false;
+        isUnicorned
+          ? (scWarningTextBar.innerHTML = scWarningTextBar.innerHTML
+              .replace("<br><br>", "<br>")
+              .replace("<br><b>Predicate", " <b>Predicate")
+              .replace("Changes to this item will be written to disk so they can be shared with others.<br>", ""))
+          : false;
+      }
+    }
+    //Check if item is locked
+    // setTimeout(function () {
+    //   var isItemLocked = document.querySelector(".scRibbon").innerHTML.includes("Check this item in.");
+
+    //   if (isItemLocked && !isElevateUnlock && !isLockMessage) {
+    //     if (isLockMessage) {
+    //       var temp = scWarningText.split("' ");
+    //       var lockedBy = temp[0].replace("'", "");
+    //       lockedBy += " has";
+    //     } else {
+    //       lockedBy = "You have";
+    //     }
+
+    //     document.querySelector("#scLockMenuText") ? (document.querySelector("#scLockMenuText").innerText = "Unlock item...") : false;
+
+    //     //Prepare HTML
+    //     let scMessage = `<div id="scMessageBarUrl" class="scMessageBar scWarning">
+    //         <div class="scMessageBarIcon" style="background-image:url(${global.iconLock})"></div>
+    //         <div class="scMessageBarTextContainer">
+    //           <div class="scMessageBarTitle">${lockedBy} locked this item.</div>
+    //           <div class="scMessageBarText">Nobody can edit this page until you unlock it.</div>
+    //           <ul class="scMessageBarOptions">
+    //             <li class="scMessageBarOptionBullet">
+    //               <a href="#" onclick="javascript:return scForm.postEvent(this,event,'item:checkin')" class="scMessageBarOption">Unlock this item</a>
+    //             </li>
+    //           </ul>
+    //         </div>
+    //       </div>`;
+    //     scEditorHeader.insertAdjacentHTML("afterend", scMessage);
+    //   }
+    // }, 1000);
+  }, 100);
 };
 
 /*

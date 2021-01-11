@@ -9,6 +9,11 @@ body.satDark .popover-content {
   color: var(--text);
 }
 
+body.satDark .scContentTree a,
+body.satDark .scStretch {
+  color: var(--text);
+}
+
 body.satDark .sc-applicationContent-info .sc-border,
 body.satDark .sc-applicationContent-info {
   background-color: var(--black3);
@@ -574,6 +579,14 @@ body.satDark .scMenuItemHotkey {
 body.satDark .scMenuPanelItem_Hover div b,
 body.satDark .scMenuPanelItem_Hover div {
   color: var(--white) !important;
+}
+
+body.satDark .scMenuItemIcon,
+body.satDark .scMenuItemCaption,
+body.satDark .scMenuItemHotkey,
+body.satDark .scMenuPanelItemSelected,
+body.satDark .scMenuPanelItem {
+  color: var(--text) !important;
 }
 
 body.satDark .scMenuItemIcon_Hover,
@@ -1712,9 +1725,14 @@ body.satDark .scRibbonToolbarSeperatorLine {
   background: #9ea3a6 !important;
 }
 
+body.satDark .scRibbonToolbarSmallButtons {
+  color: var(--white);
+}
+
 body.satDark .scRibbonToolbarText {
   background-color: #111111 !important;
   border: 1px solid #111111 !important;
+  color: var(--white);
 }
 
 body.satDark .scRibbonToolbarScrollbox {

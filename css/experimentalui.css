@@ -227,9 +227,14 @@ body.satExperimentalUi #scSitecoreRibbon > span.active {
 
 body.satExperimentalUi #EditorTabs #scFlag,
 body.satExperimentalUi #scFlagMenu,
-body.satExperimentalUi .liveUrlStatus {
+body.satExperimentalUi .liveUrlStatus > span > img,
+body.satExperimentalUi .liveStatusGreen {
   visibility: hidden;
   display: none;
+}
+body.satExperimentalUi .liveUrlStatus {
+  visibility: visible;
+  display: contents;
 }
 
 body.satExperimentalUi .scWindowBorder3 {
@@ -851,6 +856,7 @@ body.satExperimentalUi .scMessageBar {
   border-radius: var(--radius) !important;
   transition: all ease-in-out 0.3s;
   transition-delay: 0s;
+  margin: 25px 20px 20px 20px;
 }
 
 body.satExperimentalUi .scMessageBar .scMessageBarIcon {
@@ -885,32 +891,9 @@ body.satExperimentalUi .scMessageBar > .liveUrlBadge {
   transition-delay: 0s;
 }
 
-body.satExperimentalUi .scMessageBar.scWarning {
-  margin: 20px;
-  border-radius: 0px var(--radius) var(--radius) 0px;
-  background-color: var(--messageWarningBar) !important;
-  color: var(--grey7) !important;
-  font-size: 14px;
-}
-
-body.satExperimentalUi .scWarning > .scMessageBarIcon {
-  border-radius: var(--radius) 0px 0px var(--radius);
-  background-color: var(--messageWarningBgIcon) !important;
-}
-
-body.satExperimentalUi .scWarning > .scMessageBarTextContainer > .scMessageBar a,
-body.satExperimentalUi .scWarning > .scMessageBarTextContainer > .scMessageBarOption,
-body.satExperimentalUi .scWarning > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet {
-  color: var(--messageWarningLink) !important;
-  text-decoration-color: rgba(0, 0, 0, 0.15) !important;
-}
-
-body.satExperimentalUi .scWarning .liveUrlBadge {
-  background-color: var(--messageWarningLink);
-}
+/* Neutral message */
 
 body.satExperimentalUi .scMessageBar.scNeutral {
-  margin: 20px;
   border-radius: 0px var(--radius) var(--radius) 0px;
   background-color: var(--grey4) !important;
   color: var(--black5) !important;
@@ -925,7 +908,7 @@ body.satExperimentalUi .scNeutral > .scMessageBarIcon {
 body.satExperimentalUi .scNeutral > .scMessageBarTextContainer > .scMessageBar a,
 body.satExperimentalUi .scNeutral > .scMessageBarTextContainer > .scMessageBarOption,
 body.satExperimentalUi .scNeutral > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet,
-body.satExperimentalUi .scNeutral > .liveStatusGray {
+body.satExperimentalUi .scNeutral .liveStatusRed {
   color: var(--black5) !important;
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
@@ -935,33 +918,9 @@ body.satExperimentalUi .scNeutral .liveUrlBadge {
   color: var(--black5);
 }
 
-body.satExperimentalUi .scMessageBar.scError {
-  margin: 20px;
-  border-radius: 0px var(--radius) var(--radius) 0px;
-  background-color: var(--messageDangerBar) !important;
-  color: var(--grey7) !important;
-  font-size: 14px;
-}
-
-body.satExperimentalUi .scError > .scMessageBarIcon {
-  border-radius: var(--radius) 0px 0px var(--radius);
-  background-color: var(--messageDangerBgIcon) !important;
-}
-
-body.satExperimentalUi .scError > .scMessageBarTextContainer > .scMessageBar a,
-body.satExperimentalUi .scError > .scMessageBarTextContainer > .scMessageBarOption,
-body.satExperimentalUi .scError > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet,
-body.satExperimentalUi .scError > .liveStatusRed {
-  color: var(--messageDangerLink) !important;
-  text-decoration-color: rgba(0, 0, 0, 0.15) !important;
-}
-
-body.satExperimentalUi .scError .liveUrlBadge {
-  background-color: var(--messageDangerLink);
-}
+/* Information message */
 
 body.satExperimentalUi .scMessageBar.scInformation {
-  margin: 20px;
   border-radius: 0px var(--radius) var(--radius) 0px;
   background-color: var(--messageInfoBar) !important;
   color: var(--grey7) !important;
@@ -975,7 +934,8 @@ body.satExperimentalUi .scInformation > .scMessageBarIcon {
 
 body.satExperimentalUi .scInformation > .scMessageBarTextContainer > .scMessageBar a,
 body.satExperimentalUi .scInformation > .scMessageBarTextContainer > .scMessageBarOption,
-body.satExperimentalUi .scInformation > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet {
+body.satExperimentalUi .scInformation > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet,
+body.satExperimentalUi .scInformation .liveStatusRed {
   color: var(--messageInfoLink) !important;
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
@@ -984,8 +944,35 @@ body.satExperimentalUi .scInformation .liveUrlBadge {
   background-color: var(--messageInfoLink);
 }
 
+/* Warning message */
+
+body.satExperimentalUi .scMessageBar.scWarning {
+  border-radius: 0px var(--radius) var(--radius) 0px;
+  background-color: var(--messageWarningBar) !important;
+  color: var(--grey7) !important;
+  font-size: 14px;
+}
+
+body.satExperimentalUi .scWarning > .scMessageBarIcon {
+  border-radius: var(--radius) 0px 0px var(--radius);
+  background-color: var(--messageWarningBgIcon) !important;
+}
+
+body.satExperimentalUi .scWarning > .scMessageBarTextContainer > .scMessageBar a,
+body.satExperimentalUi .scWarning > .scMessageBarTextContainer > .scMessageBarOption,
+body.satExperimentalUi .scWarning > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet,
+body.satExperimentalUi .scWarning .liveStatusRed {
+  color: var(--messageWarningLink) !important;
+  text-decoration-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+body.satExperimentalUi .scWarning .liveUrlBadge {
+  background-color: var(--messageWarningLink);
+}
+
+/* Success message */
+
 body.satExperimentalUi .scMessageBar.scSuccess {
-  margin: 20px;
   border-radius: 0px var(--radius) var(--radius) 0px;
   background-color: var(--messageSuccessBar) !important;
   color: var(--grey7) !important;
@@ -1000,13 +987,39 @@ body.satExperimentalUi .scSuccess > .scMessageBarIcon {
 body.satExperimentalUi .scSuccess > .scMessageBarTextContainer > .scMessageBar a,
 body.satExperimentalUi .scSuccess > .scMessageBarTextContainer > .scMessageBarOption,
 body.satExperimentalUi .scSuccess > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet,
-body.satExperimentalUi .scSuccess > .liveStatusGreen {
+body.satExperimentalUi .scSuccess .liveStatusGreen {
   color: var(--messageSuccessLink) !important;
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
 body.satExperimentalUi .scSuccess .liveUrlBadge {
   background-color: var(--messageSuccessLink);
+}
+
+/* Error message */
+
+body.satExperimentalUi .scMessageBar.scError {
+  border-radius: 0px var(--radius) var(--radius) 0px;
+  background-color: var(--messageDangerBar) !important;
+  color: var(--grey7) !important;
+  font-size: 14px;
+}
+
+body.satExperimentalUi .scError > .scMessageBarIcon {
+  border-radius: var(--radius) 0px 0px var(--radius);
+  background-color: var(--messageDangerBgIcon) !important;
+}
+
+body.satExperimentalUi .scError > .scMessageBarTextContainer > .scMessageBar a,
+body.satExperimentalUi .scError > .scMessageBarTextContainer > .scMessageBarOption,
+body.satExperimentalUi .scError > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet,
+body.satExperimentalUi .scError .liveStatusRed {
+  color: var(--messageDangerLink) !important;
+  text-decoration-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+body.satExperimentalUi .scError .liveUrlBadge {
+  background-color: var(--messageDangerLink);
 }
 
 body.satExperimentalUi .liveUrlBadge {
@@ -1018,6 +1031,11 @@ body.satExperimentalUi .liveUrlBadge {
 body.satExperimentalUi .liveUrlBadge:hover {
   filter: brightness(1.1);
   border-color: inherit;
+}
+
+body.satExperimentalUi .scConfirmationContainer {
+  border-spacing: 10px;
+  border-collapse: separate;
 }
 
 body.satExperimentalUi .scMessageBarTextContainer {
@@ -1612,31 +1630,55 @@ body.satExperimentalUi .ui-widget-header {
   background-color: var(--accent);
 } */
 
-body.satExperimentalUi nobr:first-child > .scTabActive,
-body.satExperimentalUi nobr:first-child > .scTabActive_Hover {
-  border-left: 1px solid var(--accent);
+/* Dialog box */
+body.satExperimentalUi .scDialogContentContainer {
+  padding: 0px;
 }
 
-body.satExperimentalUi nobr:last-child > .scTabActive,
-body.satExperimentalUi nobr:last-child > .scTabActive_Hover {
-  border-right: 1px solid var(--accent);
+body.satExperimentalUi .scTabPage {
+  border-width: 0px 0px 1px 0px;
+  padding-bottom: 1px;
+}
+
+body.satExperimentalUi .scTabstrip {
+  padding: 13px 10px 0px 10px;
+  height: fit-content;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 5px;
+  border: none;
+  display: flex;
+  overflow-x: scroll;
+  overflow-y: auto;
+}
+
+body.satExperimentalUi .scTab,
+body.satExperimentalUi .scTab_Hover {
+  background-color: transparent;
+  border: 0px !important;
+  color: var(--text);
+  min-height: 43px;
+}
+
+body.satExperimentalUi .scTab_Hover {
+  border-bottom: 3px solid var(--accent) !important;
 }
 
 body.satExperimentalUi .scTabActive,
 body.satExperimentalUi .scTabActive_Hover {
-  background-color: var(--accent);
-  color: var(--accentText);
-  border-top: 1px solid var(--accent);
-  font-weight: bold;
+  background-color: transparent;
+  border: 0px !important;
+  border-bottom: 3px solid var(--accent) !important;
+  color: var(--text);
+  font-weight: 700;
 }
 
 body.satExperimentalUi .scTabActive:after,
 body.satExperimentalUi .scTabActive_Hover:after {
-  background: var(--accent);
+  width: 0px;
 }
 
-body.satExperimentalUi .scTabstrip {
-  border-bottom: 2px solid var(--accent);
+body.satExperimentalUi a.scItemThumbnail:hover {
+  background-color: var(--grey3);
+  border-color: var(--grey3);
 }
 
 /**

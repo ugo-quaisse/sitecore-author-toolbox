@@ -33,7 +33,7 @@ document.body.onload = function () {
   if (fromLaunchpad) {
     document.querySelector(".save_settings").innerHTML = "Save your preferences";
     document.querySelector("#scHeader").style.display = "inherit";
-    document.querySelector("#scBack").href = backUrl;
+    document.querySelector("#scBack").href = backUrl ? backUrl : "#";
     document.querySelector("#banner").style.top = "50px";
     document.querySelector("#bannerTitle").style.opacity = "1";
     document.querySelector("#intro").style.marginTop = "50px";
@@ -85,7 +85,9 @@ document.body.onload = function () {
     toggleFeature(storage.feature_workbox, "#feature_workbox", true);
     toggleFeature(storage.feature_contextmenu, "#feature_contextmenu", true);
     toggleFeature(storage.feature_gravatarimage, "#feature_gravatarimage", true);
+    toggleFeature(storage.feature_lockeditems, "#feature_lockeditems", true);
     toggleFeature(storage.feature_helplink, "#feature_helplink", true);
+    toggleFeature(storage.feature_reminder, "#feature_reminder", false);
     toggleFeature(storage.feature_instantsearch, "#feature_instantsearch", true);
     toggleFeature(storage.feature_experimentalui, "#feature_experimentalui", false);
     toggleFeature(storage.feature_contrast_icons, "#feature_contrast_icons", false);
@@ -278,6 +280,10 @@ document.querySelector(".save_sites").onclick = function (event) {
       alert("You have some errors...");
       document.querySelector(".save_sites").innerHTML = "Save your sites";
     } else {
+      let params = new URLSearchParams(window.location.search);
+      params.delete("site");
+      params.delete("name");
+      window.location.search = params;
       document.querySelector(".trackChanges").value = "0";
       document.querySelector("#sitesList").setAttribute("style", "opacity:0.3");
       document.querySelector(".save_sites").innerHTML = "Saving...";
@@ -287,7 +293,7 @@ document.querySelector(".save_sites").onclick = function (event) {
       setTimeout(function () {
         document.querySelector("#sitesList").setAttribute("style", "opacity:1");
         document.querySelector(".save_sites").innerHTML = "Save your sites";
-        location.reload();
+        !window.location.search.includes("configure_domains") ? (window.location.search += "&configure_domains=true") : location.reload();
       }, 1500);
     }
   });
@@ -322,7 +328,9 @@ document.querySelector(".save_settings").onclick = function (event) {
     feature_urlstatus: document.querySelector("#feature_urlstatus").checked,
     feature_contextmenu: document.querySelector("#feature_contextmenu").checked,
     feature_gravatarimage: document.querySelector("#feature_gravatarimage").checked,
+    feature_lockeditems: document.querySelector("#feature_lockeditems").checked,
     feature_helplink: document.querySelector("#feature_helplink").checked,
+    feature_reminder: document.querySelector("#feature_reminder").checked,
     feature_instantsearch: document.querySelector("#feature_instantsearch").checked,
     feature_experimentalui: document.querySelector("#feature_experimentalui").checked,
     feature_contrast_icons: document.querySelector("#feature_contrast_icons").checked,

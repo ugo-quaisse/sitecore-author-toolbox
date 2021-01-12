@@ -84,7 +84,7 @@ body.satExperimentalUi.satDark .scMessageBarTextContainer > .scMessageBar a,
 body.satExperimentalUi.satDark .scMessageBarTextContainer .scMessageBarOption,
 body.satExperimentalUi.satDark .scMessageBarTextContainer .scMessageBarOptions > .scMessageBarOptionBullet {
   color: var(--white) !important;
-  text-decoration-color: var(--white) !important;
+  text-decoration-color: rgb(255 255 255 / 0.7) !important;
   opacity: 0.7;
 }
 
@@ -442,4 +442,8 @@ body.satExperimentalUi.satDark div.scPasswordUI {
 body.satExperimentalUi.satDark ul.dynatree-container,
 body.satExperimentalUi.satDark div.content {
   background-color: var(--black2) !important;
+}
+
+body.satExperimentalUi.satDark .reEditorModesCell {
+  background-color: transparent;
 }

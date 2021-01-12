@@ -60,7 +60,7 @@ const initLiveUrl = (storage) => {
   let scEditorTabs = document.querySelector("div#scEditorTabs");
   let scEditorHeaderVersionsLanguage = document.querySelector(".scEditorHeaderVersionsLanguage");
   let scLanguageTxtLong = scEditorHeaderVersionsLanguage ? scEditorHeaderVersionsLanguage.getAttribute("title") : false;
-  let badge = "Loading...";
+  let badge;
   let barStyle = storage.feature_experimentalui ? "scNeutral" : "scWarning";
   //Live URL
   let liveUrl = getSiteUrl(storage, ScItem.pathFull);
@@ -109,17 +109,17 @@ const initLiveUrl = (storage) => {
 
         //Prepare HTML (scInformation scWarning scError)
         //prettier-ignore
-        let scMessage = `<div id="scMessageBarLiveUrl" class="scMessageBar ` + barStyle + `">
-            <div class="scMessageBarIcon" style="background-image:url(` + global.icon + `)"></div>
+        let scMessage = `<div id="scMessageBarLiveUrl" class="scMessageBar ${barStyle}">
+            <div class="scMessageBarIcon" style="background-image:url(${global.icon})"></div>
             <div class="scMessageBarTextContainer">
               <div class="scMessageBarTitle">Sitecore Live URL
-              <span class="liveUrlLoader">Loading...</span>
-              <span class="liveUrlBadge t-sm t-top hide" onclick="window.open('` + global.launchpadPage + `?configure_domains=true&launchpad=true&url=` + global.windowLocationHref + `')" data-tooltip="Click to configure your domains" title="Click to configure your domains">` + badge + `</span>
+              <span class="liveUrlLoader">Checking...</span>
+              <span class="liveUrlBadge t-sm t-top hide" onclick="window.open('${global.launchpadPage}?configure_domains=true&launchpad=true&url=${global.windowLocationHref}')" data-tooltip="Click to configure your domains" title="Click to configure your domains">${badge}</span>
               <span class="liveUrlStatus"></span>
               </div>
-              <div class="scMessageBarText">To preview this page in <b>"` + scLanguageTxtLong + `".</b></div>
+              <div class="scMessageBarText">To preview this page in <b>"${scLanguageTxtLong}".</b></div>
               <ul class="scMessageBarOptions" style="margin:0px">
-              <li class="scMessageBarOptionBullet"><a href="` + decodeURI(liveUrl) + `" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this link</a> or try <a href="` + alternativeUrl + `" target="_blank" class="scMessageBarOption">this alternative link</a></li>
+              <li class="scMessageBarOptionBullet"><a href="${decodeURI(liveUrl)}" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this link</a> or try <a href="${alternativeUrl}" target="_blank" class="scMessageBarOption">this alternative link</a></li>
               </ul>
               </div>
             </div>`;
@@ -179,7 +179,7 @@ const liveUrlQuickInfo = (sitecoreItemPath) => {
     var url = new URL(sitecoreItemPath);
     cell1.innerHTML = "Live URL:";
     //prettier-ignore
-    cell2.innerHTML = `<a href="` + sitecoreItemPath + `" target="_blank">` + decodeURI(url.origin + url.pathname) + ` <img src="` + global.iconExternalLink + `" style="width: 14px; vertical-align: text-top;" class="scIconCopy" /></a>`;
+    cell2.innerHTML = `<a href="${sitecoreItemPath}" target="_blank">${decodeURI(url.origin + url.pathname)} <img src="${global.iconExternalLink}" style="width: 14px; vertical-align: text-top;" class="scIconCopy" /></a>`;
   }
 };
 
@@ -218,7 +218,7 @@ const checkUrlStatus = (status, source = null, experimental = false) => {
 
   //Update Dom
   liveUrlStatus != null ? (liveUrlStatus.innerHTML = html) : false;
-  liveUrlStatus != null ? liveUrlLoader.remove() : false;
+  liveUrlStatus != null && liveUrlLoader ? liveUrlLoader.remove() : false;
 
   if (experimental) {
     //Update bar color

@@ -1257,14 +1257,14 @@ body.satDark .reMode_html span,
 body.satDark .reMode_selected.reMode_html span {
   color: var(--black3) !important;
 }
-body.satDark .reMode_design span,
-body.satDark .reMode_selected.reMode_design span {
-  color: var(--black8) !important;
+body.satDark .reLayoutWrapper {
+  overflow: hidden;
 }
-body.satDark .reContentCell,
 body.satDark .reContentCell iframe {
-  background-color: var(--grey1) !important;
-  color: var(--white) !important;
+  filter: invert(1) !important;
+}
+body.satDark .Metro.RadEditor .reContentCell {
+  background-color: transparent;
 }
 body.satDark .Row {
   background-color: var(--black2) !important;
@@ -2421,9 +2421,9 @@ body.satDark .Metro.RadEditor .reEditorModes a.reMode_selected:hover {
 }
 
 body.satDark .Metro.RadEditor .reEditorModes .reMode_selected {
-  background-color: var(--black1) !important;
-  color: var(--white) !important;
-  border: 1px solid var(--black1) !important;
+  background-color: var(--black1);
+  color: var(--white);
+  border: 1px solid var(--black1);
 }
 
 body.satDark #EditorBottom {
@@ -2542,6 +2542,7 @@ body.satDark .ui-dialog .ui-dialog-titlebar {
   background-color: var(--black1) !important;
 }
 
+body.satDark .DialogHeader,
 body.satDark .scFormDialogHeader .DialogHeader,
 body.satDark .ui-dialog .ui-dialog-titlebar + .DialogHeader {
   background: var(--black1) !important;

@@ -105,23 +105,22 @@ const insertSavebar = () => {
   let scPrimaryBtn = global.hasModePreview
     ? `<button class="primary scExitButton" onclick="javascript:return scForm.invoke('contenteditor:closepreview', event)">Close Panel</button>`
     : `<button id="scPublishMenuMore" class="grouped" type="button"><span class="scPublishMenuMoreArrow">▾</span></button>
-            <ul class="scPublishMenu">             
+          <ul class="scPublishMenu">             
             <li onclick="javascript:return scForm.invoke('item:setpublishing', event)">Unpublish...</li>
             <li onclick="javascript:return scForm.postEvent(this,event,'item:publishingviewer(id=)')">Scheduler...</li>
             <li onclick="javascript:return scForm.invoke('item:publishnow', event)">Quick Publish...</li>  
-            </ul>
-            <button class="primary primaryGrouped" onclick="javascript:return scForm.postEvent(this,event,'item:publish(id=)')">Save and Publish</button>`;
+          </ul>
+        <button class="primary primaryGrouped" onclick="javascript:return scForm.postEvent(this,event,'item:publish(id=)')">Save and Publish</button>`;
 
-  let scLiveyBtn = !global.hasModePreview && getScItemData().path.includes("/home") ? `<button class="scPreviewButton" onclick="javascript:return scForm.invoke('contenteditor:preview', event)">Preview</button>` : ``;
+  let scPreviewBtn = !global.hasModePreview && getScItemData().path.includes("/home") ? `<button class="scPreviewButton" onclick="javascript:return scForm.invoke('contenteditor:preview', event)">Preview</button>` : ``;
 
   //Save Bar
   //prettier-ignore
-  let scSaveBar =
-    `<div class="scSaveBar">
+  let scSaveBar = `<div class="scSaveBar">
         <div class="scActions">
-            ` + scPrimaryBtn + `
+            ${scPrimaryBtn}
             <button class="scSaveButton" onclick="javascript:return scForm.invoke('contenteditor:save', event)">Save</button>
-            ` + scLiveyBtn + `
+            ${scPreviewBtn}
         </div>
         <div class="scBreadcrumb"></div>
     </div>`;

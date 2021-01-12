@@ -66,11 +66,9 @@ const checkPublishNotification = (storage) => {
       //Variable
       target = document.querySelector("#LastPage");
       let darkMode;
-      var notificationSubTitle = target.querySelector(".sc-text-largevalue").innerHTML;
-      var notificationBody = target.querySelector(".scFieldLabel").innerHTML;
-      if (notificationBody == "Result:") {
-        notificationBody = "Finished " + document.querySelector("#ResultText").value.split("Finished")[1];
-      }
+      var notificationSubTitle = target.querySelector(".sc-text-largevalue") ? target.querySelector(".sc-text-largevalue").innerHTML : false;
+      var notificationBody = target.querySelector(".scFieldLabel") ? target.querySelector(".scFieldLabel").innerHTML : false;
+      notificationBody = notificationBody == "Result:" ? "Finished " + document.querySelector("#ResultText").value.split("Finished")[1] : "";
 
       //Send notification
       sendNotification(notificationSubTitle, notificationBody);

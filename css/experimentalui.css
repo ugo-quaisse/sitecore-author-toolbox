@@ -854,9 +854,17 @@ body.satExperimentalUi #BTAddNewSearch:hover {
 /* Message bar */
 body.satExperimentalUi .scMessageBar {
   border-radius: var(--radius) !important;
-  transition: all ease-in-out 0.3s;
+  transition: all ease-in-out 0.2s;
   transition-delay: 0s;
+  vertical-align: top;
   margin: 25px 20px 20px 20px;
+
+  /* display: inline-flex;
+  min-width: calc(50% - 30px);
+  width: auto;
+  overflow-y: scroll;
+  max-height: 100px;
+  margin: 20px 0px 0px 20px !important; */
 }
 
 body.satExperimentalUi .scMessageBar .scMessageBarIcon {
@@ -1061,6 +1069,10 @@ body.satExperimentalUi .scEditorHeader {
 body.satExperimentalUi .scEditorSections {
   border: 0px;
   margin: 0px !important;
+}
+
+body.satExperimentalUi .scTableHeader {
+  background-color: var(--grey2) !important;
 }
 
 body.satExperimentalUi .scEditorSectionCaptionCollapsed,
@@ -1631,6 +1643,17 @@ body.satExperimentalUi .ui-widget-header {
 } */
 
 /* Dialog box */
+
+body.satExperimentalUi .scFormTable {
+  border-spacing: 10px;
+  border-collapse: separate;
+}
+
+body.satExperimentalUi .sc-text-largevalue {
+  padding: 10px;
+  position: absolute;
+}
+
 body.satExperimentalUi .scDialogContentContainer {
   padding: 0px;
 }
@@ -1848,4 +1871,14 @@ body.satExperimentalUi .contentAreaWrapper .side li a.facetClickSelected {
 
 body.satExperimentalUi .BlogPostExtra {
   color: var(--accent);
+}
+
+body.satExperimentalUi .Metro.RadEditor .reEditorModes .reMode_selected {
+  background-color: var(--accent) !important;
+  color: var(--accentText) !important;
+  border: 1px solid var(--accent);
+}
+
+body.satExperimentalUi .reMode_selected span {
+  color: var(--accentText) !important;
 }

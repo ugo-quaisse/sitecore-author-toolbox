@@ -1712,7 +1712,7 @@ body.satExtension #scPanel {
 }
 
 body.satExtension .CodeMirror {
-  height: 500px !important;
+  height: 100% !important;
   border: 1px solid #cccccc !important;
 }
 

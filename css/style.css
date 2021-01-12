@@ -1043,6 +1043,15 @@ body.satExtension .snackbarSite > button {
   background-color: #37ab62 !important;
 }
 
+.liveUrlLoader {
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 1px 7px;
+  border-radius: 10px;
+  font-size: 11px;
+  vertical-align: text-top;
+  border: 1px solid transparent;
+}
+
 .liveUrlBadge {
   background-color: #897a2f;
   color: #fce99c;
@@ -1703,7 +1712,7 @@ body.satExtension #scPanel {
 }
 
 body.satExtension .CodeMirror {
-  height: 500px !important;
+  height: 100% !important;
   border: 1px solid #cccccc !important;
 }
 

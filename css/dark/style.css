@@ -130,6 +130,7 @@ body.satDark input[type="submit"] {
   border-color: var(--black1) !important;
   background-color: var(--black2) !important;
   background: linear-gradient(to bottom, var(--text) 0%, var(--text) 100%);
+  box-shadow: none;
 }
 
 body.satDark .scButton:hover,

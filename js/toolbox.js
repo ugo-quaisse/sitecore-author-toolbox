@@ -216,7 +216,7 @@ chrome.storage.sync.get((storage) => {
    * Experience Editor detection *
    *******************************
    */
-  if ((global.isEditMode && !global.isLoginPage) || (global.isPreviewMode && !global.isLoginPage)) {
+  if ((global.isEditMode && !global.isLoginPage) || (global.isPreviewMode && !global.isLoginPage) || (global.isSitecoreModule && !global.isLoginPage)) {
     log("Experience Editor detected", "red");
     document.body ? document.body.classList.add("satExtension") : false;
     loadJsFile("js/inject.js");
@@ -242,6 +242,8 @@ chrome.storage.sync.get((storage) => {
       initLanguageMenuEE(storage);
     } else if (global.isInsertPage) {
       log("**** Insert Page ****", "orange");
+    } else if (global.isSitecoreModule) {
+      log("**** Sitecore Module ****", "orange");
     } else {
       log("**** Page in EE ****", "orange");
       addToolbarEditCE(storage);

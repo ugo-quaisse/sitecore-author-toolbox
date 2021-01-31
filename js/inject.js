@@ -229,7 +229,9 @@ const showSitecoreRibbon = () => {
     });
   }
 
-  let dock = document.querySelector(".scDockTop") ? document.querySelector(".scDockTop") : document.querySelector("iframe").contentWindow.document.querySelector(".scDockTop");
+  let dock = document.querySelector(".scDockTop") ? document.querySelector(".scDockTop") : false;
+  !dock && document.querySelector("iframe") ? (dock = document.querySelector("iframe").contentWindow.document.querySelector(".scDockTop")) : false;
+
   if (dock) {
     //Update icon and local storage
     if (dock.classList.contains("showSitecoreRibbon")) {

@@ -74,6 +74,8 @@
 
   --iconBrightness: 0.1;
   --iconContrast: 2;
+
+  --background: #fff;
 }
 
 :root body.satDark {

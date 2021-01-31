@@ -43,9 +43,10 @@ const showSnackbar = (storage) => {
 const showSnackbarSite = (storage, ScItem) => {
   //Get SiteName
   let siteName = ScItem.pathFull.split("/home/")[0].split("/").reverse();
+  let pathToHome = ScItem.pathFull.split("/home/")[0] + "/home/";
 
   //Get site in userstorage (settings)
-  let siteUrl = getSiteUrl(storage, ScItem.pathFull);
+  let siteUrl = getSiteUrl(storage, pathToHome);
 
   //Get Site in locastorage
   let existing = localStorage.getItem("sbDismissSites");
@@ -56,7 +57,7 @@ const showSnackbarSite = (storage, ScItem) => {
   //prettier0ignore
   let snackbarHtml = `<b>"` + siteName[0].toUpperCase() + `" site detected</b><br /> Are you using any live/CD server?<br />Click "Add site" to configure it now.`;
   //prettier-ignore
-  let html = `<div class="snackbarSite">` + snackbarHtml + `<button id="sbActionSite" onclick="addSite('` + global.launchpadPage + `','` + global.urlOrigin + `','` + ScItem.pathFull + `', '` + siteName[0].toUpperCase() + `')">ADD&nbsp;SITE</button><button id="sbDismissSite">DON'T SHOW AGAIN</button></div>`;
+  let html = `<div class="snackbarSite">${snackbarHtml}<button id="sbActionSite" onclick="addSite('${global.launchpadPage}','${global.urlOrigin}','${pathToHome}', '${siteName[0].toUpperCase()}')">ADD&nbsp;SITE</button><button id="sbDismissSite">DON'T SHOW AGAIN</button></div>`;
 
   //Hide previous snackbar
   document.querySelectorAll(".snackbarSite").forEach((div) => {

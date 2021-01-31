@@ -5,7 +5,7 @@ import { log, loadCssFile, sitecoreItemJson, getScItemData } from "./helpers.js"
 import { initLiveUrl } from "./url.js";
 import { checkHelpLink } from "./help.js";
 import { checkReminder } from "./reminder.js";
-import { checkLockedItems } from "./lockitems.js";
+import { checkLockedItems, getItemProperties } from "./items.js";
 import { findCountryName } from "./language.js";
 import { initGroupedErrors } from "./errors.js";
 import { insertSavebar, insertBreadcrumb, insertLanguageButton, insertVersionButton, insertMoreButton } from "./experimentalui.js";
@@ -73,6 +73,7 @@ const sitecoreAuthorToolbox = (storage) => {
   initSyntaxHighlighterScriban(storage);
   checkHelpLink(ScItem.id, ScItem.language, ScItem.version, storage);
   checkReminder(ScItem.id, ScItem.language, ScItem.version, storage);
+  getItemProperties(ScItem.id, ScItem.language, ScItem.version, storage);
   checkLockedItems(ScItem.id, storage);
   initFancyMessageBars(storage);
   initCheckboxes(storage);

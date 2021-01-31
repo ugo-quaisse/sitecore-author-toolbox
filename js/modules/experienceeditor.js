@@ -174,7 +174,7 @@ const addHideRibbonButton = (storage) => {
 
           //Listeners
           document.addEventListener("keydown", (event) => {
-            if (event.key === "Shift") {
+            if (event.ctrlKey && event.shiftKey) {
               exeJsCode(`toggleRibbon()`);
               event.preventDefault();
               event.stopPropagation();

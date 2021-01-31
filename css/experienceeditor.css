@@ -53,7 +53,7 @@ body.satEE .view-render-exception {
   padding: 50px;
 }
 
-body.satEE .zg-variant-switcher {
+/* body.satEE .zg-variant-switcher {
   zoom: 1.1;
   background-color: #f1d500 !important;
   padding: 4px !important;
@@ -75,7 +75,7 @@ body.satEE .zg-variant-switcher .zg-variant-list li.selected {
 
 body.satEE .zg-variant-toggle-dropdown {
   right: 5px !important;
-}
+} */
 
 body.satEE .scChromeToolbar {
   box-shadow: none !important;

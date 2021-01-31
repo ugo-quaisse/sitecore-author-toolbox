@@ -12,6 +12,7 @@ export { getSiteUrl, initLiveUrl, checkUrlStatus };
  * Find and Match site URL with user settings in storage
  */
 const getSiteUrl = (storage, path) => {
+  storage.site_manager == undefined ? (storage.site_manager = true) : false;
   //Get SiteName
   let homePath = path.split("/home/")[0] + "/home/";
   let liveUrl;
@@ -29,7 +30,7 @@ const getSiteUrl = (storage, path) => {
         // console.log("--> Site tracked-> ", homePath.toLowerCase());
         if (siteStorage.toLowerCase() == homePath.toLowerCase()) {
           liveUrl = Object.entries(site)[0][1].slice(-1) == "/" ? decodeURI(Object.entries(site)[0][1].slice(0, -1)) : decodeURI(Object.entries(site)[0][1]);
-          //console.log("--> **Site Manager**", liveUrl);
+          // console.log("--> **Site Manager**", liveUrl);
           break;
         }
       }
@@ -61,7 +62,7 @@ const initLiveUrl = (storage) => {
   let scEditorHeaderVersionsLanguage = document.querySelector(".scEditorHeaderVersionsLanguage");
   let scLanguageTxtLong = scEditorHeaderVersionsLanguage ? scEditorHeaderVersionsLanguage.getAttribute("title") : false;
   let badge;
-  let barStyle = storage.feature_experimentalui ? "scNeutral" : "scWarning";
+  let barStyle = storage.feature_experimentalui ? "scWarning" : "scWarning";
   //Live URL
   let liveUrl = getSiteUrl(storage, ScItem.pathFull);
   let alternativeUrl = window.location.origin + "/?sc_itemid=" + ScItem.id + "&sc_mode=normal&sc_lang=" + ScItem.language + "&sc_version=" + ScItem.version;
@@ -89,20 +90,14 @@ const initLiveUrl = (storage) => {
         //Update live Url
         if (liveUrl == undefined) {
           badge = "CM server";
-          liveUrl = window.location.origin + "/" + ScItem.language + "/" + sitecorePath + "?sc_mode=normal&sc_site=xxxsxa_sitexxx";
+          liveUrl = window.location.origin + "/" + ScItem.language + "/" + sitecorePath;
         } else {
           badge = "CD server";
           liveUrl = liveUrl.includes("{lang}") ? liveUrl.replace("{lang}", ScItem.language) + "/" + sitecorePath : liveUrl + "/" + ScItem.language + "/" + sitecorePath;
         }
 
         //Update alternative Url
-        if (response.farewell) {
-          alternativeUrl = alternativeUrl.replace("xxxsxa_sitexxx", response.farewell);
-          liveUrl = liveUrl.replace("xxxsxa_sitexxx", response.farewell);
-        } else {
-          alternativeUrl = alternativeUrl.replace("&sc_site=xxxsxa_sitexxx", "");
-          liveUrl = liveUrl.replace("&sc_site=xxxsxa_sitexxx", "");
-        }
+        alternativeUrl = response.farewell ? alternativeUrl.replace("xxxsxa_sitexxx", response.farewell) : (alternativeUrl = alternativeUrl.replace("&sc_site=xxxsxa_sitexxx", ""));
 
         //Experimentation
         document.querySelector(".scPreviewButton") ? document.querySelector(".scPreviewButton").setAttribute("style", "display: block") : false;

@@ -115,6 +115,7 @@ body.satExperimentalUi .scMenuButton {
 
 body.satExperimentalUi .sc-globalheader-appName {
   cursor: pointer;
+  margin-left: 0px;
 }
 
 body.satExperimentalUi .scEditorTabControls {
@@ -225,6 +226,15 @@ body.satExperimentalUi #scSitecoreRibbon > span.active {
   margin-left: 14px;
 }
 
+body.satExperimentalUi .scSystemMenu {
+  background: url(chrome-extension://__MSG_@@extension_id__/images/burger.svg) center center no-repeat var(--accent);
+}
+
+body.satExperimentalUi .scSystemMenu a.scSystemMenu:hover {
+  filter: brightness(1.05);
+  background: url(chrome-extension://__MSG_@@extension_id__/images/burger.svg) center center no-repeat var(--accent);
+}
+
 body.satExperimentalUi #EditorTabs #scFlag,
 body.satExperimentalUi #scFlagMenu,
 body.satExperimentalUi .liveUrlStatus > span > img,
@@ -278,6 +288,11 @@ body.satExperimentalUi .showSitecoreRibbon {
 
 body.satExperimentalUi .scSitecoreRibbon {
   transform: rotate(180deg);
+}
+
+body.satExperimentalUi .sc-quickbar-tab.sc-quickbar-tab-selected {
+  border-top: 3px solid var(--accent);
+  margin-bottom: -5px;
 }
 
 body.satExperimentalUi #scAccentColor {
@@ -852,10 +867,20 @@ body.satExperimentalUi #BTAddNewSearch:hover {
 }
 
 /* Message bar */
+body.satExperimentalUi .sc-messageBar,
+body.satExperimentalUi .scMessageBar,
+body.satExperimentalUi .scMessageBar a,
+body.satExperimentalUi .scMessageBar .scMessageBarIcon,
+body.satExperimentalUi .scMessageBar .scMessageBarOptions,
+body.satExperimentalUi .scMessageBar .scMessageBarOptionBullet,
+body.satExperimentalUi .scMessageBar .scMessageBarOption,
+body.satExperimentalUi .scMessageBar .liveUrlLoader,
+body.satExperimentalUi .scMessageBar .liveUrlBadge {
+  transition: background-color ease-out 0.1s, color ease-out 0.1s;
+}
+
 body.satExperimentalUi .scMessageBar {
   border-radius: var(--radius) !important;
-  transition: all ease-in-out 0.2s;
-  transition-delay: 0s;
   vertical-align: top;
   margin: 25px 20px 20px 20px;
 
@@ -867,6 +892,10 @@ body.satExperimentalUi .scMessageBar {
   margin: 20px 0px 0px 20px !important; */
 }
 
+body.satExperimentalUi .scStretch .scMessageBar {
+  margin: 0px;
+}
+
 body.satExperimentalUi .scMessageBar .scMessageBarIcon {
   background-position: center 19px !important;
   padding: 7px !important;
@@ -874,29 +903,14 @@ body.satExperimentalUi .scMessageBar .scMessageBarIcon {
   border-bottom-left-radius: var(--radius) !important;
   border-top-right-radius: 0px !important;
   border-bottom-right-radius: 0px !important;
-  transition: all ease-in-out 0.3s;
-  transition-delay: 0s;
 }
 
 body.satExperimentalUi .scMessageBar .scMessageBarTextContainer .scMessageBarText {
   margin: 7px 0px 0px 0px;
-  transition: all ease-in-out 0.3s;
-  transition-delay: 0s;
 }
 
 body.satExperimentalUi .scMessageBar > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet > span {
   color: var(--text);
-  transition: all ease-in-out 0.3s;
-  transition-delay: 0s;
-}
-
-body.satExperimentalUi .scMessageBar > .scMessageBarOptions,
-body.satExperimentalUi .scMessageBar > .scMessageBarOptionBullet,
-body.satExperimentalUi .scMessageBar > .scMessageBarOption,
-body.satExperimentalUi .scMessageBar > a,
-body.satExperimentalUi .scMessageBar > .liveUrlBadge {
-  transition: all ease-in-out 0.3s;
-  transition-delay: 0s;
 }
 
 /* Neutral message */
@@ -921,6 +935,7 @@ body.satExperimentalUi .scNeutral .liveStatusRed {
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
+body.satExperimentalUi .scNeutral .liveUrlLoader,
 body.satExperimentalUi .scNeutral .liveUrlBadge {
   background-color: var(--grey);
   color: var(--black5);
@@ -948,8 +963,27 @@ body.satExperimentalUi .scInformation .liveStatusRed {
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
+body.satExperimentalUi .scInformation .liveUrlLoader,
 body.satExperimentalUi .scInformation .liveUrlBadge {
   background-color: var(--messageInfoLink);
+}
+
+[data-bind="foreach: notifications" i] > .alert-info {
+  background-color: var(--messageInfoBar) !important;
+  color: var(--grey7) !important;
+}
+
+[data-bind="foreach: notifications" i] > .alert-info > .alert-ico-background {
+  background-color: var(--messageInfoBgIcon) !important;
+}
+
+[data-bind="foreach: notifications" i] > .alert-info > div > .sc-messageBar-messageText {
+  color: var(--messageInfoLink) !important;
+}
+
+[data-bind="foreach: notifications" i] > .alert-info > div > .sc-messageBar-messageText a {
+  color: var(--messageInfoLink) !important;
+  text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
 /* Warning message */
@@ -974,8 +1008,27 @@ body.satExperimentalUi .scWarning .liveStatusRed {
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
+body.satExperimentalUi .scWarning .liveUrlLoader,
 body.satExperimentalUi .scWarning .liveUrlBadge {
   background-color: var(--messageWarningLink);
+}
+
+[data-bind="foreach: warnings" i] > .alert-info {
+  background-color: var(--messageWarningBar) !important;
+  color: var(--grey7) !important;
+}
+
+[data-bind="foreach: warnings" i] > .alert-info > .alert-ico-background {
+  background-color: var(--messageWarningBgIcon) !important;
+}
+
+[data-bind="foreach: warnings" i] > .alert-info > div > .sc-messageBar-messageText {
+  color: var(--messageWarningLink) !important;
+}
+
+[data-bind="foreach: warnings" i] > .alert-info > div > .sc-messageBar-messageText a {
+  color: var(--messageWarningLink) !important;
+  text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
 /* Success message */
@@ -1000,6 +1053,7 @@ body.satExperimentalUi .scSuccess .liveStatusGreen {
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
+body.satExperimentalUi .scSuccess .liveUrlLoader,
 body.satExperimentalUi .scSuccess .liveUrlBadge {
   background-color: var(--messageSuccessLink);
 }
@@ -1026,10 +1080,32 @@ body.satExperimentalUi .scError .liveStatusRed {
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
+body.satExperimentalUi .scError .liveUrlLoader,
 body.satExperimentalUi .scError .liveUrlBadge {
   background-color: var(--messageDangerLink);
 }
 
+[data-bind="foreach: errors" i] > .alert-info {
+  background-color: var(--messageDangerBar) !important;
+  color: var(--grey7) !important;
+}
+
+[data-bind="foreach: errors" i] > .alert-info > .alert-ico-background {
+  background-color: var(--messageDangerBgIcon) !important;
+}
+
+[data-bind="foreach: errors" i] > .alert-info > div > .sc-messageBar-messageText {
+  color: var(--messageDangerLink) !important;
+}
+
+[data-bind="foreach: errors" i] > .alert-info > div > .sc-messageBar-messageText a {
+  color: var(--messageDangerLink) !important;
+  text-decoration-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+/* General bar styling  */
+
+body.satExperimentalUi .liveUrlLoader,
 body.satExperimentalUi .liveUrlBadge {
   color: var(--white);
   font-size: 12px;
@@ -1075,6 +1151,7 @@ body.satExperimentalUi .scTableHeader {
   background-color: var(--grey2) !important;
 }
 
+body.satExperimentalUi .scSection > tbody > tr:first-child > td,
 body.satExperimentalUi .scEditorSectionCaptionCollapsed,
 body.satExperimentalUi .scEditorSectionCaptionExpanded {
   margin: 10px 20px 0px 20px;
@@ -1088,6 +1165,13 @@ body.satExperimentalUi .scEditorSectionCaptionExpanded {
   border-left: none !important;
 }
 
+body.satExperimentalUi .accordion-heading.activeAccordion {
+  background-color: var(--accent);
+  color: var(--accentText);
+}
+
+body.satExperimentalUi .scSection > tbody > tr.scCollapsed:first-child > td,
+body.satExperimentalUi .accordion-heading,
 body.satExperimentalUi .scEditorSectionCaptionCollapsed {
   background-color: var(--black9);
   border-radius: var(--radius);
@@ -1097,8 +1181,25 @@ body.satExperimentalUi .scEditorSectionCaptionCollapsed:hover {
   background-color: var(--black8);
 }
 
-body.satExperimentalUi .scEditorSectionCaptionExpanded > img {
+body.satExperimentalUi .scSection > tbody > tr:first-child > td,
+body.satExperimentalUi .scSection > tbody > tr.scCollapsed:first-child > td,
+body.satExperimentalUi .accordion-heading.activeAccordion,
+body.satExperimentalUi .accordion-heading {
+  border-radius: 0px;
+}
+
+body.satExperimentalUi .scSection {
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+body.satExperimentalUi .scEditorSectionCaptionExpanded > img,
+body.satExperimentalUi .scEditorSectionCaptionExpanded .icon-expand {
   filter: invert(var(--accentInvert));
+}
+
+body.satExperimentalUi .scEditorSectionCaptionExpanded .header-title {
+  color: var(--accentText) !important;
 }
 
 body.satExperimentalUi .scEditorSectionCaptionGlyph {
@@ -1361,7 +1462,7 @@ body.satExperimentalUi #FileList a.scButton.scButtonGrid.selected > img {
 }
 
 body.satExperimentalUi input[type="submit"],
-body.satExperimentalUi .scButton {
+body.satExperimentalUi .scButton:not(".add-rule-button") {
   background-color: var(--grey4);
   color: var(--text);
   font-size: 15px;
@@ -1608,6 +1709,12 @@ body.satExperimentalUi .scLink:hover {
 }
 
 /* RTE */
+
+body.satExperimentalUi #EditorUpdatePanel {
+  padding: 10px;
+  background-color: var(--background);
+}
+
 body.satExperimentalUi .reEditorModesCell {
   background-color: var(--black5);
   height: 30px;
@@ -1651,11 +1758,7 @@ body.satExperimentalUi .scFormTable {
 
 body.satExperimentalUi .sc-text-largevalue {
   padding: 10px;
-  position: absolute;
-}
-
-body.satExperimentalUi .scDialogContentContainer {
-  padding: 0px;
+  position: initial;
 }
 
 body.satExperimentalUi .scTabPage {
@@ -1664,7 +1767,9 @@ body.satExperimentalUi .scTabPage {
 }
 
 body.satExperimentalUi .scTabstrip {
-  padding: 13px 10px 0px 10px;
+  padding: 0px;
+  margin: 0px -15px;
+  width: auto;
   height: fit-content;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 5px;
   border: none;
@@ -1692,6 +1797,7 @@ body.satExperimentalUi .scTabActive_Hover {
   border-bottom: 3px solid var(--accent) !important;
   color: var(--text);
   font-weight: 700;
+  min-height: 43px;
 }
 
 body.satExperimentalUi .scTabActive:after,
@@ -1784,8 +1890,7 @@ body.satExperimentalUi div.scPasswordUI {
   z-index: 10;
 }
 
-body.satExperimentalUi .btn-primary,
-body.satExperimentalUi .sc-quickbar-tab:hover {
+body.satExperimentalUi .btn-primary {
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
   border-radius: var(--radius);
@@ -1805,7 +1910,7 @@ body.satExperimentalUi .sc-quickbar-tab {
 }
 
 body.satExperimentalUi .sc-quickbar-tab:hover {
-  border-bottom: 0px solid transparent !important;
+  text-decoration: none;
 }
 
 body.satExperimentalUi .btn-default {
@@ -1873,12 +1978,54 @@ body.satExperimentalUi .BlogPostExtra {
   color: var(--accent);
 }
 
+body.satExperimentalUi .Metro.RadEditor .reEditorModes .reMode_selected > span {
+  color: var(--accentText) !important;
+}
+
 body.satExperimentalUi .Metro.RadEditor .reEditorModes .reMode_selected {
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
   border: 1px solid var(--accent);
 }
 
-body.satExperimentalUi .reMode_selected span {
+body.satExperimentalUi .Metro.RadEditor .reEditorModes a.reMode_selected:hover {
+  border: 1px solid var(--accent) !important;
+}
+
+/* Personalization  */
+
+body.satExperimentalUi #ComponentPersonalization + label + label {
+  background-image: none !important;
+  display: none;
+}
+
+body.satExperimentalUi label[for="ComponentPersonalization"] {
+  padding: 15px 0px 15px 15px !important;
+  margin-right: 0px !important;
+}
+
+body.satExperimentalUi .action-combo {
+  top: -2px;
+}
+
+body.satExperimentalUi .pick-button:hover {
+  background-color: var(--accent) !important;
   color: var(--accentText) !important;
+}
+
+body.satExperimentalUi.satEE .zg-variant-switcher {
+  background-color: var(--accent) !important;
+  color: var(--accentText) !important;
+}
+
+body.satExperimentalUi.satEE .zg-variant-switcher .zg-variant-list:hover {
+  background-color: var(--accent) !important;
+  color: var(--accentText) !important;
+}
+
+body.satExperimentalUi .scWorkflowChipFinal {
+  background-color: #2bd347;
+  border-radius: 10px;
+  color: #fff;
+  padding: 2px 10px;
 }

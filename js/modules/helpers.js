@@ -74,7 +74,7 @@ const log = (message, color = "yellow") => {
  * Load CSS file
  */
 const loadCssFile = (file) => {
-  var link = document.createElement("link");
+  let link = document.createElement("link");
   link.type = "text/css";
   link.rel = "stylesheet";
   link.href = chrome.runtime.getURL(file);
@@ -85,7 +85,7 @@ const loadCssFile = (file) => {
  * Load Javascript file
  */
 const loadJsFile = (file) => {
-  var script = document.createElement("script");
+  let script = document.createElement("script");
   script.src = chrome.runtime.getURL(file);
   (document.head || document.documentElement).appendChild(script);
   script.remove();

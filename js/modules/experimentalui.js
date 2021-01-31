@@ -231,10 +231,9 @@ const insertMoreButton = () => {
         <li class="separator" onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor')">Edit in Experience Editor...</li>
         <li onclick="javascript:return scForm.invoke('item:setlayoutdetails', event)">Presentation details...</li>
         <li class="separator" onclick="javascript:return scForm.postEvent(this,event,'item:sethelp')">Help texts</li>
-        <li id="scInfoButton">Item details</li>
-        <li onclick="javascript:return scForm.postEvent(this,event,'item:executescript(id=` +
-    ScItem.id +
-    `,db=master,script={1876D433-4FAE-46B2-B2EF-AAA0FDA110E7},scriptDb=master)')">Author statistics</li>
+        <!-- <li id="scInfoButton">Item details</li> -->
+        <li  onclick="javascript:return scForm.postEvent(this,event,'contenteditor:properties')">Item properties</li>
+        <li onclick="javascript:return scForm.postEvent(this,event,'item:executescript(id=${ScItem.id},db=master,script={1876D433-4FAE-46B2-B2EF-AAA0FDA110E7},scriptDb=master)')">Author statistics</li>
         <li class="separator danger" onclick="javascript:return scForm.invoke('item:delete(id=` +
     ScItem.id +
     `)', event)">Delete</li>
@@ -360,7 +359,7 @@ const initColorPicker = (storage) => {
         color = colorPicker.value;
         text = setTextColour(color);
         text == "#ffffff" ? (brightness = 10) : (brightness = 0);
-        text == "#ffffff" ? (invert = 0) : (invert = 1);
+        text == "#ffffff" ? (invert = 1) : (invert = 0);
         text == "#ffffff" ? (borderAlpha = "rgba(255, 255, 255, 0.4)") : (borderAlpha = "rgba(0, 0, 0, 0.4)");
         console.log(invert);
         //Root

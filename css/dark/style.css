@@ -1,3 +1,7 @@
+body.satDark {
+  border: none;
+}
+
 body.satDark .scStartbar,
 body.satDark .sc-fullWidth {
   background-color: var(--black3) !important;
@@ -127,6 +131,7 @@ body.satDark #Cancel {
 
 body.satDark .scButton,
 body.satDark input[type="submit"] {
+  box-shadow: none;
   border-color: var(--black1) !important;
   background-color: var(--black2) !important;
   background: linear-gradient(to bottom, var(--text) 0%, var(--text) 100%);
@@ -2484,6 +2489,9 @@ body.satDark .scEditorSections {
   border-color: var(--black1) !important;
   border-width: 1px 0px 0px 0px !important;
 }
+body.satDark .scEditorSectionPanel > tbody > tr > td {
+  border-top: 1px solid var(--black3);
+}
 body.satDark #scEditorTabs {
   background-color: var(--black1);
 }
@@ -2501,7 +2509,7 @@ body.satDark .scEditorTabEmpty {
 }
 body.satDark .scEditorTabSelected {
   color: var(--text) !important;
-  background-color: var(--black2) !important;
+  background-color: var(--black1) !important;
 }
 
 body.satDark #ContentWrapper,

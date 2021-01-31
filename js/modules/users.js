@@ -147,8 +147,7 @@ const initUserMenu = (storage, type = "CE") => {
 
     if (type == "CE") {
       //prettier-ignore
-      htmlMenu =
-        `<div class="scAccountMenu">
+      htmlMenu = `<div class="scAccountMenu">
         <div class="scAccountMenuWrapper">
         <div class="scAccountColumn scAccountGroup1">
           <ul> 
@@ -161,7 +160,8 @@ const initUserMenu = (storage, type = "CE") => {
             <li onclick="javascript:goToSubmenu(2)" id="scSkip" class="opensubmenu">Theme <span id="scSkip" class="themeMenuHint">Classic</span></li> 
             <li onclick="window.open('${global.launchpadPage}?launchpad=true')">Extension Options</li>
 
-            <li onclick="javascript:return scForm.invoke('contenteditor:close', event)">Log out</li>
+            <li onclick="javascript:return scForm.invoke('system:logout', event)">Log out</li>
+            
           </ul>
         </div>
 
@@ -186,13 +186,12 @@ const initUserMenu = (storage, type = "CE") => {
       </div>`;
     } else if (type == "EE") {
       //prettier-ignore
-      htmlMenu =
-        `<div class="scAccountMenu">
+      htmlMenu = `<div class="scAccountMenu">
           <div class="scAccountMenuWrapper">
             <div class="scAccountColumn scAccountGroup1">
               <ul> 
                 <li onclick="javascript:return scForm.invoke('preferences:changeuserinformation', event)">My profile (${accountUser})</li>
-                <li onclick="javascript:return scForm.invoke('contenteditor:close', event)">Log out</li>
+                <li onclick="javascript:return scForm.invoke('system:logout', event)">Log out</li>
               </ul>
             </div>   
           </div>

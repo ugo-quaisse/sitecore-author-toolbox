@@ -40,12 +40,16 @@ const initDarkMode = (storage) => {
     }
     //Add custom csss for scrollbar on windows
     navigator.platform.indexOf("Win") == 0 ? loadCssFile("css/dark/scrollbars.min.css") : false;
+    //Set new background color
+    document.documentElement.style.setProperty("--background", "#000");
   } else if (storage.feature_darkmode && storage.feature_darkmode_auto && currentColorScheme() == "light") {
     document.body.classList.remove("satDark");
     if (storage.feature_darkmode_auto && document.querySelector(".darkmodeRadio[value='auto']")) {
       document.querySelector(".darkmodeRadio[value='auto']").checked = true;
       document.querySelector(".darkmodeRadio[value='auto']").dispatchEvent(new Event("click"));
     }
+    //Set new background color
+    document.documentElement.style.setProperty("--background", "#fff");
   }
 };
 

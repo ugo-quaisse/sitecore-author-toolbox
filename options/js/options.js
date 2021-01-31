@@ -68,7 +68,7 @@ document.body.onload = function () {
     toggleFeature(storage.feature_errors, "#feature_errors", true);
     toggleFeature(storage.feature_notification, "#feature_notification", true);
     toggleFeature(storage.feature_darkmode, "#feature_darkmode", false);
-    toggleFeature(storage.feature_darkmode_auto, "#feature_darkmode_auto", true);
+    toggleFeature(storage.feature_darkmode_auto, "#feature_darkmode_auto", false);
     toggleFeature(storage.feature_favorites, "#feature_favorites", false);
     toggleFeature(storage.feature_reloadnode, "#feature_reloadnode", true);
     toggleFeature(storage.feature_launchpad, "#feature_launchpad", true);
@@ -76,6 +76,7 @@ document.body.onload = function () {
     toggleFeature(storage.feature_rtl, "#feature_rtl", true);
     toggleFeature(storage.feature_charscount, "#feature_charscount", true);
     toggleFeature(storage.feature_autoexpand, "#feature_autoexpand", true);
+    toggleFeature(storage.feature_quickinfoenhancement, "#feature_quickinfoenhancement", false);
     toggleFeature(storage.feature_translatemode, "#feature_translatemode", false);
     toggleFeature(storage.feature_contenteditor, "#feature_contenteditor", true);
     toggleFeature(storage.feature_experienceeditor, "#feature_experienceeditor", true);
@@ -318,6 +319,7 @@ document.querySelector(".save_settings").onclick = function (event) {
     feature_launchpad_tiles: document.querySelector("#feature_launchpad_tiles").checked,
     feature_charscount: document.querySelector("#feature_charscount").checked,
     feature_autoexpand: document.querySelector("#feature_autoexpand").checked,
+    feature_quickinfoenhancement: document.querySelector("#feature_quickinfoenhancement").checked,
     feature_translatemode: document.querySelector("#feature_translatemode").checked,
     feature_contenteditor: document.querySelector("#feature_contenteditor").checked,
     feature_experienceeditor: document.querySelector("#feature_experienceeditor").checked,

@@ -458,7 +458,7 @@ body.satExtension .scWelcome .clouds {
   background-position: center bottom;
   background-repeat: no-repeat;
   position: relative;
-  bottom: 0;
+  bottom: -1px;
   height: 100%;
   width: 100%;
   margin-top: -200px;
@@ -651,17 +651,23 @@ a.scTileItem .scTileItemIconImage {
   border: 1px solid #e1e1e1;
 }
 
-.scTileItemIcon {
+body.satExtension .scTileItemIcon {
   margin: 0 0;
   width: 50px;
   position: relative;
 }
 
-.scTileItemDetails {
+body.satExtension .scTileItemDetails {
   margin-top: 0px;
   position: relative;
   left: 45px;
   top: -27px;
+}
+
+body.satExtension .scTileItemPane .scTileItemDetails {
+  margin-top: 0px;
+  left: 0px;
+  top: 0px;
 }
 
 /**
@@ -887,6 +893,7 @@ body.satExtension .dark:hover {
   margin-top: -1px !important;
 }
 .scEditorSectionPanel > tbody > tr > td {
+  border-top: 1px solid #ccc;
   padding-top: 20px;
   padding-bottom: 20px;
 }
@@ -900,6 +907,7 @@ body.satExtension #scEditorTabs {
   padding: 0;
   border-bottom: 0px;
   padding-top: 8px;
+  padding-left: 10px;
   background-color: #ffffff;
 }
 #scEditorTabs > ul {
@@ -1338,11 +1346,11 @@ body.satExtension .scInstantSearchResults {
 
 .sc-globalHeader-startButton {
   float: left !important;
+  margin-right: 15px;
 }
 
 .sc-globalheader-appName {
   color: #cccccc;
-  float: left;
   font-size: 1.167em;
   font-weight: normal;
   margin-left: 15px;
@@ -1713,7 +1721,7 @@ body.satExtension #scPanel {
 
 body.satExtension .CodeMirror {
   height: 100% !important;
-  border: 1px solid #cccccc !important;
+  border: none !important;
 }
 
 .hideDesktopHeader {

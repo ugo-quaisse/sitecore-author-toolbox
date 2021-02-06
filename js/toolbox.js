@@ -33,6 +33,7 @@ import { initRteTooltips, initSyntaxHighlighterRte } from "./modules/rte.js";
 import { initPreviewButton, listenPreviewTab } from "./modules/preview.js";
 import { initLaunchpadIcon, initLaunchpadMenu } from "./modules/launchpad.js";
 import { initAutoExpandTree, initTreeGutterTooltips } from "./modules/contenttree.js";
+import { initQuerySuggestions } from "./modules/template.js";
 import { storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor } from "./modules/experienceeditor.js";
 
 /**
@@ -132,6 +133,10 @@ chrome.storage.sync.get((storage) => {
     } else if (global.isWorkbox) {
       log("**** Workbox ****", "orange");
       initAppName(storage, "Workbox");
+    } else if (global.isTemplateBuilder) {
+      log("**** Template Builder ****", "orange");
+      initAppName(storage, "Template Builder");
+      initQuerySuggestions(storage);
     } else {
       log("**** Non identified ****", "orange");
       log(global.windowLocationHref, "green");

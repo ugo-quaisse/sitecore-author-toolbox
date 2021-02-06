@@ -2029,3 +2029,7 @@ body.satExperimentalUi .scWorkflowChipFinal {
   color: #fff;
   padding: 2px 10px;
 }
+
+path.help-icon {
+  fill: var(--accent);
+}

@@ -108,6 +108,7 @@ export const scDatabase = urlParams.get("sc_content");
 export const isGalleryLanguage = windowLocationHref.includes("gallery.language");
 export const isGalleryVersion = windowLocationHref.includes("gallery.version");
 export const isGalleryLinks = windowLocationHref.includes("gallery.links");
+export const isTemplateBuilder = windowLocationHref.includes("templatebuilder");
 export const isLayoutDetails = windowLocationHref.includes("layoutdetails");
 export const isRichText = windowLocationHref.includes("richtext.");
 export const isGalleryLanguageExpEd = windowLocationHref.includes("selectlanguagegallery");

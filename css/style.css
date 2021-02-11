@@ -1724,6 +1724,14 @@ body.satExtension .CodeMirror {
   border: none !important;
 }
 
+body.satExtension .scEditorSectionPanel .CodeMirror {
+  border: 1px solid #cccccc !important;
+}
+
+body.satExtension .CodeMirror-scroll {
+  min-height: 300px;
+}
+
 .hideDesktopHeader {
   margin-top: 0px !important;
 }

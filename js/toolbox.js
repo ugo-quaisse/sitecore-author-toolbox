@@ -25,7 +25,19 @@ import { initAppName, initGravatarImage, initUserMenu } from "./modules/users.js
 import { initInstantSearch, enhancedSitecoreSearch } from "./modules/search.js";
 import { insertModal, insertPanel } from "./modules/insert.js";
 import { initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons } from "./modules/media.js";
-import { initOnboarding, initExperimentalUi, initInsertIcon, initGutter, initColorPicker, initSitecoreRibbon, initContrastedIcons, initSvgAnimation, initEventListeners, initTitleBarDesktop } from "./modules/experimentalui.js";
+import {
+  initOnboarding,
+  initExperimentalUi,
+  initInsertIcon,
+  initGutter,
+  initColorPicker,
+  initSitecoreRibbon,
+  initContrastedIcons,
+  initSvgAnimation,
+  initEventListeners,
+  initTitleBarDesktop,
+  initMaterializeIcons,
+} from "./modules/experimentalui.js";
 import { initFavorites } from "./modules/favorites.js";
 import { initGroupedErrors } from "./modules/errors.js";
 import { enhancedBucketLists } from "./modules/buckets.js";
@@ -79,14 +91,15 @@ chrome.storage.sync.get((storage) => {
         log("**** Experimental ****", "yellow");
         initAppName(storage, "Content Editor");
         initSvgAnimation();
-        insertModal(ScItem.id, ScItem.language, ScItem.version);
+        insertModal(storage, ScItem.id, ScItem.language, ScItem.version);
         insertPanel();
-        initInsertIcon();
+        initInsertIcon(storage);
         initGutter();
         initSitecoreRibbon();
         initEventListeners();
         initTitleBarDesktop();
         initOnboarding();
+        initMaterializeIcons(storage);
       }
     }
 

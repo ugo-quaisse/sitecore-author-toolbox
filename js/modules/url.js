@@ -76,9 +76,10 @@ const initLiveUrl = (storage) => {
   let isSettings = ScItem.pathFull.includes("/settings/");
   let isPresentation = ScItem.pathFull.includes("/presentation/");
   let isEmailTemplate = ScItem.pathFull.includes("/sitecore/content/email/");
+  let isDictionnary = ScItem.template.includes("/sitecore/templates/system/dictionary/");
 
-  //Excluding data, presentation, settings, email
-  if (isContent && !isData && !isPresentation && !isSettings && !isEmailTemplate) {
+  //Excluding data, presentation, settings, email, dictionnary
+  if (isContent && !isData && !isPresentation && !isSettings && !isEmailTemplate && !isDictionnary) {
     //Get user preference
     storage.feature_urls == undefined ? (storage.feature_urls = true) : false;
     storage.feature_urlstatus == undefined ? (storage.feature_urlstatus = true) : false;
@@ -94,6 +95,12 @@ const initLiveUrl = (storage) => {
         } else {
           badge = "CD server";
           liveUrl = liveUrl.includes("{lang}") ? liveUrl.replace("{lang}", ScItem.language) + "/" + sitecorePath : liveUrl + "/" + ScItem.language + "/" + sitecorePath;
+          liveUrl = liveUrl.includes("{nolang}")
+            ? liveUrl
+                .replace("{nolang}/", "")
+                .replace("{nolang}", "")
+                .replace("/" + ScItem.language + "/", "") + sitecorePath
+            : liveUrl + "/" + ScItem.language + "/" + sitecorePath;
         }
 
         //Update alternative Url

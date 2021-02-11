@@ -27,6 +27,8 @@
   --grey13: #343434;
   --grey14: #cdcdcd;
   --grey15: #efefef;
+  --grey16: #f5f6f8;
+  --grey17: #d7d8da;
 
   --lightblue: #1e81ef;
   --blue: #0b84ff;
@@ -40,9 +42,10 @@
   --accentText: #ffffff;
   --accentBrightness: 50;
   --accentInvert: 0;
+  --accentRevert: 1;
   --accentBorder: rgba(255, 255, 255, 0.4);
   --accentFilters: invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg);
-  --radius: 3px;
+  --radius: 4px;
 
   --messageSuccessBgIcon: #8ce99a;
   --messageSuccessIcon: #40c057;
@@ -70,7 +73,8 @@
 
   --white: #fff;
   --whiteFaded: rgba(255, 255, 255, 0.2);
-  --text: #47474e;
+  --text: #263238;
+  --textFaded: #546e7a;
 
   --iconBrightness: 0.1;
   --iconContrast: 2;

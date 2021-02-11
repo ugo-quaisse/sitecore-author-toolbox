@@ -2,10 +2,9 @@
  * Sitecore Expeimental Mode UI, by Ugo Quaisse
  * experimental.css
  */
-
 body.satExperimentalUi {
   -webkit-font-smoothing: antialiased;
-  color: var(--grey1) !important;
+  color: var(--text) !important;
 }
 
 body.satExperimentalUi.contentEditor {
@@ -68,6 +67,10 @@ body.satExperimentalUi #scPanel h3 {
   margin: auto;
 }
 
+body.satExperimentalUi #SearchPanel .scBurgerMenuTitle {
+  color: var(--grey7);
+}
+
 body.satExperimentalUi div#scPageExtendersForm {
   border-bottom: 3px solid var(--accent);
 }
@@ -122,6 +125,10 @@ body.satExperimentalUi .scEditorTabControls {
   display: none;
 }
 
+body.satExperimentalUi .scEditorGrid {
+  background-color: var(--grey16);
+}
+
 /* Sitecore hide */
 
 body.satExperimentalUi .scValidatorPanel,
@@ -158,15 +165,16 @@ body.satExperimentalUi #EditorTabs {
 body.satExperimentalUi #EditorFrames {
   margin-top: 56px;
   height: calc(100% - 115px);
+  background-color: var(--grey16);
 }
 
 body.satExperimentalUi #SearchPanel {
   padding: 18px 18px 16px 18px;
   min-height: 57px;
-  background-color: #e8e6e6;
+  background-color: var(--grey16);
   font-size: 16px;
   font-weight: bold;
-  border-bottom: 1px solid var(--grey);
+  border-bottom: 1px solid var(--grey17);
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -282,6 +290,14 @@ body.satExperimentalUi #scModal .header .close {
   filter: brightness(var(--accentBrightness));
 }
 
+body.satExperimentalUi #scModal .main .scIconModal {
+  min-width: 48px;
+}
+
+body.satExperimentalUi #scModal .main .scIconTextModal {
+  font-weight: 700;
+}
+
 body.satExperimentalUi .showSitecoreRibbon {
   display: block !important;
 }
@@ -312,6 +328,12 @@ body.satExperimentalUi #scAccentColor::-webkit-color-swatch-wrapper {
   border: none;
   border-radius: 10px;
   padding: 0;
+}
+
+body.satExperimentalUi #scAccentColor:focus {
+  outline: none !important;
+  border: 0px !important;
+  box-shadow: none !important;
 }
 
 body.satExperimentalUi .scAccountColumn > ul > li:hover {
@@ -398,6 +420,11 @@ body.satExperimentalUi .scNoVersion > button:hover {
   filter: brightness(0.95);
 }
 
+body.satExperimentalUi .scEditorTabHeaderNormal,
+body.satExperimentalUi .scEditorTabHeaderActive {
+  padding: 0px 30px;
+}
+
 body.satExperimentalUi .scEditorTabHeaderNormal > span.scEditorTabHeaderModified:after,
 body.satExperimentalUi .scEditorTabHeaderActive > span.scEditorTabHeaderModified:after {
   color: var(--accent);
@@ -429,7 +456,7 @@ body.satExperimentalUi .scContentControlImageDetails {
 
 /*Forms*/
 body.satExperimentalUi #Editors input[type="text"] {
-  min-height: 35px;
+  min-height: 34px;
 }
 
 body.satExperimentalUi #Editors input:not([type]),
@@ -440,16 +467,44 @@ body.satExperimentalUi #Editors textarea,
 body.satExperimentalUi #ContentWrapper {
   font-size: 15px;
   line-height: 20px;
-  border-radius: none;
+  border-radius: 0px !important;
   box-shadow: none;
-  padding: 4px 6px;
+  padding: 8px 10px;
   box-sizing: border-box;
+  border-color: var(--grey17);
 }
 
-body.satExperimentalUi #Editors select:not([multiple]) {
-  min-height: 34px !important;
+body.satExperimentalUi #Editors select:not([multiple]):not(.scContentControlMultilistBox) {
+  min-height: 38px !important;
   border-radius: 0px !important;
-  /*-webkit-appearance: initial;*/
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20448%22%20enable-background%3D%22new%200%200%20256%20448%22%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E.arrow%7Bfill%3A%23424242%3B%7D%3C%2Fstyle%3E%3Cpath%20class%3D%22arrow%22%20d%3D%22M255.9%20168c0-4.2-1.6-7.9-4.8-11.2-3.2-3.2-6.9-4.8-11.2-4.8H16c-4.2%200-7.9%201.6-11.2%204.8S0%20163.8%200%20168c0%204.4%201.6%208.2%204.8%2011.4l112%20112c3.1%203.1%206.8%204.6%2011.2%204.6%204.4%200%208.2-1.5%2011.4-4.6l112-112c3-3.2%204.5-7%204.5-11.4z%22%2F%3E%3C%2Fsvg%3E%0A");
+  background-position: right 15px center;
+  background-repeat: no-repeat;
+  background-size: auto 50%;
+}
+
+body.satExperimentalUi #Editors select:not([multiple]),
+body.satExperimentalUi #Editors textarea,
+body.satExperimentalUi #Editors input:not(.scContentControlImage) {
+  border-radius: 2px !important;
+}
+
+body.satExperimentalUi #Editors input:hover:not(.scContentControlImage),
+body.satExperimentalUi #Editors textarea:hover,
+body.satExperimentalUi #Editors select:hover {
+  border-color: var(--text);
+}
+
+body.satExperimentalUi input:focus:not(.scContentControlImage),
+body.satExperimentalUi select:focus,
+body.satExperimentalUi textarea:focus {
+  box-shadow: var(--accent) 0px 0px 0px 1px !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-color: var(--accent) !important;
+  border-image: initial !important;
+  outline: 0px !important;
 }
 
 body.satExperimentalUi .scEditorHeaderQuickInfoInput {
@@ -483,10 +538,11 @@ body.satExperimentalUi .scContentTreeNodeIcon {
 
 body.satExperimentalUi .scContentTreeNodeIcon {
   margin: 0 8px 0 0;
-  transform: scale(1.15);
+  transform: scale(1.2);
   position: relative;
   z-index: 10;
   image-rendering: pixelated;
+  opacity: 0.7;
 }
 
 body.satExperimentalUi .scMenuItemCaption,
@@ -516,10 +572,18 @@ body.satExperimentalUi .scContentTreeNodeGlyph {
   width: 20px !important;
   vertical-align: middle !important;
   filter: grayscale(1);
+  /* display: block;
+  box-sizing: border-box;
+  background: url(chrome-extension://__MSG_@@extension_id__/images/chevron.svg) no-repeat;
+  width: 10px;
+  height: 15px;
+  padding-left: 10px;
+  display: initial;
+  transform: scale(0.6); */
 }
 
 body.satExperimentalUi div.scContentTreeNode {
-  padding: 2px 0px 1px 17px;
+  padding: 2px 0px 1px 20px;
   font-size: 14px;
 }
 
@@ -592,8 +656,11 @@ body.satExperimentalUi #ContentTreePanel a.scContentTreeNodeActive > span {
   color: var(--white) !important;
 }
 
+/* Content Tree text */
+
 body.satExperimentalUi #ContentTreePanel a.scContentTreeNodeNormal > span {
-  color: var(--text);
+  color: var(--textFaded) !important;
+  font-weight: 600;
 }
 
 body.satExperimentalUi #ContentTreePanel a.scContentTreeNodeActive > span > div,
@@ -619,6 +686,12 @@ body.satExperimentalUi #ContentTreePanel a.scContentTreeNodeActive > span {
 
 body.satExperimentalUi #ContentTreePanel a.scContentTreeNodeActive > span > img {
   max-width: 16px;
+}
+
+/* body.satExperimentalUi .scContentTreeNode > img.scContrastedIcon, */
+body.satExperimentalUi #ContentTreePanel a.scContentTreeNodeActive > span > img.scContrastedIcon {
+  filter: invert(var(--accentRevert)) !important;
+  opacity: 1;
 }
 
 body.satExperimentalUi .scGutter {
@@ -670,7 +743,7 @@ body.satExperimentalUi .scEditItemIcon {
 }
 
 body.satExperimentalUi .scInsertItemIconInverted {
-  filter: invert(0);
+  filter: invert(var(--accentInvert)) !important;
 }
 
 /* Content Editor Header */
@@ -793,7 +866,7 @@ body.satExperimentalUi #scEditorTabs > ul > li.scEditorTabSelected:not(.scEditor
 }
 
 body.satExperimentalUi .scEditorTab {
-  background-color: var(--grey5) !important;
+  background-color: rgba(0, 0, 0, 0.05) !important;
 }
 
 body.satExperimentalUi .scEditorTab:hover {
@@ -804,6 +877,7 @@ body.satExperimentalUi .scEditorTab:hover {
 body.satExperimentalUi .scEditorTabSelected {
   background-color: var(--white) !important;
   border-top: 3px solid var(--accent) !important;
+  font-weight: 600 !important;
 }
 
 body.satExperimentalUi .scEditorTabSelected:hover {
@@ -1145,6 +1219,7 @@ body.satExperimentalUi .scEditorHeader {
 body.satExperimentalUi .scEditorSections {
   border: 0px;
   margin: 0px !important;
+  background-color: var(--grey16);
 }
 
 body.satExperimentalUi .scTableHeader {
@@ -1214,7 +1289,7 @@ body.satExperimentalUi .scEditorSectionPanel {
   padding: 15px;
   width: calc(100% - 40px);
   background-color: var(--white);
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0 1px rgb(63 63 68 / 5%), 0 1px 2px 0 rgb(63 63 68 / 15%);
 }
 
 body.satExperimentalUi .scEditorSectionPanel.scTabsRounded {
@@ -1247,6 +1322,12 @@ body.satExperimentalUi a.scContentButton {
 }
 
 /*Instant Search */
+body.satExperimentalUi .scInstantSearch:focus {
+  box-shadow: none !important;
+  border: none !important;
+  outline: none !important;
+}
+
 body.satExperimentalUi .scInstantSearchResults > li:focus,
 body.satExperimentalUi .scInstantSearchResults > li:hover {
   background-color: var(--accent);
@@ -1294,22 +1375,22 @@ body.satExperimentalUi .scEditorFieldLabelAdministrator {
 body.satExperimentalUi .splitter-bar {
   width: 2px;
   margin-left: 0px;
-  background-color: var(--grey4);
+  background-color: var(--grey17);
   z-index: 9 !important;
 }
 
 body.satExperimentalUi .splitter-bar:before,
 body.satExperimentalUi .splitter-bar:after {
-  background-color: var(--grey4);
+  background-color: var(--grey17);
   z-index: 100 !important;
 }
 
 /* Content Editor buttons */
 
 body.satExperimentalUi .scSaveBar {
-  background-color: var(--grey5) !important;
+  background-color: var(--grey16);
   height: 30px;
-  border-bottom: 1px solid var(--grey);
+  border-bottom: 1px solid var(--grey17);
   border-left: 0px;
   z-index: 1000;
   padding: 13px;
@@ -1325,24 +1406,39 @@ body.satExperimentalUi .scSaveBar > .scBreadcrumb {
   padding: 8px;
   text-indent: 0px;
   font-size: 13px;
-  color: var(--text);
+  color: var(--grey7);
   max-width: 60%;
   width: -webkit-fill-available;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
 }
 
 body.satExperimentalUi .scSaveBar > .scBreadcrumb > i {
   font-style: initial;
-  color: #a5a5a5;
-  margin: 1px;
   font-size: 16px;
   vertical-align: middle;
+  padding: 0px 10px;
+  background: url(chrome-extension://__MSG_@@extension_id__/images/treemenu_collapsed.png) no-repeat center center;
+  background-size: contain;
 }
 
 body.satExperimentalUi .scSaveBar > .scBreadcrumb > u {
   cursor: pointer;
+  text-decoration: unset;
+}
+
+body.satExperimentalUi .scSaveBar > .scBreadcrumb > u:hover {
+  text-decoration: underline;
+}
+
+body.satExperimentalUi .scSaveBar > .scBreadcrumb > u:last-child {
+  color: var(--accent);
+}
+
+body.satExperimentalUi .scSaveBar > .scBreadcrumb > u:first-child {
+  color: var(--grey7);
 }
 
 body.satExperimentalUi .scSaveBar > .scActions > .scPublishMenu {
@@ -1402,7 +1498,7 @@ body.satExperimentalUi .scSaveBar > .scActions > button {
 }
 
 body.satExperimentalUi .scPublishMenuMoreArrow {
-  filter: invert(var(--accentInvert));
+  filter: invert(var(--accentInvert)) !important;
 }
 
 body.satExperimentalUi .scBackground {
@@ -1461,6 +1557,13 @@ body.satExperimentalUi #FileList a.scButton.scButtonGrid.selected > img {
   filter: invert(1);
 }
 
+body.satExperimentalUi .scButton {
+  background-image: none;
+  box-shadow: none;
+  background-color: var(--grey4);
+  border-color: var(--grey4);
+}
+
 body.satExperimentalUi input[type="submit"],
 body.satExperimentalUi .scButton:not(".add-rule-button") {
   background-color: var(--grey4);
@@ -1505,9 +1608,22 @@ body.satExperimentalUi .scSaveBar > .scActions > button:disabled {
   opacity: 0.5;
 }
 
+body.satExperimentalUi .scSaveBar > .scActions > button.scSaveButton,
+body.satExperimentalUi .scSaveBar > .scActions > button.scPreviewButton {
+  color: var(--black6);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 12px;
+  min-height: 34px;
+}
+
 body.satExperimentalUi .scSaveBar > .scActions > button.primary {
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 12px;
+  min-height: 34px;
 }
 
 body.satExperimentalUi .scSaveBar > .scActions > button.primaryGrouped {
@@ -1519,7 +1635,7 @@ body.satExperimentalUi .scSaveBar > .scActions > button.primaryGrouped {
 body.satExperimentalUi .scSaveBar > .scActions > button.grouped {
   margin: 0px;
   margin-top: -2px;
-  padding: 7px 10px 8px 10px;
+  padding: 7px 10px;
   margin-right: 5px;
   background-color: var(--accent) !important;
   color: var(--accentText);
@@ -2030,6 +2146,25 @@ body.satExperimentalUi .scWorkflowChipFinal {
   padding: 2px 10px;
 }
 
+body.satExperimentalUi a.scTemplate,
+body.satExperimentalUi a.scTemplate:link,
+body.satExperimentalUi a.scTemplate:visited,
+body.satExperimentalUi a.scTemplate:hover,
+body.satExperimentalUi a.scTemplate:active {
+  color: var(--accent) !important;
+}
+
 path.help-icon {
   fill: var(--accent);
+}
+
+body.satExperimentalUi.satEE .scFrameYellow {
+  box-shadow: 0px 0px 10px 1px var(--accent);
+  background-color: var(--accent) !important;
+}
+
+body.satExperimentalUi .scEditorQuickInfo td:nth-of-type(1) {
+  text-align: left;
+  width: 150px;
+  font-weight: 700;
 }

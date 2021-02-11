@@ -1,7 +1,9 @@
+/* eslint-disable array-element-newline */
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
-import { getScItemData, setTextColour } from "./helpers.js";
+import * as icons from "./icons.js";
+import { getMaterializeIcon, getScItemData, setTextColour } from "./helpers.js";
 // import { getFiltersCss } from "./colors.js";
 
 export {
@@ -24,6 +26,8 @@ export {
   initSvgAnimation,
   initEventListeners,
   initTitleBarDesktop,
+  replaceIcons,
+  initMaterializeIcons,
 };
 
 /**
@@ -137,17 +141,21 @@ const insertSavebar = () => {
 /**
  * Path to Breadcrumb
  */
-const pathToBreadcrumb = (pathname, delimiter = "/", underline = true) => {
+const pathToBreadcrumb = (pathname, delimiter = "", underline = true) => {
   let breadcrumb = "#####";
   let count = 0;
   let elipsis = false;
+  let path, site;
 
   if (pathname) {
-    let path = pathname.toLowerCase() + "/";
+    path = pathname.toLowerCase() + "/";
     path = path.split("/home/");
     if (path[1] != undefined) {
+      site = path[0].split("/").pop();
       path = path[1].split("/");
-      underline ? (breadcrumb += '<u class="home" onclick="javascript:return scForm.invoke(\'contenteditor:home\', event)">Home</u> ') : (breadcrumb += "Home ");
+      underline
+        ? (breadcrumb += `... <i>${delimiter}</i> <u class="scBreadcrumbHome">${site.capitalize()}</u> <i>${delimiter}</i> <u onclick="javascript:return scForm.invoke('contenteditor:home', event)">Home</u> `)
+        : (breadcrumb += `... <i>${delimiter}</i> ${site.capitalize()} <i>${delimiter}</i> Home `);
     } else {
       path = path[0].split("/");
     }
@@ -156,7 +164,7 @@ const pathToBreadcrumb = (pathname, delimiter = "/", underline = true) => {
       count++;
       if (path.length > 8 && count > 3 && count < path.length - 2) {
         if (!elipsis) {
-          level != "" ? (breadcrumb += "<i>" + delimiter + "</i> [...] ") : false;
+          level != "" ? (breadcrumb += "<i>" + delimiter + "</i> ... ") : false;
           elipsis = true;
         }
 
@@ -313,7 +321,7 @@ const initSitecoreRibbon = () => {
  * Get Accent Color
  */
 const getAccentColor = () => {
-  let color, text, brightness, invert;
+  let color, text, brightness, invert, revert;
   let storage = localStorage.getItem("scColorPicker");
   let root = document.documentElement;
   if (storage) {
@@ -321,16 +329,19 @@ const getAccentColor = () => {
     text = setTextColour(color);
     text == "#ffffff" ? (brightness = 10) : (brightness = 0);
     text == "#ffffff" ? (invert = 0) : (invert = 1);
+    text == "#ffffff" ? (revert = 1) : (revert = 0);
     root.style.setProperty("--accent", color);
     root.style.setProperty("--accentText", text);
     root.style.setProperty("--accentBrightness", brightness);
     root.style.setProperty("--accentInvert", invert);
+    root.style.setProperty("--accentRevert", revert);
   } else {
     color = "#ee3524"; //red
     root.style.setProperty("--accent", "#ee3524");
     root.style.setProperty("--accentText", "#ffffff");
     root.style.setProperty("--accentBrightness", 50);
     root.style.setProperty("--accentInvert", 0);
+    root.style.setProperty("--accentRevert", 1);
   }
 
   // let filtersCss = getFiltersCss(color);
@@ -447,7 +458,7 @@ const setInsertIcon = (treeNode) => {
 /**
  * Init Insert action icons (create, edit in EE) in content tree when you hover an item
  */
-const initInsertIcon = () => {
+const initInsertIcon = (storage) => {
   let contentTree = document.querySelector(".scContentTree");
   let treeNode = document.querySelector(".scContentTreeContainer");
   let node, nodeId, nodeIcon, nodeContent;
@@ -461,23 +472,22 @@ const initInsertIcon = () => {
         setInsertIcon(event.path[2].getAttribute("id"));
         node = event.path[2];
       }
+
+      var contrastedIcon = storage.feature_contrast_icons === true ? "scContrastedIcon" : "";
+
       //Updating html structure to allow text-overflow and avoid icons overlap
       if (node && !node.classList.contains("scNoOverlap")) {
         nodeId = node.getAttribute("id").replace("Tree_Node_", "");
         nodeIcon = node.querySelector("span > img").src;
         nodeContent = node.querySelector("span").innerText;
         node.querySelector("span").innerHTML =
-          `<img src="` +
-          nodeIcon +
-          `" width="16" height="16" class="scContentTreeNodeIcon" alt="" border="0"><div ondblclick="javascript:return scForm.postEvent(this,event,'item:rename(id={` +
+          `<img src="${nodeIcon}" width="16" height="16" class="scContentTreeNodeIcon ${contrastedIcon}" alt="" border="0"><div ondblclick="javascript:return scForm.postEvent(this,event,'item:rename(id={` +
           nodeId.replace(
             // eslint-disable-next-line prefer-named-capture-group
             /([0-z]{8})([0-z]{4})([0-z]{4})([0-z]{4})([0-z]{12})/u,
             "$1-$2-$3-$4-$5"
           ) +
-          `})')">` +
-          nodeContent +
-          `</div>`;
+          `})')">${nodeContent}</div>`;
         node.classList.add("scNoOverlap");
       }
     });
@@ -626,5 +636,88 @@ const initTitleBarDesktop = () => {
     document.querySelector(".titleBarDesktop").classList.add("hide");
   } else if (document.querySelector(".titleBarDesktop")) {
     document.querySelector(".titleBarDesktop").classList.remove("hide");
+  }
+};
+
+/**
+ * Replace Glyph Images
+ */
+const replaceIcons = (storage) => {
+  if (storage.feature_contrast_icons === true) {
+    let imgGlyph = document.querySelectorAll(".scContentTree .scContentTreeNodeGlyph, .scContentTree .scContentTreeNodeIcon, .scContentControlTree .scContentTreeNodeGlyph, .scContentControlTree .scContentTreeNodeIcon, #scModal .main img");
+    for (let icon of imgGlyph) {
+      let filename = icon.src.substring(icon.src.lastIndexOf("/") + 1).toLowerCase();
+      //Sitecore tree chevron
+      if (filename.includes("treemenu_expanded.png")) {
+        icon.src = global.iconTreeExpanded;
+      } else if (filename.includes("treemenu_collapsed.png")) {
+        icon.src = global.iconTreeCollapsed;
+      }
+
+      //Loop Json with icons references, find and match
+      for (let entry of Object.entries(icons.jsonIcons)) {
+        if (filename.includes(entry[1].search)) {
+          let path = entry[1].icon.split("::");
+          icon.src = getMaterializeIcon(path[0], path[1]);
+          icon.classList.add("scContrastedIcon");
+          break;
+        }
+      }
+    }
+  }
+};
+
+/**
+ * Replace Glyph Images
+ */
+const initMaterializeIcons = (storage) => {
+  if (storage.feature_contrast_icons === true) {
+    let target, observer;
+    //console.log(icons.jsonIcons);
+    replaceIcons(storage);
+    //Content tree
+    target = document.querySelector(".scContentTree");
+    observer = new MutationObserver(function () {
+      replaceIcons(storage);
+    });
+    //Observer UI
+    target
+      ? observer.observe(target, {
+          attributes: false,
+          childList: true,
+          characterData: false,
+          subtree: true,
+        })
+      : false;
+    //Content tree multiselect
+    target = document.querySelector(".scContentControlTree");
+    observer = new MutationObserver(function () {
+      replaceIcons(storage);
+    });
+    //Observer UI
+    target
+      ? observer.observe(target, {
+          attributes: false,
+          childList: true,
+          characterData: false,
+          subtree: true,
+        })
+      : false;
+    //Modal window
+    setTimeout(function () {
+      target = document.querySelector("#scModal .main");
+      observer = new MutationObserver(function () {
+        replaceIcons(storage);
+      });
+      //Observer UI
+      target
+        ? observer.observe(target, {
+            attributes: false,
+            childList: true,
+            characterData: false,
+            subtree: true,
+          })
+        : false;
+    }, 500);
   }
 };

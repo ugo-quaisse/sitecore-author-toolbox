@@ -15,7 +15,7 @@
 
 import * as global from "./global.js";
 
-export { log, loadCssFile, loadJsFile, exeJsCode, sitecoreItemJson, fetchTimeout, getScItemData, setPlural, setTextColour, repositionElement, startDrag, calcMD5 };
+export { log, loadCssFile, loadJsFile, exeJsCode, getMaterializeIcon, sitecoreItemJson, fetchTimeout, getScItemData, setPlural, setTextColour, repositionElement, startDrag, calcMD5 };
 
 /**
  * Show colored log message in console
@@ -100,6 +100,11 @@ const exeJsCode = (code) => {
   (document.head || document.documentElement).appendChild(script);
   script.remove();
 };
+
+/**
+ * Get Materialize icon
+ */
+const getMaterializeIcon = (folder = "action", icon = "description", theme = "materialiconsoutlined") => chrome.runtime.getURL(`images/icons/src/${folder}/${icon}/${theme}/24px.svg`);
 
 /**
  * Get active Siteore item from Chrome Storage

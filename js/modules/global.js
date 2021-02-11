@@ -94,6 +94,8 @@ export const iconRotate = chrome.runtime.getURL("images/preview_rotate.svg");
 export const iconSun = chrome.runtime.getURL("images/sun.svg");
 export const iconMoon = chrome.runtime.getURL("images/moon.svg");
 export const iconOwl = chrome.runtime.getURL("images/owl.svg");
+export const iconTreeCollapsed = chrome.runtime.getURL("images/treemenu_collapsed.png");
+export const iconTreeExpanded = chrome.runtime.getURL("images/treemenu_expanded.png");
 
 export let timeout;
 export const isSitecore = windowLocationHref.includes("/sitecore/");
@@ -108,6 +110,7 @@ export const scDatabase = urlParams.get("sc_content");
 export const isGalleryLanguage = windowLocationHref.includes("gallery.language");
 export const isGalleryVersion = windowLocationHref.includes("gallery.version");
 export const isGalleryLinks = windowLocationHref.includes("gallery.links");
+export const isSetIcon = windowLocationHref.includes("seticon");
 export const isTemplateBuilder = windowLocationHref.includes("templatebuilder");
 export const isLayoutDetails = windowLocationHref.includes("layoutdetails");
 export const isRichText = windowLocationHref.includes("richtext.");

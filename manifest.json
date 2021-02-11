@@ -31,5 +31,5 @@
     "default_title": "Sitecore Author Toolbox (options)",
     "default_icon": "images/icon.png"
   },
-  "web_accessible_resources": ["images/*", "css/*", "js/*", "audio/*", "options/*"]
+  "web_accessible_resources": ["images/*", "css/*", "js/*", "audio/*", "options/*", "data/icons.json"]
 }

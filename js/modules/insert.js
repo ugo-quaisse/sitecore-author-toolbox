@@ -4,6 +4,7 @@
 
 import * as global from "./global.js";
 import { getScItemData } from "./helpers.js";
+import { replaceIcons } from "./experimentalui.js";
 
 export { insertModal, insertPanel, getRelatedMedia };
 
@@ -44,7 +45,7 @@ const insertPanel = () => {
 /**
  * Insert basic Insert Modal Window
  */
-const insertModal = (sitecoreItemID, scLanguage, scVersion, scItemName = "", mutationObserver = true) => {
+const insertModal = (storage, sitecoreItemID, scLanguage, scVersion, scItemName = "", mutationObserver = true) => {
   var ajax = new XMLHttpRequest();
   ajax.timeout = 7000;
   ajax.open("GET", "/sitecore/shell/default.aspx?xmlcontrol=Gallery.New&id=" + sitecoreItemID + "&la=" + scLanguage + "&vs=" + scVersion + "&db=master", true);
@@ -99,8 +100,7 @@ const insertModal = (sitecoreItemID, scLanguage, scVersion, scItemName = "", mut
 
         for (var options of jsonOptions.subitems) {
           let iconTemp = options[1].replace("/temp/iconcache/", "~/icon/");
-          menuTiles +=
-            '<div class="item"><a href="#" onclick="insertPageClose(); ' + options[2] + '"><img loading="lazy" src="' + iconTemp + '" onerror="this.onerror=null;this.src=\'' + global.iconDocument + "'\"/><br />" + options[0] + "</a></div>";
+          menuTiles += `<div class="item"><a href="#" class="scIconTextModal" onclick="insertPageClose(); ${options[2]}"><img loading="lazy" class="scIconModal" src="${iconTemp}" onerror="this.onerror=null;this.src='${global.iconDocument}'"/><br />${options[0]}</a></div>`;
         }
       }
       //prettier-ignore
@@ -108,6 +108,9 @@ const insertModal = (sitecoreItemID, scLanguage, scVersion, scItemName = "", mut
       let htmlMenu = `<div class="scOverlay"></div><div id="scModal">` + htmlMenuInner + `</div>`;
 
       scModal ? (scModal.innerHTML = htmlMenuInner) : document.querySelector("body").insertAdjacentHTML("beforeend", htmlMenu);
+
+      //If storage.contrasted, we change icons
+      replaceIcons(storage);
 
       //Section below will be executed on load only (true)
       if (mutationObserver) {
@@ -122,7 +125,7 @@ const insertModal = (sitecoreItemID, scLanguage, scVersion, scItemName = "", mut
                 "$1-$2-$3-$4-$5"
               );
               var scItemName = mutation.target.dataset.scitemname;
-              insertModal(scItem, "en", "1", scItemName, false);
+              insertModal(storage, scItem, "en", "1", scItemName, false);
             }
           }
         });

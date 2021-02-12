@@ -8,7 +8,7 @@ import * as global from "./global.js";
 import { setPlural } from "./helpers.js";
 import { getAccentColor } from "./experimentalui.js";
 
-export { getImageInfo, initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons };
+export { getImageInfo, initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons, initUploader };
 
 /**
  * Convert bytes to Size
@@ -213,7 +213,7 @@ const initMediaCounter = () => {
     let scFolderButtons = document.querySelector(".scFolderButtons");
     let scButtonHtml = `<div class="scNoVersion"><p>The folder is empty.</p><br /></div>`;
     if (scFolderButtons) {
-      scFolderButtons.insertAdjacentHTML("afterbegin", scButtonHtml);
+      scFolderButtons.insertAdjacentHTML("afterend", scButtonHtml);
     } else {
       document.querySelectorAll(".scTitle").forEach((el) => {
         el.innerText.toLowerCase().includes("media") ? el.insertAdjacentHTML("beforebegin", scButtonHtml) : false;
@@ -392,5 +392,38 @@ const resizeTable = (id) => {
     cols[i].appendChild(div);
     cols[i].style.position = "relative";
     setListeners(div);
+  }
+};
+
+/**
+ * Init Uploader styling
+ */
+const initUploader = () => {
+  if (document.querySelector("form[data-sc-id='Uploader']")) {
+    //Drag events
+    document.querySelector("form[data-sc-id='Uploader']").addEventListener(
+      "dragover",
+      function (event) {
+        document.querySelector("form[data-sc-id='Uploader']").classList.add("scUploaderOver");
+        event.preventDefault();
+      },
+      false
+    );
+    document.querySelector("form[data-sc-id='Uploader']").addEventListener(
+      "dragleave",
+      function (event) {
+        document.querySelector("form[data-sc-id='Uploader']").classList.remove("scUploaderOver");
+        event.preventDefault();
+      },
+      false
+    );
+    document.querySelector("form[data-sc-id='Uploader']").addEventListener(
+      "drop",
+      function (event) {
+        document.querySelector("form[data-sc-id='Uploader']").classList.remove("scUploaderOver");
+        event.preventDefault();
+      },
+      false
+    );
   }
 };

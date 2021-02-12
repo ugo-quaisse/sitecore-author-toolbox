@@ -425,7 +425,7 @@ function doubleClick(id, itemId) {
 /**
  * Get parent in tree node
  */
-function getParentNode(int = 1, tabLoadingTitle) {
+function getParentNode(int = 1, tabLoadingTitle = "Loading...") {
   var elem = parent.document.querySelector(".scContentTreeNodeActive");
   var count = 0;
   for (; elem && elem !== document; elem = elem.parentNode) {

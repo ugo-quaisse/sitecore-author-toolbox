@@ -932,6 +932,7 @@ body.satExtension #scEditorTabs {
 }
 #scEditorTabs > ul > li:not(.scEditorTabEmpty):hover {
   border-top: 2px solid red;
+  padding: 9px 13px;
 }
 #scEditorTabs > ul > li.scEditorTabSelected:not(.scEditorTabEmpty):hover {
   border-top: 3px solid red !important;
@@ -1682,6 +1683,13 @@ body.satExtension #scModal {
   z-index: 10;
   color: #999999;
   font-size: 14px;
+}
+
+#svgAnimationCircle {
+  opacity: 1;
+  left: calc(50% - 50px);
+  transform: scale(1);
+  margin-top: 150px;
 }
 
 body.satExtension #scPanel {

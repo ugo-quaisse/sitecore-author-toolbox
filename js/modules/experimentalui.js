@@ -14,6 +14,7 @@ export {
   insertLanguageButton,
   insertVersionButton,
   insertMoreButton,
+  insertProfilesButton,
   insertNavigatorButton,
   pathToBreadcrumb,
   initInsertIcon,
@@ -24,6 +25,7 @@ export {
   getParentNode,
   initContrastedIcons,
   initSvgAnimation,
+  initSvgAnimationPublish,
   initEventListeners,
   initTitleBarDesktop,
   replaceIcons,
@@ -150,12 +152,13 @@ const pathToBreadcrumb = (pathname, delimiter = "", underline = true) => {
   if (pathname) {
     path = pathname.toLowerCase() + "/";
     path = path.split("/home/");
+    //If home is part of the path
     if (path[1] != undefined) {
       site = path[0].split("/").pop();
       path = path[1].split("/");
       underline
-        ? (breadcrumb += `... <i>${delimiter}</i> <u class="scBreadcrumbHome">${site.capitalize()}</u> <i>${delimiter}</i> <u onclick="javascript:return scForm.invoke('contenteditor:home', event)">Home</u> `)
-        : (breadcrumb += `... <i>${delimiter}</i> ${site.capitalize()} <i>${delimiter}</i> Home `);
+        ? (breadcrumb += `<i>${delimiter}</i> <u class="scBreadcrumbHome" onclick="getParentNode(` + path.length + `);">${site.capitalize()}</u> <i>${delimiter}</i> <u onclick="getParentNode(` + (path.length - 1) + `);">Home</u> `)
+        : (breadcrumb += `<i>${delimiter}</i> ${site.capitalize()} <i>${delimiter}</i> Home `);
     } else {
       path = path[0].split("/");
     }
@@ -227,9 +230,7 @@ const insertMoreButton = () => {
   //prettier-ignore
   let button =
     `<button class="scEditorHeaderButton" id="scMoreButton" title="More actions" type="button">
-    <img src="` +
-    global.iconMore +
-    `" class="scLanguageIcon">
+    <img src="${global.iconMore}" class="scLanguageIcon">
     </button>
     <ul class="scMoreMenu">
         <li onclick="javascript:if(confirm('Do you really want to create a new version for this item?')) { return scForm.postEvent(this,event,'item:addversion(id=)') }">Add new version</li>
@@ -253,15 +254,15 @@ const insertMoreButton = () => {
   let html =
     `<div class="content">
       <h2>Item details</h2>
-      <h3>Item ID:</h3> <span class="itemDetail">` + ScItem.id + `</span>
-      <h3>Name:</h3> <span class="itemDetail">` + ScItem.name + `</span>
-      <h3>Path:</h3> <span class="itemDetail">` + ScItem.path + `</span>
-      <h3>Template:</h3> <span class="itemDetail">` + ScItem.template + `</span>
-      <h3>Template ID:</h3> <span class="itemDetail">` + ScItem.templateId + `</span>
-      <h3>From:</h3> <span class="itemDetail">` + ScItem.from + `</span>
-      <h3>Owner:</h3> <span class="itemDetail">` + ScItem.owner + `</span>
-      <h3>Language:</h3> <span class="itemDetail">` + ScItem.language + `</span>
-      <h3>Version:</h3> <span class="itemDetail">` + ScItem.version + `</span>
+      <h3>Item ID:</h3> <span class="itemDetail">${ScItem.id}</span>
+      <h3>Name:</h3> <span class="itemDetail">${ScItem.name}</span>
+      <h3>Path:</h3> <span class="itemDetail">${ScItem.path}</span>
+      <h3>Template:</h3> <span class="itemDetail">${ScItem.template}</span>
+      <h3>Template ID:</h3> <span class="itemDetail">${ScItem.templateId}</span>
+      <h3>From:</h3> <span class="itemDetail">${ScItem.from}</span>
+      <h3>Owner:</h3> <span class="itemDetail">${ScItem.owner}</span>
+      <h3>Language:</h3> <span class="itemDetail">${ScItem.language}</span>
+      <h3>Version:</h3> <span class="itemDetail">${ScItem.version}</span>
     </div>`;
   panel ? (panel.innerHTML = html) : false;
 
@@ -275,14 +276,14 @@ const insertVersionButton = (scItemId, scLanguage = "EN", scVersion = 1) => {
   //Button
   let container = document.querySelector(".scEditorTabControlsHolder");
   //prettier-ignore
-  let button = `<button class="scEditorHeaderButton" id="scVersionButton" type="button"><img src="` + global.iconVersion + `" class="scLanguageIcon"> ` + scVersion + ` ▾</button>`;
+  let button = `<button class="scEditorHeaderButton" id="scVersionButton" type="button"><img src="${global.iconVersion}" class="scLanguageIcon"> ${scVersion} ▾</button>`;
   container && !document.querySelector("#scVersionButton") && scVersion != null ? container.insertAdjacentHTML("afterbegin", button) : false;
 
   //Iframe
   document.querySelector("#scVersionIframe") ? document.querySelector("#scVersionIframe").remove() : false;
   let body = document.querySelector("body");
   //prettier-ignore
-  let iframe = `<iframe loading="lazy" id="scVersionIframe" src="/sitecore/shell/default.aspx?xmlcontrol=Gallery.Versions&id=` + scItemId + `&la=` + scLanguage + `&vs=` + scVersion + `&db=master"></iframe>`;
+  let iframe = `<iframe loading="lazy" id="scVersionIframe" src="/sitecore/shell/default.aspx?xmlcontrol=Gallery.Versions&id=${scItemId}&la=${scLanguage}&vs=${scVersion}&db=master"></iframe>`;
   body && !document.querySelector("#scVersionIframe") ? body.insertAdjacentHTML("beforeend", iframe) : false;
 
   //Remove old button
@@ -290,11 +291,22 @@ const insertVersionButton = (scItemId, scLanguage = "EN", scVersion = 1) => {
 };
 
 /**
+ * Insert Profiles button
+ */
+const insertProfilesButton = () => {
+  let container = document.querySelector(".scEditorTabControlsHolder");
+  let button = document.querySelector(".scEditorHeaderCustomizeProfilesIcon")
+    ? `<button class="scEditorHeaderButton" id="scProfilesButton" type="button" onclick="javascript:return scForm.invoke('item:personalize')"><img src="${global.iconProfiles}" class="scLanguageIcon"></button>`
+    : ``;
+  container ? container.insertAdjacentHTML("afterbegin", button) : false;
+};
+
+/**
  * Insert Navigator button
  */
 const insertNavigatorButton = () => {
   let container = document.querySelector(".scEditorTabControlsHolder");
-  let button = `<button class="scEditorHeaderButton" id="scNavigatorButton" type="button"><img src="` + global.iconNotebook + `" class="scLanguageIcon"> ▾</button>`;
+  let button = `<button class="scEditorHeaderButton" id="scNavigatorButton" type="button"><img src="${global.iconNotebook}" class="scLanguageIcon"> ▾</button>`;
   container ? container.insertAdjacentHTML("afterbegin", button) : false;
 
   document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;
@@ -372,7 +384,6 @@ const initColorPicker = (storage) => {
         text == "#ffffff" ? (brightness = 10) : (brightness = 0);
         text == "#ffffff" ? (invert = 1) : (invert = 0);
         text == "#ffffff" ? (borderAlpha = "rgba(255, 255, 255, 0.4)") : (borderAlpha = "rgba(0, 0, 0, 0.4)");
-        console.log(invert);
         //Root
         let root = document.documentElement;
         root.style.setProperty("--accent", color);
@@ -559,6 +570,17 @@ const initSvgAnimation = () => {
 };
 
 /**
+ * Init SVG animation during publish
+ */
+const initSvgAnimationPublish = (storage) => {
+  if (storage.feature_experimentalui) {
+    document.querySelector(".scWizardProgressPage").insertAdjacentHTML("beforebegin", `<div class="scIndeterminateProgress"></div>`);
+    let svgAnimation = `<div id="svgAnimationCircle">` + global.svgAnimationCircle + `</div>`;
+    document.querySelector(".scWizardProgressPage").insertAdjacentHTML("afterbegin", svgAnimation);
+  }
+};
+
+/**
  * Check if User enable Contrasted Icons (only works with Experimental UI)
  */
 const initContrastedIcons = (storage) => {
@@ -644,7 +666,9 @@ const initTitleBarDesktop = () => {
  */
 const replaceIcons = (storage) => {
   if (storage.feature_contrast_icons === true) {
-    let imgGlyph = document.querySelectorAll(".scContentTree .scContentTreeNodeGlyph, .scContentTree .scContentTreeNodeIcon, .scContentControlTree .scContentTreeNodeGlyph, .scContentControlTree .scContentTreeNodeIcon, #scModal .main img");
+    let imgGlyph = document.querySelectorAll(
+      ".scContentTree .scContentTreeNodeGlyph, .scContentTree .scContentTreeNodeIcon, .scContentControlTree .scContentTreeNodeGlyph, .scContentControlTree .scContentTreeNodeIcon, #scModal .main img, .scInstantSearchResults img, .dynatree-container img, .scTabs .scImageContainer > img"
+    );
     for (let icon of imgGlyph) {
       let filename = icon.src.substring(icon.src.lastIndexOf("/") + 1).toLowerCase();
       //Sitecore tree chevron
@@ -662,6 +686,11 @@ const replaceIcons = (storage) => {
           icon.classList.add("scContrastedIcon");
           break;
         }
+      }
+
+      //If media image, no filter
+      if (filename.includes(".ashx")) {
+        icon.classList.add("scIconImage");
       }
     }
   }
@@ -703,8 +732,22 @@ const initMaterializeIcons = (storage) => {
           subtree: true,
         })
       : false;
-    //Modal window
     setTimeout(function () {
+      //Instant search
+      target = document.querySelector(".scInstantSearchResults");
+      observer = new MutationObserver(function () {
+        replaceIcons(storage);
+      });
+      //Observer UI
+      target
+        ? observer.observe(target, {
+            attributes: false,
+            childList: true,
+            characterData: false,
+            subtree: true,
+          })
+        : false;
+      //Modal window
       target = document.querySelector("#scModal .main");
       observer = new MutationObserver(function () {
         replaceIcons(storage);
@@ -718,6 +761,34 @@ const initMaterializeIcons = (storage) => {
             subtree: true,
           })
         : false;
-    }, 500);
+      //Speak UI tree
+      target = document.querySelector("div[data-sc-id='TreeView']");
+      observer = new MutationObserver(function () {
+        replaceIcons(storage);
+      });
+      //Observer UI
+      target
+        ? observer.observe(target, {
+            attributes: true,
+            childList: true,
+            characterData: true,
+            subtree: true,
+          })
+        : false;
+      //EE components
+      target = document.querySelector(".scTabs");
+      observer = new MutationObserver(function () {
+        replaceIcons(storage);
+      });
+      //Observer UI
+      target
+        ? observer.observe(target, {
+            attributes: false,
+            childList: true,
+            characterData: false,
+            subtree: true,
+          })
+        : false;
+    }, 100);
   }
 };

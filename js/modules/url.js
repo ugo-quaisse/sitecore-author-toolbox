@@ -94,13 +94,14 @@ const initLiveUrl = (storage) => {
           liveUrl = window.location.origin + "/" + ScItem.language + "/" + sitecorePath;
         } else {
           badge = "CD server";
+          //Tokens
           liveUrl = liveUrl.includes("{lang}") ? liveUrl.replace("{lang}", ScItem.language) + "/" + sitecorePath : liveUrl + "/" + ScItem.language + "/" + sitecorePath;
-          liveUrl = liveUrl.includes("{nolang}")
-            ? liveUrl
+          liveUrl.includes("{nolang}")
+            ? (liveUrl = liveUrl
                 .replace("{nolang}/", "")
                 .replace("{nolang}", "")
-                .replace("/" + ScItem.language + "/", "") + sitecorePath
-            : liveUrl + "/" + ScItem.language + "/" + sitecorePath;
+                .replace("/" + ScItem.language + "/", "/"))
+            : false;
         }
 
         //Update alternative Url

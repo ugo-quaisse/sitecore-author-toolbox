@@ -131,3 +131,7 @@ body.satEE .scEmptyPlaceholder:hover {
   box-shadow: 0px 0px 10px 1px rgba(241, 213, 0, 0.7);
   border: 1px solid #f1d500 !important;
 }
+
+body.satEE #sxa-toolbox {
+  overflow: scroll;
+}

@@ -54,16 +54,13 @@ const sendNotification = (scTitle, scBody) => {
  * Send a notification to the browser when an action is ended up
  */
 const checkPublishNotification = (storage) => {
-  /**
-   * > 10. Publish notification
-   */
-  let target = document.querySelector("#LastPage");
-  let observer = new MutationObserver(function () {
+  let target, observer;
+  target = document.querySelector("#LastPage");
+  observer = new MutationObserver(function () {
     storage.feature_notification == undefined ? (storage.feature_notification = true) : false;
     storage.feature_experimentalui == undefined ? (storage.feature_experimentalui = false) : false;
 
     if (storage.feature_notification) {
-      //Variable
       target = document.querySelector("#LastPage");
       let darkMode;
       var notificationSubTitle = target.querySelector(".sc-text-largevalue") ? target.querySelector(".sc-text-largevalue").innerHTML : false;

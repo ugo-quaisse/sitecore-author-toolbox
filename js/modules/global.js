@@ -32,6 +32,7 @@ export const iconError = chrome.runtime.getURL("images/error.svg");
 export const iconEdit = chrome.runtime.getURL("images/edit.svg");
 export const iconMedia = chrome.runtime.getURL("images/media.svg");
 export const iconTranslate = chrome.runtime.getURL("images/translate.svg");
+export const iconProfiles = chrome.runtime.getURL("images/profiles.svg");
 export const iconVersion = chrome.runtime.getURL("images/version.svg");
 export const iconLanguage = chrome.runtime.getURL("images/language.svg");
 export const iconMore = chrome.runtime.getURL("images/more.svg");
@@ -176,7 +177,7 @@ export const hasModePreview = windowLocationHref.includes("&mo=preview");
 export const scContentTree = document.querySelector("#ContentTreeHolder");
 
 export const svgAnimation = `
-<svg version="1.1" id="L4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 52 12" enable-background="new 0 0 0 0" xml:space="preserve">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 52 12" enable-background="new 0 0 0 0" xml:space="preserve">
   <circle fill="#fff" stroke="none" cx="6" cy="6" r="6" style="fill: var(--accent)">
     <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.1"></animate>    
   </circle>
@@ -186,6 +187,13 @@ export const svgAnimation = `
   <circle fill="#fff" stroke="none" cx="46" cy="6" r="6" style="fill: var(--accent)">
     <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.3"></animate>     
   </circle>
+</svg>`;
+
+export const svgAnimationCircle = `
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: none; display: block; shape-rendering: auto; animation-play-state: running; animation-delay: 0s;" width="100px" height="100px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+<circle cx="50" cy="50" fill="none" stroke="var(--accent)" stroke-width="5" r="30" stroke-dasharray="141.37166941154067 49.12388980384689" style="animation-play-state: running; animation-delay: 0s;">
+  <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50" keyTimes="0;1" style="animation-play-state: running; animation-delay: 0s;"></animateTransform>
+</circle>
 </svg>`;
 
 export const jsonData = JSON.parse(

@@ -159,6 +159,7 @@ const initUserMenu = (storage, type = "CE") => {
             <li onclick="javascript:goToSubmenu(1)" id="scSkip" class="separator opensubmenu">Dark Mode <span id="scSkip" class="darkMenuHint">Light</span></li>
             <li onclick="javascript:goToSubmenu(2)" id="scSkip" class="opensubmenu">Theme <span id="scSkip" class="themeMenuHint">Classic</span></li> 
             <li onclick="window.open('${global.launchpadPage}?launchpad=true')">Extension Options</li>
+            <li onclick="window.open('${global.launchpadPage}?configure_domains=true&launchpad=true')">Configure you sites</li>
 
             <li onclick="javascript:return scForm.invoke('system:logout', event)">Log out</li>
             
@@ -350,7 +351,7 @@ const initInterfaceEvents = () => {
         //Storage
         chrome.storage.sync.set({
           feature_experimentalui: true,
-          feature_contrast_icons: false,
+          feature_contrast_icons: true,
           feature_cetabs: true,
         });
       }

@@ -8,7 +8,7 @@ import { checkReminder } from "./reminder.js";
 import { checkLockedItems, getItemProperties } from "./items.js";
 import { findCountryName } from "./language.js";
 import { initGroupedErrors } from "./errors.js";
-import { insertSavebar, insertBreadcrumb, insertLanguageButton, insertVersionButton, insertMoreButton } from "./experimentalui.js";
+import { insertSavebar, insertBreadcrumb, insertLanguageButton, insertProfilesButton, insertVersionButton, insertMoreButton } from "./experimentalui.js";
 import { initSyntaxHighlighterScriban } from "./rte.js";
 import { initTabSections } from "./tabs.js";
 import { initRTL } from "./rtl.js";
@@ -16,7 +16,7 @@ import { enhancedTreeSearch } from "./search.js";
 import { initTranslateMode } from "./translate.js";
 import { showSnackbarSite } from "./snackbar.js";
 
-export { sitecoreAuthorToolbox, initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, refreshContentEditor, openFolderTab };
+export { sitecoreAuthorToolbox, initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, refreshContentEditor, openFolderTab, contentTreeScrollTo };
 
 /*
  * Main function executed when the Content Editor refreshes
@@ -61,6 +61,7 @@ const sitecoreAuthorToolbox = (storage) => {
     insertMoreButton();
     insertVersionButton(ScItem.id, ScItem.language, ScItem.version);
     insertLanguageButton(ScItem.id, ScItem.language, ScItem.version);
+    insertProfilesButton();
   }
 
   initTabSections(storage);
@@ -507,4 +508,20 @@ const refreshContentEditor = (storage) => {
   });
   //Observer UI
   target ? observer.observe(target, { attributes: true }) : false;
+};
+
+/*
+ * Once loaded, scroll to position
+ */
+const contentTreeScrollTo = () => {
+  setTimeout(() => {
+    if (document.querySelector(".scContentTreeNodeActive")) {
+      let activeItemPosition = document.querySelector(".scContentTreeNodeActive").getBoundingClientRect().top;
+      let windowHeight = window.innerHeight;
+      if (activeItemPosition > windowHeight) {
+        //prettier-ignore
+        document.querySelector("#ContentTreeInnerPanel").scrollTop = (activeItemPosition - windowHeight) + (windowHeight / 2);
+      }
+    }
+  }, 2000);
 };

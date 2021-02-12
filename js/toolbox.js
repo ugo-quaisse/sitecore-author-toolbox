@@ -20,11 +20,11 @@ import { workboxNotifications } from "./modules/workbox.js";
 import { resumeFromWhereYouLeftOff, historyNavigation } from "./modules/history.js";
 import { checkNotificationPermissions, checkPublishNotification } from "./modules/notification.js";
 import { initFlagRibbonEE, initLanguageMenuEE, initLanguageMenuCE, initFlagsPublishingWindow, initFlagsPublish } from "./modules/language.js";
-import { initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, refreshContentEditor } from "./modules/contenteditor.js";
+import { initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, refreshContentEditor, contentTreeScrollTo } from "./modules/contenteditor.js";
 import { initAppName, initGravatarImage, initUserMenu } from "./modules/users.js";
 import { initInstantSearch, enhancedSitecoreSearch } from "./modules/search.js";
 import { insertModal, insertPanel } from "./modules/insert.js";
-import { initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons } from "./modules/media.js";
+import { initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons, initUploader } from "./modules/media.js";
 import {
   initOnboarding,
   initExperimentalUi,
@@ -34,6 +34,7 @@ import {
   initSitecoreRibbon,
   initContrastedIcons,
   initSvgAnimation,
+  initSvgAnimationPublish,
   initEventListeners,
   initTitleBarDesktop,
   initMaterializeIcons,
@@ -87,6 +88,7 @@ chrome.storage.sync.get((storage) => {
       workboxNotifications(storage);
       historyNavigation();
       showSnackbar(storage);
+      contentTreeScrollTo();
       if (storage.feature_experimentalui) {
         log("**** Experimental ****", "yellow");
         initAppName(storage, "Content Editor");
@@ -203,6 +205,7 @@ chrome.storage.sync.get((storage) => {
       log("**** Publish / Rebuild / Package ****", "orange");
       initCheckboxes(storage);
       initFlagsPublish(storage);
+      initSvgAnimationPublish(storage);
     } else if (global.isUserOptions) {
       log("**** User options ****", "orange");
       document.querySelectorAll(".scTabs > div > fieldset > div").forEach(function (elem) {
@@ -220,8 +223,11 @@ chrome.storage.sync.get((storage) => {
       initCheckboxes(storage);
       initDateTimeField(storage);
       initPasswordField(storage);
+      initMaterializeIcons(storage);
     } else if (global.isDialog || global.isLockedItems) {
       log("**** Dialog UI ****", "orange");
+      initMaterializeIcons(storage);
+      initUploader();
     } else if (global.isSourceBrowser) {
       log("**** Source Browser ****", "orange");
     } else if (global.isGalleryLinks) {

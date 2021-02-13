@@ -574,6 +574,8 @@ const initSvgAnimation = () => {
  */
 const initSvgAnimationPublish = (storage) => {
   if (storage.feature_experimentalui) {
+    document.querySelector("#Exporting > .scFormDialogHeader").insertAdjacentHTML("afterend", `<div class="scIndeterminateProgress"></div>`);
+    document.querySelector("#Uploading > .scFormDialogHeader").insertAdjacentHTML("afterend", `<div class="scIndeterminateProgress"></div>`);
     document.querySelector(".scWizardProgressPage").insertAdjacentHTML("beforebegin", `<div class="scIndeterminateProgress"></div>`);
     let svgAnimation = `<div id="svgAnimationCircle">` + global.svgAnimationCircle + `</div>`;
     document.querySelector(".scWizardProgressPage").insertAdjacentHTML("afterbegin", svgAnimation);

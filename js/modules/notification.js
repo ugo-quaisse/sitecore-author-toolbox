@@ -64,6 +64,7 @@ const checkPublishNotification = (storage) => {
       target = document.querySelector("#LastPage");
       let darkMode;
       var notificationSubTitle = target.querySelector(".sc-text-largevalue") ? target.querySelector(".sc-text-largevalue").innerHTML : false;
+      !notificationSubTitle ? (notificationSubTitle = target.querySelector("#Success > div").innerHTML) : false;
       var notificationBody = target.querySelector(".scFieldLabel") ? target.querySelector(".scFieldLabel").innerHTML : false;
       notificationBody = notificationBody == "Result:" ? "Finished " + document.querySelector("#ResultText").value.split("Finished")[1] : "";
 

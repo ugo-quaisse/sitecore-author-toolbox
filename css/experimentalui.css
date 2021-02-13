@@ -7,6 +7,8 @@ body.satExperimentalUi {
   color: var(--text) !important;
 }
 
+body.satExperimentalUi #EditorPanel,
+body.satExperimentalUi #MainPanel,
 body.sc.satExperimentalUi {
   background-color: var(--experimentalBackground);
 }
@@ -528,6 +530,10 @@ body.satExperimentalUi select option:active,
 body.satExperimentalUi select option:checked {
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
+}
+
+body.satExperimentalUi .dialog-content {
+  background-color: var(--white);
 }
 
 /* Speak UI  */
@@ -1765,7 +1771,16 @@ body.satExperimentalUi .scPopup {
   padding: 5px;
 }
 
-body.satExperimentalUi .sc-insertItem-container.selected,
+body.satExperimentalUi .sc-insertItem-container.selected {
+  border-color: transparent;
+  background-color: transparent;
+}
+body.satExperimentalUi .sc-insertItem-container.selected .sc-insertItem-imageContainer {
+  box-shadow: 0px 0px 0px 3px var(--accent);
+  border-radius: 3px;
+  border-color: transparent;
+  background-color: transparent;
+}
 body.satExperimentalUi .sc-insertItem-container.selected .sc-display-name,
 body.satExperimentalUi .scChecked {
   background-color: var(--accent);

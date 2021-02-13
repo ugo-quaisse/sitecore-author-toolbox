@@ -206,6 +206,12 @@ chrome.storage.sync.get((storage) => {
       initCheckboxes(storage);
       initFlagsPublish(storage);
       initSvgAnimationPublish(storage);
+    } else if (global.isExportSiteWizard) {
+      log("**** Export Site Wizard ****", "orange");
+      initSvgAnimationPublish(storage);
+    } else if (global.isUploadPackage) {
+      log("**** Upload Package ****", "orange");
+      initSvgAnimationPublish(storage);
     } else if (global.isUserOptions) {
       log("**** User options ****", "orange");
       document.querySelectorAll(".scTabs > div > fieldset > div").forEach(function (elem) {

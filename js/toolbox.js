@@ -224,16 +224,19 @@ chrome.storage.sync.get((storage) => {
       log("**** Versions menu ****", "orange");
     } else if (global.isLayoutDetails) {
       log("**** Layout Details ****", "orange");
+    } else if (global.isDialog || global.isLockedItems) {
+      log("**** Dialog UI ****", "orange");
+      initMaterializeIcons(storage);
+      initUploader();
+    } else if (global.isGalleryFavorites) {
+      log("**** Favorites ****", "orange");
+      initMaterializeIcons(storage);
     } else if (global.isXmlControl && !global.isRichText) {
       log("**** XML Control (Window) ****", "orange");
       initCheckboxes(storage);
       initDateTimeField(storage);
       initPasswordField(storage);
       initMaterializeIcons(storage);
-    } else if (global.isDialog || global.isLockedItems) {
-      log("**** Dialog UI ****", "orange");
-      initMaterializeIcons(storage);
-      initUploader();
     } else if (global.isSourceBrowser) {
       log("**** Source Browser ****", "orange");
     } else if (global.isGalleryLinks) {

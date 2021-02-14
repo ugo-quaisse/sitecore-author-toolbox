@@ -2323,3 +2323,7 @@ body.satExperimentalUi .scWizardProgressPage .scSpinner {
 body.satExperimentalUi .scWizardProgressPage .scActionText {
   margin-top: 0px;
 }
+
+body.satExperimentalUi #satFavoritesDrag:hover {
+  background-color: var(--accent);
+}

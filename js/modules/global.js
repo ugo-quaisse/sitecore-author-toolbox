@@ -193,7 +193,7 @@ export const svgAnimation = `
 
 export const svgAnimationCircle = `
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: none; display: block; shape-rendering: auto; animation-play-state: running; animation-delay: 0s;" width="100px" height="100px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-<circle cx="50" cy="50" fill="none" stroke="var(--accent)" stroke-width="5" r="30" stroke-dasharray="141.37166941154067 49.12388980384689" style="animation-play-state: running; animation-delay: 0s;">
+<circle cx="50" cy="50" fill="none" stroke="var(--accent)" stroke-width="3" r="30" stroke-dasharray="141.37166941154067 49.12388980384689" style="animation-play-state: running; animation-delay: 0s;">
   <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50" keyTimes="0;1" style="animation-play-state: running; animation-delay: 0s;"></animateTransform>
 </circle>
 </svg>`;

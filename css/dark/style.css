@@ -1352,7 +1352,7 @@ body.satDark .sc .btn {
 body.satDark .sc .btn .btn-primary {
   color: var(--text) !important;
 }
-body.satDark #sitecorAuthorToolboxFav {
+body.satDark #satFavorites {
   box-shadow: rgba(0, 0, 0, 0.5) 0px -10px 10px 0px;
 }
 body.satDark a.scItemThumbnailSelected,

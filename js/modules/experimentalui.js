@@ -574,11 +574,14 @@ const initSvgAnimation = () => {
  */
 const initSvgAnimationPublish = (storage) => {
   if (storage.feature_experimentalui) {
+    document.querySelector("#Publishing > .scFormDialogHeader").insertAdjacentHTML("afterend", `<div class="scIndeterminateProgress"></div>`);
+    document.querySelector("#Publishing > .scWizardProgressPage").insertAdjacentHTML("afterbegin", `<div id="svgAnimationCircle">${global.svgAnimationCircle}</div>`);
     document.querySelector("#Exporting > .scFormDialogHeader").insertAdjacentHTML("afterend", `<div class="scIndeterminateProgress"></div>`);
+    document.querySelector("#Exporting > .scWizardProgressPage").insertAdjacentHTML("afterbegin", `<div id="svgAnimationCircle">${global.svgAnimationCircle}</div>`);
     document.querySelector("#Uploading > .scFormDialogHeader").insertAdjacentHTML("afterend", `<div class="scIndeterminateProgress"></div>`);
+    document.querySelector("#Uploading > .scWizardProgressPage").insertAdjacentHTML("afterbegin", `<div id="svgAnimationCircle">${global.svgAnimationCircle}</div>`);
     document.querySelector(".scWizardProgressPage").insertAdjacentHTML("beforebegin", `<div class="scIndeterminateProgress"></div>`);
-    let svgAnimation = `<div id="svgAnimationCircle">` + global.svgAnimationCircle + `</div>`;
-    document.querySelector(".scWizardProgressPage").insertAdjacentHTML("afterbegin", svgAnimation);
+    document.querySelector(".scWizardProgressPage").insertAdjacentHTML("afterbegin", `<div id="svgAnimationCircle">${global.svgAnimationCircle}</div>`);
   }
 };
 
@@ -669,7 +672,7 @@ const initTitleBarDesktop = () => {
 const replaceIcons = (storage) => {
   if (storage.feature_contrast_icons === true) {
     let imgGlyph = document.querySelectorAll(
-      ".scContentTree .scContentTreeNodeGlyph, .scContentTree .scContentTreeNodeIcon, .scContentControlTree .scContentTreeNodeGlyph, .scContentControlTree .scContentTreeNodeIcon, #scModal .main img, .scInstantSearchResults img, .dynatree-container img, .scTabs .scImageContainer > img"
+      ".scContentTree .scContentTreeNodeGlyph, .scContentTree .scContentTreeNodeIcon, .scContentControlTree .scContentTreeNodeGlyph, .scContentControlTree .scContentTreeNodeIcon, #scModal .main img, .scInstantSearchResults img, .dynatree-container img, .scTabs .scImageContainer > img, .scStretch img"
     );
     for (let icon of imgGlyph) {
       let filename = icon.src.substring(icon.src.lastIndexOf("/") + 1).toLowerCase();
@@ -734,7 +737,11 @@ const initMaterializeIcons = (storage) => {
           subtree: true,
         })
       : false;
+
     setTimeout(function () {
+      //Favorites
+      target = document.querySelector(".scStretch");
+      target ? replaceIcons(storage) : false;
       //Instant search
       target = document.querySelector(".scInstantSearchResults");
       observer = new MutationObserver(function () {

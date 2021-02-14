@@ -757,8 +757,16 @@ body.satExtension #scPreloader {
   border: 0px;
 }
 
-#sitecorAuthorToolboxFav {
+body.satExtension #satFavorites {
   box-shadow: rgba(235, 235, 235, 0.5) 0px -10px 10px 0px;
+}
+
+body.satExtension #satFavoritesDrag {
+  height: 2px;
+  background-color: var(--grey17);
+  cursor: row-resize;
+  transition: background-color 0.1s ease-in-out 0s !important;
+  z-index: 10001;
 }
 
 #LanguagesPanel > #Languages {

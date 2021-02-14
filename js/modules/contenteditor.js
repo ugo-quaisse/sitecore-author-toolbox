@@ -186,9 +186,9 @@ const sitecoreAuthorToolbox = (storage) => {
   /**
    * Update Favorite Item ID
    */
-  let sitecorAuthorToolboxFav = document.querySelector("#sitecorAuthorToolboxFav");
+  let satFavorites = document.querySelector("#satFavorites");
   let scFavoritesUrl = "../default.aspx?xmlcontrol=Gallery.Favorites&id=" + ScItem.id + "&la=en&vs=1";
-  sitecorAuthorToolboxFav ? (sitecorAuthorToolboxFav.src = scFavoritesUrl) : false;
+  satFavorites ? (satFavorites.src = scFavoritesUrl) : false;
 
   /**
    * Save data in storage

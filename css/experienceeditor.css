@@ -135,3 +135,11 @@ body.satEE .scEmptyPlaceholder:hover {
 body.satEE #sxa-toolbox {
   overflow: scroll;
 }
+
+body.satEE .sc_DropDownItemImage {
+  padding: 0px 10px 0px 0px;
+}
+
+body.satEE .sc_DropDownListItemUsed {
+  background-color: var(--accent);
+}

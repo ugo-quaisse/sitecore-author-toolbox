@@ -451,6 +451,10 @@ export const jsonIcons = JSON.parse(
   {
     "search": "users5",
     "icon": "social::share"
+  },
+  {
+    "search": "organize_",
+    "icon": "content::create"
   }
 ]`
 );

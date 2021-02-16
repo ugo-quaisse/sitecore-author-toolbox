@@ -2,10 +2,20 @@
  * Sitecore Expeimental Mode UI, by Ugo Quaisse
  * experimental.css
  */
-
 body.satExperimentalUi {
   -webkit-font-smoothing: antialiased;
-  color: var(--grey1) !important;
+  color: var(--text) !important;
+}
+
+body.satExperimentalUi .ui-widget-overlay::after {
+  background: url(chrome-extension://dpmlbbpimcmgdlhpdphnijefjchoicmj/images/sc-spinner.svg) center center no-repeat rgb(255, 255, 255);
+  background-size: 70%;
+}
+
+body.satExperimentalUi #EditorPanel,
+body.satExperimentalUi #MainPanel,
+body.sc.satExperimentalUi {
+  background-color: var(--experimentalBackground);
 }
 
 body.satExperimentalUi.contentEditor {
@@ -68,6 +78,10 @@ body.satExperimentalUi #scPanel h3 {
   margin: auto;
 }
 
+body.satExperimentalUi #SearchPanel .scBurgerMenuTitle {
+  color: var(--textFaded);
+}
+
 body.satExperimentalUi div#scPageExtendersForm {
   border-bottom: 3px solid var(--accent);
 }
@@ -115,10 +129,15 @@ body.satExperimentalUi .scMenuButton {
 
 body.satExperimentalUi .sc-globalheader-appName {
   cursor: pointer;
+  margin-left: 0px;
 }
 
 body.satExperimentalUi .scEditorTabControls {
   display: none;
+}
+
+body.satExperimentalUi .scEditorGrid {
+  background-color: var(--experimentalBackground);
 }
 
 /* Sitecore hide */
@@ -157,15 +176,16 @@ body.satExperimentalUi #EditorTabs {
 body.satExperimentalUi #EditorFrames {
   margin-top: 56px;
   height: calc(100% - 115px);
+  background-color: var(--experimentalBackground);
 }
 
 body.satExperimentalUi #SearchPanel {
   padding: 18px 18px 16px 18px;
   min-height: 57px;
-  background-color: #e8e6e6;
+  background-color: var(--experimentalBackground);
   font-size: 16px;
   font-weight: bold;
-  border-bottom: 1px solid var(--grey);
+  border-bottom: 1px solid var(--grey17);
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -225,6 +245,15 @@ body.satExperimentalUi #scSitecoreRibbon > span.active {
   margin-left: 14px;
 }
 
+body.satExperimentalUi .scSystemMenu {
+  background: url(chrome-extension://__MSG_@@extension_id__/images/burger.svg) center center no-repeat var(--accent);
+}
+
+body.satExperimentalUi .scSystemMenu a.scSystemMenu:hover {
+  filter: brightness(1.05);
+  background: url(chrome-extension://__MSG_@@extension_id__/images/burger.svg) center center no-repeat var(--accent);
+}
+
 body.satExperimentalUi #EditorTabs #scFlag,
 body.satExperimentalUi #scFlagMenu,
 body.satExperimentalUi .liveUrlStatus > span > img,
@@ -272,12 +301,25 @@ body.satExperimentalUi #scModal .header .close {
   filter: brightness(var(--accentBrightness));
 }
 
+body.satExperimentalUi #scModal .main .scIconModal {
+  min-width: 48px;
+}
+
+body.satExperimentalUi #scModal .main .scIconTextModal {
+  font-weight: 700;
+}
+
 body.satExperimentalUi .showSitecoreRibbon {
   display: block !important;
 }
 
 body.satExperimentalUi .scSitecoreRibbon {
   transform: rotate(180deg);
+}
+
+body.satExperimentalUi .sc-quickbar-tab.sc-quickbar-tab-selected {
+  border-top: 3px solid var(--accent);
+  margin-bottom: -5px;
 }
 
 body.satExperimentalUi #scAccentColor {
@@ -299,6 +341,12 @@ body.satExperimentalUi #scAccentColor::-webkit-color-swatch-wrapper {
   padding: 0;
 }
 
+body.satExperimentalUi #scAccentColor:focus {
+  outline: none !important;
+  border: 0px !important;
+  box-shadow: none !important;
+}
+
 body.satExperimentalUi .scAccountColumn > ul > li:hover {
   background-color: var(--accent);
   color: var(--accentText);
@@ -311,13 +359,13 @@ body.satExperimentalUi .scEditorFieldMarker {
 body.satExperimentalUi .scLanguageIcon,
 body.satExperimentalUi .scMediaIcon,
 body.satExperimentalUi .scVersionIcon {
-  width: 16px !important;
-  height: 16px !important;
+  /* width: 16px !important;
+  height: 16px !important; */
   vertical-align: sub !important;
 }
 
 body.satExperimentalUi .scMediaIcon {
-  filter: brightness(var(--accentBrightness));
+  filter: invert(var(--accentRevert));
 }
 
 body.satExperimentalUi .scEditorQuickInfo {
@@ -383,6 +431,11 @@ body.satExperimentalUi .scNoVersion > button:hover {
   filter: brightness(0.95);
 }
 
+body.satExperimentalUi .scEditorTabHeaderNormal,
+body.satExperimentalUi .scEditorTabHeaderActive {
+  padding: 0px 30px;
+}
+
 body.satExperimentalUi .scEditorTabHeaderNormal > span.scEditorTabHeaderModified:after,
 body.satExperimentalUi .scEditorTabHeaderActive > span.scEditorTabHeaderModified:after {
   color: var(--accent);
@@ -414,7 +467,7 @@ body.satExperimentalUi .scContentControlImageDetails {
 
 /*Forms*/
 body.satExperimentalUi #Editors input[type="text"] {
-  min-height: 35px;
+  min-height: 34px;
 }
 
 body.satExperimentalUi #Editors input:not([type]),
@@ -425,16 +478,44 @@ body.satExperimentalUi #Editors textarea,
 body.satExperimentalUi #ContentWrapper {
   font-size: 15px;
   line-height: 20px;
-  border-radius: none;
+  border-radius: 0px !important;
   box-shadow: none;
-  padding: 4px 6px;
+  padding: 8px 10px;
   box-sizing: border-box;
+  border-color: var(--grey17);
 }
 
-body.satExperimentalUi #Editors select:not([multiple]) {
-  min-height: 34px !important;
+body.satExperimentalUi #Editors select:not([multiple]):not(.scContentControlMultilistBox) {
+  min-height: 38px !important;
   border-radius: 0px !important;
-  /*-webkit-appearance: initial;*/
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20448%22%20enable-background%3D%22new%200%200%20256%20448%22%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E.arrow%7Bfill%3A%23424242%3B%7D%3C%2Fstyle%3E%3Cpath%20class%3D%22arrow%22%20d%3D%22M255.9%20168c0-4.2-1.6-7.9-4.8-11.2-3.2-3.2-6.9-4.8-11.2-4.8H16c-4.2%200-7.9%201.6-11.2%204.8S0%20163.8%200%20168c0%204.4%201.6%208.2%204.8%2011.4l112%20112c3.1%203.1%206.8%204.6%2011.2%204.6%204.4%200%208.2-1.5%2011.4-4.6l112-112c3-3.2%204.5-7%204.5-11.4z%22%2F%3E%3C%2Fsvg%3E%0A");
+  background-position: right 15px center;
+  background-repeat: no-repeat;
+  background-size: auto 50%;
+}
+
+body.satExperimentalUi #Editors select:not([multiple]),
+body.satExperimentalUi #Editors textarea,
+body.satExperimentalUi #Editors input:not(.scContentControlImage) {
+  border-radius: 2px !important;
+}
+
+body.satExperimentalUi #Editors input:hover:not(.scContentControlImage),
+body.satExperimentalUi #Editors textarea:hover,
+body.satExperimentalUi #Editors select:hover {
+  border-color: var(--text);
+}
+
+body.satExperimentalUi input:focus:not(.scContentControlImage),
+body.satExperimentalUi select:focus,
+body.satExperimentalUi textarea:focus {
+  box-shadow: var(--accent) 0px 0px 0px 1px;
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-color: var(--accent);
+  border-image: initial !important;
+  outline: 0px !important;
 }
 
 body.satExperimentalUi .scEditorHeaderQuickInfoInput {
@@ -456,6 +537,102 @@ body.satExperimentalUi select option:checked {
   color: var(--accentText) !important;
 }
 
+body.satExperimentalUi .dialog-content {
+  background-color: var(--white);
+}
+
+/* Speak UI  */
+
+body.satExperimentalUi .sc-dialogContent {
+  background-color: var(--experimentalBackground);
+}
+
+body.satExperimentalUi .sc-navigation-menu,
+body.satExperimentalUi .sc-navigation-menu .menuroot {
+  background-color: var(--black5);
+}
+
+body.satExperimentalUi .sc-navigation-menu .header {
+  background: unset !important;
+}
+
+body.satExperimentalUi .sc-dialogHeader-content,
+body.satExperimentalUi .sc-dialogContent,
+body.satExperimentalUi .sc-dialogFooter-content {
+  max-width: unset;
+}
+
+body.satExperimentalUi .sc-dialogContent-title {
+  display: none;
+}
+
+body.satExperimentalUi .sc-applicationHeader-row2,
+body.satExperimentalUi .sc-dialogContent-toolbar {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 5px;
+}
+
+body.satExperimentalUi .dynatree-container {
+  zoom: 1.1;
+}
+
+body.satExperimentalUi .sc ul.dynatree-container li {
+  padding: 3px;
+}
+
+body.satExperimentalUi a.sc-button {
+  padding-top: 8px;
+}
+body.satExperimentalUi .scButton,
+body.satExperimentalUi .sc-button {
+  text-transform: uppercase;
+  width: auto;
+  padding: 0px 20px;
+  font-weight: 700;
+  font-family: "Open Sans";
+  height: 34px;
+}
+
+body.satExperimentalUi .sc-iconList-wrap:active,
+body.satExperimentalUi .sc-iconList-wrap.active {
+  background-color: unset;
+}
+
+body.satExperimentalUi a.scItemThumbnail:hover,
+body.satExperimentalUi .scItemThumbnailSelected {
+  background-color: transparent;
+  border-color: transparent;
+  cursor: pointer;
+}
+
+body.satExperimentalUi a.scItemThumbnail:hover .scImageContainer {
+  background-color: var(--grey9);
+}
+
+body.satExperimentalUi .scItemThumbnailSelected .scImageContainer,
+body.satExperimentalUi .sc-iconList-wrap:active .sc-iconList-item,
+body.satExperimentalUi .sc-iconList-wrap.active .sc-iconList-item {
+  border-color: transparent;
+  border-radius: 3px;
+  box-shadow: 0px 0px 0px 3px var(--accent);
+}
+
+/* body.satExperimentalUi .sc-applicationHeader-row1,
+body.satExperimentalUi .sc-applicationHeader-row1:after {
+  background: unset;
+  background-color: var(--accent);
+}
+
+body.satExperimentalUi .sc-applicationHeader-row1 .sc-applicationHeader-title,
+body.satExperimentalUi .sc-applicationHeader-row1 .sc-applicationHeader-breadCrumb a {
+  color: var(--accentText);
+} */
+
+/* body.satExperimentalUi .itemRow.highlighted,
+body.satExperimentalUi .itemRow.highlighted .rcpad {
+  background-color: var(--accent) !important;
+  color: var(--accentText);
+} */
+
 /* Icons */
 
 body.satExperimentalUi .scMenuItemIcon,
@@ -468,10 +645,20 @@ body.satExperimentalUi .scContentTreeNodeIcon {
 
 body.satExperimentalUi .scContentTreeNodeIcon {
   margin: 0 8px 0 0;
-  transform: scale(1.15);
+  transform: scale(1.2);
   position: relative;
   z-index: 10;
   image-rendering: pixelated;
+  opacity: 0.7;
+}
+
+body.satExperimentalUi .scBreadcrumbIcon {
+  margin: 0px;
+  transform: scale(1.2);
+  position: relative;
+  z-index: 10;
+  image-rendering: pixelated;
+  opacity: 0.7;
 }
 
 body.satExperimentalUi .scMenuItemCaption,
@@ -501,10 +688,18 @@ body.satExperimentalUi .scContentTreeNodeGlyph {
   width: 20px !important;
   vertical-align: middle !important;
   filter: grayscale(1);
+  /* display: block;
+  box-sizing: border-box;
+  background: url(chrome-extension://__MSG_@@extension_id__/images/chevron.svg) no-repeat;
+  width: 10px;
+  height: 15px;
+  padding-left: 10px;
+  display: initial;
+  transform: scale(0.6); */
 }
 
 body.satExperimentalUi div.scContentTreeNode {
-  padding: 2px 0px 1px 17px;
+  padding: 2px 0px 1px 20px;
   font-size: 14px;
 }
 
@@ -577,8 +772,11 @@ body.satExperimentalUi #ContentTreePanel a.scContentTreeNodeActive > span {
   color: var(--white) !important;
 }
 
+/* Content Tree text */
+
 body.satExperimentalUi #ContentTreePanel a.scContentTreeNodeNormal > span {
-  color: var(--text);
+  color: var(--textFaded) !important;
+  font-weight: 600;
 }
 
 body.satExperimentalUi #ContentTreePanel a.scContentTreeNodeActive > span > div,
@@ -604,6 +802,29 @@ body.satExperimentalUi #ContentTreePanel a.scContentTreeNodeActive > span {
 
 body.satExperimentalUi #ContentTreePanel a.scContentTreeNodeActive > span > img {
   max-width: 16px;
+}
+
+body.satExperimentalUi #satFavorites {
+  box-shadow: unset;
+}
+
+/* body.satExperimentalUi .scContentTreeNode > img.scContrastedIcon, */
+body.satExperimentalUi .scMenuItemIcon_Hover img.scContrastedIcon,
+body.satExperimentalUi .scContentControlTree .scContentTreeNodeNormal:hover img.scContrastedIcon,
+body.satExperimentalUi .scContentTreeNodeActive img.scContrastedIcon {
+  filter: invert(var(--accentRevert)) !important;
+  opacity: 1;
+}
+
+body.satExperimentalUi #ContentTreePanel img.scIconImage {
+  filter: unset !important;
+  opacity: unset !important;
+}
+
+body.satExperimentalUi .scInstantSearchResults img.scContrastedIcon {
+  max-width: 16px;
+  filter: invert(1);
+  opacity: 0.3;
 }
 
 body.satExperimentalUi .scGutter {
@@ -655,7 +876,7 @@ body.satExperimentalUi .scEditItemIcon {
 }
 
 body.satExperimentalUi .scInsertItemIconInverted {
-  filter: invert(0);
+  filter: invert(var(--accentInvert)) !important;
 }
 
 /* Content Editor Header */
@@ -711,7 +932,24 @@ body.satExperimentalUi .scEditorHeaderButton > img {
 
 /*Overlay*/
 body.satExperimentalUi iframe.ui-widget-content {
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 15px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Uploader */
+body.satExperimentalUi .sc-uploader {
+  border: 2px dashed var(--grey);
+  background-color: rgba(0, 0, 0, 0.075);
+  width: 50%;
+  margin: auto;
+}
+
+body.satExperimentalUi .scUploaderOver {
+  border: 2px dashed var(--accent);
+}
+
+body.satExperimentalUi .scUploaderOver .btn-default {
+  background-color: var(--accent) !important;
+  color: var(--accentText) !important;
 }
 
 /*Iframe */
@@ -778,17 +1016,13 @@ body.satExperimentalUi #scEditorTabs > ul > li.scEditorTabSelected:not(.scEditor
 }
 
 body.satExperimentalUi .scEditorTab {
-  background-color: var(--grey5) !important;
-}
-
-body.satExperimentalUi .scEditorTab:hover {
-  border-top: 2px solid var(--grey2) !important;
-  border-bottom: 0px solid transparent !important;
+  background-color: rgba(0, 0, 0, 0.05) !important;
 }
 
 body.satExperimentalUi .scEditorTabSelected {
   background-color: var(--white) !important;
   border-top: 3px solid var(--accent) !important;
+  font-weight: 600 !important;
 }
 
 body.satExperimentalUi .scEditorTabSelected:hover {
@@ -839,9 +1073,9 @@ body.satExperimentalUi #BTAddNewSearch {
   border-bottom: 3px solid transparent !important;
   background-image: url("chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.svg"), none !important;
   background-size: 16px 16px !important;
+  opacity: 0.5;
 }
 
-body.satExperimentalUi #BTAddNewSearch:active,
 body.satExperimentalUi #BTAddNewSearch:hover {
   background-color: transparent !important;
   border-bottom: 3px solid var(--grey2);
@@ -852,10 +1086,20 @@ body.satExperimentalUi #BTAddNewSearch:hover {
 }
 
 /* Message bar */
+body.satExperimentalUi .sc-messageBar,
+body.satExperimentalUi .scMessageBar,
+body.satExperimentalUi .scMessageBar a,
+body.satExperimentalUi .scMessageBar .scMessageBarIcon,
+body.satExperimentalUi .scMessageBar .scMessageBarOptions,
+body.satExperimentalUi .scMessageBar .scMessageBarOptionBullet,
+body.satExperimentalUi .scMessageBar .scMessageBarOption,
+body.satExperimentalUi .scMessageBar .liveUrlLoader,
+body.satExperimentalUi .scMessageBar .liveUrlBadge {
+  transition: background-color ease-out 0.1s, color ease-out 0.1s;
+}
+
 body.satExperimentalUi .scMessageBar {
   border-radius: var(--radius) !important;
-  transition: all ease-in-out 0.2s;
-  transition-delay: 0s;
   vertical-align: top;
   margin: 25px 20px 20px 20px;
 
@@ -867,6 +1111,10 @@ body.satExperimentalUi .scMessageBar {
   margin: 20px 0px 0px 20px !important; */
 }
 
+body.satExperimentalUi .scStretch .scMessageBar {
+  margin: 0px;
+}
+
 body.satExperimentalUi .scMessageBar .scMessageBarIcon {
   background-position: center 19px !important;
   padding: 7px !important;
@@ -874,29 +1122,14 @@ body.satExperimentalUi .scMessageBar .scMessageBarIcon {
   border-bottom-left-radius: var(--radius) !important;
   border-top-right-radius: 0px !important;
   border-bottom-right-radius: 0px !important;
-  transition: all ease-in-out 0.3s;
-  transition-delay: 0s;
 }
 
 body.satExperimentalUi .scMessageBar .scMessageBarTextContainer .scMessageBarText {
   margin: 7px 0px 0px 0px;
-  transition: all ease-in-out 0.3s;
-  transition-delay: 0s;
 }
 
 body.satExperimentalUi .scMessageBar > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet > span {
   color: var(--text);
-  transition: all ease-in-out 0.3s;
-  transition-delay: 0s;
-}
-
-body.satExperimentalUi .scMessageBar > .scMessageBarOptions,
-body.satExperimentalUi .scMessageBar > .scMessageBarOptionBullet,
-body.satExperimentalUi .scMessageBar > .scMessageBarOption,
-body.satExperimentalUi .scMessageBar > a,
-body.satExperimentalUi .scMessageBar > .liveUrlBadge {
-  transition: all ease-in-out 0.3s;
-  transition-delay: 0s;
 }
 
 /* Neutral message */
@@ -921,6 +1154,7 @@ body.satExperimentalUi .scNeutral .liveStatusRed {
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
+body.satExperimentalUi .scNeutral .liveUrlLoader,
 body.satExperimentalUi .scNeutral .liveUrlBadge {
   background-color: var(--grey);
   color: var(--black5);
@@ -948,8 +1182,27 @@ body.satExperimentalUi .scInformation .liveStatusRed {
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
+body.satExperimentalUi .scInformation .liveUrlLoader,
 body.satExperimentalUi .scInformation .liveUrlBadge {
   background-color: var(--messageInfoLink);
+}
+
+[data-bind="foreach: notifications" i] > .alert-info {
+  background-color: var(--messageInfoBar) !important;
+  color: var(--grey7) !important;
+}
+
+[data-bind="foreach: notifications" i] > .alert-info > .alert-ico-background {
+  background-color: var(--messageInfoBgIcon) !important;
+}
+
+[data-bind="foreach: notifications" i] > .alert-info > div > .sc-messageBar-messageText {
+  color: var(--messageInfoLink) !important;
+}
+
+[data-bind="foreach: notifications" i] > .alert-info > div > .sc-messageBar-messageText a {
+  color: var(--messageInfoLink) !important;
+  text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
 /* Warning message */
@@ -974,8 +1227,27 @@ body.satExperimentalUi .scWarning .liveStatusRed {
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
+body.satExperimentalUi .scWarning .liveUrlLoader,
 body.satExperimentalUi .scWarning .liveUrlBadge {
   background-color: var(--messageWarningLink);
+}
+
+[data-bind="foreach: warnings" i] > .alert-info {
+  background-color: var(--messageWarningBar) !important;
+  color: var(--grey7) !important;
+}
+
+[data-bind="foreach: warnings" i] > .alert-info > .alert-ico-background {
+  background-color: var(--messageWarningBgIcon) !important;
+}
+
+[data-bind="foreach: warnings" i] > .alert-info > div > .sc-messageBar-messageText {
+  color: var(--messageWarningLink) !important;
+}
+
+[data-bind="foreach: warnings" i] > .alert-info > div > .sc-messageBar-messageText a {
+  color: var(--messageWarningLink) !important;
+  text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
 /* Success message */
@@ -1000,6 +1272,7 @@ body.satExperimentalUi .scSuccess .liveStatusGreen {
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
+body.satExperimentalUi .scSuccess .liveUrlLoader,
 body.satExperimentalUi .scSuccess .liveUrlBadge {
   background-color: var(--messageSuccessLink);
 }
@@ -1026,10 +1299,32 @@ body.satExperimentalUi .scError .liveStatusRed {
   text-decoration-color: rgba(0, 0, 0, 0.15) !important;
 }
 
+body.satExperimentalUi .scError .liveUrlLoader,
 body.satExperimentalUi .scError .liveUrlBadge {
   background-color: var(--messageDangerLink);
 }
 
+[data-bind="foreach: errors" i] > .alert-info {
+  background-color: var(--messageDangerBar) !important;
+  color: var(--grey7) !important;
+}
+
+[data-bind="foreach: errors" i] > .alert-info > .alert-ico-background {
+  background-color: var(--messageDangerBgIcon) !important;
+}
+
+[data-bind="foreach: errors" i] > .alert-info > div > .sc-messageBar-messageText {
+  color: var(--messageDangerLink) !important;
+}
+
+[data-bind="foreach: errors" i] > .alert-info > div > .sc-messageBar-messageText a {
+  color: var(--messageDangerLink) !important;
+  text-decoration-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+/* General bar styling  */
+
+body.satExperimentalUi .liveUrlLoader,
 body.satExperimentalUi .liveUrlBadge {
   color: var(--white);
   font-size: 12px;
@@ -1041,8 +1336,12 @@ body.satExperimentalUi .liveUrlBadge:hover {
   border-color: inherit;
 }
 
+body.satExperimentalUi .scConfirmationIcon.scContrastedIcon {
+  width: 48px;
+}
+
 body.satExperimentalUi .scConfirmationContainer {
-  border-spacing: 10px;
+  /* border-spacing: 10px; */
   border-collapse: separate;
 }
 
@@ -1069,12 +1368,16 @@ body.satExperimentalUi .scEditorHeader {
 body.satExperimentalUi .scEditorSections {
   border: 0px;
   margin: 0px !important;
+  background-color: var(--experimentalBackground);
 }
 
 body.satExperimentalUi .scTableHeader {
   background-color: var(--grey2) !important;
 }
 
+body.satExperimentalUi .scSection > tbody > tr:first-child > td,
+body.satExperimentalUi .scWorkBoxMainHeader,
+body.satExperimentalUi .scBackground,
 body.satExperimentalUi .scEditorSectionCaptionCollapsed,
 body.satExperimentalUi .scEditorSectionCaptionExpanded {
   margin: 10px 20px 0px 20px;
@@ -1088,6 +1391,25 @@ body.satExperimentalUi .scEditorSectionCaptionExpanded {
   border-left: none !important;
 }
 
+body.satExperimentalUi .scBackground,
+body.satExperimentalUi .scWorkBoxMainHeader {
+  margin: 0px;
+}
+
+body.satExperimentalUi .scSectionCenter,
+body.satExperimentalUi .scPaneHeader {
+  border-left: 5px solid var(--accent);
+}
+
+body.satExperimentalUi .accordion-heading.activeAccordion {
+  background-color: var(--accent);
+  color: var(--accentText);
+}
+
+body.satExperimentalUi .scSection > tbody > tr.scCollapsed:first-child > td,
+body.satExperimentalUi .scCollapsed,
+body.satExperimentalUi .scCollapsed .scPaneHeader,
+body.satExperimentalUi .accordion-heading,
 body.satExperimentalUi .scEditorSectionCaptionCollapsed {
   background-color: var(--black9);
   border-radius: var(--radius);
@@ -1097,8 +1419,25 @@ body.satExperimentalUi .scEditorSectionCaptionCollapsed:hover {
   background-color: var(--black8);
 }
 
-body.satExperimentalUi .scEditorSectionCaptionExpanded > img {
+body.satExperimentalUi .scSection > tbody > tr:first-child > td,
+body.satExperimentalUi .scSection > tbody > tr.scCollapsed:first-child > td,
+body.satExperimentalUi .accordion-heading.activeAccordion,
+body.satExperimentalUi .accordion-heading {
+  border-radius: 0px;
+}
+
+body.satExperimentalUi .scSection {
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+body.satExperimentalUi .scEditorSectionCaptionExpanded > img,
+body.satExperimentalUi .scEditorSectionCaptionExpanded .icon-expand {
   filter: invert(var(--accentInvert));
+}
+
+body.satExperimentalUi .scEditorSectionCaptionExpanded .header-title {
+  color: var(--accentText) !important;
 }
 
 body.satExperimentalUi .scEditorSectionCaptionGlyph {
@@ -1113,7 +1452,7 @@ body.satExperimentalUi .scEditorSectionPanel {
   padding: 15px;
   width: calc(100% - 40px);
   background-color: var(--white);
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0 1px rgb(63 63 68 / 5%), 0 1px 2px 0 rgb(63 63 68 / 15%);
 }
 
 body.satExperimentalUi .scEditorSectionPanel.scTabsRounded {
@@ -1146,6 +1485,12 @@ body.satExperimentalUi a.scContentButton {
 }
 
 /*Instant Search */
+body.satExperimentalUi .scInstantSearch:focus {
+  box-shadow: none !important;
+  border: none !important;
+  outline: none !important;
+}
+
 body.satExperimentalUi .scInstantSearchResults > li:focus,
 body.satExperimentalUi .scInstantSearchResults > li:hover {
   background-color: var(--accent);
@@ -1193,22 +1538,22 @@ body.satExperimentalUi .scEditorFieldLabelAdministrator {
 body.satExperimentalUi .splitter-bar {
   width: 2px;
   margin-left: 0px;
-  background-color: var(--grey4);
+  background-color: var(--grey17);
   z-index: 9 !important;
 }
 
 body.satExperimentalUi .splitter-bar:before,
 body.satExperimentalUi .splitter-bar:after {
-  background-color: var(--grey4);
+  background-color: var(--grey17);
   z-index: 100 !important;
 }
 
 /* Content Editor buttons */
 
 body.satExperimentalUi .scSaveBar {
-  background-color: var(--grey5) !important;
+  background-color: var(--experimentalBackground);
   height: 30px;
-  border-bottom: 1px solid var(--grey);
+  border-bottom: 1px solid var(--grey17);
   border-left: 0px;
   z-index: 1000;
   padding: 13px;
@@ -1224,24 +1569,39 @@ body.satExperimentalUi .scSaveBar > .scBreadcrumb {
   padding: 8px;
   text-indent: 0px;
   font-size: 13px;
-  color: var(--text);
+  color: var(--textFaded);
   max-width: 60%;
   width: -webkit-fill-available;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
 }
 
 body.satExperimentalUi .scSaveBar > .scBreadcrumb > i {
   font-style: initial;
-  color: #a5a5a5;
-  margin: 1px;
   font-size: 16px;
   vertical-align: middle;
+  padding: 0px 10px;
+  background: url(chrome-extension://__MSG_@@extension_id__/images/treemenu_collapsed.png) no-repeat center center;
+  background-size: contain;
 }
 
 body.satExperimentalUi .scSaveBar > .scBreadcrumb > u {
   cursor: pointer;
+  text-decoration: unset;
+}
+
+body.satExperimentalUi .scSaveBar > .scBreadcrumb > u:hover {
+  text-decoration: underline;
+}
+
+body.satExperimentalUi .scSaveBar > .scBreadcrumb > u:last-child {
+  color: var(--accent);
+}
+
+body.satExperimentalUi .scSaveBar > .scBreadcrumb > u:first-child {
+  color: var(--textFaded);
 }
 
 body.satExperimentalUi .scSaveBar > .scActions > .scPublishMenu {
@@ -1301,7 +1661,7 @@ body.satExperimentalUi .scSaveBar > .scActions > button {
 }
 
 body.satExperimentalUi .scPublishMenuMoreArrow {
-  filter: invert(var(--accentInvert));
+  filter: invert(var(--accentInvert)) !important;
 }
 
 body.satExperimentalUi .scBackground {
@@ -1309,14 +1669,15 @@ body.satExperimentalUi .scBackground {
 }
 
 body.satExperimentalUi .scTitle {
-  padding: 10px;
   margin-top: 3px;
   border-bottom: none;
   clear: left;
-  font-size: 15px;
   font-weight: 800;
-  color: var(--grey7);
+  color: var(--textFaded);
   clear: both;
+  margin-left: 10px;
+  font-size: 20px;
+  padding: 20px 5px 5px 5px;
 }
 body.satExperimentalUi .scFolderButtons {
   padding-left: 10px;
@@ -1325,6 +1686,11 @@ body.satExperimentalUi .scFolderButtons {
 
 body.satExperimentalUi .scFolderButtonsTitle {
   display: none;
+}
+
+body.satExperimentalUi .scMediaExplorer tbody tr .mediaTitle {
+  color: var(--textFaded);
+  font-weight: 600;
 }
 
 body.satExperimentalUi .scMediaExplorer tbody tr:hover .mediaTitle,
@@ -1340,11 +1706,60 @@ body.satExperimentalUi .scMediaExplorer tbody tr:hover a.scMediaActions {
   filter: invert(var(--accentInvert));
 }
 
+body.satExperimentalUi .scTiles .scTileItem:nth-child(even),
+body.satExperimentalUi .scMediaExplorer tbody tr:nth-child(even) {
+  background: var(--experimentalBackground);
+}
+
+body.satExperimentalUi .scTiles .scTileItem:nth-child(odd),
+body.satExperimentalUi .scMediaExplorer tbody tr:nth-child(odd) {
+  background: var(--white);
+}
+
 body.satExperimentalUi #FileList {
   background: var(--white) !important;
   border-radius: 3px;
   overflow: visible;
   padding-top: 25px !important;
+}
+
+body.satExperimentalUi #FileList a:not(.scButton) {
+  box-shadow: 0 4px 5px 0 rgb(0 0 0 / 7%), 0 1px 10px 0 rgb(0 0 0 / 6%), 0 2px 4px -1px rgb(0 0 0 / 15%);
+  border-radius: var(--radius);
+  background-color: var(--experimentalBackground);
+  padding: 0px;
+  height: 250px;
+}
+body.satExperimentalUi #FileList a:not(.scButton) .scMediaBorder {
+  margin-bottom: 10px;
+}
+body.satExperimentalUi #FileList a:not(.scButton) .scMediaTitle {
+  font-size: 16px;
+  color: var(--textFaded);
+  font-weight: 600;
+  text-align: left;
+  padding: 0px 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+body.satExperimentalUi #FileList a:not(.scButton) .scMediaDetails,
+body.satExperimentalUi #FileList a:not(.scButton) .scMediaValidation,
+body.satExperimentalUi #FileList a:not(.scButton) .scMediaUsages {
+  font-size: 10px;
+  padding: 0px;
+  height: 20px;
+  text-align: left;
+  padding: 0px 10px;
+}
+body.satExperimentalUi #FileList a:not(.scButton) .scMediaBorder > img {
+  width: 100% !important;
+  max-height: 90px;
+  object-fit: cover;
+}
+
+body.satExperimentalUi #FileList a.scButton {
+  border: 0px;
+  vertical-align: middle;
 }
 
 body.satExperimentalUi #FileList a.scButton.scButtonList.selected,
@@ -1360,8 +1775,16 @@ body.satExperimentalUi #FileList a.scButton.scButtonGrid.selected > img {
   filter: invert(1);
 }
 
-body.satExperimentalUi input[type="submit"],
 body.satExperimentalUi .scButton {
+  background-image: none;
+  box-shadow: none;
+  background-color: var(--grey4);
+  border-color: var(--grey4);
+  border: 0px;
+}
+
+body.satExperimentalUi input[type="submit"],
+body.satExperimentalUi .scButton:not(".add-rule-button") {
   background-color: var(--grey4);
   color: var(--text);
   font-size: 15px;
@@ -1378,8 +1801,8 @@ body.satExperimentalUi .scButtonPrimary {
   background: var(--accent) !important;
   color: var(--accentText);
   outline-color: var(--accent);
-  box-shadow: unset;
-  border: unset;
+  box-shadow: unset !important;
+  border: unset !important;
   background-image: unset;
 }
 
@@ -1400,13 +1823,34 @@ body.satExperimentalUi .scSaveBar > .scActions > button:hover {
   filter: brightness(1.05);
 }
 
+body.satExperimentalUi #Result {
+  border-top: 0px;
+}
+
+body.satExperimentalUi #OptionTableWrapper {
+  padding: 8px 15px;
+}
+
 body.satExperimentalUi .scSaveBar > .scActions > button:disabled {
   opacity: 0.5;
+}
+
+body.satExperimentalUi .scSaveBar > .scActions > button.scSaveButton,
+body.satExperimentalUi .scSaveBar > .scActions > button.scPreviewButton {
+  color: var(--black6);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 12px;
+  min-height: 34px;
 }
 
 body.satExperimentalUi .scSaveBar > .scActions > button.primary {
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 12px;
+  min-height: 34px;
 }
 
 body.satExperimentalUi .scSaveBar > .scActions > button.primaryGrouped {
@@ -1418,7 +1862,7 @@ body.satExperimentalUi .scSaveBar > .scActions > button.primaryGrouped {
 body.satExperimentalUi .scSaveBar > .scActions > button.grouped {
   margin: 0px;
   margin-top: -2px;
-  padding: 7px 10px 8px 10px;
+  padding: 6px 10px 8px 9px;
   margin-right: 5px;
   background-color: var(--accent) !important;
   color: var(--accentText);
@@ -1432,7 +1876,16 @@ body.satExperimentalUi .scPopup {
   padding: 5px;
 }
 
-body.satExperimentalUi .sc-insertItem-container.selected,
+body.satExperimentalUi .sc-insertItem-container.selected {
+  border-color: transparent;
+  background-color: transparent;
+}
+body.satExperimentalUi .sc-insertItem-container.selected .sc-insertItem-imageContainer {
+  box-shadow: 0px 0px 0px 3px var(--accent);
+  border-radius: 3px;
+  border-color: transparent;
+  background-color: transparent;
+}
 body.satExperimentalUi .sc-insertItem-container.selected .sc-display-name,
 body.satExperimentalUi .scChecked {
   background-color: var(--accent);
@@ -1608,6 +2061,12 @@ body.satExperimentalUi .scLink:hover {
 }
 
 /* RTE */
+
+body.satExperimentalUi #EditorUpdatePanel {
+  padding: 10px;
+  background-color: var(--background);
+}
+
 body.satExperimentalUi .reEditorModesCell {
   background-color: var(--black5);
   height: 30px;
@@ -1651,11 +2110,7 @@ body.satExperimentalUi .scFormTable {
 
 body.satExperimentalUi .sc-text-largevalue {
   padding: 10px;
-  position: absolute;
-}
-
-body.satExperimentalUi .scDialogContentContainer {
-  padding: 0px;
+  position: initial;
 }
 
 body.satExperimentalUi .scTabPage {
@@ -1664,7 +2119,9 @@ body.satExperimentalUi .scTabPage {
 }
 
 body.satExperimentalUi .scTabstrip {
-  padding: 13px 10px 0px 10px;
+  padding: 0px;
+  margin: 0px -15px;
+  width: auto;
   height: fit-content;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 5px;
   border: none;
@@ -1679,6 +2136,7 @@ body.satExperimentalUi .scTab_Hover {
   border: 0px !important;
   color: var(--text);
   min-height: 43px;
+  transition: all 0.1s;
 }
 
 body.satExperimentalUi .scTab_Hover {
@@ -1692,16 +2150,12 @@ body.satExperimentalUi .scTabActive_Hover {
   border-bottom: 3px solid var(--accent) !important;
   color: var(--text);
   font-weight: 700;
+  min-height: 43px;
 }
 
 body.satExperimentalUi .scTabActive:after,
 body.satExperimentalUi .scTabActive_Hover:after {
   width: 0px;
-}
-
-body.satExperimentalUi a.scItemThumbnail:hover {
-  background-color: var(--grey3);
-  border-color: var(--grey3);
 }
 
 /**
@@ -1773,19 +2227,22 @@ body.satExperimentalUi input.scPasswordUI {
 
 body.satExperimentalUi div.scPasswordUI {
   position: absolute;
-  border: 1px solid var(--grey14);
-  border-right: none;
   background: var(--grey15);
-  height: 16px;
-  padding: 8px;
+  padding: 9px;
   border-radius: 0px;
   box-shadow: unset;
-  width: 16px;
+  height: 17px;
+  box-shadow: unset;
+  width: 17px;
   z-index: 10;
+  border-right: none;
+  padding: 8px;
+  margin-top: 1px;
+  margin-left: 1px;
+  border: 0px;
 }
 
-body.satExperimentalUi .btn-primary,
-body.satExperimentalUi .sc-quickbar-tab:hover {
+body.satExperimentalUi .btn-primary {
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
   border-radius: var(--radius);
@@ -1805,7 +2262,7 @@ body.satExperimentalUi .sc-quickbar-tab {
 }
 
 body.satExperimentalUi .sc-quickbar-tab:hover {
-  border-bottom: 0px solid transparent !important;
+  text-decoration: none;
 }
 
 body.satExperimentalUi .btn-default {
@@ -1873,12 +2330,119 @@ body.satExperimentalUi .BlogPostExtra {
   color: var(--accent);
 }
 
+body.satExperimentalUi .Metro.RadEditor .reEditorModes .reMode_selected > span {
+  color: var(--accentText) !important;
+}
+
 body.satExperimentalUi .Metro.RadEditor .reEditorModes .reMode_selected {
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
   border: 1px solid var(--accent);
 }
 
-body.satExperimentalUi .reMode_selected span {
+body.satExperimentalUi .Metro.RadEditor .reEditorModes a.reMode_selected:hover {
+  border: 1px solid var(--accent) !important;
+}
+
+/* Personalization  */
+
+body.satExperimentalUi #ComponentPersonalization + label + label {
+  background-image: none !important;
+  display: none;
+}
+
+body.satExperimentalUi label[for="ComponentPersonalization"] {
+  padding: 15px 0px 15px 15px !important;
+  margin-right: 0px !important;
+}
+
+body.satExperimentalUi .action-combo {
+  top: -2px;
+}
+
+body.satExperimentalUi .pick-button:hover {
+  background-color: var(--accent) !important;
   color: var(--accentText) !important;
+}
+
+body.satExperimentalUi.satEE .zg-variant-switcher {
+  background-color: var(--accent) !important;
+  color: var(--accentText) !important;
+}
+
+body.satExperimentalUi.satEE .zg-variant-switcher .zg-variant-list:hover {
+  background-color: var(--accent) !important;
+  color: var(--accentText) !important;
+}
+
+body.satExperimentalUi .scWorkflowChipFinal {
+  background-color: #2bd347;
+  border-radius: 10px;
+  color: #fff;
+  padding: 2px 10px;
+}
+
+body.satExperimentalUi a.scTemplate,
+body.satExperimentalUi a.scTemplate:link,
+body.satExperimentalUi a.scTemplate:visited,
+body.satExperimentalUi a.scTemplate:hover,
+body.satExperimentalUi a.scTemplate:active {
+  color: var(--accent) !important;
+}
+
+path.help-icon {
+  fill: var(--accent);
+}
+
+body.satExperimentalUi.satEE .scFrameYellow {
+  box-shadow: 0px 0px 10px 1px var(--accent);
+  background-color: var(--accent) !important;
+}
+
+body.satExperimentalUi .scEditorQuickInfo td:nth-of-type(1) {
+  text-align: left;
+  width: 150px;
+  font-weight: 700;
+}
+
+body.satExperimentalUi .scIndeterminateProgress {
+  width: 100%;
+  height: 3px;
+  background-color: var(--accent);
+  animation: indeterminateAnimation 1s infinite linear;
+  transform-origin: 0% 50%;
+}
+
+@keyframes indeterminateAnimation {
+  0% {
+    transform: translateX(0) scaleX(0);
+  }
+  40% {
+    transform: translateX(0) scaleX(0.4);
+  }
+  100% {
+    transform: translateX(100%) scaleX(0.5);
+  }
+}
+
+body.satExperimentalUi .scWizardProgressPage .scSpinner {
+  display: none;
+}
+
+body.satExperimentalUi .scWizardProgressPage .scActionText {
+  margin-top: 0px;
+}
+
+body.satExperimentalUi #satFavoritesDrag:hover {
+  background-color: var(--accent);
+}
+
+body.satExperimentalUi #scLightbox:before {
+  content: "";
+  height: 100px;
+  width: 100px;
+  background: transparent url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner.svg") no-repeat center center;
+  box-shadow: unset;
+  z-index: 5;
+  filter: invert(1) brightness(1.5);
 }

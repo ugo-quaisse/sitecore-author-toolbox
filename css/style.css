@@ -1,22 +1,30 @@
+/* start preload  */
 form#ContentEditorForm {
   filter: blur(7px) brightness(0.1) grayscale(1);
   transition: all ease-in-out 0.1s;
   transition-delay: 0.2s;
 }
+form[action*="/sitecore/"]:not(#LoginForm) {
+  opacity: 0;
+  transition: opacity ease-in-out 0s;
+  transition-delay: 0.1s;
+}
 section.sc-applicationContent-main {
   opacity: 0;
 }
-
 body.satExtension .hide {
   display: none;
 }
-
 body.satExtension form#ContentEditorForm {
   filter: blur(0px) brightness(1) grayscale(0);
+}
+body.satExtension form[action*="/sitecore/"]:not(#LoginForm) {
+  opacity: 1;
 }
 body.satExtension section.sc-applicationContent-main {
   opacity: 1;
 }
+/* end preload  */
 body.satExtension .saveMessage {
   display: none;
 }
@@ -121,6 +129,32 @@ body.satExtension .scTitle {
   min-height: 20px;
 }
 
+body.satExtension .scSearch > input[type="text"] {
+  padding: 10px;
+  margin: 20px 0px 0px 20px;
+  width: calc(100% - 40px);
+  background-color: var(--grey3);
+  border: 0px;
+  box-shadow: none;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  background-size: 16px;
+  background-image: url("chrome-extension://__MSG_@@extension_id__/images/magnifier_media.svg") !important;
+  background-repeat: no-repeat;
+  background-position: center left 10px !important;
+  padding-left: 36px;
+}
+
+body.satExtension .scSearch > input[type="text"]:focus {
+  border-color: transparent !important;
+  box-shadow: transparent 0 0 0 1px !important;
+}
+
+body.satExtension .scSearch > input[type="text"]::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  font-weight: 600;
+}
+
 body.satExtension .scFolderButtons {
   padding-top: 25px !important;
 }
@@ -136,6 +170,148 @@ body.satExtension .scBackground > #FileList {
 
 body.satExtension .scBackground > #FileList {
   display: block;
+}
+
+body.satExtension .scNoVersion {
+  margin: auto;
+  padding: 50px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+body.satExtension form[action*="Media/"] > .scBackground {
+  padding: 0px;
+}
+
+body.satExtension #scLightbox {
+  background-color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: none;
+  top: 0px;
+  text-align: center;
+  z-index: 999;
+  border: 0px;
+}
+
+body.satExtension #scLightbox:before {
+  content: "";
+  color: #cccccc;
+  font-size: 12px;
+  top: 50%;
+  left: 50%;
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%);
+  transition: 0.2s;
+  transition-delay: 0s;
+  text-align: center;
+  padding-top: 40px;
+  height: 56px;
+  width: 96px;
+  position: absolute;
+  background: transparent url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner32.gif") no-repeat center center;
+  z-index: auto;
+  z-index: 5;
+}
+
+body.satExtension #scLightbox #scLightboxPrev {
+  position: fixed;
+  top: 50%;
+  left: 0px;
+  padding: 20px;
+  color: var(--white);
+  font-size: 30px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+body.satExtension #scLightbox #scLightboxNext {
+  position: fixed;
+  top: 50%;
+  right: 0px;
+  padding: 20px;
+  color: var(--white);
+  font-size: 30px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+body.satExtension #scLightbox #scLightboxPrev:hover,
+body.satExtension #scLightbox #scLightboxNext:hover {
+  opacity: 1;
+}
+
+body.satExtension .scLightboxHideSpinner:before {
+  display: none;
+}
+
+body.satExtension #scLightbox > .scLightboxHeader {
+  height: 50px;
+  background-color: var(--black);
+}
+body.satExtension #scLightbox > .scLightboxHeader > .scLightboxTitle {
+  float: left;
+  width: 50%;
+  padding: 14px;
+  text-align: left;
+  color: var(--white);
+  font-size: 16px;
+}
+
+body.satExtension #scLightbox > .scLightboxHeader > button {
+  float: right;
+  background-color: unset;
+  border: 0px;
+  padding: 14px 10px;
+  margin-right: 8px;
+  cursor: pointer;
+  transform: scale(1.2);
+}
+body.satExtension #scLightbox > .scLightboxHeader > button img {
+  vertical-align: middle;
+  width: 14px;
+}
+
+body.satExtension #scLightbox > .scLightboxHeader > .sclightboxDownload {
+  filter: invert(1);
+}
+
+body.satExtension #scLightbox > .scLightboxContent {
+  max-width: 90%;
+  max-height: 90%;
+  vertical-align: middle;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--white);
+  z-index: 1000;
+}
+
+body.satExtension #scLightbox > .scLightboxContent > img {
+  max-width: 80vw;
+  max-height: 80vh;
+  min-width: 10vw;
+  min-height: 10vh;
+  z-index: 10;
+}
+
+body.satExtension #scLightbox > .scLightboxContent > iframe {
+  width: 60vw;
+  height: 85vh;
+  z-index: 10;
+  display: none;
+}
+
+body.satExtension #scLightbox > .scLightboxFooter {
+  height: 40px;
+  /* background-color: var(--black); */
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
 }
 
 #FileList a.scButton {
@@ -458,7 +634,7 @@ body.satExtension .scWelcome .clouds {
   background-position: center bottom;
   background-repeat: no-repeat;
   position: relative;
-  bottom: 0;
+  bottom: -1px;
   height: 100%;
   width: 100%;
   margin-top: -200px;
@@ -578,6 +754,15 @@ body.satExtension .scWelcome button:hover {
   vertical-align: sub !important;
 }
 
+.scMediaBorder > img {
+  width: unset !important;
+  height: unset !important;
+}
+
+.scMediaIcon[src*=".ashx"] {
+  filter: unset !important;
+}
+
 body.satExtension div#Languages img {
   display: block;
   width: 32px;
@@ -651,17 +836,23 @@ a.scTileItem .scTileItemIconImage {
   border: 1px solid #e1e1e1;
 }
 
-.scTileItemIcon {
+body.satExtension .scTileItemIcon {
   margin: 0 0;
   width: 50px;
   position: relative;
 }
 
-.scTileItemDetails {
+body.satExtension .scTileItemDetails {
   margin-top: 0px;
   position: relative;
   left: 45px;
   top: -27px;
+}
+
+body.satExtension .scTileItemPane .scTileItemDetails {
+  margin-top: 0px;
+  left: 0px;
+  top: 0px;
 }
 
 /**
@@ -751,8 +942,17 @@ body.satExtension #scPreloader {
   border: 0px;
 }
 
-#sitecorAuthorToolboxFav {
+body.satExtension #satFavorites {
+  padding-top: 10px;
   box-shadow: rgba(235, 235, 235, 0.5) 0px -10px 10px 0px;
+}
+
+body.satExtension #satFavoritesDrag {
+  height: 2px;
+  background-color: var(--grey17);
+  cursor: row-resize;
+  transition: background-color 0.1s ease-in-out 0s !important;
+  z-index: 10001;
 }
 
 #LanguagesPanel > #Languages {
@@ -887,6 +1087,7 @@ body.satExtension .dark:hover {
   margin-top: -1px !important;
 }
 .scEditorSectionPanel > tbody > tr > td {
+  border-top: 1px solid #ccc;
   padding-top: 20px;
   padding-bottom: 20px;
 }
@@ -900,6 +1101,7 @@ body.satExtension #scEditorTabs {
   padding: 0;
   border-bottom: 0px;
   padding-top: 8px;
+  padding-left: 10px;
   background-color: #ffffff;
 }
 #scEditorTabs > ul {
@@ -924,6 +1126,7 @@ body.satExtension #scEditorTabs {
 }
 #scEditorTabs > ul > li:not(.scEditorTabEmpty):hover {
   border-top: 2px solid red;
+  padding: 9px 13px;
 }
 #scEditorTabs > ul > li.scEditorTabSelected:not(.scEditorTabEmpty):hover {
   border-top: 3px solid red !important;
@@ -1338,11 +1541,11 @@ body.satExtension .scInstantSearchResults {
 
 .sc-globalHeader-startButton {
   float: left !important;
+  margin-right: 15px;
 }
 
 .sc-globalheader-appName {
   color: #cccccc;
-  float: left;
   font-size: 1.167em;
   font-weight: normal;
   margin-left: 15px;
@@ -1676,6 +1879,13 @@ body.satExtension #scModal {
   font-size: 14px;
 }
 
+#svgAnimationCircle {
+  opacity: 1;
+  left: calc(50% - 50px);
+  transform: scale(1);
+  margin-top: 150px;
+}
+
 body.satExtension #scPanel {
   position: fixed;
   background-color: var(--white);
@@ -1713,7 +1923,15 @@ body.satExtension #scPanel {
 
 body.satExtension .CodeMirror {
   height: 100% !important;
+  border: none !important;
+}
+
+body.satExtension .scEditorSectionPanel .CodeMirror {
   border: 1px solid #cccccc !important;
+}
+
+body.satExtension .CodeMirror-scroll {
+  min-height: 300px;
 }
 
 .hideDesktopHeader {
@@ -1726,6 +1944,11 @@ body.satExtension .CodeMirror {
   border: 1px solid var(--blue);
   background-image: none !important;
   box-shadow: none !important;
+}
+
+#FileList a.scButton.scButtonList.selected > img,
+#FileList a.scButton.scButtonGrid.selected > img {
+  filter: invert(1);
 }
 
 #SearchPanel .scBurgerMenu {
@@ -1973,6 +2196,19 @@ body.satExtension .darkModeIconMoon.rise {
   margin-top: 0px;
   opacity: 1;
   transition-delay: 0.2s;
+}
+
+body.satExtension .scUploadIcon {
+  width: 16px;
+  margin-right: 5px;
+}
+
+body.satExtension .scUploadIconDrop {
+  display: block;
+  margin: auto;
+  width: 100px;
+  opacity: 0.7;
+  margin-bottom: 10px;
 }
 
 /* Tooltips */

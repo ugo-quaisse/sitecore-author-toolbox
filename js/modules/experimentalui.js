@@ -1,7 +1,10 @@
+/* eslint-disable array-element-newline */
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
-import { getScItemData, setTextColour } from "./helpers.js";
+import * as icons from "./icons.js";
+import { getMaterializeIcon, getScItemData, setTextColour } from "./helpers.js";
+// import { getFiltersCss } from "./colors.js";
 
 export {
   initOnboarding,
@@ -11,8 +14,8 @@ export {
   insertLanguageButton,
   insertVersionButton,
   insertMoreButton,
+  insertProfilesButton,
   insertNavigatorButton,
-  insertLockButton,
   pathToBreadcrumb,
   initInsertIcon,
   getAccentColor,
@@ -22,8 +25,11 @@ export {
   getParentNode,
   initContrastedIcons,
   initSvgAnimation,
+  initSvgAnimationPublish,
   initEventListeners,
   initTitleBarDesktop,
+  replaceIcons,
+  initMaterializeIcons,
 };
 
 /**
@@ -105,23 +111,22 @@ const insertSavebar = () => {
   let scPrimaryBtn = global.hasModePreview
     ? `<button class="primary scExitButton" onclick="javascript:return scForm.invoke('contenteditor:closepreview', event)">Close Panel</button>`
     : `<button id="scPublishMenuMore" class="grouped" type="button"><span class="scPublishMenuMoreArrow">▾</span></button>
-            <ul class="scPublishMenu">             
+          <ul class="scPublishMenu">             
             <li onclick="javascript:return scForm.invoke('item:setpublishing', event)">Unpublish...</li>
             <li onclick="javascript:return scForm.postEvent(this,event,'item:publishingviewer(id=)')">Scheduler...</li>
             <li onclick="javascript:return scForm.invoke('item:publishnow', event)">Quick Publish...</li>  
-            </ul>
-            <button class="primary primaryGrouped" onclick="javascript:return scForm.postEvent(this,event,'item:publish(id=)')">Save and Publish</button>`;
+          </ul>
+        <button class="primary primaryGrouped" onclick="javascript:return scForm.postEvent(this,event,'item:publish(id=)')">Save and Publish</button>`;
 
-  let scLiveyBtn = !global.hasModePreview && getScItemData().path.includes("/home") ? `<button class="scPreviewButton" onclick="javascript:return scForm.invoke('contenteditor:preview', event)">Preview</button>` : ``;
+  let scPreviewBtn = !global.hasModePreview && getScItemData().path.includes("/home") ? `<button class="scPreviewButton" onclick="javascript:return scForm.invoke('contenteditor:preview', event)">Preview</button>` : ``;
 
   //Save Bar
   //prettier-ignore
-  let scSaveBar =
-    `<div class="scSaveBar">
+  let scSaveBar = `<div class="scSaveBar">
         <div class="scActions">
-            ` + scPrimaryBtn + `
+            ${scPrimaryBtn}
             <button class="scSaveButton" onclick="javascript:return scForm.invoke('contenteditor:save', event)">Save</button>
-            ` + scLiveyBtn + `
+            ${scPreviewBtn}
         </div>
         <div class="scBreadcrumb"></div>
     </div>`;
@@ -138,17 +143,22 @@ const insertSavebar = () => {
 /**
  * Path to Breadcrumb
  */
-const pathToBreadcrumb = (pathname, delimiter = "/", underline = true) => {
+const pathToBreadcrumb = (pathname, delimiter = "", underline = true) => {
   let breadcrumb = "#####";
   let count = 0;
   let elipsis = false;
+  let path, site;
 
   if (pathname) {
-    let path = pathname.toLowerCase() + "/";
+    path = pathname.toLowerCase() + "/";
     path = path.split("/home/");
+    //If home is part of the path
     if (path[1] != undefined) {
+      site = path[0].split("/").pop();
       path = path[1].split("/");
-      underline ? (breadcrumb += '<u class="home" onclick="javascript:return scForm.invoke(\'contenteditor:home\', event)">Home</u> ') : (breadcrumb += "Home ");
+      underline
+        ? (breadcrumb += `<i>${delimiter}</i> <u class="scBreadcrumbHome" onclick="getParentNode(` + path.length + `);">${site.capitalize()}</u> <i>${delimiter}</i> <u onclick="getParentNode(` + (path.length - 1) + `);">Home</u> `)
+        : (breadcrumb += `<i>${delimiter}</i> ${site.capitalize()} <i>${delimiter}</i> Home `);
     } else {
       path = path[0].split("/");
     }
@@ -157,7 +167,7 @@ const pathToBreadcrumb = (pathname, delimiter = "/", underline = true) => {
       count++;
       if (path.length > 8 && count > 3 && count < path.length - 2) {
         if (!elipsis) {
-          level != "" ? (breadcrumb += "<i>" + delimiter + "</i> [...] ") : false;
+          level != "" ? (breadcrumb += "<i>" + delimiter + "</i> ... ") : false;
           elipsis = true;
         }
 
@@ -220,22 +230,19 @@ const insertMoreButton = () => {
   //prettier-ignore
   let button =
     `<button class="scEditorHeaderButton" id="scMoreButton" title="More actions" type="button">
-    <img src="` +
-    global.iconMore +
-    `" class="scLanguageIcon">
+    <img src="${global.iconMore}" class="scLanguageIcon">
     </button>
     <ul class="scMoreMenu">
         <li onclick="javascript:if(confirm('Do you really want to create a new version for this item?')) { return scForm.postEvent(this,event,'item:addversion(id=)') }">Add new version</li>
         <li onclick="javascript:return scForm.invoke('contenteditor:edit')" id="scLockMenuText">Lock item</li>
         <li onclick="javascript:return scForm.postEvent(this,event,'item:rename')">Rename item</li>
         <li onclick="javascript:return scForm.invoke('item:duplicate')">Duplicate</li>
-        <li class="separator" onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor')">Edit in Experience Editor...</li>
-        <li onclick="javascript:return scForm.invoke('item:setlayoutdetails', event)">Presentation details...</li>
+        <li onclick="javascript:return scForm.invoke('item:clone')">Clone</li>
+        <li class="separator" onclick="javascript:return scForm.invoke('item:setlayoutdetails', event)">Presentation details...</li>
         <li class="separator" onclick="javascript:return scForm.postEvent(this,event,'item:sethelp')">Help texts</li>
-        <li id="scInfoButton">Item details</li>
-        <li onclick="javascript:return scForm.postEvent(this,event,'item:executescript(id=` +
-    ScItem.id +
-    `,db=master,script={1876D433-4FAE-46B2-B2EF-AAA0FDA110E7},scriptDb=master)')">Author statistics</li>
+        <!-- <li id="scInfoButton">Item details</li> -->
+        <li  onclick="javascript:return scForm.postEvent(this,event,'contenteditor:properties')">Item properties</li>
+        <li onclick="javascript:return scForm.postEvent(this,event,'item:executescript(id=${ScItem.id},db=master,script={1876D433-4FAE-46B2-B2EF-AAA0FDA110E7},scriptDb=master)')">Author statistics</li>
         <li class="separator danger" onclick="javascript:return scForm.invoke('item:delete(id=` +
     ScItem.id +
     `)', event)">Delete</li>
@@ -247,15 +254,15 @@ const insertMoreButton = () => {
   let html =
     `<div class="content">
       <h2>Item details</h2>
-      <h3>Item ID:</h3> <span class="itemDetail">` + ScItem.id + `</span>
-      <h3>Name:</h3> <span class="itemDetail">` + ScItem.name + `</span>
-      <h3>Path:</h3> <span class="itemDetail">` + ScItem.path + `</span>
-      <h3>Template:</h3> <span class="itemDetail">` + ScItem.template + `</span>
-      <h3>Template ID:</h3> <span class="itemDetail">` + ScItem.templateId + `</span>
-      <h3>From:</h3> <span class="itemDetail">` + ScItem.from + `</span>
-      <h3>Owner:</h3> <span class="itemDetail">` + ScItem.owner + `</span>
-      <h3>Language:</h3> <span class="itemDetail">` + ScItem.language + `</span>
-      <h3>Version:</h3> <span class="itemDetail">` + ScItem.version + `</span>
+      <h3>Item ID:</h3> <span class="itemDetail">${ScItem.id}</span>
+      <h3>Name:</h3> <span class="itemDetail">${ScItem.name}</span>
+      <h3>Path:</h3> <span class="itemDetail">${ScItem.path}</span>
+      <h3>Template:</h3> <span class="itemDetail">${ScItem.template}</span>
+      <h3>Template ID:</h3> <span class="itemDetail">${ScItem.templateId}</span>
+      <h3>From:</h3> <span class="itemDetail">${ScItem.from}</span>
+      <h3>Owner:</h3> <span class="itemDetail">${ScItem.owner}</span>
+      <h3>Language:</h3> <span class="itemDetail">${ScItem.language}</span>
+      <h3>Version:</h3> <span class="itemDetail">${ScItem.version}</span>
     </div>`;
   panel ? (panel.innerHTML = html) : false;
 
@@ -269,14 +276,14 @@ const insertVersionButton = (scItemId, scLanguage = "EN", scVersion = 1) => {
   //Button
   let container = document.querySelector(".scEditorTabControlsHolder");
   //prettier-ignore
-  let button = `<button class="scEditorHeaderButton" id="scVersionButton" type="button"><img src="` + global.iconVersion + `" class="scLanguageIcon"> ` + scVersion + ` ▾</button>`;
+  let button = `<button class="scEditorHeaderButton" id="scVersionButton" type="button"><img src="${global.iconVersion}" class="scLanguageIcon"> ${scVersion} ▾</button>`;
   container && !document.querySelector("#scVersionButton") && scVersion != null ? container.insertAdjacentHTML("afterbegin", button) : false;
 
   //Iframe
   document.querySelector("#scVersionIframe") ? document.querySelector("#scVersionIframe").remove() : false;
   let body = document.querySelector("body");
   //prettier-ignore
-  let iframe = `<iframe loading="lazy" id="scVersionIframe" src="/sitecore/shell/default.aspx?xmlcontrol=Gallery.Versions&id=` + scItemId + `&la=` + scLanguage + `&vs=` + scVersion + `&db=master"></iframe>`;
+  let iframe = `<iframe loading="lazy" id="scVersionIframe" src="/sitecore/shell/default.aspx?xmlcontrol=Gallery.Versions&id=${scItemId}&la=${scLanguage}&vs=${scVersion}&db=master"></iframe>`;
   body && !document.querySelector("#scVersionIframe") ? body.insertAdjacentHTML("beforeend", iframe) : false;
 
   //Remove old button
@@ -284,23 +291,22 @@ const insertVersionButton = (scItemId, scLanguage = "EN", scVersion = 1) => {
 };
 
 /**
+ * Insert Profiles button
+ */
+const insertProfilesButton = () => {
+  let container = document.querySelector(".scEditorTabControlsHolder");
+  let button = document.querySelector(".scEditorHeaderCustomizeProfilesIcon")
+    ? `<button class="scEditorHeaderButton" id="scProfilesButton" type="button" onclick="javascript:return scForm.invoke('item:personalize')"><img src="${global.iconProfiles}" class="scLanguageIcon"></button>`
+    : ``;
+  container ? container.insertAdjacentHTML("afterbegin", button) : false;
+};
+
+/**
  * Insert Navigator button
  */
 const insertNavigatorButton = () => {
   let container = document.querySelector(".scEditorTabControlsHolder");
-  let button = `<button class="scEditorHeaderButton" id="scNavigatorButton" type="button"><img src="` + global.iconNotebook + `" class="scLanguageIcon"> ▾</button>`;
-  container ? container.insertAdjacentHTML("afterbegin", button) : false;
-
-  document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;
-};
-
-/**
- * Insert Lock button
- */
-const insertLockButton = (locked = false) => {
-  let icon = locked === false ? global.iconUnlocked : global.iconLocked;
-  let container = document.querySelector(".scEditorTabControlsHolder");
-  let button = `<button onclick="javascript:return scForm.postEvent(this,event,'item:checkout')" class="scEditorHeaderButton" id="scLockButton" title="Lock this item" type="button"><img src="` + icon + `" class="scLanguageIcon"></button>`;
+  let button = `<button class="scEditorHeaderButton" id="scNavigatorButton" type="button"><img src="${global.iconNotebook}" class="scLanguageIcon"> ▾</button>`;
   container ? container.insertAdjacentHTML("afterbegin", button) : false;
 
   document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;
@@ -327,7 +333,7 @@ const initSitecoreRibbon = () => {
  * Get Accent Color
  */
 const getAccentColor = () => {
-  let color, text, brightness, invert;
+  let color, text, brightness, invert, revert;
   let storage = localStorage.getItem("scColorPicker");
   let root = document.documentElement;
   if (storage) {
@@ -335,17 +341,24 @@ const getAccentColor = () => {
     text = setTextColour(color);
     text == "#ffffff" ? (brightness = 10) : (brightness = 0);
     text == "#ffffff" ? (invert = 0) : (invert = 1);
+    text == "#ffffff" ? (revert = 1) : (revert = 0);
     root.style.setProperty("--accent", color);
     root.style.setProperty("--accentText", text);
     root.style.setProperty("--accentBrightness", brightness);
     root.style.setProperty("--accentInvert", invert);
+    root.style.setProperty("--accentRevert", revert);
   } else {
     color = "#ee3524"; //red
     root.style.setProperty("--accent", "#ee3524");
     root.style.setProperty("--accentText", "#ffffff");
     root.style.setProperty("--accentBrightness", 50);
     root.style.setProperty("--accentInvert", 0);
+    root.style.setProperty("--accentRevert", 1);
   }
+
+  // let filtersCss = getFiltersCss(color);
+  // root.style.setProperty("--accentFilters", filtersCss);
+  // console.log("FiltersCSS", filtersCss);
 
   return color;
 };
@@ -369,9 +382,8 @@ const initColorPicker = (storage) => {
         color = colorPicker.value;
         text = setTextColour(color);
         text == "#ffffff" ? (brightness = 10) : (brightness = 0);
-        text == "#ffffff" ? (invert = 0) : (invert = 1);
+        text == "#ffffff" ? (invert = 1) : (invert = 0);
         text == "#ffffff" ? (borderAlpha = "rgba(255, 255, 255, 0.4)") : (borderAlpha = "rgba(0, 0, 0, 0.4)");
-        console.log(invert);
         //Root
         let root = document.documentElement;
         root.style.setProperty("--accent", color);
@@ -457,7 +469,7 @@ const setInsertIcon = (treeNode) => {
 /**
  * Init Insert action icons (create, edit in EE) in content tree when you hover an item
  */
-const initInsertIcon = () => {
+const initInsertIcon = (storage) => {
   let contentTree = document.querySelector(".scContentTree");
   let treeNode = document.querySelector(".scContentTreeContainer");
   let node, nodeId, nodeIcon, nodeContent;
@@ -471,23 +483,22 @@ const initInsertIcon = () => {
         setInsertIcon(event.path[2].getAttribute("id"));
         node = event.path[2];
       }
+
+      var contrastedIcon = storage.feature_contrast_icons === true ? "scContrastedIcon" : "";
+
       //Updating html structure to allow text-overflow and avoid icons overlap
       if (node && !node.classList.contains("scNoOverlap")) {
         nodeId = node.getAttribute("id").replace("Tree_Node_", "");
         nodeIcon = node.querySelector("span > img").src;
         nodeContent = node.querySelector("span").innerText;
         node.querySelector("span").innerHTML =
-          `<img src="` +
-          nodeIcon +
-          `" width="16" height="16" class="scContentTreeNodeIcon" alt="" border="0"><div ondblclick="javascript:return scForm.postEvent(this,event,'item:rename(id={` +
+          `<img src="${nodeIcon}" width="16" height="16" class="scContentTreeNodeIcon ${contrastedIcon}" alt="" border="0"><div ondblclick="javascript:return scForm.postEvent(this,event,'item:rename(id={` +
           nodeId.replace(
             // eslint-disable-next-line prefer-named-capture-group
             /([0-z]{8})([0-z]{4})([0-z]{4})([0-z]{4})([0-z]{12})/u,
             "$1-$2-$3-$4-$5"
           ) +
-          `})')">` +
-          nodeContent +
-          `</div>`;
+          `})')">${nodeContent}</div>`;
         node.classList.add("scNoOverlap");
       }
     });
@@ -556,6 +567,22 @@ const getParentNode = (int = 1) => {
 const initSvgAnimation = () => {
   let svgAnimation = `<div id="svgAnimation">` + global.svgAnimation + `</div>`;
   document.querySelector("#EditorFrames") ? document.querySelector("#EditorFrames").insertAdjacentHTML("beforebegin", svgAnimation) : false;
+};
+
+/**
+ * Init SVG animation during publish
+ */
+const initSvgAnimationPublish = (storage) => {
+  if (storage.feature_experimentalui) {
+    document.querySelector("#Publishing > .scFormDialogHeader").insertAdjacentHTML("afterend", `<div class="scIndeterminateProgress"></div>`);
+    document.querySelector("#Publishing > .scWizardProgressPage").insertAdjacentHTML("afterbegin", `<div id="svgAnimationCircle">${global.svgAnimationCircle}</div>`);
+    document.querySelector("#Exporting > .scFormDialogHeader").insertAdjacentHTML("afterend", `<div class="scIndeterminateProgress"></div>`);
+    document.querySelector("#Exporting > .scWizardProgressPage").insertAdjacentHTML("afterbegin", `<div id="svgAnimationCircle">${global.svgAnimationCircle}</div>`);
+    document.querySelector("#Uploading > .scFormDialogHeader").insertAdjacentHTML("afterend", `<div class="scIndeterminateProgress"></div>`);
+    document.querySelector("#Uploading > .scWizardProgressPage").insertAdjacentHTML("afterbegin", `<div id="svgAnimationCircle">${global.svgAnimationCircle}</div>`);
+    document.querySelector(".scWizardProgressPage").insertAdjacentHTML("beforebegin", `<div class="scIndeterminateProgress"></div>`);
+    document.querySelector(".scWizardProgressPage").insertAdjacentHTML("afterbegin", `<div id="svgAnimationCircle">${global.svgAnimationCircle}</div>`);
+  }
 };
 
 /**
@@ -636,5 +663,94 @@ const initTitleBarDesktop = () => {
     document.querySelector(".titleBarDesktop").classList.add("hide");
   } else if (document.querySelector(".titleBarDesktop")) {
     document.querySelector(".titleBarDesktop").classList.remove("hide");
+  }
+};
+
+/**
+ * Replace Glyph Images
+ */
+const replaceIcons = (storage) => {
+  if (storage.feature_contrast_icons === true) {
+    let imgGlyph = document.querySelectorAll(
+      ".scContentTreeNodeGlyph, .scContentTreeNodeIcon, #scModal .main img, .scInstantSearchResults img, .dynatree-container img, .scTabs .scImageContainer > img, form[action*='Gallery'] img, form[action*='Media'] .scFolderButtons img, .scPopup .scMenuItemIcon > img"
+    );
+    for (let icon of imgGlyph) {
+      let filename = icon.src.substring(icon.src.lastIndexOf("/") + 1).toLowerCase();
+      //Sitecore tree chevron
+      if (filename.includes("treemenu_expanded.png")) {
+        icon.src = global.iconTreeExpanded;
+      } else if (filename.includes("treemenu_collapsed.png")) {
+        icon.src = global.iconTreeCollapsed;
+      }
+
+      //Loop Json with icons references, find and match
+      for (let entry of Object.entries(icons.jsonIcons)) {
+        if (filename.includes(entry[1].search)) {
+          let path = entry[1].icon.split("::");
+          icon.src = getMaterializeIcon(path[0], path[1]);
+          icon.classList.add("scContrastedIcon");
+          break;
+        }
+      }
+
+      //If media image, no filter
+      if (filename.includes(".ashx")) {
+        icon.classList.add("scIconImage");
+      }
+    }
+  }
+};
+
+/**
+ * Replace Glyph Images
+ */
+const initMaterializeIcons = (storage) => {
+  if (storage.feature_contrast_icons === true) {
+    let target, observer;
+    replaceIcons(storage);
+    //In Content Editor
+    target = document.querySelector("#ContentEditorForm");
+    observer = new MutationObserver(function () {
+      replaceIcons(storage);
+    });
+    //Observer UI
+    target
+      ? observer.observe(target, {
+          attributes: false,
+          childList: true,
+          characterData: false,
+          subtree: true,
+        })
+      : false;
+    //In iframe, modals and windows
+    setTimeout(function () {
+      //Speak UI tree
+      target = document.querySelector("div[data-sc-id='TreeView']");
+      observer = new MutationObserver(function () {
+        replaceIcons(storage);
+      });
+      target
+        ? observer.observe(target, {
+            attributes: false,
+            childList: true,
+            characterData: false,
+            subtree: true,
+          })
+        : false;
+      //EE components
+      target = document.querySelector(".scTabs");
+      observer = new MutationObserver(function () {
+        replaceIcons(storage);
+      });
+      //Observer UI
+      target
+        ? observer.observe(target, {
+            attributes: false,
+            childList: true,
+            characterData: false,
+            subtree: true,
+          })
+        : false;
+    }, 100);
   }
 };

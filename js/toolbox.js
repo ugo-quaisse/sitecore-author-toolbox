@@ -20,12 +20,25 @@ import { workboxNotifications } from "./modules/workbox.js";
 import { resumeFromWhereYouLeftOff, historyNavigation } from "./modules/history.js";
 import { checkNotificationPermissions, checkPublishNotification } from "./modules/notification.js";
 import { initFlagRibbonEE, initLanguageMenuEE, initLanguageMenuCE, initFlagsPublishingWindow, initFlagsPublish } from "./modules/language.js";
-import { initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, refreshContentEditor } from "./modules/contenteditor.js";
+import { initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, refreshContentEditor, contentTreeScrollTo } from "./modules/contenteditor.js";
 import { initAppName, initGravatarImage, initUserMenu } from "./modules/users.js";
 import { initInstantSearch, enhancedSitecoreSearch } from "./modules/search.js";
 import { insertModal, insertPanel } from "./modules/insert.js";
-import { initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons } from "./modules/media.js";
-import { initOnboarding, initExperimentalUi, initInsertIcon, initGutter, initColorPicker, initSitecoreRibbon, initContrastedIcons, initSvgAnimation, initEventListeners, initTitleBarDesktop } from "./modules/experimentalui.js";
+import { initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons, initUploadButton, initUploader, initLightbox, initMediaSearchBox } from "./modules/media.js";
+import {
+  initOnboarding,
+  initExperimentalUi,
+  initInsertIcon,
+  initGutter,
+  initColorPicker,
+  initSitecoreRibbon,
+  initContrastedIcons,
+  initSvgAnimation,
+  initSvgAnimationPublish,
+  initEventListeners,
+  initTitleBarDesktop,
+  initMaterializeIcons,
+} from "./modules/experimentalui.js";
 import { initFavorites } from "./modules/favorites.js";
 import { initGroupedErrors } from "./modules/errors.js";
 import { enhancedBucketLists } from "./modules/buckets.js";
@@ -33,6 +46,7 @@ import { initRteTooltips, initSyntaxHighlighterRte } from "./modules/rte.js";
 import { initPreviewButton, listenPreviewTab } from "./modules/preview.js";
 import { initLaunchpadIcon, initLaunchpadMenu } from "./modules/launchpad.js";
 import { initAutoExpandTree, initTreeGutterTooltips } from "./modules/contenttree.js";
+import { initQuerySuggestions } from "./modules/template.js";
 import { storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor } from "./modules/experienceeditor.js";
 
 /**
@@ -44,7 +58,7 @@ chrome.storage.sync.get((storage) => {
    * Sitecore detection *
    **********************
    */
-  if (global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isCss && !global.isUploadManager) {
+  if (global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isCss) {
     log("Sitecore detected", "red");
     document.body ? document.body.classList.add("satExtension") : false;
     loadJsFile("js/inject.js");
@@ -74,18 +88,21 @@ chrome.storage.sync.get((storage) => {
       workboxNotifications(storage);
       historyNavigation();
       showSnackbar(storage);
+      contentTreeScrollTo();
+      initLightbox();
       if (storage.feature_experimentalui) {
         log("**** Experimental ****", "yellow");
         initAppName(storage, "Content Editor");
         initSvgAnimation();
-        insertModal(ScItem.id, ScItem.language, ScItem.version);
+        insertModal(storage, ScItem.id, ScItem.language, ScItem.version);
         insertPanel();
-        initInsertIcon();
+        initInsertIcon(storage);
         initGutter();
         initSitecoreRibbon();
         initEventListeners();
         initTitleBarDesktop();
         initOnboarding();
+        initMaterializeIcons(storage);
       }
     }
 
@@ -132,6 +149,10 @@ chrome.storage.sync.get((storage) => {
     } else if (global.isWorkbox) {
       log("**** Workbox ****", "orange");
       initAppName(storage, "Workbox");
+    } else if (global.isTemplateBuilder) {
+      log("**** Template Builder ****", "orange");
+      initAppName(storage, "Template Builder");
+      initQuerySuggestions(storage);
     } else {
       log("**** Non identified ****", "orange");
       log(global.windowLocationHref, "green");
@@ -152,6 +173,8 @@ chrome.storage.sync.get((storage) => {
       initMediaDragDrop();
       initMediaViewButtons();
       initMediaExplorer(storage);
+      initMediaSearchBox();
+      initMaterializeIcons(storage);
     } else if (global.isFieldEditor) {
       log("**** Field editor ****", "orange");
       initCheckboxes(storage);
@@ -185,6 +208,13 @@ chrome.storage.sync.get((storage) => {
       log("**** Publish / Rebuild / Package ****", "orange");
       initCheckboxes(storage);
       initFlagsPublish(storage);
+      initSvgAnimationPublish(storage);
+    } else if (global.isExportSiteWizard) {
+      log("**** Export Site Wizard ****", "orange");
+      initSvgAnimationPublish(storage);
+    } else if (global.isUploadPackage) {
+      log("**** Upload Package ****", "orange");
+      initSvgAnimationPublish(storage);
     } else if (global.isUserOptions) {
       log("**** User options ****", "orange");
       document.querySelectorAll(".scTabs > div > fieldset > div").forEach(function (elem) {
@@ -197,13 +227,22 @@ chrome.storage.sync.get((storage) => {
       log("**** Versions menu ****", "orange");
     } else if (global.isLayoutDetails) {
       log("**** Layout Details ****", "orange");
+    } else if (global.isDialog || global.isLockedItems) {
+      log("**** Dialog UI ****", "orange");
+      initMaterializeIcons(storage);
+      initUploader();
+    } else if (global.isGalleryFavorites) {
+      log("**** Favorites ****", "orange");
+      initMaterializeIcons(storage);
+    } else if (global.isMediaBrowser) {
+      log("**** Media Browser ****", "orange");
+      initUploadButton();
     } else if (global.isXmlControl && !global.isRichText) {
       log("**** XML Control (Window) ****", "orange");
       initCheckboxes(storage);
       initDateTimeField(storage);
       initPasswordField(storage);
-    } else if (global.isDialog || global.isLockedItems) {
-      log("**** Dialog UI ****", "orange");
+      initMaterializeIcons(storage);
     } else if (global.isSourceBrowser) {
       log("**** Source Browser ****", "orange");
     } else if (global.isGalleryLinks) {
@@ -216,7 +255,7 @@ chrome.storage.sync.get((storage) => {
    * Experience Editor detection *
    *******************************
    */
-  if ((global.isEditMode && !global.isLoginPage) || (global.isPreviewMode && !global.isLoginPage)) {
+  if ((global.isEditMode && !global.isLoginPage) || (global.isPreviewMode && !global.isLoginPage) || (global.isSitecoreModule && !global.isLoginPage)) {
     log("Experience Editor detected", "red");
     document.body ? document.body.classList.add("satExtension") : false;
     loadJsFile("js/inject.js");
@@ -242,6 +281,8 @@ chrome.storage.sync.get((storage) => {
       initLanguageMenuEE(storage);
     } else if (global.isInsertPage) {
       log("**** Insert Page ****", "orange");
+    } else if (global.isSitecoreModule) {
+      log("**** Sitecore Module ****", "orange");
     } else {
       log("**** Page in EE ****", "orange");
       addToolbarEditCE(storage);

@@ -7,6 +7,7 @@
  */
 export const windowLocationHref = window.location.href.replace(/&amp;/g, "&").toLowerCase();
 export const queryString = window.location.search.toLowerCase();
+export const urlOrigin = new URL(windowLocationHref).origin;
 export const urlParams = new URLSearchParams(queryString);
 export const debug = !!urlParams.has("debug");
 export const showSnackbar = true;
@@ -23,6 +24,7 @@ export const iconLock = chrome.runtime.getURL("images/lock.svg");
 export const iconMenu = chrome.runtime.getURL("images/menu.svg");
 export const iconData = chrome.runtime.getURL("images/data.svg");
 export const iconWorkflow = chrome.runtime.getURL("images/workflow.svg");
+export const iconReminder = chrome.runtime.getURL("images/reminder.svg");
 export const iconUnicorn = chrome.runtime.getURL("images/unicorn.svg");
 export const iconUser = chrome.runtime.getURL("images/user.svg");
 export const iconDocument = chrome.runtime.getURL("images/document.svg");
@@ -30,12 +32,15 @@ export const iconError = chrome.runtime.getURL("images/error.svg");
 export const iconEdit = chrome.runtime.getURL("images/edit.svg");
 export const iconMedia = chrome.runtime.getURL("images/media.svg");
 export const iconTranslate = chrome.runtime.getURL("images/translate.svg");
+export const iconProfiles = chrome.runtime.getURL("images/profiles.svg");
 export const iconVersion = chrome.runtime.getURL("images/version.svg");
 export const iconLanguage = chrome.runtime.getURL("images/language.svg");
 export const iconMore = chrome.runtime.getURL("images/more.svg");
 export const iconRename = chrome.runtime.getURL("images/rename.svg");
 export const iconBin = chrome.runtime.getURL("images/bin.svg");
 export const iconDownload = chrome.runtime.getURL("images/download.svg");
+export const iconArrowLeft = chrome.runtime.getURL("images/arrow_left.svg");
+export const iconArrowRight = chrome.runtime.getURL("images/arrow_right.svg");
 export const iconGridView = chrome.runtime.getURL("images/grid.svg");
 export const iconListView = chrome.runtime.getURL("images/list.svg");
 export const iconWarningMedia = chrome.runtime.getURL("images/warning-media.svg");
@@ -58,6 +63,7 @@ export const iconConfluence = chrome.runtime.getURL("images/confluence.svg");
 export const iconFlagGeneric = chrome.runtime.getURL("images/Flags/32x32/flag_generic.png");
 export const iconBell = chrome.runtime.getURL("images/bell.svg");
 export const iconUpload = chrome.runtime.getURL("images/upload.svg");
+export const iconDrop = chrome.runtime.getURL("images/drop.svg");
 export const iconPublish = chrome.runtime.getURL("images/publish.svg");
 export const iconAdd = chrome.runtime.getURL("images/add.svg");
 export const iconDownArrow = chrome.runtime.getURL("images/down-arrow.svg");
@@ -78,7 +84,7 @@ export const iconCalendar = chrome.runtime.getURL("images/calendar.svg");
 export const iconPassword = chrome.runtime.getURL("images/password.svg");
 
 export const rteLanguages = ["ARABIC", "HEBREW", "PERSIAN", "URDU", "SINDHI"];
-export const launchpadPage = chrome.runtime.getURL("options.html");
+export const launchpadPage = chrome.runtime.getURL("options/options.html");
 export const launchpadIcon = chrome.runtime.getURL("images/icon.png");
 export const launchpadGroupTitle = "Sitecore Author Toolbox";
 export const launchpadTitle = "Options";
@@ -92,9 +98,12 @@ export const iconRotate = chrome.runtime.getURL("images/preview_rotate.svg");
 export const iconSun = chrome.runtime.getURL("images/sun.svg");
 export const iconMoon = chrome.runtime.getURL("images/moon.svg");
 export const iconOwl = chrome.runtime.getURL("images/owl.svg");
+export const iconTreeCollapsed = chrome.runtime.getURL("images/treemenu_collapsed.png");
+export const iconTreeExpanded = chrome.runtime.getURL("images/treemenu_expanded.png");
 
 export let timeout;
 export const isSitecore = windowLocationHref.includes("/sitecore/");
+export const isSitecoreModule = windowLocationHref.includes("/sitecore%20modules/");
 export let isPreviewMode = document.querySelector(".pagemode-preview");
 !isPreviewMode ? (isPreviewMode = windowLocationHref.includes("sc_mode=preview")) : false;
 export let isEditMode = document.querySelector(".pagemode-edit, .on-page-editor");
@@ -105,6 +114,8 @@ export const scDatabase = urlParams.get("sc_content");
 export const isGalleryLanguage = windowLocationHref.includes("gallery.language");
 export const isGalleryVersion = windowLocationHref.includes("gallery.version");
 export const isGalleryLinks = windowLocationHref.includes("gallery.links");
+export const isSetIcon = windowLocationHref.includes("seticon");
+export const isTemplateBuilder = windowLocationHref.includes("templatebuilder");
 export const isLayoutDetails = windowLocationHref.includes("layoutdetails");
 export const isRichText = windowLocationHref.includes("richtext.");
 export const isGalleryLanguageExpEd = windowLocationHref.includes("selectlanguagegallery");
@@ -121,6 +132,8 @@ export const isMediaUpload = windowLocationHref.includes("/applications/dialogs/
 export const isUploadManager = windowLocationHref.includes("/uploadmanager/");
 export const isPublishWindow = windowLocationHref.includes("/applications/publish.aspx");
 export const isPublishDialog = windowLocationHref.includes("/publishing/publishdialog");
+export const isExportSiteWizard = windowLocationHref.includes("exportsitewizard");
+export const isUploadPackage = windowLocationHref.includes("uploadpackage");
 export const isSecurityWindow = windowLocationHref.includes("/applications/security/");
 export const isEditUser = windowLocationHref.includes("security.edituser.aspx");
 export const isSecurityEditor = windowLocationHref.includes("security%20editor.aspx");
@@ -158,7 +171,7 @@ export const isRules = windowLocationHref.includes("rules.aspx");
 export const isCss = windowLocationHref.includes(".css");
 export const isSearch = windowLocationHref.includes("showresult.aspx");
 export const isExperienceProfile = windowLocationHref.includes("/applications/experienceprofile/");
-export const isWorkbox = windowLocationHref.includes("/applications/workbox.aspx");
+export const isWorkbox = windowLocationHref.includes("workbox");
 export const scQuickInfo = document.querySelector(".scEditorHeaderQuickInfoInput");
 export const scUrlHash = window.location.hash.substr(1);
 export const workboxLaunchpad = document.querySelector("a[title='Workbox']");
@@ -169,7 +182,7 @@ export const hasModePreview = windowLocationHref.includes("&mo=preview");
 export const scContentTree = document.querySelector("#ContentTreeHolder");
 
 export const svgAnimation = `
-<svg version="1.1" id="L4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 52 12" enable-background="new 0 0 0 0" xml:space="preserve">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 52 12" enable-background="new 0 0 0 0" xml:space="preserve">
   <circle fill="#fff" stroke="none" cx="6" cy="6" r="6" style="fill: var(--accent)">
     <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.1"></animate>    
   </circle>
@@ -179,6 +192,13 @@ export const svgAnimation = `
   <circle fill="#fff" stroke="none" cx="46" cy="6" r="6" style="fill: var(--accent)">
     <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.3"></animate>     
   </circle>
+</svg>`;
+
+export const svgAnimationCircle = `
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: none; display: block; shape-rendering: auto; animation-play-state: running; animation-delay: 0s;" width="100px" height="100px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+<circle cx="50" cy="50" fill="none" stroke="var(--accent)" stroke-width="3" r="30" stroke-dasharray="141.37166941154067 49.12388980384689" style="animation-play-state: running; animation-delay: 0s;">
+  <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50" keyTimes="0;1" style="animation-play-state: running; animation-delay: 0s;"></animateTransform>
+</circle>
 </svg>`;
 
 export const jsonData = JSON.parse(

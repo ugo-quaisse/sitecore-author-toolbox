@@ -23,7 +23,7 @@ function checkSiteSxa(sender, sendResponse) {
   chrome.cookies.getAll({}, function (cookies) {
     for (var i in cookies) {
       if (cookies[i].domain == url.hostname && cookies[i].name == "sxa_site" && cookies[i].value != "login") {
-        sendResponse({ farewell: cookies[i].value });
+        sendResponse({ farewell: cookies[i].value.toLowerCase() });
         break;
       }
     }
@@ -222,6 +222,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
   //   console.table(e.scData);
   //   console.table(e.domain_manager);
   // });
+  // chrome.storage.sync.clear();
 
   if (details.reason == "install") {
     //chrome.tabs.create({ url: "https://uquaisse.io/extension-update/?utm_source=install&utm_medium=chrome&utm_campaign=" + thisVersion });

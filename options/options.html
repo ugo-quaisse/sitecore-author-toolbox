@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sitecore Author Toolbox</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="css/options.css" />
+  </head>
+
+  <body>
+    <div id="extensionOptions" class="wrapper">
+      <!-- Header -->
+      <header class="sc-globalHeader" id="scHeader">
+        <a href="" id="scBack">
+          <img class="sc-global-logo" src="../../images/global_logo.png" alt="Sitecore logo" />
+        </a>
+      </header>
+      <!-- Banner -->
+      <div id="banner">
+        <h3 id="bannerTitle">Sitecore Author Toolbox</h3>
+        <img src="../../images/icon_round.png" alt="Sitecore Author Toolbox logo" />
+      </div>
+      <div id="intro">
+        <h2>Hello, I am<br />Sitecore Author Toolbox</h2>
+      </div>
+
+      <!-- Main panel-->
+      <div id="main">
+        <legend>Appearance</legend>
+        <fieldset>
+          <!-- Dark mode -->
+          <div class="scFeature">
+            <input id="feature_darkmode" name="feature_darkmode" class="scCheckbox" type="checkbox" />
+            <label for="feature_darkmode" class="scLabel"></label>
+            <span class="scFeatureName">Dark mode <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- Auto detect -->
+          <div class="scFeature">
+            <input id="feature_darkmode_auto" name="feature_darkmode_auto" class="scCheckbox" type="checkbox" />
+            <label for="feature_darkmode_auto" class="scLabel"></label>
+            <span class="scFeatureName">↳ Auto Switch <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- Experimental UI -->
+          <div class="scFeature">
+            <input id="feature_experimentalui" name="feature_experimentalui" class="scCheckbox" type="checkbox" />
+            <label for="feature_experimentalui" class="scLabel"></label>
+            <span class="scFeatureName">Experimental UI Theme <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- Contrasted icons for Experimental UI -->
+          <div class="scFeature">
+            <input id="feature_contrast_icons" name="feature_contrast_icons" class="scCheckbox" type="checkbox" />
+            <label for="feature_contrast_icons" class="scLabel"></label>
+            <span class="scFeatureName">↳ Material Icons <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+        </fieldset>
+        <legend>General</legend>
+        <fieldset>
+          <!-- Notifications (publish & rebuild) -->
+          <div class="scFeature">
+            <input id="feature_notification" name="feature_notification" class="scCheckbox" type="checkbox" />
+            <label for="feature_notification" class="scLabel"></label>
+            <span class="scFeatureName">Notifications (publish & rebuild) <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- Syntax highlighter (Html & Scriban)  -->
+          <div class="scFeature">
+            <input id="feature_rtecolor" name="feature_rtecolor" class="scCheckbox" type="checkbox" />
+            <label for="feature_rtecolor" class="scLabel"></label>
+            <span class="scFeatureName">Syntax highlighter (Html & Scriban) <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- Workbox badge  -->
+          <div class="scFeature">
+            <input id="feature_workbox" name="feature_workbox" class="scCheckbox" type="checkbox" />
+            <label for="feature_workbox" class="scLabel"></label>
+            <span class="scFeatureName">Workbox badge <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+        </fieldset>
+        <legend>Content Editor</legend>
+        <fieldset>
+          <!-- Live URL bar  -->
+          <div class="scFeature">
+            <input id="feature_urls" name="feature_urls" class="scCheckbox" type="checkbox" />
+            <label for="feature_urls" class="scLabel"></label>
+            <span class="scFeatureName">Publish URL <a class="sitesSettings" id="settings">Configure sites ➜</a> <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- Live URL publication status -->
+          <div class="scFeature">
+            <input id="feature_urlstatus" name="feature_urlstatus" class="scCheckbox" type="checkbox" />
+            <label for="feature_urlstatus" class="scLabel"></label>
+            <span class="scFeatureName">↳ Live status <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- Grouped error bar -->
+          <div class="scFeature">
+            <input id="feature_errors" name="feature_errors" class="scCheckbox" type="checkbox" />
+            <label for="feature_errors" class="scLabel"></label>
+            <span class="scFeatureName">Grouped errors <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- Language and versions flags -->
+          <div class="scFeature">
+            <input id="feature_flags" name="feature_flags" class="scCheckbox" type="checkbox" />
+            <label for="feature_flags" class="scLabel"></label>
+            <span class="scFeatureName">Language flags <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- Tree auto expand -->
+          <div class="scFeature">
+            <input id="feature_autoexpand" name="feature_autoexpand" class="scCheckbox" type="checkbox" />
+            <label for="feature_autoexpand" class="scLabel"></label>
+            <span class="scFeatureName">Tree auto expand <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- Tab sections -->
+          <div class="scFeature">
+            <input id="feature_cetabs" name="feature_cetabs" class="scCheckbox" type="checkbox" />
+            <label for="feature_cetabs" class="scLabel"></label>
+            <span class="scFeatureName">Tab sections <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- Reload from where you left off -->
+          <div class="scFeature">
+            <input id="feature_reloadnode" name="feature_reloadnode" class="scCheckbox" type="checkbox" />
+            <label for="feature_reloadnode" class="scLabel"></label>
+            <span class="scFeatureName">Reload from where you left off <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- Character counter -->
+          <div class="scFeature">
+            <input id="feature_charscount" name="feature_charscount" class="scCheckbox" type="checkbox" />
+            <label for="feature_charscount" class="scLabel"></label>
+            <span class="scFeatureName">Character counter <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- Search box -->
+          <div class="scFeature">
+            <input id="feature_instantsearch" name="feature_instantsearch" class="scCheckbox" type="checkbox" />
+            <label for="feature_instantsearch" class="scLabel"></label>
+            <span class="scFeatureName">Search box <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- RTL (Arabic, Hebrew, Persian, Urdu, Sindhi) -->
+          <div class="scFeature">
+            <input id="feature_rtl" name="feature_rtl" class="scCheckbox" type="checkbox" />
+            <label for="feature_rtl" class="scLabel"></label>
+            <span class="scFeatureName">RTL (Arabic, Hebrew, Persian, Urdu, Sindhi) <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- Favorites sidebar -->
+          <div class="scFeature">
+            <input id="feature_favorites" name="feature_favorites" class="scCheckbox" type="checkbox" />
+            <label for="feature_favorites" class="scLabel"></label>
+            <span class="scFeatureName">Favorites sidebar <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- Translate mode copy button -->
+          <div class="scFeature">
+            <input id="feature_translatemode" name="feature_translatemode" class="scCheckbox" type="checkbox" />
+            <label for="feature_translatemode" class="scLabel"></label>
+            <span class="scFeatureName">Translate mode copy button <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- Quick info -->
+          <div class="scFeature">
+            <input id="feature_quickinfoenhancement" name="feature_quickinfoenhancement" class="scCheckbox" type="checkbox" />
+            <label for="feature_quickinfoenhancement" class="scLabel"></label>
+            <span class="scFeatureName">Quick Info enhancements <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- Locked item bar -->
+          <div class="scFeature">
+            <input id="feature_lockeditems" name="feature_lockeditems" class="scCheckbox" type="checkbox" />
+            <label for="feature_lockeditems" class="scLabel"></label>
+            <span class="scFeatureName">Locked item bar <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- Help links bar -->
+          <div class="scFeature">
+            <input id="feature_helplink" name="feature_helplink" class="scCheckbox" type="checkbox" />
+            <label for="feature_helplink" class="scLabel"></label>
+            <span class="scFeatureName">Help bar and tooltips <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- Reminder bar -->
+          <div class="scFeature">
+            <input id="feature_reminder" name="feature_reminder" class="scCheckbox" type="checkbox" />
+            <label for="feature_reminder" class="scLabel"></label>
+            <span class="scFeatureName">Reminder bar <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- Fancy message bars -->
+          <div class="scFeature">
+            <input id="feature_messagebar" name="feature_messagebar" class="scCheckbox" type="checkbox" />
+            <label for="feature_messagebar" class="scLabel"></label>
+            <span class="scFeatureName">Fancy message bars <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- Other enhancements -->
+          <div class="scFeature">
+            <input id="feature_contenteditor" name="feature_contenteditor" class="scCheckbox" type="checkbox" />
+            <label for="feature_contenteditor" class="scLabel"></label>
+            <span class="scFeatureName">Other enhancements <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+        </fieldset>
+        <legend>Experience Editor</legend>
+        <fieldset>
+          <!-- Right click to open in EE -->
+          <div class="scFeature">
+            <input id="feature_contextmenu" name="feature_contextmenu" class="scCheckbox" type="checkbox" />
+            <label for="feature_contextmenu" class="scLabel"></label>
+            <span class="scFeatureName">Right click to open in EE <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- Right click to open in EE -->
+          <div class="scFeature">
+            <input id="feature_experienceeditor" name="feature_experienceeditor" class="scCheckbox" type="checkbox" />
+            <label for="feature_experienceeditor" class="scLabel"></label>
+            <span class="scFeatureName">Other enhancements <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+        </fieldset>
+        <legend>Experience Profile</legend>
+        <fieldset>
+          <!-- Right click to open in EE -->
+          <div class="scFeature">
+            <input id="feature_gravatarimage" name="feature_gravatarimage" class="scCheckbox" type="checkbox" />
+            <label for="feature_gravatarimage" class="scLabel"></label>
+            <span class="scFeatureName">Gravatar image <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+        </fieldset>
+        <legend>Launchpad and Desktop</legend>
+        <fieldset>
+          <!-- Launchpad extension icon  -->
+          <div class="scFeature">
+            <input id="feature_launchpad" name="feature_launchpad" class="scCheckbox" type="checkbox" />
+            <label for="feature_launchpad" class="scLabel"></label>
+            <span class="scFeatureName">Extension settings icon <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+          <!-- Launchpad tiles display  -->
+          <div class="scFeature">
+            <input id="feature_launchpad_tiles" name="feature_launchpad_tiles" class="scCheckbox" type="checkbox" />
+            <label for="feature_launchpad_tiles" class="scLabel"></label>
+            <span class="scFeatureName">Launchpad Tiles display <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank">Info</a></span>
+          </div>
+        </fieldset>
+
+        <div id="save">
+          <button class="save_settings">Save and reload Sitecore</button>
+        </div>
+      </div>
+      <!-- Panel domains -->
+      <div id="domains">
+        <p>
+          <a href="https://uquaisse.io/sat_domains" target="_blank">How to configure your sites?</a><br />
+          <b>Hints</b><br />
+          - Use <code>{lang}</code> token in your URL if you whant to embed language at a specific place.<br />
+          - Use <code>{nolang}</code> token anywhere in your URL if you don't want language embedding.
+        </p>
+        <div id="sitesButtons">
+          <input class="importSites" type="file" accept=".json" style="display: none" />
+          <input class="importSitesVisible" type="button" value="⤒ IMPORT (.JSON)" />
+          <input class="exportSites" type="button" value="⤓ EXPORT (.JSON)" />
+        </div>
+        <div id="sitesList">
+          <!-- List of sites goes here -->
+        </div>
+        <div class="addDomain">ADD A DOMAIN +</div>
+        <div id="save_domains">
+          <button class="back">&laquo; Back</button>
+          <button class="save_sites">Save your sites</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer-->
+    <div id="footer">
+      <p>
+        Crafted with ❤️ by <b>Ugo Quaisse</b> (Paris, France)<br />
+        Follow me at <a href="https://twitter.com/uquaisse" target="_blank">https://twitter.com/uquaisse</a> or <a href="https://uquaisse.io/?utm_source=browseraction&utm_medium=chrome" target="_blank">https://uquaisse.io</a><br /><br />
+      </p>
+      <p>
+        Version <span id="scVersion"></span> - Post a review <a href="https://chrome.google.com/webstore/detail/mckfcmcdbgkgffdknpkaihjigmcnnbco/publish-accepted?authuser=0&hl=en" target="_blank">here</a>.<br />
+        👾 You can report a bug by clicking <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/issues/new?assignees=&labels=&template=bug_report.md&title=" target="_blank">here</a>
+      </p>
+    </div>
+    <input type="hidden" class="trackChanges" value="0" />
+    <script type="module" src="js/options.js"></script>
+  </body>
+</html>

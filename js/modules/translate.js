@@ -14,6 +14,7 @@ const initTranslateMode = (storage) => {
     let isTranslateMode = false;
     let scEditorPanel = document.querySelector(".scEditorPanel");
     let scQuickInfo = document.querySelector("div[id^='QuickInfo_']");
+    let scEditorTabs = document.querySelector("div#scEditorTabs");
     let scEditorSectionPanel = document.querySelectorAll(".scEditorSectionPanel .scEditorSectionPanelCell")[1];
     let scTextFields = scEditorPanel.querySelectorAll("input, textarea, select");
     let scEditorHeaderVersionsLanguage = document.querySelector(".scEditorHeaderVersionsLanguage");
@@ -77,21 +78,23 @@ const initTranslateMode = (storage) => {
 
       //Add message bar
       if (!document.querySelector("#scMessageBarTranslation")) {
-        let scMessage =
-          '<div id="scMessageBarTranslation" class="scMessageBar scInformation"><div class="scMessageBarIcon" style="background-image:url(' +
-          global.iconTranslate +
-          ')"></div><div class="scMessageBarTextContainer"><div class="scMessageBarTitle">Translation Mode (' +
-          fieldRightLang +
-          " to " +
-          fieldLeftLang +
-          ')</div><div class="scMessageBarText">You are translating content. If you want, you can directly </b></div><ul class="scMessageBarOptions" style="margin:0px"><li class="scMessageBarOptionBullet"><span class="scMessageBarOption" onclick="javascript:copyTranslateAll();" style="cursor:pointer">Copy existing content into ' +
-          scLanguageTxtShort +
-          ' version</span></li> or <li class="scMessageBarOptionBullet"><span class="scMessageBarOption" style="cursor:pointer !important;" onclick="window.open(\'https://translate.google.com/#view=home&op=translate&sl=' +
-          fieldRightLang.toLowerCase() +
-          "&tl=" +
-          fieldLeftLang.toLowerCase() +
-          "&text=Hello Sitecore');\">Use Google Translate</span></li></ul></div></div>";
-        scQuickInfo.insertAdjacentHTML("beforebegin", scMessage);
+        let scMessage = `<div id="scMessageBarTranslation" class="scMessageBar scInformation">
+          <div class="scMessageBarIcon" style="background-image:url(${global.iconTranslate})"></div>
+          <div class="scMessageBarTextContainer">
+            <div class="scMessageBarTitle">Translation Mode (${fieldRightLang} to ${fieldLeftLang})</div>
+            <div class="scMessageBarText">You are translating content. If you want, you can directly </b></div>
+            <ul class="scMessageBarOptions" style="margin:0px">
+              <li class="scMessageBarOptionBullet">
+                <a class="scMessageBarOption" onclick="javascript:copyTranslateAll();" style="cursor:pointer">Copy existing content into ${scLanguageTxtShort} version</a>
+              </li>
+            </ul>
+            </div>
+          </div>`;
+        if (scEditorTabs) {
+          scEditorTabs.insertAdjacentHTML("beforebegin", scMessage);
+        } else if (scQuickInfo) {
+          scQuickInfo.insertAdjacentHTML("beforebegin", scMessage);
+        }
       }
     }
   }

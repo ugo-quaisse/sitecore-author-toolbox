@@ -15,7 +15,7 @@
 
 import * as global from "./global.js";
 
-export { log, loadCssFile, loadJsFile, exeJsCode, sitecoreItemJson, fetchTimeout, getScItemData, setPlural, setTextColour, repositionElement, startDrag, calcMD5 };
+export { log, loadCssFile, loadJsFile, exeJsCode, getMaterializeIcon, sitecoreItemJson, fetchTimeout, getScItemData, setPlural, setTextColour, repositionElement, startDrag, calcMD5 };
 
 /**
  * Show colored log message in console
@@ -74,7 +74,7 @@ const log = (message, color = "yellow") => {
  * Load CSS file
  */
 const loadCssFile = (file) => {
-  var link = document.createElement("link");
+  let link = document.createElement("link");
   link.type = "text/css";
   link.rel = "stylesheet";
   link.href = chrome.runtime.getURL(file);
@@ -85,7 +85,7 @@ const loadCssFile = (file) => {
  * Load Javascript file
  */
 const loadJsFile = (file) => {
-  var script = document.createElement("script");
+  let script = document.createElement("script");
   script.src = chrome.runtime.getURL(file);
   (document.head || document.documentElement).appendChild(script);
   script.remove();
@@ -100,6 +100,11 @@ const exeJsCode = (code) => {
   (document.head || document.documentElement).appendChild(script);
   script.remove();
 };
+
+/**
+ * Get Materialize icon
+ */
+const getMaterializeIcon = (folder = "action", icon = "description", theme = "materialiconsoutlined") => chrome.runtime.getURL(`images/icons/src/${folder}/${icon}/${theme}/24px.svg`);
 
 /**
  * Get active Siteore item from Chrome Storage

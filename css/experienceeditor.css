@@ -53,7 +53,7 @@ body.satEE .view-render-exception {
   padding: 50px;
 }
 
-body.satEE .zg-variant-switcher {
+/* body.satEE .zg-variant-switcher {
   zoom: 1.1;
   background-color: #f1d500 !important;
   padding: 4px !important;
@@ -75,7 +75,7 @@ body.satEE .zg-variant-switcher .zg-variant-list li.selected {
 
 body.satEE .zg-variant-toggle-dropdown {
   right: 5px !important;
-}
+} */
 
 body.satEE .scChromeToolbar {
   box-shadow: none !important;
@@ -88,21 +88,28 @@ body.satEE .scChromeDropDown {
 body.satEE .scChromeName {
   border-radius: 4px 4px 0px 0px !important;
 }
+
 body.satEE .scFrameSideHorizontal {
   box-shadow: 0px 0px 10px 1px rgba(40, 155, 200, 0.7);
   height: 2px !important;
   background-color: #289bc8 !important;
   transform: translateY(-15%);
+  border-style: none;
 }
+
 body.satEE .scFrameSideVertical {
   box-shadow: 0px 0px 10px 1px rgba(40, 155, 200, 0.7);
   width: 2px !important;
   background-color: #289bc8 !important;
   transform: translateX(-15%);
+  border-style: none;
 }
+body.satEE .scHoverFrameSideHorizontal,
+body.satEE .scHoverFrameSideVertical,
 body.satEE .scFrameYellow {
   box-shadow: 0px 0px 10px 1px rgba(241, 213, 0, 0.7);
   background-color: #f1d500 !important;
+  border-style: none;
 }
 body.satEE .chromeWithDatasource {
   transition: all 0.1s ease-in-out;
@@ -123,4 +130,16 @@ body.satEE .scEnabledChrome:hover,
 body.satEE .scEmptyPlaceholder:hover {
   box-shadow: 0px 0px 10px 1px rgba(241, 213, 0, 0.7);
   border: 1px solid #f1d500 !important;
+}
+
+body.satEE #sxa-toolbox {
+  overflow: scroll;
+}
+
+body.satEE .sc_DropDownItemImage {
+  padding: 0px 10px 0px 0px;
+}
+
+body.satEE .sc_DropDownListItemUsed {
+  background-color: var(--accent);
 }

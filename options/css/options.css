@@ -1,0 +1,521 @@
+html,
+body {
+  width: 100%;
+  min-width: 400px;
+  font-family: arial, verdana;
+  margin: 0px;
+  padding: 0px;
+  font-size: 12px;
+  font-weight: 600;
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  color: #131313;
+  font-family: "Open Sans", sans-serif;
+  background-color: #f0f0f0;
+}
+legend {
+  font-size: 15px;
+  color: #474747;
+  padding: 2px 10px;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-align: left;
+  font-family: "Open Sans", sans-serif;
+  margin-top: 10px;
+}
+fieldset {
+  border: 1px solid #f0f0f0;
+  border-bottom: none;
+  background-color: #fff;
+  border-radius: 0px;
+  padding: 0px;
+}
+
+.scFeature {
+  padding: 10px 15px 10px 15px;
+  border-bottom: 1px solid #f0f0f0;
+  font-weight: normal;
+  line-height: 17px;
+}
+.scFeatureName .infoLink {
+  color: #ee3524;
+  font-size: 11px;
+  padding: 0px 5px;
+  cursor: pointer;
+  font-weight: bold;
+  display: none;
+  text-decoration: none;
+}
+.scFeatureName .infoLink:hover {
+  color: #6edc60;
+}
+.scFeatureName .infoLink:after {
+  content: "";
+}
+.scFeatureName:hover .infoLink {
+  display: inline;
+}
+.site {
+  padding: 10px 15px 10px 15px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flow-root;
+}
+a {
+  color: #ee3524;
+}
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
+label {
+  display: inline-block;
+  margin-right: 0.5em;
+}
+label > input {
+  display: none;
+}
+label i {
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  vertical-align: middle;
+}
+label > input:checked + i {
+  box-shadow: inset 0 0 0 0.2em #ffffff;
+  background: #ee3524;
+}
+label:hover {
+  cursor: pointer;
+}
+#message {
+  color: #ee3524;
+  font-size: 20px;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+}
+#sitesList,
+#sitesButtons {
+  text-align: center;
+}
+.back,
+.save_sites,
+.save_settings,
+.addSite,
+.addDomain,
+.sitesSettings,
+.importSites,
+.importSitesVisible,
+.exportSites {
+  cursor: pointer;
+  padding: 12px 40px;
+  display: inline-block;
+  margin: 15px 0px 30px 0px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  outline: none;
+  position: relative;
+  color: #fff;
+  background: #ee3524;
+  border: 0px;
+  text-shadow: none;
+  border: 0px;
+  border-radius: 3px;
+  box-shadow: none;
+}
+
+.addSite,
+.addDomain,
+.sitesSettings,
+.importSites,
+.importSitesVisible,
+.exportSites {
+  padding: 12px 15px;
+  margin: 5px;
+  width: fit-content;
+  background: #f7991f;
+  color: #f2fff0;
+  font-size: 12px;
+}
+
+.addSite {
+  clear: both;
+  padding: 5px 15px;
+  margin: 15px auto;
+  display: block;
+  background: #4989f4;
+}
+.addDomain {
+  clear: both;
+  padding: 5px 15px;
+  margin: 5px auto;
+  display: block;
+  width: fit-content;
+  background: #6edc60;
+}
+.sitesSettings {
+  padding: 0px 5px;
+  margin: 0px;
+  font-size: 10px;
+  background: #f7991f !important;
+  text-decoration: none;
+}
+.domainDisplay {
+  text-transform: lowercase;
+}
+
+.sitesSettings:hover,
+.save_sites:hover,
+.addSite:hover,
+.addDomain:hover,
+.save_settings:hover,
+.importSitesVisible:hover,
+.exportSites:hover {
+  background: #474747;
+  color: rgb(255, 255, 255);
+  border: 0px;
+}
+.back {
+  background: #666666;
+}
+.back:hover {
+  background: #dc291e;
+}
+#banner {
+  width: 100%;
+  height: 70px;
+  text-align: center;
+  padding: 20px 0px 0px 0px;
+  background: #dc291e; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #93291e, #dc291e); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #93291e, #dc291e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  position: fixed;
+  z-index: 10;
+  transition: height 0.2s ease-in-out;
+  background-color: #ca241c;
+  background: url("chrome-extension://__MSG_@@extension_id__/images/breadcrumb_red_bg.png");
+  background-repeat: repeat-x;
+  top: 0px;
+}
+@media screen and (min-width: 450px) {
+  #banner:after {
+    position: absolute;
+    right: 0;
+    top: 0px;
+    display: block;
+    background: url("chrome-extension://__MSG_@@extension_id__/images/logo_spiral.png") center right;
+    background-repeat: no-repeat;
+    width: 113px;
+    height: 90px;
+    content: " ";
+    opacity: 1;
+  }
+}
+@media screen and (max-width: 450px) {
+  .back {
+    margin: 0px 0px 0px 0px;
+    padding: 12px 20px;
+  }
+}
+#banner > img {
+  width: 150px;
+  transform: scale(1);
+  transition: all 0.2s ease-in-out;
+}
+#banner > h3 {
+  position: fixed;
+  top: 36px;
+  left: 15px;
+  color: #ffffff;
+  font-family: "Open Sans", sans-serif;
+  font-size: 24px;
+  transition: all 0.1s ease-in-out;
+  opacity: 0;
+  font-weight: 400;
+}
+#banner.animate {
+  height: 40px;
+}
+#banner.animate > img {
+  transform: scale(0.5);
+  margin-left: -275px;
+  margin-top: -45px;
+}
+#banner.animate > h3 {
+  opacity: 1;
+  top: -5px;
+  left: 115px;
+  opacity: 1;
+  font-size: 22px;
+}
+#intro {
+  text-align: center;
+  padding: 180px 0px 0px 0px;
+  font-size: 22px;
+  font-family: "Open Sans", sans-serif;
+}
+#intro > h2 {
+  font-size: 28px;
+  line-height: 35px;
+  margin: 5px 0px 25px;
+  font-weight: 300;
+}
+#video {
+  display: none;
+  padding: 20px 0px 0px;
+  max-width: 550px;
+  margin: auto;
+}
+.domain h3 {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  color: #4693f8;
+  font-size: 23px;
+  text-align: left;
+}
+.domain h3 > i {
+  /* color: #333; */
+  font-weight: 600;
+  font-style: normal;
+  font-size: 15px;
+}
+h4 {
+  margin: 15px;
+  font-size: 17px;
+  text-align: center;
+  font-weight: 300;
+}
+#main {
+  padding: 0px 25px;
+  margin: auto;
+  text-align: left;
+  max-width: 550px;
+  line-height: 25px;
+}
+#save {
+  text-align: center;
+  padding: 20px 0px;
+}
+#footer {
+  padding: 10px 25px;
+  text-align: center;
+  color: #666666;
+  margin-top: -50px;
+  font-weight: 400;
+}
+input {
+  margin: 0px 0px 0px 5px !important;
+}
+#scHeader {
+  display: none;
+  position: fixed;
+  top: 0px;
+  z-index: 10;
+}
+.sc-globalHeader {
+  color: #ffffff;
+  border-color: #2b2b2b;
+  background-color: #2b2b2b;
+  height: 50px;
+  line-height: 50px;
+  padding: 0;
+  width: 100%;
+  margin: 0 auto;
+}
+.sc-global-logo {
+  margin: 8.5px 14.5px;
+  height: 33px;
+  width: 33px;
+}
+
+#scVideo {
+  padding: 25px 25px 0px 25px;
+  margin: auto;
+  max-width: 550px;
+}
+
+#domains {
+  padding: 0px 25px;
+  margin: auto;
+  text-align: left;
+  max-width: 550px;
+  line-height: 25px;
+  display: none;
+}
+#domains > p {
+  text-align: center;
+}
+#extensionOptions > #domains > div > p {
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
+  font-size: 15px;
+}
+
+#domains .arrow {
+  float: left;
+  text-align: center;
+  width: 8%;
+  padding-top: 27px;
+}
+
+#domains .edit {
+  padding: 8px;
+  margin-left: 5px;
+  display: inline;
+  background: transparent url("chrome-extension://__MSG_@@extension_id__/images/ce.png") no-repeat 50% center;
+  cursor: pointer;
+}
+
+#domains .delete {
+  float: left;
+  text-align: center;
+  width: 8%;
+  cursor: pointer;
+  padding-top: 27px;
+}
+
+.cm_url {
+  width: 50%;
+  float: left;
+}
+.cm_url > label {
+  display: block;
+}
+.cm_url > input {
+  display: block;
+  width: -webkit-fill-available;
+  font-size: 14px;
+  padding: 7px;
+  border-radius: 3px;
+  border: 2px solid #ccc;
+  margin: 0px !important;
+}
+
+.cd_url {
+  width: 34%;
+  float: left;
+}
+.cd_url > label {
+  display: block;
+}
+.cd_url > input {
+  display: block;
+  width: -webkit-fill-available;
+  font-size: 14px;
+  padding: 7px;
+  border-radius: 3px;
+  border: 2px solid #ccc;
+  margin: 0px !important;
+}
+
+input[name="key"],
+input[name="value"] {
+  background-color: transparent;
+  border: 0px;
+  text-transform: lowercase;
+  transition: border ease-in-out 0.1s;
+}
+input[name="key"]:focus,
+input[name="value"]:focus {
+  color: #000;
+  border-color: #4793f8;
+}
+
+input[name="key"]::placeholder,
+input[name="value"]::placeholder {
+  color: #ccc;
+}
+.site label {
+  font-weight: 600;
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  color: #131313;
+  text-align: left;
+  font-size: 12px;
+}
+#save_domains {
+  text-align: center;
+  margin: 20px 0px;
+}
+#return {
+  text-align: center;
+  margin-top: -15px;
+  margin-bottom: 10px;
+}
+#return > a {
+  cursor: pointer;
+}
+sup a {
+  background-color: yellow;
+  color: black;
+  padding: 2px;
+  border-radius: 2px;
+  text-decoration: none;
+  font-size: 10px;
+}
+
+/* Checkbox */
+input.scCheckbox {
+  display: none !important;
+}
+
+label.scLabel {
+  margin: 0px 0px 0px 5px;
+  width: 35px;
+  height: 20px;
+  text-indent: -150%;
+  clip: rect(0 0 0 0);
+  color: transparent;
+  user-select: none;
+  vertical-align: middle;
+  float: right;
+  transform: scale(1.1);
+}
+label.scLabel::before,
+label.scLabel::after {
+  content: "";
+  display: block;
+  position: absolute;
+  cursor: pointer;
+  z-index: auto;
+}
+label.scLabel::before {
+  width: 100%;
+  height: 100%;
+  max-width: 38px !important;
+  max-height: 20px !important;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 9999em;
+  transition: background-color 0.15s ease;
+}
+label.scLabel::after {
+  width: 18px;
+  height: 18px;
+  top: 1px;
+  left: 1px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.45);
+  transition: left 0.15s ease;
+  cursor: pointer !important;
+  position: relative;
+}
+input.scCheckbox:checked + label.scLabel::before {
+  background-color: #6edc60;
+}
+
+input.scCheckbox:checked + label.scLabel::after {
+  left: 16px;
+}
+
+input.scCheckbox:disabled + label.scLabel::before {
+  opacity: 0.4;
+  background-color: #ccc;
+  cursor: not-allowed !important;
+}
+
+input.scCheckbox:disabled + label.scLabel::after {
+  opacity: 0.7;
+  cursor: not-allowed !important;
+}

@@ -447,7 +447,6 @@ body.satExperimentalUi.satDark div.content {
 body.satExperimentalUi.satDark .reEditorModesCell {
   background-color: transparent;
 }
-
 body.satExperimentalUi.satDark #satFavoritesDrag {
   background-color: var(--grey2);
 }

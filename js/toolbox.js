@@ -24,7 +24,7 @@ import { initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, r
 import { initAppName, initGravatarImage, initUserMenu } from "./modules/users.js";
 import { initInstantSearch, enhancedSitecoreSearch } from "./modules/search.js";
 import { insertModal, insertPanel } from "./modules/insert.js";
-import { initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons, initUploader } from "./modules/media.js";
+import { initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons, initUploadButton, initUploader, initLightbox, initMediaSearchBox } from "./modules/media.js";
 import {
   initOnboarding,
   initExperimentalUi,
@@ -58,7 +58,7 @@ chrome.storage.sync.get((storage) => {
    * Sitecore detection *
    **********************
    */
-  if (global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isCss && !global.isUploadManager) {
+  if (global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isCss) {
     log("Sitecore detected", "red");
     document.body ? document.body.classList.add("satExtension") : false;
     loadJsFile("js/inject.js");
@@ -89,6 +89,7 @@ chrome.storage.sync.get((storage) => {
       historyNavigation();
       showSnackbar(storage);
       contentTreeScrollTo();
+      initLightbox();
       if (storage.feature_experimentalui) {
         log("**** Experimental ****", "yellow");
         initAppName(storage, "Content Editor");
@@ -172,6 +173,8 @@ chrome.storage.sync.get((storage) => {
       initMediaDragDrop();
       initMediaViewButtons();
       initMediaExplorer(storage);
+      initMediaSearchBox();
+      initMaterializeIcons(storage);
     } else if (global.isFieldEditor) {
       log("**** Field editor ****", "orange");
       initCheckboxes(storage);
@@ -231,6 +234,9 @@ chrome.storage.sync.get((storage) => {
     } else if (global.isGalleryFavorites) {
       log("**** Favorites ****", "orange");
       initMaterializeIcons(storage);
+    } else if (global.isMediaBrowser) {
+      log("**** Media Browser ****", "orange");
+      initUploadButton();
     } else if (global.isXmlControl && !global.isRichText) {
       log("**** XML Control (Window) ****", "orange");
       initCheckboxes(storage);

@@ -237,8 +237,8 @@ const insertMoreButton = () => {
         <li onclick="javascript:return scForm.invoke('contenteditor:edit')" id="scLockMenuText">Lock item</li>
         <li onclick="javascript:return scForm.postEvent(this,event,'item:rename')">Rename item</li>
         <li onclick="javascript:return scForm.invoke('item:duplicate')">Duplicate</li>
-        <li class="separator" onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor')">Edit in Experience Editor...</li>
-        <li onclick="javascript:return scForm.invoke('item:setlayoutdetails', event)">Presentation details...</li>
+        <li onclick="javascript:return scForm.invoke('item:clone')">Clone</li>
+        <li class="separator" onclick="javascript:return scForm.invoke('item:setlayoutdetails', event)">Presentation details...</li>
         <li class="separator" onclick="javascript:return scForm.postEvent(this,event,'item:sethelp')">Help texts</li>
         <!-- <li id="scInfoButton">Item details</li> -->
         <li  onclick="javascript:return scForm.postEvent(this,event,'contenteditor:properties')">Item properties</li>
@@ -672,7 +672,7 @@ const initTitleBarDesktop = () => {
 const replaceIcons = (storage) => {
   if (storage.feature_contrast_icons === true) {
     let imgGlyph = document.querySelectorAll(
-      ".scContentTree .scContentTreeNodeGlyph, .scContentTree .scContentTreeNodeIcon, .scContentControlTree .scContentTreeNodeGlyph, .scContentControlTree .scContentTreeNodeIcon, #scModal .main img, .scInstantSearchResults img, .dynatree-container img, .scTabs .scImageContainer > img, .scStretch img"
+      ".scContentTreeNodeGlyph, .scContentTreeNodeIcon, #scModal .main img, .scInstantSearchResults img, .dynatree-container img, .scTabs .scImageContainer > img, form[action*='Gallery'] img, form[action*='Media'] .scFolderButtons img, .scPopup .scMenuItemIcon > img"
     );
     for (let icon of imgGlyph) {
       let filename = icon.src.substring(icon.src.lastIndexOf("/") + 1).toLowerCase();
@@ -707,10 +707,9 @@ const replaceIcons = (storage) => {
 const initMaterializeIcons = (storage) => {
   if (storage.feature_contrast_icons === true) {
     let target, observer;
-    //console.log(icons.jsonIcons);
     replaceIcons(storage);
-    //Content tree
-    target = document.querySelector(".scContentTree");
+    //In Content Editor
+    target = document.querySelector("#ContentEditorForm");
     observer = new MutationObserver(function () {
       replaceIcons(storage);
     });
@@ -723,64 +722,18 @@ const initMaterializeIcons = (storage) => {
           subtree: true,
         })
       : false;
-    //Content tree multiselect
-    target = document.querySelector(".scContentControlTree");
-    observer = new MutationObserver(function () {
-      replaceIcons(storage);
-    });
-    //Observer UI
-    target
-      ? observer.observe(target, {
-          attributes: false,
-          childList: true,
-          characterData: false,
-          subtree: true,
-        })
-      : false;
-
+    //In iframe, modals and windows
     setTimeout(function () {
-      //Favorites
-      target = document.querySelector(".scStretch");
-      target ? replaceIcons(storage) : false;
-      //Instant search
-      target = document.querySelector(".scInstantSearchResults");
-      observer = new MutationObserver(function () {
-        replaceIcons(storage);
-      });
-      //Observer UI
-      target
-        ? observer.observe(target, {
-            attributes: false,
-            childList: true,
-            characterData: false,
-            subtree: true,
-          })
-        : false;
-      //Modal window
-      target = document.querySelector("#scModal .main");
-      observer = new MutationObserver(function () {
-        replaceIcons(storage);
-      });
-      //Observer UI
-      target
-        ? observer.observe(target, {
-            attributes: false,
-            childList: true,
-            characterData: false,
-            subtree: true,
-          })
-        : false;
       //Speak UI tree
       target = document.querySelector("div[data-sc-id='TreeView']");
       observer = new MutationObserver(function () {
         replaceIcons(storage);
       });
-      //Observer UI
       target
         ? observer.observe(target, {
-            attributes: true,
+            attributes: false,
             childList: true,
-            characterData: true,
+            characterData: false,
             subtree: true,
           })
         : false;

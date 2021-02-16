@@ -129,8 +129,8 @@ export const jsonIcons = JSON.parse(
     "icon": "action::search"
   },
   {
-    "search": "warning.png",
-    "icon": "action::announcement"
+    "search": "warning",
+    "icon": "alert::warning_amber"
   },
   {
     "search": "folder_gear.png",
@@ -357,7 +357,7 @@ export const jsonIcons = JSON.parse(
     "icon": "action::description"
   },
   {
-    "search": "list",
+    "search": "list.png",
     "icon": "action::list"
   },
   {
@@ -455,6 +455,74 @@ export const jsonIcons = JSON.parse(
   {
     "search": "organize_",
     "icon": "content::create"
+  },
+  {
+    "search": "masks",
+    "icon": "maps::theater_comedy"
+  },
+  {
+    "search": "copy",
+    "icon": "content::content_copy"
+  },
+  {
+    "search": "selection",
+    "icon": "image::photo_size_select_small"
+  },
+  {
+    "search": "people",
+    "icon": "social::people"
+  },
+  {
+    "search": "person",
+    "icon": "social::person"
+  },
+  {
+    "search": "delete",
+    "icon": "content::clear"
+  },
+  {
+    "search": "console",
+    "icon": "hardware::laptop"
+  },
+  {
+    "search": "publish",
+    "icon": "social::public"
+  },
+  {
+    "search": "pencil",
+    "icon": "content::create"
+  },
+  {
+    "search": "documents_empty",
+    "icon": "content::content_copy"
+  },
+  {
+    "search": "powershell",
+    "icon": "action::integration_instructions"
+  },
+  {
+    "search": "recycle_bin",
+    "icon": "action::delete"
+  },
+  {
+    "search": "move_to",
+    "icon": "file::drive_file_move"
+  },
+  {
+    "search": "transfer",
+    "icon": "file::rule_folder"
+  },
+  {
+    "search": "_template",
+    "icon": "action::note_add"
+  },
+  {
+    "search": "gallery.svg",
+    "icon": "file::file_upload"
+  },
+  {
+    "search": "export1",
+    "icon": "file::file_upload"
   }
 ]`
 );

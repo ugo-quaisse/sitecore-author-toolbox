@@ -447,3 +447,18 @@ body.satExperimentalUi.satDark div.content {
 body.satExperimentalUi.satDark .reEditorModesCell {
   background-color: transparent;
 }
+
+body.satExperimentalUi.satDark #satFavoritesDrag {
+  background-color: var(--grey2);
+}
+
+body.satExperimentalUi.satDark .scSaveBar > .scBreadcrumb > i,
+body.satExperimentalUi.satDark .scContrastedIcon {
+  filter: invert(1);
+}
+
+body.satExperimentalUi.satDark #Editors input:not(.scContentControlImage),
+body.satExperimentalUi.satDark #Editors select:not([multiple]),
+body.satExperimentalUi.satDark #Editors textarea {
+  border-color: var(--black6);
+}

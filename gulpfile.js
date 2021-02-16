@@ -27,7 +27,7 @@ gulp.task("minify-css", function () {
   //https://chrome.google.com/webstore/detail/extensions-reloader/fimgfedafeadlieiabdeeaodndnlbhid
 });
 gulp.task("watch", function () {
-  gulp.watch(["css/*.css", "!css/*.min.css"], gulp.series(["minify-css"]));
+  gulp.watch(["css/*.css", "css/dark/*.css", "!css/*.min.css"], gulp.series(["minify-css"]));
 });
 
 //Default

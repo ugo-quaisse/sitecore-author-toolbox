@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>drop</title>
+    <g id="drop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <polyline id="Path" stroke="#000000" stroke-width="3" points="18.8522046 37.1537258 2 37.1537258 2 2 16.7382064 2 21.5458637 8.12061526 47.5146097 8.12061526 47.5146097 37.1537258 31.6550098 37.1537258"></polyline>
+        <path d="M25.4570361,48.3768914 L25.4570361,20.5768629 L19.1430683,27.0446495 M25.6430683,20.5446495 L31.6430683,27.0446495" id="Combined-Shape" stroke="#000000" stroke-width="3"></path>
+    </g>
+</svg>

@@ -579,3 +579,61 @@ function addSite(optionPage, urlOrigin, sitePath, siteName) {
   //prettier-ignore
   window.open(optionPage + `?configure_domains=true&launchpad=true&domain=` + urlOrigin + `&site=` + sitePath + `&name=` + siteName);
 }
+
+/**
+ * Open Lightbox
+ */
+function openLightbox(id, from = "frame") {
+  let lightbox = parent.document.querySelector("#scLightbox");
+  let item = from == "frame" ? document.querySelector(`img[data-id='${id}']`) : document.querySelector("iframe[src*='/Media/']").contentDocument.querySelector(`img[data-id='${id}']`);
+  let img = item.src.replace("&h=150", "").replace("&w=150", "").replace("&thn=1", "");
+  let name = item.dataset.name;
+  let size = item.dataset.size;
+  let mediaType = size == "--" ? "other" : "img";
+  lightbox ? lightbox.classList.remove("scLightboxHideSpinner") : false;
+  lightbox ? lightbox.querySelector(".sclightboxDownload > a").setAttribute("href", img) : false;
+  if (mediaType == "img") {
+    lightbox ? lightbox.querySelector(".scLightboxContent > iframe").setAttribute("style", "display: none") : false;
+    lightbox ? lightbox.querySelector(".scLightboxContent > img").setAttribute("style", "display: block") : false;
+    lightbox ? lightbox.querySelector(".scLightboxContent > img").setAttribute("src", img) : false;
+    lightbox ? (lightbox.querySelector(".scLightboxTitle").innerHTML = `<b>${name}</b> (${size})`) : false;
+  } else {
+    lightbox ? lightbox.querySelector(".scLightboxContent > img").setAttribute("style", "display: none") : false;
+    lightbox ? lightbox.querySelector(".scLightboxContent > iframe").setAttribute("style", "display: block") : false;
+    lightbox ? lightbox.querySelector(".scLightboxContent > iframe").setAttribute("src", img) : false;
+    lightbox ? (lightbox.querySelector(".scLightboxTitle").innerHTML = `<b>${name}</b>`) : false;
+  }
+  //Remove spinner
+  lightbox.querySelectorAll(".scLightboxContent > img, .scLightboxContent > iframe").forEach((elem) => {
+    elem.onload = function () {
+      lightbox.classList.add("scLightboxHideSpinner");
+    };
+  });
+  //Show lightbox
+  lightbox ? lightbox.setAttribute("style", "display:block") : false;
+  //Browse all items
+
+  let mediaThumbnails = from == "frame" ? document.querySelectorAll(".mediaThumbnail > img") : document.querySelector("iframe[src*='/Media/']").contentDocument.querySelectorAll(".mediaThumbnail > img");
+  for (var i = 0; i < mediaThumbnails.length; ++i) {
+    if (item == mediaThumbnails[i]) {
+      let prev = mediaThumbnails[i - 1] ? mediaThumbnails[i - 1].dataset.id : false;
+      let next = mediaThumbnails[i + 1] ? mediaThumbnails[i + 1].dataset.id : false;
+      if (prev) {
+        lightbox.querySelector("#scLightboxPrev").setAttribute(`onclick`, `openLightbox('${prev}','arrow')`);
+        lightbox.querySelector("#scLightboxPrev").setAttribute("style", "display:block");
+      } else {
+        lightbox.querySelector("#scLightboxPrev").setAttribute(`onclick`, ``);
+        lightbox.querySelector("#scLightboxPrev").setAttribute("style", "display:none");
+      }
+      if (next) {
+        lightbox.querySelector("#scLightboxNext").setAttribute(`onclick`, `openLightbox('${next}','arrow')`);
+        lightbox.querySelector("#scLightboxNext").setAttribute("style", "display:block");
+      } else {
+        lightbox.querySelector("#scLightboxNext").setAttribute(`onclick`, ``);
+        lightbox.querySelector("#scLightboxNext").setAttribute("style", "display:none");
+      }
+      console.log("Prev", `openLightbox('${prev}')`);
+      console.log("Next", `openLightbox('${next}')`);
+    }
+  }
+}

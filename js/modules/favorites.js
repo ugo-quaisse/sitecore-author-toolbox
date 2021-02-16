@@ -15,22 +15,33 @@ const initFavorites = (storage) => {
     var scMyShortcut = `<div id="satFavoritesDrag"></div><iframe loading="lazy" id="satFavorites" class="satFavorites" src="${scFavoritesUrl}" style="width:100%; height:150px; margin-top: 0px; resize: vertical;"></iframe>`;
     global.scContentTree.insertAdjacentHTML("afterend", scMyShortcut);
 
+    //Size from local storage
+    scFavoritesIframe = document.querySelector("#satFavorites");
+    let offsetTop = localStorage.getItem("scFavoritesSize");
+    offsetTop ? scFavoritesIframe.setAttribute("style", "height:" + offsetTop + "px; visibility:visible") : false;
+
     //Drag handler event
-    let offsetTop, isResizing;
+    let isResizing = false;
     let iframe = document.querySelector("#satFavorites");
     let handle = document.querySelector("#satFavoritesDrag");
-    handle.addEventListener("mousedown", function () {
+    let dock = document.querySelector(".scDockBottom");
+    let dockHeight = dock ? dock.getBoundingClientRect().height : 0;
+    handle.addEventListener("mousedown", () => {
       isResizing = true;
     });
-    document.querySelector("body, #satFavorites").addEventListener("mousemove", function (e) {
-      if (!isResizing) return;
-      offsetTop = window.innerHeight - e.clientY - 2;
-      iframe.setAttribute("style", "height:" + offsetTop + "px; visibility:hidden");
+    document.querySelector("body, #satFavorites").addEventListener("mousemove", (e) => {
+      if (isResizing) {
+        offsetTop = window.innerHeight - e.clientY - 2 - dockHeight;
+        iframe.setAttribute("style", "height:" + offsetTop + "px; visibility:hidden");
+      }
     });
-    document.querySelector("body, #satFavorites").addEventListener("mouseup", function (e) {
+    document.querySelector("body, #satFavorites").addEventListener("mouseup", (e) => {
+      if (isResizing) {
+        offsetTop = window.innerHeight - e.clientY - 2 - dockHeight;
+        iframe.setAttribute("style", "height:" + offsetTop + "px; visibility:visible");
+      }
+      localStorage.setItem("scFavoritesSize", offsetTop);
       isResizing = false;
-      offsetTop = window.innerHeight - e.clientY - 2;
-      iframe.setAttribute("style", "height:" + offsetTop + "px; visibility:visible");
     });
   }
 };

@@ -8,7 +8,7 @@ import * as global from "./global.js";
 import { setPlural } from "./helpers.js";
 import { getAccentColor } from "./experimentalui.js";
 
-export { getImageInfo, initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons, initUploader };
+export { getImageInfo, initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons, initUploadButton, initUploader, initLightbox, initMediaSearchBox };
 
 /**
  * Convert bytes to Size
@@ -142,29 +142,34 @@ const initMediaExplorer = (storage) => {
       //Invert color icons
       let invert = isExperimental ? "t-invert" : "";
 
+      //Lightbox action
+      let lightbox = mediaFolder != "Folder" ? `openLightbox('${mediaId}')` : mediaClick;
+
       //Prepare html table
       // prettier-ignore
       mediaExplorer += `
-      <tr id="mediaItem_` + mediaId + `">
-        <td class="mediaArrow" onclick="` + mediaClick + `">` + mediaArrow + `</td>
-        <td class="mediaThumbnail" onclick="` + mediaClick + `"><img src='` + mediaThumbnail + `' style="width: ` + scMediaThumbnailSize + `px !important; min-height: ` + scMediaThumbnailSize + `px !important" class="` + mediaClass + ` scMediaThumbnail" loading="lazy"/></td>
-        <td class="mediaTitle_` + mediaId + `" onclick="doubleClick('` + mediaId + `','` + itemId + `')" title="` + mediaTitle + ` (Double click to rename)">
-          <div class="mediaTitle">` + mediaTitle + `</div>
+      <tr id="mediaItem_${mediaId}">
+        <td class="mediaArrow" onclick="${mediaClick}">${mediaArrow}</td>
+        <td class="mediaThumbnail">
+          <img src='${mediaThumbnail}' onclick="${lightbox}" data-name="${mediaTitle}" data-size="${mediaDimensions}" data-id="${mediaId}" style="width: ${scMediaThumbnailSize}px !important; min-height: ${scMediaThumbnailSize}px !important" class="${mediaClass} scMediaThumbnail" loading="lazy"/>
         </td>
-        <td class="left" onclick="` + mediaClick + `">` + mediaDimensions + `</td>
-        <td class="mediaType mediaType_` + mediaId + `" onclick="` + mediaClick + `"><span>` + mediaFolder + `</span></td>
-        <td class="mediaSize mediaSize_` + mediaId + `" data-size="0" onclick="` + mediaClick + `">--</td>
-        <td class="left" onclick="` + mediaClick + `">` + mediaWarning + `</td>
-        <td class="left" onclick="` + mediaClick + `">` + mediaUsage + `</td>
+        <td class="mediaTitle_${mediaId}" onclick="doubleClick('${mediaId}','${itemId}')" title="${mediaTitle} (Double click to rename)">
+          <div class="mediaTitle">${mediaTitle}</div>
+        </td>
+        <td class="left" onclick="${mediaClick}">${mediaDimensions}</td>
+        <td class="mediaType mediaType_${mediaId}" onclick="${mediaClick}"><span>${mediaFolder}</span></td>
+        <td class="mediaSize mediaSize_${mediaId}" data-size="0" onclick="${mediaClick}">--</td>
+        <td class="left" onclick="${mediaClick}">${mediaWarning}</td>
+        <td class="left" onclick="${mediaClick}">${mediaUsage}</td>
         <td class="center">  
-          <a download href="` + mediaImage + `" class="scMediaActions t-sm t-top ` + invert + `" data-tooltip="Download" style="visibility: ` + showDownload + `">
-            <img src="` + global.iconDownload + `" class="scMediaIcon">
+          <a download href="${mediaImage}" class="scMediaActions t-sm t-top ${invert}" data-tooltip="Download" style="visibility: ${showDownload}">
+            <img src="${global.iconDownload}" class="scMediaIcon">
           </a>
-          <button class="scMediaActions t-sm t-top ` + invert + `" data-tooltip="Publish" type="button" onclick="javascript:return scForm.postEvent(this,event,'item:publish(id={` + itemId + `})')">
-            <img src="` + global.iconPublish + `" class="scMediaIcon">
+          <button class="scMediaActions t-sm t-top ${invert}" data-tooltip="Publish" type="button" onclick="javascript:return scForm.postEvent(this,event,'item:publish(id={${itemId}})')">
+            <img src="${global.iconPublish}" class="scMediaIcon">
           </button>
-          <button class="scMediaActions t-sm t-top ` + invert + `" data-tooltip="Delete" type="button" onclick="javascript:return scForm.postEvent(this,event,'item:delete(id={` + itemId + `})')">
-            <img src="` + global.iconBin + `" class="scMediaIcon">
+          <button class="scMediaActions t-sm t-top ${invert}" data-tooltip="Delete" type="button" onclick="javascript:return scForm.postEvent(this,event,'item:delete(id={${itemId}})')">
+            <img src="${global.iconBin}" class="scMediaIcon">
           </button>
         </td>
       </tr>`;
@@ -177,6 +182,26 @@ const initMediaExplorer = (storage) => {
     //Insert list view
     document.querySelectorAll(".scTitle").forEach((el) => {
       el.innerText.toLowerCase().includes("media") ? el.insertAdjacentHTML("afterend", mediaExplorer) : false;
+    });
+
+    //Escape and arrow navigation for lightbox
+    let lightbox = parent.document.querySelector("#scLightbox");
+    let lightboxPrev = parent.document.querySelector("#scLightboxPrev");
+    let lightboxNext = parent.document.querySelector("#scLightboxNext");
+    parent.document.onkeydown = function (evt) {
+      evt.key == "Escape" && lightbox ? lightbox.setAttribute("style", "display:none") : false;
+      evt.key == "ArrowRight" && lightbox ? lightboxNext.click() : false;
+      evt.key == "ArrowLeft" && lightbox ? lightboxPrev.click() : false;
+    };
+    document.onkeydown = function (evt) {
+      evt.key == "Escape" && lightbox ? lightbox.setAttribute("style", "display:none") : false;
+      evt.key == "ArrowRight" && lightbox ? lightboxNext.click() : false;
+      evt.key == "ArrowLeft" && lightbox ? lightboxPrev.click() : false;
+    };
+    lightbox.addEventListener("click", (evt) => {
+      evt.target.getAttribute("class") != "action" ? lightbox.querySelector(".scLightboxContent > img").setAttribute("src", "") : false;
+      evt.target.getAttribute("class") != "action" ? lightbox.querySelector(".scLightboxContent > iframe").setAttribute("src", "") : false;
+      evt.target.getAttribute("class") != "action" ? lightbox.setAttribute("style", "display:none") : false;
     });
 
     //Buttom view
@@ -307,7 +332,37 @@ const initMediaViewButtons = () => {
 };
 
 /**
- * Init Media Library Drag and Drop button
+ * Init Media Search box
+ */
+const initMediaSearchBox = () => {
+  var scFolderButtons = document.querySelector(".scFolderButtons");
+  var scSearchHtml = `<div class="scSearch"><input type="text" placeholder="Search in folder"></div>`;
+  scFolderButtons ? scFolderButtons.insertAdjacentHTML("afterend", scSearchHtml) : false;
+
+  //Listerner
+  let searchBox = document.querySelector(".scSearch > input");
+  searchBox.addEventListener("input", () => {
+    //Grid view
+    document.querySelectorAll("#FileList a:not(.scButton)").forEach((elem) => {
+      // eslint-disable-next-line require-unicode-regexp
+      let regExp = new RegExp(searchBox.value, "i");
+      if (elem.querySelector(".scMediaTitle")) {
+        elem.querySelector(".scMediaTitle").innerText.match(regExp) ? elem.setAttribute("style", "display:block") : elem.setAttribute("style", "display:none");
+      }
+    });
+    //List view
+    document.querySelectorAll(".scMediaExplorer > tbody > tr").forEach((elem) => {
+      // eslint-disable-next-line require-unicode-regexp
+      let regExp = new RegExp(searchBox.value, "i");
+      if (elem.querySelector(".mediaTitle")) {
+        elem.querySelector(".mediaTitle").innerText.match(regExp) ? elem.setAttribute("style", "display:content") : elem.setAttribute("style", "display:none");
+      }
+    });
+  });
+};
+
+/**
+ * Resize Table
  */
 // eslint-disable-next-line no-unused-vars
 const resizeTable = (id) => {
@@ -398,7 +453,21 @@ const resizeTable = (id) => {
 /**
  * Init Uploader styling
  */
+const initUploadButton = () => {
+  let button = document.querySelector("button[data-sc-id='UploadButton']");
+  let icon = `<img src="${global.iconUpload}" class="scUploadIcon"/>`;
+  button ? button.insertAdjacentHTML("afterbegin", icon) : false;
+};
+
+/**
+ * Init Uploader styling
+ */
 const initUploader = () => {
+  //Add visual
+  let drop = document.querySelector(".sc-uploader-content");
+  let icon = `<img src="${global.iconDrop}" class="scUploadIconDrop"/>`;
+  drop ? drop.insertAdjacentHTML("afterbegin", icon) : false;
+
   if (document.querySelector("form[data-sc-id='Uploader']")) {
     //Drag events
     document.querySelector("form[data-sc-id='Uploader']").addEventListener(
@@ -426,4 +495,31 @@ const initUploader = () => {
       false
     );
   }
+};
+
+/**
+ * Init Lightbox
+ */
+const initLightbox = () => {
+  let scLightbox = document.querySelector("#scLightbox");
+  let html = `
+  <div id="scLightbox">
+    <div class="scLightboxHeader">
+      <div class="scLightboxTitle"></div>
+      <button class="sclightboxClose">
+        <img src="${global.iconWindowClose}" />
+      </button>
+      <button class="sclightboxDownload">
+        <a download href="#"><img src="${global.iconDownload}" class="action" /></a>
+      </button>
+    </div>
+    <div class="action" id="scLightboxPrev"><img src="${global.iconArrowLeft}" class="action"/></div>
+    <div class="scLightboxContent">
+      <img src="" />
+      <iframe src=""></iframe> 
+    </div>
+    <div class="action" id="scLightboxNext"><img src="${global.iconArrowRight}" class="action"/></div>
+    <div class="scLightboxFooter"></div>
+  </div>`;
+  !scLightbox ? document.querySelector("body").insertAdjacentHTML("beforeend", html) : false;
 };

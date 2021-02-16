@@ -7,6 +7,11 @@ body.satExperimentalUi {
   color: var(--text) !important;
 }
 
+body.satExperimentalUi .ui-widget-overlay::after {
+  background: url(chrome-extension://dpmlbbpimcmgdlhpdphnijefjchoicmj/images/sc-spinner.svg) center center no-repeat rgb(255, 255, 255);
+  background-size: 70%;
+}
+
 body.satExperimentalUi #EditorPanel,
 body.satExperimentalUi #MainPanel,
 body.sc.satExperimentalUi {
@@ -74,7 +79,7 @@ body.satExperimentalUi #scPanel h3 {
 }
 
 body.satExperimentalUi #SearchPanel .scBurgerMenuTitle {
-  color: var(--grey7);
+  color: var(--textFaded);
 }
 
 body.satExperimentalUi div#scPageExtendersForm {
@@ -354,13 +359,13 @@ body.satExperimentalUi .scEditorFieldMarker {
 body.satExperimentalUi .scLanguageIcon,
 body.satExperimentalUi .scMediaIcon,
 body.satExperimentalUi .scVersionIcon {
-  width: 16px !important;
-  height: 16px !important;
+  /* width: 16px !important;
+  height: 16px !important; */
   vertical-align: sub !important;
 }
 
 body.satExperimentalUi .scMediaIcon {
-  filter: brightness(var(--accentBrightness));
+  filter: invert(var(--accentRevert));
 }
 
 body.satExperimentalUi .scEditorQuickInfo {
@@ -505,10 +510,10 @@ body.satExperimentalUi #Editors select:hover {
 body.satExperimentalUi input:focus:not(.scContentControlImage),
 body.satExperimentalUi select:focus,
 body.satExperimentalUi textarea:focus {
-  box-shadow: var(--accent) 0px 0px 0px 1px !important;
+  box-shadow: var(--accent) 0px 0px 0px 1px;
   border-width: 1px !important;
   border-style: solid !important;
-  border-color: var(--accent) !important;
+  border-color: var(--accent);
   border-image: initial !important;
   outline: 0px !important;
 }
@@ -799,15 +804,21 @@ body.satExperimentalUi #ContentTreePanel a.scContentTreeNodeActive > span > img 
   max-width: 16px;
 }
 
+body.satExperimentalUi #satFavorites {
+  box-shadow: unset;
+}
+
 /* body.satExperimentalUi .scContentTreeNode > img.scContrastedIcon, */
-body.satExperimentalUi #ContentTreePanel a.scContentTreeNodeActive > span > img.scContrastedIcon {
+body.satExperimentalUi .scMenuItemIcon_Hover img.scContrastedIcon,
+body.satExperimentalUi .scContentControlTree .scContentTreeNodeNormal:hover img.scContrastedIcon,
+body.satExperimentalUi .scContentTreeNodeActive img.scContrastedIcon {
   filter: invert(var(--accentRevert)) !important;
   opacity: 1;
 }
 
 body.satExperimentalUi #ContentTreePanel img.scIconImage {
-  filter: unset;
-  opacity: unset;
+  filter: unset !important;
+  opacity: unset !important;
 }
 
 body.satExperimentalUi .scInstantSearchResults img.scContrastedIcon {
@@ -925,8 +936,20 @@ body.satExperimentalUi iframe.ui-widget-content {
 }
 
 /* Uploader */
+body.satExperimentalUi .sc-uploader {
+  border: 2px dashed var(--grey);
+  background-color: rgba(0, 0, 0, 0.075);
+  width: 50%;
+  margin: auto;
+}
+
 body.satExperimentalUi .scUploaderOver {
   border: 2px dashed var(--accent);
+}
+
+body.satExperimentalUi .scUploaderOver .btn-default {
+  background-color: var(--accent) !important;
+  color: var(--accentText) !important;
 }
 
 /*Iframe */
@@ -1050,9 +1073,9 @@ body.satExperimentalUi #BTAddNewSearch {
   border-bottom: 3px solid transparent !important;
   background-image: url("chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.svg"), none !important;
   background-size: 16px 16px !important;
+  opacity: 0.5;
 }
 
-body.satExperimentalUi #BTAddNewSearch:active,
 body.satExperimentalUi #BTAddNewSearch:hover {
   background-color: transparent !important;
   border-bottom: 3px solid var(--grey2);
@@ -1313,8 +1336,12 @@ body.satExperimentalUi .liveUrlBadge:hover {
   border-color: inherit;
 }
 
+body.satExperimentalUi .scConfirmationIcon.scContrastedIcon {
+  width: 48px;
+}
+
 body.satExperimentalUi .scConfirmationContainer {
-  border-spacing: 10px;
+  /* border-spacing: 10px; */
   border-collapse: separate;
 }
 
@@ -1349,6 +1376,8 @@ body.satExperimentalUi .scTableHeader {
 }
 
 body.satExperimentalUi .scSection > tbody > tr:first-child > td,
+body.satExperimentalUi .scWorkBoxMainHeader,
+body.satExperimentalUi .scBackground,
 body.satExperimentalUi .scEditorSectionCaptionCollapsed,
 body.satExperimentalUi .scEditorSectionCaptionExpanded {
   margin: 10px 20px 0px 20px;
@@ -1362,12 +1391,24 @@ body.satExperimentalUi .scEditorSectionCaptionExpanded {
   border-left: none !important;
 }
 
+body.satExperimentalUi .scBackground,
+body.satExperimentalUi .scWorkBoxMainHeader {
+  margin: 0px;
+}
+
+body.satExperimentalUi .scSectionCenter,
+body.satExperimentalUi .scPaneHeader {
+  border-left: 5px solid var(--accent);
+}
+
 body.satExperimentalUi .accordion-heading.activeAccordion {
   background-color: var(--accent);
   color: var(--accentText);
 }
 
 body.satExperimentalUi .scSection > tbody > tr.scCollapsed:first-child > td,
+body.satExperimentalUi .scCollapsed,
+body.satExperimentalUi .scCollapsed .scPaneHeader,
 body.satExperimentalUi .accordion-heading,
 body.satExperimentalUi .scEditorSectionCaptionCollapsed {
   background-color: var(--black9);
@@ -1528,7 +1569,7 @@ body.satExperimentalUi .scSaveBar > .scBreadcrumb {
   padding: 8px;
   text-indent: 0px;
   font-size: 13px;
-  color: var(--grey7);
+  color: var(--textFaded);
   max-width: 60%;
   width: -webkit-fill-available;
   white-space: nowrap;
@@ -1560,7 +1601,7 @@ body.satExperimentalUi .scSaveBar > .scBreadcrumb > u:last-child {
 }
 
 body.satExperimentalUi .scSaveBar > .scBreadcrumb > u:first-child {
-  color: var(--grey7);
+  color: var(--textFaded);
 }
 
 body.satExperimentalUi .scSaveBar > .scActions > .scPublishMenu {
@@ -1628,14 +1669,15 @@ body.satExperimentalUi .scBackground {
 }
 
 body.satExperimentalUi .scTitle {
-  padding: 10px;
   margin-top: 3px;
   border-bottom: none;
   clear: left;
-  font-size: 15px;
   font-weight: 800;
-  color: var(--grey7);
+  color: var(--textFaded);
   clear: both;
+  margin-left: 10px;
+  font-size: 20px;
+  padding: 20px 5px 5px 5px;
 }
 body.satExperimentalUi .scFolderButtons {
   padding-left: 10px;
@@ -1644,6 +1686,11 @@ body.satExperimentalUi .scFolderButtons {
 
 body.satExperimentalUi .scFolderButtonsTitle {
   display: none;
+}
+
+body.satExperimentalUi .scMediaExplorer tbody tr .mediaTitle {
+  color: var(--textFaded);
+  font-weight: 600;
 }
 
 body.satExperimentalUi .scMediaExplorer tbody tr:hover .mediaTitle,
@@ -1659,11 +1706,60 @@ body.satExperimentalUi .scMediaExplorer tbody tr:hover a.scMediaActions {
   filter: invert(var(--accentInvert));
 }
 
+body.satExperimentalUi .scTiles .scTileItem:nth-child(even),
+body.satExperimentalUi .scMediaExplorer tbody tr:nth-child(even) {
+  background: var(--experimentalBackground);
+}
+
+body.satExperimentalUi .scTiles .scTileItem:nth-child(odd),
+body.satExperimentalUi .scMediaExplorer tbody tr:nth-child(odd) {
+  background: var(--white);
+}
+
 body.satExperimentalUi #FileList {
   background: var(--white) !important;
   border-radius: 3px;
   overflow: visible;
   padding-top: 25px !important;
+}
+
+body.satExperimentalUi #FileList a:not(.scButton) {
+  box-shadow: 0 4px 5px 0 rgb(0 0 0 / 7%), 0 1px 10px 0 rgb(0 0 0 / 6%), 0 2px 4px -1px rgb(0 0 0 / 15%);
+  border-radius: var(--radius);
+  background-color: var(--experimentalBackground);
+  padding: 0px;
+  height: 250px;
+}
+body.satExperimentalUi #FileList a:not(.scButton) .scMediaBorder {
+  margin-bottom: 10px;
+}
+body.satExperimentalUi #FileList a:not(.scButton) .scMediaTitle {
+  font-size: 16px;
+  color: var(--textFaded);
+  font-weight: 600;
+  text-align: left;
+  padding: 0px 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+body.satExperimentalUi #FileList a:not(.scButton) .scMediaDetails,
+body.satExperimentalUi #FileList a:not(.scButton) .scMediaValidation,
+body.satExperimentalUi #FileList a:not(.scButton) .scMediaUsages {
+  font-size: 10px;
+  padding: 0px;
+  height: 20px;
+  text-align: left;
+  padding: 0px 10px;
+}
+body.satExperimentalUi #FileList a:not(.scButton) .scMediaBorder > img {
+  width: 100% !important;
+  max-height: 90px;
+  object-fit: cover;
+}
+
+body.satExperimentalUi #FileList a.scButton {
+  border: 0px;
+  vertical-align: middle;
 }
 
 body.satExperimentalUi #FileList a.scButton.scButtonList.selected,
@@ -1684,6 +1780,7 @@ body.satExperimentalUi .scButton {
   box-shadow: none;
   background-color: var(--grey4);
   border-color: var(--grey4);
+  border: 0px;
 }
 
 body.satExperimentalUi input[type="submit"],
@@ -1704,8 +1801,8 @@ body.satExperimentalUi .scButtonPrimary {
   background: var(--accent) !important;
   color: var(--accentText);
   outline-color: var(--accent);
-  box-shadow: unset;
-  border: unset;
+  box-shadow: unset !important;
+  border: unset !important;
   background-image: unset;
 }
 
@@ -1724,6 +1821,14 @@ body.satExperimentalUi .scButtonPrimary:active {
 body.satExperimentalUi .scButton:hover,
 body.satExperimentalUi .scSaveBar > .scActions > button:hover {
   filter: brightness(1.05);
+}
+
+body.satExperimentalUi #Result {
+  border-top: 0px;
+}
+
+body.satExperimentalUi #OptionTableWrapper {
+  padding: 8px 15px;
 }
 
 body.satExperimentalUi .scSaveBar > .scActions > button:disabled {
@@ -1757,7 +1862,7 @@ body.satExperimentalUi .scSaveBar > .scActions > button.primaryGrouped {
 body.satExperimentalUi .scSaveBar > .scActions > button.grouped {
   margin: 0px;
   margin-top: -2px;
-  padding: 7px 10px;
+  padding: 6px 10px 8px 9px;
   margin-right: 5px;
   background-color: var(--accent) !important;
   color: var(--accentText);
@@ -2122,15 +2227,19 @@ body.satExperimentalUi input.scPasswordUI {
 
 body.satExperimentalUi div.scPasswordUI {
   position: absolute;
-  border: 1px solid var(--grey14);
-  border-right: none;
   background: var(--grey15);
-  height: 16px;
-  padding: 8px;
+  padding: 9px;
   border-radius: 0px;
   box-shadow: unset;
-  width: 16px;
+  height: 17px;
+  box-shadow: unset;
+  width: 17px;
   z-index: 10;
+  border-right: none;
+  padding: 8px;
+  margin-top: 1px;
+  margin-left: 1px;
+  border: 0px;
 }
 
 body.satExperimentalUi .btn-primary {
@@ -2326,4 +2435,14 @@ body.satExperimentalUi .scWizardProgressPage .scActionText {
 
 body.satExperimentalUi #satFavoritesDrag:hover {
   background-color: var(--accent);
+}
+
+body.satExperimentalUi #scLightbox:before {
+  content: "";
+  height: 100px;
+  width: 100px;
+  background: transparent url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner.svg") no-repeat center center;
+  box-shadow: unset;
+  z-index: 5;
+  filter: invert(1) brightness(1.5);
 }

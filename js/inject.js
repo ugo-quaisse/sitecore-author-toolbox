@@ -42,11 +42,11 @@ function scSaveAnimation(id) {
       document.querySelector(".scSaveButton").innerText = "Save";
       document.querySelector(".scSaveButton").removeAttribute("disabled");
       saveMessage.classList.add("visible");
-    }, 2000);
+    }, 1500);
 
     setTimeout(function () {
       saveMessage.classList.remove("visible");
-    }, 3000);
+    }, 2500);
   }
 }
 
@@ -373,7 +373,7 @@ function sortTable(col, title, pos) {
  */
 function updateMediaThumbnails(value) {
   document.querySelectorAll(".scMediaThumbnail").forEach((el) => {
-    el.setAttribute("style", "width:" + value + "px !important");
+    el.setAttribute("style", "width:" + value + "px !important; height:" + value + "px !important");
     localStorage.setItem("scMediaThumbnailSize", value);
   });
 }
@@ -580,18 +580,25 @@ function addSite(optionPage, urlOrigin, sitePath, siteName) {
   window.open(optionPage + `?configure_domains=true&launchpad=true&domain=` + urlOrigin + `&site=` + sitePath + `&name=` + siteName);
 }
 
+/*
+ * Full screen lightbox
+ */
+function fullscreenLightbox() {
+  document.querySelector("#scLightbox").requestFullscreen();
+}
 /**
  * Open Lightbox
  */
 function openLightbox(id, from = "frame") {
   let lightbox = parent.document.querySelector("#scLightbox");
   let item = from == "frame" ? document.querySelector(`img[data-id='${id}']`) : document.querySelector("iframe[src*='/Media/']").contentDocument.querySelector(`img[data-id='${id}']`);
-  let img = item.src.replace("&h=150", "").replace("&w=150", "").replace("&thn=1", "");
+  let img = item.src.replace("&h=180", "").replace("&w=180", "").replace("&h=300", "").replace("&thn=1", "");
   let name = item.dataset.name;
   let size = item.dataset.size;
   let mediaType = size == "--" ? "other" : "img";
   lightbox ? lightbox.classList.remove("scLightboxHideSpinner") : false;
   lightbox ? lightbox.querySelector(".sclightboxDownload > a").setAttribute("href", img) : false;
+  lightbox ? lightbox.querySelector(".sclightboxFullscreen").setAttribute("onclick", `fullscreenLightbox()`) : false;
   if (mediaType == "img") {
     lightbox ? lightbox.querySelector(".scLightboxContent > iframe").setAttribute("style", "display: none") : false;
     lightbox ? lightbox.querySelector(".scLightboxContent > img").setAttribute("style", "display: block") : false;
@@ -632,8 +639,6 @@ function openLightbox(id, from = "frame") {
         lightbox.querySelector("#scLightboxNext").setAttribute(`onclick`, ``);
         lightbox.querySelector("#scLightboxNext").setAttribute("style", "display:none");
       }
-      console.log("Prev", `openLightbox('${prev}')`);
-      console.log("Next", `openLightbox('${next}')`);
     }
   }
 }

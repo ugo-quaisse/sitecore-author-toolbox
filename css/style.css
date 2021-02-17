@@ -133,7 +133,7 @@ body.satExtension .scSearch > input[type="text"] {
   padding: 10px;
   margin: 20px 0px 0px 20px;
   width: calc(100% - 40px);
-  background-color: var(--grey3);
+  background-color: var(--grey18);
   border: 0px;
   box-shadow: none;
   border-radius: var(--radius);
@@ -156,7 +156,8 @@ body.satExtension .scSearch > input[type="text"]::placeholder {
 }
 
 body.satExtension .scFolderButtons {
-  padding-top: 25px !important;
+  padding-top: 25px;
+  padding-left: 10px;
 }
 
 body.satExtension .scFolderButtonsTitle {
@@ -165,11 +166,9 @@ body.satExtension .scFolderButtonsTitle {
 
 /* Media Explorer */
 body.satExtension .scBackground > #FileList {
-  display: none;
-}
-
-body.satExtension .scBackground > #FileList {
-  display: block;
+  display: flow-root;
+  height: -webkit-fill-available;
+  padding-bottom: 50px !important;
 }
 
 body.satExtension .scNoVersion {
@@ -252,6 +251,7 @@ body.satExtension #scLightbox > .scLightboxHeader {
   height: 50px;
   background-color: var(--black);
 }
+
 body.satExtension #scLightbox > .scLightboxHeader > .scLightboxTitle {
   float: left;
   width: 50%;
@@ -411,6 +411,10 @@ body.satExtension .scMediaExplorer {
   width: 3%;
 }
 
+.scMediaExplorer td.mediaThumbnail > img {
+  object-fit: cover;
+}
+
 .scMediaExplorer td.mediaSize {
   text-align: left !important;
 }
@@ -473,7 +477,7 @@ body.satExtension .scMediaExplorer {
 
 .scMediaExplorer td > img.scMediaPreview {
   background: #f0f0f0;
-  border: 1px solid #fff;
+  border: 3px solid #fff;
   width: 25px !important;
   min-height: 25px !important;
   margin: 3px 5px 0px 5px;
@@ -727,7 +731,7 @@ body.satExtension .scWelcome button:hover {
   padding-bottom: 8px;
 }
 
-.scGalleryGrip {
+body.satExtension .scGalleryGrip {
   position: absolute;
   bottom: 1px;
   left: 1px;
@@ -735,7 +739,7 @@ body.satExtension .scWelcome button:hover {
   height: 10px;
 }
 
-.scLanguagesGalleryMenu {
+body.satExtension .scLanguagesGalleryMenu {
   overflow: hidden;
   vertical-align: top;
   border-bottom: 12px solid transparent;
@@ -746,21 +750,117 @@ body.satExtension .scWelcome button:hover {
   border-collapse: separate;
 }
 
-.scLanguageIcon,
-.scMediaIcon,
-.scVersionIcon {
+body.satExtension .scLanguageIcon,
+body.satExtension .scMediaIcon,
+body.satExtension .scVersionIcon {
   width: 16px !important;
   height: 16px !important;
   vertical-align: sub !important;
 }
 
-.scMediaBorder > img {
+body.satExtension .scMediaBorder > img {
   width: unset !important;
   height: unset !important;
 }
 
-.scMediaIcon[src*=".ashx"] {
+body.satExtension .scMediaIcon[src*=".ashx"] {
   filter: unset !important;
+}
+
+body.satExtension #FileList .scTitle {
+  margin-top: 3px;
+  border-bottom: none;
+  clear: left;
+  font-weight: 800;
+  color: var(--text);
+  clear: both;
+  margin-left: 0px;
+  font-size: 16px;
+  padding: 20px 20px 5px 20px;
+}
+
+/* Media card  */
+
+body.satExtension #FileList .scMediaCard {
+  position: relative;
+}
+
+body.satExtension #FileList .scMediaCard {
+  box-shadow: 0 4px 5px 0 rgb(0 0 0 / 7%), 0 1px 10px 0 rgb(0 0 0 / 6%), 0 2px 4px -1px rgb(0 0 0 / 15%);
+  border-radius: var(--radius);
+  background-color: var(--white);
+  border: 0px;
+  padding: 0px;
+  margin: 12px 5px 12px 20px;
+  height: 285px;
+}
+body.satExtension #FileList .scMediaCard:hover {
+  box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%);
+}
+
+body.satExtension #FileList .scMediaCard .scMediaTitle {
+  font-size: 16px;
+  color: var(--textFaded);
+  font-weight: 600;
+  text-align: left;
+  padding: 0px 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+body.satExtension #FileList .scMediaCard .scMediaDetails,
+body.satExtension #FileList .scMediaCard .scMediaValidation,
+body.satExtension #FileList .scMediaCard .scMediaUsages {
+  font-size: 12px;
+  padding: 0px;
+  height: 20px;
+  text-align: left;
+  padding: 0px 10px;
+}
+body.satExtension #FileList .scMediaCard .scMediaBorder {
+  margin-bottom: 10px;
+}
+body.satExtension #FileList .scMediaCard .scMediaBorder > img {
+  width: 100% !important;
+  height: 150px !important;
+  padding: 0px !important;
+  object-fit: cover;
+}
+
+body.satExtension #FileList .scMediaCard .scMediaValidation {
+  display: none;
+}
+
+body.satExtension #FileList .scMediaCard .scMediaBorder {
+  margin-bottom: 10px;
+}
+body.satExtension #FileList .scMediaCard .scMediaBorder > img {
+  width: 100% !important;
+  height: 150px !important;
+  padding: 0px !important;
+  object-fit: cover;
+}
+
+body.satExtension #FileList .scMediaCard .scMediaActionsWrapper {
+  position: absolute;
+  bottom: 10px;
+  height: 16px;
+  width: inherit;
+}
+
+body.satExtension #FileList .scMediaCard .scMediaActionsWrapper > span {
+  width: 20px;
+  display: inline;
+  margin-left: 15px;
+  float: left;
+}
+
+body.satExtension #FileList .scMediaCard .scMediaActionsWrapper > span > img {
+  opacity: 0.5;
+  width: 18px;
+}
+
+body.satExtension #FileList .scMediaCard .scMediaActionsWrapper > span > img:hover {
+  opacity: 0.7;
 }
 
 body.satExtension div#Languages img {
@@ -2240,7 +2340,7 @@ body.satExtension [data-tooltip]:after {
 body.satEE [data-tooltip]:before,
 body.satExtension [data-tooltip]:before {
   padding: 8px 10px;
-  min-width: 60px;
+  min-width: 50px;
   border-radius: 4px;
   background: rgba(0, 0, 0, 0.9);
   color: #fff;

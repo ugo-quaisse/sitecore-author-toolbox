@@ -82,7 +82,7 @@ const sitecoreAuthorToolbox = (storage) => {
   initTranslateMode(storage);
   enhancedTreeSearch(storage);
   changeTitleWindow(storage);
-  showSnackbarSite(storage, ScItem);
+  // showSnackbarSite(storage, ScItem);
 
   /**
    * Insert Flag (In Active Tab) + Version Number

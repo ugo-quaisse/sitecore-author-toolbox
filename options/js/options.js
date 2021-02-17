@@ -92,6 +92,8 @@ document.body.onload = function () {
     toggleFeature(storage.feature_instantsearch, "#feature_instantsearch", true);
     toggleFeature(storage.feature_experimentalui, "#feature_experimentalui", false);
     toggleFeature(storage.feature_contrast_icons, "#feature_contrast_icons", false);
+    toggleFeature(storage.feature_medialist, "#feature_medialist", true);
+    toggleFeature(storage.feature_mediacard, "#feature_mediacard", true);
   });
 };
 
@@ -336,6 +338,8 @@ document.querySelector(".save_settings").onclick = function (event) {
     feature_instantsearch: document.querySelector("#feature_instantsearch").checked,
     feature_experimentalui: document.querySelector("#feature_experimentalui").checked,
     feature_contrast_icons: document.querySelector("#feature_contrast_icons").checked,
+    feature_medialist: document.querySelector("#feature_medialist").checked,
+    feature_mediacard: document.querySelector("#feature_mediacard").checked,
   };
 
   //Save data

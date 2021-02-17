@@ -523,6 +523,14 @@ export const jsonIcons = JSON.parse(
   {
     "search": "export1",
     "icon": "file::file_upload"
+  },
+  {
+    "search": "bottle_bubbles",
+    "icon": "social::sanitizer"
+  },
+  {
+    "search": "element_run",
+    "icon": "file::upload_file"
   }
 ]`
 );

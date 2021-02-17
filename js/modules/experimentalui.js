@@ -243,9 +243,7 @@ const insertMoreButton = () => {
         <!-- <li id="scInfoButton">Item details</li> -->
         <li  onclick="javascript:return scForm.postEvent(this,event,'contenteditor:properties')">Item properties</li>
         <li onclick="javascript:return scForm.postEvent(this,event,'item:executescript(id=${ScItem.id},db=master,script={1876D433-4FAE-46B2-B2EF-AAA0FDA110E7},scriptDb=master)')">Author statistics</li>
-        <li class="separator danger" onclick="javascript:return scForm.invoke('item:delete(id=` +
-    ScItem.id +
-    `)', event)">Delete</li>
+        <li class="separator danger" onclick="javascript:return scForm.invoke('item:delete(id=${ScItem.id})', event)">Delete</li>
     </ul>`;
   container && !document.querySelector("#scMoreButton") ? container.insertAdjacentHTML("afterbegin", button) : false;
 
@@ -492,7 +490,7 @@ const initInsertIcon = (storage) => {
         nodeIcon = node.querySelector("span > img").src;
         nodeContent = node.querySelector("span").innerText;
         node.querySelector("span").innerHTML =
-          `<img src="${nodeIcon}" width="16" height="16" class="scContentTreeNodeIcon ${contrastedIcon}" alt="" border="0"><div ondblclick="javascript:return scForm.postEvent(this,event,'item:rename(id={` +
+          `<img src="${nodeIcon}" loading="lazy" width="16" height="16" class="scContentTreeNodeIcon ${contrastedIcon}" alt="" border="0"><div ondblclick="javascript:return scForm.postEvent(this,event,'item:rename(id={` +
           nodeId.replace(
             // eslint-disable-next-line prefer-named-capture-group
             /([0-z]{8})([0-z]{4})([0-z]{4})([0-z]{4})([0-z]{12})/u,
@@ -695,6 +693,7 @@ const replaceIcons = (storage) => {
 
       //If media image, no filter
       if (filename.includes(".ashx")) {
+        icon.setAttribute("loading", "lazy");
         icon.classList.add("scIconImage");
       }
     }

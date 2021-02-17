@@ -171,9 +171,9 @@ chrome.storage.sync.get((storage) => {
       log("**** Media Folder ****", "orange");
       initMediaCounter();
       initMediaDragDrop();
-      initMediaViewButtons();
+      initMediaViewButtons(storage);
       initMediaExplorer(storage);
-      initMediaSearchBox();
+      initMediaSearchBox(storage);
       initMaterializeIcons(storage);
     } else if (global.isFieldEditor) {
       log("**** Field editor ****", "orange");

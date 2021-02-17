@@ -365,7 +365,7 @@ body.satExperimentalUi .scVersionIcon {
 }
 
 body.satExperimentalUi .scMediaIcon {
-  filter: invert(var(--accentRevert));
+  /* filter: invert(var(--accentRevert)); */
 }
 
 body.satExperimentalUi .scEditorQuickInfo {
@@ -510,10 +510,10 @@ body.satExperimentalUi #Editors select:hover {
 body.satExperimentalUi input:focus:not(.scContentControlImage),
 body.satExperimentalUi select:focus,
 body.satExperimentalUi textarea:focus {
-  box-shadow: var(--accent) 0px 0px 0px 1px;
+  box-shadow: var(--accent) 0px 0px 0px 1px !important;
   border-width: 1px !important;
   border-style: solid !important;
-  border-color: var(--accent);
+  border-color: var(--accent) !important;
   border-image: initial !important;
   outline: 0px !important;
 }
@@ -945,6 +945,23 @@ body.satExperimentalUi .sc-uploader {
 
 body.satExperimentalUi .scUploaderOver {
   border: 2px dashed var(--accent);
+}
+
+body.satExperimentalUi .sc-uploader-general-info {
+  position: absolute;
+  right: 5%;
+  bottom: -8px;
+  width: 90%;
+  text-align: center;
+  margin: 20px 0px;
+  padding: 0px;
+  background-color: #e5e5e5;
+}
+
+body.satExperimentalUi .sc-uploaderInfo-extra .progress .bar,
+body.satExperimentalUi .sc-uploader .progress .bar {
+  background-color: var(--accent);
+  background-image: unset;
 }
 
 body.satExperimentalUi .scUploaderOver .btn-default {
@@ -1675,9 +1692,9 @@ body.satExperimentalUi .scTitle {
   font-weight: 800;
   color: var(--textFaded);
   clear: both;
-  margin-left: 10px;
+  margin-left: 0px;
   font-size: 20px;
-  padding: 20px 5px 5px 5px;
+  padding: 20px 20px 5px 20px;
 }
 body.satExperimentalUi .scFolderButtons {
   padding-left: 10px;
@@ -1700,10 +1717,15 @@ body.satExperimentalUi .scMediaExplorer tbody tr:hover {
   color: var(--accentText) !important;
 }
 
+body.satExperimentalUi .scMediaCard .scMediaValidation {
+  display: none;
+}
+
 body.satExperimentalUi .scMediaExplorer tbody tr:hover button.scMediaActions,
 body.satExperimentalUi .scMediaExplorer tbody tr:hover a.scMediaActions {
   opacity: 1;
-  filter: invert(var(--accentInvert));
+  filter: invert(var(--accentRevert));
+  box-shadow: unset;
 }
 
 body.satExperimentalUi .scTiles .scTileItem:nth-child(even),
@@ -1717,23 +1739,26 @@ body.satExperimentalUi .scMediaExplorer tbody tr:nth-child(odd) {
 }
 
 body.satExperimentalUi #FileList {
-  background: var(--white) !important;
+  background: var(--experimentalBackground) !important;
   border-radius: 3px;
   overflow: visible;
   padding-top: 25px !important;
 }
 
-body.satExperimentalUi #FileList a:not(.scButton) {
+body.satExperimentalUi #FileList .scMediaCard {
   box-shadow: 0 4px 5px 0 rgb(0 0 0 / 7%), 0 1px 10px 0 rgb(0 0 0 / 6%), 0 2px 4px -1px rgb(0 0 0 / 15%);
   border-radius: var(--radius);
-  background-color: var(--experimentalBackground);
+  background-color: var(--white);
+  border: 0px;
   padding: 0px;
-  height: 250px;
+  margin: 12px 5px 12px 20px;
+  height: 285px;
 }
-body.satExperimentalUi #FileList a:not(.scButton) .scMediaBorder {
-  margin-bottom: 10px;
+body.satExperimentalUi #FileList .scMediaCard:hover {
+  box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%);
 }
-body.satExperimentalUi #FileList a:not(.scButton) .scMediaTitle {
+
+body.satExperimentalUi #FileList .scMediaCard .scMediaTitle {
   font-size: 16px;
   color: var(--textFaded);
   font-weight: 600;
@@ -1742,18 +1767,22 @@ body.satExperimentalUi #FileList a:not(.scButton) .scMediaTitle {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-body.satExperimentalUi #FileList a:not(.scButton) .scMediaDetails,
-body.satExperimentalUi #FileList a:not(.scButton) .scMediaValidation,
-body.satExperimentalUi #FileList a:not(.scButton) .scMediaUsages {
-  font-size: 10px;
+body.satExperimentalUi #FileList .scMediaCard .scMediaDetails,
+body.satExperimentalUi #FileList .scMediaCard .scMediaValidation,
+body.satExperimentalUi #FileList .scMediaCard .scMediaUsages {
+  font-size: 12px;
   padding: 0px;
   height: 20px;
   text-align: left;
   padding: 0px 10px;
 }
-body.satExperimentalUi #FileList a:not(.scButton) .scMediaBorder > img {
+body.satExperimentalUi #FileList .scMediaCard .scMediaBorder {
+  margin-bottom: 10px;
+}
+body.satExperimentalUi #FileList .scMediaCard .scMediaBorder > img {
   width: 100% !important;
-  max-height: 90px;
+  height: 150px !important;
+  padding: 0px !important;
   object-fit: cover;
 }
 
@@ -1778,8 +1807,8 @@ body.satExperimentalUi #FileList a.scButton.scButtonGrid.selected > img {
 body.satExperimentalUi .scButton {
   background-image: none;
   box-shadow: none;
-  background-color: var(--grey4);
-  border-color: var(--grey4);
+  background-color: var(--grey18) !important;
+  border-color: var(--grey18) !important;
   border: 0px;
 }
 
@@ -1821,6 +1850,10 @@ body.satExperimentalUi .scButtonPrimary:active {
 body.satExperimentalUi .scButton:hover,
 body.satExperimentalUi .scSaveBar > .scActions > button:hover {
   filter: brightness(1.05);
+}
+
+body.satExperimentalUi #FileList a.scButton:hover {
+  filter: brightness(0.95);
 }
 
 body.satExperimentalUi #Result {
@@ -2207,6 +2240,9 @@ body.satExperimentalUi .scTimePicker a:hover {
   background-color: var(--accent);
   color: var(--accentText);
 }
+body.satExperimentalUi #Editor_contentIframe {
+  padding: 5px;
+}
 
 body.satExperimentalUi .scCalendarUI {
   position: relative;
@@ -2218,7 +2254,7 @@ body.satExperimentalUi .scCalendarUI {
   border-radius: 0px;
   box-shadow: unset;
   width: 16px;
-  min-height: 17px;
+  min-height: 20px;
 }
 
 body.satExperimentalUi input.scPasswordUI {

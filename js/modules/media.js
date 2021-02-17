@@ -5,7 +5,7 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
-import { setPlural } from "./helpers.js";
+import { exeJsCode, setPlural } from "./helpers.js";
 import { getAccentColor } from "./experimentalui.js";
 
 export { getImageInfo, initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons, initUploadButton, initUploader, initLightbox, initMediaSearchBox };
@@ -75,8 +75,10 @@ const getImageInfo = (imageUrl, imageId, jsonObject) => {
  * Init Media Library Explorer
  */
 const initMediaExplorer = (storage) => {
-  if (localStorage.getItem("scMediaView") == "list") {
-    let isExperimental = storage.feature_experimentalui;
+  storage.feature_medialist == undefined ? (storage.feature_medialist = true) : false;
+  storage.feature_mediacard == undefined ? (storage.feature_mediacard = true) : false;
+  let isExperimental = storage.feature_experimentalui;
+  if (localStorage.getItem("scMediaView") == "list" && storage.feature_medialist) {
     let mediaItems = document.querySelectorAll("#FileList > a:not(.scButton)");
     mediaItems.forEach((el) => {
       el.remove();
@@ -110,7 +112,7 @@ const initMediaExplorer = (storage) => {
     for (let item of mediaItems) {
       mediaId = item ? item.getAttribute("id") : false;
       //.replace("&h=72", "&h=300").replace("&w=72", "&w=300")
-      mediaThumbnail = item.querySelector(".scMediaBorder > img") ? item.querySelector(".scMediaBorder > img").getAttribute("src").replace("&h=72", "&h=150").replace("&w=72", "&w=150") : false;
+      mediaThumbnail = item.querySelector(".scMediaBorder > img") ? item.querySelector(".scMediaBorder > img").getAttribute("src").replace("&h=72", "&h=180").replace("&w=72", "") : false;
       mediaImage = item.querySelector(".scMediaBorder > img") ? item.querySelector(".scMediaBorder > img").getAttribute("src").replace("&h=72", "").replace("&thn=1", "").replace("&w=72", "").replace("bc=white&", "") : false;
       mediaTitle = item.querySelector(".scMediaTitle") ? item.querySelector(".scMediaTitle").innerText : "--";
       mediaDimensions = item.querySelector(".scMediaDetails") ? item.querySelector(".scMediaDetails").innerText : "--";
@@ -151,7 +153,7 @@ const initMediaExplorer = (storage) => {
       <tr id="mediaItem_${mediaId}">
         <td class="mediaArrow" onclick="${mediaClick}">${mediaArrow}</td>
         <td class="mediaThumbnail">
-          <img src='${mediaThumbnail}' onclick="${lightbox}" data-name="${mediaTitle}" data-size="${mediaDimensions}" data-id="${mediaId}" style="width: ${scMediaThumbnailSize}px !important; min-height: ${scMediaThumbnailSize}px !important" class="${mediaClass} scMediaThumbnail" loading="lazy"/>
+          <img src='${mediaThumbnail}' onclick="${lightbox}" data-name="${mediaTitle}" data-size="${mediaDimensions}" data-id="${mediaId}" style="width: ${scMediaThumbnailSize}px !important; height: ${scMediaThumbnailSize}px !important" class="${mediaClass} scMediaThumbnail" loading="lazy"/>
         </td>
         <td class="mediaTitle_${mediaId}" onclick="doubleClick('${mediaId}','${itemId}')" title="${mediaTitle} (Double click to rename)">
           <div class="mediaTitle">${mediaTitle}</div>
@@ -169,7 +171,7 @@ const initMediaExplorer = (storage) => {
             <img src="${global.iconPublish}" class="scMediaIcon">
           </button>
           <button class="scMediaActions t-sm t-top ${invert}" data-tooltip="Delete" type="button" onclick="javascript:return scForm.postEvent(this,event,'item:delete(id={${itemId}})')">
-            <img src="${global.iconBin}" class="scMediaIcon">
+            <img src="${global.iconTrash}" class="scMediaIcon">
           </button>
         </td>
       </tr>`;
@@ -182,26 +184,6 @@ const initMediaExplorer = (storage) => {
     //Insert list view
     document.querySelectorAll(".scTitle").forEach((el) => {
       el.innerText.toLowerCase().includes("media") ? el.insertAdjacentHTML("afterend", mediaExplorer) : false;
-    });
-
-    //Escape and arrow navigation for lightbox
-    let lightbox = parent.document.querySelector("#scLightbox");
-    let lightboxPrev = parent.document.querySelector("#scLightboxPrev");
-    let lightboxNext = parent.document.querySelector("#scLightboxNext");
-    parent.document.onkeydown = function (evt) {
-      evt.key == "Escape" && lightbox ? lightbox.setAttribute("style", "display:none") : false;
-      evt.key == "ArrowRight" && lightbox ? lightboxNext.click() : false;
-      evt.key == "ArrowLeft" && lightbox ? lightboxPrev.click() : false;
-    };
-    document.onkeydown = function (evt) {
-      evt.key == "Escape" && lightbox ? lightbox.setAttribute("style", "display:none") : false;
-      evt.key == "ArrowRight" && lightbox ? lightboxNext.click() : false;
-      evt.key == "ArrowLeft" && lightbox ? lightboxPrev.click() : false;
-    };
-    lightbox.addEventListener("click", (evt) => {
-      evt.target.getAttribute("class") != "action" ? lightbox.querySelector(".scLightboxContent > img").setAttribute("src", "") : false;
-      evt.target.getAttribute("class") != "action" ? lightbox.querySelector(".scLightboxContent > iframe").setAttribute("src", "") : false;
-      evt.target.getAttribute("class") != "action" ? lightbox.setAttribute("style", "display:none") : false;
     });
 
     //Buttom view
@@ -222,7 +204,91 @@ const initMediaExplorer = (storage) => {
         document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos] ? document.querySelectorAll(".scMediaExplorer > thead > tr > th")[scMediaSortPos].click() : false;
       }, 270);
     }
+  } else if (storage.feature_mediacard) {
+    document.querySelectorAll("#FileList > a:not(.scButton) > .scMediaBorder").forEach((el) => {
+      let item = el.parentElement;
+      // eslint-disable-next-line no-script-url
+      let mediaClick = item ? item.getAttribute("onclick").replace("javascript:", "").replace("return false", "") : false;
+      let mediaId = item ? item.getAttribute("id") : false;
+      let mediaImage = item.querySelector(".scMediaBorder > img") ? item.querySelector(".scMediaBorder > img").getAttribute("src").replace("&h=72", "").replace("&thn=1", "").replace("&w=72", "").replace("bc=white&", "") : false;
+      let mediaThumbnail = item.querySelector(".scMediaBorder > img") ? item.querySelector(".scMediaBorder > img").getAttribute("src").replace("&h=72", "&h=300").replace("&w=72", "") : false;
+      let mediaTitle = item.querySelector(".scMediaTitle") ? item.querySelector(".scMediaTitle").innerText : "--";
+      let mediaDimensions = item.querySelector(".scMediaDetails") ? item.querySelector(".scMediaDetails").innerText : "--";
+      let mediaFolder = mediaImage.includes("/folder.png") ? "Folder" : "--";
+      let mediaWarning = item.querySelector(".scMediaValidation") ? item.querySelector(".scMediaValidation").innerText : "No warning";
+
+      //Ovverride old listener
+      item.addEventListener(
+        "click",
+        (event) => {
+          console.log(event.target.getAttribute("class"));
+          event.target.getAttribute("class") == "scMediaIcon" ? exeJsCode(`${mediaClick}`) : false;
+          event.target.getAttribute("class") == "scMediaLightbox" ? exeJsCode(`openLightbox('${mediaId}');`) : false;
+          // eslint-disable-next-line no-unneeded-ternary
+          event.target.getAttribute("class") == "scMediaInfo" ? false : false;
+          event.target.getAttribute("class") == "scMediaDelete"
+            ? exeJsCode(
+                `scForm.postEvent(this,event,'item:delete(id={` +
+                  mediaId.substring(1).replace(
+                    // eslint-disable-next-line prefer-named-capture-group
+                    /([0-z]{8})([0-z]{4})([0-z]{4})([0-z]{4})([0-z]{12})/u,
+                    "$1-$2-$3-$4-$5"
+                  ) +
+                  `})')`
+              )
+            : false;
+          event.stopPropagation();
+        },
+        true
+      );
+      //Action wapper
+      el.parentElement ? el.parentElement.insertAdjacentHTML("beforeend", '<div class="scMediaActionsWrapper"</div>') : false;
+
+      //Lightbox action
+      let lightboxIcon = `<span class="t-sm t-top" data-tooltip="Preview"><img src="${global.iconLightbox}" class="scMediaLightbox"/></span>`;
+      lightboxIcon = mediaFolder != "Folder" ? lightboxIcon : false;
+      el.parentElement && lightboxIcon ? el.parentElement.querySelector(".scMediaActionsWrapper").insertAdjacentHTML("beforeend", lightboxIcon) : false;
+      //Info Icon
+      let infoIcon = `<span class="t-sm t-top" data-tooltip="${mediaWarning}"><img src="${global.iconInfo}" class="scMediaInfo"/></span>`;
+      infoIcon = mediaFolder != "Folder" ? infoIcon : false;
+      el.parentElement && infoIcon ? el.parentElement.querySelector(".scMediaActionsWrapper").insertAdjacentHTML("beforeend", infoIcon) : false;
+      //Delete Icon
+      let deleteIcon = `<span class="t-sm t-top" data-tooltip="Delete"><img src="${global.iconTrash}" class="scMediaDelete"/></span>`;
+      deleteIcon = mediaFolder != "Folder" ? deleteIcon : false;
+      el.parentElement && deleteIcon ? el.parentElement.querySelector(".scMediaActionsWrapper").insertAdjacentHTML("beforeend", deleteIcon) : false;
+
+      //Adjust style
+      item.querySelector(".scMediaBorder > img").setAttribute("loading", "lazy");
+      mediaFolder == "Folder" ? item.querySelector(".scMediaBorder > img").setAttribute("src", global.iconMediaFolder) : item.querySelector(".scMediaBorder > img").setAttribute("src", mediaThumbnail);
+      item.querySelector(".scMediaBorder > img").setAttribute("data-id", mediaId);
+      item.querySelector(".scMediaBorder > img").setAttribute("data-size", mediaDimensions);
+      item.querySelector(".scMediaBorder > img").setAttribute("data-name", mediaTitle);
+      item.querySelector(".scMediaBorder").classList.add("mediaThumbnail");
+      item.querySelector(".scMediaBorder").removeAttribute("style");
+      item.removeAttribute("href");
+      item.removeAttribute("onclick");
+      item.classList.add("scMediaCard");
+    });
   }
+  //Escape and arrow navigation for lightbox
+  let lightbox = parent.document.querySelector("#scLightbox");
+  let lightboxPrev = parent.document.querySelector("#scLightboxPrev");
+  let lightboxNext = parent.document.querySelector("#scLightboxNext");
+  parent.document.onkeydown = function (evt) {
+    evt.key == "Escape" && lightbox ? lightbox.setAttribute("style", "display:none") : false;
+    evt.key == "ArrowRight" && lightbox ? lightboxNext.click() : false;
+    evt.key == "ArrowLeft" && lightbox ? lightboxPrev.click() : false;
+  };
+  document.onkeydown = function (evt) {
+    evt.key == "Escape" && lightbox ? lightbox.setAttribute("style", "display:none") : false;
+    evt.key == "ArrowRight" && lightbox ? lightboxNext.click() : false;
+    evt.key == "ArrowLeft" && lightbox ? lightboxPrev.click() : false;
+  };
+  lightbox.addEventListener("click", (evt) => {
+    evt.target.getAttribute("class") != "action" ? lightbox.querySelector(".scLightboxContent > img").setAttribute("src", "") : false;
+    evt.target.getAttribute("class") != "action" ? lightbox.querySelector(".scLightboxContent > iframe").setAttribute("src", "") : false;
+    evt.target.getAttribute("class") != "action" ? lightbox.setAttribute("style", "display:none") : false;
+  });
 };
 
 /**
@@ -231,7 +297,7 @@ const initMediaExplorer = (storage) => {
 const initMediaCounter = () => {
   let totalItem = document.querySelectorAll("#FileList > a").length;
   document.querySelectorAll(".scTitle").forEach((el) => {
-    el.innerText.toLowerCase().includes("media") ? (el.innerText = el.innerText + ` (` + totalItem + `)`) : false;
+    el.innerText.toLowerCase().includes("media") ? (el.innerHTML = `${el.innerText} <i>(${totalItem})</i>`) : false;
   });
   //If empty
   if (totalItem == 0) {
@@ -257,108 +323,122 @@ const initMediaDragDrop = () => {
   var scMediaID = scIframeSrc[0];
   //Prepare HTML
   var scUploadMediaUrl = `/sitecore/client/Applications/Dialogs/UploadMediaDialog?ref=list&ro=sitecore://master/%7b${scMediaID}%7d%3flang%3den&fo=sitecore://master/%7b${scMediaID}%7d`;
-  //Add button
+  //Add upload button
   var scFolderButtons = document.querySelector(".scFolderButtons");
-  var scButtonHtml = `<a class="scButton t-sm t-top" data-tooltip="Drag and drop upload" id="scUploadDragDrop" onclick="javascript:scSitecore.prototype.showModalDialog('${scUploadMediaUrl}', '', '', null, null); return false;"><img loading="lazy" src=" ${global.iconGallery} " width="16" height="16" class="scIcon" alt="" border="0"><div class="scHeader">Upload multiple files</div></a>`;
+  var scButtonHtml = `<a class="scButton t-sm t-top" data-tooltip="Drag and drop upload" id="scUploadDragDrop" onclick="javascript:scSitecore.prototype.showModalDialog('${scUploadMediaUrl}', '', '', null, null); return false;"><img loading="lazy" src=" ${global.iconGallery} " width="16" height="16" class="scIcon" alt="" border="0"><div class="scHeader">Upload files</div></a>`;
   scFolderButtons ? scFolderButtons.insertAdjacentHTML("afterbegin", scButtonHtml) : false;
 };
 
 /**
  * Init Media Library View buttons
  */
-const initMediaViewButtons = () => {
-  let scFolderButtons = document.querySelector(".scFolderButtons");
-  let listSelected, gridSelected;
-  localStorage.getItem("scMediaView") == "list" ? (listSelected = "selected") : (gridSelected = "selected");
+const initMediaViewButtons = (storage) => {
+  storage.feature_medialist == undefined ? (storage.feature_medialist = true) : false;
+  if (storage.feature_medialist) {
+    let scFolderButtons = document.querySelector(".scFolderButtons");
+    let listSelected, gridSelected;
+    localStorage.getItem("scMediaView") == "list" ? (listSelected = "selected") : (gridSelected = "selected");
 
-  //Insert Media view
-  // prettier-ignore
-  let scButtonHtml = `
-  <a class="scButton scButtonList ` + listSelected + ` t-sm t-top" data-tooltip="List view"  onclick="switchMediaView('list')"><img loading="lazy" src=" ${global.iconListView} " width="16" height="16" class="scIcon" alt="" border="0"></a>
-  <a class="scButton scButtonGrid ` + gridSelected + ` t-sm t-top" data-tooltip="Grid view""  onclick="switchMediaView('grid')"><img loading="lazy" src=" ${global.iconGridView} " width="16" height="16" class="scIcon" alt="" border="0"></a>`;
+    // prettier-ignore
+    let scButtonHtml = `
+  <a class="scButton scButtonList ${listSelected} t-sm t-top" data-tooltip="List view"  onclick="switchMediaView('list')"><img loading="lazy" src="${global.iconListView}" width="16" height="16" class="scIcon" alt="" border="0"></a>
+  <a class="scButton scButtonGrid ${gridSelected} t-sm t-top" data-tooltip="Grid view""  onclick="switchMediaView('grid')"><img loading="lazy" src="${global.iconGridView}" width="16" height="16" class="scIcon" alt="" border="0"></a>`;
 
-  if (scFolderButtons) {
-    scFolderButtons.insertAdjacentHTML("beforeend", scButtonHtml);
-  } else {
-    document.querySelectorAll(".scTitle").forEach((el) => {
-      el.innerText.toLowerCase().includes("media") ? el.insertAdjacentHTML("beforebegin", scButtonHtml) : false;
-    });
-  }
+    //Insert grid/list buttons
+    if (scFolderButtons) {
+      scFolderButtons.insertAdjacentHTML("beforeend", scButtonHtml);
+    } else {
+      document.querySelectorAll(".scTitle").forEach((el) => {
+        el.innerText.toLowerCase().includes("media") ? el.insertAdjacentHTML("beforebegin", scButtonHtml) : false;
+      });
+    }
 
-  //Back to parent
-  setTimeout(function () {
-    var elem = parent.document.querySelector(".scContentTreeNodeActive");
-    var count = 0;
-    for (; elem && elem !== document; elem = elem.parentNode) {
-      if (elem.classList) {
-        if (elem.classList.contains("scContentTreeNode")) {
-          count++;
-          if (count == 2) {
-            var parentScTitle = elem.querySelector(".scContentTreeNodeNormal > span").innerText;
-            var parentScId = elem
-              .querySelector(".scContentTreeNodeNormal")
-              .getAttribute("id")
-              .replace("Tree_Node_", "")
-              .replace(
-                // eslint-disable-next-line prefer-named-capture-group
-                /(.{8})(.{4})(.{4})(.{4})(.{12})/u,
-                "$1-$2-$3-$4-$5"
-              );
-            //Insert Refresh
-            let scButtonHtml = `<a class="scButton scSmall t-sm t-top" data-tooltip="Refresh" onclick="javascript:location.reload(); return false;" title="Refresh view"><img loading="lazy" src=" ${global.iconRefresh} " width="16" height="16" class="scIcon" alt="Refresh view" border="0"><div class="scHeader">&nbsp;</div></a>`;
-            if (scFolderButtons) {
-              scFolderButtons.insertAdjacentHTML("afterbegin", scButtonHtml);
-            } else {
-              document.querySelectorAll(".scTitle").forEach((el) => {
-                el.innerText.toLowerCase().includes("media") ? el.insertAdjacentHTML("beforebegin", scButtonHtml) : false;
-              });
+    //Back button
+    setTimeout(function () {
+      var elem = parent.document.querySelector(".scContentTreeNodeActive");
+      var count = 0;
+      for (; elem && elem !== document; elem = elem.parentNode) {
+        if (elem.classList) {
+          if (elem.classList.contains("scContentTreeNode")) {
+            count++;
+            if (count == 2) {
+              var parentScTitle = elem.querySelector(".scContentTreeNodeNormal > span").innerText;
+              var parentScId = elem
+                .querySelector(".scContentTreeNodeNormal")
+                .getAttribute("id")
+                .replace("Tree_Node_", "")
+                .replace(
+                  // eslint-disable-next-line prefer-named-capture-group
+                  /(.{8})(.{4})(.{4})(.{4})(.{12})/u,
+                  "$1-$2-$3-$4-$5"
+                );
+              //Insert Refresh
+              let scButtonHtml = `<a class="scButton scSmall t-sm t-top" data-tooltip="Refresh" onclick="javascript:location.reload(); return false;" title="Refresh view"><img loading="lazy" src=" ${global.iconRefresh} " width="16" height="16" class="scIcon" alt="Refresh view" border="0"><div class="scHeader">&nbsp;</div></a>`;
+              if (scFolderButtons) {
+                scFolderButtons.insertAdjacentHTML("afterbegin", scButtonHtml);
+              } else {
+                document.querySelectorAll(".scTitle").forEach((el) => {
+                  el.innerText.toLowerCase().includes("media") ? el.insertAdjacentHTML("beforebegin", scButtonHtml) : false;
+                });
+              }
+              //Insert Back
+              //prettier-ignore
+              scButtonHtml = `<a class="scButton scSmall t-sm t-top" data-tooltip="Back" onclick="javascript:scForm.getParentForm().invoke('item:load(id={` + parentScId + `})');return false" title="Back to ` + parentScTitle + `"><img loading="lazy" src=" ${global.iconParent} " width="16" height="16" class="scIcon" alt="alt="Back to ` + parentScTitle + `" border="0"><div class="scHeader">&nbsp;</div></a>`;
+              if (scFolderButtons) {
+                scFolderButtons.insertAdjacentHTML("afterbegin", scButtonHtml);
+              } else {
+                document.querySelectorAll(".scTitle").forEach((el) => {
+                  el.innerText.toLowerCase().includes("media") ? el.insertAdjacentHTML("beforebegin", scButtonHtml) : false;
+                });
+              }
+              break;
             }
-            //Insert Back
-            //prettier-ignore
-            scButtonHtml = `<a class="scButton scSmall t-sm t-top" data-tooltip="Back" onclick="javascript:scForm.getParentForm().invoke('item:load(id={` + parentScId + `})');return false" title="Back to ` + parentScTitle + `"><img loading="lazy" src=" ${global.iconParent} " width="16" height="16" class="scIcon" alt="alt="Back to ` + parentScTitle + `" border="0"><div class="scHeader">&nbsp;</div></a>`;
-            if (scFolderButtons) {
-              scFolderButtons.insertAdjacentHTML("afterbegin", scButtonHtml);
-            } else {
-              document.querySelectorAll(".scTitle").forEach((el) => {
-                el.innerText.toLowerCase().includes("media") ? el.insertAdjacentHTML("beforebegin", scButtonHtml) : false;
-              });
-            }
-            break;
           }
         }
       }
-    }
-  }, 150);
+    }, 150);
+  }
 };
 
 /**
  * Init Media Search box
  */
-const initMediaSearchBox = () => {
-  var scFolderButtons = document.querySelector(".scFolderButtons");
-  var scSearchHtml = `<div class="scSearch"><input type="text" placeholder="Search in folder"></div>`;
-  scFolderButtons ? scFolderButtons.insertAdjacentHTML("afterend", scSearchHtml) : false;
+const initMediaSearchBox = (storage) => {
+  storage.feature_mediacard == undefined ? (storage.feature_mediacard = true) : false;
+  if (storage.feature_mediacard) {
+    var scFolderButtons = document.querySelector(".scFolderButtons");
+    var scSearchHtml = `<div class="scSearch"><input type="text" placeholder="Search in folder"></div>`;
+    scFolderButtons ? scFolderButtons.insertAdjacentHTML("afterend", scSearchHtml) : false;
 
-  //Listerner
-  let searchBox = document.querySelector(".scSearch > input");
-  searchBox.addEventListener("input", () => {
-    //Grid view
-    document.querySelectorAll("#FileList a:not(.scButton)").forEach((elem) => {
-      // eslint-disable-next-line require-unicode-regexp
-      let regExp = new RegExp(searchBox.value, "i");
-      if (elem.querySelector(".scMediaTitle")) {
-        elem.querySelector(".scMediaTitle").innerText.match(regExp) ? elem.setAttribute("style", "display:block") : elem.setAttribute("style", "display:none");
-      }
+    //Listerner
+    let searchBox = document.querySelector(".scSearch > input");
+    searchBox.addEventListener("input", () => {
+      let count = 0;
+      //Grid view
+      document.querySelectorAll("#FileList a:not(.scButton)").forEach((elem) => {
+        // eslint-disable-next-line require-unicode-regexp
+        let regExp = new RegExp(searchBox.value, "i");
+        if (elem.querySelector(".scMediaTitle")) {
+          elem.querySelector(".scMediaTitle").innerText.match(regExp) ? elem.setAttribute("style", "display:block") : elem.setAttribute("style", "display:none");
+          elem.querySelector(".scMediaTitle").innerText.match(regExp) ? count++ : false;
+        }
+      });
+      //List view
+      document.querySelectorAll(".scMediaExplorer > tbody > tr").forEach((elem) => {
+        let count = 0;
+        // eslint-disable-next-line require-unicode-regexp
+        let regExp = new RegExp(searchBox.value, "i");
+        if (elem.querySelector(".mediaTitle")) {
+          elem.querySelector(".mediaTitle").innerText.match(regExp) ? elem.setAttribute("style", "display:content") : elem.setAttribute("style", "display:none");
+          elem.querySelector(".mediaTitle").innerText.match(regExp) ? count++ : false;
+        }
+      });
+      //Update counter
+      document.querySelectorAll(".scTitle").forEach((el) => {
+        el.innerText.toLowerCase().includes("media") ? (el.querySelector("i").innerHTML = `(${count})`) : false;
+      });
     });
-    //List view
-    document.querySelectorAll(".scMediaExplorer > tbody > tr").forEach((elem) => {
-      // eslint-disable-next-line require-unicode-regexp
-      let regExp = new RegExp(searchBox.value, "i");
-      if (elem.querySelector(".mediaTitle")) {
-        elem.querySelector(".mediaTitle").innerText.match(regExp) ? elem.setAttribute("style", "display:content") : elem.setAttribute("style", "display:none");
-      }
-    });
-  });
+  }
 };
 
 /**
@@ -509,8 +589,11 @@ const initLightbox = () => {
       <button class="sclightboxClose">
         <img src="${global.iconWindowClose}" />
       </button>
-      <button class="sclightboxDownload">
+      <button class="sclightboxDownload" class="action" >
         <a download href="#"><img src="${global.iconDownload}" class="action" /></a>
+      </button>
+      <button class="sclightboxFullscreen" class="action" >
+        <img src="${global.iconFullscreen}" class="action" />
       </button>
     </div>
     <div class="action" id="scLightboxPrev"><img src="${global.iconArrowLeft}" class="action"/></div>

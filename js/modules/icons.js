@@ -41,10 +41,6 @@ export const jsonIcons = JSON.parse(
     "icon": "communication::list_alt"
   },
   {
-    "search": "document.png",
-    "icon": "action::language"
-  },
-  {
     "search": "office_building",
     "icon": "communication::business"
   },
@@ -313,8 +309,16 @@ export const jsonIcons = JSON.parse(
     "icon": "action::wysiwyg"
   },
   {
+    "search": "folder_document",
+    "icon": "file::topic"
+  },
+  {
     "search": "folder_",
     "icon": "file::folder"
+  },
+  {
+    "search": "document.png",
+    "icon": "action::description"
   },
   {
     "search": "barrel",
@@ -531,6 +535,14 @@ export const jsonIcons = JSON.parse(
   {
     "search": "element_run",
     "icon": "file::upload_file"
+  },
+  {
+    "search": "front",
+    "icon": "action::flip_to_front"
+  },
+  {
+    "search": "video",
+    "icon": "av::videocam"
   }
 ]`
 );

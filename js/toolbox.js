@@ -47,7 +47,7 @@ import { initPreviewButton, listenPreviewTab } from "./modules/preview.js";
 import { initLaunchpadIcon, initLaunchpadMenu } from "./modules/launchpad.js";
 import { initAutoExpandTree, initTreeGutterTooltips } from "./modules/contenttree.js";
 import { initQuerySuggestions } from "./modules/template.js";
-import { storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor } from "./modules/experienceeditor.js";
+import { storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor, initRenderingSearchBox } from "./modules/experienceeditor.js";
 
 /**
  * Get all user's settings from chrome storage
@@ -169,8 +169,8 @@ chrome.storage.sync.get((storage) => {
       listenPreviewTab(storage);
     } else if (global.isMediaFolder) {
       log("**** Media Folder ****", "orange");
-      initMediaCounter();
-      initMediaDragDrop();
+      initMediaCounter(storage);
+      initMediaDragDrop(storage);
       initMediaViewButtons(storage);
       initMediaExplorer(storage);
       initMediaSearchBox(storage);
@@ -236,7 +236,11 @@ chrome.storage.sync.get((storage) => {
       initMaterializeIcons(storage);
     } else if (global.isMediaBrowser) {
       log("**** Media Browser ****", "orange");
-      initUploadButton();
+      initUploadButton(storage);
+    } else if (global.isSelectRendering) {
+      log("**** Select Rendering ****", "orange");
+      initAppName(storage, "Select Rendering");
+      initRenderingSearchBox(storage);
     } else if (global.isXmlControl && !global.isRichText) {
       log("**** XML Control (Window) ****", "orange");
       initCheckboxes(storage);

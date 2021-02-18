@@ -38,8 +38,23 @@ body.satDark #Editor_contentIframe a:visited {
   color: var(--blue) !important;
 }
 
-body.satDark .scButtons > .scButton {
-  background-image: linear-gradient(var(--blue) 0%, var(--blue) 100%);
+body.satDark #ItemList a.scButton {
+  background-image: none;
+  vertical-align: top;
+  text-decoration: none;
+  text-align: center;
+  overflow: visible;
+  display: inline-block;
+  margin: 15px 0 0 10px;
+  float: none;
+  box-shadow: unset !important;
+  background-color: var(--black) !important;
+  line-height: 2.4em;
+  min-height: 38px;
+  font-size: 12px;
+  border-radius: 4px;
+  padding: 0px 12px !important;
+  border: 1px solid var(--black3) imp !important;
 }
 
 body.satDark .sc-border[data-sc-id="AnalyticsFallback"] {
@@ -53,11 +68,10 @@ body.satDark .scInstantSearch {
   border-color: var(--black2) !important;
 }
 body.satDark .scInstantSearch:focus {
-  background-color: var(--white) !important;
-  color: #333333 !important;
+  color: var(--text) !important;
 }
 body.satDark .scInstantSearch::placeholder {
-  color: #777 !important;
+  color: var(--black7) !important;
 }
 
 body.satDark input:not([type]),
@@ -978,8 +992,7 @@ body.satDark .scViewerHeadline {
 }
 
 body.satDark #scLightbox {
-  border: solid 1px #868686;
-  background: white;
+  background: rgba(0, 0, 0, 0.8);
 }
 
 body.satDark .modal-backdrop,
@@ -1362,10 +1375,6 @@ body.satDark a.scItemThumbnail:hover {
   border: 1px solid var(--darkblue);
 }
 
-body.satDark a.scItemThumbnail:hover > span.scDisplayName {
-  color: var(--black3) !important;
-}
-
 body.satDark .ff #Right {
   background-color: var(--black1) !important;
 }
@@ -1490,13 +1499,21 @@ body.satDark a.scButton {
   color: rgba(255, 255, 255, 0.8);
 }
 
+body.satDark .scBackground > #FileList {
+  background-color: var(--black1) !important;
+}
+
 body.satDark #FileList a.scButton {
-  background: var(--blue);
   box-shadow: unset !important;
   background-color: var(--black) !important;
 }
 
-body.satDark #FileList a.scButton > img.scIcon {
+body.satDark #FileList a.scButton.scSmall > img.scIcon {
+  filter: invert(1);
+}
+
+body.satDark #FileList a.scButtonList > img,
+body.satDark #FileList a.scButtonGrid > img {
   filter: invert(1);
 }
 
@@ -1597,14 +1614,17 @@ body.satDark .scMediaExplorer .mediaTitle {
   color: var(--text);
 }
 
-body.satDark .scMediaExplorer tbody tr:hover .mediaTitle,
 body.satDark .scMediaExplorer tbody tr:hover {
   background: var(--black4) !important;
   color: var(--text) !important;
 }
 
+body.satDark .scMediaExplorer tbody tr:hover .mediaTitle {
+  color: var(--text) !important;
+}
+
 body.satDark .scMediaExplorer thead tr {
-  background: var(--black1);
+  background: var(--black4) !important;
   color: var(--text);
 }
 
@@ -1624,7 +1644,7 @@ body.satDark .scMediaExplorer thead tr th:hover {
 
 body.satDark .scMediaExplorer td > img.scMediaPreview {
   background: var(--black1);
-  border: 1px solid var(--black);
+  border: 3px solid var(--black);
 }
 
 body.satDark #FileList a.scButton.scButtonGrid.selected,
@@ -2232,11 +2252,9 @@ body.satDark #EditorFrames {
 }
 
 body.satDark #BTAddNewSearch {
-  background-color: var(--black3) !important;
+  background-color: transparent !important;
   color: #131313;
-
-  border: 0px solid var(--black3) !important;
-
+  border: 0px solid transparent !important;
   box-shadow: inset 0 1px transparent !important;
   text-shadow: transparent;
   background-image: url("chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.png"), linear-gradient(to bottom, transparent 0%, transparent 100%) !important;
@@ -2244,16 +2262,8 @@ body.satDark #BTAddNewSearch {
   background-repeat: no-repeat;
 }
 
-body.satDark a#BTAddNewSearch:hover {
-  background-color: var(--black1) !important;
-}
-
-body.satDark a#BTAddNewSearch:active {
-  background-image: none !important;
-  background-color: var(--black1) !important;
-  background-repeat: no-repeat;
-  box-shadow: inset 0 3px 3px transparent !important;
-  border-color: #bdbdbd;
+body.satDark .t-invert > img {
+  filter: invert(1);
 }
 
 body.satDark a.scRibbonEditorTabNormal,
@@ -3180,4 +3190,14 @@ body.satDark #sxa-toolbox #sxa-toolbox-root ul li:hover {
 
 body.satDark .sc-ribbon .sc-chunk-panel {
   border: 1px solid var(--black1);
+}
+
+/* Media card  */
+
+body.satExtension.satDark #FileList .scMediaCard {
+  background-color: var(--black3);
+}
+
+body.satExtension.satDark #FileList .scMediaCard .scMediaActionsWrapper > span > img {
+  filter: invert(1);
 }

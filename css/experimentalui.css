@@ -31,8 +31,8 @@ body.satExperimentalUi .scStartButton {
 
 body.satExperimentalUi button:focus,
 body.satExperimentalUi button:active {
-  outline: 0px solid var(--accent);
-  box-shadow: 0 0 0 2.5px var(--accent) !important;
+  outline: 0px solid var(--accentTransparent);
+  box-shadow: 0 0 0 2.5px var(--accentTransparent) !important;
 }
 
 body.satExperimentalUi .scTreeview .nodeNormal {
@@ -80,6 +80,10 @@ body.satExperimentalUi #scPanel h3 {
 
 body.satExperimentalUi #SearchPanel .scBurgerMenuTitle {
   color: var(--textFaded);
+}
+
+body.satExperimentalUi a#BTAddNewSearch:hover {
+  border-bottom: 3px solid var(--accent) !important;
 }
 
 body.satExperimentalUi div#scPageExtendersForm {
@@ -288,6 +292,10 @@ body.satExperimentalUi a.scTileItem:hover {
   color: var(--accentText) !important;
 }
 
+body.satExperimentalUi .scFormDialogFooter {
+  background-color: var(--experimentalBackground);
+}
+
 body.satExperimentalUi #scModal .header {
   background-color: var(--accent);
   color: var(--accentText);
@@ -362,10 +370,6 @@ body.satExperimentalUi .scVersionIcon {
   /* width: 16px !important;
   height: 16px !important; */
   vertical-align: sub !important;
-}
-
-body.satExperimentalUi .scMediaIcon {
-  /* filter: invert(var(--accentRevert)); */
 }
 
 body.satExperimentalUi .scEditorQuickInfo {
@@ -507,13 +511,13 @@ body.satExperimentalUi #Editors select:hover {
   border-color: var(--text);
 }
 
-body.satExperimentalUi input:focus:not(.scContentControlImage),
+body.satExperimentalUi input:focus:not(.scContentControlImage):not([type="radio"]),
 body.satExperimentalUi select:focus,
 body.satExperimentalUi textarea:focus {
-  box-shadow: var(--accent) 0px 0px 0px 1px !important;
+  box-shadow: var(--accentTransparent) 0px 0px 0px 1px !important;
   border-width: 1px !important;
   border-style: solid !important;
-  border-color: var(--accent) !important;
+  border-color: var(--accentTransparent) !important;
   border-image: initial !important;
   outline: 0px !important;
 }
@@ -533,7 +537,7 @@ body.satExperimentalUi .scContentControlCheckbox:checked + .scContentControlChec
 body.satExperimentalUi select option:focus,
 body.satExperimentalUi select option:active,
 body.satExperimentalUi select option:checked {
-  background-color: var(--accent) !important;
+  background-color: var(--accentTransparent) !important;
   color: var(--accentText) !important;
 }
 
@@ -604,15 +608,23 @@ body.satExperimentalUi .scItemThumbnailSelected {
   cursor: pointer;
 }
 
+body.satExperimentalUi a.scItemThumbnail .scImageContainer {
+  border-radius: var(--radius);
+}
+
+body.satExperimentalUi a.scItemThumbnail:hover {
+  background-color: transparent !important;
+}
+
 body.satExperimentalUi a.scItemThumbnail:hover .scImageContainer {
-  background-color: var(--grey9);
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 body.satExperimentalUi .scItemThumbnailSelected .scImageContainer,
 body.satExperimentalUi .sc-iconList-wrap:active .sc-iconList-item,
 body.satExperimentalUi .sc-iconList-wrap.active .sc-iconList-item {
   border-color: transparent;
-  border-radius: 3px;
+  border-radius: var(--radius);
   box-shadow: 0px 0px 0px 3px var(--accent);
 }
 
@@ -938,7 +950,7 @@ body.satExperimentalUi iframe.ui-widget-content {
 /* Uploader */
 body.satExperimentalUi .sc-uploader {
   border: 2px dashed var(--grey);
-  background-color: rgba(0, 0, 0, 0.075);
+  background-color: rgba(0, 0, 0, 0.02);
   width: 50%;
   margin: auto;
 }
@@ -1078,11 +1090,12 @@ body.satExperimentalUi a.scRibbonEditorTabNormal {
   font-weight: normal !important;
   text-transform: uppercase !important;
   cursor: pointer !important;
+  transition: border ease-in-out 0.1s;
 }
 
 body.satExperimentalUi a.scRibbonEditorTabNormal:hover {
   background-color: transparent;
-  border-bottom: 3px solid var(--grey2);
+  border-bottom: 3px solid var(--accent) !important;
 }
 
 body.satExperimentalUi #BTAddNewSearch {
@@ -1091,6 +1104,7 @@ body.satExperimentalUi #BTAddNewSearch {
   background-image: url("chrome-extension://__MSG_@@extension_id__/images/edition-magnifier.svg"), none !important;
   background-size: 16px 16px !important;
   opacity: 0.5;
+  transition: border ease-in-out 0.1s;
 }
 
 body.satExperimentalUi #BTAddNewSearch:hover {
@@ -1510,7 +1524,7 @@ body.satExperimentalUi .scInstantSearch:focus {
 
 body.satExperimentalUi .scInstantSearchResults > li:focus,
 body.satExperimentalUi .scInstantSearchResults > li:hover {
-  background-color: var(--accent);
+  background-color: var(--accentTransparent);
   color: var(--accentText);
 }
 
@@ -1678,7 +1692,7 @@ body.satExperimentalUi .scSaveBar > .scActions > button {
 }
 
 body.satExperimentalUi .scPublishMenuMoreArrow {
-  filter: invert(var(--accentInvert)) !important;
+  color: var(--accentText);
 }
 
 body.satExperimentalUi .scBackground {
@@ -1710,10 +1724,14 @@ body.satExperimentalUi .scMediaExplorer tbody tr .mediaTitle {
   font-weight: 600;
 }
 
-body.satExperimentalUi .scMediaExplorer tbody tr:hover .mediaTitle,
+/* prettier-ignore */
 body.satExperimentalUi .scMediaExplorer tbody tr:hover {
   cursor: pointer;
-  background: var(--accent) !important;
+  background: var(--accentTransparent) !important;
+  color: var(--accentText) !important;
+}
+
+body.satExperimentalUi .scMediaExplorer tbody tr:hover .mediaTitle {
   color: var(--accentText) !important;
 }
 
@@ -1756,6 +1774,14 @@ body.satExperimentalUi #FileList .scMediaCard {
 }
 body.satExperimentalUi #FileList .scMediaCard:hover {
   box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%);
+}
+
+body.satExperimentalUi #FileList .scMediaCard:hover .scMediaUsages {
+  opacity: 1;
+}
+
+body.satExperimentalUi #FileList .scMediaCard .scMediaUsages {
+  opacity: 0.5;
 }
 
 body.satExperimentalUi #FileList .scMediaCard .scMediaTitle {
@@ -1801,7 +1827,7 @@ body.satExperimentalUi #FileList a.scButton.scButtonGrid.selected {
 
 body.satExperimentalUi #FileList a.scButton.scButtonList.selected > img,
 body.satExperimentalUi #FileList a.scButton.scButtonGrid.selected > img {
-  filter: invert(1);
+  filter: invert(var(--accentRevert));
 }
 
 body.satExperimentalUi .scButton {
@@ -2037,21 +2063,6 @@ body.satExperimentalUi .scVerticalImagedTabstrip > div.selected:hover {
   background-color: var(--grey3) !important;
 }
 
-/* @keyframes preloading {
-  from {
-    background-position: 0px center;
-  }
-  to {
-    background-position: -100px center;
-  }
-}
-
-body.satExperimentalUi .scMediaThumbnail {
-  background: url(chrome-extension://__MSG_@@extension_id__/images/media_loader.jpg) !important;
-  background-position: 0px center;
-  background-size: cover !important;
-  animation: preloading 2s linear infinite;
-} */
 body.satExperimentalUi a.scContentTreeNodeNormal:hover,
 body.satExperimentalUi a.scContentTreeNodeActive,
 body.satExperimentalUi a.scContentTreeNodeNormal.scDragHover {
@@ -2161,6 +2172,11 @@ body.satExperimentalUi .scTabstrip {
   display: flex;
   overflow-x: scroll;
   overflow-y: auto;
+}
+
+body.satExperimentalUi .scTabPage {
+  padding: 0px !important;
+  border: 0px !important;
 }
 
 body.satExperimentalUi .scTab,

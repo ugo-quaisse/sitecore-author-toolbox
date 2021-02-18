@@ -18,9 +18,14 @@ body.satExperimentalUi.satDark #EditorTabs {
   color: var(--text);
 }
 
+body.satExperimentalUi.satDark #Result {
+  border-top: 0px;
+}
+
 body.satExperimentalUi.satDark #FileList {
   background: var(--black1) !important;
   color: var(--text);
+  border-color: var(--black);
 }
 
 body.satExperimentalUi.satDark #FileList a {
@@ -207,6 +212,11 @@ body.satExperimentalUi.satDark .scEditorSectionPanel {
   background-color: var(--black2) !important;
 }
 
+body.satExperimentalUi.satDark .scImageContainer {
+  background-color: transparent;
+  border-color: var(--black3);
+}
+
 body.satExperimentalUi.satDark .scEditorSectionPanel.scTabsRounded {
   border-radius: 3px;
 }
@@ -232,12 +242,8 @@ body.satExperimentalUi.satDark .scEditItemIcon {
 }
 
 body.satExperimentalUi.satDark #FileList a.scButton {
-  background: var(--black4) !important;
+  background: var(--black2);
   border: 1px solid var(--black4) !important;
-}
-
-body.satExperimentalUi.satDark #FileList a.scButton > img {
-  filter: invert(var(--accentInvert));
 }
 
 body.satExperimentalUi.satDark .scMediaExplorer th {

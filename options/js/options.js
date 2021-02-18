@@ -94,6 +94,7 @@ document.body.onload = function () {
     toggleFeature(storage.feature_contrast_icons, "#feature_contrast_icons", false);
     toggleFeature(storage.feature_medialist, "#feature_medialist", true);
     toggleFeature(storage.feature_mediacard, "#feature_mediacard", true);
+    toggleFeature(storage.feature_medialibrary, "#feature_medialibrary", true);
   });
 };
 
@@ -147,13 +148,13 @@ document.querySelector("#settings").onclick = function () {
  */
 document.querySelector(".back").onclick = function (event) {
   event.preventDefault();
-  let reload = true;
+  let reload = false;
 
-  if (document.querySelector(".trackChanges").value == "1") {
-    if (!confirm("Changes that you made may not be saved.\nContinue without saving?") == true) {
-      reload = false;
-    }
-  }
+  // if (document.querySelector(".trackChanges").value == "1") {
+  //   if (!confirm("Changes that you made may not be saved.\nContinue without saving?") == true) {
+  //     reload = false;
+  //   }
+  // }
   if (reload) {
     document.querySelectorAll(".domain").forEach((div) => {
       div.remove();
@@ -340,6 +341,7 @@ document.querySelector(".save_settings").onclick = function (event) {
     feature_contrast_icons: document.querySelector("#feature_contrast_icons").checked,
     feature_medialist: document.querySelector("#feature_medialist").checked,
     feature_mediacard: document.querySelector("#feature_mediacard").checked,
+    feature_medialibrary: document.querySelector("#feature_medialibrary").checked,
   };
 
   //Save data

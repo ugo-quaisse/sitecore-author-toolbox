@@ -3,7 +3,7 @@
 import * as global from "./global.js";
 import { exeJsCode, loadCssFile, startDrag, sitecoreItemJson } from "./helpers.js";
 
-export { storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor };
+export { storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor, initRenderingSearchBox };
 
 /**
  * Add button to toolbar to open datasource in CE
@@ -250,6 +250,47 @@ const resetExperienceEditor = (storage) => {
   //Remove satExtension satDark satExperimetalUI from main frame
   document.body ? document.body.classList.add("satEE") : false;
   document.body ? document.body.classList.remove("satExtension") : false;
+  document.body && storage.feature_experimentalui ? document.body.classList.add("satEEExperimentalUi") : false;
   // document.body.classList.remove("satDark");
   document.body.classList.remove("satExperimentalUi");
+};
+
+/**
+ * Init Rendering Search box
+ */
+const initRenderingSearchBox = (storage) => {
+  storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;
+  if (storage.feature_experienceeditor) {
+    let resultList = document.querySelector(".scTabs");
+    resultList ? resultList.setAttribute("style", "top:110px; padding: 0px 10px; background-color: transparent !important;") : false;
+
+    var scFolderButtons = document.querySelector(".scTabstrip");
+    var scSearchHtml = `<div class="scSearch"><input type="text" placeholder="Search in renderings"></div>`;
+    scFolderButtons ? scFolderButtons.insertAdjacentHTML("afterend", scSearchHtml) : false;
+
+    //Listerner
+    let searchBox = document.querySelector(".scSearch > input");
+    searchBox.addEventListener("input", () => {
+      document.querySelectorAll(".scItemThumbnail").forEach((elem) => {
+        // eslint-disable-next-line require-unicode-regexp
+        let regExp = new RegExp(searchBox.value, "i");
+        if (elem.querySelector(".scDisplayName")) {
+          elem.querySelector(".scDisplayName").innerText.match(regExp) ? elem.setAttribute("style", "display:block") : elem.setAttribute("style", "display:none");
+          elem.querySelector(".scDisplayName").innerText.match(regExp) ? elem.classList.add("hideTab") : elem.classList.remove("hideTab");
+        }
+      });
+      //Search in each tab
+      document.querySelectorAll(".scTabPage").forEach((tab) => {
+        var result = tab.querySelectorAll(".hideTab").length;
+        // eslint-disable-next-line newline-per-chained-call
+        var tabNumber = tab.getAttribute("id").split("_").pop();
+        console.log(tabNumber, result);
+        if (result === 0) {
+          document.querySelector(`#Tabs_tab_${tabNumber}`).setAttribute("style", "opacity:0.2");
+        } else {
+          document.querySelector(`#Tabs_tab_${tabNumber}`).setAttribute("style", "opacity:1");
+        }
+      });
+    });
+  }
 };

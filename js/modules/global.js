@@ -130,6 +130,7 @@ export const isMediaLibrary = windowLocationHref.includes("he=media+library");
 export const isWindowedMode = urlParams.has("he") && !urlParams.has("sc_bw");
 export const isMediaBrowser = windowLocationHref.includes("sitecore.shell.applications.media.mediabrowser");
 export const isSourceBrowser = windowLocationHref.includes("sitecore.shell.applications.dialogs.selectrenderingdatasource");
+export const isSelectRendering = windowLocationHref.includes("selectrendering");
 export const isMediaFolder = windowLocationHref.includes("media%20folder.aspx");
 export const isLockedItems = windowLocationHref.includes("lockeditems.aspx");
 export const isMediaUpload = windowLocationHref.includes("/applications/dialogs/uploadmediadialog");

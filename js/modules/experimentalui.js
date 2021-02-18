@@ -341,6 +341,7 @@ const getAccentColor = () => {
     text == "#ffffff" ? (invert = 0) : (invert = 1);
     text == "#ffffff" ? (revert = 1) : (revert = 0);
     root.style.setProperty("--accent", color);
+    root.style.setProperty("--accentTransparent", color + "99");
     root.style.setProperty("--accentText", text);
     root.style.setProperty("--accentBrightness", brightness);
     root.style.setProperty("--accentInvert", invert);
@@ -348,15 +349,12 @@ const getAccentColor = () => {
   } else {
     color = "#ee3524"; //red
     root.style.setProperty("--accent", "#ee3524");
+    root.style.setProperty("--accentTransparent", "#ee352499");
     root.style.setProperty("--accentText", "#ffffff");
     root.style.setProperty("--accentBrightness", 50);
     root.style.setProperty("--accentInvert", 0);
     root.style.setProperty("--accentRevert", 1);
   }
-
-  // let filtersCss = getFiltersCss(color);
-  // root.style.setProperty("--accentFilters", filtersCss);
-  // console.log("FiltersCSS", filtersCss);
 
   return color;
 };
@@ -366,7 +364,7 @@ const getAccentColor = () => {
  */
 const initColorPicker = (storage) => {
   if (storage.feature_experimentalui) {
-    let color, text, brightness, invert, borderAlpha;
+    let color, text, brightness, invert, revert, borderAlpha;
 
     //prettier-ignore
     let input = `<input type="color" id="scAccentColor" name="scAccentColor" value="` + getAccentColor() + `" class="t-bottom t-sm" data-tooltip="Your accent color">`;
@@ -379,24 +377,30 @@ const initColorPicker = (storage) => {
       colorPicker.addEventListener("change", () => {
         color = colorPicker.value;
         text = setTextColour(color);
+        console.log(text);
         text == "#ffffff" ? (brightness = 10) : (brightness = 0);
-        text == "#ffffff" ? (invert = 1) : (invert = 0);
+        text == "#ffffff" ? (invert = 0) : (invert = 1);
+        text == "#ffffff" ? (revert = 1) : (revert = 0);
         text == "#ffffff" ? (borderAlpha = "rgba(255, 255, 255, 0.4)") : (borderAlpha = "rgba(0, 0, 0, 0.4)");
         //Root
         let root = document.documentElement;
         root.style.setProperty("--accent", color);
+        root.style.setProperty("--accentTransparent", color + "99");
         root.style.setProperty("--accentText", text);
         root.style.setProperty("--accentBrightness", brightness);
         root.style.setProperty("--accentInvert", invert);
+        root.style.setProperty("--accentRevert", revert);
         root.style.setProperty("--accentBorder", borderAlpha);
 
         //Iframes
         document.querySelectorAll("iframe").forEach(function (e) {
           let iframe = e.contentWindow.document.documentElement;
           iframe.style.setProperty("--accent", color);
+          iframe.style.setProperty("--accentTransparent", color + "99");
           iframe.style.setProperty("--accentText", text);
           iframe.style.setProperty("--accentBrightness", brightness);
           iframe.style.setProperty("--accentInvert", invert);
+          iframe.style.setProperty("--accentRevert", revert);
           root.style.setProperty("--accentBorder", borderAlpha);
         });
 
@@ -649,9 +653,9 @@ const initEventListeners = () => {
  */
 const initTitleBarDesktop = () => {
   //Icons
-  let close = `<img onclick="javascript:return scForm.postEvent(this,event,'javascript:scWin.closeWindow()')" src="` + global.iconWindowClose + `" class="windowIcon" title="Close"/>`;
-  let max = `<img onclick="javascript:return scForm.postEvent(this,event,'javascript:scWin.maximizeWindow()')" src="` + global.iconWindowMax + `" class="windowIcon" title="Maximize"/>`;
-  let min = `<img onclick="javascript:return scForm.postEvent(this,event, 'javascript:scWin.minimizeWindow()')"src="` + global.iconWindowMin + `" class="windowIcon" title="Minimize"/>`;
+  let close = `<img onclick="javascript:return scForm.postEvent(this,event,'javascript:scWin.closeWindow()')" src="${global.iconWindowClose}" class="windowIcon" title="Close"/>`;
+  let max = `<img onclick="javascript:return scForm.postEvent(this,event,'javascript:scWin.maximizeWindow()')" src="${global.iconWindowMax}" class="windowIcon" title="Maximize"/>`;
+  let min = `<img onclick="javascript:return scForm.postEvent(this,event, 'javascript:scWin.minimizeWindow()')"src="${global.iconWindowMin}" class="windowIcon" title="Minimize"/>`;
   //Dock
   let dock = document.querySelector(".scDockTop");
   dock && global.isWindowedMode

@@ -14,6 +14,7 @@ import { initTabSections } from "./tabs.js";
 import { initRTL } from "./rtl.js";
 import { enhancedTreeSearch } from "./search.js";
 import { initTranslateMode } from "./translate.js";
+import { showSnackbarSite } from "./snackbar.js";
 
 export { sitecoreAuthorToolbox, initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, refreshContentEditor, openFolderTab, contentTreeScrollTo };
 
@@ -82,7 +83,7 @@ const sitecoreAuthorToolbox = (storage) => {
   initTranslateMode(storage);
   enhancedTreeSearch(storage);
   changeTitleWindow(storage);
-  // showSnackbarSite(storage, ScItem);
+  showSnackbarSite(storage, ScItem);
 
   /**
    * Insert Flag (In Active Tab) + Version Number

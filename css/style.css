@@ -12,6 +12,15 @@ form[action*="/sitecore/"]:not(#LoginForm) {
 section.sc-applicationContent-main {
   opacity: 0;
 }
+nav#ribbonPreLoadingIndicator .sc-progressindicator-inner {
+  opacity: 0;
+}
+body.satEE nav#ribbonPreLoadingIndicator .sc-progressindicator-inner {
+  opacity: 1;
+}
+body.satEE.satEEExperimentalUi .sc-progressindicator-inner {
+  background: #fff url(chrome-extension://dpmlbbpimcmgdlhpdphnijefjchoicmj/images/sc-spinner.svg) no-repeat center center;
+}
 body.satExtension .hide {
   display: none;
 }
@@ -143,11 +152,6 @@ body.satExtension .scSearch > input[type="text"] {
   background-repeat: no-repeat;
   background-position: center left 10px !important;
   padding-left: 36px;
-}
-
-body.satExtension .scSearch > input[type="text"]:focus {
-  border-color: transparent !important;
-  box-shadow: transparent 0 0 0 1px !important;
 }
 
 body.satExtension .scSearch > input[type="text"]::placeholder {
@@ -297,6 +301,7 @@ body.satExtension #scLightbox > .scLightboxContent > img {
   min-width: 10vw;
   min-height: 10vh;
   z-index: 10;
+  box-shadow: 0px 0px 50px 0px rgb(0 0 0 / 10%);
 }
 
 body.satExtension #scLightbox > .scLightboxContent > iframe {
@@ -304,6 +309,7 @@ body.satExtension #scLightbox > .scLightboxContent > iframe {
   height: 85vh;
   z-index: 10;
   display: none;
+  box-shadow: 0px 0px 50px 0px rgb(0 0 0 / 10%);
 }
 
 body.satExtension #scLightbox > .scLightboxFooter {
@@ -431,10 +437,13 @@ body.satExtension .scMediaExplorer {
   text-align: right !important;
 }
 
-.scMediaExplorer tbody tr:hover .mediaTitle,
 .scMediaExplorer tbody tr:hover {
   cursor: pointer;
   background: #d6d6d6 !important;
+  color: var(--text) !important;
+}
+
+.scMediaExplorer tbody tr:hover .mediaTitle {
   color: var(--text) !important;
 }
 
@@ -761,6 +770,8 @@ body.satExtension .scVersionIcon {
 body.satExtension .scMediaBorder > img {
   width: unset !important;
   height: unset !important;
+  border-top-left-radius: var(--radius);
+  border-top-right-radius: var(--radius);
 }
 
 body.satExtension .scMediaIcon[src*=".ashx"] {
@@ -783,9 +794,6 @@ body.satExtension #FileList .scTitle {
 
 body.satExtension #FileList .scMediaCard {
   position: relative;
-}
-
-body.satExtension #FileList .scMediaCard {
   box-shadow: 0 4px 5px 0 rgb(0 0 0 / 7%), 0 1px 10px 0 rgb(0 0 0 / 6%), 0 2px 4px -1px rgb(0 0 0 / 15%);
   border-radius: var(--radius);
   background-color: var(--white);
@@ -793,6 +801,7 @@ body.satExtension #FileList .scMediaCard {
   padding: 0px;
   margin: 12px 5px 12px 20px;
   height: 285px;
+  overflow: inherit;
 }
 body.satExtension #FileList .scMediaCard:hover {
   box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%);
@@ -806,6 +815,10 @@ body.satExtension #FileList .scMediaCard .scMediaTitle {
   padding: 0px 10px;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
 }
 body.satExtension #FileList .scMediaCard .scMediaDetails,
 body.satExtension #FileList .scMediaCard .scMediaValidation,
@@ -1282,6 +1295,12 @@ body.satExtension .snackbarSite {
   border-radius: 3px;
   box-sizing: unset;
   z-index: 100000;
+}
+
+body.satExtension .snackbarSite {
+  background: url(chrome-extension://__MSG_@@extension_id__/images/site.svg) center left #333 no-repeat;
+  background-size: 9%;
+  background-position-x: 18px;
 }
 
 body.satExtension .snackbar > b,

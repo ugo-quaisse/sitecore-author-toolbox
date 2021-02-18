@@ -153,7 +153,7 @@ const initMediaExplorer = (storage) => {
       <tr id="mediaItem_${mediaId}">
         <td class="mediaArrow" onclick="${mediaClick}">${mediaArrow}</td>
         <td class="mediaThumbnail">
-          <img src='${mediaThumbnail}' onclick="${lightbox}" data-name="${mediaTitle}" data-size="${mediaDimensions}" data-id="${mediaId}" style="width: ${scMediaThumbnailSize}px !important; height: ${scMediaThumbnailSize}px !important" class="${mediaClass} scMediaThumbnail" loading="lazy"/>
+          <img src='${mediaThumbnail}' onclick="${lightbox}" data-name="${mediaTitle}" data-size="${mediaDimensions}" data-id="${mediaId}" style="width: ${scMediaThumbnailSize}px !important; height: ${scMediaThumbnailSize}px !important" class="${mediaClass} scMediaThumbnail" loading="lazy" title="Preview"/>
         </td>
         <td class="mediaTitle_${mediaId}" onclick="doubleClick('${mediaId}','${itemId}')" title="${mediaTitle} (Double click to rename)">
           <div class="mediaTitle">${mediaTitle}</div>
@@ -265,6 +265,7 @@ const initMediaExplorer = (storage) => {
       item.querySelector(".scMediaBorder > img").setAttribute("data-name", mediaTitle);
       item.querySelector(".scMediaBorder").classList.add("mediaThumbnail");
       item.querySelector(".scMediaBorder").removeAttribute("style");
+      item.querySelector(".scMediaBorder > img").setAttribute("title", item.querySelector(".scMediaTitle").innerText);
       item.removeAttribute("href");
       item.removeAttribute("onclick");
       item.classList.add("scMediaCard");
@@ -294,21 +295,24 @@ const initMediaExplorer = (storage) => {
 /**
  * Init Media Library Counter
  */
-const initMediaCounter = () => {
-  let totalItem = document.querySelectorAll("#FileList > a").length;
-  document.querySelectorAll(".scTitle").forEach((el) => {
-    el.innerText.toLowerCase().includes("media") ? (el.innerHTML = `${el.innerText} <i>(${totalItem})</i>`) : false;
-  });
-  //If empty
-  if (totalItem == 0) {
-    let scFolderButtons = document.querySelector(".scFolderButtons");
-    let scButtonHtml = `<div class="scNoVersion"><p>The folder is empty.</p><br /></div>`;
-    if (scFolderButtons) {
-      scFolderButtons.insertAdjacentHTML("afterend", scButtonHtml);
-    } else {
-      document.querySelectorAll(".scTitle").forEach((el) => {
-        el.innerText.toLowerCase().includes("media") ? el.insertAdjacentHTML("beforebegin", scButtonHtml) : false;
-      });
+const initMediaCounter = (storage) => {
+  storage.feature_medialibrary == undefined ? (storage.feature_medialibrary = true) : false;
+  if (storage.feature_medialibrary) {
+    let totalItem = document.querySelectorAll("#FileList > a").length;
+    document.querySelectorAll(".scTitle").forEach((el) => {
+      el.innerText.toLowerCase().includes("media") ? (el.innerHTML = `${el.innerText} <i>(${totalItem})</i>`) : false;
+    });
+    //If empty
+    if (totalItem == 0) {
+      let scFolderButtons = document.querySelector(".scFolderButtons");
+      let scButtonHtml = `<div class="scNoVersion"><p>The folder is empty.</p><br /></div>`;
+      if (scFolderButtons) {
+        scFolderButtons.insertAdjacentHTML("afterend", scButtonHtml);
+      } else {
+        document.querySelectorAll(".scTitle").forEach((el) => {
+          el.innerText.toLowerCase().includes("media") ? el.insertAdjacentHTML("beforebegin", scButtonHtml) : false;
+        });
+      }
     }
   }
 };
@@ -316,17 +320,20 @@ const initMediaCounter = () => {
 /**
  * Init Media Library Drag and Drop button
  */
-const initMediaDragDrop = () => {
-  var scIframeSrc = window.location.href.split("id=%7B");
-  scIframeSrc = scIframeSrc[1].split("%7B");
-  scIframeSrc = scIframeSrc[0].split("%7D");
-  var scMediaID = scIframeSrc[0];
-  //Prepare HTML
-  var scUploadMediaUrl = `/sitecore/client/Applications/Dialogs/UploadMediaDialog?ref=list&ro=sitecore://master/%7b${scMediaID}%7d%3flang%3den&fo=sitecore://master/%7b${scMediaID}%7d`;
-  //Add upload button
-  var scFolderButtons = document.querySelector(".scFolderButtons");
-  var scButtonHtml = `<a class="scButton t-sm t-top" data-tooltip="Drag and drop upload" id="scUploadDragDrop" onclick="javascript:scSitecore.prototype.showModalDialog('${scUploadMediaUrl}', '', '', null, null); return false;"><img loading="lazy" src=" ${global.iconGallery} " width="16" height="16" class="scIcon" alt="" border="0"><div class="scHeader">Upload files</div></a>`;
-  scFolderButtons ? scFolderButtons.insertAdjacentHTML("afterbegin", scButtonHtml) : false;
+const initMediaDragDrop = (storage) => {
+  storage.feature_medialibrary == undefined ? (storage.feature_medialibrary = true) : false;
+  if (storage.feature_medialibrary) {
+    var scIframeSrc = window.location.href.split("id=%7B");
+    scIframeSrc = scIframeSrc[1].split("%7B");
+    scIframeSrc = scIframeSrc[0].split("%7D");
+    var scMediaID = scIframeSrc[0];
+    //Prepare HTML
+    var scUploadMediaUrl = `/sitecore/client/Applications/Dialogs/UploadMediaDialog?ref=list&ro=sitecore://master/%7b${scMediaID}%7d%3flang%3den&fo=sitecore://master/%7b${scMediaID}%7d`;
+    //Add upload button
+    var scFolderButtons = document.querySelector(".scFolderButtons");
+    var scButtonHtml = `<a class="scButton t-sm t-top" data-tooltip="Drag and drop upload" id="scUploadDragDrop" onclick="javascript:scSitecore.prototype.showModalDialog('${scUploadMediaUrl}', '', '', null, null); return false;"><img loading="lazy" src=" ${global.iconGallery} " width="16" height="16" class="scIcon" alt="" border="0"><div class="scHeader">Upload files</div></a>`;
+    scFolderButtons ? scFolderButtons.insertAdjacentHTML("afterbegin", scButtonHtml) : false;
+  }
 };
 
 /**
@@ -404,8 +411,8 @@ const initMediaViewButtons = (storage) => {
  * Init Media Search box
  */
 const initMediaSearchBox = (storage) => {
-  storage.feature_mediacard == undefined ? (storage.feature_mediacard = true) : false;
-  if (storage.feature_mediacard) {
+  storage.feature_medialibrary == undefined ? (storage.feature_medialibrary = true) : false;
+  if (storage.feature_medialibrary) {
     var scFolderButtons = document.querySelector(".scFolderButtons");
     var scSearchHtml = `<div class="scSearch"><input type="text" placeholder="Search in folder"></div>`;
     scFolderButtons ? scFolderButtons.insertAdjacentHTML("afterend", scSearchHtml) : false;
@@ -531,12 +538,15 @@ const resizeTable = (id) => {
 };
 
 /**
- * Init Uploader styling
+ * Init Uploader styling in speak window
  */
-const initUploadButton = () => {
-  let button = document.querySelector("button[data-sc-id='UploadButton']");
-  let icon = `<img src="${global.iconUpload}" class="scUploadIcon"/>`;
-  button ? button.insertAdjacentHTML("afterbegin", icon) : false;
+const initUploadButton = (storage) => {
+  storage.feature_medialibrary == undefined ? (storage.feature_medialibrary = true) : false;
+  if (storage.feature_medialibrary) {
+    let button = document.querySelector("button[data-sc-id='UploadButton']");
+    let icon = `<img src="${global.iconUpload}" class="scUploadIcon"/>`;
+    button ? button.insertAdjacentHTML("afterbegin", icon) : false;
+  }
 };
 
 /**

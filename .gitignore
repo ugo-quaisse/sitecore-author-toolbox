@@ -1,6 +1,5 @@
 *.zip
 *.DS_Store
-js/modules/local.js
+.vscode/
 node_modules/
-.vscode/settings.json
 data/

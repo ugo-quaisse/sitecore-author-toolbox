@@ -339,7 +339,7 @@ const initCharsCount = (storage) => {
     //On load
     for (var field of scTextFields) {
       if (field.className == "scContentControl" || field.className == "scContentControlMemo") {
-        field.setAttribute("style", "padding-right: 70px !important");
+        field.setAttribute("style", "padding-right: 80px !important");
         field.parentElement.setAttribute("style", "position:relative !important");
         chars = field.value.length;
         if (chars > 1) {
@@ -347,7 +347,7 @@ const initCharsCount = (storage) => {
         } else {
           charsText = chars + " char";
         }
-        countHtml = '<div id="chars_' + field.id + '" style="position: absolute; bottom: 1px; right: 1px; padding: 6px 10px; border-radius: 4px; line-height: 20px; opacity:0.5;">' + charsText + "</div>";
+        countHtml = `<div id="chars_${field.id}" style="position: absolute; bottom: 1px; right: 10px; padding: 6px 10px; border-radius: 4px; line-height: 20px; opacity:0.5;">${charsText}</div>`;
         field.insertAdjacentHTML("afterend", countHtml);
       }
     }

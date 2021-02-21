@@ -1,18 +1,24 @@
 body.satDark {
   border: none;
 }
-
 body.satDark .scStartbar,
 body.satDark .sc-fullWidth {
   background-color: var(--black3) !important;
 }
-
 body.satDark .modal-body,
+body.satDark .dialog-content,
 body.satDark .popover-content {
   background-color: var(--black2);
   color: var(--text);
 }
-
+body.satDark .sc-listcontrol .sc-listcontrol-body .table tr:nth-child(even),
+body.satDark .sc-listcontrol .sc-listcontrol-body .sc-table tr:nth-child(even) {
+  background-color: var(--black1);
+  color: var(--text);
+}
+body.satDark table td {
+  border: 0px;
+}
 body.satDark .scContentTree a,
 body.satDark .scStretch {
   color: var(--text);
@@ -1164,7 +1170,7 @@ body.satDark .scProgressIndicator32 {
 
 body.satDark .sc-text-bold {
   font-weight: 600;
-  color: var(--black1);
+  color: var(--text);
 }
 
 body.satDark .scListControl > tbody:first-child > tr:first-child,
@@ -1455,9 +1461,13 @@ body.satDark .right-column {
 body.satDark #SectionHeader {
   color: var(--text) !important;
 }
+body.satDark .mode {
+  margin-right: 10px;
+  border-radius: var(--radius);
+}
+body.satDark .scVerticalImagedTabstrip > div:hover,
 body.satDark .mode:hover {
-  background-color: var(--darkblue);
-  border: 1px solid var(--darkblue) !important;
+  background-color: rgba(0, 0, 0, 0.075) !important;
 }
 body.satDark #FileList a:hover,
 body.satDark #FileList a:active,
@@ -2263,7 +2273,7 @@ body.satDark #BTAddNewSearch {
 }
 
 body.satDark .t-invert > img {
-  filter: invert(1);
+  filter: invert(0);
 }
 
 body.satDark a.scRibbonEditorTabNormal,
@@ -2702,8 +2712,9 @@ body.satDark .sc-dialogContent-toolbar {
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
 }
 body.satDark .sc-dialogContent-main {
+  background-color: var(--black2) !important;
   color: var(--text) !important;
-  border-color: var(--text) !important;
+  border-color: var(--black2) !important;
 }
 body.satDark .sc .sc-backbutton.btn {
   color: var(--white);
@@ -3065,11 +3076,6 @@ body.satDark .sc {
 body.satDark #scCrossPiece {
   background-color: var(--black2) !important;
 }
-
-body.satDark .scExpTab {
-  background-color: var(--black2) !important;
-  color: var(--grey) !important;
-}
 body.satDark #sxa-toolbox.sxa-mobile-toolbox .sxa-toolbox-header,
 body.satDark #sxa-toolbox.sxa-mobile-toolbox .sxa-toolbox-expander {
   background-color: var(--black2) !important;
@@ -3157,9 +3163,6 @@ body.satDark #RibbonContainer {
   border-color: var(--black1) !important;
 }
 
-body.satDark .scEditableTab,
-body.satDark .scContentEditorTab,
-body.satDark .scNormalModeTab,
 body.satDark .scFlexColumnContainer,
 body.satDark .scFlexContent {
   background-color: var(--black2) !important;
@@ -3190,6 +3193,11 @@ body.satDark #sxa-toolbox #sxa-toolbox-root ul li:hover {
 
 body.satDark .sc-ribbon .sc-chunk-panel {
   border: 1px solid var(--black1);
+}
+
+body.satExtension.satDark .scMediaActions:hover {
+  background-color: transparent !important;
+  box-shadow: none !important;
 }
 
 /* Media card  */

@@ -76,7 +76,7 @@ document.body.onload = function () {
     toggleFeature(storage.feature_rtl, "#feature_rtl", true);
     toggleFeature(storage.feature_charscount, "#feature_charscount", true);
     toggleFeature(storage.feature_autoexpand, "#feature_autoexpand", true);
-    toggleFeature(storage.feature_quickinfoenhancement, "#feature_quickinfoenhancement", false);
+    toggleFeature(storage.feature_quickinfoenhancement, "#feature_quickinfoenhancement", true);
     toggleFeature(storage.feature_translatemode, "#feature_translatemode", false);
     toggleFeature(storage.feature_contenteditor, "#feature_contenteditor", true);
     toggleFeature(storage.feature_experienceeditor, "#feature_experienceeditor", true);
@@ -104,6 +104,9 @@ document.body.onload = function () {
 document.querySelector("#feature_experimentalui").onclick = function () {
   if (document.querySelector("#feature_experimentalui").checked == true) {
     document.querySelector("#feature_cetabs").checked = true;
+    document.querySelector("#feature_contrast_icons").checked = true;
+  } else {
+    document.querySelector("#feature_contrast_icons").checked = false;
   }
 };
 
@@ -129,7 +132,7 @@ document.querySelector("#settings").onclick = function () {
   document.querySelector(".importSitesVisible").addEventListener("click", chooseJson);
   //Generating list of sites
   chrome.storage.sync.get(["site_manager"], (storage) => {
-    parseJsonSites(storage.site_manager);
+    storage.site_manager ? parseJsonSites(storage.site_manager) : false;
   });
 
   //If a site is passed into the URL

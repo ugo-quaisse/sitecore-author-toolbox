@@ -1,20 +1,8 @@
-html {
-  font-size: 100% !important;
-}
+/* 
+ * General configuration of the Experience Editor
+ */
 
-body.satEE {
-  line-height: normal !important;
-}
-
-body.satEE .scAddRendering {
-  font-size: 17px !important;
-  font-weight: bold !important;
-  background-color: #ffffff;
-  padding: 2px 7px;
-  border-radius: 5px;
-  color: #666666;
-}
-
+/* Add/Move component buttons  */
 body.satEE .scInsertionHandle,
 body.satEE .scSortingHandle {
   left: 0px !important;
@@ -44,57 +32,23 @@ body.satEE .scInsertionHandleRight {
   display: none !important;
 }
 
-body.satEE .view-render-exception {
-  background-color: #ffdbdb;
-  font-family: monospace;
-  line-height: 17px;
-  font-size: 12px;
-  color: red;
-  padding: 50px;
-}
-
-/* body.satEE .zg-variant-switcher {
-  zoom: 1.1;
-  background-color: #f1d500 !important;
-  padding: 4px !important;
-  margin: 0px !important;
-  height: 30px !important;
-}
-
-body.satEE .zg-variant-switcher .zg-variant-list:hover {
-  background-color: #f1d500 !important;
-}
-
-body.satEE .zg-variant-switcher.expanded li:hover {
-  background-color: rgba(241, 213, 0, 0.2) !important;
-}
-
-body.satEE .zg-variant-switcher .zg-variant-list li.selected {
+body.satEE .scAddRendering {
+  font-size: 17px !important;
   font-weight: bold !important;
+  background-color: #ffffff;
+  padding: 2px 7px;
+  border-radius: 5px;
+  color: #666666;
 }
 
-body.satEE .zg-variant-toggle-dropdown {
-  right: 5px !important;
-} */
-
-body.satEE .scChromeToolbar {
-  box-shadow: none !important;
-}
-body.satEE .scChromeControls,
-body.satEE .scChromeDropDown {
-  box-shadow: 0px 4px 17px 9px rgba(0, 0, 0, 0.3) !important;
-  border-radius: 6px !important;
-}
-body.satEE .scChromeName {
-  border-radius: 4px 4px 0px 0px !important;
-}
-
+/* Renderings selection frame */
 body.satEE .scFrameSideHorizontal {
   box-shadow: 0px 0px 10px 1px rgba(40, 155, 200, 0.7);
   height: 2px !important;
   background-color: #289bc8 !important;
   transform: translateY(-15%);
   border-style: none;
+  border-radius: var(--radius);
 }
 
 body.satEE .scFrameSideVertical {
@@ -103,6 +57,7 @@ body.satEE .scFrameSideVertical {
   background-color: #289bc8 !important;
   transform: translateX(-15%);
   border-style: none;
+  border-radius: var(--radius);
 }
 body.satEE .scHoverFrameSideHorizontal,
 body.satEE .scHoverFrameSideVertical,
@@ -111,35 +66,335 @@ body.satEE .scFrameYellow {
   background-color: #f1d500 !important;
   border-style: none;
 }
-body.satEE .chromeWithDatasource {
+body.satEE .scChromeDropDown .scHeader {
+  color: var(--text) !important;
+}
+body.satEE .scSubHeader,
+body.satEE .scConditions {
+  color: var(--text) !important;
+}
+body.satEE .scListItem,
+body.satEE .scActiveListItem {
+  color: var(--text) !important;
+  background-color: transparent !important;
+}
+body.satEE .scListItem:hover {
+  border-color: transparent;
+  font-weight: 600 !important;
+}
+body.satEE .zg-variant-switcher .zg-variant-header,
+body.satEE .zg-variant-switcher .zg-variant-list .variant-name,
+body.satEE .zg-variant-switcher.expanded .zg-variant-list {
+  color: var(--text) !important;
+}
+body.satEE .zg-variant-switcher.expanded .zg-variant-tip {
+  color: var(--accent) !important;
+}
+/* 
+ * All below is for Experimental UI
+ */
+body.satEEExperimentalUi .sxa-toolbox {
+  background-color: var(--black2) !important;
+}
+body.satEEExperimentalUi .sxa-toolbox-expander {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background-color: var(--black2) !important;
+}
+body.satEEExperimentalUi .scChromeBadge,
+body.satEEExperimentalUi .scLabel {
+  background-color: var(--accent);
+  padding: 1px 5px !important;
+  border-radius: var(--radius);
+  font-weight: 600 !important;
+  color: var(--accentText) !important;
+  top: -5px !important;
+  left: 18px !important;
+}
+body.satEEExperimentalUi .xa-rendering-dragger {
+  width: 50%;
+  right: 8%;
+  margin-top: -13px;
+}
+body.satEEExperimentalUi .scToolbarIndicator {
+  opacity: 1;
+  padding: 11px 11px;
+}
+body.satEEExperimentalUi .scChromeToolbar {
+  box-shadow: none !important;
+  background: none !important;
+}
+body.satEEExperimentalUi .scChromeDropDown {
+  padding: 5px !important;
+}
+body.satEEExperimentalUi .scChromeControls,
+body.satEEExperimentalUi .scChromeDropDown {
+  box-shadow: 0px 4px 17px 9px rgba(0, 0, 0, 0.3) !important;
+  padding: 0px;
+  border: 0px;
+}
+body.satEEExperimentalUi .scChromeDropDown a.scChromeDropDownRow span {
+  color: var(--text) !important;
+  font-weight: 600 !important;
+}
+body.satEEExperimentalUi .scChromeDropDown .scHeader {
+  background-color: var(--grey2) !important;
+  color: var(--white) !important;
+  padding: 5px;
+  font-weight: 600 !important;
+}
+body.satEEExperimentalUi .scItemsList {
+  border: none !important;
+  height: unset !important;
+}
+body.satEEExperimentalUi .scActiveListItem {
+  font-weight: 600 !important;
+  color: var(--accent) !important;
+}
+body.satEEExperimentalUi .scChromeName {
+  margin: 0px;
+  padding: 12px !important;
+  background-color: var(--grey2);
+}
+body.satEEExperimentalUi span.scChromeText {
+  color: var(--white) !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  text-transform: capitalize;
+}
+body.satEEExperimentalUi span.scChromeCommandText {
+  color: var(--text) !important;
+  font-weight: 600 !important;
+  font-size: 12px !important;
+}
+body.satEEExperimentalUi #commandRow {
+  padding: 10px 10px 6px 10px;
+}
+body.satEEExperimentalUi #commandRow > a {
+  margin-bottom: 2px !important;
+}
+body.satEEExperimentalUi #commandRow > a > img {
+  margin-top: 2px !important;
+}
+body.satEEExperimentalUi #commandRow > span.scChromeComboButton {
+  border: 0px;
+  padding: 0px;
+}
+body.satEEExperimentalUi #commandRow > span.scChromeComboButton > a:first-child {
+  margin: 0 !important;
+  padding-right: 0px !important;
+  margin-top: 2px !important;
+}
+body.satEEExperimentalUi #commandRow > span.scChromeComboButton > a:last-child {
+  width: 8.5px !important;
+  top: 6px !important;
+  height: 30px !important;
+}
+body.satEEExperimentalUi #commandRow > span.scChromeComboButton:hover,
+body.satEEExperimentalUi #commandRow > a:hover,
+body.satEEExperimentalUi #commandRow > span.scChromeComboButton > a.scChromeCommand:hover,
+body.satEEExperimentalUi a.scChromeDropDownRow:hover,
+body.satEEExperimentalUi a.scChromeDropDownRow:hover > span {
+  background-color: var(--accent) !important;
+  color: var(--accentText) !important;
+  border: 0px !important;
+  border-radius: var(--radius) !important;
+}
+body.satEEExperimentalUi #commandRow > span.scChromeComboButton:hover img,
+body.satEEExperimentalUi #commandRow > a:hover img {
+  filter: invert(var(--accentRevert));
+}
+body.satEEExperimentalUi .scChromeWorkflowSection,
+body.satEEExperimentalUi #myItemsLoadingIndicator,
+body.satEEExperimentalUi .scChromeDsSection[title*="associated"],
+body.satEEExperimentalUi .scChromeDsSection[data-tooltip*="associated"] {
+  display: none;
+}
+body.satEEExperimentalUi .scChromeDsSection,
+body.satEEExperimentalUi .scChromeCommand,
+body.satEEExperimentalUi .scChromeCommand:hover,
+body.satEEExperimentalUi .scChromeMoreSection,
+body.satEEExperimentalUi .scChromeMoreSection:hover {
+  padding: 5px !important;
+  margin: 0px 5px !important;
+  min-width: 34px !important;
+  height: 34px !important;
+  text-align: center !important;
+  cursor: pointer !important;
+  background: unset !important;
+  border: unset !important;
+}
+body.satEEExperimentalUi .scChromeMoreSection > .scChromeCommandText {
+  top: 5px;
+  left: 5px;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+}
+body.satEEExperimentalUi .scChromeCommandText > img,
+body.satEEExperimentalUi .scChromeDsSection > img,
+body.satEEExperimentalUi .scChromeCommand > img {
+  width: 20px;
+  vertical-align: middle !important;
+  object-fit: contain;
+}
+body.satEEExperimentalUi .scChromeCommand.scExpandDropdown {
+  padding: 5px 0px !important;
+  width: 10px !important;
+  min-width: 10px !important;
+  margin: 0px 5px 0px 0px !important;
+}
+body.satEEExperimentalUi .scDdArrow,
+body.satEEExperimentalUi .scChromeCommand.scExpandDropdown img {
+  width: 10px !important;
+  top: 2px;
+  filter: invert(var(--iconInvert));
+}
+body.satEEExperimentalUi .scChromeCommand.scChromeWorkflowSection img,
+body.satEEExperimentalUi .scChromeCommand.scChromeMoreSection img {
+  top: 0px;
+  padding: 5px 5px 0px 0px;
+}
+body.satEEExperimentalUi .scChromeCommandText {
+  top: 6px;
+}
+body.satEEExperimentalUi .scEditButton,
+body.satEEExperimentalUi .scEditButton:hover {
+  background-color: var(--accent);
+  color: var(--accentText) !important;
+  border-radius: var(--radius);
+  width: fit-content;
+  margin: 10px auto 0px;
+  padding: 8px 15px 6px 8px;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  border: 0px !important;
+}
+body.satEEExperimentalUi .scEditButton > div {
+  border: 0px;
+}
+body.satEEExperimentalUi .scEditButton > div > img {
+  display: none;
+}
+body.satEEExperimentalUi .scChromeCommand:not(.scChromeMoreSection) {
+  border: unset !important;
+}
+body.satEEExperimentalUi .scChromeComboButton:hover .scChromeCommand {
+  padding: 0 10px 0;
+}
+body.satEEExperimentalUi .scChromeComboButton:hover .scExpandDropdown {
+  padding: 0px;
+}
+body.satEEExperimentalUi .scChromeCommandSectionDelimiter {
+  display: none;
+}
+body.satEEExperimentalUi .chromeWithDatasource {
   transition: all 0.1s ease-in-out;
 }
-body.satEE .chromeWithDatasource:hover {
+body.satEEExperimentalUi .chromeWithDatasource:hover {
   outline-color: #289bc8;
   position: relative;
   z-index: 1;
   box-shadow: 0px 0px 10px 1px rgba(40, 155, 200, 0.7);
 }
 
-body.satEE .scEnabledChrome,
-body.satEE .scEmptyPlaceholder {
+body.satEEExperimentalUi .scEnabledChrome,
+body.satEEExperimentalUi .scEmptyPlaceholder {
   border: 1px solid transparent;
 }
 
-body.satEE .scEnabledChrome:hover,
-body.satEE .scEmptyPlaceholder:hover {
+body.satEEExperimentalUi .scEnabledChrome:hover,
+body.satEEExperimentalUi .scEmptyPlaceholder:hover {
   box-shadow: 0px 0px 10px 1px rgba(241, 213, 0, 0.7);
   border: 1px solid #f1d500 !important;
 }
 
-body.satEE #sxa-toolbox {
-  overflow: scroll;
-}
-
-body.satEE .sc_DropDownItemImage {
+body.satEEExperimentalUi .sc_DropDownItemImage {
   padding: 0px 10px 0px 0px;
 }
 
-body.satEE .sc_DropDownListItemUsed {
+body.satEEExperimentalUi .sc_DropDownListItemUsed {
   background-color: var(--accent);
+}
+body.satEEExperimentalUi .zg-variant-switcher {
+  border-top: unset;
+  height: 35px;
+  margin: 0;
+  padding: 8px;
+  background-color: var(--grey19);
+}
+body.satEEExperimentalUi .zg-variant-switcher .zg-variant-header {
+  padding-left: 10px;
+  margin-top: 0px;
+  font-size: 14px !important;
+}
+body.satEEExperimentalUi .zg-variant-switcher .zg-variant-list .variant-name {
+  font-weight: 600 !important;
+}
+body.satEEExperimentalUi .zg-variant-switcher.expanded .zg-variant-list,
+body.satEEExperimentalUi .zg-variant-switcher.expanded .zg-variant-tip {
+  background: transparent !important;
+  border: solid 1px transparent;
+  background: transparent;
+  margin-top: -1px;
+  font-size: 13px !important;
+}
+body.satEEExperimentalUi .zg-variant-switcher .zg-variant-available {
+  background-color: var(--grey19);
+  padding: 0px 10px 10px 10px;
+  margin-top: -2px;
+}
+body.satEEExperimentalUi .zg-variant-switcher.expanded .zg-variant-available {
+  background-color: transparent;
+  padding: 0px 10px 10px 10px;
+  margin-top: -2px;
+}
+body.satEEExperimentalUi .zg-variant-switcher.expanded li {
+  padding: 5px;
+  border: 2px solid transparent;
+  font-weight: 600 !important;
+}
+body.satEEExperimentalUi .zg-variant-switcher .zg-variant-list {
+  margin-top: 0px;
+  height: auto;
+}
+body.satEEExperimentalUi .zg-variant-switcher .zg-variant-list:hover {
+  background: transparent;
+}
+body.satEEExperimentalUi .zg-variant-switcher.expanded li:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius) !important;
+}
+body.satEEExperimentalUi .zg-variant-switcher .zg-variant-toggle-dropdown {
+  background-position-x: 96%;
+}
+/* Dark Mode */
+body.satEEDark .scEditableTab,
+body.satEEDark .scContentEditorTab,
+body.satEEDark .scNormalModeTab,
+body.satEEDark .scExpTab {
+  background-color: var(--black2) !important;
+  color: var(--text) !important;
+}
+body.satEEDark #commandRow,
+body.satEEDark .scChromeControls,
+body.satEEDark .scChromeDropDown {
+  background-color: var(--black1) !important;
+}
+body.satEEDark .scLevelConnection,
+body.satEEDark .scContrastedIcon,
+body.satEEDark .zg-variant-toggle-dropdown {
+  filter: invert(var(--iconInvert));
+}
+body.satEEDark .zg-variant-switcher .zg-variant-available,
+body.satEEDark .zg-variant-switcher,
+body.satEEDark .zg-variant-switcher.expanded ul.flex-thumb,
+body.satEEDark .zg-variant-switcher.expanded ul.flex-thumb .variant-name {
+  color: var(--text) !important;
+  background-color: var(--grey2);
+  border-color: var(--grey2);
+}
+body.satEEDark .zg-variant-switcher.expanded ul.flex-thumb .variant-name {
+  background-color: transparent;
 }

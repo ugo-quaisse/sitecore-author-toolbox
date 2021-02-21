@@ -3,7 +3,30 @@ import * as global from "./global.js";
 import { exeJsCode, calcMD5 } from "./helpers.js";
 import { currentColorScheme } from "./dark.js";
 
-export { getGravatar, initGravatarImage, initAppName, initWorkboxMenu, initUserPortraitMenu, initRibbonToggleMenu, initUserMenu };
+export { initIntroScreen, getGravatar, initGravatarImage, initAppName, initWorkboxMenu, initUserPortraitMenu, initRibbonToggleMenu, initUserMenu };
+
+/**
+ * Init Introduction scree
+ */
+const initIntroScreen = () => {
+  //check if hidden in local storage
+  if (!localStorage.getItem("scIntroScreen")) {
+    //create html
+    let overlay = document.querySelector(".scIntroOverlay");
+    let html = `<div class="scIntroOverlay"><img src="${global.iconIntro}" /></div>`;
+    !overlay ? document.querySelector("body").insertAdjacentHTML("beforeend", html) : false;
+    //add listener
+    document.querySelector(".scIntroOverlay").addEventListener(
+      "click",
+      function (event) {
+        document.querySelector(".scIntroOverlay").setAttribute("style", "visibility:hidden");
+        event.preventDefault();
+        localStorage.setItem("scIntroScreen", true);
+      },
+      false
+    );
+  }
+};
 
 /**
  * Get Gravatar image from an email
@@ -159,7 +182,6 @@ const initUserMenu = (storage, type = "CE") => {
             <li onclick="javascript:goToSubmenu(1)" id="scSkip" class="separator opensubmenu">Dark Mode <span id="scSkip" class="darkMenuHint">Light</span></li>
             <li onclick="javascript:goToSubmenu(2)" id="scSkip" class="opensubmenu">Theme <span id="scSkip" class="themeMenuHint">Classic</span></li> 
             <li onclick="window.open('${global.launchpadPage}?launchpad=true')">Extension Options</li>
-            <li onclick="window.open('${global.launchpadPage}?configure_domains=true&launchpad=true')">Configure you sites</li>
 
             <li onclick="javascript:return scForm.invoke('system:logout', event)">Log out</li>
             

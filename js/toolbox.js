@@ -21,7 +21,7 @@ import { resumeFromWhereYouLeftOff, historyNavigation } from "./modules/history.
 import { checkNotificationPermissions, checkPublishNotification } from "./modules/notification.js";
 import { initFlagRibbonEE, initLanguageMenuEE, initLanguageMenuCE, initFlagsPublishingWindow, initFlagsPublish } from "./modules/language.js";
 import { initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, refreshContentEditor, contentTreeScrollTo } from "./modules/contenteditor.js";
-import { initAppName, initGravatarImage, initUserMenu } from "./modules/users.js";
+import { initIntroScreen, initAppName, initGravatarImage, initUserMenu } from "./modules/users.js";
 import { initInstantSearch, enhancedSitecoreSearch } from "./modules/search.js";
 import { insertModal, insertPanel } from "./modules/insert.js";
 import { initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons, initUploadButton, initUploader, initLightbox, initMediaSearchBox } from "./modules/media.js";
@@ -72,7 +72,7 @@ chrome.storage.sync.get((storage) => {
     initAutoExpandTree(storage);
     initTreeGutterTooltips();
     refreshContentEditor(storage);
-    !global.isLaunchpad ? initColorPicker(storage) : false;
+    initColorPicker(storage);
 
     /*
      **********************
@@ -90,6 +90,7 @@ chrome.storage.sync.get((storage) => {
       showSnackbar(storage);
       contentTreeScrollTo();
       initLightbox();
+      initIntroScreen();
       if (storage.feature_experimentalui) {
         log("**** Experimental ****", "yellow");
         initAppName(storage, "Content Editor");
@@ -177,7 +178,7 @@ chrome.storage.sync.get((storage) => {
       initMaterializeIcons(storage);
     } else if (global.isFieldEditor) {
       log("**** Field editor ****", "orange");
-      initCheckboxes(storage);
+      // initCheckboxes(storage); bug with toggle
       initDateTimeField(storage);
       initPasswordField(storage);
       initCharsCount(storage);
@@ -237,10 +238,11 @@ chrome.storage.sync.get((storage) => {
     } else if (global.isMediaBrowser) {
       log("**** Media Browser ****", "orange");
       initUploadButton(storage);
-    } else if (global.isSelectRendering) {
+    } else if (global.isSelectRendering && !global.isSourceBrowser) {
       log("**** Select Rendering ****", "orange");
       initAppName(storage, "Select Rendering");
       initRenderingSearchBox(storage);
+      initMaterializeIcons(storage);
     } else if (global.isXmlControl && !global.isRichText) {
       log("**** XML Control (Window) ****", "orange");
       initCheckboxes(storage);
@@ -294,6 +296,7 @@ chrome.storage.sync.get((storage) => {
       addPlaceholderTooltip(storage);
       addHideRibbonButton(storage);
       resetExperienceEditor(storage);
+      initMaterializeIcons(storage);
     }
   }
 });

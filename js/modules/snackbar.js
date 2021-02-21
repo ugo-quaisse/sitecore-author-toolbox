@@ -55,9 +55,9 @@ const showSnackbarSite = (storage, ScItem) => {
 
   //Snackbar settings
   //prettier0ignore
-  let snackbarHtml = `<b>"` + siteName[0].toUpperCase() + `" site detected</b><br /> Are you using any live/CD server?<br />Click "Add site" to configure it now.`;
+  let snackbarHtml = `<b>"` + siteName[0].toUpperCase() + `" site detected</b><br /> Are you using a CD server for publishing?<br />Click "Add site" to configure it now.`;
   //prettier-ignore
-  let html = `<div class="snackbarSite">${snackbarHtml}<button id="sbActionSite" onclick="addSite('${global.launchpadPage}','${global.urlOrigin}','${pathToHome}', '${siteName[0].toUpperCase()}')">ADD&nbsp;SITE</button><button id="sbDismissSite">DON'T SHOW AGAIN</button></div>`;
+  let html = `<div class="snackbarSite">${snackbarHtml}<button id="sbActionSite" onclick="addSite('${global.launchpadPage}','${global.urlOrigin}','${pathToHome}', '${siteName[0].toUpperCase()}')">ADD&nbsp;SITE</button><button id="sbDismissSite">CLOSE</button></div>`;
 
   //Hide previous snackbar
   document.querySelectorAll(".snackbarSite").forEach((div) => {

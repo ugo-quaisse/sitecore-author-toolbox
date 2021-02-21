@@ -56,7 +56,7 @@ const checkLockedItems = (item, storage) => {
  * Get all items properties
  */
 const getItemProperties = (itemId, language, version, storage) => {
-  storage.feature_quickinfoenhancement == undefined ? (storage.feature_quickinfoenhancement = false) : false;
+  storage.feature_quickinfoenhancement == undefined ? (storage.feature_quickinfoenhancement = true) : false;
   if (storage.feature_quickinfoenhancement) {
     global.debug ? console.log("Check item properties") : false;
     let itemUrl = `sitecore/shell/default.aspx?xmlcontrol=ContentEditor.Properties&id=${itemId}&la=${language}&vs=${version}`;

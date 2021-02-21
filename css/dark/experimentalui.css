@@ -1,7 +1,6 @@
 body.satExperimentalUi.satDark.sc-fullWidth {
   background-color: var(--black2) !important;
 }
-
 body.satExperimentalUi.satDark .popover-content {
   background-color: var(--black2);
   color: var(--text);
@@ -231,8 +230,7 @@ body.satExperimentalUi.satDark .scEditorTabEmpty {
 }
 
 body.satExperimentalUi.satDark .scContentTreeNodeGlyph:hover + a > span,
-body.satExperimentalUi.satDark div.scContentTreeNode > img:hover + a > span,
-body.satExperimentalUi.satDark a.scContentTreeNodeNormal:hover > span {
+body.satExperimentalUi.satDark div.scContentTreeNode > img:hover + a > span {
   background-color: var(--black3) !important;
 }
 
@@ -262,17 +260,18 @@ body.satExperimentalUi.satDark .scMediaExplorer thead tr .mediaSelected {
 
 body.satExperimentalUi.satDark .scTiles .scTileItem:nth-child(even),
 body.satExperimentalUi.satDark .scMediaExplorer tbody tr:nth-child(even) {
-  background: var(--black3);
+  background: var(--black2);
 }
 
 body.satExperimentalUi.satDark .scTiles .scTileItem:nth-child(odd),
 body.satExperimentalUi.satDark .scMediaExplorer tbody tr:nth-child(odd) {
-  background: var(--black2);
+  background: var(--black1);
 }
 
 body.satExperimentalUi.satDark #ContentEditor,
 body.satExperimentalUi.satDark #Page {
   background-color: var(--black);
+  margin-top: 0px !important;
 }
 
 body.satExperimentalUi.satDark #ContentTreePanel .scContentTreeNodeGlyph:hover + a > span,
@@ -314,6 +313,7 @@ body.satExperimentalUi.satDark .scMenuPanelItem_Hover,
 body.satExperimentalUi.satDark .sc-gallery-option-content-active {
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
+  filter: unset;
 }
 
 body.satExperimentalUi.satDark .scContentControlCheckbox:checked + .scContentControlCheckboxLabel::before {
@@ -383,8 +383,11 @@ body.satExperimentalUi.satDark input[type="submit"]:hover,
 body.satExperimentalUi.satDark #Renderings > div:hover,
 body.satExperimentalUi.satDark #Placeholders > div:hover,
 body.satExperimentalUi.satDark .scVerticalTabstrip .scVerticalTabs a:hover {
-  background-color: var(--accent) !important;
-  color: var(--accentText) !important;
+  background-color: transparent !important;
+  box-shadow: 0px 0px 1px var(--accent);
+  border: 1px solid var(--accent);
+  margin-right: 10px;
+  border-radius: var(--radius);
 }
 
 body.satExperimentalUi.satDark input[type="submit"],
@@ -459,11 +462,18 @@ body.satExperimentalUi.satDark #satFavoritesDrag {
 
 body.satExperimentalUi.satDark .scSaveBar > .scBreadcrumb > i,
 body.satExperimentalUi.satDark .scContrastedIcon {
-  filter: invert(1);
+  filter: invert(var(--iconInvert)) !important;
 }
 
 body.satExperimentalUi.satDark #Editors input:not(.scContentControlImage),
 body.satExperimentalUi.satDark #Editors select:not([multiple]),
 body.satExperimentalUi.satDark #Editors textarea {
   border-color: var(--black6);
+}
+
+body.satExperimentalUi.satDark .grid-settings-advanced .grid-basic-tab-header,
+body.satExperimentalUi.satDark .grid-settings-basic .grid-advanced-tab-header {
+  background-color: var(--black2);
+  color: var(--text);
+  border: 1px solid transparent;
 }

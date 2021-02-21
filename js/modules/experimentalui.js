@@ -48,7 +48,7 @@ const initOnboarding = () => {
           <div class="scContent">
             <h2>Hello Experimental Theme!</h2>
             <h3>Sitecore Author Toolbox extension</h3>
-            <p><b>What is that?</b><br />Experimental UI is a new theme for Sitecore with the same features as Sitecore UI. It comes with a simple and clean interface that will help authors to focus more on their content and accelerate their workflow.</p>
+            <p><b>What is that?</b><br />Experimental UI is a new modern theme for Sitecore. It comes with a simple and clean interface that will help authors to focus more on their content and accelerate their workflow.</p>
             <p><b>Where is the ribbon?</b><br />You can click the little arrow/chevron on the top right to toggle the ribbon. Alternatively, you can press CTRL + SHIFT.</p>
             <button id="scWelcomeClose">Ok, let's start!</button>
             <p class="switch" id="scWelcomeSwitch"><u>Switch back to classic Sitecore</u></p>
@@ -672,9 +672,9 @@ const initTitleBarDesktop = () => {
  * Replace Glyph Images
  */
 const replaceIcons = (storage) => {
-  if (storage.feature_contrast_icons === true) {
+  if (storage.feature_experimentalui === true && storage.feature_contrast_icons === true) {
     let imgGlyph = document.querySelectorAll(
-      ".scContentTreeNodeGlyph, .scContentTreeNodeIcon, #scModal .main img, .scInstantSearchResults img, .dynatree-container img, .scTabs .scImageContainer > img, form[action*='Gallery'] img, form[action*='Media'] .scFolderButtons img, .scPopup .scMenuItemIcon > img"
+      ".scContentTreeNodeGlyph, .scContentTreeNodeIcon, #scModal .main img, .scInstantSearchResults img, .dynatree-container img, .scTabs .scImageContainer > img, form[action*='Gallery'] img, form[action*='Media'] .scFolderButtons img, .scPopup .scMenuItemIcon > img, .satEE .scChromeCommand > img"
     );
     for (let icon of imgGlyph) {
       let filename = icon.src.substring(icon.src.lastIndexOf("/") + 1).toLowerCase();
@@ -708,7 +708,7 @@ const replaceIcons = (storage) => {
  * Replace Glyph Images
  */
 const initMaterializeIcons = (storage) => {
-  if (storage.feature_contrast_icons === true) {
+  if (storage.feature_experimentalui === true && storage.feature_contrast_icons === true) {
     let target, observer;
     replaceIcons(storage);
     //In Content Editor
@@ -752,6 +752,20 @@ const initMaterializeIcons = (storage) => {
             childList: true,
             characterData: false,
             subtree: true,
+          })
+        : false;
+      //EE components
+      target = document.querySelector(".scChromeControls");
+      observer = new MutationObserver(function () {
+        replaceIcons(storage);
+      });
+      //Observer UI
+      target
+        ? observer.observe(target, {
+            attributes: true,
+            childList: true,
+            characterData: false,
+            subtree: false,
           })
         : false;
     }, 100);

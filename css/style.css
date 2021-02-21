@@ -157,6 +157,7 @@ body.satExtension .scSearch > input[type="text"] {
 body.satExtension .scSearch > input[type="text"]::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   font-weight: 600;
+  font-size: 14px;
 }
 
 body.satExtension .scFolderButtons {
@@ -607,6 +608,29 @@ body.satExtension .scOverlay {
   visibility: hidden;
 }
 
+body.satExtension .scIntroOverlay {
+  background: rgba(0, 0, 0, 0.75);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000000;
+  visibility: visible;
+  backdrop-filter: blur(1px);
+  cursor: pointer;
+}
+
+body.satExtension .scIntroOverlay > img {
+  position: fixed;
+  top: 30px;
+  right: 20px;
+  cursor: pointer;
+}
+
 body.satExtension .scWelcomeOverlay {
   background: rgba(0, 0, 0, 0.6);
   margin: 0;
@@ -633,6 +657,7 @@ body.satExtension .scWelcome {
   box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.5);
   border-radius: var(--radius);
   background-color: var(--white);
+  color: var(--black4);
 }
 
 body.satExtension .scWelcome .header {
@@ -1740,7 +1765,6 @@ ul.sc-accountInformation li:last-child:after {
 }
 
 .scAccountGroup1 {
-  top: 0px;
   width: 300px;
 }
 
@@ -2418,7 +2442,7 @@ body.satExtension [data-tooltip].t-top:after {
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
-  border-top: 6px solid rgba(0, 0, 0, 0.8);
+  border-top: 6px solid rgba(0, 0, 0, 0.9);
   border-bottom: none;
   top: -5px;
 }
@@ -2440,7 +2464,7 @@ body.satExtension [data-tooltip].t-right:after {
   top: 50%;
   left: 100%;
   transform: translateY(-50%);
-  border-right: 8px solid rgba(0, 0, 0, 0.8);
+  border-right: 8px solid rgba(0, 0, 0, 0.9);
   border-left: none;
 }
 body.satEE [data-tooltip].t-right:hover:before,
@@ -2461,7 +2485,7 @@ body.satExtension [data-tooltip].t-bottom:after {
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  border-bottom: 8px solid rgba(0, 0, 0, 0.8);
+  border-bottom: 8px solid rgba(0, 0, 0, 0.9);
   border-top: none;
 }
 body.satEE [data-tooltip].t-bottom:hover:before,

@@ -10,7 +10,7 @@ export const jsonIcons = JSON.parse(
   },
   {
     "search": "windows.png",
-    "icon": "action::admin_panel_settings"
+    "icon": "file::grid_view"
   },
   {
     "search": "workstation1.png",
@@ -18,7 +18,7 @@ export const jsonIcons = JSON.parse(
   },
   {
     "search": "form_blue.png",
-    "icon": "action::admin_panel_settings"
+    "icon": "social::architecture"
   },
   {
     "search": "folder.png",
@@ -155,6 +155,10 @@ export const jsonIcons = JSON.parse(
   {
     "search": "pda.png",
     "icon": "device::devices"
+  },
+  {
+    "search": "elements_tree",
+    "icon": "notification::account_tree"
   },
   {
     "search": "elements",
@@ -453,7 +457,7 @@ export const jsonIcons = JSON.parse(
     "icon": "content::add_circle_outline"
   },
   {
-    "search": "users5",
+    "search": "users",
     "icon": "social::share"
   },
   {
@@ -482,7 +486,7 @@ export const jsonIcons = JSON.parse(
   },
   {
     "search": "delete",
-    "icon": "content::clear"
+    "icon": "action::delete"
   },
   {
     "search": "console",
@@ -543,6 +547,38 @@ export const jsonIcons = JSON.parse(
   {
     "search": "video",
     "icon": "av::videocam"
+  },
+  {
+    "search": "note_pinned",
+    "icon": "action::sticky_note_2"
+  },
+  {
+    "search": "windows_disabled",
+    "icon": "communication::desktop_access_disabled_faded"
+  },
+  {
+    "search": "font_style_bold",
+    "icon": "editor::format_bold"
+  },
+  {
+    "search": "font_style_italics",
+    "icon": "editor::format_italic"
+  },
+  {
+    "search": "font_style_underline",
+    "icon": "editor::format_underlined"
+  },
+  {
+    "search": "navigate_up",
+    "icon": "navigation::expand_less"
+  },
+  {
+    "search": "navigate_down",
+    "icon": "navigation::expand_more"
+  },
+  {
+    "search": "bullet_square",
+    "icon": "toggle::check_box_outline_blank"
   }
 ]`
 );

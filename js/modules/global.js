@@ -104,6 +104,7 @@ export const iconMoon = chrome.runtime.getURL("images/moon.svg");
 export const iconOwl = chrome.runtime.getURL("images/owl.svg");
 export const iconTreeCollapsed = chrome.runtime.getURL("images/treemenu_collapsed.png");
 export const iconTreeExpanded = chrome.runtime.getURL("images/treemenu_expanded.png");
+export const iconIntro = chrome.runtime.getURL("images/intro.svg");
 
 export let timeout;
 export const isSitecore = windowLocationHref.includes("/sitecore/");

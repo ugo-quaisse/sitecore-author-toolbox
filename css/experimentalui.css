@@ -15,7 +15,7 @@ body.satExperimentalUi .ui-widget-overlay::after {
 body.satExperimentalUi #EditorPanel,
 body.satExperimentalUi #MainPanel,
 body.sc.satExperimentalUi {
-  background-color: var(--experimentalBackground);
+  background-color: var(--experimentalBackground) !important;
 }
 
 body.satExperimentalUi.contentEditor {
@@ -108,7 +108,8 @@ body.satExperimentalUi .saveMessage {
   top: -50px;
   z-index: 10000000000;
   background-color: var(--messageSuccessLink);
-  color: var(--messageSuccessBar);
+  color: var(--white);
+  border-radius: var(--radius);
   font-weight: normal;
   font-size: 14px;
   text-align: center;
@@ -588,12 +589,30 @@ body.satExperimentalUi a.sc-button {
 }
 body.satExperimentalUi .scButton,
 body.satExperimentalUi .sc-button {
+  color: var(--black3);
   text-transform: uppercase;
   width: auto;
   padding: 0px 20px;
   font-weight: 700;
   font-family: "Open Sans";
   height: 34px;
+  box-shadow: none;
+  background-color: var(--grey18) !important;
+  border-color: var(--grey18) !important;
+  border: 0px;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+body.satExperimentalUi input[type="submit"],
+body.satExperimentalUi .scButton:not(.add-rule-button) {
+  padding: 7px 14px 8px 14px;
+  background-image: none !important;
+  outline-color: var(--accent);
+}
+
+body.satExperimentalUi .scButton:hover {
+  filter: brightness(0.95);
 }
 
 body.satExperimentalUi .sc-iconList-wrap:active,
@@ -1399,7 +1418,7 @@ body.satExperimentalUi .scEditorHeader {
 body.satExperimentalUi .scEditorSections {
   border: 0px;
   margin: 0px !important;
-  background-color: var(--experimentalBackground);
+  background-color: var(--experimentalBackground) !important;
 }
 
 body.satExperimentalUi .scTableHeader {
@@ -1579,8 +1598,15 @@ body.satExperimentalUi .splitter-bar:after {
   z-index: 100 !important;
 }
 
+/* Experience Editor buttons */
+body.satExperimentalUi .sc-breadcrumb {
+  background: unset;
+  background-color: var(--experimentalBackground);
+  height: 57px;
+  border-bottom: 1px solid var(--grey17);
+  padding: 5px;
+}
 /* Content Editor buttons */
-
 body.satExperimentalUi .scSaveBar {
   background-color: var(--experimentalBackground);
   height: 30px;
@@ -1813,6 +1839,7 @@ body.satExperimentalUi #FileList .scMediaCard .scMediaBorder > img {
 }
 
 body.satExperimentalUi #FileList a.scButton {
+  color: var(--black3);
   border: 0px;
   vertical-align: middle;
 }
@@ -1828,28 +1855,6 @@ body.satExperimentalUi #FileList a.scButton.scButtonGrid.selected {
 body.satExperimentalUi #FileList a.scButton.scButtonList.selected > img,
 body.satExperimentalUi #FileList a.scButton.scButtonGrid.selected > img {
   filter: invert(var(--accentRevert));
-}
-
-body.satExperimentalUi .scButton {
-  background-image: none;
-  box-shadow: none;
-  background-color: var(--grey18) !important;
-  border-color: var(--grey18) !important;
-  border: 0px;
-}
-
-body.satExperimentalUi input[type="submit"],
-body.satExperimentalUi .scButton:not(".add-rule-button") {
-  background-color: var(--grey4);
-  color: var(--text);
-  font-size: 15px;
-  background-image: none;
-  padding: 7px 14px 8px 14px;
-  border: 0px;
-  border-radius: var(--radius);
-  cursor: pointer;
-  box-shadow: none;
-  outline-color: var(--accent);
 }
 
 body.satExperimentalUi .scButtonPrimary {
@@ -1873,7 +1878,6 @@ body.satExperimentalUi .scButtonPrimary:active {
   box-shadow: none;
 }
 
-body.satExperimentalUi .scButton:hover,
 body.satExperimentalUi .scSaveBar > .scActions > button:hover {
   filter: brightness(1.05);
 }
@@ -1896,7 +1900,7 @@ body.satExperimentalUi .scSaveBar > .scActions > button:disabled {
 
 body.satExperimentalUi .scSaveBar > .scActions > button.scSaveButton,
 body.satExperimentalUi .scSaveBar > .scActions > button.scPreviewButton {
-  color: var(--black6);
+  color: var(--black3);
   font-weight: 700;
   text-transform: uppercase;
   font-size: 12px;
@@ -2060,7 +2064,7 @@ body.satExperimentalUi .scEditorFieldLabel:hover .scEditorFieldLabelAdministrato
 
 body.satExperimentalUi .scVerticalImagedTabstrip > div.selected,
 body.satExperimentalUi .scVerticalImagedTabstrip > div.selected:hover {
-  background-color: var(--grey3) !important;
+  background-color: transparent !important;
 }
 
 body.satExperimentalUi a.scContentTreeNodeNormal:hover,
@@ -2299,7 +2303,7 @@ body.satExperimentalUi .btn-primary {
   color: var(--accentText) !important;
   border-radius: var(--radius);
   box-shadow: unset;
-  border: 1px solid transparent;
+  border: 1px solid transparent !important;
   background-image: unset;
 }
 
@@ -2324,6 +2328,7 @@ body.satExperimentalUi .btn-default {
   box-shadow: unset;
   border: 1px solid transparent;
   background-image: unset;
+  border: 0px;
 }
 
 body.satExperimentalUi .btn-primary:hover,
@@ -2497,4 +2502,18 @@ body.satExperimentalUi #scLightbox:before {
   box-shadow: unset;
   z-index: 5;
   filter: invert(1) brightness(1.5);
+}
+
+body.satExperimentalUi .grid-settings-advanced .grid-advanced-tab-header,
+body.satExperimentalUi .grid-settings-basic .grid-basic-tab-header {
+  background-color: var(--accent);
+  color: var(--accentText);
+  border: 1px solid transparent;
+}
+
+body.satExperimentalUi .grid-settings-advanced .grid-basic-tab-header,
+body.satExperimentalUi .grid-settings-basic .grid-advanced-tab-header {
+  background-color: var(--white);
+  color: var(--text);
+  border: 1px solid transparent;
 }

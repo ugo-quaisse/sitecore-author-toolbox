@@ -2,6 +2,7 @@
 
 import * as global from "./global.js";
 import { exeJsCode, loadCssFile, startDrag, sitecoreItemJson } from "./helpers.js";
+import { currentColorScheme } from "./dark.js";
 
 export { storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor, initRenderingSearchBox };
 
@@ -26,26 +27,29 @@ const storeCurrentPageEE = () => {
  */
 const addToolbarEditCE = (storage) => {
   storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;
-  let target = document.querySelector(".scChromeDropDown");
+  let target = document.querySelector(".scChromeControls");
   let observer = new MutationObserver(function () {
-    let scChromeDropDownRow = document.querySelectorAll(".scChromeDropDownRow");
     let scLanguage = document.querySelector("#scLanguage").value;
-    let scVersion = "";
-
-    for (var row of scChromeDropDownRow) {
-      if (row.getAttribute("title")) {
-        if (row.getAttribute("title").toLowerCase() == "change associated content") {
-          var id = row.getAttribute("onclick").split("id={")[1].split("}")[0];
-          //prettier-ignore
-          var html = `<a href="#" title="Edit in Content Editor" class="scChromeDropDownRow" onclick="javascript:window.open('/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#{` + id + `}_` + scLanguage.toLowerCase() + `_` + scVersion + `')"><img src="/~/icon/applicationsv2/32x32/window_edit.png" style="width:16px" alt="Edit in Content Editor"><span>Edit in Content Editor</span></a>`;
-          row.insertAdjacentHTML("beforebegin", html);
-        }
-      }
-    }
+    let associatedContent = document.querySelector(".scChromeDropDown a[title*='associated']");
+    let itemId = associatedContent ? associatedContent.getAttribute("onclick").split("id={")[1].split("}")[0] : false;
+    let editClick = `javascript:window.open('/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#{${itemId}}_${scLanguage.toLowerCase()}_1')`;
+    let editInCE = `<a class="scChromeDropDownRow satEditInCE" onclick="${editClick}"><img src="/~/icon/apps/16x16/Pencil.png" style="width:16px"><span>Edit in the Content Editor</span></a>`;
+    let eeOptions = document.querySelector(".scChromeDropDown a[title*='options']");
+    let dropDown = eeOptions.parentElement;
+    //Add class
+    associatedContent ? associatedContent.classList.add("satAssociatedContent") : false;
+    //let relatedItem = document.querySelector(".scChromeDropDown a[title*='related']");
+    //let componentProperties = document.querySelector(".scChromeDropDown a[title*='properties']");
+    // associatedContent ? associatedContent.insertAdjacentHTML("beforebegin", html) : false;
+    // dropDown ? dropDown.insertAdjacentHTML("afterbegin", componentProperties.outerHTML) : false;
+    // dropDown ? dropDown.insertAdjacentHTML("afterbegin", eeOptions.outerHTML) : false;
+    //dropDown ? dropDown.insertAdjacentHTML("afterbegin", relatedItem.outerHTML) : false;
+    dropDown && !dropDown.querySelector(".satEditInCE") ? dropDown.insertAdjacentHTML("afterbegin", editInCE) : dropDown.querySelector(".satEditInCE").setAttribute("onclick", editClick);
+    dropDown && !dropDown.querySelector(".satAssociatedContent") ? dropDown.insertAdjacentHTML("afterbegin", associatedContent.outerHTML) : false;
   });
 
   //Observer
-  storage.feature_experienceeditor && target
+  storage.feature_experienceeditor && storage.feature_experimentalui && target
     ? observer.observe(target, {
         attributes: false,
         childList: true,
@@ -55,43 +59,56 @@ const addToolbarEditCE = (storage) => {
 };
 
 /**
- * Add /Move component tooltip
+ * Add / Move component tooltip
  */
 const addToolbarTooltip = (storage) => {
   storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;
   let target = document.querySelector(".scChromeControls");
   let observer = new MutationObserver(function () {
     var scChromeToolbar = document.querySelectorAll(".scChromeToolbar");
-    //Find scChromeCommand
+    //Find EE toolbars
     for (var controls of scChromeToolbar) {
       controls.setAttribute("style", "margin-left:50px");
-      var scChromeCommand = controls.querySelectorAll(".scChromeCommand");
-      var changeColor = false;
+      let scChromeCommand = controls.querySelectorAll(".scChromeCommand");
+      let changeColor = false;
 
-      for (var command of scChromeCommand) {
-        var title = command.getAttribute("title");
-        command.setAttribute("style", "z-index:auto");
+      //Find buttons in the current EE toolbar
+      setTimeout(() => {
+        for (var button of scChromeCommand) {
+          let title = button.getAttribute("title");
+          button.setAttribute("style", "z-index:auto");
+          //Find the Usage button
+          if (title && storage.feature_experimentalui) {
+            if (button.classList.contains("scChromeMoreSection") && title.toLowerCase().includes("more")) {
+              button.innerHTML = `<img src="${chrome.runtime.getURL("images/more_vert.svg")}" class="scContrastedIcon" style="padding: 0px;"/>`;
+            } else if (button.classList.contains("scChromeMoreSection") && title.toLowerCase().includes("webpages")) {
+              button.querySelector("span").innerHTML = `<img src="${chrome.runtime.getURL("images/usage.svg")}" class="scContrastedIcon" style="padding: 2px 0px 0px 0px;"/>`;
+            }
+          }
 
-        if (!changeColor && title) {
-          if (title.toLowerCase().includes("move component") || title.toLowerCase().includes("remove component")) {
-            document.querySelectorAll(".scFrameSideHorizontal, .scFrameSideVertical").forEach(function (e) {
-              e.classList.remove("scFrameYellow");
-            });
-            changeColor = true;
-          } else {
-            document.querySelectorAll(".scFrameSideHorizontal, .scFrameSideVertical").forEach(function (e) {
-              e.classList.add("scFrameYellow");
-            });
+          //Add Tooltip to the button
+          if (title != null && title != "") {
+            button.setAttribute("data-tooltip", title);
+            button.classList.add("t-bottom");
+            button.classList.add("t-md");
+            button.removeAttribute("title");
+          }
+
+          //Change color of placehodlers
+          if (!changeColor && title) {
+            if (title.toLowerCase().includes("move component") || title.toLowerCase().includes("remove component")) {
+              document.querySelectorAll(".scFrameSideHorizontal, .scFrameSideVertical").forEach(function (e) {
+                e.classList.remove("scFrameYellow");
+              });
+              changeColor = true;
+            } else {
+              document.querySelectorAll(".scFrameSideHorizontal, .scFrameSideVertical").forEach(function (e) {
+                e.classList.add("scFrameYellow");
+              });
+            }
           }
         }
-
-        if (title != null && title != "") {
-          command.setAttribute("data-tooltip", title);
-          command.classList.add("t-bottom");
-          command.classList.add("t-md");
-          command.removeAttribute("title");
-        }
-      }
+      }, 500);
     }
   });
 
@@ -244,15 +261,16 @@ const addHideRibbonButton = (storage) => {
  */
 const resetExperienceEditor = (storage) => {
   storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;
-  if (storage.feature_experienceeditor) {
-    loadCssFile("css/experienceeditor.min.css");
-  }
+  storage.feature_experienceeditor ? loadCssFile("css/experienceeditor.min.css") : false;
   //Remove satExtension satDark satExperimetalUI from main frame
   document.body ? document.body.classList.add("satEE") : false;
   document.body ? document.body.classList.remove("satExtension") : false;
+  document.body ? document.body.classList.remove("satDark") : false;
+  document.body ? document.body.classList.remove("satExperimentalUi") : false;
   document.body && storage.feature_experimentalui ? document.body.classList.add("satEEExperimentalUi") : false;
-  // document.body.classList.remove("satDark");
-  document.body.classList.remove("satExperimentalUi");
+  if ((document.body && storage.feature_darkmode && !storage.feature_darkmode_auto) || (document.body && storage.feature_darkmode && storage.feature_darkmode_auto && currentColorScheme() == "dark")) {
+    document.body ? document.body.classList.add("satEEDark") : false;
+  }
 };
 
 /**

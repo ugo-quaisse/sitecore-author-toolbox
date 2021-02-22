@@ -326,11 +326,6 @@ body.satExperimentalUi .scSitecoreRibbon {
   transform: rotate(180deg);
 }
 
-body.satExperimentalUi .sc-quickbar-tab.sc-quickbar-tab-selected {
-  border-top: 3px solid var(--accent);
-  margin-bottom: -5px;
-}
-
 body.satExperimentalUi #scAccentColor {
   -webkit-appearance: none;
   padding: 0;
@@ -543,7 +538,7 @@ body.satExperimentalUi select option:checked {
 }
 
 body.satExperimentalUi .dialog-content {
-  background-color: var(--white);
+  background-color: transparent;
 }
 
 /* Speak UI  */
@@ -674,13 +669,22 @@ body.satExperimentalUi .scContentTreeNodeIcon {
   filter: brightness(var(--iconBrightness));
 }
 
+body.satExperimentalUi .scMaterialIcon {
+  filter: invert(var(--iconInvert)) !important;
+}
+
 body.satExperimentalUi .scContentTreeNodeIcon {
   margin: 0 8px 0 0;
-  transform: scale(1.2);
+  transform: scale(1.1);
   position: relative;
   z-index: 10;
   image-rendering: pixelated;
+}
+
+body.satExperimentalUi .scContentTreeNodeIcon.scMaterialIcon {
+  transform: scale(1.2);
   opacity: 0.7;
+  image-rendering: unset;
 }
 
 body.satExperimentalUi .scBreadcrumbIcon {
@@ -839,10 +843,9 @@ body.satExperimentalUi #satFavorites {
   box-shadow: unset;
 }
 
-/* body.satExperimentalUi .scContentTreeNode > img.scContrastedIcon, */
-body.satExperimentalUi .scMenuItemIcon_Hover img.scContrastedIcon,
-body.satExperimentalUi .scContentControlTree .scContentTreeNodeNormal:hover img.scContrastedIcon,
-body.satExperimentalUi .scContentTreeNodeActive img.scContrastedIcon {
+body.satExperimentalUi .scMenuItemIcon_Hover img.scMaterialIcon,
+body.satExperimentalUi .scContentControlTree .scContentTreeNodeNormal:hover img.scMaterialIcon,
+body.satExperimentalUi .scContentTreeNodeActive img.scMaterialIcon {
   filter: invert(var(--accentRevert)) !important;
   opacity: 1;
 }
@@ -852,7 +855,7 @@ body.satExperimentalUi #ContentTreePanel img.scIconImage {
   opacity: unset !important;
 }
 
-body.satExperimentalUi .scInstantSearchResults img.scContrastedIcon {
+body.satExperimentalUi .scInstantSearchResults img.scMaterialIcon {
   max-width: 16px;
   filter: invert(1);
   opacity: 0.3;
@@ -1386,7 +1389,7 @@ body.satExperimentalUi .liveUrlBadge:hover {
   border-color: inherit;
 }
 
-body.satExperimentalUi .scConfirmationIcon.scContrastedIcon {
+body.satExperimentalUi .scConfirmationIcon.scMaterialIcon {
   width: 48px;
 }
 
@@ -1938,22 +1941,40 @@ body.satExperimentalUi .scPopup {
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
   padding: 5px;
 }
-
+body.satExperimentalUi .sc-insert-items,
+body.satExperimentalUi .sc-insertItem-container {
+  background-color: transparent;
+  border-color: transparent;
+}
 body.satExperimentalUi .sc-insertItem-container.selected {
   border-color: transparent;
   background-color: transparent;
 }
+body.satExperimentalUi .sc-insertItem-container:hover {
+  background-color: transparent;
+  border-color: transparent;
+  cursor: pointer;
+}
+body.satExperimentalUi .sc-insertItem-container .sc-insertItem-imageContainer:hover,
 body.satExperimentalUi .sc-insertItem-container.selected .sc-insertItem-imageContainer {
   box-shadow: 0px 0px 0px 3px var(--accent);
   border-radius: 3px;
   border-color: transparent;
   background-color: transparent;
 }
+body.satExperimentalUi .sc-insertItem-displayNameContainer {
+  padding: 10px;
+}
 body.satExperimentalUi .sc-insertItem-container.selected .sc-display-name,
 body.satExperimentalUi .scChecked {
-  background-color: var(--accent);
-  color: var(--accentText) !important;
+  background: transparent;
+  color: var(--text) !important;
   border-color: transparent;
+  font-weight: 600;
+}
+
+body.satExperimentalUi div[data-sc-id="ItemTreeView"] {
+  border-color: transparent !important;
 }
 
 body.satExperimentalUi .scPopup > table > tbody > tr[id^="ContextMenu_"] > td {

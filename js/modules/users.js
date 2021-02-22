@@ -179,9 +179,9 @@ const initUserMenu = (storage, type = "CE") => {
             <li onclick="javascript:return scForm.invoke('preferences:changeregionalsettings', event)">Languages</li>
             <li onclick="javascript:return scForm.invoke('shell:useroptions', event)">Sitecore Options</li>
           
-            <li onclick="javascript:goToSubmenu(1)" id="scSkip" class="separator opensubmenu">Dark Mode <span id="scSkip" class="darkMenuHint">Light</span></li>
-            <li onclick="javascript:goToSubmenu(2)" id="scSkip" class="opensubmenu">Theme <span id="scSkip" class="themeMenuHint">Classic</span></li> 
-            <li onclick="window.open('${global.launchpadPage}?launchpad=true')">Extension Options</li>
+            <li onclick="javascript:goToSubmenu(1)" id="scSkip" class="separator opensubmenu"><img src="${global.iconMenuBright}" /> Dark Mode <span id="scSkip" class="darkMenuHint">Light</span></li>
+            <li onclick="javascript:goToSubmenu(2)" id="scSkip" class="opensubmenu"><img src="${global.iconMenuTheme}" /> Theme <span id="scSkip" class="themeMenuHint">Classic</span></li> 
+            <li onclick="window.open('${global.launchpadPage}?launchpad=true')"><img src="${global.iconMenuOptions}" /> Extension Options</li>
 
             <li onclick="javascript:return scForm.invoke('system:logout', event)">Log out</li>
             
@@ -191,7 +191,7 @@ const initUserMenu = (storage, type = "CE") => {
         <div class="scAccountSub">
           <div class="scAccountColumn scAccountGroup2">
             <ul>
-              <li onclick="javascript:goToSubmenu(0)" id="scSkip" class="backsubmenu">Dark Mode</li>
+              <li onclick="javascript:goToSubmenu(0)" id="scSkip" class="backsubmenu"><img src="${global.iconMenuBright}" /> Dark Mode</li>
               <li>Light <input type="radio" class="darkmodeRadio" name="darkMode" value="light" checked></li>
               <li>Dark <input type="radio" class="darkmodeRadio" name="darkMode" value="dark"></li>
               <li>Automatic <input type="radio" class="darkmodeRadio" name="darkMode" value="auto"></li>
@@ -199,7 +199,7 @@ const initUserMenu = (storage, type = "CE") => {
           </div>
           <div class="scAccountColumn scAccountGroup2">
             <ul>
-              <li onclick="javascript:goToSubmenu(0)" id="scSkip" class="backsubmenu">Theme</li>
+              <li onclick="javascript:goToSubmenu(0)" id="scSkip" class="backsubmenu"><img src="${global.iconMenuTheme}" /> Theme</li>
               <li>Classic <input type="radio" class="interfaceRadio" name="interface" value="classic" checked></li>
               <li>Experimental UI <input type="radio" class="interfaceRadio" name="interface" value="experimental"></li>
             </ul>
@@ -353,7 +353,7 @@ const initInterfaceEvents = () => {
         //Storage
         chrome.storage.sync.set({
           feature_experimentalui: false,
-          feature_contrast_icons: false,
+          feature_material_icons: false,
           feature_cetabs: false,
         });
       } else if (radio.value == "experimental") {
@@ -373,7 +373,7 @@ const initInterfaceEvents = () => {
         //Storage
         chrome.storage.sync.set({
           feature_experimentalui: true,
-          feature_contrast_icons: true,
+          feature_material_icons: true,
           feature_cetabs: true,
         });
       }

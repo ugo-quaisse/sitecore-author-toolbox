@@ -32,7 +32,6 @@ import {
   initGutter,
   initColorPicker,
   initSitecoreRibbon,
-  initContrastedIcons,
   initSvgAnimation,
   initSvgAnimationPublish,
   initEventListeners,
@@ -47,7 +46,7 @@ import { initPreviewButton, listenPreviewTab } from "./modules/preview.js";
 import { initLaunchpadIcon, initLaunchpadMenu } from "./modules/launchpad.js";
 import { initAutoExpandTree, initTreeGutterTooltips } from "./modules/contenttree.js";
 import { initQuerySuggestions } from "./modules/template.js";
-import { storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor, initRenderingSearchBox } from "./modules/experienceeditor.js";
+import { initDefaultTextEE, storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor, initRenderingSearchBox } from "./modules/experienceeditor.js";
 
 /**
  * Get all user's settings from chrome storage
@@ -68,7 +67,6 @@ chrome.storage.sync.get((storage) => {
     initDarkMode(storage);
     detectSwitchDarkMode(storage);
     initExperimentalUi(storage);
-    initContrastedIcons(storage);
     initAutoExpandTree(storage);
     initTreeGutterTooltips();
     refreshContentEditor(storage);
@@ -178,7 +176,7 @@ chrome.storage.sync.get((storage) => {
       initMaterializeIcons(storage);
     } else if (global.isFieldEditor) {
       log("**** Field editor ****", "orange");
-      // initCheckboxes(storage); bug with toggle
+      initCheckboxes(storage);
       initDateTimeField(storage);
       initPasswordField(storage);
       initCharsCount(storage);
@@ -269,7 +267,6 @@ chrome.storage.sync.get((storage) => {
     initDarkMode(storage);
     detectSwitchDarkMode(storage);
     initExperimentalUi(storage);
-    initContrastedIcons(storage);
 
     /*
      ************************
@@ -287,6 +284,7 @@ chrome.storage.sync.get((storage) => {
       initLanguageMenuEE(storage);
     } else if (global.isInsertPage) {
       log("**** Insert Page ****", "orange");
+      initMaterializeIcons(storage);
     } else if (global.isSitecoreModule) {
       log("**** Sitecore Module ****", "orange");
     } else {
@@ -297,6 +295,7 @@ chrome.storage.sync.get((storage) => {
       addHideRibbonButton(storage);
       resetExperienceEditor(storage);
       initMaterializeIcons(storage);
+      initDefaultTextEE(storage);
     }
   }
 });

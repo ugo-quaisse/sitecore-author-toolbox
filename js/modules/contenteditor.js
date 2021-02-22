@@ -416,10 +416,10 @@ const initCheckboxes = (storage) => {
   if (storage.feature_contenteditor) {
     loadCssFile("css/checkbox.min.css");
     for (var field of document.querySelectorAll("*:not(#Languages) > input[type=checkbox]")) {
-      // if (field.className == "scContentControlCheckbox") {
-      field.classList.add("scContentControlCheckbox");
-      field.insertAdjacentHTML("afterend", `<label for="` + field.id + `" class="scContentControlCheckboxLabel"></label>`);
-      // }
+      if (field.parentElement.nodeName != "LABEL") {
+        field.classList.add("scContentControlCheckbox");
+        field.insertAdjacentHTML("afterend", `<label for="${field.id}" class="scContentControlCheckboxLabel"></label>`);
+      }
     }
   }
 };

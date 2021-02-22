@@ -154,8 +154,7 @@ body.satDark input[type="submit"] {
   box-shadow: none;
   border-color: var(--black1) !important;
   background-color: var(--black2) !important;
-  background: linear-gradient(to bottom, var(--text) 0%, var(--text) 100%);
-  box-shadow: none;
+  background-image: none;
 }
 
 body.satDark .scButton:hover,
@@ -168,9 +167,7 @@ body.satDark input[type="submit"]:hover {
 body.satDark .scButton:active,
 body.satDark input[type="submit"]:active {
   background-color: #d1d1d1;
-  background-image: linear-gradient(to bottom, transparent 0%, transparent 100%);
   background-repeat: repeat-x;
-  box-shadow: inset 0 0px 6px transparent !important;
   background-image: none;
   border-color: #bdbdbd;
   box-shadow: inset 0 3px 3px transparent;
@@ -2967,10 +2964,6 @@ body.satDark .sc-ribbon {
   border-bottom: 1px solid var(--black2) !important;
 }
 
-body.satDark .sc-quickbar-tab.sc-quickbar-tab-selected {
-  background-color: var(--black2) !important;
-  color: var(--text) !important;
-}
 body.satDark .sc-quickbar-tab {
   border: 1px solid var(--text) !important;
   border-color: transparent !important;

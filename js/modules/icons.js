@@ -579,6 +579,18 @@ export const jsonIcons = JSON.parse(
   {
     "search": "bullet_square",
     "icon": "toggle::check_box_outline_blank"
+  },
+  {
+    "search": "download",
+    "icon": "file::file_download"
+  },
+  {
+    "search": "upload",
+    "icon": "file::file_upload"
+  },
+  {
+    "search": "bullet_triangle",
+    "icon": "av::play_arrow"
   }
 ]`
 );

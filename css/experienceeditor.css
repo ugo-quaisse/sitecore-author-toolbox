@@ -40,7 +40,9 @@ body.satEE .scAddRendering {
   border-radius: 5px;
   color: #666666;
 }
-
+body.satEE .scContrastedIcon {
+  filter: brightness(var(--iconBrightness)) invert(var(--iconInvert));
+}
 /* Renderings selection frame */
 body.satEE .scFrameSideHorizontal {
   box-shadow: 0px 0px 10px 1px rgba(40, 155, 200, 0.7);
@@ -100,6 +102,9 @@ body.satEEExperimentalUi .sxa-toolbox-expander {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   background-color: var(--black2) !important;
+}
+body.satEEExperimentalUi #sxa-toolbox span.expanded {
+  border-color: var(--accent) !important;
 }
 body.satEEExperimentalUi .scChromeBadge,
 body.satEEExperimentalUi .scLabel {
@@ -341,13 +346,22 @@ body.satEEExperimentalUi .zg-variant-switcher.expanded .zg-variant-tip {
 }
 body.satEEExperimentalUi .zg-variant-switcher .zg-variant-available {
   background-color: var(--grey19);
-  padding: 0px 10px 10px 10px;
+  padding: 0px 10px 5px 10px;
   margin-top: -2px;
 }
 body.satEEExperimentalUi .zg-variant-switcher.expanded .zg-variant-available {
   background-color: transparent;
   padding: 0px 10px 10px 10px;
   margin-top: -2px;
+}
+body.satEEExperimentalUi .zg-variant-switcher .zg-variant-header {
+  width: 20%;
+}
+body.satEEExperimentalUi .zg-variant-switcher .zg-variant-list {
+  width: 80%;
+}
+body.satEEExperimentalUi .zg-variant-switcher.expanded .zg-variant-list .zg-variant-available {
+  background-color: var(--grey19);
 }
 body.satEEExperimentalUi .zg-variant-switcher.expanded li {
   padding: 5px;
@@ -369,6 +383,15 @@ body.satEEExperimentalUi .zg-variant-switcher.expanded li:hover {
 body.satEEExperimentalUi .zg-variant-switcher .zg-variant-toggle-dropdown {
   background-position-x: 96%;
 }
+
+body.satEEExperimentalUi .scDefaultTextEE {
+  background-color: var(--accent);
+  color: var(--accentText);
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-weight: 500;
+}
+
 /* Dark Mode */
 body.satEEDark .scEditableTab,
 body.satEEDark .scContentEditorTab,
@@ -383,7 +406,7 @@ body.satEEDark .scChromeDropDown {
   background-color: var(--black1) !important;
 }
 body.satEEDark .scLevelConnection,
-body.satEEDark .scContrastedIcon,
+body.satEEDark .scMaterialIcon,
 body.satEEDark .zg-variant-toggle-dropdown {
   filter: invert(var(--iconInvert));
 }

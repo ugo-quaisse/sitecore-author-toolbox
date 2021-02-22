@@ -1,46 +1,14 @@
-/* start preload  */
-form#ContentEditorForm {
-  filter: blur(7px) brightness(0.1) grayscale(1);
-  transition: all ease-in-out 0.1s;
-  transition-delay: 0.2s;
-}
+/* Main Preload  */
 form[action*="/sitecore/"]:not(#LoginForm) {
-  opacity: 0;
-  transition: opacity ease-in-out 0s;
-  transition-delay: 0.1s;
-}
-section.sc-applicationContent-main {
-  opacity: 0;
-}
-nav#ribbonPreLoadingIndicator .sc-progressindicator-inner {
-  opacity: 0;
-}
-body.satEE nav#ribbonPreLoadingIndicator .sc-progressindicator-inner {
-  opacity: 1;
-}
-body.satEE.satEEExperimentalUi .sc-progressindicator-inner {
-  background: #fff url(chrome-extension://dpmlbbpimcmgdlhpdphnijefjchoicmj/images/sc-spinner.svg) no-repeat center center;
-}
-body.satExtension .hide {
-  display: none;
-}
-body.satExtension form#ContentEditorForm {
-  filter: blur(0px) brightness(1) grayscale(0);
+  filter: opacity(0);
+  transition: all ease 0s;
+  transition-delay: 0s;
 }
 body.satExtension form[action*="/sitecore/"]:not(#LoginForm) {
-  opacity: 1;
-}
-body.satExtension section.sc-applicationContent-main {
-  opacity: 1;
-}
-/* end preload  */
-body.satExtension .saveMessage {
-  display: none;
+  filter: opacity(1);
 }
 body.contentEditor {
-  background-color: #000;
-  transition: all ease-in-out 0.3s;
-  transition-delay: 0.5s;
+  background-color: var(--black1);
 }
 body.contentEditor:after {
   content: "";
@@ -69,12 +37,38 @@ body.contentEditor:after {
 }
 
 body.satExtension.contentEditor {
-  background-color: #fff !important;
+  background-color: var(--background) !important;
 }
 
 body.satExtension.contentEditor:after {
   opacity: 0;
   visibility: hidden;
+}
+
+section.sc-applicationContent-main {
+  opacity: 0;
+}
+nav#ribbonPreLoadingIndicator .sc-progressindicator-inner {
+  opacity: 0;
+}
+body.satEE nav#ribbonPreLoadingIndicator .sc-progressindicator-inner {
+  opacity: 1;
+}
+body.satEE.satExperimentalUi .sc-progressindicator-inner,
+body.satEE.satEEExperimentalUi .sc-progressindicator-inner {
+  background: #fff url(chrome-extension://dpmlbbpimcmgdlhpdphnijefjchoicmj/images/sc-spinner.svg) no-repeat center center !important;
+}
+body.satExtension .hide {
+  display: none;
+}
+body.satExtension section.sc-applicationContent-main {
+  opacity: 1;
+}
+/* end preload  */
+
+/* Sitecore style  */
+body.satExtension .saveMessage {
+  display: none;
 }
 
 body.satExtension button:focus,
@@ -1744,6 +1738,16 @@ ul.sc-accountInformation li:last-child:after {
   overflow: hidden;
   transition: all ease-in-out 0.2s;
   display: unset !important;
+}
+
+.scAccountMenu img {
+  vertical-align: middle;
+  filter: invert(1);
+  width: auto;
+  height: 20px;
+  padding-right: 5px;
+  filter: invert(1);
+  opacity: 0.6;
 }
 
 .scAccountMenu.open {

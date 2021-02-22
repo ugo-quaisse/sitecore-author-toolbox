@@ -4,7 +4,7 @@ import * as global from "./global.js";
 import { exeJsCode, loadCssFile, startDrag, sitecoreItemJson } from "./helpers.js";
 import { currentColorScheme } from "./dark.js";
 
-export { storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor, initRenderingSearchBox };
+export { storeCurrentPageEE, initDefaultTextEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor, initRenderingSearchBox };
 
 /**
  * Add button to toolbar to open datasource in CE
@@ -23,6 +23,21 @@ const storeCurrentPageEE = () => {
 };
 
 /**
+ * Style default compoenent text
+ */
+const initDefaultTextEE = (storage) => {
+  storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;
+  if (storage.feature_experienceeditor) {
+    document.querySelectorAll("*[scdefaulttext], .meta-component-wrapper, .scLooseFrameZone").forEach(function (text) {
+      let test = text.innerText.toLowerCase();
+      if (test.includes(" field]") || test.includes(" empty]") || test.includes(" link]")) {
+        text.innerHTML = `<i class="scDefaultTextEE">${text.innerText}</i>`;
+      }
+    });
+  }
+};
+
+/**
  * Add button to toolbar to open datasource in CE
  */
 const addToolbarEditCE = (storage) => {
@@ -35,7 +50,7 @@ const addToolbarEditCE = (storage) => {
     let editClick = `javascript:window.open('/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#{${itemId}}_${scLanguage.toLowerCase()}_1')`;
     let editInCE = `<a class="scChromeDropDownRow satEditInCE" onclick="${editClick}"><img src="/~/icon/apps/16x16/Pencil.png" style="width:16px"><span>Edit in the Content Editor</span></a>`;
     let eeOptions = document.querySelector(".scChromeDropDown a[title*='options']");
-    let dropDown = eeOptions.parentElement;
+    let dropDown = eeOptions ? eeOptions.parentElement : false;
     //Add class
     associatedContent ? associatedContent.classList.add("satAssociatedContent") : false;
     //let relatedItem = document.querySelector(".scChromeDropDown a[title*='related']");
@@ -80,9 +95,9 @@ const addToolbarTooltip = (storage) => {
           //Find the Usage button
           if (title && storage.feature_experimentalui) {
             if (button.classList.contains("scChromeMoreSection") && title.toLowerCase().includes("more")) {
-              button.innerHTML = `<img src="${chrome.runtime.getURL("images/more_vert.svg")}" class="scContrastedIcon" style="padding: 0px;"/>`;
+              button.innerHTML = `<img src="${chrome.runtime.getURL("images/more_vert.svg")}" class="scMaterialIcon" style="padding: 0px;"/>`;
             } else if (button.classList.contains("scChromeMoreSection") && title.toLowerCase().includes("webpages")) {
-              button.querySelector("span").innerHTML = `<img src="${chrome.runtime.getURL("images/usage.svg")}" class="scContrastedIcon" style="padding: 2px 0px 0px 0px;"/>`;
+              button.querySelector("span").innerHTML = `<img src="${chrome.runtime.getURL("images/usage.svg")}" class="scMaterialIcon" style="padding: 2px 0px 0px 0px;"/>`;
             }
           }
 
@@ -283,7 +298,7 @@ const initRenderingSearchBox = (storage) => {
     resultList ? resultList.setAttribute("style", "top:110px; padding: 0px 10px; background-color: transparent !important;") : false;
 
     var scFolderButtons = document.querySelector(".scTabstrip");
-    var scSearchHtml = `<div class="scSearch"><input type="text" placeholder="Search in renderings"></div>`;
+    var scSearchHtml = `<div class="scSearch"><input type="text" placeholder="Search for component"></div>`;
     scFolderButtons ? scFolderButtons.insertAdjacentHTML("afterend", scSearchHtml) : false;
 
     //Listerner

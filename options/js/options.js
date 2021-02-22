@@ -91,7 +91,7 @@ document.body.onload = function () {
     toggleFeature(storage.feature_reminder, "#feature_reminder", false);
     toggleFeature(storage.feature_instantsearch, "#feature_instantsearch", true);
     toggleFeature(storage.feature_experimentalui, "#feature_experimentalui", false);
-    toggleFeature(storage.feature_contrast_icons, "#feature_contrast_icons", false);
+    toggleFeature(storage.feature_material_icons, "#feature_material_icons", false);
     toggleFeature(storage.feature_medialist, "#feature_medialist", true);
     toggleFeature(storage.feature_mediacard, "#feature_mediacard", true);
     toggleFeature(storage.feature_medialibrary, "#feature_medialibrary", true);
@@ -104,9 +104,9 @@ document.body.onload = function () {
 document.querySelector("#feature_experimentalui").onclick = function () {
   if (document.querySelector("#feature_experimentalui").checked == true) {
     document.querySelector("#feature_cetabs").checked = true;
-    document.querySelector("#feature_contrast_icons").checked = true;
+    document.querySelector("#feature_material_icons").checked = true;
   } else {
-    document.querySelector("#feature_contrast_icons").checked = false;
+    document.querySelector("#feature_material_icons").checked = false;
   }
 };
 
@@ -341,7 +341,7 @@ document.querySelector(".save_settings").onclick = function (event) {
     feature_reminder: document.querySelector("#feature_reminder").checked,
     feature_instantsearch: document.querySelector("#feature_instantsearch").checked,
     feature_experimentalui: document.querySelector("#feature_experimentalui").checked,
-    feature_contrast_icons: document.querySelector("#feature_contrast_icons").checked,
+    feature_material_icons: document.querySelector("#feature_material_icons").checked,
     feature_medialist: document.querySelector("#feature_medialist").checked,
     feature_mediacard: document.querySelector("#feature_mediacard").checked,
     feature_medialibrary: document.querySelector("#feature_medialibrary").checked,

@@ -206,9 +206,8 @@ body.satExperimentalUi.satDark .scEditorSectionPanel {
   margin-top: 0px !important;
   padding: 15px;
   width: calc(100% - 40px);
-  background-color: var(--white);
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
-  background-color: var(--black2) !important;
+  background-color: var(--black2);
 }
 
 body.satExperimentalUi.satDark .scImageContainer {
@@ -461,7 +460,7 @@ body.satExperimentalUi.satDark #satFavoritesDrag {
 }
 
 body.satExperimentalUi.satDark .scSaveBar > .scBreadcrumb > i,
-body.satExperimentalUi.satDark .scContrastedIcon {
+body.satExperimentalUi.satDark .scMaterialIcon {
   filter: invert(var(--iconInvert)) !important;
 }
 

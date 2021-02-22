@@ -81,8 +81,8 @@
   --textFaded: #546e7a;
 
   --iconInvert: 0;
-  --iconBrightness: 0.1;
-  --iconContrast: 2;
+  --iconBrightness: 1;
+  --iconContrast: 1;
 
   --background: #fff;
 }
@@ -95,4 +95,5 @@
   --darkblue: #1b1d21 !important;
   --iconInvert: 1;
   --experimentalBackground: #111111;
+  --background: #000;
 }

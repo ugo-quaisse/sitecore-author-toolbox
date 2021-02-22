@@ -1,3 +1,4 @@
+/* eslint-disable newline-per-chained-call */
 /* eslint-disable array-element-newline */
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
@@ -23,7 +24,6 @@ export {
   initSitecoreRibbon,
   initGutter,
   getParentNode,
-  initContrastedIcons,
   initSvgAnimation,
   initSvgAnimationPublish,
   initEventListeners,
@@ -95,11 +95,6 @@ const initExperimentalUi = (storage) => {
       document.querySelector(".themeMenuHint").innerText = "Experimental UI";
     }
     getAccentColor();
-  }
-  storage.feature_contrast_icons == undefined ? (storage.feature_contrast_icons = false) : false;
-  if (storage.feature_contrast_icons === false) {
-    document.documentElement.style.setProperty("--iconBrightness", 1);
-    document.documentElement.style.setProperty("--iconContrast", 1);
   }
 };
 
@@ -486,7 +481,8 @@ const initInsertIcon = (storage) => {
         node = event.path[2];
       }
 
-      var contrastedIcon = storage.feature_contrast_icons === true ? "scContrastedIcon" : "";
+      //Colors of icons (black or white)
+      var contrastedIcon = storage.feature_material_icons === true ? "scMaterialIcon" : "";
 
       //Updating html structure to allow text-overflow and avoid icons overlap
       if (node && !node.classList.contains("scNoOverlap")) {
@@ -588,16 +584,6 @@ const initSvgAnimationPublish = (storage) => {
 };
 
 /**
- * Check if User enable Contrasted Icons (only works with Experimental UI)
- */
-const initContrastedIcons = (storage) => {
-  if (storage.feature_contrast_icons === false) {
-    document.documentElement.style.setProperty("--iconBrightness", 1);
-    document.documentElement.style.setProperty("--iconContrast", 1);
-  }
-};
-
-/**
  * Init Experimental Event Listeners
  */
 const initEventListeners = () => {
@@ -672,26 +658,34 @@ const initTitleBarDesktop = () => {
  * Replace Glyph Images
  */
 const replaceIcons = (storage) => {
-  if (storage.feature_experimentalui === true && storage.feature_contrast_icons === true) {
+  if (storage.feature_experimentalui === true && storage.feature_material_icons === true) {
     let imgGlyph = document.querySelectorAll(
-      ".scContentTreeNodeGlyph, .scContentTreeNodeIcon, #scModal .main img, .scInstantSearchResults img, .dynatree-container img, .scTabs .scImageContainer > img, form[action*='Gallery'] img, form[action*='Media'] .scFolderButtons img, .scPopup .scMenuItemIcon > img, .satEE .scChromeCommand > img"
+      ".scContentTreeNodeGlyph, .scContentTreeNodeIcon, #scModal .main img, .scInstantSearchResults img, .dynatree-container img, .dynatree-node > img, .scTabs .scImageContainer > img, form[action*='Gallery'] img, form[action*='Media'] .scFolderButtons img, .scPopup .scMenuItemIcon > img, .satEE .scChromeCommand > img"
     );
     for (let icon of imgGlyph) {
       let filename = icon.src.substring(icon.src.lastIndexOf("/") + 1).toLowerCase();
+      let parent = icon.parentElement.parentElement;
+      parent = parent ? parent.getAttribute("id") : false;
+      let parentId = parent ? parent.split("_").pop() : false;
       //Sitecore tree chevron
       if (filename.includes("treemenu_expanded.png")) {
         icon.src = global.iconTreeExpanded;
       } else if (filename.includes("treemenu_collapsed.png")) {
         icon.src = global.iconTreeCollapsed;
-      }
-
-      //Loop Json with icons references, find and match
-      for (let entry of Object.entries(icons.jsonIcons)) {
-        if (filename.includes(entry[1].search)) {
-          let path = entry[1].icon.split("::");
-          icon.src = getMaterializeIcon(path[0], path[1]);
-          icon.classList.add("scContrastedIcon");
-          break;
+      } else if (parentId == "11111111111111111111111111111111") {
+        icon.src = global.iconSitecoreTree;
+        icon.classList.add("scMaterialIcon");
+      } else {
+        //Loop Json with icons references, find and match
+        for (let entry of Object.entries(icons.jsonIcons)) {
+          if (filename.includes(entry[1].search)) {
+            let path = entry[1].icon.split("::");
+            icon.src = getMaterializeIcon(path[0], path[1]);
+            icon.classList.add("scMaterialIcon");
+            break;
+          } else {
+            icon.classList.add("scContrastedIcon");
+          }
         }
       }
 
@@ -708,9 +702,11 @@ const replaceIcons = (storage) => {
  * Replace Glyph Images
  */
 const initMaterializeIcons = (storage) => {
-  if (storage.feature_experimentalui === true && storage.feature_contrast_icons === true) {
+  if (storage.feature_experimentalui === true && storage.feature_material_icons === true) {
     let target, observer;
     replaceIcons(storage);
+    document.documentElement.style.setProperty("--iconBrightness", 0.1);
+    document.documentElement.style.setProperty("--iconContrast", 2);
     //In Content Editor
     target = document.querySelector("#ContentEditorForm");
     observer = new MutationObserver(function () {
@@ -728,7 +724,7 @@ const initMaterializeIcons = (storage) => {
     //In iframe, modals and windows
     setTimeout(function () {
       //Speak UI tree
-      target = document.querySelector("div[data-sc-id='TreeView']");
+      target = document.querySelector("div[data-sc-id*='TreeView']");
       observer = new MutationObserver(function () {
         replaceIcons(storage);
       });

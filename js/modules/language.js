@@ -46,7 +46,7 @@ const cleanCountryName = (name) => {
     language = language.replace("KOREAN", "KOREA");
     language = language.replace("UNITED_STATES", "USA");
     language = language.replace("UNITED_KINGDOM", "GREAT_BRITAIN");
-    language = language.replace("ENGLISH", "GREAT_BRITAIN");
+    language = language.replace("ENGLISH", "USA");
     language = language.replace("PRC", "CHINA");
     language = language.replace("SIMPLIFIED", "CHINA");
     language = language.replace("TRADITIONAL", "CHINA");

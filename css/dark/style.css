@@ -441,7 +441,7 @@ body.satDark .scContentControlIFrame_Active {
   color: black;
 }
 body.satDark .scContentControlImagePane {
-  border-color: var(--black3) !important;
+  border-color: var(--black4) !important;
 }
 
 body.satDark .scContentControlImageImage {
@@ -1564,7 +1564,7 @@ body.satDark .scDarkModeCheckbox:checked + .scDarkModeCheckbox::before {
 }
 
 body.satDark .scContentControlCheckboxLabel::before {
-  background-color: #666 !important;
+  background-color: var(--black4) !important;
 }
 
 body.satDark .sc-dialogContent {

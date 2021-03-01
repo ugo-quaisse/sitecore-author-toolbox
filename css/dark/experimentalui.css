@@ -416,12 +416,12 @@ body.satExperimentalUi.satDark .scContentControlCheckbox:checked + .scContentCon
 }
 
 body.satExperimentalUi.satDark .scContentControlImageImage > iframe {
-  background: var(--grey2) url(chrome-extension://__MSG_@@extension_id__/images/backgroundImage.svg) center 70% no-repeat !important;
+  background: var(--black2) url(chrome-extension://__MSG_@@extension_id__/images/backgroundImage.svg) center 70% no-repeat !important;
   background-size: 7% !important;
 }
 
 body.satExperimentalUi.satDark .scContentControlImageDetails {
-  background-color: var(--grey2);
+  background-color: var(--black2);
 }
 
 /* hover styles*/
@@ -560,10 +560,18 @@ body.satExperimentalUi.satDark .scMaterialIcon {
   filter: invert(var(--iconInvert)) !important;
 }
 
-body.satExperimentalUi.satDark #Editors input:not(.scContentControlImage),
-body.satExperimentalUi.satDark #Editors select:not([multiple]),
-body.satExperimentalUi.satDark #Editors textarea {
-  border-color: var(--black6);
+body.satExperimentalUi.satDark #Editors input:not([type]),
+body.satExperimentalUi.satDark #Editors input[type="text"],
+body.satExperimentalUi.satDark #Editors input[type="password"],
+body.satExperimentalUi.satDark #Editors select,
+body.satExperimentalUi.satDark #Editors textarea,
+body.satExperimentalUi.satDark #ContentWrapper body.satExperimentalUi.satDark #Editors input:not(.scContentControlImage),
+body.satExperimentalUi.satDark #Editors select:not([multiple]) {
+  border-color: var(--black4);
+}
+
+body.satExperimentalUi.satDark .scContentControlHtml {
+  border-color: var(--black4) !important;
 }
 
 body.satExperimentalUi.satDark .grid-settings-advanced .grid-basic-tab-header,

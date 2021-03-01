@@ -1,6 +1,9 @@
 body.satDark {
   border: none;
 }
+body.satDark .sc-globalHeader {
+  background-color: var(--black2);
+}
 body.satDark .scStartbar,
 body.satDark .sc-fullWidth {
   background-color: var(--black3) !important;
@@ -685,7 +688,7 @@ body.satDark .scTreeview .scTreeItem.hover {
 }
 
 body.satDark .scStretch {
-  background-color: #111;
+  background-color: var(--black1);
 }
 
 body.satDark .scSpinEditInput {
@@ -1001,7 +1004,7 @@ body.satDark #scLightbox {
 body.satDark .modal-backdrop,
 body.satDark .modal-backdrop.fade.in,
 body.satDark #scOverlay {
-  background-color: #000;
+  background-color: var(--black);
 }
 
 body.satDark #SearchBox {
@@ -1674,15 +1677,15 @@ body.satDark .sc .sc-border[data-sc-id="AnalyticsFallback"] {
  * ribbon.css
  */
 body.satDark #RibbonPanel {
-  border-bottom: 1px solid #333333 !important;
+  border-bottom: 1px solid var(--black3) !important;
 }
 
 body.satDark .RibbonPanel {
-  border-bottom: 1px solid #333333 !important;
+  border-bottom: 1px solid var(--black3) !important;
 }
 
 body.satDark .scRibbon {
-  background-color: #333333 !important;
+  background-color: var(--black3) !important;
 }
 
 body.satDark .scRibbon a {
@@ -1719,7 +1722,7 @@ body.satDark .scRibbonToolbarContextualStrip {
 
 body.satDark .scRibbon .chunk {
   background-color: var(--black2) !important;
-  border-right: 1px solid #111111 !important;
+  border-right: 1px solid var(--black1) !important;
 }
 
 body.satDark .lang_ja_jp .scRibbonToolbarStrip,
@@ -1763,8 +1766,8 @@ body.satDark .scRibbonToolbarSmallButtons {
 }
 
 body.satDark .scRibbonToolbarText {
-  background-color: #111111 !important;
-  border: 1px solid #111111 !important;
+  background-color: var(--black1) !important;
+  border: 1px solid var(--black1) !important;
   color: var(--white);
 }
 
@@ -2083,7 +2086,7 @@ body.satDark .scEditorSectionCaptionExpanded {
   border-left: 5px solid #dc291e !important;
   border-bottom: 1px solid var(--black1) !important;
   color: var(--white);
-  background-color: var(--grey13);
+  background-color: var(--black3);
 }
 
 body.satDark .scEditorSectionCaptionCollapsed {
@@ -2249,8 +2252,7 @@ body.satDark .scEditorGrid {
 }
 
 body.satDark #EditorTabs {
-  background-color: transparent !important;
-
+  background-color: var(--black2) !important;
   border-bottom: 1px solid var(--black3) !important;
 }
 
@@ -2647,7 +2649,7 @@ body.satDark .pick-button:hover {
 
 body.satDark .scEditHtmlButtons {
   background: var(--black2);
-  border-top: #333 1px solid;
+  border-top: var(--black3) 1px solid;
 }
 
 body.satDark .sc .sc-smartpanel-wrapper {

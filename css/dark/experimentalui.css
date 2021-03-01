@@ -336,7 +336,7 @@ body.satExperimentalUi.satDark .scEditItemIcon {
 
 body.satExperimentalUi.satDark #FileList a.scButton {
   background: var(--black2);
-  border: 1px solid var(--black4) !important;
+  border: 1px solid var(--black3) !important;
 }
 
 body.satExperimentalUi.satDark .scMediaExplorer th {

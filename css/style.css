@@ -9,6 +9,7 @@ body.satExtension form[action*="/sitecore/"]:not(#LoginForm) {
 }
 body.contentEditor {
   background-color: var(--black1);
+  border: 0px;
 }
 body.contentEditor:after {
   content: "";

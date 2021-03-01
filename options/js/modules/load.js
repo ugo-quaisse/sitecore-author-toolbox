@@ -11,11 +11,16 @@ export { parseJsonSites, onReaderLoad, uploadJson };
  * Parse a json and create html
  */
 const parseJsonSites = (json) => {
-  //   console.log(json);
+  // console.log(json);
   for (var [domain, values] of Object.entries(json)) {
     let domainId = addDomain("", domain, true);
     for (var [id, site] of Object.entries(values)) {
-      addSite(domainId, Object.entries(site)[0][0], Object.entries(site)[0][1], false, "", true);
+      try {
+        let lang = Object.entries(site)[1][1] != undefined ? Object.entries(site)[1][1] : "";
+        addSite(domainId, Object.entries(site)[0][0], Object.entries(site)[0][1], lang, false, "", true);
+      } catch (e) {
+        addSite(domainId, Object.entries(site)[0][0], Object.entries(site)[0][1], "", false, "", true);
+      }
     }
   }
 };

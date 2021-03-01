@@ -253,20 +253,33 @@
       <!-- Panel domains -->
       <div id="domains">
         <p>
-          <a href="https://uquaisse.io/sat_domains" target="_blank">How to configure your sites?</a><br />
-          <b>Hints</b><br />
-          - Use <code>{lang}</code> token in your URL if you whant to embed language at a specific place.<br />
-          - Use <code>{nolang}</code> token anywhere in your URL if you don't want language embedding.
+          <a class="show_hint">How to configure your sites</a>
         </p>
+        <div id="hint">
+          <ul>
+            <li>Copy the Sitecore site path from Sitecore Quick Info</li>
+            <li>Enter your Site Url</li>
+            <li>If needed, add <code>{lang}</code> token in your "site URL" if you want to embed language at a specific place.</li>
+            <li>If needed, add <code>{nolang}</code> token in your "site URL" if you don't want any language embedded.</li>
+            <li>If you need to get a specific URL for a given language, click Advanced Mode and add Sitecore language in this field (e.g "en" or "fr-fr")</li>
+            <li>More help available at <a href="https://uquaisse.io/sat_domains" target="_blank">https://uquaisse.io</a></li>
+          </ul>
+        </div>
+
         <div id="sitesButtons">
           <input class="importSites" type="file" accept=".json" style="display: none" />
           <input class="importSitesVisible" type="button" value="⤒ IMPORT (.JSON)" />
           <input class="exportSites" type="button" value="⤓ EXPORT (.JSON)" />
         </div>
+
+        <div id="modes">
+          <a class="advanced_mode">Advanced mode</a>
+          <a class="basic_mode" style="display: none">Basic mode</a>
+        </div>
         <div id="sitesList">
           <!-- List of sites goes here -->
         </div>
-        <div class="addDomain">ADD A DOMAIN +</div>
+        <div class="addDomain">+ ADD A DOMAIN</div>
         <div id="save_domains">
           <button class="back">&laquo; Back</button>
           <button class="save_sites">Save your sites</button>
@@ -286,6 +299,7 @@
       </p>
     </div>
     <input type="hidden" class="trackChanges" value="0" />
+    <input type="hidden" class="showAdvanced" value="0" />
     <script type="module" src="js/options.js"></script>
   </body>
 </html>

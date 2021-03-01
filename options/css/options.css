@@ -57,7 +57,7 @@ fieldset {
 }
 .site {
   padding: 10px 15px 10px 15px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 0px solid #f0f0f0;
   display: flow-root;
 }
 a {
@@ -96,8 +96,16 @@ label:hover {
   font-family: "Open Sans", sans-serif;
 }
 #sitesList,
-#sitesButtons {
+#sitesButtons,
+#modes {
   text-align: center;
+  padding: 5px 0px;
+}
+#modes > a {
+  cursor: pointer;
+}
+#modes > a:hover {
+  text-decoration: underline;
 }
 .back,
 .save_sites,
@@ -149,8 +157,8 @@ label:hover {
 }
 .addDomain {
   clear: both;
-  padding: 5px 15px;
-  margin: 5px auto;
+  padding: 5px 30px;
+  margin: 15px auto;
   display: block;
   width: fit-content;
   background: #6edc60;
@@ -291,7 +299,7 @@ h4 {
   padding: 0px 25px;
   margin: auto;
   text-align: left;
-  max-width: 550px;
+  max-width: 800px;
   line-height: 25px;
 }
 #save {
@@ -340,23 +348,48 @@ input {
   padding: 0px 25px;
   margin: auto;
   text-align: left;
-  max-width: 550px;
+  max-width: 1024px;
   line-height: 25px;
   display: none;
 }
 #domains > p {
   text-align: center;
 }
+#domains > p > a {
+  cursor: pointer;
+  text-decoration: none;
+}
+#domains > p > a:hover {
+  text-decoration: underline;
+}
 #extensionOptions > #domains > div > p {
   border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
   font-size: 15px;
 }
 
+#domains #hint {
+  background-color: rgba(0, 0, 0, 0.1);
+  display: none;
+  width: 100%;
+}
+
 #domains .arrow {
-  float: left;
+  display: inline-block;
   text-align: center;
-  width: 8%;
+  width: 35px;
   padding-top: 27px;
+}
+
+@media screen and (max-width: 500px) {
+  #domains > p {
+    font-size: 14px;
+  }
+  #domains .arrow {
+    padding: 0px 4px 0px 20px;
+    font-size: 25px;
+    font-weight: 600;
+    transform: rotate(90deg);
+  }
 }
 
 #domains .edit {
@@ -368,16 +401,35 @@ input {
 }
 
 #domains .delete {
-  float: left;
+  /* opacity: 0; */
+  display: inline-block;
   text-align: center;
-  width: 8%;
+  width: 35px;
   cursor: pointer;
   padding-top: 27px;
 }
 
+#domains .delete > span {
+  color: red;
+  display: none;
+}
+
+/* #domains .site:hover .delete {
+  opacity: 1;
+} */
+
+@media screen and (max-width: 500px) {
+  #domains .delete {
+    width: 100%;
+  }
+  #domains .delete > span {
+    display: inline-block;
+  }
+}
+
 .cm_url {
-  width: 50%;
-  float: left;
+  width: calc(50% - 50px - 50px);
+  display: inline-block;
 }
 .cm_url > label {
   display: block;
@@ -392,9 +444,16 @@ input {
   margin: 0px !important;
 }
 
+@media screen and (max-width: 500px) {
+  .cm_url {
+    width: 100%;
+    display: block;
+  }
+}
+
 .cd_url {
-  width: 34%;
-  float: left;
+  width: calc(50% - 50px - 50px);
+  display: inline-block;
 }
 .cd_url > label {
   display: block;
@@ -409,21 +468,59 @@ input {
   margin: 0px !important;
 }
 
+@media screen and (max-width: 500px) {
+  .cd_url {
+    width: 100%;
+    display: block;
+  }
+}
+
+.lang_url {
+  width: 90px;
+  padding-left: 10px;
+  display: none;
+}
+.lang_url > label {
+  display: block;
+}
+.lang_url > input {
+  display: block;
+  width: -webkit-fill-available;
+  font-size: 14px;
+  padding: 7px;
+  border-radius: 3px;
+  border: 2px solid #ccc;
+  margin: 0px !important;
+}
+
+@media screen and (max-width: 500px) {
+  .lang_url {
+    width: 100%;
+    padding-left: 0px;
+    padding-top: 20px;
+  }
+}
+
 input[name="key"],
-input[name="value"] {
-  background-color: transparent;
-  border: 0px;
+input[name="value"],
+input[name="lang"] {
+  background-color: #f0f0f0;
+  border-width: 2px;
+  font-size: 13px;
+  color: #333333;
   text-transform: lowercase;
   transition: border ease-in-out 0.1s;
 }
 input[name="key"]:focus,
-input[name="value"]:focus {
+input[name="value"]:focus,
+input[name="lang"]:focus {
   color: #000;
   border-color: #4793f8;
 }
 
 input[name="key"]::placeholder,
-input[name="value"]::placeholder {
+input[name="value"]::placeholder,
+input[name="lang"]::placeholder {
   color: #ccc;
 }
 .site label {

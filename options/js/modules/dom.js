@@ -22,7 +22,7 @@ const animateHeader = (scroll_pos) => {
  */
 const trackChanges = (isImport = true) => {
   !isImport ? (document.querySelector(".save_sites").innerHTML = document.querySelector(".save_sites").innerHTML.replace("*", "") + "*") : false;
-  !isImport ? (document.querySelector(".trackChanges").value = "1") : false;
+  !isImport ? (document.querySelector(".trackChanges").value = "0") : false;
 };
 
 /**
@@ -90,12 +90,12 @@ const addDomain = (text = "", tocreate = undefined, isImport = false) => {
         let html = `
         <legend><span class="domainDisplay">${newUrl.origin}</span> <div class="edit editDomain_${countDomains}"></div></legend>
         <fieldset class="domain" id="domain_${countDomains}" data-domain="${newUrl.origin}">
-        </fieldset>
-        <div class="addSite addSite_${countDomains}">ADD A SITE +</div>`;
+        <div class="addSite addSite_${countDomains}">+ ADD A SITE</div>
+        </fieldset>`;
         document.querySelector("#sitesList").insertAdjacentHTML("beforeend", html);
         trackChanges(isImport);
         //Click events
-        document.querySelector(".addSite_" + countDomains).addEventListener("click", addSite.bind("", "domain_" + countDomains, "", "", false));
+        document.querySelector(".addSite_" + countDomains).addEventListener("click", addSite.bind("", "domain_" + countDomains, "", "", "", false));
         document.querySelector(".editDomain_" + countDomains).addEventListener("click", editDomain.bind("", "domain_" + countDomains));
         tocreate === undefined ? addSite("domain_" + countDomains, "", "") : false;
         returnId = `domain_` + countDomains;
@@ -142,20 +142,22 @@ const editDomain = (domainId) => {
 /**
  * Prepend input fields to add a site
  */
-const addSite = (domain, path, cd, autoadd = false, name = "", isImport = "") => {
+const addSite = (domain, path, cd, lang = "", autoadd = false, name = "", isImport = "") => {
   let isExisting = false;
 
   //Check if sites already exists
   document.querySelectorAll("#" + domain + " input[name='key']").forEach((elem) => {
-    if (path == elem.value) {
+    let elemLang = elem.parentElement.parentElement.querySelector(".lang_url > input") ? elem.parentElement.parentElement.querySelector(".lang_url > input").value.toLowerCase() : "";
+    if (path == elem.value && lang.toLowerCase() == elemLang) {
       !isImport ? alert(`This site "` + elem.value + `"already exist.`) : false;
       isExisting = true;
-      console.log("Site already exists", elem.value);
+      console.log("Site already exists", elem.value + " " + elemLang);
     }
   });
 
   if (isExisting == false) {
     let countSites = document.querySelectorAll(".site").length + 1;
+    let showAdvanced = document.querySelector(".showAdvanced").value == 1 ? "display:inline-block" : "display:none";
     //prettier-ignore
     let html = `
     <div class="site" id="site_${countSites}">
@@ -167,8 +169,12 @@ const addSite = (domain, path, cd, autoadd = false, name = "", isImport = "") =>
         <div class="cd_url">
             <label for="siteUrl">Site URL</label>
             <input id="siteUrl" name="value" type="url" placeholder="e.g https://..." pattern="https?://.*" value="${decodeURI(cd)}"> 
+        </div>
+        <div class="lang_url" style="${showAdvanced}">
+            <label for="langUrl">Language</label>
+            <input id="langUrl" name="lang" type="url" placeholder="e.g fr-FR" value="${decodeURI(lang)}"> 
         </div> 
-        <div class="delete deleteSite_${countSites}" >❌</div>
+        <div class="delete deleteSite_${countSites}" title="Delete this site">❌ <span>Delete site</span></div>
     </div>`;
     document.querySelector("#" + domain).insertAdjacentHTML("afterbegin", html);
     trackChanges(isImport);

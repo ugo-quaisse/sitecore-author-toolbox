@@ -141,7 +141,7 @@ document.querySelector("#settings").onclick = function () {
     if (url.searchParams.get("site")) {
       let domain = new URL(url.searchParams.get("domain")).origin;
       let domainId = addDomain("", domain, true);
-      addSite(domainId, url.searchParams.get("site"), "", true, url.searchParams.get("name"));
+      addSite(domainId, url.searchParams.get("site"), "", "", true, url.searchParams.get("name"));
     }
   }, 500);
 };
@@ -186,7 +186,7 @@ document.querySelector(".exportSites").onclick = function (event) {
   var json = {};
   var count = 0;
   var error = false;
-  var domain, key, value;
+  var domain, key, value, lang;
 
   document.querySelectorAll(".domain").forEach(function (url) {
     url.querySelectorAll(".site").forEach(function (site) {
@@ -194,7 +194,10 @@ document.querySelector(".exportSites").onclick = function (event) {
       domain = url.dataset.domain;
       key = site.querySelector("input[name='key']").value;
       value = site.querySelector("input[name='value']").value;
+      lang = site.querySelector("input[name='lang']").value;
       error = false;
+      //Lang check
+      lang = lang == "" ? "" : lang.toLowerCase();
       //Sanity check
       if (key == "") {
         site.querySelector("input[name='key']").setAttribute("style", "border-color:red");
@@ -210,7 +213,7 @@ document.querySelector(".exportSites").onclick = function (event) {
           //Build object for this domain
           !json[domain] ? (json[domain] = {}) : false;
           //Add site to this domain
-          json[domain][count] = { [key]: value };
+          json[domain][count] = { [key]: value, language: lang };
           count++;
           site.querySelector("input[name='key']").setAttribute("style", "border-color:#ccc");
           site.querySelector("input[name='value']").setAttribute("style", "border-color:#ccc");
@@ -246,7 +249,7 @@ document.querySelector(".save_sites").onclick = function (event) {
   var json = {};
   var count = 0;
   var error = false;
-  var domain, key, value;
+  var domain, key, value, lang;
 
   document.querySelectorAll(".domain").forEach(function (url) {
     url.querySelectorAll(".site").forEach(function (site) {
@@ -254,6 +257,9 @@ document.querySelector(".save_sites").onclick = function (event) {
       domain = url.dataset.domain;
       key = site.querySelector("input[name='key']").value;
       value = site.querySelector("input[name='value']").value;
+      lang = site.querySelector("input[name='lang']").value;
+      //Lang check
+      lang = lang == "" ? "" : lang.toLowerCase();
       //Sanity check
       if (key == "") {
         site.querySelector("input[name='key']").setAttribute("style", "border-color:red");
@@ -269,7 +275,7 @@ document.querySelector(".save_sites").onclick = function (event) {
           //Build object for this domain
           !json[domain] ? (json[domain] = {}) : false;
           //Add site to this domain
-          json[domain][count] = { [key]: value };
+          json[domain][count] = { [key]: value, language: lang };
           count++;
           site.querySelector("input[name='key']").setAttribute("style", "border-color:#ccc");
           site.querySelector("input[name='value']").setAttribute("style", "border-color:#ccc");
@@ -304,6 +310,37 @@ document.querySelector(".save_sites").onclick = function (event) {
       }, 1500);
     }
   });
+};
+
+/**
+ * Show hints
+ */
+document.querySelector(".show_hint").onclick = function () {
+  document.querySelector("#hint").setAttribute("style", "display:inline-block");
+};
+
+/**
+ * Show more options
+ */
+document.querySelector(".advanced_mode").onclick = function () {
+  document.querySelectorAll(".lang_url").forEach(function (elem) {
+    elem.setAttribute("style", "display:inline-block");
+  });
+  document.querySelector(".showAdvanced").value = 1;
+  document.querySelector(".advanced_mode").setAttribute("style", "display:none");
+  document.querySelector(".basic_mode").setAttribute("style", "display:block");
+};
+
+/**
+ * Show less options
+ */
+document.querySelector(".basic_mode").onclick = function () {
+  document.querySelectorAll(".lang_url").forEach(function (elem) {
+    elem.setAttribute("style", "display:none");
+  });
+  document.querySelector(".showAdvanced").value = 0;
+  document.querySelector(".basic_mode").setAttribute("style", "display:none");
+  document.querySelector(".advanced_mode").setAttribute("style", "display:block");
 };
 
 /**

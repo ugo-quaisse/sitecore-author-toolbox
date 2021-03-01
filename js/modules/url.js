@@ -11,27 +11,41 @@ export { getSiteUrl, initLiveUrl, checkUrlStatus };
 /**
  * Find and Match site URL with user settings in storage
  */
-const getSiteUrl = (storage, path) => {
+const getSiteUrl = (storage, path, language) => {
   storage.site_manager == undefined ? (storage.site_manager = true) : false;
   //Get SiteName
   let homePath = path.split("/home/")[0] + "/home/";
   let liveUrl;
-  // console.log("Current domain ->", global.urlOrigin);
-  // console.log("Current path ->", path);
+  let liveUrlLanguageSpecific = false;
 
-  //Site Manager
+  //Site Manager - Test 1: attemp with language specific site
   for (var [domain, values] of Object.entries(storage.site_manager)) {
     if (domain == global.urlOrigin) {
-      // console.log("-> Domain check OK -> ", domain);
       // eslint-disable-next-line no-unused-vars
       for (var [id, site] of Object.entries(values)) {
+        let siteLanguage = Object.entries(site)[1][1].toLowerCase();
         let siteStorage = Object.entries(site)[0][0].slice(-1) != "/" ? Object.entries(site)[0][0] + "/" : Object.entries(site)[0][0];
-        // console.log("--> Site recorded-> ", siteStorage.toLowerCase());
-        // console.log("--> Site tracked-> ", homePath.toLowerCase());
-        if (siteStorage.toLowerCase() == homePath.toLowerCase()) {
+        if (siteLanguage == language && siteStorage.toLowerCase() == homePath.toLowerCase()) {
           liveUrl = Object.entries(site)[0][1].slice(-1) == "/" ? decodeURI(Object.entries(site)[0][1].slice(0, -1)) : decodeURI(Object.entries(site)[0][1]);
-          // console.log("--> **Site Manager**", liveUrl);
+          liveUrlLanguageSpecific = true;
           break;
+        }
+      }
+    }
+  }
+
+  //Site Manager - Test 2: attemp without language specific site
+  if (!liveUrlLanguageSpecific) {
+    for ([domain, values] of Object.entries(storage.site_manager)) {
+      if (domain == global.urlOrigin) {
+        // eslint-disable-next-line no-unused-vars
+        for ([id, site] of Object.entries(values)) {
+          let siteLanguage = Object.entries(site)[1][1].toLowerCase();
+          let siteStorage = Object.entries(site)[0][0].slice(-1) != "/" ? Object.entries(site)[0][0] + "/" : Object.entries(site)[0][0];
+          if (siteLanguage == "" && siteStorage.toLowerCase() == homePath.toLowerCase()) {
+            liveUrl = Object.entries(site)[0][1].slice(-1) == "/" ? decodeURI(Object.entries(site)[0][1].slice(0, -1)) : decodeURI(Object.entries(site)[0][1]);
+            break;
+          }
         }
       }
     }
@@ -64,7 +78,7 @@ const initLiveUrl = (storage) => {
   let badge;
   let barStyle = storage.feature_experimentalui ? "scWarning" : "scWarning";
   //Live URL
-  let liveUrl = getSiteUrl(storage, ScItem.pathFull);
+  let liveUrl = getSiteUrl(storage, ScItem.pathFull, ScItem.language);
   let alternativeUrl = window.location.origin + "/?sc_itemid=" + ScItem.id + "&sc_mode=normal&sc_lang=" + ScItem.language + "&sc_version=" + ScItem.version;
   //Path
   let temp = ScItem.pathFull.toLowerCase().split("/home/");

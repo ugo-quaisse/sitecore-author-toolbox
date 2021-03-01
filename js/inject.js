@@ -619,8 +619,8 @@ function openLightbox(id, from = "frame") {
   //Show lightbox
   lightbox ? lightbox.setAttribute("style", "display:block") : false;
   //Browse all items
-
-  let mediaThumbnails = from == "frame" ? document.querySelectorAll(".mediaThumbnail > img") : document.querySelector("iframe[src*='/Media/']").contentDocument.querySelectorAll(".mediaThumbnail > img");
+  let mediaThumbnails =
+    from == "frame" ? document.querySelectorAll("a:not(.scMediaFolder) > .mediaThumbnail > img") : document.querySelector("iframe[src*='/Media/']").contentDocument.querySelectorAll("a:not(.scMediaFolder) > .mediaThumbnail > img");
   for (var i = 0; i < mediaThumbnails.length; ++i) {
     if (item == mediaThumbnails[i]) {
       let prev = mediaThumbnails[i - 1] ? mediaThumbnails[i - 1].dataset.id : false;

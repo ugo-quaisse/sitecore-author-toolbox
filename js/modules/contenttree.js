@@ -59,7 +59,7 @@ const initAutoExpandTree = (storage) => {
                 subTreeMain.querySelector(".scCountNodes") ? subTreeMain.querySelector(".scCountNodes").remove() : false;
               }
             }
-          }, 300);
+          }, 500);
         }
 
         //Media Upload
@@ -76,7 +76,7 @@ const initAutoExpandTree = (storage) => {
                 console.log(newNodes);
               }
             }
-          }, 300);
+          }, 500);
         }
       },
       false
@@ -99,7 +99,7 @@ const initAutoExpandTree = (storage) => {
               nextGlyphId.click();
             }
           }
-        }, 300);
+        }, 500);
       },
       false
     );

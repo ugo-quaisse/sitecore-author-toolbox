@@ -59,37 +59,133 @@ body.satExperimentalUi.satDark .scMessageBar.scNeutral {
 }
 
 body.satExperimentalUi.satDark .scMessageBar.scSuccess {
-  background-color: #044740 !important;
+  background-color: #1a4617 !important;
 }
 
 body.satExperimentalUi.satDark .scMessageBar.scWarning {
-  background-color: #61520d !important;
+  background-color: #493d17 !important;
 }
 
 body.satExperimentalUi.satDark .scMessageBar.scError {
-  background-color: #6b120f !important;
+  background-color: #4a1718 !important;
 }
 
 body.satExperimentalUi.satDark .scMessageBar.scInformation {
-  background-color: #040b47 !important;
+  background-color: #153749 !important;
 }
 
-body.satExperimentalUi.satDark .scMessageBarIcon {
+body.satExperimentalUi.satDark .scMessageBar.scNeutral .scMessageBarIcon {
   background-color: var(--whiteFaded) !important;
 }
 
-body.satExperimentalUi.satDark .liveUrlBadge {
-  background-color: var(--whiteFaded);
+body.satExperimentalUi.satDark .scMessageBar.scSuccess .scMessageBarIcon {
+  background-color: #49b63f !important;
 }
 
-body.satExperimentalUi.satDark .scMessageBarTextContainer > .scMessageBarTitle,
-body.satExperimentalUi.satDark .scMessageBarTextContainer > .scMessageBarText,
-body.satExperimentalUi.satDark .scMessageBarTextContainer > .scMessageBar a,
-body.satExperimentalUi.satDark .scMessageBarTextContainer .scMessageBarOption,
-body.satExperimentalUi.satDark .scMessageBarTextContainer .scMessageBarOptions > .scMessageBarOptionBullet {
+body.satExperimentalUi.satDark .scMessageBar.scWarning .scMessageBarIcon {
+  background-color: #ffcc01 !important;
+}
+
+body.satExperimentalUi.satDark .scMessageBar.scError .scMessageBarIcon {
+  background-color: #b90e29 !important;
+}
+
+body.satExperimentalUi.satDark .scMessageBar.scInformation .scMessageBarIcon {
+  background-color: #1badf8 !important;
+}
+
+body.satExperimentalUi.satDark .scMessageBar.scNeutral .liveUrlBadge,
+body.satExperimentalUi.satDark .scMessageBar.scNeutral .liveUrlLoader {
+  background-color: var(--whiteFaded);
+  color: var(--black);
+  margin-left: 5px;
+  filter: brightness(0.43);
+}
+
+body.satExperimentalUi.satDark .scMessageBar.scSuccess .liveUrlBadge,
+body.satExperimentalUi.satDark .scMessageBar.scSuccess .liveUrlLoader {
+  background-color: #49b63f;
+  color: var(--black);
+  margin-left: 5px;
+  filter: brightness(0.43);
+}
+
+body.satExperimentalUi.satDark .scMessageBar.scWarning .liveUrlBadge,
+body.satExperimentalUi.satDark .scMessageBar.scWarning .liveUrlLoader {
+  background-color: #ffcc01;
+  color: var(--black);
+  margin-left: 5px;
+  filter: brightness(0.43);
+}
+
+body.satExperimentalUi.satDark .scMessageBar.scError .liveUrlBadge,
+body.satExperimentalUi.satDark .scMessageBar.scError .liveUrlLoader {
+  background-color: #b90e29;
+  color: var(--black);
+  margin-left: 5px;
+  filter: brightness(0.43);
+}
+
+body.satExperimentalUi.satDark .scMessageBar.scInformation .liveUrlBadge,
+body.satExperimentalUi.satDark .scMessageBar.scInformation .liveUrlLoader {
+  background-color: #1badf8;
+  color: var(--black);
+  margin-left: 5px;
+  filter: brightness(0.43);
+}
+
+body.satExperimentalUi.satDark .scMessageBar.scNeutral .scMessageBarTextContainer > .scMessageBarTitle,
+body.satExperimentalUi.satDark .scMessageBar.scNeutral .scMessageBarTextContainer > .scMessageBarText,
+body.satExperimentalUi.satDark .scMessageBar.scNeutral .scMessageBarTextContainer > .scMessageBar a,
+body.satExperimentalUi.satDark .scMessageBar.scNeutral .scMessageBarTextContainer .scMessageBarOption,
+body.satExperimentalUi.satDark .scMessageBar.scNeutral .scMessageBarTextContainer .scMessageBarOptions > .scMessageBarOptionBullet {
   color: var(--white) !important;
   text-decoration-color: rgb(255 255 255 / 0.7) !important;
   opacity: 0.7;
+}
+
+body.satExperimentalUi.satDark .scMessageBar.scSuccess .scMessageBarTextContainer > .scMessageBarTitle,
+body.satExperimentalUi.satDark .scMessageBar.scSuccess .scMessageBarTextContainer > .scMessageBarText,
+body.satExperimentalUi.satDark .scMessageBar.scSuccess .scMessageBarTextContainer > .scMessageBar a,
+body.satExperimentalUi.satDark .scMessageBar.scSuccess .scMessageBarTextContainer .scMessageBarOption,
+body.satExperimentalUi.satDark .scMessageBar.scSuccess .scMessageBarTextContainer .scMessageBarOptions > .scMessageBarOptionBullet {
+  color: #49b63f !important;
+  text-decoration-color: #49b63f !important;
+  filter: brightness(2.3);
+  opacity: 1;
+}
+
+body.satExperimentalUi.satDark .scMessageBar.scWarning .scMessageBarTextContainer > .scMessageBarTitle,
+body.satExperimentalUi.satDark .scMessageBar.scWarning .scMessageBarTextContainer > .scMessageBarText,
+body.satExperimentalUi.satDark .scMessageBar.scWarning .scMessageBarTextContainer > .scMessageBar a,
+body.satExperimentalUi.satDark .scMessageBar.scWarning .scMessageBarTextContainer .scMessageBarOption,
+body.satExperimentalUi.satDark .scMessageBar.scWarning .scMessageBarTextContainer .scMessageBarOptions > .scMessageBarOptionBullet {
+  color: #ffcc01 !important;
+  text-decoration-color: #ffcc01 !important;
+  filter: brightness(2.3);
+  opacity: 1;
+}
+
+body.satExperimentalUi.satDark .scMessageBar.scError .scMessageBarTextContainer > .scMessageBarTitle,
+body.satExperimentalUi.satDark .scMessageBar.scError .scMessageBarTextContainer > .scMessageBarText,
+body.satExperimentalUi.satDark .scMessageBar.scError .scMessageBarTextContainer > .scMessageBar a,
+body.satExperimentalUi.satDark .scMessageBar.scError .scMessageBarTextContainer .scMessageBarOption,
+body.satExperimentalUi.satDark .scMessageBar.scError .scMessageBarTextContainer .scMessageBarOptions > .scMessageBarOptionBullet {
+  color: #b90e29 !important;
+  text-decoration-color: #b90e29 !important;
+  filter: brightness(2.3);
+  opacity: 1;
+}
+
+body.satExperimentalUi.satDark .scMessageBar.scInformation .scMessageBarTextContainer > .scMessageBarTitle,
+body.satExperimentalUi.satDark .scMessageBar.scInformation .scMessageBarTextContainer > .scMessageBarText,
+body.satExperimentalUi.satDark .scMessageBar.scInformation .scMessageBarTextContainer > .scMessageBar a,
+body.satExperimentalUi.satDark .scMessageBar.scInformation .scMessageBarTextContainer .scMessageBarOption,
+body.satExperimentalUi.satDark .scMessageBar.scInformation .scMessageBarTextContainer .scMessageBarOptions > .scMessageBarOptionBullet {
+  color: #1badf8 !important;
+  text-decoration-color: #1badf8 !important;
+  filter: brightness(2.3);
+  opacity: 1;
 }
 
 /* Ends */

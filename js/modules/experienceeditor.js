@@ -28,7 +28,7 @@ const storeCurrentPageEE = () => {
 const initDefaultTextEE = (storage) => {
   storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;
   if (storage.feature_experienceeditor) {
-    document.querySelectorAll("*[scdefaulttext], .meta-component-wrapper, .scLooseFrameZone").forEach(function (text) {
+    document.querySelectorAll("*[scdefaulttext], .meta-component-wrapper, .scEnabledChrome, .scTextWrapper").forEach(function (text) {
       let test = text.innerText.toLowerCase();
       if (test.includes(" field]") || test.includes(" empty]") || test.includes(" link]")) {
         text.innerHTML = `<i class="scDefaultTextEE">${text.innerText}</i>`;

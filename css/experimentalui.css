@@ -1211,6 +1211,7 @@ body.satExperimentalUi .scNeutral .liveUrlLoader,
 body.satExperimentalUi .scNeutral .liveUrlBadge {
   background-color: var(--grey);
   color: var(--black5);
+  margin-left: 5px;
 }
 
 /* Information message */
@@ -1283,6 +1284,7 @@ body.satExperimentalUi .scWarning .liveStatusRed {
 body.satExperimentalUi .scWarning .liveUrlLoader,
 body.satExperimentalUi .scWarning .liveUrlBadge {
   background-color: var(--messageWarningLink);
+  margin-left: 5px;
 }
 
 [data-bind="foreach: warnings" i] > .alert-info {
@@ -1328,6 +1330,7 @@ body.satExperimentalUi .scSuccess .liveStatusGreen {
 body.satExperimentalUi .scSuccess .liveUrlLoader,
 body.satExperimentalUi .scSuccess .liveUrlBadge {
   background-color: var(--messageSuccessLink);
+  margin-left: 5px;
 }
 
 /* Error message */
@@ -1355,6 +1358,7 @@ body.satExperimentalUi .scError .liveStatusRed {
 body.satExperimentalUi .scError .liveUrlLoader,
 body.satExperimentalUi .scError .liveUrlBadge {
   background-color: var(--messageDangerLink);
+  margin-left: 5px;
 }
 
 [data-bind="foreach: errors" i] > .alert-info {
@@ -1382,6 +1386,7 @@ body.satExperimentalUi .liveUrlBadge {
   color: var(--white);
   font-size: 12px;
   padding: 1px 5px;
+  margin-left: 5px;
 }
 
 body.satExperimentalUi .liveUrlBadge:hover {
@@ -1762,6 +1767,10 @@ body.satExperimentalUi .scMediaExplorer tbody tr:hover {
 
 body.satExperimentalUi .scMediaExplorer tbody tr:hover .mediaTitle {
   color: var(--accentText) !important;
+}
+
+body.satExperimentalUi .scMediaFolder .scMediaIcon {
+  opacity: 0.7;
 }
 
 body.satExperimentalUi .scMediaCard .scMediaValidation {

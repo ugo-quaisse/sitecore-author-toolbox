@@ -2972,6 +2972,10 @@ body.satDark .sc-quickbar-tab:hover {
   background-color: var(--blue) !important;
   color: var(--text) !important;
 }
+body.satDark .sc-quickbar-tab-selected,
+body.satDark .sc-quickbar-tab-selected:hover {
+  background-color: var(--black2);
+}
 body.satDark .sc-ribbon .sc-chunk:after {
   background-color: var(--black1) !important;
 }

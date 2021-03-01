@@ -260,6 +260,7 @@ const initMediaExplorer = (storage) => {
       //Adjust style
       item.querySelector(".scMediaBorder > img").setAttribute("loading", "lazy");
       mediaFolder == "Folder" ? item.querySelector(".scMediaBorder > img").setAttribute("src", global.iconMediaFolder) : item.querySelector(".scMediaBorder > img").setAttribute("src", mediaThumbnail);
+      mediaFolder == "Folder" ? item.classList.add("scMediaFolder") : false;
       item.querySelector(".scMediaBorder > img").setAttribute("data-id", mediaId);
       item.querySelector(".scMediaBorder > img").setAttribute("data-size", mediaDimensions);
       item.querySelector(".scMediaBorder > img").setAttribute("data-name", mediaTitle);

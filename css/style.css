@@ -253,7 +253,7 @@ body.satExtension #scLightbox > .scLightboxHeader {
 
 body.satExtension #scLightbox > .scLightboxHeader > .scLightboxTitle {
   float: left;
-  width: 50%;
+  width: calc(100% - 200px);
   padding: 14px;
   text-align: left;
   color: var(--white);

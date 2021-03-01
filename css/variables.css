@@ -31,6 +31,7 @@
   --grey17: #d7d8da;
   --grey18: #ececec;
   --grey19: #ebebeb;
+  --grey20: #fafafa;
 
   --experimentalBackground: #f7f7f7;
 
@@ -91,17 +92,14 @@
 :root body.satEEDark {
   --text: #c0c0c0 !important;
   --textFaded: #c0c0c0 !important;
-  /* --experimentalBackground: #0c1116;
-  --black1: #0c1116 !important;
-  --black2: #161b22 !important;
-  --black3: #21262d !important; */
   --grey5: #2b2b2b !important;
   --darkblue: #1b1d21 !important;
   --iconInvert: 1;
   --background: #000;
 }
 
-body.satExperimentalUi.satDark {
+:root body.satExperimentalUi.satDark,
+:root body.satEEDark {
   --experimentalBackground: #0c1116;
   --black1: #0c1116 !important;
   --black2: #161b22 !important;

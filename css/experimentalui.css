@@ -2349,6 +2349,11 @@ body.satExperimentalUi .sc-quickbar-tab {
 
 body.satExperimentalUi .sc-quickbar-tab:hover {
   text-decoration: none;
+  background-color: var(--grey20) !important;
+}
+
+body.satExperimentalUi .sc-quickbar-tab-selected {
+  font-weight: 600;
 }
 
 body.satExperimentalUi .btn-default {

@@ -372,7 +372,7 @@ body.satExperimentalUi.satDark #Page {
 body.satExperimentalUi.satDark #ContentTreePanel .scContentTreeNodeGlyph:hover + a > span,
 body.satExperimentalUi.satDark #ContentTreePanel div.scContentTreeNode > img:hover + a > span,
 body.satExperimentalUi.satDark #ContentTreePanel a.scContentTreeNodeNormal:hover > span {
-  background-color: var(--grey2) !important;
+  background-color: var(--black2) !important;
 }
 
 body.satExperimentalUi.satDark .scFormDialogHeader,
@@ -512,6 +512,10 @@ body.satExperimentalUi.satDark .sc-quickbar-item,
 body.satExperimentalUi.satDark .sc-quickbar-tab,
 body.satExperimentalUi.satDark .sc-breadcrumb-item-path {
   color: var(--text) !important;
+}
+
+body.satExperimentalUi.satDark .sc-quickbar-tab:hover {
+  background-color: var(--black2) !important;
 }
 
 body.satExperimentalUi.satDark .sc-ribbon .pressed {

@@ -951,21 +951,6 @@ body.satDark .scTab_Hover {
   background-color: #e3e3e3;
 }
 
-body.satDark nobr:first-child > .scTab,
-body.satDark nobr:first-child > .scTab_Hover {
-  border-left: 1px solid var(--black3) !important;
-}
-
-body.satDark nobr:first-child > .scTabActive,
-body.satDark nobr:first-child > .scTabActive_Hover {
-  border-left: 1px solid #474747;
-}
-
-body.satDark nobr:last-child > .scTabActive,
-body.satDark nobr:last-child > .scTabActive_Hover {
-  border-right: 1px solid #474747;
-}
-
 body.satDark .scVerticalTabstrip .scVerticalTabs {
   border-right: 1px solid #474747;
 }

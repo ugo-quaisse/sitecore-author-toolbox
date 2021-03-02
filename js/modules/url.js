@@ -17,6 +17,7 @@ const getSiteUrl = (storage, path, language) => {
   let homePath = path.split("/home/")[0] + "/home/";
   let liveUrl;
   let liveUrlLanguageSpecific = false;
+  let scSite = {};
 
   //Site Manager - Test 1: attemp with language specific site
   for (var [domain, values] of Object.entries(storage.site_manager)) {
@@ -24,10 +25,16 @@ const getSiteUrl = (storage, path, language) => {
       // eslint-disable-next-line no-unused-vars
       for (var [id, site] of Object.entries(values)) {
         let siteLanguage = Object.entries(site)[1][1].toLowerCase();
+        let siteLanguageEmbedding = Object.entries(site)[2][1];
         let siteStorage = Object.entries(site)[0][0].slice(-1) != "/" ? Object.entries(site)[0][0] + "/" : Object.entries(site)[0][0];
         if (siteLanguage == language && siteStorage.toLowerCase() == homePath.toLowerCase()) {
           liveUrl = Object.entries(site)[0][1].slice(-1) == "/" ? decodeURI(Object.entries(site)[0][1].slice(0, -1)) : decodeURI(Object.entries(site)[0][1]);
           liveUrlLanguageSpecific = true;
+          //Fill scSite object
+          scSite.path = siteStorage.toLowerCase();
+          scSite.url = liveUrl.toLowerCase();
+          scSite.language = siteLanguage.toLowerCase();
+          scSite.languageEmbedding = siteLanguageEmbedding;
           break;
         }
       }
@@ -41,9 +48,15 @@ const getSiteUrl = (storage, path, language) => {
         // eslint-disable-next-line no-unused-vars
         for ([id, site] of Object.entries(values)) {
           let siteLanguage = Object.entries(site)[1][1].toLowerCase();
+          let siteLanguageEmbedding = Object.entries(site)[2][1];
           let siteStorage = Object.entries(site)[0][0].slice(-1) != "/" ? Object.entries(site)[0][0] + "/" : Object.entries(site)[0][0];
           if (siteLanguage == "" && siteStorage.toLowerCase() == homePath.toLowerCase()) {
             liveUrl = Object.entries(site)[0][1].slice(-1) == "/" ? decodeURI(Object.entries(site)[0][1].slice(0, -1)) : decodeURI(Object.entries(site)[0][1]);
+            //Fill scSite object
+            scSite.path = siteStorage.toLowerCase();
+            scSite.url = liveUrl.toLowerCase();
+            scSite.language = siteLanguage.toLowerCase();
+            scSite.languageEmbedding = siteLanguageEmbedding;
             break;
           }
         }
@@ -57,12 +70,17 @@ const getSiteUrl = (storage, path, language) => {
       if (window.location.origin == domain) {
         liveUrl = decodeURI(storage.domain_manager[domain]);
         // console.log("**Domain Manager**", liveUrl);
+        //Fill scSite object
+        scSite.path = domain.toLowerCase();
+        scSite.url = liveUrl.toLowerCase();
+        scSite.language = "";
+        scSite.languageEmbedding = true;
         break;
       }
     }
   }
 
-  return liveUrl;
+  return scSite;
 };
 
 /**
@@ -78,7 +96,7 @@ const initLiveUrl = (storage) => {
   let badge;
   let barStyle = storage.feature_experimentalui ? "scWarning" : "scWarning";
   //Live URL
-  let liveUrl = getSiteUrl(storage, ScItem.pathFull, ScItem.language);
+  let ScSite = getSiteUrl(storage, ScItem.pathFull, ScItem.language);
   let alternativeUrl = window.location.origin + "/?sc_itemid=" + ScItem.id + "&sc_mode=normal&sc_lang=" + ScItem.language + "&sc_version=" + ScItem.version;
   //Path
   let temp = ScItem.pathFull.toLowerCase().split("/home/");
@@ -104,19 +122,15 @@ const initLiveUrl = (storage) => {
       //Get cookie sxa_site
       chrome.runtime.sendMessage({ greeting: "sxa_site" }, function (response) {
         //Update live Url
-        if (liveUrl == undefined) {
+        if (ScSite.url == undefined) {
           badge = "CM server";
-          liveUrl = window.location.origin + "/" + ScItem.language + "/" + sitecorePath;
+          ScSite.url = window.location.origin + "/" + ScItem.language + "/" + sitecorePath;
         } else {
           badge = "CD server";
-          //Tokens
-          liveUrl = liveUrl.includes("{lang}") ? liveUrl.replace("{lang}", ScItem.language) + "/" + sitecorePath : liveUrl + "/" + ScItem.language + "/" + sitecorePath;
-          liveUrl.includes("{nolang}")
-            ? (liveUrl = liveUrl
-                .replace("{nolang}/", "")
-                .replace("{nolang}", "")
-                .replace("/" + ScItem.language + "/", "/"))
-            : false;
+          //Language embedding position
+          ScSite.url = ScSite.url.includes("{lang}") ? ScSite.url.replace("{lang}", ScItem.language) + "/" + sitecorePath : ScSite.url + "/" + ScItem.language + "/" + sitecorePath;
+          //Language embedding disabled
+          ScSite.languageEmbedding == false ? (ScSite.url = ScSite.url.replace("/" + ScItem.language + "/", "/")) : false;
         }
 
         //Update alternative Url
@@ -137,7 +151,7 @@ const initLiveUrl = (storage) => {
               </div>
               <div class="scMessageBarText">To preview this page in <b>"${scLanguageTxtLong}".</b></div>
               <ul class="scMessageBarOptions" style="margin:0px">
-              <li class="scMessageBarOptionBullet"><a href="${decodeURI(liveUrl)}" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this link</a> or try <a href="${alternativeUrl}" target="_blank" class="scMessageBarOption">this alternative link</a></li>
+              <li class="scMessageBarOptionBullet"><a href="${decodeURI(ScSite.url)}" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this link</a> or try <a href="${alternativeUrl}" target="_blank" class="scMessageBarOption">this alternative link</a></li>
               </ul>
               </div>
             </div>`;
@@ -162,7 +176,7 @@ const initLiveUrl = (storage) => {
         }
 
         //Insert link into Quickinfo table
-        liveUrlQuickInfo(liveUrl);
+        liveUrlQuickInfo(ScSite.url);
 
         /**
          * Live status
@@ -171,7 +185,7 @@ const initLiveUrl = (storage) => {
           chrome.runtime.sendMessage(
             {
               greeting: "get_pagestatus",
-              url: liveUrl,
+              url: ScSite.url,
               source: null,
               experimental: true,
             },

@@ -130,6 +130,9 @@ document.querySelector("#settings").onclick = function () {
   document.querySelector(".addDomain").addEventListener("click", addDomain.bind("", "", undefined));
   document.querySelector(".importSites").addEventListener("change", uploadJson);
   document.querySelector(".importSitesVisible").addEventListener("click", chooseJson);
+  //Get status of advanced mode
+  let advancedMode = localStorage.getItem("scAdvancedMode");
+  advancedMode == "true" ? document.querySelector(".advanced_mode").click() : document.querySelector(".basic_mode").click();
   //Generating list of sites
   chrome.storage.sync.get(["site_manager"], (storage) => {
     storage.site_manager ? parseJsonSites(storage.site_manager) : false;
@@ -141,7 +144,7 @@ document.querySelector("#settings").onclick = function () {
     if (url.searchParams.get("site")) {
       let domain = new URL(url.searchParams.get("domain")).origin;
       let domainId = addDomain("", domain, true);
-      addSite(domainId, url.searchParams.get("site"), "", "", true, url.searchParams.get("name"));
+      addSite(domainId, url.searchParams.get("site"), "", "", true, true, url.searchParams.get("name"));
     }
   }, 500);
 };
@@ -151,29 +154,20 @@ document.querySelector("#settings").onclick = function () {
  */
 document.querySelector(".back").onclick = function (event) {
   event.preventDefault();
-  let reload = false;
+  document.querySelectorAll(".domain, #sitesList > legend").forEach((div) => {
+    div.remove();
+  });
 
-  // if (document.querySelector(".trackChanges").value == "1") {
-  //   if (!confirm("Changes that you made may not be saved.\nContinue without saving?") == true) {
-  //     reload = false;
-  //   }
-  // }
-  if (reload) {
-    document.querySelectorAll(".domain").forEach((div) => {
-      div.remove();
-    });
-
-    var url = new URL(window.location.href);
-    var configureDomains = url.searchParams.get("configure_domains");
-    var backUrl = url.searchParams.get("url");
-    if (configureDomains == "false") {
-      window.open(backUrl + "&sc_bw=1");
-      window.close();
-    } else {
-      document.querySelector("#main").setAttribute("style", "display:block");
-      document.querySelector("#domains").setAttribute("style", "display:none");
-      document.querySelector("#save").setAttribute("style", "display:block");
-    }
+  var url = new URL(window.location.href);
+  var configureDomains = url.searchParams.get("configure_domains");
+  var backUrl = url.searchParams.get("url");
+  if (configureDomains == "false") {
+    window.open(backUrl + "&sc_bw=1");
+    window.close();
+  } else {
+    document.querySelector("#main").setAttribute("style", "display:block");
+    document.querySelector("#domains").setAttribute("style", "display:none");
+    document.querySelector("#save").setAttribute("style", "display:block");
   }
 };
 
@@ -186,7 +180,7 @@ document.querySelector(".exportSites").onclick = function (event) {
   var json = {};
   var count = 0;
   var error = false;
-  var domain, key, value, lang;
+  var domain, key, value, lang, embedding;
 
   document.querySelectorAll(".domain").forEach(function (url) {
     url.querySelectorAll(".site").forEach(function (site) {
@@ -195,6 +189,7 @@ document.querySelector(".exportSites").onclick = function (event) {
       key = site.querySelector("input[name='key']").value;
       value = site.querySelector("input[name='value']").value;
       lang = site.querySelector("input[name='lang']").value;
+      embedding = site.querySelector("input[name='embedding']").checked;
       error = false;
       //Lang check
       lang = lang == "" ? "" : lang.toLowerCase();
@@ -213,7 +208,7 @@ document.querySelector(".exportSites").onclick = function (event) {
           //Build object for this domain
           !json[domain] ? (json[domain] = {}) : false;
           //Add site to this domain
-          json[domain][count] = { [key]: value, language: lang };
+          json[domain][count] = { [key]: value, language: lang, languageEmbedding: embedding };
           count++;
           site.querySelector("input[name='key']").setAttribute("style", "border-color:#ccc");
           site.querySelector("input[name='value']").setAttribute("style", "border-color:#ccc");
@@ -249,7 +244,7 @@ document.querySelector(".save_sites").onclick = function (event) {
   var json = {};
   var count = 0;
   var error = false;
-  var domain, key, value, lang;
+  var domain, key, value, lang, embedding;
 
   document.querySelectorAll(".domain").forEach(function (url) {
     url.querySelectorAll(".site").forEach(function (site) {
@@ -258,6 +253,7 @@ document.querySelector(".save_sites").onclick = function (event) {
       key = site.querySelector("input[name='key']").value;
       value = site.querySelector("input[name='value']").value;
       lang = site.querySelector("input[name='lang']").value;
+      embedding = site.querySelector("input[name='embedding']").checked;
       //Lang check
       lang = lang == "" ? "" : lang.toLowerCase();
       //Sanity check
@@ -275,7 +271,7 @@ document.querySelector(".save_sites").onclick = function (event) {
           //Build object for this domain
           !json[domain] ? (json[domain] = {}) : false;
           //Add site to this domain
-          json[domain][count] = { [key]: value, language: lang };
+          json[domain][count] = { [key]: value, language: lang, languageEmbedding: embedding };
           count++;
           site.querySelector("input[name='key']").setAttribute("style", "border-color:#ccc");
           site.querySelector("input[name='value']").setAttribute("style", "border-color:#ccc");
@@ -296,12 +292,12 @@ document.querySelector(".save_sites").onclick = function (event) {
       let params = new URLSearchParams(window.location.search);
       params.delete("site");
       params.delete("name");
-      window.location.search = params;
-      document.querySelector(".trackChanges").value = "0";
+      // window.location.search = params;
+      // document.querySelector(".trackChanges").value = "0";
       document.querySelector("#sitesList").setAttribute("style", "opacity:0.3");
       document.querySelector(".save_sites").innerHTML = "Saving...";
       setTimeout(function () {
-        document.querySelector(".save_sites").innerHTML = "OK!";
+        document.querySelector(".save_sites").innerHTML = "Saved!";
       }, 1000);
       setTimeout(function () {
         document.querySelector("#sitesList").setAttribute("style", "opacity:1");
@@ -323,9 +319,10 @@ document.querySelector(".show_hint").onclick = function () {
  * Show more options
  */
 document.querySelector(".advanced_mode").onclick = function () {
-  document.querySelectorAll(".lang_url").forEach(function (elem) {
+  document.querySelectorAll(".lang_url, .embedding_url").forEach(function (elem) {
     elem.setAttribute("style", "display:inline-block");
   });
+  localStorage.setItem("scAdvancedMode", true);
   document.querySelector(".showAdvanced").value = 1;
   document.querySelector(".advanced_mode").setAttribute("style", "display:none");
   document.querySelector(".basic_mode").setAttribute("style", "display:block");
@@ -335,9 +332,10 @@ document.querySelector(".advanced_mode").onclick = function () {
  * Show less options
  */
 document.querySelector(".basic_mode").onclick = function () {
-  document.querySelectorAll(".lang_url").forEach(function (elem) {
+  document.querySelectorAll(".lang_url, .embedding_url").forEach(function (elem) {
     elem.setAttribute("style", "display:none");
   });
+  localStorage.setItem("scAdvancedMode", false);
   document.querySelector(".showAdvanced").value = 0;
   document.querySelector(".basic_mode").setAttribute("style", "display:none");
   document.querySelector(".advanced_mode").setAttribute("style", "display:block");

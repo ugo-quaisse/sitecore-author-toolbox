@@ -4,10 +4,13 @@ import * as global from "./global.js";
 
 export { initGroupedErrors };
 
-const getErrors = () => {
+const getErrors = (storage) => {
+  storage.feature_cetabs == undefined ? (storage.feature_cetabs = false) : false;
+
   let scErrors = document.getElementsByClassName("scValidationMarkerIcon");
   let scMessageErrors = false;
   let count = 0;
+  let found, section, click;
 
   for (let item of scErrors) {
     item.getAttribute("src") != "/sitecore/shell/themes/standard/images/bullet_square_yellow.png" ? count++ : false;
@@ -15,17 +18,23 @@ const getErrors = () => {
 
   if (count > 0) {
     //Prepare HTML
-    scMessageErrors =
-      `<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(` +
-      global.iconError +
-      `)"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">`;
+    scMessageErrors = `<div id="scMessageBarError" class="scMessageBar scError"><div class="scMessageBarIcon" style="background-image:url(${global.iconError})"></div><div class="scMessageBarTextContainer"><ul class="scMessageBarOptions" style="margin:0px">`;
 
     for (let item of scErrors) {
+      if (storage.feature_cetabs) {
+        // eslint-disable-next-line prefer-named-capture-group
+        found = item.getAttribute("onclick").match(/(?<=\(')(.*?)(?='\))/u);
+        section = document.querySelector(`[id^='${found[0]}']`) ? document.querySelector(`[id^='${found[0]}']`).closest(".scEditorSectionPanel").previousSibling.id : false;
+        click = `document.querySelector('li[data-id=${section}]').click()`;
+      } else {
+        click = item.getAttribute("onclick");
+      }
       if (item.getAttribute("src") != "/sitecore/shell/themes/standard/images/bullet_square_yellow.png") {
-        scMessageErrors += '<li class="scMessageBarOptionBullet" onclick="' + item.getAttribute("onclick") + '" style="cursor:pointer;">' + item.getAttribute("title") + "</li>";
+        scMessageErrors += `<li class="scMessageBarOptionBullet" onclick="${click}" style="cursor:pointer;">${item.getAttribute("title")}</li>`;
       }
     }
-    scMessageErrors += "</ul></div></div>";
+
+    scMessageErrors += `</ul></div></div>`;
   }
 
   return scMessageErrors;
@@ -37,7 +46,7 @@ const initGroupedErrors = (storage) => {
   if (storage.feature_errors) {
     let scQuickInfo = document.querySelector("div[id^='QuickInfo_']");
     let scEditorTabs = document.querySelector("div#scEditorTabs");
-    let scMessageErrors = getErrors();
+    let scMessageErrors = getErrors(storage);
 
     //Insert message bar into Sitecore Content Editor
     if (scMessageErrors != false && !document.querySelector("#scMessageBarError")) {
@@ -58,7 +67,7 @@ const initGroupedErrors = (storage) => {
         element = document.querySelector("#scMessageBarError");
         element ? element.parentNode.removeChild(element) : false;
 
-        let scMessageErrors = getErrors();
+        let scMessageErrors = getErrors(storage);
 
         //Add errors
         if (scMessageErrors != false) {

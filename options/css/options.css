@@ -348,7 +348,7 @@ input {
   padding: 0px 25px;
   margin: auto;
   text-align: left;
-  max-width: 1024px;
+  max-width: 1200px;
   line-height: 25px;
   display: none;
 }
@@ -401,34 +401,33 @@ input {
 }
 
 #domains .delete {
-  /* opacity: 0; */
   display: inline-block;
   text-align: center;
-  width: 35px;
+  padding: 3px 11px;
+  margin: 0px 0px 0px 8px;
   cursor: pointer;
-  padding-top: 27px;
+  background: #999;
+  color: #fff;
+  border-radius: 3px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-weight: 700;
 }
 
-#domains .delete > span {
-  color: red;
-  display: none;
+#domains .site .delete:hover {
+  background: #d93127;
 }
-
-/* #domains .site:hover .delete {
-  opacity: 1;
-} */
 
 @media screen and (max-width: 500px) {
   #domains .delete {
-    width: 100%;
-  }
-  #domains .delete > span {
-    display: inline-block;
+    text-transform: uppercase;
+    padding: 5px 15px;
+    margin: 15px 0px 0px;
   }
 }
 
 .cm_url {
-  width: calc(50% - 50px - 50px);
+  width: calc(50% - 50px - 45px - 65px);
   display: inline-block;
 }
 .cm_url > label {
@@ -438,7 +437,7 @@ input {
   display: block;
   width: -webkit-fill-available;
   font-size: 14px;
-  padding: 7px;
+  padding: 6px;
   border-radius: 3px;
   border: 2px solid #ccc;
   margin: 0px !important;
@@ -452,7 +451,7 @@ input {
 }
 
 .cd_url {
-  width: calc(50% - 50px - 50px);
+  width: calc(50% - 50px - 45px - 65px);
   display: inline-block;
 }
 .cd_url > label {
@@ -462,7 +461,7 @@ input {
   display: block;
   width: -webkit-fill-available;
   font-size: 14px;
-  padding: 7px;
+  padding: 6px;
   border-radius: 3px;
   border: 2px solid #ccc;
   margin: 0px !important;
@@ -476,7 +475,7 @@ input {
 }
 
 .lang_url {
-  width: 90px;
+  width: 80px;
   padding-left: 10px;
   display: none;
 }
@@ -487,14 +486,32 @@ input {
   display: block;
   width: -webkit-fill-available;
   font-size: 14px;
-  padding: 7px;
+  padding: 6px;
   border-radius: 3px;
   border: 2px solid #ccc;
   margin: 0px !important;
 }
 
+.embedding_url {
+  width: 80px;
+  padding-left: 10px;
+  display: none;
+}
+.embedding_url > label {
+  float: left !important;
+  position: relative;
+}
+.embedding_url > .scLabel {
+  top: 5px;
+}
+
 @media screen and (max-width: 500px) {
   .lang_url {
+    width: 100%;
+    padding-left: 0px;
+    padding-top: 20px;
+  }
+  .embedding_url {
     width: 100%;
     padding-left: 0px;
     padding-top: 20px;
@@ -530,6 +547,7 @@ input[name="lang"]::placeholder {
   color: #131313;
   text-align: left;
   font-size: 12px;
+  margin-bottom: 2px;
 }
 #save_domains {
   text-align: center;

@@ -19,9 +19,9 @@ body.satDark .sc-listcontrol .sc-listcontrol-body .sc-table tr:nth-child(even) {
   background-color: var(--black1);
   color: var(--text);
 }
-body.satDark table td {
+/* body.satDark table td {
   border: 0px;
-}
+} */
 body.satDark .scContentTree a,
 body.satDark .scStretch {
   color: var(--text);

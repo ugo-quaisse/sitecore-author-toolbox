@@ -195,6 +195,10 @@ body.satExperimentalUi #SearchPanel {
   overflow: hidden;
 }
 
+body.satExperimentalUi .scEditorFieldMarkerBarCellRed {
+  border-left-color: var(--red) !important;
+}
+
 body.satExperimentalUi input[type="color"] {
   outline: none;
   background-color: #2b2b2b;

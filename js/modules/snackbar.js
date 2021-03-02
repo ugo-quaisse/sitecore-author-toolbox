@@ -46,8 +46,8 @@ const showSnackbarSite = (storage, ScItem) => {
   let pathToHome = ScItem.pathFull.split("/home/")[0] + "/home/";
 
   //Get site in userstorage (settings)
-  let siteUrl = getSiteUrl(storage, pathToHome, ScItem.language);
-
+  let ScSite = getSiteUrl(storage, pathToHome, ScItem.language);
+  let siteUrl = ScSite.url;
   //Get Site in locastorage
   let existing = localStorage.getItem("sbDismissSites");
   existing = existing ? JSON.parse(existing) : {};

@@ -66,8 +66,8 @@ const initTabSections = (storage) => {
       //prettier-ignore
       scEditorTabs += `
         <li class="scEditorTabEmpty"></li>
-        <li data-id="` + sectionId + `" class="scEditorTab ` + sectionSelected + ` ` + sectionErrorClass + `"
-        onclick="toggleSection(this,'` + sectionTitle + `', false, '` + storage.feature_experimentalui + `')">` + sectionErrorHtml + sectionTitle + `</li>`;
+        <li data-id="${sectionId}" class="scEditorTab ${sectionSelected} ${sectionErrorClass}"
+        onclick="toggleSection(this,'${sectionTitle}', false, '${storage.feature_experimentalui}')">${sectionErrorHtml}${sectionTitle}</li>`;
     }
 
     scEditorTabs += '<li class="scEditorTabEmpty"></li></ul></div>';

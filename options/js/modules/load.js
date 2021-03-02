@@ -17,9 +17,11 @@ const parseJsonSites = (json) => {
     for (var [id, site] of Object.entries(values)) {
       try {
         let lang = Object.entries(site)[1][1] != undefined ? Object.entries(site)[1][1] : "";
-        addSite(domainId, Object.entries(site)[0][0], Object.entries(site)[0][1], lang, false, "", true);
+        let embedding = Object.entries(site)[2][1] != undefined ? Object.entries(site)[2][1] : true;
+        addSite(domainId, Object.entries(site)[0][0], Object.entries(site)[0][1], lang, embedding, false, "", true);
       } catch (e) {
-        addSite(domainId, Object.entries(site)[0][0], Object.entries(site)[0][1], "", false, "", true);
+        console.warn(e);
+        addSite(domainId, Object.entries(site)[0][0], Object.entries(site)[0][1], "", true, false, "", true);
       }
     }
   }

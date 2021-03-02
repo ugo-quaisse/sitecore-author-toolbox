@@ -372,7 +372,6 @@ const initColorPicker = (storage) => {
       colorPicker.addEventListener("change", () => {
         color = colorPicker.value;
         text = setTextColour(color);
-        console.log(text);
         text == "#ffffff" ? (brightness = 10) : (brightness = 0);
         text == "#ffffff" ? (invert = 0) : (invert = 1);
         text == "#ffffff" ? (revert = 1) : (revert = 0);

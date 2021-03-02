@@ -95,9 +95,9 @@ const addDomain = (text = "", tocreate = undefined, isImport = false) => {
         document.querySelector("#sitesList").insertAdjacentHTML("beforeend", html);
         trackChanges(isImport);
         //Click events
-        document.querySelector(".addSite_" + countDomains).addEventListener("click", addSite.bind("", "domain_" + countDomains, "", "", "", false));
+        document.querySelector(".addSite_" + countDomains).addEventListener("click", addSite.bind("", "domain_" + countDomains, "", "", true, "", false));
         document.querySelector(".editDomain_" + countDomains).addEventListener("click", editDomain.bind("", "domain_" + countDomains));
-        tocreate === undefined ? addSite("domain_" + countDomains, "", "") : false;
+        tocreate === undefined ? addSite("domain_" + countDomains, "", "", true) : false;
         returnId = `domain_` + countDomains;
       }
     } catch (error) {
@@ -142,7 +142,7 @@ const editDomain = (domainId) => {
 /**
  * Prepend input fields to add a site
  */
-const addSite = (domain, path, cd, lang = "", autoadd = false, name = "", isImport = "") => {
+const addSite = (domain, path, cd, lang = "", embedding = true, autoadd = false, name = "", isImport = "") => {
   let isExisting = false;
 
   //Check if sites already exists
@@ -158,6 +158,7 @@ const addSite = (domain, path, cd, lang = "", autoadd = false, name = "", isImpo
   if (isExisting == false) {
     let countSites = document.querySelectorAll(".site").length + 1;
     let showAdvanced = document.querySelector(".showAdvanced").value == 1 ? "display:inline-block" : "display:none";
+    let languageEmbedding = embedding ? "checked" : "";
     //prettier-ignore
     let html = `
     <div class="site" id="site_${countSites}">
@@ -173,10 +174,15 @@ const addSite = (domain, path, cd, lang = "", autoadd = false, name = "", isImpo
         <div class="lang_url" style="${showAdvanced}">
             <label for="langUrl">Language</label>
             <input id="langUrl" name="lang" type="url" placeholder="e.g fr-FR" value="${decodeURI(lang)}"> 
+        </div>
+        <div class="embedding_url" style="${showAdvanced}">
+            <label for="langUrl">Embedding</label>
+            <input id="embeddingUrl_${countSites}" name="embedding" class="scCheckbox" type="checkbox" ${languageEmbedding} />
+            <label for="embeddingUrl_${countSites}" class="scLabel"></label>
         </div> 
-        <div class="delete deleteSite_${countSites}" title="Delete this site">❌ <span>Delete site</span></div>
+        <div class="delete deleteSite_${countSites}" title="Delete this site">✕ Delete</div>
     </div>`;
-    document.querySelector("#" + domain).insertAdjacentHTML("afterbegin", html);
+    document.querySelector("#" + domain + " > .addSite").insertAdjacentHTML("beforebegin", html);
     trackChanges(isImport);
     //style
     autoadd ? document.querySelector("#site_" + countSites + " input[name='value']").setAttribute("style", "border-color:#6fdd60") : false;

@@ -1,10 +1,10 @@
 {
   "name": "sitecore-author-toolbox",
-  "version": "6.0",
+  "version": "6.0.3",
   "description": "A set of handy tools for Sitecore Authors: Live URL, Grouped errors, Flags, Dark mode, Notifications, Media drag & drop...",
   "scripts": {
     "dev": "gulp",
-    "build": ""
+    "build": "npm-build-zip --source=."
   },
   "main": "js/main.js",
   "directories": {
@@ -40,6 +40,7 @@
     "gulp-open": "^3.0.1",
     "gulp-rename": "^2.0.0",
     "gulp-wait": "^0.0.2",
+    "npm-build-zip": "^1.0.3",
     "yargs-parser": ">=5.0.0-security.0"
   }
 }

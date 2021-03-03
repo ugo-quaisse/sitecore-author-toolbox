@@ -204,14 +204,22 @@ const initLiveUrl = (storage) => {
  */
 const liveUrlQuickInfo = (sitecoreItemPath) => {
   var table = document.querySelector(".scEditorQuickInfo");
+  var row, cell1, cell2, url;
   if (table) {
-    var row = table.insertRow(-1);
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    var url = new URL(sitecoreItemPath);
+    //Url
+    url = new URL(sitecoreItemPath);
+    //Text
+    row = table.insertRow(-1);
+    cell1 = row.insertCell(0);
+    cell2 = row.insertCell(1);
     cell1.innerHTML = "Live URL:";
-    //prettier-ignore
     cell2.innerHTML = `<a href="${sitecoreItemPath}" target="_blank">${decodeURI(url.origin + url.pathname)} <img src="${global.iconExternalLink}" style="width: 14px; vertical-align: text-top;" class="scIconCopy" /></a>`;
+    //Screenshot
+    // row = table.insertRow(-1);
+    // cell1 = row.insertCell(0);
+    // cell2 = row.insertCell(1);
+    // cell1.innerHTML = "Screenshot:";
+    // cell2.innerHTML = `<img src="https://api.apiflash.com/v1/urltoimage?access_key=${api}&format=jpeg&url=${url}&width=800" width="400"/>`;
   }
 };
 

@@ -96,8 +96,9 @@ const initAppName = (storage, name = "Content Editor") => {
   if (storage.feature_experimentalui) {
     //Add app name
     let startButton = document.querySelector(".sc-globalHeader-startButton");
-    let htmlApp = `<div class="sc-globalheader-appName" onclick="javascript:return scForm.invoke('contenteditor:home', event)">` + name + `</div>`;
-    startButton ? startButton.insertAdjacentHTML("afterend", htmlApp) : false;
+    let oldScDetect = document.querySelector(".sc-applicationHeader-row2");
+    let htmlApp = `<div class="sc-globalheader-appName">` + name + `</div>`;
+    startButton && oldScDetect ? startButton.insertAdjacentHTML("afterend", htmlApp) : false;
   }
 };
 

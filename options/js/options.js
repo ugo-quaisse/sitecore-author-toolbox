@@ -292,7 +292,8 @@ document.querySelector(".save_sites").onclick = function (event) {
       let params = new URLSearchParams(window.location.search);
       params.delete("site");
       params.delete("name");
-      // window.location.search = params;
+      params.delete("domain");
+      window.location.search = params;
       // document.querySelector(".trackChanges").value = "0";
       document.querySelector("#sitesList").setAttribute("style", "opacity:0.3");
       document.querySelector(".save_sites").innerHTML = "Saving...";

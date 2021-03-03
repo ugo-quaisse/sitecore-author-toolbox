@@ -44,7 +44,6 @@
 .sc-launchpad-item .icon:hover,
 .sc-launchpad-item .icon:focus,
 .sc-launchpad-item .icon:active {
-  background: none !important;
   border: none !important;
   padding: 0;
   margin: 0;
@@ -66,7 +65,7 @@
 }
 
 .sc-launchpad-item .sc-launchpad-text {
-  padding: 10px;
+  padding: 10px !important;
   display: contents;
   width: auto;
   /* text-decoration: none !important; */

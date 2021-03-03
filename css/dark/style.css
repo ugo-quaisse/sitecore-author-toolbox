@@ -1528,7 +1528,10 @@ body.satDark .liveStatusRed {
 body.satDark .liveStatusGreen {
   color: var(--lightgreen);
 }
-
+body.satDark .sc-launchpad-item {
+  background-color: var(--black2);
+  border-color: var(--black4);
+}
 body.satDark .sc-launchpad-item .sc-launchpad-text {
   color: var(--text);
 }
@@ -2672,6 +2675,7 @@ body.satDark .sc-applicationContent-main {
   color: var(--text) !important;
   border-color: var(--text) !important;
   background-color: var(--black2) !important;
+  background-image: unset;
 }
 body.satDark .sc-controlpanel-box-content {
   background-color: var(--black3);
@@ -2707,10 +2711,15 @@ body.satDark .sc .sc-text-largetitle {
   color: var(--text) !important;
 }
 
-body.satDark .sc-launchpad-item .icon {
-  background-color: var(--black3) !important;
+body.satDark .sc-launchpad-group-row > a.sc-launchpad-item .icon {
+  background-color: var(--black2) !important;
   background-image: none !important;
-  border: 1px var(--black4) solid !important;
+  border-color: var(--black4);
+}
+
+body.satDark div:not(.sc-launchpad-group-row) > a.sc-launchpad-item .icon {
+  background-color: #bfe1fa !important;
+  background-image: none !important;
 }
 
 body.satDark .sc .sc-border[data-sc-id="AnalyticsFallback"] {
@@ -3179,17 +3188,27 @@ body.satDark .sc-ribbon .sc-chunk-panel {
   border: 1px solid var(--black1);
 }
 
-body.satExtension.satDark .scMediaActions:hover {
+body.satDark .scMediaActions:hover {
   background-color: transparent !important;
   box-shadow: none !important;
 }
 
 /* Media card  */
 
-body.satExtension.satDark #FileList .scMediaCard {
+body.satDark #FileList .scMediaCard {
   background-color: var(--black3);
 }
 
-body.satExtension.satDark #FileList .scMediaCard .scMediaActionsWrapper > span > img {
+body.satDark #FileList .scMediaCard .scMediaActionsWrapper > span > img {
   filter: invert(1);
+}
+
+/* Sitecore 10.1  */
+body.satDark .sc-launchpad-group-title,
+body.satDark.sc .sc-text[data-sc-id="CustomAnalyticsLabel"] {
+  color: var(--text) !important;
+}
+body.satDark .sc div[data-sc-id="ColumnPanel1"] .sc-advancedExpander,
+body.satDark .sc-border[data-sc-id="FallBackMessageBorder"] {
+  background: var(--black1) !important;
 }

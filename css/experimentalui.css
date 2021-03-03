@@ -1920,7 +1920,7 @@ body.satExperimentalUi .scSaveBar > .scActions > button.scPreviewButton {
   font-weight: 700;
   text-transform: uppercase;
   font-size: 12px;
-  max-height: 34px;
+  height: 34px;
 }
 
 body.satExperimentalUi .scSaveBar > .scActions > button.primary {
@@ -1929,14 +1929,14 @@ body.satExperimentalUi .scSaveBar > .scActions > button.primary {
   font-weight: 700;
   text-transform: uppercase;
   font-size: 12px;
-  max-height: 34px;
+  height: 34px;
 }
 
 body.satExperimentalUi .scSaveBar > .scActions > button.primaryGrouped {
   border-radius: var(--radius) 0px 0px var(--radius);
   border-right: 1px solid var(--accentBorder);
   margin-right: 0px;
-  max-height: 34px;
+  height: 34px;
 }
 
 body.satExperimentalUi .scSaveBar > .scActions > button.grouped {
@@ -1947,7 +1947,7 @@ body.satExperimentalUi .scSaveBar > .scActions > button.grouped {
   background-color: var(--accent) !important;
   color: var(--accentText);
   border-radius: 0px var(--radius) var(--radius) 0px;
-  max-height: 34px;
+  height: 34px;
 }
 
 body.satExperimentalUi .scPopup {

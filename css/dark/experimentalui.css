@@ -28,8 +28,8 @@ body.satExperimentalUi.satDark #FileList {
 }
 
 body.satExperimentalUi.satDark #FileList a {
-  background-color: var(--black1);
-  border-color: var(--black1);
+  background-color: var(--black2);
+  border-color: var(--black2);
 }
 
 body.satExperimentalUi.satDark .scSaveBar > .scActions > .scPublishMenu,

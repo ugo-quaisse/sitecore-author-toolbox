@@ -1421,6 +1421,7 @@ body.satDark #StatusBar .status-bar-panel {
 body.satDark .sc-border[data-sc-id="FallbackHeader"],
 body.satDark .sc-border[data-sc-id="FallbackMessageWrap"] {
   color: var(--text) !important;
+  border-width: 0px;
 }
 body.satDark .scWindowFrame {
   border: 1px solid var(--black2) !important;
@@ -1529,7 +1530,7 @@ body.satDark .liveStatusGreen {
   color: var(--lightgreen);
 }
 body.satDark .sc-launchpad-item {
-  background-color: var(--black2);
+  background-color: var(--black1);
   border-color: var(--black4);
 }
 body.satDark .sc-launchpad-item .sc-launchpad-text {
@@ -2674,7 +2675,7 @@ body.satDark .sc-applicationContent,
 body.satDark .sc-applicationContent-main {
   color: var(--text) !important;
   border-color: var(--text) !important;
-  background-color: var(--black2) !important;
+  background-color: var(--black1) !important;
   background-image: unset;
 }
 body.satDark .sc-controlpanel-box-content {
@@ -3211,4 +3212,5 @@ body.satDark.sc .sc-text[data-sc-id="CustomAnalyticsLabel"] {
 body.satDark .sc div[data-sc-id="ColumnPanel1"] .sc-advancedExpander,
 body.satDark .sc-border[data-sc-id="FallBackMessageBorder"] {
   background: var(--black1) !important;
+  border-color: var(--black4) !important;
 }

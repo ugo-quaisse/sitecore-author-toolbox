@@ -86,6 +86,9 @@ const getItemProperties = (itemId, language, version, storage) => {
               var cell2 = row.insertCell(1);
               cell1.innerHTML = line.querySelector(".scKey").innerText;
               cell2.innerHTML = line.querySelector(".scValue").innerText.includes("(final state)") ? `<span class="scWorkflowChipFinal">${line.querySelector(".scValue").innerText}</span>` : line.querySelector(".scValue").innerText;
+              cell2.innerHTML = line.querySelector(".scValue").innerText.toLowerCase().includes("no workflow state assigned")
+                ? `<span class="scWorkflowChipNone">${line.querySelector(".scValue").innerText}</span>`
+                : line.querySelector(".scValue").innerText;
             }
           }
         });

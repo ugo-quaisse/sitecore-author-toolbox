@@ -42,5 +42,8 @@
     "gulp-wait": "^0.0.2",
     "npm-build-zip": "^1.0.3",
     "yargs-parser": ">=5.0.0-security.0"
-  }
+  },
+  "browserslist": [
+    "last 1 Chrome version"
+  ]
 }

@@ -29,6 +29,14 @@ body.satExperimentalUi .scStartButton {
   cursor: pointer;
 }
 
+body.satExperimentalUi #globalHeaderUserPortrait {
+  border-width: 2px;
+}
+
+body.satExperimentalUi #globalHeaderUserPortrait:hover {
+  border-color: var(--accent);
+}
+
 body.satExperimentalUi button:focus,
 body.satExperimentalUi button:active {
   outline: 0px solid var(--accentTransparent);
@@ -586,6 +594,7 @@ body.satExperimentalUi .sc ul.dynatree-container li {
 body.satExperimentalUi a.sc-button {
   padding-top: 8px;
 }
+body.satExperimentalUi .btn-default,
 body.satExperimentalUi .scButton,
 body.satExperimentalUi .sc-button {
   color: var(--black3);
@@ -1611,7 +1620,7 @@ body.satExperimentalUi .splitter-bar:after {
 }
 
 /* Experience Editor buttons */
-body.satExperimentalUi .sc-breadcrumb {
+body.satExperimentalUi *:not(.sc-applicationHeader-breadCrumb) > .sc-breadcrumb {
   background: unset;
   background-color: var(--experimentalBackground);
   height: 57px;
@@ -2128,12 +2137,6 @@ body.satExperimentalUi .scOpenItem {
   font-weight: 600;
 }
 
-/* body.satExperimentalUi .sc-label, */
-body.satExperimentalUi [data-sc-id="ReferenceContentSearchBorder"] {
-  background-color: var(--accent);
-  color: var(--accentText);
-}
-
 body.satExperimentalUi .scPreviewButton.focus {
   outline: 0px solid var(--accent);
   box-shadow: 0 0 0 2.5px var(--accent) !important;
@@ -2547,6 +2550,22 @@ body.satExperimentalUi #scLightbox:before {
   box-shadow: unset;
   z-index: 5;
   filter: invert(1) brightness(1.5);
+}
+
+body.satExperimentalUi .grid-tab-header {
+  line-height: 38px;
+  left: 0px !important;
+}
+
+body.satExperimentalUi .grid-mode-tabs {
+  border-color: var(--accent);
+}
+
+body.satExperimentalUi .style-selected {
+  color: var(--accentText);
+  background-color: var(--accent);
+  border-radius: var(--radius);
+  padding: 0px 5px 2px 2px;
 }
 
 body.satExperimentalUi .grid-settings-advanced .grid-advanced-tab-header,

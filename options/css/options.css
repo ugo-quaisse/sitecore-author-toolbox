@@ -207,7 +207,7 @@ label:hover {
   background-repeat: repeat-x;
   top: 0px;
 }
-@media screen and (min-width: 450px) {
+@media screen and (min-width: 700px) {
   #banner:after {
     position: absolute;
     right: 0;
@@ -221,7 +221,7 @@ label:hover {
     opacity: 1;
   }
 }
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 700px) {
   .back {
     margin: 0px 0px 0px 0px;
     padding: 12px 20px;
@@ -380,7 +380,7 @@ input {
   padding-top: 27px;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 700px) {
   #domains > p {
     font-size: 14px;
   }
@@ -418,7 +418,7 @@ input {
   background: #d93127;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 700px) {
   #domains .delete {
     text-transform: uppercase;
     padding: 5px 15px;
@@ -443,7 +443,7 @@ input {
   margin: 0px !important;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 700px) {
   .cm_url {
     width: 100%;
     display: block;
@@ -467,7 +467,7 @@ input {
   margin: 0px !important;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 700px) {
   .cd_url {
     width: 100%;
     display: block;
@@ -505,7 +505,7 @@ input {
   top: 5px;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 700px) {
   .lang_url {
     width: 100%;
     padding-left: 0px;

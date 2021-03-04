@@ -96,9 +96,9 @@ const initAppName = (storage, name = "Content Editor") => {
   if (storage.feature_experimentalui) {
     //Add app name
     let startButton = document.querySelector(".sc-globalHeader-startButton");
-    let oldScDetect = document.querySelector(".sc-applicationHeader-row2");
-    let htmlApp = `<div class="sc-globalheader-appName">` + name + `</div>`;
-    startButton && oldScDetect ? startButton.insertAdjacentHTML("afterend", htmlApp) : false;
+    let newDashboard = document.querySelector("link[href*='/applications/launchpad/launchpad.css' i]");
+    let htmlApp = `<div class="sc-globalheader-appName">${name}</div>`;
+    startButton && !newDashboard ? startButton.insertAdjacentHTML("afterend", htmlApp) : false;
   }
 };
 
@@ -145,6 +145,9 @@ const initUserPortraitMenu = (storage) => {
     accountInformation.querySelector("li").remove();
     accountInformation.querySelector("li").innerHTML = accountInformation.querySelector("li > img").outerHTML;
     accountInformation.querySelector("li > img").setAttribute("id", "globalHeaderUserPortrait");
+    //let profilePicture = accountInformation.querySelector("li > img").getAttribute("src");
+    //profilePicture.includes("default_user.png") ? accountInformation.querySelector("li > img").setAttribute("src", "https://robohash.org/administrator") : false;
+    //profilePicture.includes("default_user.png") ? console.log(profilePicture) : false;
   }
 };
 

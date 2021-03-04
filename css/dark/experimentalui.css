@@ -584,3 +584,12 @@ body.satExperimentalUi.satDark .grid-settings-basic .grid-advanced-tab-header {
   color: var(--text);
   border: 1px solid transparent;
 }
+
+body.satExperimentalUi.satDark .sc-insertItem-container.hover,
+body.satExperimentalUi.satDark .sc-insertItem-container.selected {
+  background-color: transparent !important;
+}
+
+body.satExperimentalUi.satDark .sc-advancedExpander.open .sc-advancedExpander-header {
+  border-left: 5px solid var(--accent);
+}

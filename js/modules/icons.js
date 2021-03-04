@@ -301,8 +301,20 @@ export const jsonIcons = JSON.parse(
     "icon": "file::snippet_folder"
   },
   {
+    "search": "photo_landscape2_edit",
+    "icon": "editor::mode"
+  },
+  {
+    "search": "photo_landscape2_delete",
+    "icon": "action::delete_forever"
+  },
+  {
     "search": "photo",
     "icon": "editor::insert_photo"
+  },
+  {
+    "search": "navigate_plus",
+    "icon": "content::add_circle_outline"
   },
   {
     "search": "text",

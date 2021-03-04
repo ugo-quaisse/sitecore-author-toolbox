@@ -3022,11 +3022,6 @@ body.satDark .sc-ribbon .sc-chunk-panel {
 body.satDark .sc-ribbon .sc-chunk-datepanel .sc-chunk-datepanel-datetime:hover {
   background-color: transparent !important;
 }
-body.satDark .sc-breadcrumb {
-  border-top: 1px solid var(--black3) !important;
-  background: var(--black2) !important;
-  border-bottom: 1px solid var(--black1) !important;
-}
 body.satDark .sc-breadcrumb .sc-breadcrumb-item-action,
 body.satDark .sc-breadcrumb .sc-breadcrumb-item-path {
   color: var(--text) !important;

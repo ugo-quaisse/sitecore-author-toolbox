@@ -287,6 +287,8 @@ chrome.storage.sync.get((storage) => {
       initMaterializeIcons(storage);
     } else if (global.isSitecoreModule) {
       log("**** Sitecore Module ****", "orange");
+    } else if (global.isDialogEE) {
+      log("**** Dialog ****", "orange");
     } else {
       log("**** Page in EE ****", "orange");
       addToolbarEditCE(storage);

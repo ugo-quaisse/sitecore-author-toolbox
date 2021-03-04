@@ -76,7 +76,7 @@ const toggleRibbon = () => {
     scWebEditRibbon.setAttribute("style", "display:none !important");
     tabText.innerText = "▼ Show";
   } else {
-    scCrossPiece.setAttribute("style", "height:300px !important");
+    //scCrossPiece.setAttribute("style", "height:300px !important");
     scWebEditRibbon.setAttribute("style", "display:block !important");
     tabText.innerText = "▲ Hide";
   }

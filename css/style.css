@@ -1101,9 +1101,13 @@ body.satExtension #satFavoritesDrag {
   margin-right: 0px !important;
 }
 
-#scWebEditRibbon,
-#scCrossPiece {
+.satExtension #scWebEditRibbon,
+.satExtension #scCrossPiece {
   transition: all ease-in-out 0.1s !important;
+}
+
+.satExtension #scCrossPiece {
+  display: contents;
 }
 
 .grayscaleClass {

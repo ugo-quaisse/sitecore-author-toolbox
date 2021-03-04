@@ -45,10 +45,17 @@ const initLaunchpadMenu = (storage) => {
   storage.feature_launchpad == undefined ? (storage.feature_launchpad = true) : false;
 
   if (storage.feature_launchpad) {
-    //prettier-ignore
-    var html = `<a href="#" class="scStartMenuLeftOption" title="" onclick="window.location.href='` + global.launchpadPage + `?launchpad=true&url=` + global.windowLocationHref + `'"><img loading="lazy" src="` + global.launchpadIcon + `" class="scStartMenuLeftOptionIcon" alt="" border="0"><div class="scStartMenuLeftOptionDescription"><div class="scStartMenuLeftOptionDisplayName">` + global.launchpadGroupTitle + `</div><div class="scStartMenuLeftOptionTooltip">` + global.launchpadTitle + `</div></div></a>`;
+    var html = `<a href="#" class="scStartMenuLeftOption" title="" onclick="window.location.href='${global.launchpadPage}?launchpad=true&url=${global.windowLocationHref}'">
+      <img loading="lazy" src="${global.launchpadIcon}" class="scStartMenuLeftOptionIcon" alt="" border="0">
+      <div class="scStartMenuLeftOptionDescription">
+        <div class="scStartMenuLeftOptionDisplayName">${global.launchpadGroupTitle}</div>
+        <div class="scStartMenuLeftOptionTooltip">${global.launchpadTitle}</div>
+      </div>
+    </a>`;
     document.querySelectorAll(".scStartMenuLeftOption").forEach(function (item) {
-      item.getAttribute("title") == "Install and maintain apps." ? item.insertAdjacentHTML("afterend", html) : false;
+      if (item.getAttribute("title").toLowerCase().includes("create new templates")) {
+        item.insertAdjacentHTML("afterend", html);
+      }
     });
   }
 };

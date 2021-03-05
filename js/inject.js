@@ -620,7 +620,9 @@ function openLightbox(id, from = "frame") {
   lightbox ? lightbox.setAttribute("style", "display:block") : false;
   //Browse all items
   let mediaThumbnails =
-    from == "frame" ? document.querySelectorAll("a:not(.scMediaFolder) > .mediaThumbnail > img") : document.querySelector("iframe[src*='/Media/']").contentDocument.querySelectorAll("a:not(.scMediaFolder) > .mediaThumbnail > img");
+    from == "frame"
+      ? document.querySelectorAll("*:not(.scMediaFolder) > .mediaThumbnail:not(.scMediaFolder) > img")
+      : document.querySelector("iframe[src*='/Media/']").contentDocument.querySelectorAll("*:not(.scMediaFolder) > .mediaThumbnail:not(.scMediaFolder) > img");
   for (var i = 0; i < mediaThumbnails.length; ++i) {
     if (item == mediaThumbnails[i]) {
       let prev = mediaThumbnails[i - 1] ? mediaThumbnails[i - 1].dataset.id : false;

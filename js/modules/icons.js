@@ -213,6 +213,18 @@ export const jsonIcons = JSON.parse(
     "icon": "maps::local_offer"
   },
   {
+    "search": "pens",
+    "icon": "social::history_edu"
+  },
+  {
+    "search": "target",
+    "icon": "action::track_changes"
+  },
+  {
+    "search": "mail",
+    "icon": "communication::email"
+  },
+  {
     "search": "earth",
     "icon": "social::public"
   },

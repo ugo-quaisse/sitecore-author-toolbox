@@ -43,7 +43,7 @@ const initDarkMode = (storage) => {
     //Set new background color
     document.documentElement.style.setProperty("--background", "#000");
   } else if (storage.feature_darkmode && storage.feature_darkmode_auto && currentColorScheme() == "light") {
-    document.body.classList.remove("satDark");
+    document.body ? document.body.classList.remove("satDark") : false;
     if (storage.feature_darkmode_auto && document.querySelector(".darkmodeRadio[value='auto']")) {
       document.querySelector(".darkmodeRadio[value='auto']").checked = true;
       document.querySelector(".darkmodeRadio[value='auto']").dispatchEvent(new Event("click"));

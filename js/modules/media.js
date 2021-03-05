@@ -152,7 +152,7 @@ const initMediaExplorer = (storage) => {
       mediaExplorer += `
       <tr id="mediaItem_${mediaId}">
         <td class="mediaArrow" onclick="${mediaClick}">${mediaArrow}</td>
-        <td class="mediaThumbnail">
+        <td class="mediaThumbnail ${mediaClass}">
           <img src='${mediaThumbnail}' onclick="${lightbox}" data-name="${mediaTitle}" data-size="${mediaDimensions}" data-id="${mediaId}" style="width: ${scMediaThumbnailSize}px !important; height: ${scMediaThumbnailSize}px !important" class="${mediaClass} scMediaThumbnail" loading="lazy" title="Preview"/>
         </td>
         <td class="mediaTitle_${mediaId}" onclick="doubleClick('${mediaId}','${itemId}')" title="${mediaTitle} (Double click to rename)">
@@ -221,7 +221,6 @@ const initMediaExplorer = (storage) => {
       item.addEventListener(
         "click",
         (event) => {
-          console.log(event.target.getAttribute("class"));
           event.target.getAttribute("class") == "scMediaIcon" ? exeJsCode(`${mediaClick}`) : false;
           event.target.getAttribute("class") == "scMediaLightbox" ? exeJsCode(`openLightbox('${mediaId}');`) : false;
           // eslint-disable-next-line no-unneeded-ternary
@@ -286,11 +285,13 @@ const initMediaExplorer = (storage) => {
     evt.key == "ArrowRight" && lightbox ? lightboxNext.click() : false;
     evt.key == "ArrowLeft" && lightbox ? lightboxPrev.click() : false;
   };
-  lightbox.addEventListener("click", (evt) => {
-    evt.target.getAttribute("class") != "action" ? lightbox.querySelector(".scLightboxContent > img").setAttribute("src", "") : false;
-    evt.target.getAttribute("class") != "action" ? lightbox.querySelector(".scLightboxContent > iframe").setAttribute("src", "") : false;
-    evt.target.getAttribute("class") != "action" ? lightbox.setAttribute("style", "display:none") : false;
-  });
+  if (lightbox) {
+    lightbox.addEventListener("click", (evt) => {
+      evt.target.getAttribute("class") != "action" ? lightbox.querySelector(".scLightboxContent > img").setAttribute("src", "") : false;
+      evt.target.getAttribute("class") != "action" ? lightbox.querySelector(".scLightboxContent > iframe").setAttribute("src", "") : false;
+      evt.target.getAttribute("class") != "action" ? lightbox.setAttribute("style", "display:none") : false;
+    });
+  }
 };
 
 /**

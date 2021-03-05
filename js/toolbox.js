@@ -20,7 +20,7 @@ import { workboxNotifications } from "./modules/workbox.js";
 import { resumeFromWhereYouLeftOff, historyNavigation } from "./modules/history.js";
 import { checkNotificationPermissions, checkPublishNotification } from "./modules/notification.js";
 import { initFlagRibbonEE, initLanguageMenuEE, initLanguageMenuCE, initFlagsPublishingWindow, initFlagsPublish } from "./modules/language.js";
-import { initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, refreshContentEditor, contentTreeScrollTo } from "./modules/contenteditor.js";
+import { initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, refreshContentEditor, contentTreeScrollTo, keyEventListeners } from "./modules/contenteditor.js";
 import { initIntroScreen, initAppName, initGravatarImage, initUserMenu } from "./modules/users.js";
 import { initInstantSearch, enhancedSitecoreSearch } from "./modules/search.js";
 import { insertModal, insertPanel } from "./modules/insert.js";
@@ -71,6 +71,7 @@ chrome.storage.sync.get((storage) => {
     initTreeGutterTooltips();
     refreshContentEditor(storage);
     initColorPicker(storage);
+    keyEventListeners();
 
     /*
      **********************
@@ -267,7 +268,7 @@ chrome.storage.sync.get((storage) => {
     initDarkMode(storage);
     detectSwitchDarkMode(storage);
     initExperimentalUi(storage);
-
+    keyEventListeners();
     /*
      ************************
      * 4. Sitecore iframes  *

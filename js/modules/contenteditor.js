@@ -16,7 +16,7 @@ import { enhancedTreeSearch } from "./search.js";
 import { initTranslateMode } from "./translate.js";
 import { showSnackbarSite } from "./snackbar.js";
 
-export { sitecoreAuthorToolbox, initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, refreshContentEditor, openFolderTab, contentTreeScrollTo };
+export { sitecoreAuthorToolbox, initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, refreshContentEditor, openFolderTab, contentTreeScrollTo, keyEventListeners };
 
 /*
  * Main function executed when the Content Editor refreshes
@@ -524,4 +524,20 @@ const contentTreeScrollTo = () => {
       }
     }
   }, 2000);
+};
+
+/*
+ * On press escape, close any popup openned
+ */
+const keyEventListeners = () => {
+  document.addEventListener(
+    "keyup",
+    function (event) {
+      if (event.key == "Escape") {
+        document.querySelector(".ui-icon-closethick") ? document.querySelector(".ui-icon-closethick").click() : false;
+        parent.document.querySelector(".ui-icon-closethick") ? parent.document.querySelector(".ui-icon-closethick").click() : false;
+      }
+    },
+    false
+  );
 };

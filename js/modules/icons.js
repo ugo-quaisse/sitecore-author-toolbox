@@ -537,8 +537,8 @@ export const jsonIcons = JSON.parse(
     "icon": "action::note_add"
   },
   {
-    "search": "gallery.svg",
-    "icon": "file::file_upload"
+    "search": "gallery",
+    "icon": "image::collections"
   },
   {
     "search": "export1",
@@ -603,6 +603,62 @@ export const jsonIcons = JSON.parse(
   {
     "search": "bullet_triangle",
     "icon": "av::play_arrow"
+  },
+  {
+    "search": "flash",
+    "icon": "content::bolt"
+  },
+  {
+    "search": "accordion",
+    "icon": "av::video_label"
+  },
+  {
+    "search": "carousel",
+    "icon": "action::view_carousel"
+  },
+  {
+    "search": "flip",
+    "icon": "image::flip"
+  },
+  {
+    "search": "snippet",
+    "icon": "file::text_snippet"
+  },
+  {
+    "search": "language-selector",
+    "icon": "action::translate"
+  },
+  {
+    "search": "site-selector",
+    "icon": "av::web_asset"
+  },
+  {
+    "search": "archive",
+    "icon": "content::archive"
+  },
+  {
+    "search": "navigation",
+    "icon": "action::explore"
+  },
+  {
+    "search": "title",
+    "icon": "editor::text_fields"
+  },
+  {
+    "search": "toggle",
+    "icon": "toggle::toggle_on"
+  },
+  {
+    "search": "login",
+    "icon": "action::lock_open"
+  },
+  {
+    "search": "logout",
+    "icon": "action::lock"
+  },
+  {
+    "search": "feed",
+    "icon": "communication::rss_feed"
   }
 ]`
 );

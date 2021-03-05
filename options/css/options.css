@@ -427,7 +427,7 @@ input {
 }
 
 .cm_url {
-  width: calc(50% - 50px - 45px - 65px);
+  width: calc(50% - 50px - 45px - 70px);
   display: inline-block;
 }
 .cm_url > label {
@@ -451,7 +451,7 @@ input {
 }
 
 .cd_url {
-  width: calc(50% - 50px - 45px - 65px);
+  width: calc(50% - 50px - 45px - 70px);
   display: inline-block;
 }
 .cd_url > label {

@@ -63,7 +63,7 @@ const addDomain = (text = "", tocreate = undefined, isImport = false) => {
   let returnId;
 
   if (tocreate === undefined) {
-    url = prompt("Please enter your domain URL:\nTip: Use {lang} token if you need to embed language somewhere in this URL.", text);
+    url = prompt("Please add a new domain:\nIt should be your Sitecore CM server URL.", text);
   } else {
     url = tocreate;
   }
@@ -114,7 +114,7 @@ const addDomain = (text = "", tocreate = undefined, isImport = false) => {
  */
 const editDomain = (domainId) => {
   let domain = document.querySelector("#" + domainId).dataset.domain;
-  let url = prompt("Edit this domain URL:\nTips: Use {lang} token if you need to embed language somewhere in this URL.", domain);
+  let url = prompt("Edit this domain URL (CM server):", domain);
   let isExisting = false;
 
   if (url !== null) {

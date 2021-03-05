@@ -20,12 +20,13 @@ const initLaunchpadIcon = (storage) => {
     let launchpadCol = document.querySelectorAll(".last");
     let oldScDetect = document.querySelector(".sc-applicationHeader-row2");
     let groupClass = oldScDetect ? "sc-launchpad-group-row" : "";
+    let icon = oldScDetect ? global.launchpadIcon : global.launchpadIconBlue;
     //prettier-ignore
     let html = `<div class="sc-launchpad-group">
       <header class="sc-launchpad-group-title">${global.launchpadGroupTitle}</header>
       <div class="${groupClass}">
         <a href="#" onclick="window.location.href='${global.launchpadPage}?launchpad=true&url=${global.windowLocationHref}'" class="sc-launchpad-item" title="${global.launchpadTitle}">
-        <span class="icon"><img loading="lazy" src="${global.launchpadIcon}" width="48" height="48" alt="${global.launchpadTitle}"></span>
+        <span class="icon"><img loading="lazy" src="${icon}" width="48" height="48" alt="${global.launchpadTitle}"></span>
         <span class="sc-launchpad-text">${global.launchpadTitle}</span>
         </a>
       </div>

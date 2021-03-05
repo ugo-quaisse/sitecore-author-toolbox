@@ -91,6 +91,7 @@ export const iconPassword = chrome.runtime.getURL("images/password.svg");
 export const rteLanguages = ["ARABIC", "HEBREW", "PERSIAN", "URDU", "SINDHI"];
 export const launchpadPage = chrome.runtime.getURL("options/options.html");
 export const launchpadIcon = chrome.runtime.getURL("images/icon.png");
+export const launchpadIconBlue = chrome.runtime.getURL("images/icon_blue.png");
 export const launchpadGroupTitle = "Sitecore Author Toolbox";
 export const launchpadTitle = "Options";
 export const tabLoadingTitle = "Loading...";

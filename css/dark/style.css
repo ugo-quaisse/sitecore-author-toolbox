@@ -3022,6 +3022,11 @@ body.satDark .sc-ribbon .sc-chunk-panel {
 body.satDark .sc-ribbon .sc-chunk-datepanel .sc-chunk-datepanel-datetime:hover {
   background-color: transparent !important;
 }
+
+body.satDark nav[data-sc-id="RibbonBreadcrumb"] {
+  border-bottom: 0px !important;
+}
+
 body.satDark .sc-breadcrumb .sc-breadcrumb-item-action,
 body.satDark .sc-breadcrumb .sc-breadcrumb-item-path {
   color: var(--text) !important;
@@ -3208,4 +3213,8 @@ body.satDark .sc div[data-sc-id="ColumnPanel1"] .sc-advancedExpander,
 body.satDark .sc-border[data-sc-id="FallBackMessageBorder"] {
   background: var(--black1) !important;
   border-color: var(--black4) !important;
+}
+
+body.satDark .gridParams td {
+  border-color: transparent !important;
 }

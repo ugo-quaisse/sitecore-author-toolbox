@@ -49,12 +49,14 @@ body.satExtension.contentEditor:after {
 section.sc-applicationContent-main {
   opacity: 0;
 }
+
 nav#ribbonPreLoadingIndicator .sc-progressindicator-inner {
   opacity: 0;
 }
 body.satEE nav#ribbonPreLoadingIndicator .sc-progressindicator-inner {
   opacity: 1;
 }
+body.satExperimentalUi .sc-progressindicator-inner,
 body.satEE.satExperimentalUi .sc-progressindicator-inner,
 body.satEE.satEEExperimentalUi .sc-progressindicator-inner {
   background: #fff url(chrome-extension://dpmlbbpimcmgdlhpdphnijefjchoicmj/images/sc-spinner.svg) no-repeat center center !important;
@@ -273,10 +275,6 @@ body.satExtension #scLightbox > .scLightboxHeader > button {
 body.satExtension #scLightbox > .scLightboxHeader > button img {
   vertical-align: middle;
   width: 14px;
-}
-
-body.satExtension #scLightbox > .scLightboxHeader > .sclightboxDownload {
-  filter: invert(1);
 }
 
 body.satExtension #scLightbox > .scLightboxContent {
@@ -2158,8 +2156,8 @@ body.satExtension #Page {
   transition: border-radius 0.5s ease-in-out;
   border: 0px !important;
   position: relative;
-  left: 0px;
-  top: 0px;
+  left: 0px !important;
+  top: 0px !important;
 }
 
 /* Mobile portrait */

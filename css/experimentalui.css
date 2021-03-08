@@ -1555,6 +1555,28 @@ body.satExperimentalUi a.scContentButton {
   text-decoration: none;
 }
 
+/* Vertical tab  */
+body.satExperimentalUi .scVerticalTabstrip,
+body.satExperimentalUi .scVerticalTabs a {
+  border-width: 0px !important;
+  border-bottom: 0px !important;
+  border-left: 3px solid transparent !important;
+}
+
+body.satExperimentalUi .scVerticalTabs a.active {
+  background-color: transparent;
+  border-left: 3px solid var(--accent) !important;
+  color: var(--text);
+  font-weight: 600;
+}
+
+body.satExperimentalUi .scVerticalTabstrip .scVerticalTabs a.active:hover,
+body.satExperimentalUi .scVerticalTabs a:hover {
+  background-color: transparent;
+  color: var(--text) !important;
+  border-left: 3px solid var(--accent) !important;
+}
+
 /*Instant Search */
 body.satExperimentalUi .scInstantSearch:focus {
   box-shadow: none !important;
@@ -2203,6 +2225,7 @@ body.satExperimentalUi .sc-text-largevalue {
 body.satExperimentalUi .scTabPage {
   border-width: 0px 0px 1px 0px;
   padding-bottom: 1px;
+  margin-top: 15px;
 }
 
 body.satExperimentalUi .scTabstrip {
@@ -2215,6 +2238,34 @@ body.satExperimentalUi .scTabstrip {
   display: flex;
   overflow-x: scroll;
   overflow-y: auto;
+}
+
+body.satExperimentalUi .sc-progressindicator {
+  position: fixed !important;
+  height: 100% !important;
+  top: 0 !important;
+}
+
+body.satExperimentalUi .scContentControlNavigation > img {
+  margin: 0px !important;
+}
+
+body.satExperimentalUi .sort-item.hover,
+body.satExperimentalUi .sort-item.editable:hover {
+  background-color: var(--accentTransparent);
+  border: 1px solid var(--accentTransparent);
+  color: var(--accentText);
+}
+
+body.satExperimentalUi .itemRow.selected {
+  background-color: var(--accent) !important;
+  color: var(--accentText) !important;
+}
+
+body.satExperimentalUi .Metro .reToolbar .reTool.reTool_selected,
+body.satExperimentalUi .Metro .reToolbar .reTool.reTool_selected:hover {
+  background-color: var(--accentTransparent);
+  color: var(--accentText);
 }
 
 body.satExperimentalUi .scTabPage {

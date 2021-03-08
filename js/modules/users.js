@@ -2,6 +2,7 @@
 import * as global from "./global.js";
 import { exeJsCode, calcMD5 } from "./helpers.js";
 import { currentColorScheme } from "./dark.js";
+import { initColorPicker } from "./experimentalui.js";
 
 export { initIntroScreen, getGravatar, initGravatarImage, initAppName, initWorkboxMenu, initUserPortraitMenu, initRibbonToggleMenu, initUserMenu };
 
@@ -11,20 +12,23 @@ export { initIntroScreen, getGravatar, initGravatarImage, initAppName, initWorkb
 const initIntroScreen = () => {
   //check if hidden in local storage
   if (!localStorage.getItem("scIntroScreen")) {
-    //create html
-    let overlay = document.querySelector(".scIntroOverlay");
-    let html = `<div class="scIntroOverlay"><img src="${global.iconIntro}" /></div>`;
-    !overlay ? document.querySelector("body").insertAdjacentHTML("beforeend", html) : false;
-    //add listener
-    document.querySelector(".scIntroOverlay").addEventListener(
-      "click",
-      function (event) {
-        document.querySelector(".scIntroOverlay").setAttribute("style", "visibility:hidden");
-        event.preventDefault();
-        localStorage.setItem("scIntroScreen", true);
-      },
-      false
-    );
+    if (!document.querySelector(".scIntroOverlay")) {
+      setTimeout(function () {
+        //create html
+        let html = `<div class="scIntroOverlay"><img src="${global.iconIntro}" /></div>`;
+        document.querySelector("body").insertAdjacentHTML("beforeend", html);
+        //add listener
+        document.querySelector(".scIntroOverlay").addEventListener(
+          "click",
+          function (event) {
+            document.querySelector(".scIntroOverlay").setAttribute("style", "visibility:hidden");
+            event.preventDefault();
+            localStorage.setItem("scIntroScreen", true);
+          },
+          false
+        );
+      }, 1500);
+    }
   }
 };
 
@@ -124,13 +128,12 @@ const initWorkboxMenu = (storage) => {
 const initRibbonToggleMenu = (storage, type = "CE") => {
   if (storage.feature_experimentalui) {
     let menu = document.querySelector(".sc-accountInformation");
-    let htmlIcon;
+    let htmlIcon = ``;
     if (type == "CE") {
-      htmlIcon = `<span class="t-bottom t-sm" data-tooltip="Toggle ribbon"><img loading="lazy" id="scSitecoreRibbon" onclick="showSitecoreRibbon()" src="` + global.iconDownArrow + `" class="scIconMenu" accesskey="a" /></span>`;
+      htmlIcon = `<span class="t-bottom t-sm" data-tooltip="Toggle ribbon"><img loading="lazy" id="scSitecoreRibbon" onclick="showSitecoreRibbon()" src="${global.iconDownArrow}" class="scIconMenu" accesskey="a" /></span>`;
     } else if (type == "EE") {
       document.querySelector("[data-sc-id='QuickRibbon']").classList.add("QuickRibbonHide");
-      // document.querySelector("[data-sc-id='QuickRibbon'] > div").setAttribute("style", "opacity: 0;");
-      htmlIcon = `<span class="t-bottom t-sm" data-tooltip="Toggle ribbon"><img loading="lazy" id="scSitecoreRibbon" onclick="showSitecoreRibbonEE()" src="` + global.iconDownArrow + `" class="scIconMenu" accesskey="a" /></span>`;
+      htmlIcon = `<span class="t-bottom t-sm" data-tooltip="Toggle ribbon"><img loading="lazy" id="scSitecoreRibbon" onclick="showSitecoreRibbonEE()" src="${global.iconDownArrow}" class="scIconMenu" accesskey="a" /></span>`;
     }
     menu ? menu.insertAdjacentHTML("afterbegin", htmlIcon) : false;
   }
@@ -140,15 +143,12 @@ const initRibbonToggleMenu = (storage, type = "CE") => {
  * Attach ribbon toggle icon to the header
  */
 const initUserPortraitMenu = (storage) => {
+  let accountInformation = document.querySelector(".sc-accountInformation");
   if (storage.feature_experimentalui) {
-    let accountInformation = document.querySelector(".sc-accountInformation");
-    accountInformation.querySelector("li").remove();
-    accountInformation.querySelector("li").innerHTML = accountInformation.querySelector("li > img").outerHTML;
-    accountInformation.querySelector("li > img").setAttribute("id", "globalHeaderUserPortrait");
-    //let profilePicture = accountInformation.querySelector("li > img").getAttribute("src");
-    //profilePicture.includes("default_user.png") ? accountInformation.querySelector("li > img").setAttribute("src", "https://robohash.org/administrator") : false;
-    //profilePicture.includes("default_user.png") ? console.log(profilePicture) : false;
+    accountInformation.querySelectorAll("li")[0].setAttribute("style", "display:none");
+    accountInformation.querySelectorAll("li")[1].innerHTML = accountInformation.querySelector("li > img").outerHTML;
   }
+  accountInformation.querySelector("li > img").setAttribute("id", "globalHeaderUserPortrait");
 };
 
 /**
@@ -158,19 +158,12 @@ const initUserMenu = (storage, type = "CE") => {
   let accountInformation = document.querySelector(".sc-accountInformation");
   let scGlobalHeader = document.querySelector(".sc-globalHeader-loginInfo");
   let htmlMenu;
-
   if (accountInformation) {
+    //Menu
     let accountUser = accountInformation.querySelectorAll("li")[1].innerText.trim();
-
-    if (storage.feature_experimentalui) {
-      initRibbonToggleMenu(storage, type);
-      initWorkboxMenu(storage);
-      initUserPortraitMenu(storage);
-    }
-
-    // <li onclick="javascript:return scForm.invoke('system:showlicenses', event)">Licences</li>
-    // <li onclick="javascript:return scForm.invoke('system:showabout', event)">Licence details</li>
-    //<li onclick="javascript:return scForm.invoke('item:myitems', event)">My locked items</li>
+    initRibbonToggleMenu(storage, type);
+    initWorkboxMenu(storage);
+    initUserPortraitMenu(storage);
 
     if (type == "CE") {
       //prettier-ignore
@@ -180,14 +173,48 @@ const initUserMenu = (storage, type = "CE") => {
           <ul> 
             <li onclick="javascript:return scForm.invoke('preferences:changeuserinformation', event)">My profile (${accountUser})</li>
             <li onclick="javascript:return scForm.invoke('security:changepassword', event) ">Change Password</li>
-            <li onclick="javascript:return scForm.invoke('preferences:changeregionalsettings', event)">Languages</li>
             <li onclick="javascript:return scForm.invoke('shell:useroptions', event)">Sitecore Options</li>
           
             <li onclick="javascript:goToSubmenu(1)" id="scSkip" class="separator opensubmenu"><img src="${global.iconMenuBright}" /> Dark Mode <span id="scSkip" class="darkMenuHint">Light</span></li>
             <li onclick="javascript:goToSubmenu(2)" id="scSkip" class="opensubmenu"><img src="${global.iconMenuTheme}" /> Theme <span id="scSkip" class="themeMenuHint">Classic</span></li> 
             <li onclick="window.open('${global.launchpadPage}?launchpad=true')"><img src="${global.iconMenuOptions}" /> Extension Options</li>
 
-            <li onclick="javascript:return scForm.invoke('system:logout', event)">Log out</li>
+            <li onclick="satLogout()">Log out</li>
+            
+          </ul>
+        </div>
+
+        <div class="scAccountSub">
+          <div class="scAccountColumn scAccountGroup2">
+            <ul>
+              <li onclick="javascript:goToSubmenu(0)" id="scSkip" class="backsubmenu"><img src="${global.iconMenuBright}" /> Dark Mode</li>
+              <li>Light <input type="radio" class="darkmodeRadio" name="darkMode" value="light" checked></li>
+              <li>Dark <input type="radio" class="darkmodeRadio" name="darkMode" value="dark"></li>
+              <li>Automatic <input type="radio" class="darkmodeRadio" name="darkMode" value="auto"></li>
+            </ul>
+          </div>
+          <div class="scAccountColumn scAccountGroup2">
+            <ul>
+              <li onclick="javascript:goToSubmenu(0)" id="scSkip" class="backsubmenu"><img src="${global.iconMenuTheme}" /> Theme</li>
+              <li>Classic <input type="radio" class="interfaceRadio" name="interface" value="classic" checked></li>
+              <li>Experimental UI <input type="radio" class="interfaceRadio" name="interface" value="experimental"></li>
+            </ul>
+          </div>
+        </div>
+        </div>
+      </div>`;
+    } else if (type == "LP") {
+      //prettier-ignore
+      htmlMenu = `<div class="scAccountMenu">
+        <div class="scAccountMenuWrapper">
+        <div class="scAccountColumn scAccountGroup1">
+          <ul> 
+          
+            <li onclick="javascript:goToSubmenu(1)" id="scSkip" class="separator opensubmenu"><img src="${global.iconMenuBright}" /> Dark Mode <span id="scSkip" class="darkMenuHint">Light</span></li>
+            <li onclick="javascript:goToSubmenu(2)" id="scSkip" class="opensubmenu"><img src="${global.iconMenuTheme}" /> Theme <span id="scSkip" class="themeMenuHint">Classic</span></li> 
+            <li onclick="window.open('${global.launchpadPage}?launchpad=true')"><img src="${global.iconMenuOptions}" /> Extension Options</li>
+
+            <li onclick="satLogout()">Log out</li>
             
           </ul>
         </div>
@@ -229,6 +256,9 @@ const initUserMenu = (storage, type = "CE") => {
     //Resize menu
     let height = document.querySelectorAll(".scAccountMenu > .scAccountMenuWrapper > .scAccountColumn > ul")[0].offsetHeight;
     document.querySelector(".scAccountMenu").setAttribute("style", "height:" + height + "px");
+
+    //Init color picker
+    initColorPicker(storage);
 
     //Listeners
     document.addEventListener("keydown", (event) => {

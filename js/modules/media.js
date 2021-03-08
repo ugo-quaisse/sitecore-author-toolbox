@@ -5,7 +5,7 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
-import { exeJsCode, setPlural } from "./helpers.js";
+import { exeJsCode, setPlural, getScItemData } from "./helpers.js";
 import { getAccentColor } from "./experimentalui.js";
 
 export { getImageInfo, initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons, initUploadButton, initUploader, initLightbox, initMediaSearchBox };
@@ -91,9 +91,7 @@ const initMediaExplorer = (storage) => {
 
     // prettier-ignore
     let mediaExplorer =
-      `<input id="mediaThumbnailSize" class="mediaThumbnailSize" type ="range" min ="25" max="150" step ="5" value ="` +
-      scMediaThumbnailSize +
-      `" onchange="updateMediaThumbnails(this.value)"/>
+      `<input id="mediaThumbnailSize" class="mediaThumbnailSize" type ="range" min ="25" max="150" step ="5" value ="${scMediaThumbnailSize}" onchange="updateMediaThumbnails(this.value)"/>
 
       <table class="scMediaExplorer">
         <thead>
@@ -594,18 +592,22 @@ const initUploader = () => {
  */
 const initLightbox = () => {
   let scLightbox = document.querySelector("#scLightbox");
+  let scItemPath = getScItemData().path;
   let html = `
-  <div id="scLightbox">
+  <div id="scLightbox" data-path="${scItemPath}">
     <div class="scLightboxHeader">
       <div class="scLightboxTitle"></div>
-      <button class="sclightboxClose">
+      <button class="sclightboxClose t-bottom t-xs" data-tooltip="Close">
         <img src="${global.iconWindowClose}" />
       </button>
-      <button class="sclightboxDownload" class="action" >
-        <a download href="#"><img src="${global.iconDownload}" class="action" /></a>
+      <button class="sclightboxDownload t-bottom t-xs" data-tooltip="Download" >
+        <a download href="#"><img src="${global.iconDownloadWhite}" class="action" /></a>
       </button>
-      <button class="sclightboxFullscreen" class="action" >
+      <button class="sclightboxFullscreen t-bottom t-xs" data-tooltip="Fullscreen" >
         <img src="${global.iconFullscreen}" class="action" />
+      </button>
+      <button class="sclightboxCopy t-bottom t-xs" data-tooltip="Copy path" >
+        <img src="${global.iconCopyWhite}" class="action" />
       </button>
     </div>
     <div class="action" id="scLightboxPrev"><img src="${global.iconArrowLeft}" class="action"/></div>

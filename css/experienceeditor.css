@@ -350,7 +350,7 @@ body.satEEExperimentalUi .zg-variant-switcher .zg-variant-available {
   margin-top: -2px;
 }
 body.satEEExperimentalUi .zg-variant-switcher.expanded .zg-variant-available {
-  background-color: transparent;
+  background-color: var(--grey19);
   padding: 0px 10px 10px 10px;
   margin-top: -2px;
 }
@@ -359,9 +359,6 @@ body.satEEExperimentalUi .zg-variant-switcher .zg-variant-header {
 }
 body.satEEExperimentalUi .zg-variant-switcher .zg-variant-list {
   width: 80%;
-}
-body.satEEExperimentalUi .zg-variant-switcher.expanded .zg-variant-list .zg-variant-available {
-  background-color: var(--grey19);
 }
 body.satEEExperimentalUi .zg-variant-switcher.expanded li {
   padding: 5px;
@@ -392,6 +389,11 @@ body.satEEExperimentalUi .scDefaultTextEE {
   font-weight: 500;
 }
 
+body.satEEExperimentalUi .sc-breadcrumb-item-path > img {
+  margin-top: 5px;
+  height: 16px;
+}
+
 /* Dark Mode */
 body.satEEDark .scEditableTab,
 body.satEEDark .scContentEditorTab,
@@ -420,4 +422,8 @@ body.satEEDark .zg-variant-switcher.expanded ul.flex-thumb .variant-name {
 }
 body.satEEDark .zg-variant-switcher.expanded ul.flex-thumb .variant-name {
   background-color: transparent;
+}
+
+body.satEEDark .zg-variant-switcher.expanded .zg-variant-available {
+  background-color: var(--black1);
 }

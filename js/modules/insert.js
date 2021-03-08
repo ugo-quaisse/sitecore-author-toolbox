@@ -6,33 +6,7 @@ import * as global from "./global.js";
 import { getScItemData } from "./helpers.js";
 import { replaceIcons } from "./experimentalui.js";
 
-export { insertModal, insertPanel, getRelatedMedia };
-
-/**
- * Get related medias
- */
-const getRelatedMedia = (sitecoreItemID, scLanguage, scVersion) => {
-  var ajax = new XMLHttpRequest();
-  ajax.timeout = 7000;
-  ajax.open("GET", "/sitecore/shell/default.aspx?xmlcontrol=Gallery.Links&id=" + sitecoreItemID + "&la=" + scLanguage + "&vs=" + scVersion + "&db=master", true);
-  ajax.onreadystatechange = function () {
-    if (ajax.readyState === 4 && ajax.status == "200") {
-      let html = new DOMParser().parseFromString(ajax.responseText, "text/html");
-
-      html.querySelectorAll("#Links > .scLink").forEach((el) => {
-        let path = el.innerText.toLowerCase();
-        let isMediaPath = path.includes("/sitecore/media library/");
-        if (isMediaPath) {
-          //get onclick
-          //split "- [" to get File name
-          //get > img.src
-          console.log(el);
-        }
-      });
-    }
-  };
-  sitecoreItemID ? ajax.send(null) : false;
-};
+export { insertModal, insertPanel };
 
 /**
  * Insert Panel HTML to be used with other features

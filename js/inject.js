@@ -586,6 +586,20 @@ function addSite(optionPage, urlOrigin, sitePath, siteName) {
 function fullscreenLightbox() {
   document.querySelector("#scLightbox").requestFullscreen();
 }
+/*
+ * Copy path lightbox
+ */
+function copyPathLightbox(path) {
+  console.log(path);
+  navigator.clipboard.writeText(path).then(
+    function () {
+      //Success
+    },
+    function (err) {
+      console.error("Async: Could not copy text: ", err);
+    }
+  );
+}
 /**
  * Open Lightbox
  */
@@ -595,10 +609,12 @@ function openLightbox(id, from = "frame") {
   let img = item.src.replace("&h=180", "").replace("&w=180", "").replace("&h=300", "").replace("&thn=1", "");
   let name = item.dataset.name;
   let size = item.dataset.size;
+  let path = lightbox.dataset.path;
   let mediaType = size == "--" ? "other" : "img";
   lightbox ? lightbox.classList.remove("scLightboxHideSpinner") : false;
   lightbox ? lightbox.querySelector(".sclightboxDownload > a").setAttribute("href", img) : false;
   lightbox ? lightbox.querySelector(".sclightboxFullscreen").setAttribute("onclick", `fullscreenLightbox()`) : false;
+  lightbox ? lightbox.querySelector(".sclightboxCopy").setAttribute("onclick", `copyPathLightbox('${path}/${name}')`) : false;
   if (mediaType == "img") {
     lightbox ? lightbox.querySelector(".scLightboxContent > iframe").setAttribute("style", "display: none") : false;
     lightbox ? lightbox.querySelector(".scLightboxContent > img").setAttribute("style", "display: block") : false;
@@ -643,4 +659,11 @@ function openLightbox(id, from = "frame") {
       }
     }
   }
+}
+/**
+ * Logout
+ */
+function satLogout() {
+  document.querySelector(".sc-globalHeader .logout") ? document.querySelector(".sc-globalHeader .logout").click() : false;
+  //javascript:return scForm.invoke('system:logout', event)
 }

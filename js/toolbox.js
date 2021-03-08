@@ -25,19 +25,7 @@ import { initIntroScreen, initAppName, initGravatarImage, initUserMenu } from ".
 import { initInstantSearch, enhancedSitecoreSearch } from "./modules/search.js";
 import { insertModal, insertPanel } from "./modules/insert.js";
 import { initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons, initUploadButton, initUploader, initLightbox, initMediaSearchBox } from "./modules/media.js";
-import {
-  initOnboarding,
-  initExperimentalUi,
-  initInsertIcon,
-  initGutter,
-  initColorPicker,
-  initSitecoreRibbon,
-  initSvgAnimation,
-  initSvgAnimationPublish,
-  initEventListeners,
-  initTitleBarDesktop,
-  initMaterializeIcons,
-} from "./modules/experimentalui.js";
+import { initOnboarding, initExperimentalUi, initInsertIcon, initGutter, initSitecoreRibbon, initSvgAnimation, initSvgAnimationPublish, initEventListeners, initTitleBarDesktop, initMaterializeIcons } from "./modules/experimentalui.js";
 import { initFavorites } from "./modules/favorites.js";
 import { initGroupedErrors } from "./modules/errors.js";
 import { enhancedBucketLists } from "./modules/buckets.js";
@@ -63,14 +51,10 @@ chrome.storage.sync.get((storage) => {
     loadJsFile("js/inject.js");
     checkNotificationPermissions();
     checkPublishNotification(storage);
-    initUserMenu(storage);
     initDarkMode(storage);
     detectSwitchDarkMode(storage);
     initExperimentalUi(storage);
     initAutoExpandTree(storage);
-    initTreeGutterTooltips();
-    refreshContentEditor(storage);
-    initColorPicker(storage);
     keyEventListeners();
 
     /*
@@ -81,6 +65,9 @@ chrome.storage.sync.get((storage) => {
     if (global.isContentEditor) {
       log("**** CE ****", "yellow");
       let ScItem = getScItemData();
+      initUserMenu(storage);
+      initTreeGutterTooltips();
+      refreshContentEditor(storage);
       resumeFromWhereYouLeftOff(storage);
       initInstantSearch(storage);
       initFavorites(storage);
@@ -114,11 +101,14 @@ chrome.storage.sync.get((storage) => {
     if (global.isLaunchpad) {
       log("**** Launchpad ****", "orange");
       initAppName(storage, "Launchpad");
+      initUserMenu(storage, "LP");
       initLaunchpadIcon(storage);
       showSnackbar(storage);
+      initIntroScreen();
     } else if (global.isDesktop && !global.isGalleryFavorites && !global.isXmlControl) {
       log("**** Desktop Shell ****", "orange");
       initAppName(storage, "Sitecore Desktop");
+      initUserMenu(storage);
       initLaunchpadMenu(storage);
       workboxNotifications(storage);
       showSnackbar(storage);
@@ -154,7 +144,7 @@ chrome.storage.sync.get((storage) => {
       initAppName(storage, "Template Builder");
       initQuerySuggestions(storage);
     } else {
-      log("**** Non identified ****", "orange");
+      log("**** Non identified ****", "green");
       log(global.windowLocationHref, "green");
     }
 
@@ -184,6 +174,7 @@ chrome.storage.sync.get((storage) => {
       initGroupedErrors(storage);
       addHelptextIcons();
       enhancedBucketLists();
+      initMaterializeIcons(storage);
     } else if (global.isExperienceProfile) {
       log("**** Experience Profile ****", "orange");
       initGravatarImage(storage);
@@ -227,6 +218,7 @@ chrome.storage.sync.get((storage) => {
       log("**** Versions menu ****", "orange");
     } else if (global.isLayoutDetails) {
       log("**** Layout Details ****", "orange");
+      initMaterializeIcons(storage);
     } else if (global.isDialog || global.isLockedItems) {
       log("**** Dialog UI ****", "orange");
       initMaterializeIcons(storage);
@@ -265,6 +257,7 @@ chrome.storage.sync.get((storage) => {
     document.body ? document.body.classList.add("satExtension") : false;
     loadJsFile("js/inject.js");
     checkNotificationPermissions();
+    checkPublishNotification(storage);
     initDarkMode(storage);
     detectSwitchDarkMode(storage);
     initExperimentalUi(storage);
@@ -279,7 +272,6 @@ chrome.storage.sync.get((storage) => {
       initFlagRibbonEE(storage);
       storeCurrentPageEE();
       initUserMenu(storage, "EE");
-      initColorPicker(storage);
     } else if (global.isGalleryLanguageExpEd) {
       log("**** Language Menu ****", "orange");
       initLanguageMenuEE(storage);

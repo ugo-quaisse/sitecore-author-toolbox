@@ -12,12 +12,14 @@ export { showSnackbar, showSnackbarSite };
 const showSnackbar = (storage) => {
   //Snackbar settings
   let versionIncrement = Number(global.extensionVersion.split(".").pop());
-  if (!storage.feature_experimentalui && versionIncrement == 0) {
+  let hiddenIntroScreen = localStorage.getItem("scIntroScreen");
+  let show = true;
+  if (hiddenIntroScreen && show && versionIncrement == 0) {
     //prettier-ignore
     let snackbarHtml = `
-    <b>Sitecore Author Toolbox ` + global.extensionVersion + `</b><br />
-    Live URL is now compatible with multisites!<br />Click "TRY IT" to activate it now!`;
-    let html = `<div class="snackbar">` + snackbarHtml + `<button id="sbAction" onclick='javascript:document.querySelectorAll(".interfaceRadio")[1].click()'>TRY IT</button><button id="sbDismiss">DISMISS</button></div>`;
+    <b>Welcome to Sitecore Author Toolbox ${global.extensionVersion}!</b><br />
+    Live URL is now compatible with multi-sites!<br />Click "INFO" to find out more!`;
+    let html = `<div class="snackbar">${snackbarHtml}<button id="sbAction" onclick='javascript:window.open("https://uquaisse.io/extension-update/")'>INFO</button><button id="sbDismiss">DISMISS</button></div>`;
 
     //Is Snackbar is already visible in a parent frame?
     let parentSnackbar = parent.document.querySelector(".snackbar");

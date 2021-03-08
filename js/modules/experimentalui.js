@@ -571,14 +571,18 @@ const initSvgAnimation = () => {
  */
 const initSvgAnimationPublish = (storage) => {
   if (storage.feature_experimentalui) {
-    document.querySelector("#Publishing > .scFormDialogHeader").insertAdjacentHTML("afterend", `<div class="scIndeterminateProgress"></div>`);
-    document.querySelector("#Publishing > .scWizardProgressPage").insertAdjacentHTML("afterbegin", `<div id="svgAnimationCircle">${global.svgAnimationCircle}</div>`);
-    document.querySelector("#Exporting > .scFormDialogHeader").insertAdjacentHTML("afterend", `<div class="scIndeterminateProgress"></div>`);
-    document.querySelector("#Exporting > .scWizardProgressPage").insertAdjacentHTML("afterbegin", `<div id="svgAnimationCircle">${global.svgAnimationCircle}</div>`);
-    document.querySelector("#Uploading > .scFormDialogHeader").insertAdjacentHTML("afterend", `<div class="scIndeterminateProgress"></div>`);
-    document.querySelector("#Uploading > .scWizardProgressPage").insertAdjacentHTML("afterbegin", `<div id="svgAnimationCircle">${global.svgAnimationCircle}</div>`);
-    document.querySelector(".scWizardProgressPage").insertAdjacentHTML("beforebegin", `<div class="scIndeterminateProgress"></div>`);
-    document.querySelector(".scWizardProgressPage").insertAdjacentHTML("afterbegin", `<div id="svgAnimationCircle">${global.svgAnimationCircle}</div>`);
+    if (document.querySelector("#Publishing > .scFormDialogHeader")) {
+      document.querySelector("#Publishing > .scFormDialogHeader > div").insertAdjacentHTML("afterend", `<div class="scIndeterminateProgress"></div>`);
+      document.querySelector("#Publishing > .scWizardProgressPage").insertAdjacentHTML("afterbegin", `<div id="svgAnimationCircle">${global.svgAnimationCircle}</div>`);
+    }
+    if (document.querySelector("#Exporting > .scFormDialogHeader")) {
+      document.querySelector("#Exporting > .scFormDialogHeader > div").insertAdjacentHTML("afterend", `<div class="scIndeterminateProgress"></div>`);
+      document.querySelector("#Exporting > .scWizardProgressPage").insertAdjacentHTML("afterbegin", `<div id="svgAnimationCircle">${global.svgAnimationCircle}</div>`);
+    }
+    if (document.querySelector("#Uploading > .scFormDialogHeader")) {
+      document.querySelector("#Uploading > .scFormDialogHeader > div").insertAdjacentHTML("afterend", `<div class="scIndeterminateProgress"></div>`);
+      document.querySelector("#Uploading > .scWizardProgressPage").insertAdjacentHTML("afterbegin", `<div id="svgAnimationCircle">${global.svgAnimationCircle}</div>`);
+    }
   }
 };
 
@@ -658,8 +662,9 @@ const initTitleBarDesktop = () => {
  */
 const replaceIcons = (storage) => {
   if (storage.feature_experimentalui === true && storage.feature_material_icons === true) {
+    global.debug ? console.log("Fired replaceIcons") : false;
     let imgGlyph = document.querySelectorAll(
-      ".scContentTreeNodeGlyph, .scContentTreeNodeIcon, #scModal .main img, .scInstantSearchResults img, .dynatree-container img, .dynatree-node > img, .scTabs .scImageContainer > img, form[action*='Gallery'] img, form[action*='Media'] .scFolderButtons img, .scPopup .scMenuItemIcon > img, .satEE .scChromeCommand > img"
+      ".scNavButton, .item-icon, .sc-breadcrumb-item-path > img, .scContentControlLayoutDeviceName > img, .scRendering > img, .scTabContent img, .scContentTreeNodeGlyph, .scContentTreeNodeIcon, #scModal .main img, .scInstantSearchResults img, .dynatree-container img, .dynatree-node > img, .scTabs .scImageContainer > img, form[action*='Gallery'] img, form[action*='Media'] .scFolderButtons img, .scPopup .scMenuItemIcon > img, .satEE .scChromeCommand > img"
     );
     for (let icon of imgGlyph) {
       let filename = icon.src.substring(icon.src.lastIndexOf("/") + 1).toLowerCase();
@@ -707,7 +712,7 @@ const initMaterializeIcons = (storage) => {
     document.documentElement.style.setProperty("--iconBrightness", 0.1);
     document.documentElement.style.setProperty("--iconContrast", 2);
     //In Content Editor
-    target = document.querySelector("#ContentEditorForm");
+    target = document.querySelector("body");
     observer = new MutationObserver(function () {
       replaceIcons(storage);
     });
@@ -720,49 +725,5 @@ const initMaterializeIcons = (storage) => {
           subtree: true,
         })
       : false;
-    //In iframe, modals and windows
-    setTimeout(function () {
-      //Speak UI tree
-      target = document.querySelector("div[data-sc-id*='TreeView']");
-      observer = new MutationObserver(function () {
-        replaceIcons(storage);
-      });
-      target
-        ? observer.observe(target, {
-            attributes: false,
-            childList: true,
-            characterData: false,
-            subtree: true,
-          })
-        : false;
-      //EE components
-      target = document.querySelector(".scTabs");
-      observer = new MutationObserver(function () {
-        replaceIcons(storage);
-      });
-      //Observer UI
-      target
-        ? observer.observe(target, {
-            attributes: false,
-            childList: true,
-            characterData: false,
-            subtree: true,
-          })
-        : false;
-      //EE components
-      target = document.querySelector(".scChromeControls");
-      observer = new MutationObserver(function () {
-        replaceIcons(storage);
-      });
-      //Observer UI
-      target
-        ? observer.observe(target, {
-            attributes: true,
-            childList: true,
-            characterData: false,
-            subtree: false,
-          })
-        : false;
-    }, 100);
   }
 };

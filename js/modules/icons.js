@@ -26,7 +26,7 @@ export const jsonIcons = JSON.parse(
   },
   {
     "search": "photo_scenery.png",
-    "icon": "action::perm_media"
+    "icon": "image::panorama"
   },
   {
     "search": "folder_network.png",
@@ -394,11 +394,11 @@ export const jsonIcons = JSON.parse(
   },
   {
     "search": "left",
-    "icon": "action::arrow_left_alt"
+    "icon": "navigation::chevron_left"
   },
   {
     "search": "right",
-    "icon": "action::arrow_right_alt"
+    "icon": "navigation::chevron_right"
   },
   {
     "search": "document_",
@@ -483,6 +483,14 @@ export const jsonIcons = JSON.parse(
   {
     "search": "users",
     "icon": "social::share"
+  },
+  {
+    "search": "cards",
+    "icon": "av::recent_actors"
+  },
+  {
+    "search": "card2",
+    "icon": "social::person"
   },
   {
     "search": "organize_",
@@ -669,8 +677,32 @@ export const jsonIcons = JSON.parse(
     "icon": "action::lock"
   },
   {
+    "search": "container",
+    "icon": "image::view_compact"
+  },
+  {
+    "search": "promo",
+    "icon": "navigation::campaign"
+  },
+  {
     "search": "feed",
     "icon": "communication::rss_feed"
+  },
+  {
+    "search": "monitor",
+    "icon": "hardware::laptop"
+  },
+  {
+    "search": "pda2",
+    "icon": "hardware::smartphone"
+  },
+  {
+    "search": "printer",
+    "icon": "action::print"
+  },
+  {
+    "search": "worflow",
+    "icon": "content::low_priority"
   }
 ]`
 );

@@ -2,7 +2,7 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 import * as global from "./global.js";
 
-export { checkLockedItems, getItemProperties };
+export { checkLockedItems, getRelatedItems, getItemProperties };
 
 /**
  * Check all locked items
@@ -53,6 +53,26 @@ const checkLockedItems = (item, storage) => {
 };
 
 /**
+ * Get related medias
+ */
+const getRelatedItems = (sitecoreItemID, scLanguage, scVersion) => {
+  var ajax = new XMLHttpRequest();
+  ajax.timeout = 7000;
+  ajax.open("GET", "/sitecore/shell/default.aspx?xmlcontrol=Gallery.Links&id=" + sitecoreItemID + "&la=" + scLanguage + "&vs=" + scVersion + "&db=master", true);
+  ajax.onreadystatechange = function () {
+    if (ajax.readyState === 4 && ajax.status == "200") {
+      let html = new DOMParser().parseFromString(ajax.responseText, "text/html");
+      let relatedItems = [];
+      html.querySelectorAll("#Links > .scRef > .scLink").forEach((el) => {
+        !relatedItems.includes(el.innerText) ? relatedItems.push(el.innerText) : false;
+      });
+      console.table(relatedItems);
+    }
+  };
+  sitecoreItemID ? ajax.send(null) : false;
+};
+
+/**
  * Get all items properties
  */
 const getItemProperties = (itemId, language, version, storage) => {
@@ -98,5 +118,7 @@ const getItemProperties = (itemId, language, version, storage) => {
     setTimeout(function () {
       ajax.send(null);
     }, 500);
+
+    //getRelatedItems(itemId, language, version);
   }
 };

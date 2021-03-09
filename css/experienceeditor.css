@@ -321,6 +321,9 @@ body.satEEExperimentalUi .sc_DropDownItemImage {
 body.satEEExperimentalUi .sc_DropDownListItemUsed {
   background-color: var(--accent);
 }
+body.satEEExperimentalUi .sc_DropDownListItemUsed .sc_DropDownItemText {
+  color: var(--accentText);
+}
 body.satEEExperimentalUi .zg-variant-switcher {
   border-top: unset;
   height: 35px;

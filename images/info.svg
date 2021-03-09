@@ -1,10 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Info</title>
-    <g id="Info" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="info-24px-(1)">
-            <polygon id="Path" points="0 0 16 0 16 16 0 16"></polygon>
-            <path d="M8,1.33333333 C4.32,1.33333333 1.33333333,4.32 1.33333333,8 C1.33333333,11.68 4.32,14.6666667 8,14.6666667 C11.68,14.6666667 14.6666667,11.68 14.6666667,8 C14.6666667,4.32 11.68,1.33333333 8,1.33333333 Z M8.66666667,11.3333333 L7.33333333,11.3333333 L7.33333333,7.33333333 L8.66666667,7.33333333 L8.66666667,11.3333333 Z M8.66666667,6 L7.33333333,6 L7.33333333,4.66666667 L8.66666667,4.66666667 L8.66666667,6 Z" id="Shape" fill="#000000" fill-rule="nonzero"></path>
-        </g>
-    </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>

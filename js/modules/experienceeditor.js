@@ -59,8 +59,10 @@ const addToolbarEditCE = (storage) => {
     // dropDown ? dropDown.insertAdjacentHTML("afterbegin", componentProperties.outerHTML) : false;
     // dropDown ? dropDown.insertAdjacentHTML("afterbegin", eeOptions.outerHTML) : false;
     //dropDown ? dropDown.insertAdjacentHTML("afterbegin", relatedItem.outerHTML) : false;
-    dropDown && !dropDown.querySelector(".satEditInCE") ? dropDown.insertAdjacentHTML("afterbegin", editInCE) : dropDown.querySelector(".satEditInCE").setAttribute("onclick", editClick);
-    dropDown && !dropDown.querySelector(".satAssociatedContent") ? dropDown.insertAdjacentHTML("afterbegin", associatedContent.outerHTML) : false;
+    if (dropDown) {
+      !dropDown.querySelector(".satEditInCE") ? dropDown.insertAdjacentHTML("afterbegin", editInCE) : dropDown.querySelector(".satEditInCE").setAttribute("onclick", editClick);
+      !dropDown.querySelector(".satAssociatedContent") ? dropDown.insertAdjacentHTML("afterbegin", associatedContent.outerHTML) : false;
+    }
   });
 
   //Observer

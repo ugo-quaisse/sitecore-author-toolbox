@@ -11,6 +11,10 @@ body.contentEditor {
   background-color: var(--black1);
   border: 0px;
 }
+/* body.satExtension .splitter-pane,
+body.satExtension .splitter-bar {
+  transition: width ease-out 0.1s;
+} */
 body.contentEditor:after {
   content: "";
   color: #cccccc;
@@ -49,7 +53,6 @@ body.satExtension.contentEditor:after {
 section.sc-applicationContent-main {
   opacity: 0;
 }
-
 nav#ribbonPreLoadingIndicator .sc-progressindicator-inner {
   opacity: 0;
 }
@@ -1415,8 +1418,8 @@ body.satExtension .snackbarSite > button {
 
 body.satExtension .launchpadBadge {
   position: absolute;
-  margin-left: 35px;
-  margin-top: -10px;
+  margin-left: 5px;
+  margin-top: 60px;
   background-color: #dc2a1e;
   min-width: 25px;
   color: #fff;
@@ -1427,6 +1430,15 @@ body.satExtension .launchpadBadge {
   padding: 0px 4px;
   transform: scale(0);
   animation: popup 0.1s ease-in-out forwards;
+}
+body.satExtension .launchpadBadge.sc10launchpad {
+  position: relative;
+  left: 10px;
+  top: -20px;
+  margin-left: 35px;
+  margin-top: -10px;
+  padding: 0px 6px;
+  width: fit-content;
 }
 @keyframes popup {
   100% {

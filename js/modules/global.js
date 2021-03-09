@@ -130,6 +130,7 @@ export const isTemplateBuilder = windowLocationHref.includes("templatebuilder");
 export const isLayoutDetails = windowLocationHref.includes("layoutdetails");
 export const isRichText = windowLocationHref.includes("richtext.");
 export const isGalleryLanguageExpEd = windowLocationHref.includes("selectlanguagegallery");
+export const isGalleryVersionExpEd = windowLocationHref.includes("selectversiongallery");
 export const isGalleryFavorites = windowLocationHref.includes("gallery.favorites");
 export const isAdminCache = windowLocationHref.includes("/admin/cache.aspx");
 export const isAdmin = windowLocationHref.includes("/admin/");
@@ -186,7 +187,7 @@ export const isExperienceProfile = windowLocationHref.includes("/applications/ex
 export const isWorkbox = windowLocationHref.includes("workbox");
 export const scQuickInfo = document.querySelector(".scEditorHeaderQuickInfoInput");
 export const scUrlHash = window.location.hash.substr(1);
-export const workboxLaunchpad = document.querySelector("a[title='Workbox']");
+export const workboxLaunchpad = document.querySelector("a[title='workbox'i]");
 export const workboxPage = "/sitecore/shell/Applications/Workbox/Default.aspx?he=Workbox&sc_bw=1";
 export const hasRedirection = windowLocationHref.includes("&ro=");
 export const hasRedirectionOther = windowLocationHref.includes("&sc_ce_uri=");

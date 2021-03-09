@@ -12,7 +12,7 @@ export { workboxNotifications };
  */
 const workboxNotifications = (storage) => {
   storage.feature_workbox == undefined ? (storage.feature_workbox = true) : false;
-  if (storage.feature_workbox) {
+  if (storage.feature_workbox && !storage.feature_experimentalui) {
     var wfNotification = 0;
     var wfChecksum = "#checksum#";
 
@@ -62,6 +62,10 @@ const workboxNotifications = (storage) => {
           //Show badge (launchpad)
           html = '<span class="launchpadBadge">' + wfNotification + "</span>";
           global.workboxLaunchpad ? global.workboxLaunchpad.insertAdjacentHTML("afterbegin", html) : false;
+          //Sitecore Launchpad version detection
+          let oldScDetect = document.querySelector(".sc-applicationHeader-row2");
+          //Change top left logo
+          !oldScDetect && document.querySelector(".launchpadBadge") ? document.querySelector(".launchpadBadge").classList.add("sc10launchpad") : "";
         } else {
           //Show badge (status bar)
           document.querySelectorAll(".scDockBottom > a").forEach((a) => {

@@ -100,6 +100,17 @@
   box-shadow: none !important;
   background: none !important;
 }
+body.satExtension .launchpadBadge {
+  margin-left: 55px;
+  margin-top: 40px;
+}
+body.satExtension .launchpadBadge.sc10launchpad {
+  position: absolute;
+  margin-left: 50px;
+  margin-top: 40px;
+  top: unset;
+  left: 10px;
+}
 
 @media screen and (max-width: 1200px) {
   .sc-launchpad-group-row {

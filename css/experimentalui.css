@@ -6,10 +6,9 @@ body.satExperimentalUi {
   -webkit-font-smoothing: antialiased;
   color: var(--text) !important;
 }
-
-body.satExperimentalUi .ui-widget-overlay::after {
-  background: url(chrome-extension://dpmlbbpimcmgdlhpdphnijefjchoicmj/images/sc-spinner.svg) center center no-repeat rgb(255, 255, 255);
-  background-size: 70%;
+body.satExperimentalUi .ui-widget-overlay:after {
+  background: url(chrome-extension://dpmlbbpimcmgdlhpdphnijefjchoicmj/images/sc-spinner.svg) center center no-repeat rgb(255, 255, 255) !important;
+  background-size: 70% !important;
 }
 
 body.satExperimentalUi #EditorPanel,
@@ -53,6 +52,12 @@ body.satExperimentalUi .scTreeview .nodeSelected_Hover {
   color: var(--accentText) !important;
 }
 
+body.satExperimentalUi .sc-launchpad-item .icon {
+  background-color: var(--accent) !important;
+}
+body.satExperimentalUi .sc-launchpad-item .icon > img {
+  filter: brightness(var(--accentBrightness));
+}
 body.satExperimentalUi #scPanel {
   padding: 0px 20px;
 }
@@ -2104,11 +2109,13 @@ body.satExperimentalUi .scMenuItemHotkey_Hover,
 body.satExperimentalUi .scMenuPanelItemSelected,
 body.satExperimentalUi .scMenuPanelItemSelected_Hover,
 body.satExperimentalUi .scMenuPanelItem_Hover,
-body.satExperimentalUi .sc-gallery-option-content-active {
+body.satExperimentalUi .sc-gallery-option-content-active,
+body.satExperimentalUi .sc-gallery-versionoption-number {
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
 }
 
+body.satExperimentalUi .sc-gallery-versionoption-number,
 body.satExperimentalUi .versionNumSelected {
   font-size: 18px;
   font-weight: bold;

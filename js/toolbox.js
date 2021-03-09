@@ -51,11 +51,11 @@ chrome.storage.sync.get((storage) => {
     loadJsFile("js/inject.js");
     checkNotificationPermissions();
     checkPublishNotification(storage);
-    initDarkMode(storage);
-    detectSwitchDarkMode(storage);
-    initExperimentalUi(storage);
     initAutoExpandTree(storage);
     keyEventListeners();
+    initUserMenu(storage);
+    initDarkMode(storage);
+    detectSwitchDarkMode(storage);
 
     /*
      **********************
@@ -65,7 +65,6 @@ chrome.storage.sync.get((storage) => {
     if (global.isContentEditor) {
       log("**** CE ****", "yellow");
       let ScItem = getScItemData();
-      initUserMenu(storage);
       initTreeGutterTooltips();
       refreshContentEditor(storage);
       resumeFromWhereYouLeftOff(storage);
@@ -101,14 +100,13 @@ chrome.storage.sync.get((storage) => {
     if (global.isLaunchpad) {
       log("**** Launchpad ****", "orange");
       initAppName(storage, "Launchpad");
-      initUserMenu(storage, "LP");
       initLaunchpadIcon(storage);
+      workboxNotifications(storage);
       showSnackbar(storage);
       initIntroScreen();
     } else if (global.isDesktop && !global.isGalleryFavorites && !global.isXmlControl) {
       log("**** Desktop Shell ****", "orange");
       initAppName(storage, "Sitecore Desktop");
-      initUserMenu(storage);
       initLaunchpadMenu(storage);
       workboxNotifications(storage);
       showSnackbar(storage);
@@ -146,6 +144,7 @@ chrome.storage.sync.get((storage) => {
     } else {
       log("**** Non identified ****", "green");
       log(global.windowLocationHref, "green");
+      initExperimentalUi(storage);
     }
 
     /*
@@ -258,23 +257,25 @@ chrome.storage.sync.get((storage) => {
     loadJsFile("js/inject.js");
     checkNotificationPermissions();
     checkPublishNotification(storage);
+    keyEventListeners();
+    initFlagRibbonEE(storage);
+    initUserMenu(storage, "EE");
     initDarkMode(storage);
     detectSwitchDarkMode(storage);
-    initExperimentalUi(storage);
-    keyEventListeners();
+
     /*
-     ************************
-     * 4. Sitecore iframes  *
-     ************************
+     ******************************
+     * 4. Sitecore iframes in EE  *
+     ******************************
      */
     if (global.isRibbon) {
       log("**** EE Ribbon ****", "orange");
-      initFlagRibbonEE(storage);
       storeCurrentPageEE();
-      initUserMenu(storage, "EE");
     } else if (global.isGalleryLanguageExpEd) {
       log("**** Language Menu ****", "orange");
       initLanguageMenuEE(storage);
+    } else if (global.isGalleryVersionExpEd) {
+      log("**** Version Menu ****", "orange");
     } else if (global.isInsertPage) {
       log("**** Insert Page ****", "orange");
       initMaterializeIcons(storage);

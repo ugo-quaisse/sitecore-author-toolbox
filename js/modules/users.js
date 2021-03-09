@@ -2,7 +2,7 @@
 import * as global from "./global.js";
 import { exeJsCode, calcMD5 } from "./helpers.js";
 import { currentColorScheme } from "./dark.js";
-import { initColorPicker } from "./experimentalui.js";
+import { initExperimentalUi, initColorPicker } from "./experimentalui.js";
 
 export { initIntroScreen, getGravatar, initGravatarImage, initAppName, initWorkboxMenu, initUserPortraitMenu, initRibbonToggleMenu, initUserMenu };
 
@@ -109,15 +109,19 @@ const initAppName = (storage, name = "Content Editor") => {
 /**
  * Attach Workbox notification icon to the header
  */
-const initWorkboxMenu = (storage) => {
+const initWorkboxMenu = (storage, type = "CE") => {
   if (storage.feature_experimentalui) {
     let menu = document.querySelector(".sc-accountInformation");
-
+    let clickEvent;
     //Add Notification and arrow icons
-    let dialogParamsLarge = "center:yes; help:no; resizable:yes; scroll:yes; status:no; dialogMinHeight:200; dialogMinWidth:300; dialogWidth:1100; dialogHeight:700; header:";
-
+    if (type == "CE") {
+      //prettier-ignore
+      clickEvent = `javascript:scSitecore.prototype.showModalDialog('${global.workboxPage.replace("&sc_bw=1", "&sc_bw=0")}', '', 'center:yes; help:no; resizable:yes; scroll:yes; status:no; dialogMinHeight:200; dialogMinWidth:300; dialogWidth:1100; dialogHeight:700; header:Workbox', null, null); false`;
+    } else {
+      clickEvent = `window.location.href='/sitecore/shell/Applications/Workbox.aspx?sc_bw=1'`;
+    }
     //prettier-ignore
-    let htmlIcon = `<span class="t-bottom t-sm" data-tooltip="Workbox notification"><img loading="lazy" id="scNotificationBell" onclick="javascript:scSitecore.prototype.showModalDialog('` + global.workboxPage.replace("&sc_bw=1", "&sc_bw=0") + `', '', '` + dialogParamsLarge + `Workbox', null, null); false" src="` + global.iconBell + `" class="scIconMenu" accesskey="w" /></span>`;
+    let htmlIcon = `<span class="t-bottom t-sm" data-tooltip="Workbox notification"><img loading="lazy" id="scNotificationBell" onclick="${clickEvent}" src="${global.iconBell}" class="scIconMenu" accesskey="w" /></span>`;
     menu ? menu.insertAdjacentHTML("afterbegin", htmlIcon) : false;
   }
 };
@@ -158,14 +162,15 @@ const initUserMenu = (storage, type = "CE") => {
   let accountInformation = document.querySelector(".sc-accountInformation");
   let scGlobalHeader = document.querySelector(".sc-globalHeader-loginInfo");
   let htmlMenu;
+  let page = global.isLaunchpad ? "LP" : type;
   if (accountInformation) {
     //Menu
     let accountUser = accountInformation.querySelectorAll("li")[1].innerText.trim();
-    initRibbonToggleMenu(storage, type);
-    initWorkboxMenu(storage);
+    initRibbonToggleMenu(storage, page);
+    initWorkboxMenu(storage, page);
     initUserPortraitMenu(storage);
 
-    if (type == "CE") {
+    if (page == "CE") {
       //prettier-ignore
       htmlMenu = `<div class="scAccountMenu">
         <div class="scAccountMenuWrapper">
@@ -203,7 +208,7 @@ const initUserMenu = (storage, type = "CE") => {
         </div>
         </div>
       </div>`;
-    } else if (type == "LP") {
+    } else if (page == "LP") {
       //prettier-ignore
       htmlMenu = `<div class="scAccountMenu">
         <div class="scAccountMenuWrapper">
@@ -238,7 +243,7 @@ const initUserMenu = (storage, type = "CE") => {
         </div>
         </div>
       </div>`;
-    } else if (type == "EE") {
+    } else if (page == "EE") {
       //prettier-ignore
       htmlMenu = `<div class="scAccountMenu">
           <div class="scAccountMenuWrapper">
@@ -256,9 +261,6 @@ const initUserMenu = (storage, type = "CE") => {
     //Resize menu
     let height = document.querySelectorAll(".scAccountMenu > .scAccountMenuWrapper > .scAccountColumn > ul")[0].offsetHeight;
     document.querySelector(".scAccountMenu").setAttribute("style", "height:" + height + "px");
-
-    //Init color picker
-    initColorPicker(storage);
 
     //Listeners
     document.addEventListener("keydown", (event) => {
@@ -290,10 +292,12 @@ const initUserMenu = (storage, type = "CE") => {
         document.querySelector(".scAccountMenu").classList.remove("open");
       }
     });
-
-    initDarkSwitchEvents();
-    initInterfaceEvents();
   }
+  //Init UI chain
+  initColorPicker(storage);
+  initDarkSwitchEvents();
+  initInterfaceEvents();
+  initExperimentalUi(storage);
 };
 
 /**

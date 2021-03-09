@@ -2718,11 +2718,6 @@ body.satDark .sc-launchpad-group-row > a.sc-launchpad-item .icon {
   border-color: var(--black4);
 }
 
-body.satDark div:not(.sc-launchpad-group-row) > a.sc-launchpad-item .icon {
-  background-color: #bfe1fa !important;
-  background-image: none !important;
-}
-
 body.satDark .sc .sc-border[data-sc-id="AnalyticsFallback"] {
   background-color: var(--black3) !important;
 }

@@ -485,6 +485,10 @@ export const jsonIcons = JSON.parse(
     "icon": "social::share"
   },
   {
+    "search": "user_",
+    "icon": "av::recent_actors"
+  },
+  {
     "search": "cards",
     "icon": "av::recent_actors"
   },
@@ -703,6 +707,10 @@ export const jsonIcons = JSON.parse(
   {
     "search": "worflow",
     "icon": "content::low_priority"
+  },
+  {
+    "search": "forbidden",
+    "icon": "av::not_interested"
   }
 ]`
 );

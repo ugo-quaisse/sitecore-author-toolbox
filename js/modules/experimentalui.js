@@ -88,7 +88,8 @@ const initExperimentalUi = (storage) => {
     let contentTitle = urlParams.has("he") ? urlParams.get("he") : "Content";
     //Change content tree title
     //prettier-ignore
-    SearchPanel ? (SearchPanel.innerHTML = `<button class="scMenuButton" type="button"><img src="` + global.iconMenu + `" class="scBurgerMenu"/></button> <div class="scBurgerMenuTitle t-top t-sm" data-tooltip="Go back home" onclick="javascript:return scForm.invoke('contenteditor:home', event)" title="Go back Home">` + contentTitle + `</div>`) : false;
+    SearchPanel ? (SearchPanel.innerHTML = `<button class="scMenuButton" type="button"><img src="${global.iconMenu}" class="scBurgerMenu"/></button> <div class="scBurgerMenuTitle t-top t-sm" data-tooltip="Go back home" onclick="javascript:return scForm.invoke('contenteditor:home', event)" title="Go back Home">${contentTitle}</div>`) : false;
+    //Change menu theme
     document.body ? document.body.classList.add("satExperimentalUi") : false;
     if (document.querySelector(".interfaceRadio[value='experimental']")) {
       document.querySelector(".interfaceRadio[value='experimental']").checked = true;
@@ -332,7 +333,7 @@ const getAccentColor = () => {
   if (storage) {
     color = storage;
     text = setTextColour(color);
-    text == "#ffffff" ? (brightness = 10) : (brightness = 0);
+    text == "#ffffff" ? (brightness = 20) : (brightness = 0);
     text == "#ffffff" ? (invert = 0) : (invert = 1);
     text == "#ffffff" ? (revert = 1) : (revert = 0);
     root.style.setProperty("--accent", color);
@@ -346,7 +347,7 @@ const getAccentColor = () => {
     root.style.setProperty("--accent", "#ee3524");
     root.style.setProperty("--accentTransparent", "#ee352499");
     root.style.setProperty("--accentText", "#ffffff");
-    root.style.setProperty("--accentBrightness", 50);
+    root.style.setProperty("--accentBrightness", 20);
     root.style.setProperty("--accentInvert", 0);
     root.style.setProperty("--accentRevert", 1);
   }
@@ -372,7 +373,7 @@ const initColorPicker = (storage) => {
       colorPicker.addEventListener("change", () => {
         color = colorPicker.value;
         text = setTextColour(color);
-        text == "#ffffff" ? (brightness = 10) : (brightness = 0);
+        text == "#ffffff" ? (brightness = 20) : (brightness = 0);
         text == "#ffffff" ? (invert = 0) : (invert = 1);
         text == "#ffffff" ? (revert = 1) : (revert = 0);
         text == "#ffffff" ? (borderAlpha = "rgba(255, 255, 255, 0.4)") : (borderAlpha = "rgba(0, 0, 0, 0.4)");
@@ -662,9 +663,8 @@ const initTitleBarDesktop = () => {
  */
 const replaceIcons = (storage) => {
   if (storage.feature_experimentalui === true && storage.feature_material_icons === true) {
-    global.debug ? console.log("Fired replaceIcons") : false;
     let imgGlyph = document.querySelectorAll(
-      ".scNavButton, .item-icon, .sc-breadcrumb-item-path > img, .scContentControlLayoutDeviceName > img, .scRendering > img, .scTabContent img, .scContentTreeNodeGlyph, .scContentTreeNodeIcon, #scModal .main img, .scInstantSearchResults img, .dynatree-container img, .dynatree-node > img, .scTabs .scImageContainer > img, form[action*='Gallery'] img, form[action*='Media'] .scFolderButtons img, .scPopup .scMenuItemIcon > img, .satEE .scChromeCommand > img"
+      ".icon, .glyph, .scNavButton, .item-icon, .sc-breadcrumb-item-path > img, .scContentControlLayoutDeviceName > img, .scRendering > img, .scTabContent img, .scContentTreeNodeGlyph, .scContentTreeNodeIcon, #scModal .main img, .scInstantSearchResults img, .dynatree-container img, .dynatree-node > img, .scTabs .scImageContainer > img, form[action*='Gallery'] img, form[action*='Media'] .scFolderButtons img, .scPopup .scMenuItemIcon > img, .satEE .scChromeCommand > img"
     );
     for (let icon of imgGlyph) {
       let filename = icon.src.substring(icon.src.lastIndexOf("/") + 1).toLowerCase();

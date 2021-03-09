@@ -58,6 +58,8 @@ Requires that Sitecore is installed to the default directory of /sitecore/.
 ## Supported Sitecore version
 
 Tested on Sitecore versions:
+* 10.1.0 (rev. 005207)
+* 10.0.1 (rev. 004842)
 * 9.3.0 (rev. 003498)
 * 9.2.0 (rev. 002893)
 * 8.2 (rev. 180406)
@@ -90,6 +92,12 @@ Install node modules
 
 ```cmd
 npm install
+```
+
+Run npm
+
+```cmd
+npm run dev
 ```
 
 ## Where to start

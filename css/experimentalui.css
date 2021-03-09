@@ -169,6 +169,12 @@ body.satExperimentalUi .sc-global-logo {
   background-size: 105%;
 }
 
+body.satExperimentalUi .sc-global-logo.medium.sc10launchpad {
+  background: transparent url(chrome-extension://__MSG_@@extension_id__/images/sitecore_logo.svg) center center no-repeat !important;
+  background-color: var(--accent) !important;
+  background-size: 60% !important;
+}
+
 body.satExperimentalUi .sc-global-logo:hover {
   background-position: center center;
 }
@@ -2248,6 +2254,11 @@ body.satExperimentalUi .sc-progressindicator {
 
 body.satExperimentalUi .scContentControlNavigation > img {
   margin: 0px !important;
+}
+
+body.satExperimentalUi .SelectedRow td.DataCell {
+  background-color: var(--accentTransparent);
+  color: var(--accentText);
 }
 
 body.satExperimentalUi .sort-item.hover,

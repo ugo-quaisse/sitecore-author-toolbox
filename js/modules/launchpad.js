@@ -21,6 +21,8 @@ const initLaunchpadIcon = (storage) => {
     let oldScDetect = document.querySelector(".sc-applicationHeader-row2");
     let groupClass = oldScDetect ? "sc-launchpad-group-row" : "";
     let icon = oldScDetect ? global.launchpadIcon : global.launchpadIconBlue;
+    //Change top left logo
+    !oldScDetect && document.querySelector(".sc-global-logo") ? document.querySelector(".sc-global-logo").classList.add("sc10launchpad") : "";
     //prettier-ignore
     let html = `<div class="sc-launchpad-group">
       <header class="sc-launchpad-group-title">${global.launchpadGroupTitle}</header>

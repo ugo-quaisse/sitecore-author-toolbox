@@ -246,11 +246,11 @@ const insertMoreButton = () => {
   let panel = document.querySelector("#scPanel");
   //prettier-ignore
   let html =
-    `<div class="content">
+    `<div class="content satItemDetails">
       <h2>Item details</h2>
       <h3>Item ID:</h3> <span class="itemDetail">${ScItem.id}</span>
       <h3>Name:</h3> <span class="itemDetail">${ScItem.name}</span>
-      <h3>Path:</h3> <span class="itemDetail">${ScItem.path}</span>
+      <h3>Path:</h3> <span class="itemDetail scItemPath">${ScItem.path}</span>
       <h3>Template:</h3> <span class="itemDetail">${ScItem.template}</span>
       <h3>Template ID:</h3> <span class="itemDetail">${ScItem.templateId}</span>
       <h3>From:</h3> <span class="itemDetail">${ScItem.from}</span>

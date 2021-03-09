@@ -125,16 +125,18 @@ const initLiveUrl = (storage) => {
         if (ScSite.url == undefined) {
           badge = "CM server";
           ScSite.url = window.location.origin + "/" + ScItem.language + "/" + sitecorePath;
+          //Update alternative Url
+          alternativeUrl = `or try <a href="${alternativeUrl}" target="_blank" class="scMessageBarOption">this alternative link</a>`;
+          alternativeUrl = response.farewell ? alternativeUrl.replace("xxxsxa_sitexxx", response.farewell) : (alternativeUrl = alternativeUrl.replace("&sc_site=xxxsxa_sitexxx", ""));
         } else {
           badge = "CD server";
           //Language embedding position
           ScSite.url = ScSite.url.includes("{lang}") ? ScSite.url.replace("{lang}", ScItem.language) + "/" + sitecorePath : ScSite.url + "/" + ScItem.language + "/" + sitecorePath;
           //Language embedding disabled
           ScSite.languageEmbedding == false ? (ScSite.url = ScSite.url.replace("/" + ScItem.language + "/", "/")) : false;
+          //Alternative URL
+          alternativeUrl = ``;
         }
-
-        //Update alternative Url
-        alternativeUrl = response.farewell ? alternativeUrl.replace("xxxsxa_sitexxx", response.farewell) : (alternativeUrl = alternativeUrl.replace("&sc_site=xxxsxa_sitexxx", ""));
 
         //Experimentation
         document.querySelector(".scPreviewButton") ? document.querySelector(".scPreviewButton").setAttribute("style", "display: block") : false;
@@ -146,12 +148,14 @@ const initLiveUrl = (storage) => {
             <div class="scMessageBarTextContainer">
               <div class="scMessageBarTitle">Sitecore Live URL
               <span class="liveUrlLoader">Checking...</span>
-              <span class="liveUrlBadge t-sm t-top hide" onclick="window.open('${global.launchpadPage}?configure_domains=true&launchpad=true&url=${global.windowLocationHref}')" data-tooltip="Click to configure your domains" title="Click to configure your domains">${badge}</span>
+              <span class="liveUrlBadge t-sm t-top hide" onclick="window.open('${global.launchpadPage}?configure_domains=true&launchpad=true&url=${
+          global.windowLocationHref
+        }')" data-tooltip="Click to configure your sites" title="Click to configure your sites">${badge}</span>
               <span class="liveUrlStatus"></span>
               </div>
-              <div class="scMessageBarText">To preview this page in <b>"${scLanguageTxtLong}".</b></div>
+              <div class="scMessageBarText">To view this page in <b>"${scLanguageTxtLong}"</b></div>
               <ul class="scMessageBarOptions" style="margin:0px">
-              <li class="scMessageBarOptionBullet"><a href="${decodeURI(ScSite.url)}" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this link</a> or try <a href="${alternativeUrl}" target="_blank" class="scMessageBarOption">this alternative link</a></li>
+              <li class="scMessageBarOptionBullet"><a href="${decodeURI(ScSite.url)}" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this page</a> ${alternativeUrl}</li>
               </ul>
               </div>
             </div>`;

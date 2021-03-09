@@ -609,7 +609,7 @@ function openLightbox(id, from = "frame") {
   let img = item.src.replace("&h=180", "").replace("&w=180", "").replace("&h=300", "").replace("&thn=1", "");
   let name = item.dataset.name;
   let size = item.dataset.size;
-  let path = lightbox.dataset.path;
+  let path = document.querySelector(".satItemDetails > .scItemPath") ? document.querySelector(".satItemDetails > .scItemPath").innerText : lightbox.dataset.path;
   let mediaType = size == "--" ? "other" : "img";
   lightbox ? lightbox.classList.remove("scLightboxHideSpinner") : false;
   lightbox ? lightbox.querySelector(".sclightboxDownload > a").setAttribute("href", img) : false;

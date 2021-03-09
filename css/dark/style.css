@@ -781,7 +781,7 @@ body.satDark .scToolbutton_Down,
 body.satDark .scToolbutton_Down_Hover,
 body.satDark .scToolbutton_Hover,
 body.satDark .scToolbutton_Hot {
-  color: #474747;
+  color: var(--black4);
 }
 
 body.satDark .scToolbutton:last-of-type,
@@ -842,7 +842,7 @@ body.satDark a:visited.scInspectorTaglist {
 
 body.satDark .scWizardHeader {
   color: var(--text);
-  background-color: #2b2b2b;
+  background-color: var(--black2);
 }
 
 body.satDark .scRollOver2_Hover {
@@ -855,19 +855,19 @@ body.satDark .scRollover_Hover {
 }
 
 body.satDark .scSectionLeft {
-  background-color: #474747;
+  background-color: var(--black4);
 }
 
 body.satDark .scSectionCenter {
   color: var(--text);
 
-  background-color: #474747;
+  background-color: var(--black4);
 
   border-left: 5px solid #dc291e;
 }
 
 body.satDark .scSectionRight {
-  background-color: #474747;
+  background-color: var(--black4);
 }
 
 body.satDark .scCollapsed .scSectionCenter {
@@ -916,7 +916,7 @@ body.satDark .scContentControlLayoutDevice_Active {
 }
 
 body.satDark .scTabstrip {
-  border-bottom: 2px solid #474747;
+  border-bottom: 2px solid var(--black4);
 }
 
 body.satDark .scTabs {
@@ -927,24 +927,23 @@ body.satDark .scTabPage {
   border: 1px solid var(--black3) !important;
 }
 
-body.satDark .scTab,
-body.satDark .scTab_Hover,
-body.satDark .scTabActive,
-body.satDark .scTabActive_Hover {
-  background-color: var(--black3) !important;
-
-  color: #5e5e5e;
-
-  border-top: 1px solid var(--black3) !important;
-  border-right: 1px solid var(--black3) !important;
+body.satDark #Tabs_tab_0 {
+  margin-left: 15px;
 }
 
+body.satDark .scTab,
+body.satDark .scTab_Hover {
+  background-color: var(--black1) !important;
+  color: var(--text);
+  border-top: 1px solid var(--black1) !important;
+  border-right: 1px solid var(--black1) !important;
+}
 body.satDark .scTabActive,
 body.satDark .scTabActive_Hover {
-  background-color: #474747 !important;
+  background-color: var(--black1) !important;
   color: var(--text);
-
-  border: 1px solid #474747 !important;
+  border-top: 1px solid var(--black1) !important;
+  border-right: 1px solid var(--black1) !important;
 }
 
 body.satDark .scTab_Hover {
@@ -952,7 +951,7 @@ body.satDark .scTab_Hover {
 }
 
 body.satDark .scVerticalTabstrip .scVerticalTabs {
-  border-right: 1px solid #474747;
+  border-right: 1px solid var(--black4);
 }
 
 body.satDark .scVerticalTabstrip .scVerticalTabs a,
@@ -966,9 +965,9 @@ body.satDark .scVerticalTabstrip .scVerticalTabs a:last-child {
 
 body.satDark .scVerticalTabstrip .scVerticalTabs a.active,
 body.satDark .scVerticalTabstrip .scVerticalTabs a.active:hover {
-  background-color: #474747;
+  background-color: var(--black4);
   color: var(--text);
-  border: 1px solid #474747;
+  border: 1px solid var(--black4);
 }
 
 body.satDark .scVerticalTabstrip .scVerticalTabs a:hover {
@@ -999,7 +998,7 @@ body.satDark #SearchBox {
 }
 
 body.satDark #SearchBox.focus {
-  background-color: #2b2b2b;
+  background-color: var(--black2);
 }
 
 /* Content Tree */
@@ -1061,7 +1060,7 @@ body.satDark .scTreeview .header {
 }
 
 body.satDark .scTreeview .header:before {
-  border-right: 1px solid #fff;
+  border-right: 1px solid var(--white);
 }
 
 body.satDark .scTreeview .scTreeHeader {
@@ -1069,7 +1068,7 @@ body.satDark .scTreeview .scTreeHeader {
 }
 
 body.satDark .scTreeHeader .scTreeHeaderItem:first-of-type .header:before {
-  border-right: 0px solid #fff;
+  border-right: 0px solid var(--white);
 }
 
 body.satDark .scTreeview .value {
@@ -1115,7 +1114,7 @@ body.satDark .scApplicationFooter {
 }
 
 body.satDark .scWorkBoxMainHeader {
-  background-color: #474747;
+  background-color: var(--black4);
 }
 
 body.satDark .scWorkBoxMainHeader.scCollapsed {
@@ -1123,7 +1122,7 @@ body.satDark .scWorkBoxMainHeader.scCollapsed {
 }
 
 body.satDark .scPaneHeader {
-  color: #fff;
+  color: var(--white);
   border-left: 5px solid #dc291e;
 }
 
@@ -1162,7 +1161,7 @@ body.satDark .scListControl > tbody:first-child > tr:first-child,
 body.satDark .scListControl > thead,
 body.satDark .scListControlHead {
   background-color: #5e5e5e !important;
-  color: white;
+  color: var(--white);
 }
 
 body.satDark .scListControl > tbody > tr:nth-child(odd) {
@@ -2411,7 +2410,7 @@ body.satDark .Metro .reModule .reTool:hover {
 }
 
 body.satDark .reEditorModesCell {
-  background-color: #474747;
+  background-color: var(--black4);
 
   border-top: 2px solid #dc291e !important;
 }
@@ -2422,12 +2421,12 @@ body.satDark .reEditorModes span {
 
 body.satDark .Metro.RadEditor .reEditorModes a {
   color: var(--text) !important;
-  background-color: #474747;
-  border: 1px solid #474747;
+  background-color: var(--black4);
+  border: 1px solid var(--black4);
 }
 
 body.satDark .Metro.RadEditor .reEditorModes a:hover {
-  border: 1px solid #474747;
+  border: 1px solid var(--black4);
 }
 
 body.satDark .Metro.RadEditor .reEditorModes a.reMode_selected:hover {
@@ -2441,12 +2440,12 @@ body.satDark .Metro.RadEditor .reEditorModes .reMode_selected {
 }
 
 body.satDark #EditorBottom {
-  border-top: 2px solid #dc291e !important;
+  border-top: 2px solid var(--red) !important;
 }
 
 body.satDark #EditorBottom,
 body.satDark .reModule.reStatistic {
-  background-color: #474747 !important;
+  background-color: var(--black4) !important;
   color: var(--text) !important;
 }
 
@@ -2454,16 +2453,16 @@ body.satDark .RadWindow_Metro .rwTopLeft,
 body.satDark .RadWindow_Metro .rwTopRight,
 body.satDark .RadWindow_Metro .rwTitlebar,
 body.satDark .RadWindow_Metro .rwTopResize {
-  background: #2b2b2b;
+  background: var(--black2);
 }
 
 body.satDark .RadWindow_Metro .rwControlButtons a {
-  background-color: #2b2b2b;
+  background-color: var(--black2);
 }
 
 body.satDark .RadTabStripTop_Metro .rtsLevel1,
 body.satDark .RadTabStrip_Metro .rtsLevel1 .rtsUL {
-  background-color: #474747;
+  background-color: var(--black4);
   color: var(--text);
 }
 
@@ -2481,7 +2480,7 @@ body.satDark .reAjaxspell_wrapper label {
 }
 
 body.satDark .Metro .reAjaxspell_button {
-  color: #2b2b2b !important;
+  color: var(--black2) !important;
   background: #f0f0f0 !important;
 }
 
@@ -2563,7 +2562,7 @@ body.satDark .DialogHeader,
 body.satDark .scFormDialogHeader .DialogHeader,
 body.satDark .ui-dialog .ui-dialog-titlebar + .DialogHeader {
   background: var(--black1) !important;
-  color: #fff;
+  color: var(--white);
 }
 
 body.satDark .ui-widget-content {
@@ -2664,7 +2663,7 @@ body.satDark .scGalleryInnerFrame {
   border: 1px solid var(--black6);
 }
 body.satDark #Editor_contentIframe body {
-  color: #fff;
+  color: var(--white);
 }
 
 body.satDark .sc-dialogHeader {
@@ -2685,7 +2684,7 @@ body.satDark .sc-controlpanel-box-content li {
   border-bottom: 1px solid var(--black4) !important;
 }
 body.satDark .sc-applicationHeader-row2 {
-  background-color: #2b2b2b !important;
+  background-color: var(--black2) !important;
   border-bottom: 1px solid var(--black4);
 }
 body.satDark .sc-controlpanel-box-header h4 {

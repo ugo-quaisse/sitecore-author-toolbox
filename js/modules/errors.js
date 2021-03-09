@@ -23,7 +23,7 @@ const getErrors = (storage) => {
     for (let item of scErrors) {
       if (storage.feature_cetabs) {
         // eslint-disable-next-line prefer-named-capture-group
-        found = item.getAttribute("onclick").match(/(?<=\(')(.*?)(?='\))/u);
+        found = item.getAttribute("onclick") ? item.getAttribute("onclick").match(/(?<=\(')(.*?)(?='\))/u) : false;
         section = document.querySelector(`[id^='${found[0]}']`) ? document.querySelector(`[id^='${found[0]}']`).closest(".scEditorSectionPanel").previousSibling.id : false;
         click = `document.querySelector('li[data-id=${section}]').click()`;
       } else {

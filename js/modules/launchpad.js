@@ -21,8 +21,7 @@ const initLaunchpadIcon = (storage) => {
     let oldScDetect = document.querySelector(".sc-applicationHeader-row2");
     let groupClass = oldScDetect ? "sc-launchpad-group-row" : "";
     let icon = oldScDetect ? global.launchpadIcon : global.launchpadIconBlue;
-    //Change top left logo
-    !oldScDetect && document.querySelector(".sc-global-logo") ? document.querySelector(".sc-global-logo").classList.add("sc10launchpad") : "";
+
     //prettier-ignore
     let html = `<div class="sc-launchpad-group">
       <header class="sc-launchpad-group-title">${global.launchpadGroupTitle}</header>
@@ -34,6 +33,14 @@ const initLaunchpadIcon = (storage) => {
       </div>
     </div>`;
     launchpadCol[0].insertAdjacentHTML("afterend", html);
+    //Change top left logo
+    !oldScDetect && document.querySelector(".sc-global-logo") ? document.querySelector(".sc-global-logo").classList.add("sc10launchpad") : "";
+    //Change icons
+    if (!oldScDetect) {
+      document.querySelectorAll(".icon").forEach(function (elem) {
+        elem.classList.add("sc10launchpad");
+      });
+    }
   }
   if (storage.feature_launchpad_tiles) {
     loadCssFile("css/tilelaunchpad.min.css");

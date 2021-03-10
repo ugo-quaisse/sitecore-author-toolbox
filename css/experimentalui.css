@@ -1080,6 +1080,7 @@ body.satExperimentalUi #scEditorTabs > ul > li:not(.scEditorTabEmpty) {
   padding: 7px 12px 7px 12px;
   font-size: 14px;
   font-weight: 400;
+  transition: border 0.1s;
 }
 
 body.satExperimentalUi #scEditorTabs > ul > li:not(.scEditorTabEmpty):hover {

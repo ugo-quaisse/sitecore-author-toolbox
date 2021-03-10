@@ -657,8 +657,17 @@ body.satDark .scDarkBorderCell {
 }
 
 body.satDark .scScrollbox {
+  background-color: var(--black1) !important;
+  border-color: var(--black2) !important;
+}
+
+body.satDark .scScrollbox.scContentControlTree {
   background-color: var(--black2) !important;
   border-color: var(--black3) !important;
+}
+
+body.satDark .scContentTreeNodeTitle {
+  color: var(--text);
 }
 
 body.satDark .scStretchAbsolute {
@@ -929,6 +938,11 @@ body.satDark .scTabPage {
 
 body.satDark #Tabs_tab_0 {
   margin-left: 15px;
+  border-left: 0px;
+}
+
+body.satDark div.scImageContainer {
+  background-color: var(--black1);
 }
 
 body.satDark .scTab,
@@ -1356,7 +1370,12 @@ body.satDark .sc .btn {
 body.satDark .sc .btn .btn-primary {
   color: var(--text) !important;
 }
+
+body.satDark #satFavoritesDrag {
+  background-color: var(--black3);
+}
 body.satDark #satFavorites {
+  background-color: var(--black1);
   box-shadow: rgba(0, 0, 0, 0.5) 0px -10px 10px 0px;
 }
 body.satDark a.scItemThumbnailSelected,
@@ -2135,12 +2154,15 @@ body.satDark .scEditorFieldMarkerBarCellRed {
 
 body.satDark a.scContentButton {
   color: var(--blue) !important;
-
-  border-right: 1px solid #ccc;
+  border-right: 1px solid transparent;
 }
 
 body.satDark .scContentButtonDisabled {
   color: var(--black9);
+}
+
+body.satDark .scDisplayName {
+  color: var(--text);
 }
 
 /* Template */
@@ -3019,6 +3041,7 @@ body.satDark .sc-ribbon .sc-chunk-datepanel .sc-chunk-datepanel-datetime:hover {
 
 body.satDark nav[data-sc-id="RibbonBreadcrumb"] {
   border-bottom: 0px !important;
+  background: var(--black2);
 }
 
 body.satDark .sc-breadcrumb .sc-breadcrumb-item-action,

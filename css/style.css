@@ -1254,12 +1254,11 @@ body.satExtension #scEditorTabs {
   padding: 10px 13px;
   border: 1px solid #ccc;
   background: #ffffff;
-  color: #666;
+  color: var(--black6);
   font-size: 12px;
   font-weight: 600;
   text-transform: capitalize;
   cursor: pointer;
-  transition: all 0.1s;
   border-radius: 0px 0px 0px 0px;
 }
 #scEditorTabs > ul > li:not(.scEditorTabEmpty):hover {

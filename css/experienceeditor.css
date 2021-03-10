@@ -423,10 +423,27 @@ body.satEEDark .zg-variant-switcher.expanded ul.flex-thumb .variant-name {
   background-color: var(--grey2);
   border-color: var(--grey2);
 }
+
+body.satEEDark .zg-variant-switcher.expanded .zg-variant-tip {
+  color: var(--text) !important;
+  background-color: var(--black1);
+}
 body.satEEDark .zg-variant-switcher.expanded ul.flex-thumb .variant-name {
   background-color: transparent;
 }
 
 body.satEEDark .zg-variant-switcher.expanded .zg-variant-available {
   background-color: var(--black1);
+}
+
+body.satEEDark .zg-variant-switcher.expanded li {
+  color: var(--text) !important;
+}
+
+body.satEEDark span.scChromeCommandSectionDelimiter {
+  color: var(--black5) !important;
+}
+
+body.satEEDark .scChromeCommandText {
+  color: var(--text) !important;
 }

@@ -588,6 +588,10 @@ const initSvgAnimationPublish = (storage) => {
       document.querySelector("#Installing > .scFormDialogHeader > div").insertAdjacentHTML("afterend", `<div class="scIndeterminateProgress"></div>`);
       document.querySelector("#Installing > .scWizardProgressPage").insertAdjacentHTML("afterbegin", `<div id="svgAnimationCircle">${global.svgAnimationCircle}</div>`);
     }
+    if (document.querySelector("#Rebuilding > .scFormDialogHeader")) {
+      document.querySelector("#Rebuilding > .scFormDialogHeader > div").insertAdjacentHTML("afterend", `<div class="scIndeterminateProgress"></div>`);
+      document.querySelector("#Rebuilding > .scWizardProgressPage").insertAdjacentHTML("afterbegin", `<div id="svgAnimationCircle">${global.svgAnimationCircle}</div>`);
+    }
   }
 };
 

@@ -518,6 +518,10 @@ body.satExperimentalUi.satDark .sc-quickbar-tab:hover {
   background-color: var(--black2) !important;
 }
 
+body.satExperimentalUi.satDark .sc-uploaderInfo-row {
+  border-color: var(--black);
+}
+
 body.satExperimentalUi.satDark .sc-ribbon .pressed {
   background-color: var(--accent) !important;
   color: var(--accentText) !important;

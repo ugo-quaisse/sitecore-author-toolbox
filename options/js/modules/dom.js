@@ -95,7 +95,7 @@ const addDomain = (text = "", tocreate = undefined, isImport = false) => {
         document.querySelector("#sitesList").insertAdjacentHTML("beforeend", html);
         trackChanges(isImport);
         //Click events
-        document.querySelector(".addSite_" + countDomains).addEventListener("click", addSite.bind("", "domain_" + countDomains, "", "", true, "", false));
+        document.querySelector(".addSite_" + countDomains).addEventListener("click", addSite.bind("", "domain_" + countDomains, "", "", "", "", false));
         document.querySelector(".editDomain_" + countDomains).addEventListener("click", editDomain.bind("", "domain_" + countDomains));
         tocreate === undefined ? addSite("domain_" + countDomains, "", "", true) : false;
         returnId = `domain_` + countDomains;

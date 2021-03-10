@@ -572,7 +572,8 @@ body.satExperimentalUi .sc-dialogContent {
 
 body.satExperimentalUi .sc-navigation-menu,
 body.satExperimentalUi .sc-navigation-menu .menuroot {
-  background-color: var(--black5);
+  background-color: var(--black3);
+  border-width: 0px;
 }
 
 body.satExperimentalUi .sc-navigation-menu .header {
@@ -1013,7 +1014,11 @@ body.satExperimentalUi .sc-uploader-general-info {
   text-align: center;
   margin: 20px 0px;
   padding: 0px;
-  background-color: #e5e5e5;
+  background-color: transparent;
+}
+
+body.satExperimentalUi .sc-uploader-general-info-data-col {
+  color: var(--text);
 }
 
 body.satExperimentalUi .sc-uploaderInfo-extra .progress .bar,

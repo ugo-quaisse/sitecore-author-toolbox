@@ -2533,3 +2533,7 @@ body.satExtension [data-tooltip].t-left:hover:before,
 body.satExtension [data-tooltip].t-left:hover:after {
   transform: translateX(-5px) translateY(-50%);
 }
+
+body.satExtension .sc-flx-global-header {
+  z-index: 100;
+}

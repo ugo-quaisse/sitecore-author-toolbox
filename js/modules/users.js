@@ -102,6 +102,7 @@ const initAppName = (storage, name = "Content Editor") => {
     let startButton = document.querySelector(".sc-globalHeader-startButton");
     let newDashboard = document.querySelector("link[href*='/applications/launchpad/launchpad.css' i]");
     let htmlApp = `<div class="sc-globalheader-appName">${name}</div>`;
+    console.log(newDashboard);
     startButton && !newDashboard ? startButton.insertAdjacentHTML("afterend", htmlApp) : false;
   }
 };

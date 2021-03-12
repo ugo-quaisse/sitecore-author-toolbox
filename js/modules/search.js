@@ -194,7 +194,8 @@ const instantSearch = () => {
                   }
 
                   // Append
-                  if (category.toLowerCase() == "content" || category.toLowerCase() == "media library" || category.toLowerCase() == "direct hit" || category.toLowerCase() == "system") {
+                  //|| category.toLowerCase() == "system"
+                  if (category.toLowerCase() == "content" || category.toLowerCase() == "media library" || category.toLowerCase() == "direct hit") {
                     //Title
                     showCat ? (html += "<h1>" + category + "</h1>") : false;
                     //Link

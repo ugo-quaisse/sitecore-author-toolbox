@@ -1,0 +1,44 @@
+/* General  */
+
+body.satExperimentalUi .sc-applicationHeader .sc-applicationHeader-row1:not(.no-breadcrumb) {
+  display: none;
+}
+
+body.satExperimentalUi .sc-advancedExpander.open .sc-advancedExpander-header {
+  border-left: 5px solid var(--accent);
+}
+
+/* Tabs  */
+
+body.satExperimentalUi .sc-tabcontrol > .nav-tabs > li > a {
+  background-color: transparent;
+  color: var(--text);
+  border: unset;
+  transition: border 0.1s;
+}
+body.satExperimentalUi .sc-tabcontrol > .nav-tabs > li > a:hover {
+  background-color: transparent;
+  border-bottom: 3px solid var(--accent);
+}
+body.satExperimentalUi .sc-tabcontrol > .nav-tabs > li.active > a {
+  background-color: transparent;
+  color: var(--text);
+  border: none;
+  border-bottom: 3px solid var(--accent);
+  font-weight: 600;
+}
+body.satExperimentalUi .sc-tabcontrol > .nav-tabs > li.active > a:hover {
+  background-color: transparent;
+}
+body.satExperimentalUi .sc-tabcontrol > .nav-tabs > li.active.first-visible-nav-tab a {
+  border-top: none;
+  border-left: none;
+}
+body.satExperimentalUi .sc-tabcontrol > .nav-tabs > li.active.last-visible-nav-tab a {
+  border-top: none;
+  border-right: none;
+}
+
+body.satExperimentalUi .sc-tabcontrol > .nav-tabs {
+  border-bottom: 0px solid transparent;
+}

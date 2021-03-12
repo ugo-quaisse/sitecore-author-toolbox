@@ -26,7 +26,7 @@ const initLaunchpadIcon = (storage) => {
     let html = `<div class="sc-launchpad-group">
       <header class="sc-launchpad-group-title">${global.launchpadGroupTitle}</header>
       <div class="${groupClass}">
-        <a href="#" onclick="window.location.href='${global.launchpadPage}?launchpad=true&url=${global.windowLocationHref}'" class="sc-launchpad-item" title="${global.launchpadTitle}">
+        <a href="#" onclick="window.open('${global.launchpadPage}?launchpad=true&url=${global.windowLocationHref}')" class="sc-launchpad-item" title="${global.launchpadTitle}">
         <span class="icon"><img loading="lazy" src="${icon}" width="48" height="48" alt="${global.launchpadTitle}"></span>
         <span class="sc-launchpad-text">${global.launchpadTitle}</span>
         </a>

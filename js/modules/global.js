@@ -146,6 +146,7 @@ export const isUploadManager = windowLocationHref.includes("/uploadmanager/");
 export const isPublishWindow = windowLocationHref.includes("/applications/publish.aspx");
 export const isPublishDialog = windowLocationHref.includes("/publishing/publishdialog");
 export const isExportSiteWizard = windowLocationHref.includes("exportsitewizard");
+export const isInstallationWizard = windowLocationHref.includes("installationwizard");
 export const isUploadPackage = windowLocationHref.includes("uploadpackage");
 export const isSecurityWindow = windowLocationHref.includes("/applications/security/");
 export const isEditUser = windowLocationHref.includes("security.edituser.aspx");

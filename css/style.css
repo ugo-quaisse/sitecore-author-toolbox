@@ -185,7 +185,8 @@ body.satExtension .scNoVersion {
 }
 
 body.satExtension form[action*="Media/"] > .scBackground {
-  padding: 0px;
+  padding: 0px 0px 50px 0px;
+  height: auto !important;
 }
 
 body.satExtension #scLightbox {

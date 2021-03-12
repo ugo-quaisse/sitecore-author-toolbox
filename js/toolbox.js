@@ -56,7 +56,6 @@ chrome.storage.sync.get((storage) => {
     initUserMenu(storage);
     initDarkMode(storage);
     detectSwitchDarkMode(storage);
-
     /*
      **********************
      * 1. CE Application  *
@@ -99,7 +98,6 @@ chrome.storage.sync.get((storage) => {
      */
     if (global.isLaunchpad) {
       log("**** Launchpad ****", "orange");
-      initAppName(storage, "Launchpad");
       initLaunchpadIcon(storage);
       workboxNotifications(storage);
       showSnackbar(storage);
@@ -145,6 +143,9 @@ chrome.storage.sync.get((storage) => {
       log("**** Non identified ****", "green");
       log(global.windowLocationHref, "green");
       initExperimentalUi(storage);
+      let appName = document.querySelector("*[data-sc-id=HeaderTitle]");
+      appName = appName ? appName.innerText : "";
+      initAppName(storage, appName);
     }
 
     /*
@@ -194,7 +195,7 @@ chrome.storage.sync.get((storage) => {
     } else if (global.isPublishDialog) {
       log("**** Publishing window ****", "orange");
       initFlagsPublishingWindow(storage);
-    } else if (global.isPublishWindow) {
+    } else if (global.isPublishWindow || global.isInstallationWizard) {
       log("**** Publish / Rebuild / Package ****", "orange");
       initCheckboxes(storage);
       initFlagsPublish(storage);

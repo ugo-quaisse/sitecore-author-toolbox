@@ -199,7 +199,7 @@ body.satExperimentalUi #EditorTabs {
 
 body.satExperimentalUi #EditorFrames {
   margin-top: 56px;
-  height: calc(100% - 115px);
+  height: auto;
   background-color: var(--experimentalBackground);
 }
 
@@ -2645,14 +2645,16 @@ body.satExperimentalUi .style-selected {
 
 body.satExperimentalUi .grid-settings-advanced .grid-advanced-tab-header,
 body.satExperimentalUi .grid-settings-basic .grid-basic-tab-header {
-  background-color: var(--accent);
-  color: var(--accentText);
-  border: 1px solid transparent;
+  background-color: transparent;
+  color: var(--text);
+  border: 0px;
+  border-bottom: 3px solid var(--accent);
+  font-weight: 600;
 }
 
 body.satExperimentalUi .grid-settings-advanced .grid-basic-tab-header,
 body.satExperimentalUi .grid-settings-basic .grid-advanced-tab-header {
-  background-color: var(--white);
+  background-color: transparent;
+  border: 0px;
   color: var(--text);
-  border: 1px solid transparent;
 }

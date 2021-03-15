@@ -293,7 +293,8 @@ document.querySelector(".save_sites").onclick = function (event) {
       params.delete("site");
       params.delete("name");
       params.delete("domain");
-      window.location.search = params;
+      window.history.replaceState({}, "", `${window.location.pathname}?${params}${window.location.hash}`);
+      //window.location.search = params;
       // document.querySelector(".trackChanges").value = "0";
       document.querySelector("#sitesList").setAttribute("style", "opacity:0.3");
       document.querySelector(".save_sites").innerHTML = "Saving...";

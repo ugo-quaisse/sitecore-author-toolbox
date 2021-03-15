@@ -2,7 +2,7 @@
 import * as global from "./global.js";
 import { exeJsCode, calcMD5 } from "./helpers.js";
 import { currentColorScheme } from "./dark.js";
-import { initExperimentalUi, initColorPicker } from "./experimentalui.js";
+import { initExperimentalUi, getAccentColor, initColorPicker } from "./experimentalui.js";
 
 export { initIntroScreen, getGravatar, initGravatarImage, initAppName, initWorkboxMenu, initUserPortraitMenu, initRibbonToggleMenu, initUserMenu };
 
@@ -102,7 +102,6 @@ const initAppName = (storage, name = "Content Editor") => {
     let startButton = document.querySelector(".sc-globalHeader-startButton");
     let newDashboard = document.querySelector("link[href*='/applications/launchpad/launchpad.css' i]");
     let htmlApp = `<div class="sc-globalheader-appName">${name}</div>`;
-    console.log(newDashboard);
     startButton && !newDashboard ? startButton.insertAdjacentHTML("afterend", htmlApp) : false;
   }
 };
@@ -407,6 +406,8 @@ const initInterfaceEvents = () => {
             });
           }
         });
+        //Get accent color
+        getAccentColor();
         //hint
         document.querySelector(".themeMenuHint").innerText = "Experimental UI";
         //Storage

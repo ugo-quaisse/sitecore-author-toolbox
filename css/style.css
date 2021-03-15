@@ -186,6 +186,7 @@ body.satExtension .scNoVersion {
 
 body.satExtension form[action*="Media/"] > .scBackground {
   padding: 0px 0px 50px 0px;
+  background-color: var(--grey16);
   height: auto !important;
 }
 

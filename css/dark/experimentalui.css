@@ -598,7 +598,11 @@ body.satExperimentalUi.satDark .sc-advancedExpander.open .sc-advancedExpander-he
   border-left: 5px solid var(--accent);
 }
 
-body.satExperimentalUi .scFormDialogFooter {
+body.satExperimentalUi.satDark .scFormDialogFooter {
   background-color: transparent;
   border-top: 0px;
+}
+
+body.satExperimentalUi.satDark .scInstantSearchResults {
+  background-color: var(--experimentalBackground);
 }

@@ -39,7 +39,7 @@ const initSyntaxHighlighterRte = (storage) => {
       //Inject codemirror
       loadCssFile("css/codemirror.min.css");
       loadCssFile("css/dark/ayu-dark.css");
-      loadJsFile("js/bundle.min.js");
+      loadJsFile("js/codemirror.min.js");
       //RTE Tabs
       let reTextArea = global.isRichTextEditor ? document.querySelector(".reTextArea") : false;
       let darkModeTheme = initDarkModeEditor(storage);
@@ -64,8 +64,7 @@ const initSyntaxHighlighterScriban = (storage) => {
       storage.feature_rtecolor == undefined ? (storage.feature_rtecolor = true) : false;
       if (storage.feature_rtecolor) {
         //Variables
-        let darkModeTheme = "default";
-        //   darkModeTheme = "ayu-dark";
+        let darkModeTheme = initDarkModeEditor(storage);
         //Get Scriban template field
         let scribanTemplate = document.querySelector("textarea");
         scribanTemplate.setAttribute("style", "min-height: 300px; resize: vertical; overflow: auto; margin: 0px; padding-right: 0px !important; font-family: monospace;");
@@ -75,7 +74,7 @@ const initSyntaxHighlighterScriban = (storage) => {
         //Inject codemirror
         loadCssFile("css/codemirror.min.css");
         loadCssFile("css/dark/ayu-dark.css");
-        loadJsFile("js/bundle.min.js");
+        loadJsFile("js/codemirror.min.js");
         scribanTemplate.insertAdjacentHTML("afterend", '<input type="hidden" class="scDarkMode" value="' + darkModeTheme + '" />');
         scribanTemplate.insertAdjacentHTML("afterend", '<input type="hidden" class="scEditor" value="scribanTemplate" />');
       }

@@ -1,1 +1,2 @@
-gulpfile.js
+./gulpfile.js
+./js/codemirror.js

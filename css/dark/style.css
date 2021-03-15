@@ -3226,7 +3226,7 @@ body.satDark .sc-launchpad-group-title,
 body.satDark.sc .sc-text[data-sc-id="CustomAnalyticsLabel"] {
   color: var(--text) !important;
 }
-body.satDark .sc div[data-sc-id="ColumnPanel1"] .sc-advancedExpander,
+body.satDark div[data-sc-id="ColumnPanel1"] .sc-advancedExpander,
 body.satDark .sc-border[data-sc-id="FallBackMessageBorder"] {
   background: var(--black1) !important;
   border-color: var(--black4) !important;

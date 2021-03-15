@@ -1209,6 +1209,7 @@ body.satExperimentalUi .scMessageBar .scMessageBarIcon {
 
 body.satExperimentalUi .scMessageBar .scMessageBarTextContainer .scMessageBarText {
   margin: 7px 0px 0px 0px;
+  word-break: break-word;
 }
 
 body.satExperimentalUi .scMessageBar > .scMessageBarTextContainer > .scMessageBarOptions > .scMessageBarOptionBullet > span {

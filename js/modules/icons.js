@@ -166,7 +166,7 @@ export const jsonIcons = JSON.parse(
   },
   {
     "search": "row",
-    "icon": "av::web"
+    "icon": "editor::table_rows"
   },
   {
     "search": "column",
@@ -377,6 +377,14 @@ export const jsonIcons = JSON.parse(
     "icon": "image::collections"
   },
   {
+    "search": "document_chart",
+    "icon": "av::web"
+  },
+  {
+    "search": "document_selection",
+    "icon": "action::picture_in_picture"
+  },
+  {
     "search": "document_pulse",
     "icon": "action::offline_bolt"
   },
@@ -461,7 +469,19 @@ export const jsonIcons = JSON.parse(
     "icon": "action::restore_page"
   },
   {
+    "search": "element",
+    "icon": "av::stop"
+  },
+  {
+    "search": "run",
+    "icon": "av::games"
+  },
+  {
     "search": "magnifying_glass",
+    "icon": "action::search"
+  },
+  {
+    "search": "search",
     "icon": "action::search"
   },
   {
@@ -501,7 +521,7 @@ export const jsonIcons = JSON.parse(
     "icon": "content::create"
   },
   {
-    "search": "masks",
+    "search": "mask",
     "icon": "maps::theater_comedy"
   },
   {

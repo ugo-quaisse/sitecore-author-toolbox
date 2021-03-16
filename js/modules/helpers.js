@@ -107,7 +107,7 @@ const exeJsCode = (code) => {
 const getMaterializeIcon = (folder = "action", icon = "description", theme = "materialiconsoutlined") => chrome.runtime.getURL(`images/icons/src/${folder}/${icon}/${theme}/24px.svg`);
 
 /**
- * Get active Siteore item from Chrome Storage
+ * Get active Sitecore item from Chrome Storage
  */
 const sitecoreItemJson = (itemID, languageID, versionID) => {
   //Read data
@@ -192,17 +192,12 @@ function repositionElement(event) {
  * Make an element draggable
  */
 function startDrag() {
-  var initX, mousePressX;
   var contextmenu = document.querySelector(".tabHandle");
   if (contextmenu) {
     contextmenu.addEventListener(
       "mousedown",
       function (event) {
-        initX = this.offsetLeft;
-        mousePressX = event.clientX;
-
         this.addEventListener("mousemove", repositionElement, false);
-
         window.addEventListener(
           "mouseup",
           function () {
@@ -249,7 +244,7 @@ let srt, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x,
 var hex_chr = "0123456789abcdef";
 function rhex(num) {
   var str = "";
-  for (var j = 0; j <= 3; j++) str += hex_chr.charAt((num >> (j * 8 + 4)) & 0x0f) + hex_chr.charAt((num >> (j * 8)) & 0x0f);
+  for (j = 0; j <= 3; j++) str += hex_chr.charAt((num >> (j * 8 + 4)) & 0x0f) + hex_chr.charAt((num >> (j * 8)) & 0x0f);
 
   return str;
 }
@@ -261,7 +256,7 @@ function rhex(num) {
 function str2blks_MD5(str) {
   var nblk = ((str.length + 8) >> 6) + 1;
   var blks = new Array(nblk * 16);
-  for (var i = 0; i < nblk * 16; i++) blks[i] = 0;
+  for (i = 0; i < nblk * 16; i++) blks[i] = 0;
   for (i = 0; i < str.length; i++) blks[i >> 2] |= str.charCodeAt(i) << ((i % 4) * 8);
   blks[i >> 2] |= 0x80 << ((i % 4) * 8);
   blks[nblk * 16 - 2] = str.length * 8;

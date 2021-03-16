@@ -3,6 +3,7 @@
 import * as global from "./global.js";
 import { log, exeJsCode } from "./helpers.js";
 import { sitecoreAuthorToolbox } from "./contenteditor.js";
+import { initSvgAnimation } from "./experimentalui.js";
 
 export { resumeFromWhereYouLeftOff, historyNavigation };
 
@@ -10,6 +11,7 @@ export { resumeFromWhereYouLeftOff, historyNavigation };
  * Resume from where you left off
  */
 const resumeFromWhereYouLeftOff = (storage) => {
+  initSvgAnimation(storage);
   if (!global.hasRedirectionOther && !global.isLaunchpad) {
     //fo parameters is the default Sitecore behaviour to open a specific item
     storage.feature_reloadnode == undefined ? (storage.feature_reloadnode = true) : false;
@@ -41,16 +43,27 @@ const resumeFromWhereYouLeftOff = (storage) => {
 
       //Security check
       storage.scLanguage == undefined ? (storage.scLanguage = "en") : false;
-
+      //SVG animation
+      storage.feature_experimentalui ? document.querySelector("#svgAnimation").setAttribute("style", "opacity:1") : false;
       //Reload from where you left off
       if (storage.scItemID && storage.feature_reloadnode === true) {
         log("[Read " + storage.scSource + "] Item : " + storage.scItemID, "beige");
         log("[Read " + storage.scSource + "] Language : " + storage.scLanguage, "beige");
         log("[Read " + storage.scSource + "] Version : " + storage.scVersion, "beige");
         log("*** Redirection ***", "yellow");
-        //exeJsCode(`scForm.setModified(false, '` + storage.scItemID + `');`)
-        exeJsCode(`scForm.invoke("item:load(id=` + storage.scItemID + `,language=` + storage.scLanguage + `,version=` + storage.scVersion + `)");`);
-        // sitecoreAuthorToolbox(storage);
+        setTimeout(function () {
+          exeJsCode(`scForm.invoke("item:load(id=${storage.scItemID},language=${storage.scLanguage},version=${storage.scVersion})");`);
+        }, 500);
+        //Add security if still not visible after 7s
+        setTimeout(function () {
+          if (document.querySelector("#EditorFrames")) {
+            let isVisible = window.getComputedStyle(document.querySelector("#EditorFrames")).opacity == 1;
+            if (!isVisible) {
+              document.querySelector("#EditorFrames").setAttribute("style", "opacity:1");
+              sitecoreAuthorToolbox(storage);
+            }
+          }
+        }, 7000);
       } else {
         //There is no redirection, so we force a UI refresh
         sitecoreAuthorToolbox(storage);

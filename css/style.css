@@ -955,7 +955,7 @@ a.scTileItem .scTileItemIconImage {
 
 .scTileItemDetailsHeader {
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   float: left;
   margin-right: 10px;
 }
@@ -1062,7 +1062,7 @@ body.satExtension #scPreloader {
   margin: 15px 30px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  font-weight: 700;
+  font-weight: 600;
   outline: none;
   position: relative;
   color: #fff;
@@ -2410,7 +2410,7 @@ body.satExtension [data-tooltip]:before {
   content: attr(data-tooltip);
   text-align: center;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.2;
   width: max-content;
   max-width: 400px;

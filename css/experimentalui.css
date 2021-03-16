@@ -68,7 +68,7 @@ body.satExperimentalUi #scPanel > .content {
 
 body.satExperimentalUi #scPanel h1 {
   font-size: 250%;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--accent);
   padding: 20px;
   margin: auto;
@@ -77,7 +77,7 @@ body.satExperimentalUi #scPanel h1 {
 body.satExperimentalUi #scPanel h2 {
   font-size: 125%;
   border-bottom: 1px solid var(--text);
-  font-weight: 700;
+  font-weight: 600;
   color: var(--text);
   padding: 15px 0px;
   text-transform: uppercase;
@@ -85,7 +85,7 @@ body.satExperimentalUi #scPanel h2 {
 
 body.satExperimentalUi #scPanel h3 {
   font-size: 100%;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--accent);
   padding: 10px 0px 2px 0px;
   margin: auto;
@@ -338,7 +338,7 @@ body.satExperimentalUi #scModal .main .scIconModal {
 }
 
 body.satExperimentalUi #scModal .main .scIconTextModal {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 body.satExperimentalUi .showSitecoreRibbon {
@@ -613,8 +613,8 @@ body.satExperimentalUi .sc-button {
   text-transform: uppercase;
   width: auto;
   padding: 0px 20px;
-  font-weight: 700;
-  font-family: "Open Sans";
+  font-weight: 600;
+  font-family: "Open Sans", sans-serif;
   height: 34px;
   box-shadow: none;
   background-color: var(--grey18) !important;
@@ -748,14 +748,6 @@ body.satExperimentalUi .scContentTreeNodeGlyph {
   width: 20px !important;
   vertical-align: middle !important;
   filter: grayscale(1);
-  /* display: block;
-  box-sizing: border-box;
-  background: url(chrome-extension://__MSG_@@extension_id__/images/chevron.svg) no-repeat;
-  width: 10px;
-  height: 15px;
-  padding-left: 10px;
-  display: initial;
-  transform: scale(0.6); */
 }
 
 body.satExperimentalUi div.scContentTreeNode {
@@ -798,8 +790,8 @@ body.satExperimentalUi #ContentTreePanel a.scContentTreeNodeNormal {
   background-color: transparent;
   width: -webkit-fill-available;
   padding: 1px 0px 5px 5px;
-  vertical-align: sub;
   border: 2px solid transparent;
+  vertical-align: sub;
   z-index: 1;
 }
 
@@ -1966,7 +1958,7 @@ body.satExperimentalUi .scSaveBar > .scActions > button:disabled {
 body.satExperimentalUi .scSaveBar > .scActions > button.scSaveButton,
 body.satExperimentalUi .scSaveBar > .scActions > button.scPreviewButton {
   color: var(--black3);
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
   font-size: 12px;
   height: 34px;
@@ -1975,7 +1967,7 @@ body.satExperimentalUi .scSaveBar > .scActions > button.scPreviewButton {
 body.satExperimentalUi .scSaveBar > .scActions > button.primary {
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
   font-size: 12px;
   height: 34px;
@@ -2317,7 +2309,7 @@ body.satExperimentalUi .scTabActive_Hover {
   border: 0px !important;
   border-bottom: 3px solid var(--accent) !important;
   color: var(--text);
-  font-weight: 700;
+  font-weight: 600;
   min-height: 43px;
 }
 
@@ -2583,7 +2575,7 @@ body.satExperimentalUi.satEE .scFrameYellow {
 body.satExperimentalUi .scEditorQuickInfo td:nth-of-type(1) {
   text-align: left;
   width: 150px;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 body.satExperimentalUi .scIndeterminateProgress {
@@ -2658,4 +2650,14 @@ body.satExperimentalUi .grid-settings-basic .grid-advanced-tab-header {
   background-color: transparent;
   border: 0px;
   color: var(--text);
+}
+
+
+body.satExperimentalUi .scConditionContainer {
+  background-color: var(--accent);
+    color: var(--accentText);
+    border-radius: 50%;
+    padding: 1px 5px;
+    font-size: 10px;
+    font-weight: 600; 
 }

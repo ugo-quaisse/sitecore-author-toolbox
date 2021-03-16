@@ -562,9 +562,12 @@ const getParentNode = (int = 1) => {
 /**
  * Init SVG animation
  */
-const initSvgAnimation = () => {
-  let svgAnimation = `<div id="svgAnimation">` + global.svgAnimation + `</div>`;
-  document.querySelector("#EditorFrames") ? document.querySelector("#EditorFrames").insertAdjacentHTML("beforebegin", svgAnimation) : false;
+const initSvgAnimation = (storage) => {
+  if (storage.feature_experimentalui) {
+    let isExist = document.querySelector("#svgAnimation");
+    let svgAnimation = `<div id="svgAnimation">${global.svgAnimation}</div>`;
+    document.querySelector("#EditorFrames") && !isExist ? document.querySelector("#EditorFrames").insertAdjacentHTML("beforebegin", svgAnimation) : false;
+  }
 };
 
 /**
@@ -672,7 +675,7 @@ const initTitleBarDesktop = () => {
 const replaceIcons = (storage) => {
   if (storage.feature_experimentalui === true && storage.feature_material_icons === true) {
     let imgGlyph = document.querySelectorAll(
-      ".scContentControlLayoutDeviceRenderings img, .scTreelistEx img, .icon, .glyph, .scNavButton, .item-icon, .sc-breadcrumb-item-path > img, .scContentControlLayoutDeviceName > img, .scRendering > img, .scTabContent img, .scContentTreeNodeGlyph, .scContentTreeNodeIcon, #scModal .main img, .scInstantSearchResults img, .dynatree-container img, .dynatree-node > img, .scTabs .scImageContainer > img, form[action*='Gallery'] img, form[action*='Media'] .scFolderButtons img, .scPopup .scMenuItemIcon > img, .satEE .scChromeCommand > img"
+      ".scPreviewItem > img, .scContentControlLayoutDeviceRenderings img, .scTreelistEx img, .icon, .glyph, .scNavButton, .item-icon, .sc-breadcrumb-item-path > img, .scContentControlLayoutDeviceName > img, .scRendering > img, .scTabContent img, .scContentTreeNodeGlyph, .scContentTreeNodeIcon, #scModal .main img, .scInstantSearchResults img, .dynatree-container img, .dynatree-node > img, .scTabs .scImageContainer > img, form[action*='Gallery'] img, form[action*='Media'] .scFolderButtons img, .scPopup .scMenuItemIcon > img, .satEE .scChromeCommand > img"
     );
     for (let icon of imgGlyph) {
       let filename = icon.src.substring(icon.src.lastIndexOf("/") + 1).toLowerCase();

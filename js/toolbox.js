@@ -78,7 +78,7 @@ chrome.storage.sync.get((storage) => {
       if (storage.feature_experimentalui) {
         log("**** Experimental ****", "yellow");
         initAppName(storage, "Content Editor");
-        initSvgAnimation();
+        initSvgAnimation(storage);
         insertModal(storage, ScItem.id, ScItem.language, ScItem.version);
         insertPanel();
         initInsertIcon(storage);

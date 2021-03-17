@@ -2526,9 +2526,9 @@ body.satDark #scEditorTabs {
   background-color: var(--black1);
 }
 body.satDark #scEditorTabs > ul > li {
-  border: 1px solid var(--black3);
-  background: var(--black3);
-  color: var(--black8);
+  border: 1px solid var(--black2);
+  background: var(--black2);
+  color: var(--black9);
 }
 body.satDark #scEditorTabs > ul > li:not(.scEditorTabEmpty):hover {
   color: var(--black6);

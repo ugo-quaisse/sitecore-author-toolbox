@@ -392,7 +392,7 @@ const initInterfaceEvents = () => {
         chrome.storage.sync.set({
           feature_experimentalui: false,
           feature_material_icons: false,
-          feature_cetabs: false,
+          feature_cetabs: true,
         });
       } else if (radio.value == "experimental") {
         //main

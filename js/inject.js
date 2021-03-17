@@ -27,22 +27,24 @@ function scSaveAnimation(id) {
   document.body.appendChild(indicator);
   setTimeout(function () {
     indicator.remove();
-  }, 0);
+  }, 1000);
 
   if (document.querySelector(".scSaveButton")) {
     let saveMessage = document.querySelector(".saveMessage");
-    saveMessage.innerHTML = "Saving...";
-    saveMessage.classList.add("visible");
-    document.querySelector(".scSaveButton").innerText = "Saving...";
-    document.querySelector(".scSaveButton").setAttribute("disabled", true);
+    let saveButton = document.querySelector(".scSaveButton");
+    // saveMessage.classList.remove("success");
+    // saveMessage.innerHTML = "Saving...";
+    // saveMessage.classList.add("visible");
+    saveButton.innerText = "Saving...";
+    saveButton.setAttribute("disabled", true);
 
     setTimeout(function () {
-      let saveMessage = document.querySelector(".saveMessage");
-      saveMessage.innerHTML = "Saved successfully!";
-      document.querySelector(".scSaveButton").innerText = "Save";
-      document.querySelector(".scSaveButton").removeAttribute("disabled");
+      saveMessage.classList.add("success");
       saveMessage.classList.add("visible");
-    }, 1500);
+      saveMessage.innerHTML = "Saved successfully";
+      saveButton.innerText = "Save";
+      saveButton.removeAttribute("disabled");
+    }, 800);
 
     setTimeout(function () {
       saveMessage.classList.remove("visible");

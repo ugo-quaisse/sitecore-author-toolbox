@@ -105,14 +105,14 @@ const initExperimentalUi = (storage) => {
 const insertSavebar = () => {
   //If preview mode
   let scPrimaryBtn = global.hasModePreview
-    ? `<button class="primary scExitButton" onclick="javascript:return scForm.invoke('contenteditor:closepreview', event)">Close Panel</button>`
+    ? `<button class="scPublishButton primary scExitButton" onclick="javascript:return scForm.invoke('contenteditor:closepreview', event)">Close Panel</button>`
     : `<button id="scPublishMenuMore" class="grouped" type="button"><span class="scPublishMenuMoreArrow">▾</span></button>
           <ul class="scPublishMenu">             
             <li onclick="javascript:return scForm.invoke('item:setpublishing', event)">Unpublish...</li>
             <li onclick="javascript:return scForm.postEvent(this,event,'item:publishingviewer(id=)')">Scheduler...</li>
             <li onclick="javascript:return scForm.invoke('item:publishnow', event)">Quick Publish...</li>  
           </ul>
-        <button class="primary primaryGrouped" onclick="javascript:return scForm.postEvent(this,event,'item:publish(id=)')">Save and Publish</button>`;
+        <button class="scPublishButton primary primaryGrouped" onclick="javascript:return scForm.postEvent(this,event,'item:publish(id=)')">Save and Publish</button>`;
 
   let scPreviewBtn = !global.hasModePreview && getScItemData().path.includes("/home") ? `<button class="scPreviewButton" onclick="javascript:return scForm.invoke('contenteditor:preview', event)">Preview</button>` : ``;
 

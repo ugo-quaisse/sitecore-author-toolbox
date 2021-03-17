@@ -6,7 +6,18 @@ body.satExperimentalUi {
   -webkit-font-smoothing: antialiased;
   color: var(--text) !important;
 }
+
+body.contentEditor:after {
+  background: url(chrome-extension://dpmlbbpimcmgdlhpdphnijefjchoicmj/images/sc-spinner.svg) center center no-repeat rgb(255, 255, 255) !important;
+  background-size: 70% !important;
+}
+
 body.satExperimentalUi .ui-widget-overlay:after {
+  background: url(chrome-extension://dpmlbbpimcmgdlhpdphnijefjchoicmj/images/sc-spinner.svg) center center no-repeat rgb(255, 255, 255) !important;
+  background-size: 70% !important;
+}
+
+body.satExperimentalUi #saveAnimation {
   background: url(chrome-extension://dpmlbbpimcmgdlhpdphnijefjchoicmj/images/sc-spinner.svg) center center no-repeat rgb(255, 255, 255) !important;
   background-size: 70% !important;
 }
@@ -120,22 +131,28 @@ body.satExperimentalUi .saveMessage {
   margin: auto;
   top: -50px;
   z-index: 10000000000;
-  background-color: var(--messageSuccessLink);
+  background-color: var(--messageWarningLink);
   color: var(--white);
   border-radius: var(--radius);
-  font-weight: normal;
   font-size: 14px;
+  font-weight: 600;
   text-align: center;
-  padding: 10px 15px;
+  padding: 10px 20px;
   left: 50%;
   transform: translate(-50%, 0);
   transition: all cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.4s;
   box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
-  display: block !important;
+  display: block !important; 
+  opacity: 0;
+}
+
+body.satExperimentalUi .saveMessage.success {
+  background-color: var(--messageSuccessLink);
 }
 
 body.satExperimentalUi .saveMessage.visible {
   top: 30px;
+  opacity: 1;
 }
 
 body.satExperimentalUi .scMenuButton {

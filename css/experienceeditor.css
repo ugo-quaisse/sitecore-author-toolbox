@@ -433,7 +433,7 @@ body.satEEDark .zg-variant-switcher.expanded ul.flex-thumb .variant-name {
 }
 
 body.satEEDark .zg-variant-switcher.expanded .zg-variant-available {
-  background-color: var(--black1);
+  background-color: transparent;
 }
 
 body.satEEDark .zg-variant-switcher.expanded li {

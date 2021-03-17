@@ -105,8 +105,6 @@ document.querySelector("#feature_experimentalui").onclick = function () {
   if (document.querySelector("#feature_experimentalui").checked == true) {
     document.querySelector("#feature_cetabs").checked = true;
     document.querySelector("#feature_material_icons").checked = true;
-  } else {
-    document.querySelector("#feature_material_icons").checked = false;
   }
 };
 

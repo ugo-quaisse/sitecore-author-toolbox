@@ -87,6 +87,9 @@ const getSiteUrl = (storage, path, language) => {
  * Show live URL of a page
  */
 const initLiveUrl = (storage) => {
+  //Get user preference
+  storage.feature_urls == undefined ? (storage.feature_urls = true) : false;
+  storage.feature_urlstatus == undefined ? (storage.feature_urlstatus = true) : false;
   //Variables
   let ScItem = getScItemData();
   let scQuickInfo = document.querySelector("div[id^='QuickInfo_']");
@@ -94,7 +97,7 @@ const initLiveUrl = (storage) => {
   let scEditorHeaderVersionsLanguage = document.querySelector(".scEditorHeaderVersionsLanguage");
   let scLanguageTxtLong = scEditorHeaderVersionsLanguage ? scEditorHeaderVersionsLanguage.getAttribute("title") : false;
   let badge;
-  let barStyle = storage.feature_experimentalui ? "scWarning" : "scWarning";
+  let barStyle = storage.feature_experimentalui && storage.feature_urlstatus ? "scWarning" : "scSuccess";
   //Live URL
   let ScSite = getSiteUrl(storage, ScItem.pathFull, ScItem.language);
   let alternativeUrl = window.location.origin + "/?sc_itemid=" + ScItem.id + "&sc_mode=normal&sc_lang=" + ScItem.language + "&sc_version=" + ScItem.version;
@@ -113,10 +116,6 @@ const initLiveUrl = (storage) => {
 
   //Excluding data, presentation, settings, email, dictionnary
   if (isContent && !isData && !isPresentation && !isSettings && !isEmailTemplate && !isDictionnary) {
-    //Get user preference
-    storage.feature_urls == undefined ? (storage.feature_urls = true) : false;
-    storage.feature_urlstatus == undefined ? (storage.feature_urlstatus = true) : false;
-
     //If not added yet
     if (!document.querySelector("#scMessageBarUrl") && storage.feature_urls) {
       //Get cookie sxa_site
@@ -141,13 +140,15 @@ const initLiveUrl = (storage) => {
         //Experimentation
         document.querySelector(".scPreviewButton") ? document.querySelector(".scPreviewButton").setAttribute("style", "display: block") : false;
 
+        let statusDiv = storage.feature_urlstatus ? `<span class="liveUrlLoader">Checking...</span>` : ``;
+
         //Prepare HTML (scInformation scWarning scError)
         //prettier-ignore
         let scMessage = `<div id="scMessageBarLiveUrl" class="scMessageBar ${barStyle}">
             <div class="scMessageBarIcon" style="background-image:url(${global.icon})"></div>
             <div class="scMessageBarTextContainer">
               <div class="scMessageBarTitle">Sitecore Live URL
-              <span class="liveUrlLoader">Checking...</span>
+              ${statusDiv}
               <span class="liveUrlBadge t-sm t-top hide" onclick="window.open('${global.launchpadPage}?configure_domains=true&launchpad=true&url=${
           global.windowLocationHref
         }')" data-tooltip="Click to configure your sites" title="Click to configure your sites">${badge}</span>

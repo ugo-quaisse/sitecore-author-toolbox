@@ -133,7 +133,7 @@ const toggleSection = (elem, name, experimental = false) => {
           let tabsWidth = tabsSection.scrollWidth;
 
           //Calculation
-          let calc = Math.round(currentOffset + (m - clicked.left));
+          calc = Math.round(currentOffset + (m - clicked.left));
           let calcPos = Math.round(tabs.left + tabsWidth + (m - clicked.left));
 
           //Detect boundaries
@@ -197,7 +197,7 @@ const fadeEditorFrames = () => {
     document.querySelector("#EditorFrames").setAttribute("style", "opacity:0.6");
     document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:0.6");
     document.querySelectorAll(".scEditorTabHeaderNormal, .scEditorTabHeaderActive > span")[0].innerText = "Loading...";
-    var timeout = setTimeout(function () {
+    setTimeout(function () {
       document.querySelector("#EditorFrames").setAttribute("style", "opacity:1");
       document.querySelector(".scContentTreeContainer").setAttribute("style", "opacity:1");
     }, 8000);
@@ -272,7 +272,6 @@ const showLanguageMenu = () => {
 const copyContent = (value, targetClass) => {
   navigator.clipboard.writeText(value).then(
     function () {
-      let target = document.querySelector(".copyCount_" + targetClass);
       let targetMessage = document.querySelector(".copyCountMessage_" + targetClass);
       let saveMessage = document.querySelector(".saveMessage");
       saveMessage ? (saveMessage.innerHTML = "Copied") : (targetMessage.innerHTML = "Copied!");
@@ -303,17 +302,15 @@ function sortTable(col, title, pos) {
   document.querySelector(".mediaSortOrder") ? document.querySelector(".mediaSortOrder").remove() : false;
   document.querySelector(".mediaSelected") ? document.querySelector(".mediaSelected").classList.remove("mediaSelected") : false;
   asc == 2 ? (asc = -1) : (asc = 2);
-  var table = document.querySelectorAll(".scMediaExplorer");
   var head = document.querySelector(".scMediaExplorer > thead > tr");
   var rows = document.querySelectorAll(".scMediaExplorer > tbody > tr");
   var rlen = rows.length;
   var arr = new Array();
-  var cells, clen;
+  var cells;
 
   // fill the array with values from the table
   for (var i = 0; i < rlen; i++) {
     cells = rows[i].cells;
-    clen = cells.length;
     arr[i] = new Array();
     arr[i].arrow = cells[0].outerHTML;
     arr[i].img = cells[1].outerHTML;
@@ -464,7 +461,6 @@ function changeDevicePreview(iframeId, device, orientation = "v") {
   let ratio;
 
   //Get preview page size
-  let pageWidth = document.querySelector("#" + iframeId).clientWidth;
   let pageHeight = document.querySelector("#" + iframeId).clientHeight;
 
   //Clear existing class

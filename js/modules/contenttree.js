@@ -1,6 +1,7 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
+import { initStorageFeature } from "./helpers.js";
 
 export { initAutoExpandTree, initTreeGutterTooltips };
 
@@ -8,8 +9,8 @@ export { initAutoExpandTree, initTreeGutterTooltips };
  * Auto Expand Tree
  */
 const initAutoExpandTree = (storage) => {
-  storage.feature_autoexpand == undefined ? (storage.feature_autoexpand = true) : false;
-  storage.feature_autoexpandcount == undefined ? (storage.feature_autoexpandcount = false) : false;
+  storage.feature_autoexpand = initStorageFeature(storage.feature_autoexpand, true);
+  storage.feature_autoexpandcount = initStorageFeature(storage.feature_autoexpandcount, true);
 
   if (storage.feature_autoexpand && document.querySelector(".scContentTree")) {
     //Content tree
@@ -48,15 +49,6 @@ const initAutoExpandTree = (storage) => {
               if (subTreeDiv) {
                 let newNodes = subTreeDiv.querySelectorAll(".scContentTreeNode");
                 newNodes.length == 1 ? newNodes[0].querySelector(".scContentTreeNodeGlyph").click() : false;
-
-                if (storage.feature_autoexpandcount) {
-                  document.querySelectorAll(".scCountNodes").forEach(function (element) {
-                    element.setAttribute("style", "display:none");
-                  });
-                }
-              } else {
-                let subTreeMain = document.querySelector("#" + glyphId).nextSibling.nextSibling;
-                subTreeMain.querySelector(".scCountNodes") ? subTreeMain.querySelector(".scCountNodes").remove() : false;
               }
             }
           }, 500);

@@ -214,6 +214,7 @@ chrome.storage.sync.get((storage) => {
       });
     } else if (global.isEditorFolder) {
       log("**** Editors folder ****", "orange");
+      initMaterializeIcons(storage);
     } else if (global.isGalleryVersion) {
       log("**** Versions menu ****", "orange");
     } else if (global.isLayoutDetails) {

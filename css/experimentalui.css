@@ -7,10 +7,10 @@ body.satExperimentalUi {
   color: var(--text) !important;
 }
 
-body.contentEditor:after {
+/* body.satExperimentalUi.contentEditor:after {
   background: url(chrome-extension://dpmlbbpimcmgdlhpdphnijefjchoicmj/images/sc-spinner.svg) center center no-repeat rgb(255, 255, 255) !important;
   background-size: 70% !important;
-}
+} */
 
 body.satExperimentalUi .ui-widget-overlay:after {
   background: url(chrome-extension://dpmlbbpimcmgdlhpdphnijefjchoicmj/images/sc-spinner.svg) center center no-repeat rgb(255, 255, 255) !important;
@@ -329,7 +329,7 @@ body.satExperimentalUi a.scContentButton {
 }
 
 body.satExperimentalUi a.scTileItem:hover {
-  background-color: var(--accent) !important;
+  background-color: var(--accentTransparent) !important;
   color: var(--accentText) !important;
 }
 

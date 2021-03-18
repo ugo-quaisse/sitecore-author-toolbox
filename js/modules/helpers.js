@@ -1,3 +1,4 @@
+/* eslint-disable newline-before-return */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-param-reassign */
 /* eslint-disable nonblock-statement-body-position */
@@ -15,7 +16,7 @@
 
 import * as global from "./global.js";
 
-export { log, loadCssFile, loadJsFile, exeJsCode, getMaterializeIcon, sitecoreItemJson, fetchTimeout, getScItemData, setPlural, setTextColour, repositionElement, startDrag, calcMD5 };
+export { log, loadCssFile, loadJsFile, exeJsCode, initStorageFeature, getMaterializeIcon, sitecoreItemJson, fetchTimeout, getScItemData, setPlural, setTextColour, repositionElement, startDrag, calcMD5 };
 
 /**
  * Show colored log message in console
@@ -99,6 +100,14 @@ const exeJsCode = (code) => {
   script.textContent = code;
   (document.head || document.documentElement).appendChild(script);
   script.remove();
+};
+
+/**
+ * Check if the feature has a default value
+ */
+const initStorageFeature = (featureName, ifUnderfined) => {
+  featureName = featureName === undefined ? ifUnderfined : featureName;
+  return featureName;
 };
 
 /**

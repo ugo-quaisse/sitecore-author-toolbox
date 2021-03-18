@@ -45,5 +45,8 @@
   },
   "browserslist": [
     "last 1 Chrome version"
-  ]
+  ],
+  "dependencies": {
+    "postcss-discard-duplicates": "^4.0.2"
+  }
 }

@@ -313,8 +313,8 @@ const initDarkSwitchEvents = () => {
         document.querySelectorAll("iframe").forEach(function (iframe) {
           if (iframe.contentDocument.body) {
             iframe.contentDocument.body.classList.add("satDark");
-            iframe.contentDocument.querySelectorAll("iframe").forEach(function (iframe) {
-              iframe.contentDocument.body.classList.add("satDark");
+            iframe.contentDocument.querySelectorAll("iframe").forEach(function (i) {
+              i.contentDocument.body.classList.add("satDark");
             });
           }
         });
@@ -332,8 +332,8 @@ const initDarkSwitchEvents = () => {
         document.querySelectorAll("iframe").forEach(function (iframe) {
           if (iframe.contentDocument.body) {
             iframe.contentDocument.body.classList.remove("satDark");
-            iframe.contentDocument.querySelectorAll("iframe").forEach(function (iframe) {
-              iframe.contentDocument.body.classList.remove("satDark");
+            iframe.contentDocument.querySelectorAll("iframe").forEach(function (i) {
+              i.contentDocument.body.classList.remove("satDark");
             });
           }
         });
@@ -351,8 +351,8 @@ const initDarkSwitchEvents = () => {
         document.querySelectorAll("iframe").forEach(function (iframe) {
           if (iframe.contentDocument.body) {
             iframe.contentDocument.body.classList.remove("satDark");
-            iframe.contentDocument.querySelectorAll("iframe").forEach(function (iframe) {
-              iframe.contentDocument.body.classList.remove("satDark");
+            iframe.contentDocument.querySelectorAll("iframe").forEach(function (i) {
+              i.contentDocument.body.classList.remove("satDark");
             });
           }
         });
@@ -381,8 +381,8 @@ const initInterfaceEvents = () => {
         document.querySelectorAll("iframe").forEach(function (iframe) {
           if (iframe.contentDocument.body) {
             iframe.contentDocument.body.classList.remove("satExperimentalUi");
-            iframe.contentDocument.querySelectorAll("iframe").forEach(function (iframe) {
-              iframe.contentDocument.body.classList.remove("satExperimentalUi");
+            iframe.contentDocument.querySelectorAll("iframe").forEach(function (i) {
+              i.contentDocument.body.classList.remove("satExperimentalUi");
             });
           }
         });
@@ -401,8 +401,8 @@ const initInterfaceEvents = () => {
         document.querySelectorAll("iframe").forEach(function (iframe) {
           if (iframe.contentDocument.body) {
             iframe.contentDocument.body.classList.add("satExperimentalUi");
-            iframe.contentDocument.querySelectorAll("iframe").forEach(function (iframe) {
-              iframe.contentDocument.body.classList.add("satExperimentalUi");
+            iframe.contentDocument.querySelectorAll("iframe").forEach(function (i) {
+              i.contentDocument.body.classList.add("satExperimentalUi");
             });
           }
         });

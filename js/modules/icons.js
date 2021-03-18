@@ -489,6 +489,10 @@ export const jsonIcons = JSON.parse(
     "icon": "action::pageview"
   },
   {
+    "search": "optimization",
+    "icon": "av::speed"
+  },
+  {
     "search": "sort_",
     "icon": "av::sort_by_alpha"
   },

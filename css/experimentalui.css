@@ -2259,7 +2259,7 @@ body.satExperimentalUi .scTabPage {
 
 body.satExperimentalUi .scTabstrip {
   padding: 0px;
-  margin: 0px -15px;
+  margin: 0px;
   width: auto;
   height: fit-content;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 5px;
@@ -2267,6 +2267,15 @@ body.satExperimentalUi .scTabstrip {
   display: flex;
   overflow-x: scroll;
   overflow-y: auto;
+}
+
+body.satExperimentalUi .selected.scMenuPanelItem {
+  background-color: var(--accent);
+}
+
+body.satExperimentalUi .selected.scMenuPanelItem .name,
+body.satExperimentalUi .selected.scMenuPanelItem .path {
+  color: var(--accentText);
 }
 
 body.satExperimentalUi .sc-progressindicator {
@@ -2386,6 +2395,10 @@ body.satExperimentalUi .scTimePicker a:hover {
 }
 body.satExperimentalUi #Editor_contentIframe {
   padding: 5px;
+}
+
+body.satExperimentalUi .scComboboxDropDown {
+  min-height: 8px;
 }
 
 body.satExperimentalUi .scCalendarUI {

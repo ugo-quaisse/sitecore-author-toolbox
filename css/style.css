@@ -136,6 +136,10 @@ body.satExtension .scTitle {
   min-height: 20px;
 }
 
+body.satExtension .scStretch input[type="text"] {
+  min-height: 38px;
+}
+
 body.satExtension .scSearch > input[type="text"] {
   padding: 10px;
   margin: 20px 0px 0px 20px;

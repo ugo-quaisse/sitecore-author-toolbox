@@ -95,7 +95,7 @@ const addDomain = (text = "", tocreate = undefined, isImport = false) => {
         document.querySelector("#sitesList").insertAdjacentHTML("beforeend", html);
         trackChanges(isImport);
         //Click events
-        document.querySelector(".addSite_" + countDomains).addEventListener("click", addSite.bind("", "domain_" + countDomains, "", "", "", "", false));
+        document.querySelector(".addSite_" + countDomains).addEventListener("click", addSite.bind("", "domain_" + countDomains, "", "", "", true, false, false));
         document.querySelector(".editDomain_" + countDomains).addEventListener("click", editDomain.bind("", "domain_" + countDomains));
         tocreate === undefined ? addSite("domain_" + countDomains, "", "", true) : false;
         returnId = `domain_` + countDomains;
@@ -142,13 +142,14 @@ const editDomain = (domainId) => {
 /**
  * Prepend input fields to add a site
  */
-const addSite = (domain, path, cd, lang = "", embedding = true, autoadd = false, name = "", isImport = "") => {
+const addSite = (domain, path, cd, lang = "", embedding = true, displayName = false, autoadd = false, name = "", isImport = "") => {
   let isExisting = false;
 
   //Check if sites already exists
   document.querySelectorAll("#" + domain + " input[name='key']").forEach((elem) => {
     let elemLang = elem.parentElement.parentElement.querySelector(".lang_url > input") ? elem.parentElement.parentElement.querySelector(".lang_url > input").value.toLowerCase() : "";
-    if (path == elem.value && lang.toLowerCase() == elemLang) {
+    let setLang = lang ? lang.toString().toLowerCase() : lang;
+    if (path == elem.value && setLang == elemLang) {
       !isImport ? alert(`This site "` + elem.value + `"already exist.`) : false;
       isExisting = true;
       console.log("Site already exists", elem.value + " " + elemLang);
@@ -159,6 +160,7 @@ const addSite = (domain, path, cd, lang = "", embedding = true, autoadd = false,
     let countSites = document.querySelectorAll(".site").length + 1;
     let showAdvanced = document.querySelector(".showAdvanced").value == 1 ? "display:inline-block" : "display:none";
     let languageEmbedding = embedding ? "checked" : "";
+    let languageDisplayName = displayName ? "checked" : "";
     //prettier-ignore
     let html = `
     <div class="site" id="site_${countSites}">
@@ -171,15 +173,20 @@ const addSite = (domain, path, cd, lang = "", embedding = true, autoadd = false,
             <label for="siteUrl">Site URL</label>
             <input id="siteUrl" name="value" type="url" placeholder="e.g https://..." pattern="https?://.*" value="${decodeURI(cd)}"> 
         </div>
-        <div class="lang_url" style="${showAdvanced}">
+        <div class="lang_url" style="${showAdvanced}" title="Whether or not you want to bind this URL to a specific language version. (if empty, applies to all languages)">
             <label for="langUrl">Language</label>
             <input id="langUrl" name="lang" type="url" placeholder="e.g fr-FR" value="${decodeURI(lang)}"> 
         </div>
-        <div class="embedding_url" style="${showAdvanced}">
+        <div class="embedding_url" style="${showAdvanced}" title="Whether or not you want to add language code in the URL">
             <label for="langUrl">Embedding</label>
             <input id="embeddingUrl_${countSites}" name="embedding" class="scCheckbox" type="checkbox" ${languageEmbedding} />
             <label for="embeddingUrl_${countSites}" class="scLabel"></label>
-        </div> 
+        </div>
+        <div class="displayName_url" style="${showAdvanced}" title="Whether or not you want to use Display Name instead of Item Name in your URL">
+            <label for="langUrl">Display name</label>
+            <input id="displayNameUrl_${countSites}" name="displayName" class="scCheckbox" type="checkbox" ${languageDisplayName} />
+            <label for="displayNameUrl_${countSites}" class="scLabel"></label>
+        </div>
         <div class="delete deleteSite_${countSites}" title="Delete this site">✕ Delete</div>
     </div>`;
     document.querySelector("#" + domain + " > .addSite").insertAdjacentHTML("beforebegin", html);

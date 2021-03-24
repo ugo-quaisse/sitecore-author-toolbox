@@ -105,6 +105,7 @@ export const iconWeb = chrome.runtime.getURL("images/preview_web.svg");
 export const iconRotate = chrome.runtime.getURL("images/preview_rotate.svg");
 export const iconMenuBright = chrome.runtime.getURL("images/menu_bright.svg");
 export const iconMenuTheme = chrome.runtime.getURL("images/menu_theme.svg");
+export const iconMenuColor = chrome.runtime.getURL("images/menu_color.svg");
 export const iconMenuOptions = chrome.runtime.getURL("images/menu_options.svg");
 export const iconOwl = chrome.runtime.getURL("images/owl.svg");
 export const iconTreeCollapsed = chrome.runtime.getURL("images/treemenu_collapsed.png");

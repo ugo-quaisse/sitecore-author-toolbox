@@ -243,7 +243,7 @@ const addHideRibbonButton = (storage) => {
 
   if (storage.feature_experienceeditor && !global.isRibbon) {
     //prettier-ignore
-    let html = '<div class="scNormalModeTab"><span class="t-right t-sm" data-tooltip="Open in Normal Mode"><a href="' + linkNormalMode + '" target="_blank"><img loading="lazy" src="' + global.iconChrome + '"/></a></span></div>';
+    let html = `<div class="scNormalModeTab"><span class="t-right t-sm" data-tooltip="Open in Normal Mode"><a href="${linkNormalMode}" target="_blank"><img loading="lazy" src="${global.iconChrome}"/></a></span></div>`;
     pagemodeEdit ? pagemodeEdit.insertAdjacentHTML("beforeend", html) : false;
   }
 

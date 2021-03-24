@@ -170,6 +170,9 @@ const initUserMenu = (storage, type = "CE") => {
     initWorkboxMenu(storage, page);
     initUserPortraitMenu(storage);
 
+    //Accent color
+    //let accentColor = `<li onclick="" id="scSkip"><img src="${global.iconMenuColor}" /> Accent color <input type="color" id="scAccentColor" name="scAccentColor" value="#ee3524"></li> `;
+
     if (page == "CE") {
       //prettier-ignore
       htmlMenu = `<div class="scAccountMenu">
@@ -181,7 +184,7 @@ const initUserMenu = (storage, type = "CE") => {
             <li onclick="javascript:return scForm.invoke('shell:useroptions', event)">Sitecore Options</li>
           
             <li onclick="javascript:goToSubmenu(1)" id="scSkip" class="separator opensubmenu"><img src="${global.iconMenuBright}" /> Dark Mode <span id="scSkip" class="darkMenuHint">Light</span></li>
-            <li onclick="javascript:goToSubmenu(2)" id="scSkip" class="opensubmenu"><img src="${global.iconMenuTheme}" /> Theme <span id="scSkip" class="themeMenuHint">Classic</span></li> 
+            <li onclick="javascript:goToSubmenu(2)" id="scSkip" class="opensubmenu"><img src="${global.iconMenuTheme}" /> Theme <span id="scSkip" class="themeMenuHint">Classic</span></li>
             <li onclick="window.open('${global.launchpadPage}?launchpad=true')"><img src="${global.iconMenuOptions}" /> Extension Options</li>
 
             <li onclick="satLogout()">Log out</li>

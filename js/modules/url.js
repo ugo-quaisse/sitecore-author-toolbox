@@ -17,6 +17,7 @@ const getSiteUrl = (storage, path, language) => {
   let homePath = path.split("/home/")[0] + "/home/";
   let liveUrl;
   let liveUrlLanguageSpecific = false;
+  let siteLanguage, siteLanguageEmbedding, siteDisplayName;
   let scSite = {};
 
   //Site Manager - Test 1: attemp with language specific site
@@ -24,8 +25,11 @@ const getSiteUrl = (storage, path, language) => {
     if (domain == global.urlOrigin) {
       // eslint-disable-next-line no-unused-vars
       for (var [id, site] of Object.entries(values)) {
-        let siteLanguage = Object.entries(site)[1][1].toLowerCase();
-        let siteLanguageEmbedding = Object.entries(site)[2][1];
+        for (var [key, value] of Object.entries(site)) {
+          key == "language" ? (siteLanguage = value) : false;
+          key == "languageEmbedding" ? (siteLanguageEmbedding = value) : false;
+          key == "displayName" ? (siteDisplayName = value) : false;
+        }
         let siteStorage = Object.entries(site)[0][0].slice(-1) != "/" ? Object.entries(site)[0][0] + "/" : Object.entries(site)[0][0];
         if (siteLanguage == language && siteStorage.toLowerCase() == homePath.toLowerCase()) {
           liveUrl = Object.entries(site)[0][1].slice(-1) == "/" ? decodeURI(Object.entries(site)[0][1].slice(0, -1)) : decodeURI(Object.entries(site)[0][1]);
@@ -35,6 +39,7 @@ const getSiteUrl = (storage, path, language) => {
           scSite.url = liveUrl.toLowerCase();
           scSite.language = siteLanguage.toLowerCase();
           scSite.languageEmbedding = siteLanguageEmbedding;
+          scSite.displayName = siteDisplayName;
           break;
         }
       }
@@ -47,8 +52,11 @@ const getSiteUrl = (storage, path, language) => {
       if (domain == global.urlOrigin) {
         // eslint-disable-next-line no-unused-vars
         for ([id, site] of Object.entries(values)) {
-          let siteLanguage = Object.entries(site)[1][1].toLowerCase();
-          let siteLanguageEmbedding = Object.entries(site)[2][1];
+          for ([key, value] of Object.entries(site)) {
+            key == "language" ? (siteLanguage = value) : false;
+            key == "languageEmbedding" ? (siteLanguageEmbedding = value) : false;
+            key == "displayName" ? (siteDisplayName = value) : false;
+          }
           let siteStorage = Object.entries(site)[0][0].slice(-1) != "/" ? Object.entries(site)[0][0] + "/" : Object.entries(site)[0][0];
           if (siteLanguage == "" && siteStorage.toLowerCase() == homePath.toLowerCase()) {
             liveUrl = Object.entries(site)[0][1].slice(-1) == "/" ? decodeURI(Object.entries(site)[0][1].slice(0, -1)) : decodeURI(Object.entries(site)[0][1]);
@@ -57,6 +65,7 @@ const getSiteUrl = (storage, path, language) => {
             scSite.url = liveUrl.toLowerCase();
             scSite.language = siteLanguage.toLowerCase();
             scSite.languageEmbedding = siteLanguageEmbedding;
+            scSite.displayName = siteDisplayName;
             break;
           }
         }
@@ -97,7 +106,7 @@ const initLiveUrl = (storage) => {
   let scEditorHeaderVersionsLanguage = document.querySelector(".scEditorHeaderVersionsLanguage");
   let scLanguageTxtLong = scEditorHeaderVersionsLanguage ? scEditorHeaderVersionsLanguage.getAttribute("title") : false;
   let badge;
-  let barStyle = storage.feature_experimentalui && storage.feature_urlstatus ? "scWarning" : "scSuccess";
+  let barStyle = !storage.feature_experimentalui && storage.feature_urlstatus ? "scWarning" : "scSuccess";
   //Live URL
   let ScSite = getSiteUrl(storage, ScItem.pathFull, ScItem.language);
   let alternativeUrl = window.location.origin + "/?sc_itemid=" + ScItem.id + "&sc_mode=normal&sc_lang=" + ScItem.language + "&sc_version=" + ScItem.version;
@@ -133,6 +142,10 @@ const initLiveUrl = (storage) => {
           ScSite.url = ScSite.url.includes("{lang}") ? ScSite.url.replace("{lang}", ScItem.language) + "/" + sitecorePath : ScSite.url + "/" + ScItem.language + "/" + sitecorePath;
           //Language embedding disabled
           ScSite.languageEmbedding == false ? (ScSite.url = ScSite.url.replace("/" + ScItem.language + "/", "/")) : false;
+          //Display name enabled
+          let split = ScSite.url.split("/");
+          let requiredPath = split.slice(0, ScSite.url.split("/").length - 2).join("/") + "/";
+          ScSite.displayName == true && ScItem.displayName != undefined ? (ScSite.url = requiredPath + ScItem.displayName) : false;
           //Alternative URL
           alternativeUrl = ``;
         }

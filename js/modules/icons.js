@@ -735,6 +735,10 @@ export const jsonIcons = JSON.parse(
   {
     "search": "forbidden",
     "icon": "av::not_interested"
+  },
+  {
+    "search": "close",
+    "icon": "navigation::close"
   }
 ]`
 );

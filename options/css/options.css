@@ -427,7 +427,7 @@ input {
 }
 
 .cm_url {
-  width: calc(50% - 50px - 45px - 70px);
+  width: calc(50% - 50px - 45px - 70px - 80px);
   display: inline-block;
 }
 .cm_url > label {
@@ -451,7 +451,7 @@ input {
 }
 
 .cd_url {
-  width: calc(50% - 50px - 45px - 70px);
+  width: calc(50% - 50px - 45px - 70px - 80px);
   display: inline-block;
 }
 .cd_url > label {
@@ -493,7 +493,7 @@ input {
 }
 
 .embedding_url {
-  width: 80px;
+  width: 70px;
   padding-left: 10px;
   display: none;
 }
@@ -505,6 +505,19 @@ input {
   top: 5px;
 }
 
+.displayName_url {
+  width: 90px;
+  padding-left: 10px;
+  display: none;
+}
+.displayName_url > label {
+  float: left !important;
+  position: relative;
+}
+.displayName_url > .scLabel {
+  top: 5px;
+}
+
 @media screen and (max-width: 700px) {
   .lang_url {
     width: 100%;
@@ -512,6 +525,11 @@ input {
     padding-top: 20px;
   }
   .embedding_url {
+    width: 100%;
+    padding-left: 0px;
+    padding-top: 20px;
+  }
+  .displayName_url {
     width: 100%;
     padding-left: 0px;
     padding-top: 20px;

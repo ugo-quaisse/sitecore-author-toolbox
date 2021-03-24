@@ -575,7 +575,7 @@ function goToSubmenu(id, width = 300) {
 // eslint-disable-next-line max-params
 function addSite(optionPage, urlOrigin, sitePath, siteName) {
   //prettier-ignore
-  window.open(optionPage + `?configure_domains=true&launchpad=true&domain=` + urlOrigin + `&site=` + sitePath + `&name=` + siteName);
+  window.open(optionPage + `?configure_domains=true&launchpad=true&domain=${urlOrigin}&site=${sitePath}&name=${siteName}`);
 }
 
 /*

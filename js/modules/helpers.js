@@ -156,7 +156,8 @@ const getScItemData = () => {
 
   for (var tr of dom) {
     tr.cells[0].innerText == "Item ID:" && tr.cells[1].querySelector("input") ? (scItem.id = tr.cells[1].querySelector("input").value.toLowerCase()) : false;
-    tr.cells[0].innerText == "Item name:" && tr.cells[1] ? (scItem.name = tr.cells[1].innerText.toLowerCase()) : false;
+    tr.cells[0].innerText == "Item name:" && tr.cells[1] ? (scItem.name = tr.cells[1].innerText.toLowerCase().split("- display name:")[0]) : false;
+    tr.cells[0].innerText == "Item name:" && tr.cells[1] && tr.cells[1].innerText.toLowerCase().split("- display name:")[1] ? (scItem.displayName = tr.cells[1].innerText.toLowerCase().split("- display name:")[1].trim()) : false;
     tr.cells[0].innerText == "Item path:" && tr.cells[1].querySelector("input") ? (scItem.path = tr.cells[1].querySelector("input").value.toLowerCase()) : false;
     tr.cells[0].innerText == "Item path:" && tr.cells[1].querySelector("input") ? (scItem.pathFull = tr.cells[1].querySelector("input").value.toLowerCase() + `/`) : false;
     tr.cells[0].innerText == "Template:" && tr.cells[1].querySelector("a") ? (scItem.template = tr.cells[1].querySelector("a").innerText.toLowerCase()) : false;
@@ -166,7 +167,6 @@ const getScItemData = () => {
     scItem.language = document.querySelector("#scLanguage") ? document.querySelector("#scLanguage").value.toLowerCase() : "en";
     scItem.version = document.querySelector(".scEditorHeaderVersionsVersion > span") ? document.querySelector(".scEditorHeaderVersionsVersion > span").innerText : "1";
   }
-
   return scItem;
 };
 

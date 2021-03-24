@@ -940,7 +940,7 @@ a.scTileItem:hover {
 }
 
 a.scTileItem .scTileItemPane {
-      transform: translateY(50%);
+  transform: translateY(50%);
 }
 
 a.scTileItem .scTileItemIconImage::before {
@@ -1656,7 +1656,7 @@ body.satExtension .scInstantSearchResults {
   top: 130px;
   position: relative;
   opacity: 0.6;
-} 
+}
 
 .scIconMenu {
   width: 16px;
@@ -2517,4 +2517,8 @@ body.satExtension [data-tooltip].t-left:hover:after {
 
 body.satExtension .sc-flx-global-header {
   z-index: 100;
+}
+
+body.satExtension img[data-sc-id="InfoImage"] {
+  height: auto;
 }

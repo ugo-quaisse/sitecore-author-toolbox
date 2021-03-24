@@ -142,7 +142,7 @@ body.satExperimentalUi .saveMessage {
   transform: translate(-50%, 0);
   transition: all cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.4s;
   box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
-  display: block !important; 
+  display: block !important;
   opacity: 0;
 }
 
@@ -2258,15 +2258,15 @@ body.satExperimentalUi .scTabPage {
 }
 
 body.satExperimentalUi .scTabstrip {
-  padding: 0px;
-  margin: 0px;
-  width: auto;
   height: fit-content;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 5px;
   border: none;
   display: flex;
   overflow-x: scroll;
   overflow-y: auto;
+  width: calc(100% + 30px);
+  margin-left: -15px;
+  padding: 0px 15px;
 }
 
 body.satExperimentalUi .selected.scMenuPanelItem {
@@ -2682,12 +2682,11 @@ body.satExperimentalUi .grid-settings-basic .grid-advanced-tab-header {
   color: var(--text);
 }
 
-
 body.satExperimentalUi .scConditionContainer {
   background-color: var(--accent);
-    color: var(--accentText);
-    border-radius: 50%;
-    padding: 1px 5px;
-    font-size: 10px;
-    font-weight: 600; 
+  color: var(--accentText);
+  border-radius: 50%;
+  padding: 1px 5px;
+  font-size: 10px;
+  font-weight: 600;
 }

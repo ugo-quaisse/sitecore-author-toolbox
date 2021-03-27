@@ -108,7 +108,7 @@ const insertSavebar = () => {
     ? `<button class="scPublishButton primary scExitButton" onclick="javascript:return scForm.invoke('contenteditor:closepreview', event)">Close Panel</button>`
     : `<button id="scPublishMenuMore" class="grouped" type="button"><span class="scPublishMenuMoreArrow">▾</span></button>
           <ul class="scPublishMenu">             
-            <li onclick="javascript:return scForm.invoke('item:setpublishing', event)">Unpublish...</li>
+            <li onclick="javascript:return scForm.invoke('item:setpublishing', event)">Publishing settings...</li>
             <li onclick="javascript:return scForm.postEvent(this,event,'item:publishingviewer(id=)')">Scheduler...</li>
             <li onclick="javascript:return scForm.invoke('item:publishnow', event)">Quick Publish...</li>  
           </ul>

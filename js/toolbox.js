@@ -184,7 +184,6 @@ chrome.storage.sync.get((storage) => {
       initSyntaxHighlighterRte(storage);
     } else if ((global.isContentEditorApp && storage.feature_experimentalui) || (global.isContentEditorApp && storage.feature_instantsearch)) {
       log("**** Content Editor App ****", "orange");
-      //Change logo href target on Desktop mode if
       document.querySelector("#globalLogo") ? document.querySelector("#globalLogo").setAttribute("target", "_parent") : false;
     } else if (global.isSearch) {
       log("**** Internal Search ****", "orange");
@@ -286,7 +285,7 @@ chrome.storage.sync.get((storage) => {
     } else if (global.isDialogEE) {
       log("**** Dialog ****", "orange");
     } else {
-      log("**** Page in EE ****", "orange");
+      log("**** Website preview in EE ****", "orange");
       addToolbarEditCE(storage);
       addToolbarTooltip(storage);
       addPlaceholderTooltip(storage);

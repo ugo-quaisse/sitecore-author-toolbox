@@ -324,10 +324,6 @@ body.satExperimentalUi .scContentButtons {
   margin-left: -5px;
 }
 
-body.satExperimentalUi a.scContentButton {
-  color: var(--accent);
-}
-
 body.satExperimentalUi a.scTileItem:hover {
   background-color: var(--accentTransparent) !important;
   color: var(--accentText) !important;
@@ -1580,6 +1576,10 @@ body.satExperimentalUi a.scContentButton {
   padding: 3px !important;
   border-radius: var(--radius);
   text-decoration: none;
+}
+
+body.satExperimentalUi a.scContentButton:hover {
+  opacity: 0.7;
 }
 
 /* Vertical tab  */

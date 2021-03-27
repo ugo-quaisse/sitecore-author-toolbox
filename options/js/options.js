@@ -40,13 +40,7 @@ document.body.onload = function () {
     document.querySelector("#banner").style.top = "50px";
     document.querySelector("#bannerTitle").style.opacity = "1";
     document.querySelector("#intro").style.marginTop = "50px";
-  }
-
-  if (configureDomains) {
-    document.querySelector("#settings").click();
-  }
-
-  if (!fromLaunchpad) {
+  } else {
     window.addEventListener("scroll", function () {
       if (!ticking) {
         window.requestAnimationFrame(function () {
@@ -56,6 +50,10 @@ document.body.onload = function () {
         ticking = true;
       }
     });
+  }
+
+  if (configureDomains) {
+    document.querySelector("#settings").click();
   }
 };
 
@@ -70,7 +68,6 @@ document.querySelector("#feature_experimentalui").onclick = function () {
     document.querySelector("#feature_material_icons").checked = true;
   }
 };
-
 document.querySelector("#feature_darkmode").onclick = function () {
   if (document.querySelector("#feature_darkmode").checked == false) {
     document.querySelector("#feature_darkmode_auto").disabled = true;

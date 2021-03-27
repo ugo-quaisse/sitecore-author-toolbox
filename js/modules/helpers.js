@@ -16,7 +16,7 @@
 
 import * as global from "./global.js";
 
-export { log, loadCssFile, loadJsFile, exeJsCode, initStorageFeature, getMaterializeIcon, sitecoreItemJson, fetchTimeout, getScItemData, setPlural, setTextColour, repositionElement, startDrag, calcMD5 };
+export { log, loadCssFile, loadJsFile, exeJsCode, initStorageFeature, getMaterializeIcon, sitecoreItemJson, fetchTimeout, getScItemData, setPlural, setTextColour, isFileExists, repositionElement, startDrag, calcMD5 };
 
 /**
  * Show colored log message in console
@@ -235,6 +235,16 @@ const setTextColour = (hex) => {
   const textColour = brightness > 170 ? "#111111" : "#ffffff";
 
   return textColour;
+};
+
+/**
+ * Test if a URL exists
+ */
+const isFileExists = (url) => {
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", url, false);
+  xhr.send();
+  return xhr.status != "404";
 };
 
 /*

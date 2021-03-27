@@ -2,6 +2,8 @@
 /* eslint-disable array-element-newline */
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
+import { isFileExists } from "./helpers.js";
+
 /**
  * Global variables declaration
  */
@@ -116,6 +118,7 @@ export let timeout;
 export const isSitecore = windowLocationHref.includes("/sitecore/");
 export const isSitecoreModule = windowLocationHref.includes("/sitecore%20modules/");
 export const isSitecoreContentHome = windowLocationHref.includes("/sitecore/content/home");
+export const isSitecoreJs = isFileExists(urlOrigin + "/sitecore/shell/controls/sitecore.js");
 export let isPreviewMode = document.querySelector(".pagemode-preview");
 !isPreviewMode ? (isPreviewMode = windowLocationHref.includes("sc_mode=preview")) : false;
 export let isEditMode = document.querySelector(".pagemode-edit, .on-page-editor"); // , #scCrossPiece, .scFrameSideVertical

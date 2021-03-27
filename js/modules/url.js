@@ -106,7 +106,7 @@ const initLiveUrl = (storage) => {
   let scEditorHeaderVersionsLanguage = document.querySelector(".scEditorHeaderVersionsLanguage");
   let scLanguageTxtLong = scEditorHeaderVersionsLanguage ? scEditorHeaderVersionsLanguage.getAttribute("title") : false;
   let badge;
-  let barStyle = !storage.feature_experimentalui && storage.feature_urlstatus ? "scWarning" : "scSuccess";
+  let barStyle = !storage.feature_experimentalui ? "scWarning" : "scSuccess";
   //Live URL
   let ScSite = getSiteUrl(storage, ScItem.pathFull, ScItem.language);
   let alternativeUrl = window.location.origin + "/?sc_itemid=" + ScItem.id + "&sc_mode=normal&sc_lang=" + ScItem.language + "&sc_version=" + ScItem.version;

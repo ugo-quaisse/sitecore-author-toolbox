@@ -45,7 +45,7 @@ chrome.storage.sync.get((storage) => {
    * Sitecore detection *
    **********************
    */
-  if (global.isSitecore && !global.isEditMode && !global.isLoginPage && !global.isCss) {
+  if (global.isSitecore && global.isSitecoreJs && !global.isEditMode && !global.isLoginPage && !global.isCss) {
     log("Sitecore detected", "red");
     document.body ? document.body.classList.add("satExtension") : false;
     loadJsFile("js/inject.js");

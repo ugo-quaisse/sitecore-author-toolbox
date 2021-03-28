@@ -118,7 +118,7 @@ export let timeout;
 export const isSitecore = windowLocationHref.includes("/sitecore/");
 export const isSitecoreModule = windowLocationHref.includes("/sitecore%20modules/");
 export const isSitecoreContentHome = windowLocationHref.includes("/sitecore/content/home");
-export const isSitecoreJs = isFileExists(urlOrigin + "/sitecore/shell/controls/sitecore.js");
+export const isSitecoreJs = isFileExists("/sitecore/shell/");
 export let isPreviewMode = document.querySelector(".pagemode-preview");
 !isPreviewMode ? (isPreviewMode = windowLocationHref.includes("sc_mode=preview")) : false;
 export let isEditMode = document.querySelector(".pagemode-edit, .on-page-editor"); // , #scCrossPiece, .scFrameSideVertical

@@ -238,13 +238,16 @@ const setTextColour = (hex) => {
 };
 
 /**
- * Test if a URL exists
+ * Test if Sitecore.js exists
  */
-const isFileExists = (url) => {
-  let xhr = new XMLHttpRequest();
-  xhr.open("GET", url, false);
-  xhr.send();
-  return xhr.status != "404";
+const isFileExists = (fileName) => {
+  let isFile = false;
+  document.querySelectorAll("script").forEach(function (elem) {
+    if (elem.src.toLowerCase().includes(fileName) && !isFile) {
+      isFile = true;
+    }
+  });
+  return isFile;
 };
 
 /*

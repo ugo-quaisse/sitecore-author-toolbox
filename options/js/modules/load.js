@@ -63,6 +63,7 @@ const parseJsonSites = (json) => {
           key == "languageEmbedding" ? (embedding = value) : false;
           key == "displayName" ? (display = value) : false;
         }
+        console.log(site, display);
         //Default values
         lang = lang == undefined ? "" : lang;
         embedding = embedding == undefined ? true : embedding;
@@ -81,8 +82,13 @@ const parseJsonSites = (json) => {
  * Read uploaded json and populate Dom
  */
 const onReaderLoad = (event) => {
-  var json = JSON.parse(event.target.result);
-  parseJsonSites(json);
+  try {
+    var json = JSON.parse(event.target.result);
+    parseJsonSites(json);
+  } catch (error) {
+    alert("Your Json file is not valid.\n Please check the console for more details");
+    console.error("############ Sitecore Author Toolbox Error ############\n", error, "\n########################################################");
+  }
 };
 
 /**

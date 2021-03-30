@@ -42,7 +42,7 @@ const saveSites = () => {
           //Build object for this domain
           !json[domain] ? (json[domain] = {}) : false;
           //Add site to this domain
-          json[domain][count] = { [key]: value, language: lang, languageEmbedding: embedding, displayName: display };
+          json[domain][count] = { [key]: value, language: lang, languageEmbedding: embedding, useDisplayName: display };
           count++;
           site.querySelector("input[name='key']").setAttribute("style", "border-color:#ccc");
           site.querySelector("input[name='value']").setAttribute("style", "border-color:#ccc");
@@ -100,7 +100,7 @@ const exportSites = () => {
           //Build object for this domain
           !json[domain] ? (json[domain] = {}) : false;
           //Add site to this domain
-          json[domain][count] = { [key]: value, language: lang, languageEmbedding: embedding, displayName: display };
+          json[domain][count] = { [key]: value, language: lang, languageEmbedding: embedding, useDisplayName: display };
           count++;
           site.querySelector("input[name='key']").setAttribute("style", "border-color:#ccc");
           site.querySelector("input[name='value']").setAttribute("style", "border-color:#ccc");

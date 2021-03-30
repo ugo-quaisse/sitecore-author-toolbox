@@ -247,6 +247,11 @@ const isFileExists = (fileName) => {
       isFile = true;
     }
   });
+  document.querySelectorAll("form").forEach(function (elem) {
+    if (elem.action.toLowerCase().includes(fileName) && !isFile) {
+      isFile = true;
+    }
+  });
   return isFile;
 };
 

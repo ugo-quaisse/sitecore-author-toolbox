@@ -61,7 +61,7 @@ const parseJsonSites = (json) => {
         for (var [key, value] of Object.entries(site)) {
           key == "language" ? (lang = value) : false;
           key == "languageEmbedding" ? (embedding = value) : false;
-          key == "displayName" ? (display = value) : false;
+          key == "useDisplayName" ? (display = value) : false;
         }
         console.log(site, display);
         //Default values

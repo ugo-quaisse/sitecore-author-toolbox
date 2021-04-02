@@ -2690,3 +2690,17 @@ body.satExperimentalUi .scConditionContainer {
   font-size: 10px;
   font-weight: 600;
 }
+
+body.satExperimentalUi .container-narrow {
+  overflow: unset;
+}
+
+body.satExperimentalUi .dynatree-node {
+  padding: 3px 0px;
+  display: block;
+  zoom: 1.1;
+}
+
+body.satExperimentalUi .sc-fullWidth {
+  overflow-y: hidden !important;
+}

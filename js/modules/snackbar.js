@@ -67,13 +67,13 @@ const showSnackbarSite = (storage, ScItem) => {
   });
 
   //Show Snackbar
-  if (ScItem.pathFull.includes(`/home/`) && Object.values(existing).indexOf(ScItem.pathFull) === -1 && siteUrl == undefined) {
+  if (ScItem.pathFull.includes(`/home/`) && Object.values(existing).indexOf(siteName[0].toUpperCase()) === -1 && siteUrl == undefined) {
     document.querySelector("body").insertAdjacentHTML("beforeend", html);
     //Add listener on click #sbDismiss
     document.querySelectorAll("#sbDismissSite").forEach(function (elem) {
       elem.addEventListener("click", function () {
         //Create item
-        existing[length++] = ScItem.pathFull;
+        existing[length++] = siteName[0].toUpperCase();
         localStorage.setItem("sbDismissSites", JSON.stringify(existing));
         document.querySelector(".snackbarSite").setAttribute("style", "display: none");
       });

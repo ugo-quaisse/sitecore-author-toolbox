@@ -1102,6 +1102,7 @@ body.satExtension #satFavoritesDrag {
 .satExtension #scWebEditRibbon,
 .satExtension #scCrossPiece {
   transition: all ease-in-out 0.1s !important;
+  z-index: 100000;
 }
 
 .satExtension #scCrossPiece {

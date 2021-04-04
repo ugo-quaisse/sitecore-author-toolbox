@@ -3,6 +3,7 @@
 
 import * as global from "./global.js";
 import { getSiteUrl } from "./url.js";
+import { initStorageFeature } from "./helpers.js";
 
 export { showSnackbar, showSnackbarSite };
 
@@ -43,40 +44,43 @@ const showSnackbar = (storage) => {
  * Show Materialize-style message bar from bottom-right
  */
 const showSnackbarSite = (storage, ScItem) => {
-  //Get SiteName
-  let siteName = ScItem.pathFull.split("/home/")[0].split("/").reverse();
-  let pathToHome = ScItem.pathFull.split("/home/")[0] + "/home/";
+  storage.feature_urls == initStorageFeature(storage.feature_urls, true);
+  if (storage.feature_urls) {
+    //Get SiteName
+    let siteName = ScItem.pathFull.split("/home/")[0].split("/").reverse();
+    let pathToHome = ScItem.pathFull.split("/home/")[0] + "/home/";
 
-  //Get site in userstorage (settings)
-  let ScSite = getSiteUrl(storage, pathToHome, ScItem.language);
-  let siteUrl = ScSite.url;
-  //Get Site in locastorage
-  let existing = localStorage.getItem("sbDismissSites");
-  existing = existing ? JSON.parse(existing) : {};
-  let length = Object.values(existing).length;
+    //Get site in userstorage (settings)
+    let ScSite = getSiteUrl(storage, pathToHome, ScItem.language);
+    let siteUrl = ScSite.url;
+    //Get Site in locastorage
+    let existing = localStorage.getItem("sbDismissSites");
+    existing = existing ? JSON.parse(existing) : {};
+    let length = Object.values(existing).length;
 
-  //Snackbar settings
-  //prettier0ignore
-  let snackbarHtml = `<b>"` + siteName[0].toUpperCase() + `" site detected</b><br /> Are you using a CD server for publishing?<br />Click "Add site" to configure it now.`;
-  //prettier-ignore
-  let html = `<div class="snackbarSite">${snackbarHtml}<button id="sbActionSite" onclick="addSite('${global.launchpadPage}','${global.urlOrigin}','${pathToHome}', '${siteName[0].toUpperCase()}')">ADD&nbsp;SITE</button><button id="sbDismissSite">DISMISS</button></div>`;
+    //Snackbar settings
+    //prettier0ignore
+    let snackbarHtml = `<b>"` + siteName[0].toUpperCase() + `" site detected</b><br /> Are you using a CD server for publishing?<br />Click "Add site" to configure it now.`;
+    //prettier-ignore
+    let html = `<div class="snackbarSite">${snackbarHtml}<button id="sbActionSite" onclick="addSite('${global.launchpadPage}','${global.urlOrigin}','${pathToHome}', '${siteName[0].toUpperCase()}')">ADD&nbsp;SITE</button><button id="sbDismissSite">DISMISS</button></div>`;
 
-  //Hide previous snackbar
-  document.querySelectorAll(".snackbarSite").forEach((div) => {
-    div.remove();
-  });
-
-  //Show Snackbar
-  if (ScItem.pathFull.includes(`/home/`) && Object.values(existing).indexOf(siteName[0].toUpperCase()) === -1 && siteUrl == undefined) {
-    document.querySelector("body").insertAdjacentHTML("beforeend", html);
-    //Add listener on click #sbDismiss
-    document.querySelectorAll("#sbDismissSite").forEach(function (elem) {
-      elem.addEventListener("click", function () {
-        //Create item
-        existing[length++] = siteName[0].toUpperCase();
-        localStorage.setItem("sbDismissSites", JSON.stringify(existing));
-        document.querySelector(".snackbarSite").setAttribute("style", "display: none");
-      });
+    //Hide previous snackbar
+    document.querySelectorAll(".snackbarSite").forEach((div) => {
+      div.remove();
     });
+
+    //Show Snackbar
+    if (ScItem.pathFull.includes(`/home/`) && Object.values(existing).indexOf(siteName[0].toUpperCase()) === -1 && siteUrl == undefined) {
+      document.querySelector("body").insertAdjacentHTML("beforeend", html);
+      //Add listener on click #sbDismiss
+      document.querySelectorAll("#sbDismissSite").forEach(function (elem) {
+        elem.addEventListener("click", function () {
+          //Create item
+          existing[length++] = siteName[0].toUpperCase();
+          localStorage.setItem("sbDismissSites", JSON.stringify(existing));
+          document.querySelector(".snackbarSite").setAttribute("style", "display: none");
+        });
+      });
+    }
   }
 };

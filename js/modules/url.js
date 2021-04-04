@@ -4,7 +4,7 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
-import { getScItemData, log } from "./helpers.js";
+import { getScItemData, log, initStorageFeature } from "./helpers.js";
 
 export { getSiteUrl, initLiveUrl, checkUrlStatus };
 
@@ -12,7 +12,7 @@ export { getSiteUrl, initLiveUrl, checkUrlStatus };
  * Find and Match site URL with user settings in storage
  */
 const getSiteUrl = (storage, path, language) => {
-  storage.site_manager == undefined ? (storage.site_manager = true) : false;
+  storage.site_manager == initStorageFeature(storage.site_manager, true);
   //Get SiteName
   let homePath = path.split("/home/")[0] + "/home/";
   let liveUrl;

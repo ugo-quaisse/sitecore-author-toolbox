@@ -21,45 +21,20 @@ const getSiteUrl = (storage, path, language) => {
   let scSite = {};
 
   //Site Manager - Test 1: attemp with language specific site
-  for (var [domain, values] of Object.entries(storage.site_manager)) {
-    if (domain == global.urlOrigin) {
-      // eslint-disable-next-line no-unused-vars
-      for (var [id, site] of Object.entries(values)) {
-        for (var [key, value] of Object.entries(site)) {
-          key == "language" ? (siteLanguage = value) : false;
-          key == "languageEmbedding" ? (siteLanguageEmbedding = value) : false;
-          key == "displayName" ? (siteDisplayName = value) : false;
-        }
-        let siteStorage = Object.entries(site)[0][0].slice(-1) != "/" ? Object.entries(site)[0][0] + "/" : Object.entries(site)[0][0];
-        if (siteLanguage == language && siteStorage.toLowerCase() == homePath.toLowerCase()) {
-          liveUrl = Object.entries(site)[0][1].slice(-1) == "/" ? decodeURI(Object.entries(site)[0][1].slice(0, -1)) : decodeURI(Object.entries(site)[0][1]);
-          liveUrlLanguageSpecific = true;
-          //Fill scSite object
-          scSite.path = siteStorage.toLowerCase();
-          scSite.url = liveUrl.toLowerCase();
-          scSite.language = siteLanguage.toLowerCase();
-          scSite.languageEmbedding = siteLanguageEmbedding;
-          scSite.displayName = siteDisplayName;
-          break;
-        }
-      }
-    }
-  }
-
-  //Site Manager - Test 2: attemp without language specific site
-  if (!liveUrlLanguageSpecific) {
-    for ([domain, values] of Object.entries(storage.site_manager)) {
+  if (storage.site_manager) {
+    for (var [domain, values] of Object.entries(storage.site_manager)) {
       if (domain == global.urlOrigin) {
         // eslint-disable-next-line no-unused-vars
-        for ([id, site] of Object.entries(values)) {
-          for ([key, value] of Object.entries(site)) {
+        for (var [id, site] of Object.entries(values)) {
+          for (var [key, value] of Object.entries(site)) {
             key == "language" ? (siteLanguage = value) : false;
             key == "languageEmbedding" ? (siteLanguageEmbedding = value) : false;
             key == "displayName" ? (siteDisplayName = value) : false;
           }
           let siteStorage = Object.entries(site)[0][0].slice(-1) != "/" ? Object.entries(site)[0][0] + "/" : Object.entries(site)[0][0];
-          if (siteLanguage == "" && siteStorage.toLowerCase() == homePath.toLowerCase()) {
+          if (siteLanguage == language && siteStorage.toLowerCase() == homePath.toLowerCase()) {
             liveUrl = Object.entries(site)[0][1].slice(-1) == "/" ? decodeURI(Object.entries(site)[0][1].slice(0, -1)) : decodeURI(Object.entries(site)[0][1]);
+            liveUrlLanguageSpecific = true;
             //Fill scSite object
             scSite.path = siteStorage.toLowerCase();
             scSite.url = liveUrl.toLowerCase();
@@ -71,8 +46,34 @@ const getSiteUrl = (storage, path, language) => {
         }
       }
     }
-  }
 
+    //Site Manager - Test 2: attemp without language specific site
+    if (!liveUrlLanguageSpecific) {
+      for ([domain, values] of Object.entries(storage.site_manager)) {
+        if (domain == global.urlOrigin) {
+          // eslint-disable-next-line no-unused-vars
+          for ([id, site] of Object.entries(values)) {
+            for ([key, value] of Object.entries(site)) {
+              key == "language" ? (siteLanguage = value) : false;
+              key == "languageEmbedding" ? (siteLanguageEmbedding = value) : false;
+              key == "displayName" ? (siteDisplayName = value) : false;
+            }
+            let siteStorage = Object.entries(site)[0][0].slice(-1) != "/" ? Object.entries(site)[0][0] + "/" : Object.entries(site)[0][0];
+            if (siteLanguage == "" && siteStorage.toLowerCase() == homePath.toLowerCase()) {
+              liveUrl = Object.entries(site)[0][1].slice(-1) == "/" ? decodeURI(Object.entries(site)[0][1].slice(0, -1)) : decodeURI(Object.entries(site)[0][1]);
+              //Fill scSite object
+              scSite.path = siteStorage.toLowerCase();
+              scSite.url = liveUrl.toLowerCase();
+              scSite.language = siteLanguage.toLowerCase();
+              scSite.languageEmbedding = siteLanguageEmbedding;
+              scSite.displayName = siteDisplayName;
+              break;
+            }
+          }
+        }
+      }
+    }
+  }
   //Domain Manager (Deprecated)
   if (liveUrl == false) {
     for (domain in storage.domain_manager) {

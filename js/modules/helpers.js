@@ -106,8 +106,8 @@ const exeJsCode = (code) => {
  * Check if the feature has a default value
  */
 const initStorageFeature = (featureName, ifUnderfined) => {
-  featureName = featureName === undefined ? ifUnderfined : featureName;
-  return featureName;
+  let newFeatureName = featureName === undefined ? ifUnderfined : featureName;
+  return newFeatureName;
 };
 
 /**

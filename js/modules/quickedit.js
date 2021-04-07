@@ -87,8 +87,8 @@ const launchEditUrl = (action, tabInfo) => {
         chrome.storage.sync.get(["site_manager"], async (storage) => {
             var cdUrl = new URL(tabInfo.url);
             var siteInfo = getSiteInfo(storage.site_manager, cdUrl.origin);
-            var cmUrl = siteInfo.cmUrl;
-            if (cmUrl) {
+            if (siteInfo) {
+                var cmUrl = siteInfo.cmUrl;
                 switch (action) {
                     case "editInExperienceEditor":
                         var experienceEditorUrl = getEditUrl(cmUrl, cdUrl.pathname, siteInfo.siteName);

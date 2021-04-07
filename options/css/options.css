@@ -451,7 +451,7 @@ input {
 }
 
 .cd_url {
-  width: calc(50% - 50px - 45px - 70px - 80px);
+  width: calc(45% - 50px - 45px - 70px - 80px);
   display: inline-block;
 }
 .cd_url > label {

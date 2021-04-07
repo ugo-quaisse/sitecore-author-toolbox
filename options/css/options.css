@@ -165,7 +165,7 @@ label:hover {
 }
 .sitesSettings {
   padding: 0px 5px;
-  margin: 0px;
+  margin: 0px 5px;
   font-size: 10px;
   background: #f7991f !important;
   text-decoration: none;
@@ -538,7 +538,8 @@ input {
 
 input[name="key"],
 input[name="value"],
-input[name="lang"] {
+input[name="lang"],
+input[name="siteName"] {
   background-color: #f0f0f0;
   border-width: 2px;
   font-size: 13px;
@@ -548,14 +549,16 @@ input[name="lang"] {
 }
 input[name="key"]:focus,
 input[name="value"]:focus,
-input[name="lang"]:focus {
+input[name="lang"]:focus,
+input[name="siteName"]:focus {
   color: #000;
   border-color: #4793f8;
 }
 
 input[name="key"]::placeholder,
 input[name="value"]::placeholder,
-input[name="lang"]::placeholder {
+input[name="lang"]::placeholder,
+input[name="siteName"]::placeholder {
   color: #ccc;
 }
 .site label {

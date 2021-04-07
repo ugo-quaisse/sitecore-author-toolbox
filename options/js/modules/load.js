@@ -35,6 +35,7 @@ const getFeatures = () => {
     toggleFeature(storage.feature_messagebar, "#feature_messagebar", false);
     toggleFeature(storage.feature_workbox, "#feature_workbox", false);
     toggleFeature(storage.feature_contextmenu, "#feature_contextmenu", true);
+    toggleFeature(storage.feature_editcommands, "#feature_editcommands", true);
     toggleFeature(storage.feature_gravatarimage, "#feature_gravatarimage", true);
     toggleFeature(storage.feature_lockeditems, "#feature_lockeditems", false);
     toggleFeature(storage.feature_helplink, "#feature_helplink", false);
@@ -55,11 +56,12 @@ const parseJsonSites = (json) => {
   // console.log(json);
   for (var [domain, values] of Object.entries(json)) {
     let domainId = addDomain("", domain, true);
-    let lang, embedding, display;
+    let lang, siteName, embedding, display;
     for (var [id, site] of Object.entries(values)) {
       try {
         for (var [key, value] of Object.entries(site)) {
           key == "language" ? (lang = value) : false;
+          key == "siteName" ? (siteName = value) : "";
           key == "languageEmbedding" ? (embedding = value) : false;
           key == "useDisplayName" ? (display = value) : false;
         }
@@ -69,7 +71,7 @@ const parseJsonSites = (json) => {
         embedding = embedding == undefined ? true : embedding;
         display = display == undefined ? false : display;
         //Add site
-        addSite(domainId, Object.entries(site)[0][0], Object.entries(site)[0][1], lang, embedding, display, false, "", true);
+        addSite(domainId, Object.entries(site)[0][0], Object.entries(site)[0][1], lang, embedding, display, false, "", true, siteName);
       } catch (e) {
         console.warn(e);
         addSite(domainId, Object.entries(site)[0][0], Object.entries(site)[0][1], "", true, false, false, "", true);

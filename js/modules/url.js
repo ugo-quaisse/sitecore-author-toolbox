@@ -12,7 +12,6 @@ export { getSiteUrl, initLiveUrl, checkUrlStatus };
  * Find and Match site URL from user's storage
  */
 const getSiteUrl = (storage, path, language) => {
-
   storage.site_manager == initStorageFeature(storage.site_manager, true);
 
   //Initialisation
@@ -108,7 +107,7 @@ const getHomePath = (itemPath) => {
   if (itemPath.includes(homeFolder)) {
     return itemPath.split(homeFolder)[0] + homeFolder;
   }
-  const itemPathTrailingSlashesTrimmed = itemPath.replace(/\/$/, "");
+  const itemPathTrailingSlashesTrimmed = trimTrailingSlash(itemPath);
 
   if (!itemPathTrailingSlashesTrimmed.includes("/")) {
     return itemPath;
@@ -168,9 +167,11 @@ const initLiveUrl = (storage) => {
           //Language embedding disabled
           ScSite.languageEmbedding == false ? (ScSite.url = ScSite.url.replace("/" + ScItem.language + "/", "/")) : false;
           //Display name enabled
-          let split = ScSite.url.split("/");
-          let requiredPath = split.slice(0, ScSite.url.split("/").length - 2).join("/") + "/";
-          ScSite.displayName == true && ScItem.displayName != undefined ? (ScSite.url = requiredPath + ScItem.displayName) : false;
+          if (ScSite.displayName && ScItem.displayName) {
+            const split = trimTrailingSlash(ScSite.url).split("/");
+            const requiredPath = split.slice(0, split.length - 1).join("/") + "/";
+            ScSite.url = requiredPath + ScItem.displayName;
+          }
           //Alternative URL
           alternativeUrl = ``;
         }
@@ -251,7 +252,7 @@ const pathFromHome = (itemPath) => {
     return sitecorePath;
   }
 
-  const itemPathTrailingSlashesTrimmed = itemPath.replace(/\/$/, "");
+  const itemPathTrailingSlashesTrimmed = trimTrailingSlash(itemPath);
 
   if (!itemPathTrailingSlashesTrimmed.includes("/")) {
     return itemPath;
@@ -259,6 +260,10 @@ const pathFromHome = (itemPath) => {
 
   const lastOccurrenceOfSlash = itemPathTrailingSlashesTrimmed.lastIndexOf("/") + 1;
   return itemPathTrailingSlashesTrimmed.substring(lastOccurrenceOfSlash);
+};
+
+const trimTrailingSlash = (path) => {
+  return path.replace(/\/$/, "");
 };
 
 /**

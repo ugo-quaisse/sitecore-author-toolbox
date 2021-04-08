@@ -9,11 +9,12 @@ import { getScItemData, log, initStorageFeature } from "./helpers.js";
 export { getSiteUrl, initLiveUrl, checkUrlStatus };
 
 /**
- * Find and Match site URL with user settings in storage
+ * Find and Match site URL from user's storage
  */
 const getSiteUrl = (storage, path, language) => {
   storage.site_manager == initStorageFeature(storage.site_manager, true);
-  //Get SiteName
+
+  //Initialisation
   let homePath = path.split("/home/")[0] + "/home/";
   let liveUrl;
   let liveUrlLanguageSpecific = false;
@@ -29,7 +30,7 @@ const getSiteUrl = (storage, path, language) => {
           for (var [key, value] of Object.entries(site)) {
             key == "language" ? (siteLanguage = value) : false;
             key == "languageEmbedding" ? (siteLanguageEmbedding = value) : false;
-            key == "displayName" ? (siteDisplayName = value) : false;
+            key == "useDisplayName" ? (siteDisplayName = value) : false;
           }
           let siteStorage = Object.entries(site)[0][0].slice(-1) != "/" ? Object.entries(site)[0][0] + "/" : Object.entries(site)[0][0];
           if (siteLanguage == language && siteStorage.toLowerCase() == homePath.toLowerCase()) {
@@ -56,7 +57,7 @@ const getSiteUrl = (storage, path, language) => {
             for ([key, value] of Object.entries(site)) {
               key == "language" ? (siteLanguage = value) : false;
               key == "languageEmbedding" ? (siteLanguageEmbedding = value) : false;
-              key == "displayName" ? (siteDisplayName = value) : false;
+              key == "useDisplayName" ? (siteDisplayName = value) : false;
             }
             let siteStorage = Object.entries(site)[0][0].slice(-1) != "/" ? Object.entries(site)[0][0] + "/" : Object.entries(site)[0][0];
             if (siteLanguage == "" && siteStorage.toLowerCase() == homePath.toLowerCase()) {

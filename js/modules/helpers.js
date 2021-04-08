@@ -50,8 +50,8 @@ const log = (message, color = "yellow") => {
       break;
 
     case "purple":
-      bgColor = "#32ed74";
-      txtColor = "black";
+      bgColor = "#9425EF";
+      txtColor = "white";
       fontSize = "10px";
       break;
 
@@ -62,7 +62,7 @@ const log = (message, color = "yellow") => {
       break;
 
     default:
-      bgColor = "#ffce42";
+      bgColor = "#cccccc";
       txtColor = "black";
       fontSize = "14px";
       break;

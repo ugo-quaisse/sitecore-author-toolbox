@@ -257,6 +257,7 @@ const showSitecoreRibbon = () => {
 };
 
 const showSitecoreRibbonEE = () => {
+  //let ribbon = document.querySelector("div[data-sc-id='PageEditBar']");
   document.querySelector("[data-sc-id='QuickRibbon']").click();
   if (document.querySelector("[data-sc-id='QuickRibbon'] > div").classList.contains("navigate_down")) {
     document.querySelector("#scSitecoreRibbon").classList.remove("scSitecoreRibbon");

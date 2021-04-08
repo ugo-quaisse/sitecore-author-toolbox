@@ -396,6 +396,21 @@ body.satEEExperimentalUi .sc-breadcrumb-item-path > img {
   height: 16px;
 }
 
+body.satEEExperimentalUi .c-mask.is-active {
+  opacity: 0;
+}
+
+body.satEEExperimentalUi .c-menu {
+  margin-bottom: 0px;
+  background-color: var(--experimentalBackground);
+  z-index: 100001;
+}
+
+body.satEEExperimentalUi .scGalleryFrame {
+  border-width: 0px;
+  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 /* Dark Mode */
 body.satEEDark .scEditableTab,
 body.satEEDark .scContentEditorTab,

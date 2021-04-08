@@ -9,7 +9,7 @@ export { initAutoExpandTree, initTreeGutterTooltips };
  * Auto Expand Tree
  */
 const initAutoExpandTree = (storage) => {
-  storage.feature_autoexpand = initStorageFeature(storage.feature_autoexpand, true);
+  storage.feature_autoexpand = initStorageFeature(storage.feature_autoexpand, false);
   storage.feature_autoexpandcount = initStorageFeature(storage.feature_autoexpandcount, true);
 
   if (storage.feature_autoexpand && document.querySelector(".scContentTree")) {

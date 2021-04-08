@@ -180,6 +180,7 @@ export const isSecurityDetails = windowLocationHref.includes("securitydetails.as
 export const isEditorFolder = windowLocationHref.includes("editors.folder.aspx");
 export const isRibbon = windowLocationHref.includes("/ribbon.aspx");
 export const isDialogEE = windowLocationHref.includes("/experienceeditor/dialogs/");
+export const isNavigationTree = windowLocationHref.includes("/experienceeditor/pages/navigationtreeview");
 export const isInsertPage = windowLocationHref.includes("/dialogs/insertpage");
 export const isDialog = windowLocationHref.includes("/dialogs/");
 export const isUserOptions = windowLocationHref.includes("changeuseroptions");

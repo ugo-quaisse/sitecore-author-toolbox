@@ -204,18 +204,18 @@ chrome.runtime.setUninstallURL("https://uquaisse.io/sitecore-cms/uninstallation-
 // When the extension is installed or upgraded ...
 chrome.runtime.onInstalled.addListener(function (details) {
   let thisVersion = chrome.runtime.getManifest().version;
-  let versionInfo = thisVersion.split(".");
+  // let versionInfo = thisVersion.split(".");
 
-  let versionNumber = versionInfo[0];
-  let versionRelease = versionInfo[1];
-  let versionIncrement = versionInfo[2];
+  // let versionNumber = versionInfo[0];
+  // let versionRelease = versionInfo[1];
+  // let versionIncrement = versionInfo[2];
 
-  let extinformation = [
-    ["Extension", thisVersion],
-    ["Major", versionNumber],
-    ["Minor", versionRelease],
-    ["Increment", versionIncrement],
-  ];
+  // let extinformation = [
+  //   ["Extension", thisVersion],
+  //   ["Major", versionNumber],
+  //   ["Minor", versionRelease],
+  //   ["Increment", versionIncrement],
+  // ];
 
   // chrome.storage.sync.get((e) => {
   //   console.table(e);

@@ -16,7 +16,7 @@ import { enhancedTreeSearch } from "./search.js";
 import { initTranslateMode } from "./translate.js";
 import { showSnackbarSite } from "./snackbar.js";
 
-export { sitecoreAuthorToolbox, initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, refreshContentEditor, openFolderTab, contentTreeScrollTo, keyEventListeners };
+export { sitecoreAuthorToolbox, initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, refreshContentEditor, openFolderTab, contentTreeScrollTo, keyEventListeners, resetContentEditor };
 
 /*
  * Main function executed when the Content Editor refreshes
@@ -540,4 +540,11 @@ const keyEventListeners = () => {
     },
     false
   );
+};
+
+/*
+ * Reset Content Editor Opacity
+ */
+const resetContentEditor = () => {
+  document.querySelector("form[action*='/sitecore/']:not(#LoginForm)").setAttribute("style", "filter:opacity(1)");
 };

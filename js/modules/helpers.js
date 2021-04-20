@@ -248,7 +248,8 @@ const isFileExists = (fileName) => {
     }
   });
   document.querySelectorAll("form").forEach(function (elem) {
-    if (elem.action.toLowerCase().includes(fileName) && !isFile) {
+    let action = elem.action.toString().toLowerCase();
+    if (action && action.includes(fileName) && !isFile) {
       isFile = true;
     }
   });

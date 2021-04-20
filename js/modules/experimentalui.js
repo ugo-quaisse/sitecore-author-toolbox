@@ -422,8 +422,7 @@ const setInsertIcon = (treeNode) => {
   });
   //Add Insert Icon
   //prettier-ignore
-  a.insertAdjacentHTML("afterend", `<span id="scIcon` + id + `" class="scInsertItemIcon ` + activeClass + ` t-left t-sm" data-tooltip="Insert" onclick="insertPage('` + id + `', '` + itemName + `')"></span>`
-  );
+  a.insertAdjacentHTML("afterend", `<span id="scIcon${id}" class="scInsertItemIcon ${activeClass} t-left t-sm" data-tooltip="Insert" onclick="insertPage('${id}', '${itemName}')"></span>`);
   let target = document.querySelector("#scIcon" + id);
   target ? target.setAttribute("style", "opacity:1") : false;
 
@@ -443,7 +442,7 @@ const setInsertIcon = (treeNode) => {
   });
   //Add Edit icon
   //prettier-ignore
-  a.insertAdjacentHTML("afterend", `<span id="scIconEE` + id + `" class="scEditItemIcon ` + activeClass + ` t-left t-sm" data-tooltip="Edit in Experience Editor" onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor(id={` +
+  a.insertAdjacentHTML("afterend", `<span id="scIconEE${id}" class="scEditItemIcon ${activeClass} t-left t-sm" data-tooltip="Edit in Experience Editor" onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor(id={` +
         id.replace(
         // eslint-disable-next-line prefer-named-capture-group
         /([0-z]{8})([0-z]{4})([0-z]{4})([0-z]{4})([0-z]{12})/u,
@@ -475,6 +474,8 @@ const initInsertIcon = (storage) => {
       if (event.path[1].classList.contains("scContentTreeNodeNormal") || event.path[1].classList.contains("scContentTreeNodeActive")) {
         setInsertIcon(event.path[1].getAttribute("id"));
         node = event.path[1];
+        nodeContent = node.querySelector("span").innerText;
+        node.setAttribute("title", nodeContent);
       }
       if (event.path[2].classList.contains("scContentTreeNodeNormal") || event.path[2].classList.contains("scContentTreeNodeActive")) {
         setInsertIcon(event.path[2].getAttribute("id"));

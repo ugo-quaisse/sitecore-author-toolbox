@@ -546,5 +546,6 @@ const keyEventListeners = () => {
  * Reset Content Editor Opacity
  */
 const resetContentEditor = () => {
-  document.querySelector("form[action*='/sitecore/']:not(#LoginForm)").setAttribute("style", "filter:opacity(1)");
+  let sitecoreForm = document.querySelector("form[action*='/sitecore/']:not(#LoginForm)");
+  sitecoreForm ? sitecoreForm.setAttribute("style", "filter:opacity(1)") : false;
 };

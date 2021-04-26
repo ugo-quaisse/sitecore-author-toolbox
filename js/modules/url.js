@@ -248,7 +248,10 @@ const pathFromHome = (itemPath) => {
 
   if (itemPath.includes(homeFolder)) {
     const pathParts = itemPath.toLowerCase().split(homeFolder);
-    const sitecorePath = pathParts[1] == undefined ? "" : pathParts[1];
+
+    // handle multiple "home" nodes in the path by joining them
+    const sitecorePath = pathParts[1] == undefined ? "" : pathParts.slice(1).join(homeFolder);
+    
     return sitecorePath;
   }
 

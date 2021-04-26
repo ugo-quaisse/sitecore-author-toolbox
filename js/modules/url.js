@@ -250,9 +250,7 @@ const pathFromHome = (itemPath) => {
     const pathParts = itemPath.toLowerCase().split(homeFolder);
 
     // handle multiple "home" nodes in the path by joining them
-    const sitecorePath = pathParts[1] == undefined ? "" : pathParts.slice(1).join(homeFolder);
-    
-    return sitecorePath;
+    return pathParts[1] == undefined ? "" : pathParts.slice(1).join(homeFolder);
   }
 
   const itemPathTrailingSlashesTrimmed = trimTrailingSlash(itemPath);

@@ -247,9 +247,9 @@ const pathFromHome = (itemPath) => {
 
   if (itemPath.includes(homeFolder)) {
     const pathParts = itemPath.toLowerCase().split(homeFolder);
-    const sitecorePath = pathParts[1] == undefined ? "" : pathParts[1];
 
-    return sitecorePath;
+    // handle multiple "home" nodes in the path by joining them
+    return pathParts[1] == undefined ? "" : pathParts.slice(1).join(homeFolder);
   }
 
   const itemPathTrailingSlashesTrimmed = trimTrailingSlash(itemPath);

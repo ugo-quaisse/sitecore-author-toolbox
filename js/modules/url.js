@@ -4,7 +4,7 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
-import { getScItemData, log, initStorageFeature } from "./helpers.js";
+import { getScItemData, log, initStorageFeature, trimTrailingSlash } from "./helpers.js";
 
 export { getSiteUrl, initLiveUrl, checkUrlStatus };
 
@@ -16,7 +16,6 @@ const getSiteUrl = (storage, path, language) => {
 
   //Initialisation
   const homePath = getHomePath(path);
-
   let liveUrl;
   let liveUrlLanguageSpecific = false;
   let siteLanguage, siteLanguageEmbedding, siteDisplayName;
@@ -103,17 +102,17 @@ const getSiteUrl = (storage, path, language) => {
  */
 const getHomePath = (itemPath) => {
   const homeFolder = "/home/";
-
   if (itemPath.includes(homeFolder)) {
     return itemPath.split(homeFolder)[0] + homeFolder;
   }
-  const itemPathTrailingSlashesTrimmed = trimTrailingSlash(itemPath);
 
+  const itemPathTrailingSlashesTrimmed = trimTrailingSlash(itemPath);
   if (!itemPathTrailingSlashesTrimmed.includes("/")) {
     return itemPath;
   }
 
   const lastOccurrenceOfSlash = itemPathTrailingSlashesTrimmed.lastIndexOf("/");
+
   return itemPathTrailingSlashesTrimmed.substring(0, lastOccurrenceOfSlash) + "/";
 };
 
@@ -249,6 +248,7 @@ const pathFromHome = (itemPath) => {
   if (itemPath.includes(homeFolder)) {
     const pathParts = itemPath.toLowerCase().split(homeFolder);
     const sitecorePath = pathParts[1] == undefined ? "" : pathParts[1];
+
     return sitecorePath;
   }
 
@@ -259,11 +259,8 @@ const pathFromHome = (itemPath) => {
   }
 
   const lastOccurrenceOfSlash = itemPathTrailingSlashesTrimmed.lastIndexOf("/") + 1;
-  return itemPathTrailingSlashesTrimmed.substring(lastOccurrenceOfSlash);
-};
 
-const trimTrailingSlash = (path) => {
-  return path.replace(/\/$/, "");
+  return itemPathTrailingSlashesTrimmed.substring(lastOccurrenceOfSlash);
 };
 
 /**

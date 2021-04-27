@@ -16,7 +16,7 @@
 
 import * as global from "./global.js";
 
-export { log, loadCssFile, loadJsFile, exeJsCode, initStorageFeature, getMaterializeIcon, sitecoreItemJson, fetchTimeout, getScItemData, setPlural, setTextColour, isFileExists, repositionElement, startDrag, calcMD5 };
+export { log, loadCssFile, loadJsFile, exeJsCode, initStorageFeature, getMaterializeIcon, sitecoreItemJson, fetchTimeout, getScItemData, setPlural, setTextColour, isFileExists, trimTrailingSlash, repositionElement, startDrag, calcMD5 };
 
 /**
  * Show colored log message in console
@@ -254,6 +254,11 @@ const isFileExists = (fileName) => {
   });
   return isFile;
 };
+
+/**
+ * Remove trailing slashes
+ */
+const trimTrailingSlash = (path) => path.replace(/\/$/u, "");
 
 /*
  * A JavaScript implementation of the RSA Data Security, Inc. MD5 Message

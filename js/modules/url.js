@@ -4,7 +4,7 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
-import { getScItemData, log, initStorageFeature } from "./helpers.js";
+import { getScItemData, log, initStorageFeature, trimTrailingSlash } from "./helpers.js";
 
 export { getSiteUrl, initLiveUrl, checkUrlStatus };
 
@@ -15,7 +15,7 @@ const getSiteUrl = (storage, path, language) => {
   storage.site_manager == initStorageFeature(storage.site_manager, true);
 
   //Initialisation
-  let homePath = path.split("/home/")[0] + "/home/";
+  const homePath = getHomePath(path);
   let liveUrl;
   let liveUrlLanguageSpecific = false;
   let siteLanguage, siteLanguageEmbedding, siteDisplayName;
@@ -95,6 +95,28 @@ const getSiteUrl = (storage, path, language) => {
 };
 
 /**
+ * Get the path to compare with values from site configuration
+ *
+ * Sensible Sitecore set ups will have all their pages under a home node
+ * When not using the home node return the parent to allow custom configuration for specific children
+ */
+const getHomePath = (itemPath) => {
+  const homeFolder = "/home/";
+  if (itemPath.includes(homeFolder)) {
+    return itemPath.split(homeFolder)[0] + homeFolder;
+  }
+
+  const itemPathTrailingSlashesTrimmed = trimTrailingSlash(itemPath);
+  if (!itemPathTrailingSlashesTrimmed.includes("/")) {
+    return itemPath;
+  }
+
+  const lastOccurrenceOfSlash = itemPathTrailingSlashesTrimmed.lastIndexOf("/");
+
+  return itemPathTrailingSlashesTrimmed.substring(0, lastOccurrenceOfSlash) + "/";
+};
+
+/**
  * Show live URL of a page
  */
 const initLiveUrl = (storage) => {
@@ -113,8 +135,7 @@ const initLiveUrl = (storage) => {
   let ScSite = getSiteUrl(storage, ScItem.pathFull, ScItem.language);
   let alternativeUrl = window.location.origin + "/?sc_itemid=" + ScItem.id + "&sc_mode=normal&sc_lang=" + ScItem.language + "&sc_version=" + ScItem.version;
   //Path
-  let temp = ScItem.pathFull.toLowerCase().split("/home/");
-  let sitecorePath = temp[1] == undefined ? "" : temp[1];
+  let sitecorePath = pathFromHome(ScItem.pathFull);
   //Template type
   let isContent = ScItem.pathFull.includes("/sitecore/content/");
   let isMedia = ScItem.pathFull.includes("/sitecore/media library/");
@@ -145,9 +166,11 @@ const initLiveUrl = (storage) => {
           //Language embedding disabled
           ScSite.languageEmbedding == false ? (ScSite.url = ScSite.url.replace("/" + ScItem.language + "/", "/")) : false;
           //Display name enabled
-          let split = ScSite.url.split("/");
-          let requiredPath = split.slice(0, ScSite.url.split("/").length - 2).join("/") + "/";
-          ScSite.displayName == true && ScItem.displayName != undefined ? (ScSite.url = requiredPath + ScItem.displayName) : false;
+          if (ScSite.displayName && ScItem.displayName) {
+            const split = trimTrailingSlash(ScSite.url).split("/");
+            const requiredPath = split.slice(0, split.length - 1).join("/") + "/";
+            ScSite.url = requiredPath + ScItem.displayName;
+          }
           //Alternative URL
           alternativeUrl = ``;
         }
@@ -217,6 +240,27 @@ const initLiveUrl = (storage) => {
       }); // End cookie
     }
   }
+};
+
+const pathFromHome = (itemPath) => {
+  const homeFolder = "/home/";
+
+  if (itemPath.includes(homeFolder)) {
+    const pathParts = itemPath.toLowerCase().split(homeFolder);
+
+    // handle multiple "home" nodes in the path by joining them
+    return pathParts[1] == undefined ? "" : pathParts.slice(1).join(homeFolder);
+  }
+
+  const itemPathTrailingSlashesTrimmed = trimTrailingSlash(itemPath);
+
+  if (!itemPathTrailingSlashesTrimmed.includes("/")) {
+    return itemPath;
+  }
+
+  const lastOccurrenceOfSlash = itemPathTrailingSlashesTrimmed.lastIndexOf("/") + 1;
+
+  return itemPathTrailingSlashesTrimmed.substring(lastOccurrenceOfSlash);
 };
 
 /**

@@ -1,6 +1,7 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
+import { initStorageFeature } from "./helpers.js";
 
 export { addHelptextIcons, checkHelpLink, checkUrlType, checkIconType };
 
@@ -66,7 +67,7 @@ const checkUrlType = (host) => {
  */
 // eslint-disable-next-line max-params
 const checkHelpLink = (item, language, version, storage) => {
-  storage.feature_helplink == undefined ? (storage.feature_helplink = true) : false;
+  storage.feature_helplink = initStorageFeature(storage.feature_helplink, false);
   if (storage.feature_helplink) {
     if (item) {
       let itemUrl = `sitecore/shell/default.aspx?xmlcontrol=SetHelp&id=${item}&la=${language}&vs=${version}`;

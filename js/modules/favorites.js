@@ -1,12 +1,12 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
 import * as global from "./global.js";
-import { getScItemData } from "./helpers.js";
+import { getScItemData, initStorageFeature } from "./helpers.js";
 
 export { initFavorites };
 
 const initFavorites = (storage) => {
-  storage.feature_favorites == undefined ? (storage.feature_favorites = false) : false;
+  storage.feature_favorites = initStorageFeature(storage.feature_favorites, false);
   if (storage.feature_favorites && !global.isPublishWindow && global.scContentTree) {
     let scFavoritesIframe = document.querySelector("#satFavorites");
     scFavoritesIframe ? scFavoritesIframe.remove() : false;

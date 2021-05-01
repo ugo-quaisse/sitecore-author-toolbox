@@ -121,8 +121,8 @@ const getHomePath = (itemPath) => {
  */
 const initLiveUrl = (storage) => {
   //Get user preference
-  storage.feature_urls == undefined ? (storage.feature_urls = true) : false;
-  storage.feature_urlstatus == undefined ? (storage.feature_urlstatus = true) : false;
+  storage.feature_urls = initStorageFeature(storage.feature_urls, true);
+  storage.feature_urlstatus = initStorageFeature(storage.feature_urlstatus, false);
   //Variables
   let ScItem = getScItemData();
   let scQuickInfo = document.querySelector("div[id^='QuickInfo_']");

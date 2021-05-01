@@ -3,7 +3,7 @@
 
 import * as global from "./global.js";
 import { sendNotification } from "./notification.js";
-import { setPlural } from "./helpers.js";
+import { setPlural, initStorageFeature } from "./helpers.js";
 
 export { checkWorkbox };
 
@@ -11,7 +11,7 @@ export { checkWorkbox };
  * Check how many items are pending in the user's workbox
  */
 const checkWorkbox = (storage) => {
-  storage.feature_workbox == undefined ? (storage.feature_workbox = true) : false;
+  storage.feature_workbox = initStorageFeature(storage.feature_workbox, false);
   if (storage.feature_workbox && !storage.feature_experimentalui) {
     var wfNotification = 0;
     var wfChecksum = "#checksum#";

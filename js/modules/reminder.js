@@ -1,5 +1,6 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 import * as global from "./global.js";
+import { initStorageFeature } from "./helpers.js";
 
 export { checkReminder };
 
@@ -8,7 +9,7 @@ export { checkReminder };
  */
 // eslint-disable-next-line max-params
 const checkReminder = (item, language, version, storage) => {
-  storage.feature_reminder == undefined ? (storage.feature_reminder = false) : false;
+  storage.feature_reminder = initStorageFeature(storage.feature_reminder, false);
   if (storage.feature_reminder) {
     global.debug ? console.log("Check reminder") : false;
     if (item) {

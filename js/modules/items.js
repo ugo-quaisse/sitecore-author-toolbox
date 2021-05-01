@@ -1,6 +1,7 @@
 /* eslint-disable max-params */
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 import * as global from "./global.js";
+import { initStorageFeature } from "./helpers.js";
 
 export { checkLockedItems, getRelatedItems, getItemProperties };
 
@@ -8,7 +9,7 @@ export { checkLockedItems, getRelatedItems, getItemProperties };
  * Check all locked items
  */
 const checkLockedItems = (item, storage) => {
-  storage.feature_lockeditems == undefined ? (storage.feature_lockeditems = true) : false;
+  storage.feature_lockeditems = initStorageFeature(storage.feature_lockeditems, false);
   if (storage.feature_lockeditems) {
     global.debug ? console.log("Check locked items") : false;
     let itemUrl = `sitecore/shell/-/xaml/Sitecore.Shell.Applications.WebEdit.Dialogs.LockedItems.aspx?Cart_ctl00_ctl00_ctl00_ctl00_ctl05_Items_Callback=yes`;
@@ -76,7 +77,7 @@ const getRelatedItems = (sitecoreItemID, scLanguage, scVersion) => {
  * Get all items properties
  */
 const getItemProperties = (itemId, language, version, storage) => {
-  storage.feature_quickinfoenhancement == undefined ? (storage.feature_quickinfoenhancement = true) : false;
+  storage.feature_quickinfoenhancement = initStorageFeature(storage.feature_quickinfoenhancement, true);
   if (storage.feature_quickinfoenhancement) {
     global.debug ? console.log("Check item properties") : false;
     let itemUrl = `sitecore/shell/default.aspx?xmlcontrol=ContentEditor.Properties&id=${itemId}&la=${language}&vs=${version}`;

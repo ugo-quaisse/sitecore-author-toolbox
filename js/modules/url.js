@@ -171,6 +171,8 @@ const initLiveUrl = (storage) => {
             const requiredPath = split.slice(0, split.length - 1).join("/") + "/";
             ScSite.url = requiredPath + ScItem.displayName;
           }
+          //Replace white space with dash
+          ScSite.url = ScSite.url.replaceAll(" ", "-");
           //Alternative URL
           alternativeUrl = ``;
         }

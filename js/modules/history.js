@@ -51,6 +51,7 @@ const resumeFromWhereYouLeftOff = (storage) => {
         log("[Read " + storage.scSource + "] Language : " + storage.scLanguage, "beige");
         log("[Read " + storage.scSource + "] Version : " + storage.scVersion, "beige");
         log("*** Redirection ***", "yellow");
+        document.title = "Resuming...";
         setTimeout(function () {
           exeJsCode(`scForm.invoke("item:load(id=${storage.scItemID},language=${storage.scLanguage},version=${storage.scVersion})");`);
         }, 500);

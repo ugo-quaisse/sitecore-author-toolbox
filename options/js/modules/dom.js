@@ -95,7 +95,7 @@ const addDomain = (text = "", tocreate = undefined, isImport = false) => {
         document.querySelector("#sitesList").insertAdjacentHTML("beforeend", html);
         trackChanges(isImport);
         //Click events
-        document.querySelector(".addSite_" + countDomains).addEventListener("click", addSite.bind("", "domain_" + countDomains, "", "", "", true, false, false));
+        document.querySelector(".addSite_" + countDomains).addEventListener("click", addSite.bind("", "domain_" + countDomains, "", "", "", true, true, false));
         document.querySelector(".editDomain_" + countDomains).addEventListener("click", editDomain.bind("", "domain_" + countDomains));
         tocreate === undefined ? addSite("domain_" + countDomains, "", "", "", true) : false;
         returnId = `domain_` + countDomains;
@@ -142,7 +142,7 @@ const editDomain = (domainId) => {
 /**
  * Prepend input fields to add a site
  */
-const addSite = (domain, path, cd, lang = "", embedding = true, displayName = false, autoadd = false, name = "", isImport = "") => {
+const addSite = (domain, path, cd, lang = "", embedding = true, displayName = true, autoadd = false, name = "", isImport = "") => {
   let isExisting = false;
 
   //Check if sites already exists

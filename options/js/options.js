@@ -99,7 +99,7 @@ document.querySelector("#settings").onclick = function () {
     if (url.searchParams.get("site")) {
       let domain = new URL(url.searchParams.get("domain")).origin;
       let domainId = addDomain("", domain, true);
-      addSite(domainId, url.searchParams.get("site"), "", "", true, false, true, url.searchParams.get("name"));
+      addSite(domainId, url.searchParams.get("site"), "", "", true, true, true, url.searchParams.get("name"));
     }
   }, 500);
 };

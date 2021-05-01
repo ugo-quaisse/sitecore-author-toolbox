@@ -99,10 +99,14 @@ const initLanguageMenuEE = (storage) => {
     let tdDiv, tdlanguage, tdversion, temp;
     let dom = document.querySelector(".sc-gallery-content");
     let div = dom.querySelectorAll("a[data-sc-argument]");
+    let aVal, bVal;
 
     //Sort alphabetically or by version
     div = [].slice.call(div).sort(function (a, b) {
-      return a.querySelector("a > div > div:last-child > span").textContent > b.querySelector("a > div > div:last-child > span").textContent ? -1 : 1;
+      aVal = a.querySelector("a > div > div:last-child > span").textContent == "Fallback version" ? "0 versions." : a.querySelector("a > div > div:last-child > span").textContent;
+      bVal = b.querySelector("a > div > div:last-child > span").textContent == "Fallback version" ? "0 versions." : b.querySelector("a > div > div:last-child > span").textContent;
+
+      return aVal > bVal ? -1 : 1;
       //return a.textContent > b.textContent ? 1 : -1;
     });
     //Append dom
@@ -141,11 +145,15 @@ const initLanguageMenuCE = (storage) => {
     let td, tdlanguage, tdversion, tdimage, temp;
     let dom = document.querySelector("#Languages");
     let div = dom.querySelectorAll(".scMenuPanelItem,.scMenuPanelItemSelected");
-    var tdcount = 0;
+    let tdcount = 0;
+    let aVal, bVal;
 
     //Sort alphabetically or by version
     div = [].slice.call(div).sort(function (a, b) {
-      return a.querySelector("table > tbody > tr > td > div > div:last-child").textContent > b.querySelector("table > tbody > tr > td > div > div:last-child").textContent ? -1 : 1;
+      aVal = a.querySelector("table > tbody > tr > td > div > div:last-child").textContent == "Fallback version" ? "0 versions." : a.querySelector("table > tbody > tr > td > div > div:last-child").textContent;
+      bVal = b.querySelector("table > tbody > tr > td > div > div:last-child").textContent == "Fallback version" ? "0 versions." : b.querySelector("table > tbody > tr > td > div > div:last-child").textContent;
+
+      return aVal > bVal ? -1 : 1;
       //return a.textContent > b.textContent ? 1 : -1;
     });
     //Append dom

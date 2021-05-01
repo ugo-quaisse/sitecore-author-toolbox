@@ -153,7 +153,9 @@ const pathToBreadcrumb = (pathname, delimiter = "", underline = true) => {
       site = path[0].split("/").pop();
       path = path[1].split("/");
       underline
-        ? (breadcrumb += `<i>${delimiter}</i> <u class="scBreadcrumbHome" onclick="getParentNode(` + path.length + `);">${site.capitalize()}</u> <i>${delimiter}</i> <u onclick="getParentNode(` + (path.length - 1) + `);">Home</u> `)
+        ? (breadcrumb += `<u onclick="getParentNode(${path.length + 1})">...</u> <i>${delimiter}</i> <u class="scBreadcrumbHome" onclick="getParentNode(${
+            path.length
+          });">${site.capitalize()}</u> <i>${delimiter}</i> <u onclick="getParentNode(${path.length - 1});">Home</u> `)
         : (breadcrumb += `<i>${delimiter}</i> ${site.capitalize()} <i>${delimiter}</i> Home `);
     } else {
       path = path[0].split("/");
@@ -207,7 +209,7 @@ const insertLanguageButton = (scItemId, scLanguage = "EN", scVersion = 1) => {
   document.querySelector("#scLanguageIframe") ? document.querySelector("#scLanguageIframe").remove() : false;
   let body = document.querySelector("body");
   //prettier-ignore
-  let iframe = `<iframe loading="lazy" id="scLanguageIframe" src="/sitecore/shell/default.aspx?xmlcontrol=Gallery.Languages&id=` + scItemId + `&la=` + scLanguage + `&vs=` + scVersion + `&db=master"></iframe>`;
+  let iframe = `<iframe loading="lazy" id="scLanguageIframe" src="/sitecore/shell/default.aspx?xmlcontrol=Gallery.Languages&id=${scItemId}&la=${scLanguage}&vs=${scVersion}&db=master"></iframe>`;
   body && !document.querySelector("#scLanguageIframe") ? body.insertAdjacentHTML("beforeend", iframe) : false;
 
   //Scroll position
@@ -610,8 +612,8 @@ const initEventListeners = () => {
     let scLanguageIframe = document.querySelector("#scLanguageIframe");
     let scVersionIframe = document.querySelector("#scVersionIframe");
     scPanel ? scPanel.setAttribute("style", "top: " + topPos + "px !important") : false;
-    scLanguageIframe ? scLanguageIframe.setAttribute("style", "top: " + topPos + "px !important") : false;
-    scVersionIframe ? scVersionIframe.setAttribute("style", "top: " + topPos + "px !important") : false;
+    scLanguageIframe ? scLanguageIframe.setAttribute("style", "top: " + topPos + "px !important; height: calc(100% - " + topPos + "px) !important;") : false;
+    scVersionIframe ? scVersionIframe.setAttribute("style", "top: " + topPos + "px !important; height: calc(100% - " + topPos + "px) !important;") : false;
 
     //Publish menu
     if (document.querySelector(".scPublishMenu")) {

@@ -133,7 +133,10 @@ const initLiveUrl = (storage) => {
   let barStyle = !storage.feature_experimentalui ? "scWarning" : "scSuccess";
   //Live URL
   let ScSite = getSiteUrl(storage, ScItem.pathFull, ScItem.language);
+  let siteName = ScItem.pathFull.split("/home/")[0].split("/").reverse();
+  let pathToHome = ScItem.pathFull.split("/home/")[0] + "/home/";
   let alternativeUrl = window.location.origin + "/?sc_itemid=" + ScItem.id + "&sc_mode=normal&sc_lang=" + ScItem.language + "&sc_version=" + ScItem.version;
+  let isCdServer = false;
   //Path
   let sitecorePath = pathFromHome(ScItem.pathFull);
   //Template type
@@ -161,6 +164,7 @@ const initLiveUrl = (storage) => {
           alternativeUrl = response.farewell ? alternativeUrl.replace("xxxsxa_sitexxx", response.farewell) : (alternativeUrl = alternativeUrl.replace("&sc_site=xxxsxa_sitexxx", ""));
         } else {
           badge = "CD server";
+          isCdServer = true;
           //Language embedding position
           ScSite.url = ScSite.url.includes("{lang}") ? ScSite.url.replace("{lang}", ScItem.language) + "/" + sitecorePath : ScSite.url + "/" + ScItem.language + "/" + sitecorePath;
           //Language embedding disabled
@@ -180,7 +184,8 @@ const initLiveUrl = (storage) => {
         //Experimentation
         document.querySelector(".scPreviewButton") ? document.querySelector(".scPreviewButton").setAttribute("style", "display: block") : false;
 
-        let statusDiv = storage.feature_urlstatus ? `<span class="liveUrlLoader">Checking...</span>` : ``;
+        let statusDiv = storage.feature_urlstatus && isCdServer ? `<span class="liveUrlLoader">Checking...</span>` : ``;
+        let cdConfigDiv = !isCdServer ? `` : `hide`;
 
         //Prepare HTML (scInformation scWarning scError)
         //prettier-ignore
@@ -189,9 +194,7 @@ const initLiveUrl = (storage) => {
             <div class="scMessageBarTextContainer">
               <div class="scMessageBarTitle">Sitecore Live URL
               ${statusDiv}
-              <span class="liveUrlBadge t-sm t-top hide" onclick="window.open('${global.launchpadPage}?configure_domains=true&launchpad=true&url=${
-          global.windowLocationHref
-        }')" data-tooltip="Click to configure your sites" title="Click to configure your sites">${badge}</span>
+              <span class="liveUrlBadge t-sm t-top ${cdConfigDiv}" onclick="addSite('${global.launchpadPage}','${global.urlOrigin}','${pathToHome}', '${siteName[0].toUpperCase()}')" data-tooltip="Click to configure your sites" title="Click to configure your sites">${badge}</span>
               <span class="liveUrlStatus"></span>
               </div>
               <div class="scMessageBarText">To view this page in <b>"${scLanguageTxtLong}"</b></div>
@@ -226,7 +229,7 @@ const initLiveUrl = (storage) => {
         /**
          * Live status
          */
-        if (storage.feature_urlstatus && !isMedia) {
+        if (storage.feature_urlstatus && isCdServer && !isMedia) {
           chrome.runtime.sendMessage(
             {
               greeting: "get_pagestatus",

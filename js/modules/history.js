@@ -54,7 +54,7 @@ const resumeFromWhereYouLeftOff = (storage) => {
         setTimeout(function () {
           exeJsCode(`scForm.invoke("item:load(id=${storage.scItemID},language=${storage.scLanguage},version=${storage.scVersion})");`);
         }, 500);
-        //Add security if still not visible after 7s
+        //Add security if still not visible after 8s
         setTimeout(function () {
           if (document.querySelector("#EditorFrames")) {
             let isVisible = window.getComputedStyle(document.querySelector("#EditorFrames")).opacity == 1;
@@ -63,7 +63,7 @@ const resumeFromWhereYouLeftOff = (storage) => {
               sitecoreAuthorToolbox(storage);
             }
           }
-        }, 7000);
+        }, 8000);
       } else {
         //There is no redirection, so we force a UI refresh
         sitecoreAuthorToolbox(storage);

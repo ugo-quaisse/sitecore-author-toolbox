@@ -7,6 +7,7 @@ import { isFileExists } from "./helpers.js";
 /**
  * Global variables declaration
  */
+export const timeoutAsync = 4000;
 export const windowLocationHref = window.location.href.replace(/&amp;/g, "&").toLowerCase();
 export const queryString = window.location.search.toLowerCase();
 export const urlOrigin = new URL(windowLocationHref).origin;

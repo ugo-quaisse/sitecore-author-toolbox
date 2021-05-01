@@ -13,7 +13,7 @@ const checkLockedItems = (item, storage) => {
     global.debug ? console.log("Check locked items") : false;
     let itemUrl = `sitecore/shell/-/xaml/Sitecore.Shell.Applications.WebEdit.Dialogs.LockedItems.aspx?Cart_ctl00_ctl00_ctl00_ctl00_ctl05_Items_Callback=yes`;
     var ajax = new XMLHttpRequest();
-    ajax.timeout = 10000;
+    ajax.timeout = global.timeoutAsync;
     ajax.open("GET", itemUrl, true);
     // eslint-disable-next-line consistent-return
     ajax.onreadystatechange = function () {
@@ -57,7 +57,7 @@ const checkLockedItems = (item, storage) => {
  */
 const getRelatedItems = (sitecoreItemID, scLanguage, scVersion) => {
   var ajax = new XMLHttpRequest();
-  ajax.timeout = 7000;
+  ajax.timeout = global.timeoutAsync;
   ajax.open("GET", "/sitecore/shell/default.aspx?xmlcontrol=Gallery.Links&id=" + sitecoreItemID + "&la=" + scLanguage + "&vs=" + scVersion + "&db=master", true);
   ajax.onreadystatechange = function () {
     if (ajax.readyState === 4 && ajax.status == "200") {
@@ -81,7 +81,7 @@ const getItemProperties = (itemId, language, version, storage) => {
     global.debug ? console.log("Check item properties") : false;
     let itemUrl = `sitecore/shell/default.aspx?xmlcontrol=ContentEditor.Properties&id=${itemId}&la=${language}&vs=${version}`;
     var ajax = new XMLHttpRequest();
-    ajax.timeout = 10000;
+    ajax.timeout = global.timeoutAsync;
     ajax.open("GET", itemUrl, true);
     // eslint-disable-next-line consistent-return
     ajax.onreadystatechange = function () {

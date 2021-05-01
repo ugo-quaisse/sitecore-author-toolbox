@@ -13,7 +13,7 @@ export { getFeatures, parseJsonSites, onReaderLoad, uploadJson };
 const getFeatures = () => {
   chrome.storage.sync.get((storage) => {
     toggleFeature(storage.feature_urls, "#feature_urls", true);
-    toggleFeature(storage.feature_urlstatus, "#feature_urlstatus", true);
+    toggleFeature(storage.feature_urlstatus, "#feature_urlstatus", false);
     toggleFeature(storage.feature_flags, "#feature_flags", true);
     toggleFeature(storage.feature_errors, "#feature_errors", true);
     toggleFeature(storage.feature_notification, "#feature_notification", true);
@@ -33,11 +33,11 @@ const getFeatures = () => {
     toggleFeature(storage.feature_cetabs, "#feature_cetabs", false);
     toggleFeature(storage.feature_rtecolor, "#feature_rtecolor", true);
     toggleFeature(storage.feature_messagebar, "#feature_messagebar", false);
-    toggleFeature(storage.feature_workbox, "#feature_workbox", true);
+    toggleFeature(storage.feature_workbox, "#feature_workbox", false);
     toggleFeature(storage.feature_contextmenu, "#feature_contextmenu", true);
     toggleFeature(storage.feature_gravatarimage, "#feature_gravatarimage", true);
-    toggleFeature(storage.feature_lockeditems, "#feature_lockeditems", true);
-    toggleFeature(storage.feature_helplink, "#feature_helplink", true);
+    toggleFeature(storage.feature_lockeditems, "#feature_lockeditems", false);
+    toggleFeature(storage.feature_helplink, "#feature_helplink", false);
     toggleFeature(storage.feature_reminder, "#feature_reminder", false);
     toggleFeature(storage.feature_instantsearch, "#feature_instantsearch", true);
     toggleFeature(storage.feature_experimentalui, "#feature_experimentalui", false);

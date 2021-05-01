@@ -153,6 +153,7 @@ function setIcon(tab) {
 //When message is requested from toolbox.js
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.greeting == "get_pagestatus") {
+    //const timeout = 8000;
     fetch(request.url, { redirect: "follow" })
       .then(function (response) {
         sendResponse({

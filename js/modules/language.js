@@ -39,6 +39,7 @@ const cleanCountryName = (name) => {
     language = language.replace("SIMPLIFIED,_", "");
     language = language.replace("_S.A.R.", "");
     language = language.replace("_PRC", "");
+    language = language.replace("REPUBLIC_OF THE", "");
     language = language.replace("SAR", "").trim();
     //Replace non-standard country name
     language = language.replace("U.A.E.", "UNITED_ARAB_EMIRATES");
@@ -46,6 +47,7 @@ const cleanCountryName = (name) => {
     language = language.replace("KOREAN", "KOREA");
     language = language.replace("UNITED_STATES", "USA");
     language = language.replace("UNITED_KINGDOM", "GREAT_BRITAIN");
+    language = language.replace("SERBIAN", "SERBIA");
     language = language.replace("ENGLISH", "GREAT_BRITAIN");
     language = language.replace("PRC", "CHINA");
     language = language.replace("SIMPLIFIED", "CHINA");

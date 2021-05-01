@@ -71,7 +71,7 @@ const checkHelpLink = (item, language, version, storage) => {
     if (item) {
       let itemUrl = `sitecore/shell/default.aspx?xmlcontrol=SetHelp&id=${item}&la=${language}&vs=${version}`;
       var ajax = new XMLHttpRequest();
-      ajax.timeout = 7000;
+      ajax.timeout = global.timeoutAsync;
       ajax.open("GET", itemUrl, true);
       // eslint-disable-next-line consistent-return
       ajax.onreadystatechange = function () {

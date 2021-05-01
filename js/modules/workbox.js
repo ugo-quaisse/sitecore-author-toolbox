@@ -5,19 +5,19 @@ import * as global from "./global.js";
 import { sendNotification } from "./notification.js";
 import { setPlural } from "./helpers.js";
 
-export { workboxNotifications };
+export { checkWorkbox };
 
 /**
  * Check how many items are pending in the user's workbox
  */
-const workboxNotifications = (storage) => {
+const checkWorkbox = (storage) => {
   storage.feature_workbox == undefined ? (storage.feature_workbox = true) : false;
   if (storage.feature_workbox && !storage.feature_experimentalui) {
     var wfNotification = 0;
     var wfChecksum = "#checksum#";
 
     var ajax = new XMLHttpRequest();
-    ajax.timeout = 7000;
+    ajax.timeout = global.timeoutAsync;
     ajax.open("GET", "/sitecore/shell/default.aspx?xmlcontrol=Workbox", true);
     ajax.onreadystatechange = function () {
       if (ajax.readyState === 4) {
@@ -60,7 +60,7 @@ const workboxNotifications = (storage) => {
 
         if (global.isLaunchpad) {
           //Show badge (launchpad)
-          html = '<span class="launchpadBadge">' + wfNotification + "</span>";
+          html = `<span class="launchpadBadge">${wfNotification}</span>`;
           global.workboxLaunchpad ? global.workboxLaunchpad.insertAdjacentHTML("afterbegin", html) : false;
           //Sitecore Launchpad version detection
           let oldScDetect = document.querySelector(".sc-applicationHeader-row2");
@@ -70,7 +70,7 @@ const workboxNotifications = (storage) => {
           //Show badge (status bar)
           document.querySelectorAll(".scDockBottom > a").forEach((a) => {
             if (a.innerText == "Workbox") {
-              html = '<span class="wbNotification">' + wfNotification + "</span>";
+              html = `<span class="wbNotification">${wfNotification}</span>`;
               a.setAttribute("style", "padding-right:35px");
               a.insertAdjacentHTML("afterend", html);
             }

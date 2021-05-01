@@ -12,6 +12,7 @@ import { insertSavebar, insertBreadcrumb, insertLanguageButton, insertProfilesBu
 import { initSyntaxHighlighterScriban } from "./rte.js";
 import { initTabSections } from "./tabs.js";
 import { initRTL } from "./rtl.js";
+import { checkWorkbox } from "./workbox.js";
 import { enhancedTreeSearch } from "./search.js";
 import { initTranslateMode } from "./translate.js";
 import { showSnackbarSite } from "./snackbar.js";
@@ -72,6 +73,7 @@ const sitecoreAuthorToolbox = (storage) => {
   initCharsCount(storage);
   initCopyToClipboard(storage);
   initSyntaxHighlighterScriban(storage);
+  checkWorkbox(storage);
   checkHelpLink(ScItem.id, ScItem.language, ScItem.version, storage);
   checkReminder(ScItem.id, ScItem.language, ScItem.version, storage);
   getItemProperties(ScItem.id, ScItem.language, ScItem.version, storage);

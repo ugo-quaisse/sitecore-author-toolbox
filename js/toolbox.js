@@ -16,7 +16,7 @@ import { log, loadJsFile, getScItemData } from "./modules/helpers.js";
 import { initDarkMode, detectSwitchDarkMode } from "./modules/dark.js";
 import { addHelptextIcons } from "./modules/help.js";
 import { showSnackbar } from "./modules/snackbar.js";
-import { workboxNotifications } from "./modules/workbox.js";
+import { checkWorkbox } from "./modules/workbox.js";
 import { resumeFromWhereYouLeftOff, historyNavigation } from "./modules/history.js";
 import { checkNotificationPermissions, checkPublishNotification } from "./modules/notification.js";
 import { initFlagRibbonEE, initLanguageMenuEE, initLanguageMenuCE, initFlagsPublishingWindow, initFlagsPublish } from "./modules/language.js";
@@ -68,7 +68,6 @@ chrome.storage.sync.get((storage) => {
       resumeFromWhereYouLeftOff(storage);
       initInstantSearch(storage);
       initFavorites(storage);
-      workboxNotifications(storage);
       historyNavigation();
       showSnackbar(storage);
       contentTreeScrollTo();
@@ -98,14 +97,14 @@ chrome.storage.sync.get((storage) => {
     if (global.isLaunchpad) {
       log("**** Launchpad ****", "orange");
       initLaunchpadIcon(storage);
-      workboxNotifications(storage);
+      checkWorkbox(storage);
       showSnackbar(storage);
       initIntroScreen();
     } else if (global.isDesktop && !global.isGalleryFavorites && !global.isXmlControl) {
       log("**** Desktop Shell ****", "orange");
       initAppName(storage, "Sitecore Desktop");
       initLaunchpadMenu(storage);
-      workboxNotifications(storage);
+      checkWorkbox(storage);
       showSnackbar(storage);
     } else if (global.isUserManager) {
       log("**** User Manager ****", "orange");

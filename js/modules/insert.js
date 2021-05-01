@@ -21,7 +21,7 @@ const insertPanel = () => {
  */
 const insertModal = (storage, sitecoreItemID, scLanguage, scVersion, scItemName = "", mutationObserver = true) => {
   var ajax = new XMLHttpRequest();
-  ajax.timeout = 7000;
+  ajax.timeout = global.timeoutAsync;
   ajax.open("GET", "/sitecore/shell/default.aspx?xmlcontrol=Gallery.New&id=" + sitecoreItemID + "&la=" + scLanguage + "&vs=" + scVersion + "&db=master", true);
   ajax.onreadystatechange = function () {
     if (ajax.readyState === 4 && ajax.status == "401") {

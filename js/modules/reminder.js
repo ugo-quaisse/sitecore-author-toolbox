@@ -14,7 +14,7 @@ const checkReminder = (item, language, version, storage) => {
     if (item) {
       let itemUrl = `sitecore/shell/default.aspx?xmlcontrol=Gallery.Reminder&id=${item}&la=${language}&vs=${version}`;
       var ajax = new XMLHttpRequest();
-      ajax.timeout = 10000;
+      ajax.timeout = global.timeoutAsync;
       ajax.open("GET", itemUrl, true);
       // eslint-disable-next-line consistent-return
       ajax.onreadystatechange = function () {

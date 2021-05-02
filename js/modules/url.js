@@ -170,7 +170,7 @@ const initLiveUrl = (storage) => {
           //Language embedding disabled
           ScSite.languageEmbedding == false ? (ScSite.url = ScSite.url.replace("/" + ScItem.language + "/", "/")) : false;
           //Display name enabled
-          if (ScSite.displayName && ScItem.displayName) {
+          if (ScSite.displayName && ScItem.displayName && ScItem.name != "home") {
             const split = trimTrailingSlash(ScSite.url).split("/");
             const requiredPath = split.slice(0, split.length - 1).join("/") + "/";
             ScSite.url = requiredPath + ScItem.displayName;

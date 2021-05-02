@@ -157,7 +157,6 @@ const sitecoreAuthorToolbox = (storage) => {
     if (!isMedia) {
       var EditorTabs = document.querySelectorAll("#EditorTabs > a");
       var CloseEditorTab = document.querySelectorAll("#EditorTabs .scEditorTabCloseContainer");
-      count = 0;
       for (var tab of EditorTabs) {
         count++;
         if (tab.innerText.toLowerCase() == "content" && count > 1 && CloseEditorTab.length == 0) {

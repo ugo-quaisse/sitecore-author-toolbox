@@ -666,3 +666,11 @@ function satLogout() {
   document.querySelector(".sc-globalHeader .logout") ? document.querySelector(".sc-globalHeader .logout").click() : false;
   //javascript:return scForm.invoke('system:logout', event)
 }
+
+/**
+ * Show full breadcrumb
+ */
+function showFullBreadcrumb() {
+  document.querySelector(".scBreadcrumbShort").setAttribute("style", "display:none");
+  document.querySelector(".scBreadcrumbFull").setAttribute("style", "display:block");
+}

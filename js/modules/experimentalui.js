@@ -1,3 +1,4 @@
+/* eslint-disable max-params */
 /* eslint-disable newline-per-chained-call */
 /* eslint-disable array-element-newline */
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
@@ -5,7 +6,6 @@
 import * as global from "./global.js";
 import * as icons from "./icons.js";
 import { getMaterializeIcon, getScItemData, setTextColour } from "./helpers.js";
-// import { getFiltersCss } from "./colors.js";
 
 export {
   initOnboarding,
@@ -139,7 +139,7 @@ const insertSavebar = () => {
 /**
  * Path to Breadcrumb
  */
-const pathToBreadcrumb = (pathname, delimiter = "", underline = true) => {
+const pathToBreadcrumb = (pathname, delimiter = "", underline = true, full = false) => {
   let breadcrumb = "#####";
   let count = 0;
   let elipsis = false;
@@ -163,9 +163,9 @@ const pathToBreadcrumb = (pathname, delimiter = "", underline = true) => {
 
     for (let level of path) {
       count++;
-      if (path.length > 8 && count > 3 && count < path.length - 2) {
+      if (!full && path.length > 8 && count > 3 && count < path.length - 3) {
         if (!elipsis) {
-          level != "" ? (breadcrumb += "<i>" + delimiter + "</i> ... ") : false;
+          level != "" ? (breadcrumb += `<i>${delimiter}</i> <span onclick="showFullBreadcrumb()" class="scBreadcrumbElipsis t-right t-sm" data-tooltip="Click to show all">...</span> `) : false;
           elipsis = true;
         }
 
@@ -174,14 +174,14 @@ const pathToBreadcrumb = (pathname, delimiter = "", underline = true) => {
       }
 
       if (underline) {
-        level != "" ? (breadcrumb += `<i>` + delimiter + `</i> <u onclick="getParentNode(` + (path.length - count - 1) + `, '` + global.tabLoadingTitle + `');">` + level.toLowerCase().capitalize() + `</u> `) : false;
+        level != "" ? (breadcrumb += `<i>${delimiter}</i> <u onclick="getParentNode(` + (path.length - count - 1) + `, '` + global.tabLoadingTitle + `');">` + level.toLowerCase().capitalize() + `</u> `) : false;
       } else {
-        level != "" ? (breadcrumb += `<i>` + delimiter + `</i> ` + level.toLowerCase().capitalize() + ` `) : false;
+        level != "" ? (breadcrumb += `<i>${delimiter}</i> ` + level.toLowerCase().capitalize() + ` `) : false;
       }
     }
   }
 
-  breadcrumb = breadcrumb.replace(`#####<i>` + delimiter + `</i>`, ``).replace(`#####`, ``);
+  breadcrumb = breadcrumb.replace(`#####<i>${delimiter}</i>`, ``).replace(`#####`, ``);
 
   return breadcrumb;
 };
@@ -190,9 +190,11 @@ const pathToBreadcrumb = (pathname, delimiter = "", underline = true) => {
  * Insert Breadcrumb
  */
 const insertBreadcrumb = (path) => {
-  let breadcrumb = pathToBreadcrumb(path);
+  let breadcrumb = `<span class="scBreadcrumbShort">${pathToBreadcrumb(path)}</span>`;
+  let breadcrumbFull = `<span class="scBreadcrumbFull">${pathToBreadcrumb(path, "", true, true)}</span>`;
   let scBreadcrumb = document.querySelector(".scBreadcrumb");
   scBreadcrumb && path ? (scBreadcrumb.innerHTML = breadcrumb) : false;
+  scBreadcrumb && path ? scBreadcrumb.insertAdjacentHTML("beforeend", breadcrumbFull) : false;
 };
 
 /**

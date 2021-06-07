@@ -739,6 +739,18 @@ export const jsonIcons = JSON.parse(
   {
     "search": "close",
     "icon": "navigation::close"
+  },
+  {
+    "search": "question",
+    "icon": "action::help"
+  },
+  {
+    "search": "treeview",
+    "icon": "notification::account_tree"
+  },
+  {
+    "search": "button",
+    "icon": "action::smart_button"
   }
 ]`
 );

@@ -2134,7 +2134,7 @@ body.satExtension #Page {
   border: 0px solid var(--black10);
   background-color: var(--grey10);
   position: absolute;
-  top: 50%;
+  top: calc(50% - 20px);
   left: 50%;
   transform: translate(-50%, -50%);
   height: 100%;

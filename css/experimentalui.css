@@ -1705,7 +1705,16 @@ body.satExperimentalUi .scSaveBar > .scBreadcrumb {
   font-weight: 600;
 }
 
-body.satExperimentalUi .scSaveBar > .scBreadcrumb > i {
+body.satExperimentalUi .scSaveBar > .scBreadcrumb > .scBreadcrumbFull {
+  display: none;
+}
+
+body.satExperimentalUi .scSaveBar > .scBreadcrumb > span > .scBreadcrumbElipsis {
+  cursor: pointer;
+}
+
+body.satExperimentalUi .scSaveBar > .scBreadcrumb > i,
+body.satExperimentalUi .scSaveBar > .scBreadcrumb > span > i {
   font-style: initial;
   font-size: 16px;
   vertical-align: middle;
@@ -1714,20 +1723,24 @@ body.satExperimentalUi .scSaveBar > .scBreadcrumb > i {
   background-size: contain;
 }
 
-body.satExperimentalUi .scSaveBar > .scBreadcrumb > u {
+body.satExperimentalUi .scSaveBar > .scBreadcrumb > u,
+body.satExperimentalUi .scSaveBar > .scBreadcrumb > span > u {
   cursor: pointer;
   text-decoration: unset;
 }
 
-body.satExperimentalUi .scSaveBar > .scBreadcrumb > u:hover {
+body.satExperimentalUi .scSaveBar > .scBreadcrumb > u:hover,
+body.satExperimentalUi .scSaveBar > .scBreadcrumb > span > u:hover {
   text-decoration: underline;
 }
 
-body.satExperimentalUi .scSaveBar > .scBreadcrumb > u:last-child {
+body.satExperimentalUi .scSaveBar > .scBreadcrumb > u:last-child,
+body.satExperimentalUi .scSaveBar > .scBreadcrumb > span > u:last-child {
   color: var(--accent);
 }
 
-body.satExperimentalUi .scSaveBar > .scBreadcrumb > u:first-child {
+body.satExperimentalUi .scSaveBar > .scBreadcrumb > u:first-child,
+body.satExperimentalUi .scSaveBar > .scBreadcrumb > span > u:first-child {
   color: var(--textFaded);
 }
 

@@ -70,7 +70,7 @@ const showSnackbarSite = (storage, ScItem) => {
     });
 
     //Show Snackbar
-    if (ScItem.pathFull.includes(`/home/`) && Object.values(existing).indexOf(siteName[0].toUpperCase()) === -1 && siteUrl == undefined) {
+    if (!ScItem.pathFull.includes(`/sitecore/templates/`) && ScItem.pathFull.includes(`/home/`) && Object.values(existing).indexOf(siteName[0].toUpperCase()) === -1 && siteUrl == undefined) {
       document.querySelector("body").insertAdjacentHTML("beforeend", html);
       //Add listener on click #sbDismiss
       document.querySelectorAll("#sbDismissSite").forEach(function (elem) {

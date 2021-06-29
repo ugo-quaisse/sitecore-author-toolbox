@@ -32,9 +32,6 @@ function scSaveAnimation(id) {
   if (document.querySelector(".scSaveButton")) {
     let saveMessage = document.querySelector(".saveMessage");
     let saveButton = document.querySelector(".scSaveButton");
-    // saveMessage.classList.remove("success");
-    // saveMessage.innerHTML = "Saving...";
-    // saveMessage.classList.add("visible");
     saveButton.innerText = "Saving...";
     saveButton.setAttribute("disabled", true);
 
@@ -78,7 +75,6 @@ const toggleRibbon = () => {
     scWebEditRibbon.setAttribute("style", "display:none !important");
     tabText.innerText = "▼ Show";
   } else {
-    //scCrossPiece.setAttribute("style", "height:300px !important");
     scWebEditRibbon.setAttribute("style", "display:block !important");
     tabText.innerText = "▲ Hide";
   }
@@ -626,11 +622,13 @@ function openLightbox(id, from = "frame") {
     lightbox ? (lightbox.querySelector(".scLightboxTitle").innerHTML = `<b>${name}</b>`) : false;
   }
   //Remove spinner
-  lightbox.querySelectorAll(".scLightboxContent > img, .scLightboxContent > iframe").forEach((elem) => {
-    elem.onload = function () {
-      lightbox.classList.add("scLightboxHideSpinner");
-    };
-  });
+  if (lightbox.querySelectorAll(".scLightboxContent > img, .scLightboxContent > iframe")) {
+    lightbox.querySelectorAll(".scLightboxContent > img, .scLightboxContent > iframe").forEach((elem) => {
+      elem.onload = function () {
+        lightbox.classList.add("scLightboxHideSpinner");
+      };
+    });
+  }
   //Show lightbox
   lightbox ? lightbox.setAttribute("style", "display:block") : false;
   //Browse all items

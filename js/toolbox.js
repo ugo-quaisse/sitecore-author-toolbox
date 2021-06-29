@@ -34,7 +34,7 @@ import { initPreviewButton, listenPreviewTab } from "./modules/preview.js";
 import { initLaunchpadIcon, initLaunchpadMenu } from "./modules/launchpad.js";
 import { initAutoExpandTree, initTreeGutterTooltips } from "./modules/contenttree.js";
 import { initQuerySuggestions } from "./modules/template.js";
-import { initDefaultTextEE, storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor, initRenderingSearchBox } from "./modules/experienceeditor.js";
+import { storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor, initRenderingSearchBox } from "./modules/experienceeditor.js";
 /**
  * Get all user's settings from chrome storage
  */
@@ -296,7 +296,6 @@ chrome.storage.sync.get((storage) => {
       addHideRibbonButton(storage);
       resetExperienceEditor(storage);
       initMaterializeIcons(storage);
-      initDefaultTextEE(storage);
     }
   }
 });

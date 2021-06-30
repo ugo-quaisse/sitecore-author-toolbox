@@ -177,7 +177,7 @@ document.querySelector(".save_settings").onclick = function (event) {
   if (!fromLaunchpad) {
     chrome.tabs.query({ active: true, currentWindow: true }, function (arrayOfTabs) {
       let code = "window.location.reload();";
-      chrome.tabs.executeScript(arrayOfTabs[0].id, { code });
+      chrome.scripting.executeScript(arrayOfTabs[0].id, { code });
     });
     buttonLabel = "Save and reload Sitecore";
   }

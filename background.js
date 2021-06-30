@@ -56,7 +56,7 @@ function onClickHandler(info, tab) {
       }
 
       //Open the Experience editor
-      chrome.tabs.executeScript(tab.id, {
+      chrome.scripting.executeScript(tab.id, {
         code: 'window.open("' + cmUrl + '?sc_mode=edit")',
       });
     });
@@ -120,7 +120,7 @@ function setIcon(tab) {
 
   if (isUrl && !isViewSource && tabUrl && !isLocalhost) {
     chrome.cookies.getAll({ url: tabUrl.origin }, function (cookies) {
-      chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
+      chrome.action.setBadgeBackgroundColor({ color: "#52cc7f" });
 
       for (var i in cookies) {
         if (cookies[i].name == "sitecore_userticket" || cookies[i].name.includes("#lang") || cookies[i].name.includes("#sc_mode")) {
@@ -131,8 +131,8 @@ function setIcon(tab) {
 
       //If sitecore cookie is there
       if (cookie) {
-        chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
-        chrome.browserAction.setBadgeText({ text: "ON" });
+        chrome.action.setBadgeBackgroundColor({ color: "#52cc7f" });
+        chrome.action.setBadgeText({ text: "ON" });
 
         //Context menu
         chrome.storage.sync.get(["feature_contextmenu"], (result) => {
@@ -140,13 +140,13 @@ function setIcon(tab) {
           result.feature_contextmenu ? showContextMenu(tab) : false;
         });
       } else {
-        chrome.browserAction.setBadgeBackgroundColor({ color: "#777777" });
-        chrome.browserAction.setBadgeText({ text: "OFF" });
+        chrome.action.setBadgeBackgroundColor({ color: "#777777" });
+        chrome.action.setBadgeText({ text: "OFF" });
       }
     });
   } else if (isSitecore) {
-    chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
-    chrome.browserAction.setBadgeText({ text: "ON" });
+    chrome.action.setBadgeBackgroundColor({ color: "#52cc7f" });
+    chrome.action.setBadgeText({ text: "ON" });
   }
 }
 

@@ -14,7 +14,7 @@ const saveSites = () => {
   var json = {};
   var count = 0;
   var error = false;
-  var domain, key, value, lang, embedding, display;
+  var domain, key, value, lang, siteName, embedding, display;
 
   document.querySelectorAll(".domain").forEach(function (url) {
     url.querySelectorAll(".site").forEach(function (site) {
@@ -23,6 +23,7 @@ const saveSites = () => {
       key = site.querySelector("input[name='key']").value;
       value = site.querySelector("input[name='value']").value;
       lang = site.querySelector("input[name='lang']").value;
+      siteName = site.querySelector("input[name='siteName']").value;
       embedding = site.querySelector("input[name='embedding']").checked;
       display = site.querySelector("input[name='displayName']").checked;
       //Lang check
@@ -42,7 +43,7 @@ const saveSites = () => {
           //Build object for this domain
           !json[domain] ? (json[domain] = {}) : false;
           //Add site to this domain
-          json[domain][count] = { [key]: value, language: lang, languageEmbedding: embedding, useDisplayName: display };
+          json[domain][count] = { [key]: value, language: lang, siteName: siteName, languageEmbedding: embedding, useDisplayName: display };
           count++;
           site.querySelector("input[name='key']").setAttribute("style", "border-color:#ccc");
           site.querySelector("input[name='value']").setAttribute("style", "border-color:#ccc");
@@ -71,7 +72,7 @@ const exportSites = () => {
   var json = {};
   var count = 0;
   var error = false;
-  var domain, key, value, lang, embedding, display;
+  var domain, key, value, lang, siteName, embedding, display;
 
   document.querySelectorAll(".domain").forEach(function (url) {
     url.querySelectorAll(".site").forEach(function (site) {
@@ -80,6 +81,7 @@ const exportSites = () => {
       key = site.querySelector("input[name='key']").value;
       value = site.querySelector("input[name='value']").value;
       lang = site.querySelector("input[name='lang']").value;
+      siteName = site.querySelector("input[name='siteName']").value;
       embedding = site.querySelector("input[name='embedding']").checked;
       display = site.querySelector("input[name='displayName']").checked;
       error = false;
@@ -100,7 +102,7 @@ const exportSites = () => {
           //Build object for this domain
           !json[domain] ? (json[domain] = {}) : false;
           //Add site to this domain
-          json[domain][count] = { [key]: value, language: lang, languageEmbedding: embedding, useDisplayName: display };
+          json[domain][count] = { [key]: value, language: lang, siteName: siteName, languageEmbedding: embedding, useDisplayName: display };
           count++;
           site.querySelector("input[name='key']").setAttribute("style", "border-color:#ccc");
           site.querySelector("input[name='value']").setAttribute("style", "border-color:#ccc");
@@ -155,6 +157,7 @@ const saveSettings = () => {
     feature_workbox: document.querySelector("#feature_workbox").checked,
     feature_urlstatus: document.querySelector("#feature_urlstatus").checked,
     feature_contextmenu: document.querySelector("#feature_contextmenu").checked,
+    feature_editcommands: document.querySelector("#feature_editcommands").checked,
     feature_gravatarimage: document.querySelector("#feature_gravatarimage").checked,
     feature_lockeditems: document.querySelector("#feature_lockeditems").checked,
     feature_helplink: document.querySelector("#feature_helplink").checked,

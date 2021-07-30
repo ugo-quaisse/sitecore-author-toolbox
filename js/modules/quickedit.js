@@ -152,14 +152,16 @@ const launchEditUrl = (action, tabInfo) => {
 }
 
 const getSiteInfo = (sitesInfo, cdUrl) => {
-    for (var [cmUrl, sites] of Object.entries(sitesInfo)) {
-        for (var [id, siteInfo] of Object.entries(sites)) {
-            var siteUrl = Object.entries(siteInfo)[0][1];
-            if (cdUrl.replace(/\/$/, "") === siteUrl.replace(/\/$/, ""))
-                return {
-                    cmUrl : cmUrl,
-                    siteName: siteInfo.siteName
-                };
+    if(sitesInfo){
+        for (var [cmUrl, sites] of Object.entries(sitesInfo)) {
+            for (var [id, siteInfo] of Object.entries(sites)) {
+                var siteUrl = Object.entries(siteInfo)[0][1];
+                if (cdUrl.replace(/\/$/, "") === siteUrl.replace(/\/$/, ""))
+                    return {
+                        cmUrl : cmUrl,
+                        siteName: siteInfo.siteName
+                    };
+            }
         }
     }
 }

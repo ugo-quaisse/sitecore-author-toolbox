@@ -9,70 +9,80 @@ export { showContextMenu, contextMenuClickHandler, launchEditUrl };
  * Menu on right click
  */
 const showContextMenu = (tab) => {
-    if (tab.url != undefined) {
-        var url = tab.url.split("?");
-        url = url[0];
+    chrome.contextMenus.removeAll(function () {
+        if (tab.url != undefined) {
+            var url = tab.url.split("?");
+            url = url[0];
 
-        var isSitecore = url.includes("/sitecore/");
-        var isUrl = url.includes("http");
-        var isEditMode = tab.url.includes("sc_mode=edit");
-        var isPreviewMode = tab.url.includes("sc_mode=preview");
-        var isViewSource = url.includes("view-source:");
+            var isSitecore = url.includes("/sitecore/");
+            var isUrl = url.includes("http");
+            var isEditMode = tab.url.includes("sc_mode=edit");
+            var isPreviewMode = tab.url.includes("sc_mode=preview");
+            var isViewSource = url.includes("view-source:");
 
-        //Tab URL
-        chrome.contextMenus.removeAll(function () {
+            //Tab URL
             if (isUrl && !isViewSource && !isSitecore && !isEditMode && !isPreviewMode) {
-                chrome.contextMenus.create(
-                    {
-                        title: "✏️ Edit in Experience Editor",
-                        contexts: ["page"],
-                        id: "editInExperienceEditor",
-                    },
-                    () => chrome.runtime.lastError
-                );
-                chrome.contextMenus.create(
-                    {
-                        title: "📑 Edit in Content Editor",
-                        contexts: ["page"],
-                        id: "editInContentEditor",
-                    },
-                    () => chrome.runtime.lastError
-                );
-                chrome.contextMenus.create(
-                    {
-                        title: "🚀 Edit in Horizon",
-                        contexts: ["page"],
-                        id: "editInHorizon",
-                    },
-                    () => chrome.runtime.lastError
-                );
-                chrome.contextMenus.create(
-                    {
-                        title: "🏁 View Page Insights",
-                        contexts: ["page"],
-                        id: "viewPageInsights",
-                    },
-                    () => chrome.runtime.lastError
-                );
-                chrome.contextMenus.create(
-                    {
-                        title: "🖥️ Preview in Simulator",
-                        contexts: ["page"],
-                        id: "previewInSimulator",
-                    },
-                    () => chrome.runtime.lastError
-                );
-                chrome.contextMenus.create(
-                    {
-                        title: "🗔  Open in Preview Mode",
-                        contexts: ["page"],
-                        id: "openInPreview",
-                    },
-                    () => chrome.runtime.lastError
-                );
+                chrome.storage.sync.get(["site_manager"], async (storage) => {
+                    var cdUrl = new URL(tab.url);
+                    var siteInfo = getSiteInfo(storage.site_manager, cdUrl.origin);
+                    if (siteInfo) {
+                        var cmUrl = siteInfo.cmUrl;
+                        var horizonAppUrl = await getHorizonAppUrl(cmUrl, true);
+                        chrome.contextMenus.create(
+                            {
+                                title: "✏️ Edit in Experience Editor",
+                                contexts: ["page"],
+                                id: "editInExperienceEditor",
+                            },
+                            () => chrome.runtime.lastError
+                        );
+                        chrome.contextMenus.create(
+                            {
+                                title: "📑 Edit in Content Editor",
+                                contexts: ["page"],
+                                id: "editInContentEditor",
+                            },
+                            () => chrome.runtime.lastError
+                        );
+                        if(horizonAppUrl){
+                            chrome.contextMenus.create(
+                                {
+                                    title: "🚀 Edit in Horizon",
+                                    contexts: ["page"],
+                                    id: "editInHorizon",
+                                },
+                                () => chrome.runtime.lastError
+                            );
+                            chrome.contextMenus.create(
+                                {
+                                    title: "🏁 View Page Insights",
+                                    contexts: ["page"],
+                                    id: "viewPageInsights",
+                                },
+                                () => chrome.runtime.lastError
+                            );
+                            chrome.contextMenus.create(
+                                {
+                                    title: "🖥️ Preview in Simulator",
+                                    contexts: ["page"],
+                                    id: "previewInSimulator",
+                                },
+                                () => chrome.runtime.lastError
+                            );
+                        }
+                        chrome.contextMenus.create(
+                            {
+                                title: "🗔  Open in Preview Mode",
+                                contexts: ["page"],
+                                id: "openInPreview",
+                            },
+                            () => chrome.runtime.lastError
+                        );
+                    }
+                });
             }
-        });
-    }
+        }
+    });
 }
 
 /**
@@ -171,26 +181,24 @@ const getAssociatedItemInfo = async (cmOrigin, path, siteName) => {
     }
 }
 
-const getHorizonAppUrl = async (cmOrigin) => {
+const getHorizonAppUrl = async (cmOrigin, isBackgroundRequest) => {
     const launchPadUrl = `${cmOrigin}/sitecore/shell/sitecore/client/Applications/Launchpad`;
-    var htmlDocument = await fetchHTML(launchPadUrl);
+    var htmlDocument = await fetchHTML(launchPadUrl, isBackgroundRequest);
     if(htmlDocument){
         var horizonTile = htmlDocument.querySelectorAll('a[title="Horizon"]');
         if(horizonTile.length > 0)
             return horizonTile[0].href;
-        else
-            alert('Horizon not configured for this domain');
     }
 }
 
-const fetchHTML = async (url) => {
+const fetchHTML = async (url, isBackgroundRequest) => {
     const response = await fetch(url, { redirect: 'manual'});
     if(response.status == 200){
         const responseText = await response.text(); 
         var parser = new DOMParser();
         return parser.parseFromString(responseText, 'text/html');
     }
-    else{
+    else if (!isBackgroundRequest){
         openInNewTab(`${new URL(url).origin}/sitecore/login`);
     }
 }

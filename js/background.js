@@ -48,6 +48,9 @@ function getSitecoreCookie(tab) {
  * Set exgtension icon and label
  */
 function setIcon(tab) {
+  if(!tab)
+    return;
+  
   //Variables
   var tabUrl = false;
   tab.url ? (tabUrl = new URL(tab.url)) : false;
@@ -58,7 +61,10 @@ function setIcon(tab) {
   var isLocalhost = url.includes("localhost:");
   var isViewSource = url.includes("view-source:");
   var cookie = false;
-
+  
+  chrome.contextMenus.removeAll();
+  chrome.commands.onCommand.removeListener(launchEditUrl);
+  
   if (isUrl && !isViewSource && tabUrl && !isLocalhost) {
     chrome.cookies.getAll({ url: tabUrl.origin }, function (cookies) {
       chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
@@ -78,16 +84,13 @@ function setIcon(tab) {
         //Context menu
         chrome.storage.sync.get(["feature_contextmenu"], (result) => {
           if(result.feature_contextmenu == undefined) result.feature_contextmenu = true;
-          result.feature_contextmenu ? showContextMenu(tab) : chrome.contextMenus.removeAll();
+          if(result.feature_contextmenu) showContextMenu(tab);
         });
         
         //Keyboard Shortcuts
         chrome.storage.sync.get(["feature_editcommands"], (result) => {
           if(result.feature_editcommands == undefined) result.feature_editcommands = true;
-          if(result.feature_editcommands)
-            chrome.commands.onCommand.addListener(launchEditUrl);
-          else
-            chrome.commands.onCommand.removeListener(launchEditUrl);
+          if(result.feature_editcommands) chrome.commands.onCommand.addListener(launchEditUrl);
         });
       } else {
         chrome.browserAction.setBadgeBackgroundColor({ color: "#777777" });
@@ -145,9 +148,11 @@ chrome.tabs.onUpdated.addListener(function (tab) {
 
 //When a tab is activated (does not fired is default_popup exists)
 chrome.tabs.onActivated.addListener(function (tab) {
-  chrome.tabs.getSelected(null, function (tab) {
-    setIcon(tab);
-  });
+  setTimeout(() => {
+    chrome.tabs.getSelected(null, function (tab) {
+        setIcon(tab);
+    });
+  }, 100);
 });
 
 chrome.runtime.setUninstallURL("https://uquaisse.io/sitecore-cms/uninstallation-successful/?utm_source=uninstall&utm_medium=chrome");

@@ -332,7 +332,6 @@ const initCharsCount = (storage) => {
      */
     var scTextFields = document.querySelectorAll("input, textarea");
     var countHtml;
-    var chars = 0;
     var charsText;
 
     //TODO, add scAdditionalParameters input
@@ -342,36 +341,24 @@ const initCharsCount = (storage) => {
       if (field.className == "scContentControl" || field.className == "scContentControlMemo") {
         field.setAttribute("style", "padding-right: 80px !important");
         field.parentElement.setAttribute("style", "position:relative !important");
-        chars = field.value.length;
-        if (chars > 1) {
-          charsText = chars + " chars";
-        } else {
-          charsText = chars + " char";
-        }
-        countHtml = `<div id="chars_${field.id}" style="position: absolute; bottom: 1px; right: 10px; padding: 6px 10px; border-radius: 4px; line-height: 20px; opacity:0.5;">${charsText}</div>`;
+        charsText = field.value.length > 1 ? field.value.length + " chars" : field.value.length + " char";
+        countHtml = `<div id="chars_${field.id}" class="satCharsCount" style="position: absolute; bottom: 1px; right: 10px; padding: 6px 10px; border-radius: 4px; line-height: 20px; opacity:0.5;">${charsText}</div>`;
         field.insertAdjacentHTML("afterend", countHtml);
+        //On keyup
+        field.addEventListener(
+          "keydown",
+          function (event) {
+            let charsTextEvent = event.target.value.length > 1 ? event.target.value.length + " chars" : event.target.value.length + " char";
+            document.querySelector("#chars_" + event.target.id).innerText = charsTextEvent;
+          },
+          {
+            once: false,
+            passive: true,
+            capture: false,
+          }
+        );
       }
     }
-
-    //On keyup
-    document.addEventListener(
-      "keyup",
-      function (event) {
-        if (event.target.localName == "input" || event.target.localName == "textarea") {
-          chars = event.target.value.length;
-          if (chars > 1) {
-            charsText = chars + " chars";
-          } else {
-            charsText = chars + " char";
-          }
-
-          if (document.querySelector("#chars_" + event.target.id)) {
-            document.querySelector("#chars_" + event.target.id).innerText = charsText;
-          }
-        }
-      },
-      false
-    );
   }
 };
 

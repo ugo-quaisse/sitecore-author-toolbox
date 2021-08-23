@@ -333,7 +333,7 @@ const initDarkSwitchEvents = () => {
         document.body.classList.remove("satDark");
         //iframes
         document.querySelectorAll("iframe").forEach(function (iframe) {
-          if (iframe.contentDocument.body) {
+          if (iframe.contentDocument && iframe.contentDocument.body) {
             iframe.contentDocument.body.classList.remove("satDark");
             iframe.contentDocument.querySelectorAll("iframe").forEach(function (i) {
               i.contentDocument.body.classList.remove("satDark");

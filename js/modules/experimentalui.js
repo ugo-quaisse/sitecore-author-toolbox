@@ -729,8 +729,8 @@ const initMaterializeIcons = (storage) => {
     document.documentElement.style.setProperty("--iconContrast", 2);
     //In Content Editor
     target = document.querySelector("body");
-    observer = new MutationObserver(function () {
-      replaceIcons(storage);
+    observer = new MutationObserver(function (el) {
+      el[0].target.className != "satCharsCount" && el[0].target.className != "scValidatorPanel" && el[0].target.className != "scContentTree" && el[0].target.className != "scContentTreeNode" ? replaceIcons(storage) : false;
     });
     //Observer UI
     target

@@ -9,7 +9,7 @@
   },
   "default_locale": "en",
   "background": {
-    "scripts": ["js/background.js"],
+    "page": "background.html",
     "persistent": false
   },
   "permissions": ["activeTab", "tabs", "storage", "downloads", "notifications", "declarativeContent", "contextMenus", "cookies", "http://*/*", "https://*/*"],
@@ -31,5 +31,31 @@
     "default_title": "Sitecore Author Toolbox (options)",
     "default_icon": "images/icon.png"
   },
-  "web_accessible_resources": ["images/*", "css/*", "js/*", "audio/*", "options/*", "data/icons.json"]
+  "web_accessible_resources": ["images/*", "css/*", "js/*", "audio/*", "options/*", "data/icons.json"],
+  "commands": {
+    "editInExperienceEditor": {
+      "suggested_key": {
+        "default": "Alt+X"
+      },
+      "description": "Edit In Experience Editor"
+    },
+    "editInContentEditor": {
+      "suggested_key": {
+        "default": "Alt+C"
+      },
+      "description": "Edit In Content Editor"
+    },
+    "editInHorizon": {
+      "suggested_key": {
+        "default": "Alt+H"
+      },
+      "description": "Edit in Horizon"
+    },
+    "viewPageInsights": {
+      "suggested_key": {
+        "default": "Alt+I"
+      },
+      "description": "View Page Insights"
+    }
+  }
 }

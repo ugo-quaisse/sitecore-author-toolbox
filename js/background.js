@@ -15,6 +15,8 @@
 /* eslint-disable object-property-newline */
 /* eslint-disable array-element-newline */
 
+import { showContextMenu, contextMenuClickHandler, launchEditUrl } from "./modules/quickedit.js";
+
 /**
  * Check existing cookie of SXA site
  */
@@ -32,38 +34,6 @@ function checkSiteSxa(sender, sendResponse) {
 }
 
 /**
- * Action on right-clic
- */
-function onClickHandler(info, tab) {
-  if (info.menuItemId == "SitecoreAuthorToolbox") {
-    //Check if window.location.href = CD/Live server
-    chrome.storage.sync.get(["domain_manager"], (result) => {
-      var domains = result.domain_manager;
-      var cmUrl = new URL(tab.url);
-      var cd = false;
-
-      for (var domain in domains) {
-        if (cmUrl.origin == domains[domain]) {
-          cmUrl = domain + cmUrl.pathname;
-          cd = true;
-          break;
-        }
-      }
-
-      //If no CD/Live
-      if (!cd) {
-        cmUrl = cmUrl.origin + cmUrl.pathname;
-      }
-
-      //Open the Experience editor
-      chrome.tabs.executeScript(tab.id, {
-        code: 'window.open("' + cmUrl + '?sc_mode=edit")',
-      });
-    });
-  }
-}
-
-/**
  * Get Sitecore userticket cookie
  */
 function getSitecoreCookie(tab) {
@@ -75,38 +45,12 @@ function getSitecoreCookie(tab) {
 }
 
 /**
- * Menu on right clic
- */
-function showContextMenu(tab) {
-  if (tab.url != undefined) {
-    var url = tab.url.split("?");
-    url = url[0];
-
-    var isSitecore = url.includes("/sitecore/");
-    var isUrl = url.includes("http");
-    var isEditMode = tab.url.includes("sc_mode=edit");
-    var isViewSource = url.includes("view-source:");
-
-    //Tab URL
-    chrome.contextMenus.removeAll(function () {
-      if (isUrl && !isViewSource && !isSitecore && !isEditMode) {
-        chrome.contextMenus.create(
-          {
-            title: "Edit in Experience Editor",
-            contexts: ["page"],
-            id: "SitecoreAuthorToolbox",
-          },
-          () => chrome.runtime.lastError
-        );
-      }
-    });
-  }
-}
-
-/**
  * Set exgtension icon and label
  */
 function setIcon(tab) {
+  if(!tab)
+    return;
+  
   //Variables
   var tabUrl = false;
   tab.url ? (tabUrl = new URL(tab.url)) : false;
@@ -117,13 +61,16 @@ function setIcon(tab) {
   var isLocalhost = url.includes("localhost:");
   var isViewSource = url.includes("view-source:");
   var cookie = false;
-
+  
+  chrome.contextMenus.removeAll();
+  chrome.commands.onCommand.removeListener(launchEditUrl);
+  
   if (isUrl && !isViewSource && tabUrl && !isLocalhost) {
     chrome.cookies.getAll({ url: tabUrl.origin }, function (cookies) {
       chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
 
       for (var i in cookies) {
-        if (cookies[i].name == "sitecore_userticket" || cookies[i].name.includes("#lang") || cookies[i].name.includes("#sc_mode")) {
+        if (cookies[i].name == "sitecore_userticket" || cookies[i].name.includes("#lang") || cookies[i].name.toLowerCase().includes("sc_")) {
           cookie = true;
           break;
         }
@@ -136,8 +83,14 @@ function setIcon(tab) {
 
         //Context menu
         chrome.storage.sync.get(["feature_contextmenu"], (result) => {
-          result.feature_contextmenu == undefined ? (result.feature_contextmenu = false) : false;
-          result.feature_contextmenu ? showContextMenu(tab) : false;
+          if(result.feature_contextmenu == undefined) result.feature_contextmenu = true;
+          if(result.feature_contextmenu) showContextMenu(tab);
+        });
+        
+        //Keyboard Shortcuts
+        chrome.storage.sync.get(["feature_editcommands"], (result) => {
+          if(result.feature_editcommands == undefined) result.feature_editcommands = true;
+          if(result.feature_editcommands) chrome.commands.onCommand.addListener(launchEditUrl);
         });
       } else {
         chrome.browserAction.setBadgeBackgroundColor({ color: "#777777" });
@@ -195,13 +148,18 @@ chrome.tabs.onUpdated.addListener(function (tab) {
 
 //When a tab is activated (does not fired is default_popup exists)
 chrome.tabs.onActivated.addListener(function (tab) {
-  chrome.tabs.getSelected(null, function (tab) {
-    setIcon(tab);
-  });
+  setTimeout(() => {
+    chrome.tabs.getSelected(null, function (tab) {
+        setIcon(tab);
+    });
+  }, 100);
 });
 
 chrome.runtime.setUninstallURL("https://uquaisse.io/sitecore-cms/uninstallation-successful/?utm_source=uninstall&utm_medium=chrome");
 
+//Context menu
+chrome.contextMenus.onClicked.addListener(contextMenuClickHandler);
+  
 // When the extension is installed or upgraded ...
 chrome.runtime.onInstalled.addListener(function (details) {
   let thisVersion = chrome.runtime.getManifest().version;
@@ -238,9 +196,6 @@ chrome.runtime.onInstalled.addListener(function (details) {
       console.log("Reload");
     }
   }
-
-  //Context menu
-  chrome.contextMenus.onClicked.addListener(onClickHandler);
 
   //Page action only
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {

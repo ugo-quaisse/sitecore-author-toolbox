@@ -95,9 +95,10 @@ const addDomain = (text = "", tocreate = undefined, isImport = false) => {
         document.querySelector("#sitesList").insertAdjacentHTML("beforeend", html);
         trackChanges(isImport);
         //Click events
-        document.querySelector(".addSite_" + countDomains).addEventListener("click", addSite.bind("", "domain_" + countDomains, "", "", "", true, true, false));
+        const urlParams = new URLSearchParams(window.location.search);
+        document.querySelector(".addSite_" + countDomains).addEventListener("click", addSite.bind("", "domain_" + countDomains, "", urlParams.get('siteUrl'), "", true, true, false));
         document.querySelector(".editDomain_" + countDomains).addEventListener("click", editDomain.bind("", "domain_" + countDomains));
-        tocreate === undefined ? addSite("domain_" + countDomains, "", "", "", true) : false;
+        tocreate === undefined ? addSite("domain_" + countDomains, "", urlParams.get('siteUrl'), "", true) : false;
         returnId = `domain_` + countDomains;
       }
     } catch (error) {
@@ -142,7 +143,7 @@ const editDomain = (domainId) => {
 /**
  * Prepend input fields to add a site
  */
-const addSite = (domain, path, cd, lang = "", embedding = true, displayName = true, autoadd = false, name = "", isImport = "") => {
+const addSite = (domain, path, cd, lang = "", embedding = true, displayName = true, autoadd = false, name = "", isImport = "", siteName = "") => {
   let isExisting = false;
 
   //Check if sites already exists
@@ -171,11 +172,15 @@ const addSite = (domain, path, cd, lang = "", embedding = true, displayName = tr
         <div class="arrow">➝</div>
         <div class="cd_url">
             <label for="siteUrl">Site URL</label>
-            <input id="siteUrl" name="value" type="url" placeholder="e.g https://..." pattern="https?://.*" value="${decodeURI(cd)}"> 
+            <input id="siteUrl" name="value" type="url" placeholder="e.g https://..." pattern="https?://.*" value="${cd ? decodeURI(cd) : ''}"> 
         </div>
         <div class="lang_url" style="${showAdvanced}" title="Whether or not you want to bind this URL to a specific language version. (if empty, applies to all languages)">
             <label for="langUrl">Language</label>
             <input id="langUrl" name="lang" type="url" placeholder="e.g fr-FR" value="${decodeURI(lang)}"> 
+        </div>
+        <div class="lang_url" style="${showAdvanced}" title="Please specify the exact site name configured in site config. (Only needed for multi-site implementations if the auto-siteresolving doesn't identify correct site for edit urls)">
+            <label for="siteName">Site Name</label>
+            <input id="siteName" name="siteName" type="text" placeholder="e.g website" value="${siteName}"> 
         </div>
         <div class="embedding_url" style="${showAdvanced}" title="Whether or not you want to add language code in the URL">
             <label for="langUrl">Embedding</label>

@@ -104,6 +104,10 @@ document.querySelector("#settings").onclick = function () {
   }, 500);
 };
 
+document.querySelector("#quickEditSettings").onclick = function() { 
+  document.querySelector("#settings").click();
+};
+
 //Back button
 document.querySelector(".back").onclick = function (event) {
   event.preventDefault();

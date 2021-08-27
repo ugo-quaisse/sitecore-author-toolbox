@@ -263,8 +263,6 @@ const insertMoreButton = () => {
       <h3>Version:</h3> <span class="itemDetail">${ScItem.version}</span>
     </div>`;
   panel ? (panel.innerHTML = html) : false;
-
-  //document.querySelector(".scEditorTabControls") ? document.querySelector(".scEditorTabControls").remove() : false;
 };
 
 /**
@@ -433,7 +431,7 @@ const setInsertIcon = (treeNode) => {
   //Listener when hover scInsertItemIcon
   document.querySelector(".scInsertItemIcon").addEventListener("mouseenter", function () {
     let parent = document.querySelector(".scInsertItemIcon").parentNode.querySelector("a > span");
-    parent.setAttribute("style", "background-color: var(--grey5)");
+    parent.setAttribute("style", "background-color: var(--black2)");
   });
   document.querySelector(".scInsertItemIcon").addEventListener("mouseleave", function () {
     let parent = document.querySelector(".scInsertItemIcon").parentNode.querySelector("a > span");
@@ -509,21 +507,6 @@ const initInsertIcon = (storage) => {
     contentTree.addEventListener("mouseleave", () => {
       document.querySelector(".scInsertItemIcon") ? document.querySelector(".scInsertItemIcon").setAttribute("style", "opacity:0") : false;
       document.querySelector(".scEditItemIcon") ? document.querySelector(".scEditItemIcon").setAttribute("style", "opacity:0") : false;
-
-      // if (event.path[1].classList.contains("scContentTreeNodeNormal") || event.path[1].classList.contains("scContentTreeNodeActive")) {
-      //   node = event.path[1];
-      // }
-      // if (event.path[2].classList.contains("scContentTreeNodeNormal") || event.path[2].classList.contains("scContentTreeNodeActive")) {
-      //   node = event.path[2];
-      // }
-      // //Updating html structure to allow text-overflow and avoid icons overlap
-      // if (node.classList.contains("scNoOverlap")) {
-      //   nodeIcon = node.querySelector("span > img").src;
-      //   nodeContent = node.querySelector("span").innerText;
-      //   node.querySelector("span").innerHTML =
-      //     `<img src="` + nodeIcon + `" width="16" height="16" class="scContentTreeNodeIcon" alt="" border="0">` + nodeContent;
-      //   node.classList.remove("scNoOverlap");
-      // }
     });
   }
 };
@@ -677,11 +660,12 @@ const initTitleBarDesktop = () => {
 /**
  * Replace Glyph Images
  */
-const replaceIcons = (storage) => {
+const replaceIcons = (
+  storage,
+  nodes = ".scButtonIconImage, .scTileItemIconImage, .scPreviewItem > img, .scContentControlLayoutDeviceRenderings img, .scTreelistEx img, .icon, .glyph, .scNavButton, .item-icon, .sc-breadcrumb-item-path > img, .scContentControlLayoutDeviceName > img, .scRendering > img, .scTabContent img, .scContentTreeNodeGlyph, .scContentTreeNodeIcon, #scModal .main img, .scInstantSearchResults img, .dynatree-container img, .dynatree-node > img, .scTabs .scImageContainer > img, form[action*='Gallery'] img, form[action*='Media'] .scFolderButtons img, .scPopup .scMenuItemIcon > img, .satEE .scChromeCommand > img"
+) => {
   if (storage.feature_experimentalui === true && storage.feature_material_icons === true) {
-    let imgGlyph = document.querySelectorAll(
-      ".scButtonIconImage, .scTileItemIconImage, .scPreviewItem > img, .scContentControlLayoutDeviceRenderings img, .scTreelistEx img, .icon, .glyph, .scNavButton, .item-icon, .sc-breadcrumb-item-path > img, .scContentControlLayoutDeviceName > img, .scRendering > img, .scTabContent img, .scContentTreeNodeGlyph, .scContentTreeNodeIcon, #scModal .main img, .scInstantSearchResults img, .dynatree-container img, .dynatree-node > img, .scTabs .scImageContainer > img, form[action*='Gallery'] img, form[action*='Media'] .scFolderButtons img, .scPopup .scMenuItemIcon > img, .satEE .scChromeCommand > img"
-    );
+    let imgGlyph = document.querySelectorAll(nodes);
     for (let icon of imgGlyph) {
       let filename = icon.src.substring(icon.src.lastIndexOf("/") + 1).toLowerCase();
       let parent = icon.parentElement.parentElement;
@@ -730,7 +714,10 @@ const initMaterializeIcons = (storage) => {
     //In Content Editor
     target = document.querySelector("body");
     observer = new MutationObserver(function (el) {
-      el[0].target.className != "satCharsCount" && el[0].target.className != "scValidatorPanel" && el[0].target.className != "scContentTree" && el[0].target.className != "scContentTreeNode" ? replaceIcons(storage) : false;
+      if (el[0].target.className) {
+        el[0].target.className != "satCharsCount" && el[0].target.className != "scValidatorPanel" && el[0].target.className != "scContentTree" && el[0].target.className != "scContentTreeNode" ? replaceIcons(storage) : false;
+        el[0].target.className == "scContentTreeNode" ? replaceIcons(storage, ".scContentTreeNodeGlyph, .scContentTreeNodeIcon") : false;
+      }
     });
     //Observer UI
     target

@@ -37,8 +37,7 @@ const initIntroScreen = () => {
  */
 const getGravatar = (email, size = "170", type = "robohash") => {
   //Type = [ 404 | mp | identicon | monsterid | wavatar | retro | robohash | blank ]
-  var md5 = calcMD5(email);
-  var link = "https://www.gravatar.com/avatar/" + md5 + "?s=" + size + "&d=" + type;
+  var link = "https://www.gravatar.com/avatar/" + calcMD5(email) + "?s=" + size + "&d=" + type;
 
   return link;
 };
@@ -55,9 +54,6 @@ const initGravatarImage = (storage) => {
     let observer = new MutationObserver(function () {
       let InfoPhotoImage = document.querySelector("img[data-sc-id=InfoPhotoImage]");
       let InfoEmailLink = document.querySelector("a[data-sc-id=InfoEmailLink]");
-
-      // InfoPhotoImage ? console.log(InfoPhotoImage.src) : false;
-      // InfoEmailLink ? console.log(InfoEmailLink.innerHTML) : false;
 
       if (InfoPhotoImage && InfoEmailLink) {
         if (InfoEmailLink.innerHTML.includes("@") && !InfoPhotoImage.src.includes("www.gravatar.com")) {
@@ -382,7 +378,7 @@ const initInterfaceEvents = () => {
         document.body.classList.remove("satExperimentalUi");
         //iframes
         document.querySelectorAll("iframe").forEach(function (iframe) {
-          if (iframe.contentDocument.body) {
+          if (iframe.contentDocument) {
             iframe.contentDocument.body.classList.remove("satExperimentalUi");
             iframe.contentDocument.querySelectorAll("iframe").forEach(function (i) {
               i.contentDocument.body.classList.remove("satExperimentalUi");
@@ -402,7 +398,7 @@ const initInterfaceEvents = () => {
         document.body.classList.add("satExperimentalUi");
         //iframes
         document.querySelectorAll("iframe").forEach(function (iframe) {
-          if (iframe.contentDocument.body) {
+          if (iframe.contentDocument) {
             iframe.contentDocument.body.classList.add("satExperimentalUi");
             iframe.contentDocument.querySelectorAll("iframe").forEach(function (i) {
               i.contentDocument.body.classList.add("satExperimentalUi");

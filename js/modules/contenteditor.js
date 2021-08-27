@@ -108,7 +108,6 @@ const sitecoreAuthorToolbox = (storage) => {
     storage.feature_experimentalui
       ? (scEditorHeaderVersionsVersion.querySelector("span").innerHTML = scEditorHeaderVersionsVersion.querySelector("span").innerHTML.replace("Version", "<img src='" + global.iconVersion + "' class='scVersionIcon' />"))
       : false;
-    //storage.feature_experimentalui ? document.querySelector(".scEditorHeaderNavigator").setAttribute("style","display:none") : false;
   }
 
   //Flag in tab and menu
@@ -150,7 +149,7 @@ const sitecoreAuthorToolbox = (storage) => {
    * Content Editor - UI enhancements
    */
   storage.feature_contenteditor == undefined ? (storage.feature_contenteditor = true) : false;
-  if (storage.feature_contenteditor == true) {
+  if (storage.feature_contenteditor) {
     /**
      * Select Content tab for content
      */
@@ -212,7 +211,7 @@ const sitecoreAuthorToolbox = (storage) => {
  */
 const openFolderTab = (storage) => {
   storage.feature_contenteditor == undefined ? (storage.feature_contenteditor = true) : false;
-  if (storage.feature_contenteditor == true && document.querySelector("#EditorTabs > .scRibbonEditorTabActive")) {
+  if (storage.feature_contenteditor && document.querySelector("#EditorTabs > .scRibbonEditorTabActive")) {
     if (document.querySelector("#EditorTabs > .scRibbonEditorTabActive").innerText.toLowerCase() == "search") {
       document.querySelectorAll("#EditorTabs > a").forEach(function (e) {
         e.innerText.toLowerCase() == "folder" ? e.click() : false;
@@ -287,37 +286,6 @@ const initFancyMessageBars = (storage) => {
           : false;
       }
     }
-    //Check if item is locked
-    // setTimeout(function () {
-    //   var isItemLocked = document.querySelector(".scRibbon").innerHTML.includes("Check this item in.");
-
-    //   if (isItemLocked && !isElevateUnlock && !isLockMessage) {
-    //     if (isLockMessage) {
-    //       var temp = scWarningText.split("' ");
-    //       var lockedBy = temp[0].replace("'", "");
-    //       lockedBy += " has";
-    //     } else {
-    //       lockedBy = "You have";
-    //     }
-
-    //     document.querySelector("#scLockMenuText") ? (document.querySelector("#scLockMenuText").innerText = "Unlock item...") : false;
-
-    //     //Prepare HTML
-    //     let scMessage = `<div id="scMessageBarUrl" class="scMessageBar scWarning">
-    //         <div class="scMessageBarIcon" style="background-image:url(${global.iconLock})"></div>
-    //         <div class="scMessageBarTextContainer">
-    //           <div class="scMessageBarTitle">${lockedBy} locked this item.</div>
-    //           <div class="scMessageBarText">Nobody can edit this page until you unlock it.</div>
-    //           <ul class="scMessageBarOptions">
-    //             <li class="scMessageBarOptionBullet">
-    //               <a href="#" onclick="javascript:return scForm.postEvent(this,event,'item:checkin')" class="scMessageBarOption">Unlock this item</a>
-    //             </li>
-    //           </ul>
-    //         </div>
-    //       </div>`;
-    //     scEditorHeader.insertAdjacentHTML("afterend", scMessage);
-    //   }
-    // }, 1000);
   }, 100);
 };
 
@@ -367,7 +335,7 @@ const initCharsCount = (storage) => {
  */
 const initCopyToClipboard = (storage) => {
   storage.feature_contenteditor == undefined ? (storage.feature_contenteditor = true) : false;
-  if (storage.feature_contenteditor == true) {
+  if (storage.feature_contenteditor) {
     var scTextFields = document.querySelectorAll("input, textarea, checkbox");
     var copyHtml;
     var copyCount = 0;
@@ -390,7 +358,7 @@ const initCopyToClipboard = (storage) => {
  */
 const changeTitleWindow = (storage) => {
   storage.feature_contenteditor == undefined ? (storage.feature_contenteditor = true) : false;
-  if (storage.feature_contenteditor == true) {
+  if (storage.feature_contenteditor) {
     let ScItem = getScItemData();
     ScItem.name ? (window.document.title = "" + ScItem.name.capitalize() + " (" + ScItem.language.toUpperCase() + ")") : false;
     ScItem.name && document.querySelector(".titleBarText") ? (document.querySelector(".titleBarText").innerText = "" + ScItem.name.capitalize() + " (" + ScItem.language.toUpperCase() + ")") : false;

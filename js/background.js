@@ -195,9 +195,11 @@ chrome.tabs.onUpdated.addListener(function (tab) {
 
 //When a tab is activated (does not fired is default_popup exists)
 chrome.tabs.onActivated.addListener(function (tab) {
-  chrome.tabs.getSelected(null, function (tab) {
-    setIcon(tab);
-  });
+  setTimeout(() => {
+    chrome.tabs.getSelected(null, function (tab) {
+      setIcon(tab);
+    });
+  }, 500);
 });
 
 chrome.runtime.setUninstallURL("https://uquaisse.io/sitecore-cms/uninstallation-successful/?utm_source=uninstall&utm_medium=chrome");

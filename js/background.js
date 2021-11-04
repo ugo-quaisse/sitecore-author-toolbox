@@ -114,7 +114,7 @@ function setIcon(tab) {
   url = url[0];
   var isSitecore = url.includes("/sitecore/");
   var isUrl = url.includes("http");
-  var isLocalhost = url.includes("localhost:");
+  var isLocalhost = url.includes("localhost");
   var isViewSource = url.includes("view-source:");
   var cookie = false;
 
@@ -166,19 +166,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       });
   }
 
-  if (request.greeting == "get_pagespeed") {
-    // console.log(request);
-    // async function runPagespeed(url, apiKey) {
-    //     url = new URL(url);
-    //     url = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=" + url.href + "&screenshot=true&key=" + apiKey
-    //     let request = await fetch(url)
-    //     let data = await request.json();
-    //     console.log(data);
-    //     await sendResponse({ farewell: "screenshot", screenshot: data.lighthouseResult });
-    // }
-    // //Execute
-    // runPagespeed(request.url, request.apiKey);
-  }
   if (request.greeting == "sxa_site") {
     checkSiteSxa(sender, sendResponse);
   }
@@ -245,19 +232,19 @@ chrome.runtime.onInstalled.addListener(function (details) {
   chrome.contextMenus.onClicked.addListener(onClickHandler);
 
   //Page action only
-  chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
-    chrome.declarativeContent.onPageChanged.addRules([
-      {
-        conditions: [
-          new chrome.declarativeContent.PageStateMatcher({
-            pageUrl: { urlContains: "/sitecore/" },
-          }),
-          new chrome.declarativeContent.PageStateMatcher({
-            pageUrl: { urlContains: "sc_mode=" },
-          }),
-        ],
-        actions: [new chrome.declarativeContent.ShowPageAction()],
-      },
-    ]);
-  });
+  //   chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
+  //     chrome.declarativeContent.onPageChanged.addRules([
+  //       {
+  //         conditions: [
+  //           new chrome.declarativeContent.PageStateMatcher({
+  //             pageUrl: { urlContains: "/sitecore/" },
+  //           }),
+  //           new chrome.declarativeContent.PageStateMatcher({
+  //             pageUrl: { urlContains: "sc_mode=" },
+  //           }),
+  //         ],
+  //         actions: [new chrome.declarativeContent.ShowPageAction()],
+  //       },
+  //     ]);
+  //   });
 });

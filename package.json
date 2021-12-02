@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/ugo-quaisse/sitecore-author-toolbox#readme",
   "devDependencies": {
+    "ansi-regex": ">=5.0.1",
     "eslint": "^7.6.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^14.1.1",
@@ -41,8 +42,8 @@
     "gulp-rename": "^2.0.0",
     "gulp-wait": "^0.0.2",
     "npm-build-zip": "^1.0.3",
-    "yargs-parser": ">=5.0.0-security.0",
-    "set-value": ">=4.0.1"
+    "set-value": ">=4.0.1",
+    "yargs-parser": ">=5.0.0-security.0"
   },
   "browserslist": [
     "last 1 Chrome version"

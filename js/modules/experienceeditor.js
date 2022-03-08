@@ -23,7 +23,7 @@ const storeCurrentPageEE = () => {
 };
 
 /**
- * Style default compoenent text
+ * Style default component text
  */
 const initDefaultTextEE = (storage) => {
   storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;

@@ -210,10 +210,17 @@ body.satEEExperimentalUi #commandRow > a:hover img {
   filter: invert(var(--accentRevert));
 }
 body.satEEExperimentalUi .scChromeWorkflowSection,
-body.satEEExperimentalUi #myItemsLoadingIndicator,
-body.satEEExperimentalUi .scChromeDsSection[title*="associated"],
-body.satEEExperimentalUi .scChromeDsSection[data-tooltip*="associated"] {
+body.satEEExperimentalUi #myItemsLoadingIndicator  {
   display: none;
+}
+body.satEEExperimentalUi .scChromeDsSection[title*="associated"],
+body.satEEExperimentalUi .scChromeDsSection[data-tooltip*="associated"]
+{
+  /* display: none; Bug when inserting a Datasource, it is not showing up in EE */
+}
+body.satEEExperimentalUi .scChromeDsSection img:last-child {
+  width: 10px;
+  margin-top: 10px !important;
 }
 body.satEEExperimentalUi .scChromeDsSection,
 body.satEEExperimentalUi .scChromeCommand,

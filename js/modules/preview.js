@@ -15,6 +15,7 @@ const initPreviewButton = (storage) => {
   let iframeId = window.frameElement.getAttribute("id");
   let container = parent.document.querySelector("#EditorTabs");
   let activeTab = parent.document.querySelector("#EditorTabs > a.scRibbonEditorTabActive").innerText.toLowerCase();
+  let previewTabControlsCount = parent.document.querySelectorAll("#EditorTabControls_Preview").length;
 
   //Experimental mode
   let extraClass = storage.feature_experimentalui ? "t-top t-sm" : "t-top t-sm scButtonExtended";
@@ -30,11 +31,14 @@ const initPreviewButton = (storage) => {
     </div>`;
 
   //Add to view
-  container && !document.querySelector("#EditorTabControls_Preview") && activeTab == "preview" ? container.insertAdjacentHTML("beforeend", button) : false;
+  container && previewTabControlsCount == 0 && activeTab == "preview" ? container.insertAdjacentHTML("beforeend", button) : false;
+
+  //Show it if hidden
+  previewTabControlsCount != 0 ? parent.document.querySelector("#EditorTabControls_Preview").style.display = "block" : false;
 };
 
 /**
- * Insert Preview buttons
+ * Insert Preview buttons when switching tabs
  */
 const listenPreviewTab = (storage) => {
   let target = parent.document.querySelector("[id^='FPreview']");

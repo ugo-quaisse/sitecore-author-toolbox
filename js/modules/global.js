@@ -150,6 +150,7 @@ export const isMediaUpload = windowLocationHref.includes("/applications/dialogs/
 export const isUploadManager = windowLocationHref.includes("/uploadmanager/");
 export const isPublishWindow = windowLocationHref.includes("/applications/publish.aspx");
 export const isPublishDialog = windowLocationHref.includes("/publishing/publishdialog");
+export const isPublishDashboard = windowLocationHref.includes("/publishing/dashboard");
 export const isExportSiteWizard = windowLocationHref.includes("exportsitewizard");
 export const isInstallationWizard = windowLocationHref.includes("installationwizard");
 export const isUploadPackage = windowLocationHref.includes("uploadpackage");

@@ -8,17 +8,17 @@ body.satExperimentalUi {
 }
 
 /* body.satExperimentalUi.contentEditor:after {
-  background: url(chrome-extension://dpmlbbpimcmgdlhpdphnijefjchoicmj/images/sc-spinner.svg) center center no-repeat rgb(255, 255, 255) !important;
+  background: url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner.svg") center center no-repeat rgb(255, 255, 255) !important;
   background-size: 70% !important;
 } */
 
 body.satExperimentalUi .ui-widget-overlay:after {
-  background: url(chrome-extension://dpmlbbpimcmgdlhpdphnijefjchoicmj/images/sc-spinner.svg) center center no-repeat rgb(255, 255, 255) !important;
+  background: url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner.svg") center center no-repeat rgb(255, 255, 255) !important;
   background-size: 70% !important;
 }
 
 body.satExperimentalUi #saveAnimation {
-  background: url(chrome-extension://dpmlbbpimcmgdlhpdphnijefjchoicmj/images/sc-spinner.svg) center center no-repeat rgb(255, 255, 255) !important;
+  background: url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner.svg") center center no-repeat rgb(255, 255, 255) !important;
   background-size: 70% !important;
 }
 

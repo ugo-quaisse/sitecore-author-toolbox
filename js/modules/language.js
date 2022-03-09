@@ -12,6 +12,10 @@ export { cleanCountryName, findCountryName, initFlagRibbonEE, initLanguageMenuEE
 const cleanCountryName = (name) => {
   var temp = name;
   var language = "ENGLISH";
+
+  temp = temp.replace("flag_", "");
+  temp = temp.replace(".png", "");
+
   if (temp != null && temp != undefined && temp != "") {
     if (temp.includes(" (region")) {
       temp = temp.split(" (region");

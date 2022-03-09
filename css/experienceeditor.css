@@ -43,6 +43,12 @@ body.satEE .scAddRendering {
 body.satEE .scContrastedIcon {
   filter: brightness(var(--iconBrightness)) invert(var(--iconInvert));
 }
+body.satEE .scNoContrastedFlag {
+  filter: unset;
+  image-rendering: unset;
+  opacity: 1 !important;
+}
+
 /* Renderings selection frame */
 body.satEE .scFrameSideHorizontal {
   box-shadow: 0px 0px 10px 1px rgba(40, 155, 200, 0.7);
@@ -131,6 +137,12 @@ body.satEEExperimentalUi .scChromeToolbar {
 }
 body.satEEExperimentalUi .scChromeDropDown {
   padding: 5px !important;
+}
+body.satEEExperimentalUi .scChromeDropDown img {
+  top: 11px;
+}
+body.satEEExperimentalUi .scChromeDropDown span {
+  margin-left: 25px !important;
 }
 body.satEEExperimentalUi .scChromeControls,
 body.satEEExperimentalUi .scChromeDropDown {

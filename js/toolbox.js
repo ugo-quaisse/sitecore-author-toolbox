@@ -34,6 +34,7 @@ import { initPreviewButton, listenPreviewTab } from "./modules/preview.js";
 import { initLaunchpadIcon, initLaunchpadMenu } from "./modules/launchpad.js";
 import { initAutoExpandTree, initTreeGutterTooltips } from "./modules/contenttree.js";
 import { initQuerySuggestions } from "./modules/template.js";
+import { initPublishingStatus } from "./modules/publishingdashboard.js";
 import { storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor, initRenderingSearchBox } from "./modules/experienceeditor.js";
 /**
  * Get all user's settings from chrome storage
@@ -137,6 +138,10 @@ chrome.storage.sync.get((storage) => {
       log("**** Template Builder ****", "orange");
       initAppName(storage, "Template Builder");
       initQuerySuggestions(storage);
+    } else if (global.isPublishDashboard) {
+      log("**** Publishing Dashboard ****", "orange");
+      initAppName(storage, "Publishing Dashboard");
+      initPublishingStatus(storage);
     } else {
       log("**** Non identified ****", "green");
       log(global.windowLocationHref, "green");

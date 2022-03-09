@@ -755,6 +755,10 @@ export const jsonIcons = JSON.parse(
   {
     "search": "font",
     "icon": "editor::text_fields"
+  },
+  {
+    "search": "flag_great_britain",
+    "icon": "flag::smart_button"
   }
 ]`
 );

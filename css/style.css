@@ -60,7 +60,7 @@ body.satEE nav#ribbonPreLoadingIndicator .sc-progressindicator-inner {
 body.satExperimentalUi .sc-progressindicator-inner,
 body.satEE.satExperimentalUi .sc-progressindicator-inner,
 body.satEE.satEEExperimentalUi .sc-progressindicator-inner {
-  background: #fff url(chrome-extension://dpmlbbpimcmgdlhpdphnijefjchoicmj/images/sc-spinner.svg) no-repeat center center !important;
+  background: #fff url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner.svg") no-repeat center center !important;
 }
 body.satExtension .hide {
   display: none;

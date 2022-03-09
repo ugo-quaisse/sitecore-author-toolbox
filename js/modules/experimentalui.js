@@ -6,6 +6,7 @@
 import * as global from "./global.js";
 import * as icons from "./icons.js";
 import { getMaterializeIcon, getScItemData, setTextColour } from "./helpers.js";
+import { findCountryName } from "./language.js";
 
 export {
   initOnboarding,
@@ -416,6 +417,7 @@ const setInsertIcon = (treeNode) => {
   let itemName = a.querySelector("span").innerText;
   let active = document.querySelector(".scContentTreeNodeActive") ? document.querySelector(".scContentTreeNodeActive").id.replace("Tree_Node_", "") : false;
   let activeClass = "";
+  let isDarkMode = document.querySelector("body").classList.contains("satDark");
   id == active ? (activeClass = "scInsertItemIconInverted") : false;
 
   //Remove existing Insert Icons
@@ -431,7 +433,7 @@ const setInsertIcon = (treeNode) => {
   //Listener when hover scInsertItemIcon
   document.querySelector(".scInsertItemIcon").addEventListener("mouseenter", function () {
     let parent = document.querySelector(".scInsertItemIcon").parentNode.querySelector("a > span");
-    parent.setAttribute("style", "background-color: var(--black2)");
+    !isDarkMode ? parent.setAttribute("style", "background-color: var(--grey5)") : parent.setAttribute("style", "background-color: var(--dark2)");
   });
   document.querySelector(".scInsertItemIcon").addEventListener("mouseleave", function () {
     let parent = document.querySelector(".scInsertItemIcon").parentNode.querySelector("a > span");
@@ -456,7 +458,7 @@ const setInsertIcon = (treeNode) => {
   //Listener when hover scEditItemIcon
   document.querySelector(".scEditItemIcon").addEventListener("mouseenter", function () {
     let parent = document.querySelector(".scEditItemIcon").parentNode.querySelector("a > span");
-    parent.setAttribute("style", "background-color: var(--grey5)");
+    !isDarkMode ? parent.setAttribute("style", "background-color: var(--grey5)") : parent.setAttribute("style", "background-color: var(--dark2)");
   });
   document.querySelector(".scEditItemIcon").addEventListener("mouseleave", function () {
     let parent = document.querySelector(".scEditItemIcon").parentNode.querySelector("a > span");
@@ -678,6 +680,10 @@ const replaceIcons = (
         icon.src = global.iconTreeCollapsed;
       } else if (parentId == "11111111111111111111111111111111") {
         icon.src = global.iconSitecoreTree;
+        icon.classList.add("scMaterialIcon");
+      } else if (filename.includes("flag_")) {
+        icon.src = chrome.runtime.getURL("images/Flags/svg/" + findCountryName(filename) + ".svg");
+        icon.classList.add("scNoContrastedFlag");
         icon.classList.add("scMaterialIcon");
       } else {
         //Loop Json with icons references, find and match

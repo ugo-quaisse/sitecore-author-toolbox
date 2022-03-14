@@ -4,7 +4,7 @@ import * as global from "./global.js";
 import { exeJsCode, loadCssFile, startDrag, sitecoreItemJson } from "./helpers.js";
 import { currentColorScheme } from "./dark.js";
 
-export { storeCurrentPageEE, initDefaultTextEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor, initRenderingSearchBox };
+export { storeCurrentPageEE, initDefaultTextEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor, initRenderingSearchBox, initHighlightValidationError };
 
 /**
  * Add button to toolbar to open datasource in CE
@@ -289,6 +289,18 @@ const resetExperienceEditor = (storage) => {
     document.body ? document.body.classList.add("satEEDark") : false;
   }
 };
+
+/**
+ * Highlight validation errors in the page TODO
+ */
+ const initHighlightValidationError = (storage) => {
+  storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;
+  if (storage.feature_experienceeditor) {
+    document.querySelectorAll(".alert-error .sc-messageBar-messageText-container .OptionTitle").forEach((elem) => {
+      console.log(elem.id)
+    });
+  }
+ }
 
 /**
  * Init Rendering Search box

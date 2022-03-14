@@ -759,6 +759,18 @@ export const jsonIcons = JSON.parse(
   {
     "search": "flag_great_britain",
     "icon": "flag::smart_button"
+  },
+  {
+    "search": "comment",
+    "icon": "editor::add_comment"
+  },
+  {
+    "search": "error",
+    "icon": "alert::error"
+  },
+  {
+    "search": "tab_close",
+    "icon": "navigation::close"
   }
 ]`
 );

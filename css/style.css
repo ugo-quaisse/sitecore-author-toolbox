@@ -2158,6 +2158,7 @@ body.satExtension #Page {
 
 #Page.mobile_v iframe {
   border-radius: 27px;
+  margin-top: 0px;
 }
 
 #Page.mobile_v > #Shadow {
@@ -2171,6 +2172,7 @@ body.satExtension #Page {
 
 #Page.mobile_h iframe {
   border-radius: 27px;
+  margin-top: 0px;
 }
 
 #Page.mobile_h > #Shadow {
@@ -2184,6 +2186,7 @@ body.satExtension #Page {
 
 #Page.tablet_v iframe {
   border-radius: 17px;
+  margin-top: 0px;
 }
 
 #Page.tablet_v > #Shadow {
@@ -2197,6 +2200,7 @@ body.satExtension #Page {
 
 #Page.tablet_h iframe {
   border-radius: 17px;
+  margin-top: 0px;
 }
 
 #Page.tablet_h > #Shadow {

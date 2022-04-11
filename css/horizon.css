@@ -3,5 +3,5 @@ body.satHZExperimentalUi .ngspdbadge {
 }
 
 body.satHZExperimentalUi .primary {
-  color: var(--accent);
+  background-color: var(--accent);
 }

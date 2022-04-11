@@ -1,12 +1,16 @@
 body.satHZExperimentalUi .active {
   color: var(--accent);
-  border-color: var(--accent);
+  border-bottom: 5px solid var(--accent);
 }
 
 body.satHZExperimentalUi .node.selected {
   color: var(--accentText);
   background-color: var(--accent);
   linear-gradient(270deg,#bfddf4 45px,rgba(191,221,244,0))
+}
+
+body.satHZExperimentalUi .node.selected:after {
+  background: none;
 }
 
 body.satHZExperimentalUi .ngspdbadge {

@@ -118,7 +118,7 @@ function setIcon(tab) {
   var isViewSource = url.includes("view-source:");
   var cookie = false;
 
-  if (isUrl && !isViewSource && tabUrl && !isLocalhost) {
+  if (isUrl && !isViewSource && tabUrl) {
     chrome.cookies.getAll({ url: tabUrl.origin }, function (cookies) {
       chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
 

@@ -1,3 +1,13 @@
+body.satHZExperimentalUi .active {
+  color: var(--accent);
+  border-bottom: var(--accent);
+}
+
+body.satHZExperimentalUi .node.selected {
+  color: var(--accentText);
+  background-color: var(--accent);
+}
+
 body.satHZExperimentalUi .ngspdbadge {
   color: var(--accent);
 }

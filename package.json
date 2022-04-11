@@ -51,8 +51,6 @@
   ],
   "dependencies": {
     "postcss-discard-duplicates": "^4.0.2",
-    "graceful-fs": {
-      "version": "4.2.2"
-    }
+    "graceful-fs": "4.2.2"
   }
 }

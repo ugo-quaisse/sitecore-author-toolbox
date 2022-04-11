@@ -123,7 +123,7 @@ function setIcon(tab) {
       chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
 
       for (var i in cookies) {
-        if (cookies[i].name == "sitecore_userticket" || cookies[i].name.includes("#lang") || cookies[i].name.includes("#sc_mode")) {
+        if (cookies[i].name == "sitecore_userticket" || cookies[i].name == "sc_horizon" || cookies[i].name.includes("#lang") || cookies[i].name.includes("#sc_mode")) {
           cookie = true;
           break;
         }

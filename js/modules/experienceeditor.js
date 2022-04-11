@@ -293,14 +293,14 @@ const resetExperienceEditor = (storage) => {
 /**
  * Highlight validation errors in the page TODO
  */
- const initHighlightValidationError = (storage) => {
+const initHighlightValidationError = (storage) => {
   storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;
   if (storage.feature_experienceeditor) {
     document.querySelectorAll(".alert-error .sc-messageBar-messageText-container .OptionTitle").forEach((elem) => {
-      console.log(elem.id)
+      console.log(elem.id);
     });
   }
- }
+};
 
 /**
  * Init Rendering Search box

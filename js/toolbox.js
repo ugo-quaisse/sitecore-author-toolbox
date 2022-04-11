@@ -35,7 +35,9 @@ import { initLaunchpadIcon, initLaunchpadMenu } from "./modules/launchpad.js";
 import { initAutoExpandTree, initTreeGutterTooltips } from "./modules/contenttree.js";
 import { initQuerySuggestions } from "./modules/template.js";
 import { initPublishingStatus } from "./modules/publishingdashboard.js";
-import { storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor, initRenderingSearchBox, initHighlightValidationError } from "./modules/experienceeditor.js";
+import { storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor, initRenderingSearchBox } from "./modules/experienceeditor.js";
+import { initHorizon } from "./modules/horizon.js";
+
 /**
  * Get all user's settings from chrome storage
  */
@@ -303,5 +305,16 @@ chrome.storage.sync.get((storage) => {
       initMaterializeIcons(storage);
       //initHighlightValidationError(storage);
     }
+  }
+
+  /*
+   *********************
+   * Horizon detection *
+   *********************
+   */
+  if (global.isHorizon || global.isHorizonFieldBuilder || global.isHorizonExplorer) {
+    log("Horizon detected", "red");
+    document.body ? document.body.classList.add("satExtension") : false;
+    initHorizon(storage);
   }
 });

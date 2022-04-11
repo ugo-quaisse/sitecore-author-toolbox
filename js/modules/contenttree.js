@@ -61,11 +61,9 @@ const initAutoExpandTree = (storage) => {
           setTimeout(function () {
             if (document && glyphId) {
               let subTreeDiv = glyphId.nextSibling;
-              console.log(subTreeDiv);
               if (subTreeDiv) {
                 let newNodes = subTreeDiv.querySelectorAll(".dynatree-has-children");
                 newNodes.length == 1 ? newNodes[0].querySelector(".dynatree-expander").click() : false;
-                console.log(newNodes);
               }
             }
           }, 500);
@@ -102,14 +100,31 @@ const initAutoExpandTree = (storage) => {
  * Content Tree Error Tooltip
  */
 const initTreeGutterTooltips = () => {
-  //TODO to be triggered on TREE VIEW refresh
-  setTimeout(function () {
+  //TODO buggy feature with position absolute
+  var target = document.querySelector("#ContentTreeInnerPanel");
+  var observer = new MutationObserver(function () {
     document.querySelectorAll(".scContentTreeNodeGutterIcon").forEach(function (el) {
       let parent = el.parentElement;
-      parent.setAttribute("data-tooltip", el.getAttribute("title"));
-      parent.classList.add("t-right");
-      parent.classList.add("t-xs");
-      el.removeAttribute("title");
+      let image = el.parentElement.querySelector("img");
+      let attrExists = parent.hasAttribute("data-tooltip");
+      if (!attrExists) {
+        image.setAttribute("data-tooltip", el.getAttribute("title"));
+        image.classList.add("t-right");
+        image.classList.add("t-xs");
+        //parent.setAttribute("style", "position:absolute");
+        el.removeAttribute("title");
+      }
     });
-  }, 2500);
+  });
+
+  //Observer
+  if (target) {
+    let config = {
+      attributes: false,
+      childList: true,
+      characterData: false,
+      subtree: true,
+    };
+    //observer.observe(target, config);
+  }
 };

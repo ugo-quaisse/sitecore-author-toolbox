@@ -771,6 +771,10 @@ export const jsonIcons = JSON.parse(
   {
     "search": "tab_close",
     "icon": "navigation::close"
+  },
+  {
+    "search": "lock",
+    "icon": "action::lock"
   }
 ]`
 );

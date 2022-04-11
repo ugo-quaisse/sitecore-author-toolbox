@@ -3,6 +3,7 @@
 // import * as global from "./global.js";
 import { loadCssFile } from "./helpers.js";
 import { currentColorScheme } from "./dark.js";
+import { getAccentColor } from "./experimentalui.js";
 
 export { initHorizon };
 
@@ -21,4 +22,5 @@ const initHorizon = (storage) => {
   if ((document.body && storage.feature_darkmode && !storage.feature_darkmode_auto) || (document.body && storage.feature_darkmode && storage.feature_darkmode_auto && currentColorScheme() == "dark")) {
     document.body ? document.body.classList.add("satHZDark") : false;
   }
+  getAccentColor();
 };

@@ -11,7 +11,7 @@ export { initHorizon };
  */
 const initHorizon = (storage) => {
   storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;
-  storage.feature_experienceeditor ? loadCssFile("css/horizon.min.css") : false;
+  storage.feature_experienceeditor ? loadCssFile("css/horizon.css") : false;
   //Remove satExtension satDark satExperimetalUI from main frame
   document.body ? document.body.classList.add("satHZ") : false;
   document.body ? document.body.classList.remove("satExtension") : false;

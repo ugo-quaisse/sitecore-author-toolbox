@@ -10,7 +10,7 @@ body.satHZExperimentalUi .node.selected {
 }
 
 body.satHZExperimentalUi .node.selected:after {
-  background: none;
+  background: none; 
 }
 
 body.satHZExperimentalUi .ngspdbadge {

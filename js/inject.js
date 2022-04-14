@@ -202,12 +202,14 @@ const fadeEditorFrames = () => {
 
 const insertPage = (scItem, scItemName) => {
   document.querySelector(".scOverlay") ? document.querySelector(".scOverlay").setAttribute("style", "visibility:visible") : false;
-  document.querySelector("#scModal").setAttribute("data-scItem", scItem);
-  document.querySelector("#scModal").setAttribute("data-scItemName", scItemName);
-  scItemName != undefined ? (document.querySelector("#scModal > .header > .title").innerHTML = "Insert") : false;
-  document.querySelector("#scModal").setAttribute("style", "opacity:1; visibility:visible; top: calc(50% - 550px/2)");
-  document.querySelector("#scModal > .main").innerHTML = "";
-  document.querySelector("#scModal > .preload").setAttribute("style", "opacity:1");
+  if (document.querySelector("#scModal")) {
+    document.querySelector("#scModal").setAttribute("data-scItem", scItem);
+    document.querySelector("#scModal").setAttribute("data-scItemName", scItemName);
+    scItemName != undefined ? (document.querySelector("#scModal > .header > .title").innerHTML = "Insert") : false;
+    document.querySelector("#scModal").setAttribute("style", "opacity:1; visibility:visible; top: calc(50% - 550px/2)");
+    document.querySelector("#scModal > .main").innerHTML = "";
+    document.querySelector("#scModal > .preload").setAttribute("style", "opacity:1");
+  }
 };
 
 const insertPageClose = () => {

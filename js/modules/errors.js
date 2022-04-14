@@ -46,14 +46,18 @@ const initGroupedErrors = (storage) => {
   if (storage.feature_errors) {
     let scQuickInfo = document.querySelector("div[id^='QuickInfo_']");
     let scEditorTabs = document.querySelector("div#scEditorTabs");
+    let scMainPanel = document.querySelector("div#MainPanel");
     let scMessageErrors = getErrors(storage);
-
+    console.log("Ugo Quaisse: Sitecore Author Toolbox: Grouped Errors");
+    console.log(scMessageErrors);
     //Insert message bar into Sitecore Content Editor
     if (scMessageErrors != false && !document.querySelector("#scMessageBarError")) {
       if (scEditorTabs) {
         scEditorTabs.insertAdjacentHTML("beforebegin", scMessageErrors);
       } else if (scQuickInfo) {
         scQuickInfo.insertAdjacentHTML("beforebegin", scMessageErrors);
+      } else if (scMainPanel) {
+        scMainPanel.insertAdjacentHTML("beforebegin", scMessageErrors);
       }
     }
 
@@ -75,6 +79,8 @@ const initGroupedErrors = (storage) => {
             scEditorTabs.insertAdjacentHTML("beforebegin", scMessageErrors);
           } else if (scQuickInfo) {
             scQuickInfo.insertAdjacentHTML("beforebegin", scMessageErrors);
+          } else if (scMainPanel) {
+            scMainPanel.insertAdjacentHTML("beforebegin", scMessageErrors);
           }
         }
       }, 1000);

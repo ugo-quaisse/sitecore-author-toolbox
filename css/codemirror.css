@@ -259,6 +259,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 .CodeMirror-sizer {
   position: relative;
   border-right: 30px solid transparent;
+  margin-left: 25px !important;
 }
 
 /* The fake, visible scrollbars. Used to force redraw during scrolling
@@ -306,6 +307,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
   display: inline-block;
   vertical-align: top;
   margin-bottom: -30px;
+  width: 20px !important;
 }
 .CodeMirror-gutter-wrapper {
   position: absolute;

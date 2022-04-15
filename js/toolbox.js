@@ -21,7 +21,7 @@ import { resumeFromWhereYouLeftOff, historyNavigation } from "./modules/history.
 import { checkNotificationPermissions, checkPublishNotification } from "./modules/notification.js";
 import { initFlagRibbonEE, initLanguageMenuEE, initLanguageMenuCE, initFlagsPublishingWindow, initFlagsPublish } from "./modules/language.js";
 import { initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, refreshContentEditor, contentTreeScrollTo, keyEventListeners, resetContentEditor } from "./modules/contenteditor.js";
-import { initIntroScreen, initAppName, initGravatarImage, initUserMenu } from "./modules/users.js";
+import { initAppName, initGravatarImage, initUserMenu } from "./modules/users.js";
 import { initInstantSearch, enhancedSitecoreSearch } from "./modules/search.js";
 import { insertModal, insertPanel } from "./modules/insert.js";
 import { initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons, initUploadButton, initUploader, initLightbox, initMediaSearchBox } from "./modules/media.js";
@@ -75,7 +75,7 @@ chrome.storage.sync.get((storage) => {
       showSnackbar(storage);
       contentTreeScrollTo();
       initLightbox();
-      initIntroScreen();
+      //initIntroScreen();
       if (storage.feature_experimentalui) {
         log("**** Experimental ****", "yellow");
         initAppName(storage, "Content Editor");
@@ -102,7 +102,7 @@ chrome.storage.sync.get((storage) => {
       initLaunchpadIcon(storage);
       checkWorkbox(storage);
       showSnackbar(storage);
-      initIntroScreen();
+      //initIntroScreen();
     } else if (global.isDesktop && !global.isGalleryFavorites && !global.isXmlControl) {
       log("**** Desktop Shell ****", "orange");
       initAppName(storage, "Sitecore Desktop");

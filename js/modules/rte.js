@@ -39,7 +39,7 @@ const initSyntaxHighlighterRte = (storage) => {
       //Inject codemirror
       loadCssFile("css/codemirror.min.css");
       loadCssFile("css/dark/ayu-dark.css");
-      loadJsFile("js/codemirror.js");
+      loadJsFile("js/codemirror.min.js");
       //RTE Tabs
       let reTextArea = global.isRichTextEditor ? document.querySelector(".reTextArea") : false;
       let darkModeTheme = initDarkModeEditor(storage);

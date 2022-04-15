@@ -22,15 +22,15 @@ const insertPanel = () => {
 const insertModal = (storage, sitecoreItemID, scLanguage, scVersion, scItemName = "", mutationObserver = true) => {
   var ajax = new XMLHttpRequest();
   ajax.timeout = global.timeoutAsync;
-  ajax.open("GET", "/sitecore/shell/default.aspx?xmlcontrol=Gallery.New&id=" + sitecoreItemID + "&la=" + scLanguage + "&vs=" + scVersion + "&db=master", true);
+  ajax.open(`GET`, `/sitecore/shell/default.aspx?xmlcontrol=Gallery.New&id=${sitecoreItemID}&la=${scLanguage}&vs=${scVersion}&db=master`, true);
   ajax.onreadystatechange = function () {
     if (ajax.readyState === 4 && ajax.status == "401") {
       let ScItem = getScItemData();
       let scModal = document.querySelector("#scModal");
       let menuTiles = '<div class="noResult">Your Sitecore session is expired, please reconnect.</div>';
       //prettier-ignore
-      let htmlMenuInner = `<div class="header"><span class="title">Insert under ` + ScItem.name.toUppercase() + `</span> <span class="maximize"></span> <span class="close"></span></div><div class="main"> ` + menuTiles + ` </div><div class="preload"> ` + global.svgAnimation + `</div>`;
-      let htmlMenu = `<div class="scOverlay"></div><div id="scModal">` + htmlMenuInner + `</div>`;
+      let htmlMenuInner = `<div class="header"><span class="title">Insert under ${ScItem.name.toUppercase()}</span> <span class="maximize"></span> <span class="close"></span></div><div class="main"> ` + menuTiles + ` </div><div class="preload"> ` + global.svgAnimation + `</div>`;
+      let htmlMenu = `<div class="scOverlay"></div><div id="scModal">${htmlMenuInner}</div>`;
 
       scModal ? (scModal.innerHTML = htmlMenuInner) : document.querySelector("body").insertAdjacentHTML("beforeend", htmlMenu);
     } else if (ajax.readyState === 4 && ajax.status == "200") {
@@ -68,9 +68,7 @@ const insertModal = (storage, sitecoreItemID, scLanguage, scVersion, scItemName 
 
       if (jsonOptions.subitems) {
         //If empty
-        jsonOptions.subitems.length == 0
-          ? (menuTiles = '<div class="scNoResult"><img src=" ' + global.iconForbidden + ' " style="width:128px; opacity:0.5;" /><br />Nothing to insert under "' + ScItem.name.capitalize() + '" node.</div>')
-          : false;
+        jsonOptions.subitems.length == 0 ? (menuTiles = `<div class="scNoResult"><img src="${global.iconForbidden}" style="width:128px; opacity:0.5;" /><br />Nothing to insert under "${ScItem.name.capitalize()}" node.</div>`) : false;
 
         for (var options of jsonOptions.subitems) {
           let iconTemp = options[1].replace("/temp/iconcache/", "~/icon/");
@@ -78,8 +76,8 @@ const insertModal = (storage, sitecoreItemID, scLanguage, scVersion, scItemName 
         }
       }
       //prettier-ignore
-      let htmlMenuInner = `<div class="header"><span class="title">Insert under ` + ScItem.name + `</span> <span class="maximize"></span> <span class="close"></span></div><div class="main">` + menuTiles + `</div><div class="preload">` + global.svgAnimation + `</div>`;
-      let htmlMenu = `<div class="scOverlay"></div><div id="scModal">` + htmlMenuInner + `</div>`;
+      let htmlMenuInner = `<div class="header"><span class="title">Insert under ${ScItem.name}</span> <span class="maximize"></span> <span class="close"></span></div><div class="main">${menuTiles}</div><div class="preload">${global.svgAnimation}</div>`;
+      let htmlMenu = `<div class="scOverlay"></div><div id="scModal">${htmlMenuInner}</div>`;
 
       scModal ? (scModal.innerHTML = htmlMenuInner) : document.querySelector("body").insertAdjacentHTML("beforeend", htmlMenu);
 

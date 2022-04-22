@@ -169,7 +169,7 @@ const saveSettings = () => {
 
   //Save data
   chrome.storage.sync.set(featuresEnabled, function () {
-    console.log(featuresEnabled);
+    //console.log(featuresEnabled);
   });
 };
 

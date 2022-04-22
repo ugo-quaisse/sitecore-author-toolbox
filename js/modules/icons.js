@@ -97,6 +97,14 @@ export const jsonIcons = JSON.parse(
     "icon": "action::settings"
   },
   {
+    "search": "menu",
+    "icon": "navigation::menu"
+  },
+  {
+    "search": "light",
+    "icon": "action::lightbulb"
+  },
+  {
     "search": "document_attachment.png",
     "icon": "maps::layers"
   },
@@ -233,7 +241,7 @@ export const jsonIcons = JSON.parse(
     "icon": "action::schedule"
   },
   {
-    "search": "graph_connection_directed",
+    "search": "graph_connection",
     "icon": "content::link"
   },
   {
@@ -606,6 +614,10 @@ export const jsonIcons = JSON.parse(
   },
   {
     "search": "video",
+    "icon": "av::videocam"
+  },
+  {
+    "search": "film",
     "icon": "av::videocam"
   },
   {

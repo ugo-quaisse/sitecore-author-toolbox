@@ -1,7 +1,7 @@
 {
   "name": "Sitecore Author Toolbox",
-  "version": "6.2.81",
-  "manifest_version": 2,
+  "version": "7.0",
+  "manifest_version": 3,
   "description": "A set of handy tools for Sitecore Authors: Live URL, Grouped errors, Flags, Dark mode, Notifications, Media drag & drop...",
   "icons": {
     "128": "images/icon_big.png",
@@ -9,10 +9,10 @@
   },
   "default_locale": "en",
   "background": {
-    "scripts": ["js/background.js"],
-    "persistent": false
+    "service_worker": "js/background.js"
   },
-  "permissions": ["activeTab", "tabs", "storage", "downloads", "notifications", "declarativeContent", "contextMenus", "cookies", "http://*/*", "https://*/*"],
+  "permissions": ["activeTab", "tabs", "storage", "downloads", "notifications", "declarativeContent", "contextMenus", "cookies", "scripting"],
+  "host_permissions": ["*://*/*"],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
@@ -23,13 +23,20 @@
     }
   ],
   "options_ui": {
-    "page": "options/options.html",
-    "chrome_style": false
+    "page": "options/options.html"
   },
-  "browser_action": {
+  "action": {
     "default_popup": "options/options.html",
     "default_title": "Sitecore Author Toolbox (options)",
     "default_icon": "images/icon.png"
   },
-  "web_accessible_resources": ["images/*", "css/*", "js/*", "audio/*", "options/*", "data/icons.json"]
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; "
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*", "css/*", "js/*", "audio/*", "options/*", "data/icons.json"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }

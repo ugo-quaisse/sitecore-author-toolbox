@@ -36,6 +36,10 @@ const checkIconType = (host) => {
     service = global.iconPlay;
   } else if (host.includes("jira")) {
     service = global.iconJira;
+  } else if (host.includes("azure")) {
+    service = global.iconAzure;
+  } else if (host.includes("zendesk")) {
+    service = global.iconZendesk;
   } else {
     service = global.iconHelp;
   }
@@ -55,6 +59,10 @@ const checkUrlType = (host) => {
     service = "Youtube";
   } else if (host.includes("jira")) {
     service = "Jira";
+  } else if (host.includes("dev.azure")) {
+    service = "Azure Devops";
+  } else if (host.includes("zendesk")) {
+    service = "Zendesk";
   } else {
     service = "documentation";
   }
@@ -84,34 +92,35 @@ const checkHelpLink = (item, language, version, storage) => {
           let title = short ? `<div class="scMessageBarTitle">` + short + `</div>` : `<div class="scMessageBarTitle">Documentation and help available</div>`;
           let text = long ? `<div class="scMessageBarText">` + long + `</div>` : ``;
 
+          let titleHelp = document.querySelector(".scEditorHeaderTitleHelp");
+          let scEditorID = document.querySelector(".scEditorHeader");
+          let scMessageBarHelp = document.querySelector(".scMessageBarHelp");
+          let service = ``;
+          let icon = global.iconHelp;
+
           if (link) {
             try {
               let url = new URL(link);
-              let titleHelp = document.querySelector(".scEditorHeaderTitleHelp");
-              titleHelp && url.href ? (titleHelp.innerHTML = "<a href='" + url.href + "' target='_blank'>" + titleHelp.innerText + "</a>") : false;
-              let scEditorID = document.querySelector(".scEditorHeader");
-              let service = checkUrlType(url.host);
-              let icon = checkIconType(url.host);
-              let scMessageBarHelp = document.querySelector(".scMessageBarHelp");
-
-              //prettier-ignore
-              let scMessage = `<div id="scMessageBarUrl" class="scMessageBar scInformation scMessageBarHelp">
-            <div class="scMessageBarIcon" style="background-image:url(` + icon + `)"></div>
+              titleHelp && url.href ? (titleHelp.innerHTML = `<a href='${url.href}' target='_blank'>${titleHelp.innerText}</a>`) : false;
+              icon = checkIconType(url.host);
+              service = `<li class="scMessageBarOptionBullet"><a href="${url.href}" target="_blank" class="scMessageBarOption">Open ${checkUrlType(url.host)} page</a></li>`;
+            } catch (error) {
+              console.info(`Sitecore Author Toolbox:`, `The url ${link} is not a valid link.`);
+            }
+          }
+          if (short && scEditorID) {
+            //prettier-ignore
+            let scMessage = `<div id="scMessageBarUrl" class="scMessageBar scInformation scMessageBarHelp">
+            <div class="scMessageBarIcon" style="background-image:url(${icon})"></div>
               <div class="scMessageBarTextContainer">
-                ` + title + `
-                ` + text + `
+                ${title}
+                ${text}
                 <ul class="scMessageBarOptions" style="margin:0px">
-                <li class="scMessageBarOptionBullet"><a href="` + url.href + `" target="_blank" class="scMessageBarOption">Open ` + service + ` page</a></li>
+                ${service}
                 </ul>
               </div>
             </div>`;
-              !scMessageBarHelp ? scEditorID.insertAdjacentHTML("afterend", scMessage) : false;
-            } catch (error) {
-              //error
-              console.info("Sitecore Author Toolbox:", "The url " + link + " is not a valid link.");
-            }
-
-            return link;
+            !scMessageBarHelp ? scEditorID.insertAdjacentHTML("afterend", scMessage) : false;
           }
         }
       };

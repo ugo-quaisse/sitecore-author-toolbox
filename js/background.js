@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 /**
  * Sitecore Author Toolbox
  * A Google Chrome Extension
@@ -16,7 +17,54 @@
 /* eslint-disable array-element-newline */
 
 /**
- * Check existing cookie of SXA site
+ * Get current tab information
+ */
+async function getCurrentTab() {
+  let queryOptions = { active: true, currentWindow: true };
+  let [tab] = await chrome.tabs.query(queryOptions);
+
+  return tab;
+}
+
+/**
+ * Action on right-clic
+ */
+function onRightClickHandler(info, tab) {
+  if (info.menuItemId == "SitecoreAuthorToolbox") {
+    //Check if window.location.href = CD/Live server
+    chrome.storage.sync.get(["domain_manager"], (result) => {
+      console.log(result.domain_manager);
+      var domains = result.domain_manager;
+      var cmUrl = new URL(tab.url);
+      var cd = false;
+
+      for (var domain in domains) {
+        if (cmUrl.origin == domains[domain]) {
+          cmUrl = domain + cmUrl.pathname;
+          cd = true;
+          break;
+        }
+      }
+
+      //If no CD/Live
+      cmUrl = cd ? `${cmUrl.origin}${cmUrl.pathname}` : `${cmUrl.origin}/sitecore/${cmUrl.pathname}`;
+
+      function openEE(cmUrl) {
+        window.open(`${cmUrl}?sc_mode=edit`);
+      }
+
+      //Open the Experience editor - DEPRECATED V3
+      chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        func: openEE,
+        args: [cmUrl],
+      });
+    });
+  }
+}
+
+/**
+ * Get SXA cookie value
  */
 function checkSiteSxa(sender, sendResponse) {
   var url = new URL(sender.tab.url);
@@ -32,39 +80,7 @@ function checkSiteSxa(sender, sendResponse) {
 }
 
 /**
- * Action on right-clic
- */
-function onClickHandler(info, tab) {
-  if (info.menuItemId == "SitecoreAuthorToolbox") {
-    //Check if window.location.href = CD/Live server
-    chrome.storage.sync.get(["domain_manager"], (result) => {
-      var domains = result.domain_manager;
-      var cmUrl = new URL(tab.url);
-      var cd = false;
-
-      for (var domain in domains) {
-        if (cmUrl.origin == domains[domain]) {
-          cmUrl = domain + cmUrl.pathname;
-          cd = true;
-          break;
-        }
-      }
-
-      //If no CD/Live
-      if (!cd) {
-        cmUrl = cmUrl.origin + cmUrl.pathname;
-      }
-
-      //Open the Experience editor
-      chrome.tabs.executeScript(tab.id, {
-        code: 'window.open("' + cmUrl + '?sc_mode=edit")',
-      });
-    });
-  }
-}
-
-/**
- * Get Sitecore userticket cookie
+ * Get Sitecore cookies
  */
 function getSitecoreCookie(tab) {
   chrome.cookies.get({ url: tab.url, name: "sitecore_userticket" }, function (cookie) {
@@ -75,7 +91,7 @@ function getSitecoreCookie(tab) {
 }
 
 /**
- * Menu on right clic
+ * Show context menu on right click
  */
 function showContextMenu(tab) {
   if (tab.url != undefined) {
@@ -104,10 +120,14 @@ function showContextMenu(tab) {
 }
 
 /**
- * Set exgtension icon and label
+ * Listener for extension contextmenu event
  */
-function setIcon(tab) {
-  //Variables
+chrome.contextMenus.onClicked.addListener(onRightClickHandler);
+
+/**
+ * Set extension icon and label
+ */
+function setExtensionIcon(tab) {
   var tabUrl = false;
   tab.url ? (tabUrl = new URL(tab.url)) : false;
   var url = tab.url.split("?");
@@ -120,7 +140,7 @@ function setIcon(tab) {
 
   if (isUrl && !isViewSource && tabUrl) {
     chrome.cookies.getAll({ url: tabUrl.origin }, function (cookies) {
-      chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
+      chrome.action.setBadgeBackgroundColor({ color: "#52cc7f" });
 
       for (var i in cookies) {
         if (cookies[i].name == "sitecore_userticket" || cookies[i].name == "sc_horizon" || cookies[i].name.includes("#lang") || cookies[i].name.includes("#sc_mode")) {
@@ -131,8 +151,8 @@ function setIcon(tab) {
 
       //If sitecore cookie is there
       if (cookie) {
-        chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
-        chrome.browserAction.setBadgeText({ text: "ON" });
+        chrome.action.setBadgeBackgroundColor({ color: "#52cc7f" });
+        chrome.action.setBadgeText({ text: "ON" });
 
         //Context menu
         chrome.storage.sync.get(["feature_contextmenu"], (result) => {
@@ -140,17 +160,19 @@ function setIcon(tab) {
           result.feature_contextmenu ? showContextMenu(tab) : false;
         });
       } else {
-        chrome.browserAction.setBadgeBackgroundColor({ color: "#777777" });
-        chrome.browserAction.setBadgeText({ text: "OFF" });
+        chrome.action.setBadgeBackgroundColor({ color: "#777777" });
+        chrome.action.setBadgeText({ text: "OFF" });
       }
     });
   } else if (isSitecore) {
-    chrome.browserAction.setBadgeBackgroundColor({ color: "#52cc7f" });
-    chrome.browserAction.setBadgeText({ text: "ON" });
+    chrome.action.setBadgeBackgroundColor({ color: "#52cc7f" });
+    chrome.action.setBadgeText({ text: "ON" });
   }
 }
 
-//When message is requested from toolbox.js
+/**
+ * Listener for messages received from content script
+ */
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.greeting == "get_pagestatus") {
     //const timeout = 8000;
@@ -166,32 +188,27 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       });
   }
 
-  if (request.greeting == "sxa_site") {
-    checkSiteSxa(sender, sendResponse);
-  }
+  request.greeting == "sxa_site" ? checkSiteSxa(sender, sendResponse) : false;
 
   return true;
 });
 
-//When a tab is updated
-chrome.tabs.onUpdated.addListener(function (tab) {
-  chrome.tabs.getSelected(null, function (tab) {
-    setIcon(tab);
-  });
+/**
+ * Listener for tab change
+ */
+chrome.tabs.onActivated.addListener(async () => {
+  let tab = await getCurrentTab();
+  setExtensionIcon(tab);
 });
 
-//When a tab is activated (does not fired is default_popup exists)
-chrome.tabs.onActivated.addListener(function (tab) {
-  setTimeout(() => {
-    chrome.tabs.getSelected(null, function (tab) {
-      setIcon(tab);
-    });
-  }, 500);
-});
-
+/**
+ * Listener for extension uninstall event
+ */
 chrome.runtime.setUninstallURL("https://uquaisse.io/sitecore-cms/uninstallation-successful/?utm_source=uninstall&utm_medium=chrome");
 
-// When the extension is installed or upgraded ...
+/**
+ * Listener for extension install event
+ */
 chrome.runtime.onInstalled.addListener(function (details) {
   let thisVersion = chrome.runtime.getManifest().version;
   // let versionInfo = thisVersion.split(".");
@@ -215,36 +232,17 @@ chrome.runtime.onInstalled.addListener(function (details) {
   // chrome.storage.sync.clear();
 
   if (details.reason == "install") {
-    //chrome.tabs.create({ url: "https://uquaisse.io/extension-update/?utm_source=install&utm_medium=chrome&utm_campaign=" + thisVersion });
+    //chrome.scripting.create({ url: "https://uquaisse.io/extension-update/?utm_source=install&utm_medium=chrome&utm_campaign=" + thisVersion });
   } else if (details.reason == "update") {
     if (thisVersion != details.previousVersion) {
-      console.log("Updated from " + details.previousVersion + " to " + thisVersion);
-      new Notification("Extension updated!", {
-        body: "Version " + thisVersion,
-        icon: chrome.runtime.getURL("images/icon.png"),
-      });
+      console.log(`Updated from ${details.previousVersion} to ${thisVersion}`);
+      // V3 DEPRECATED
+      // new Notification("Extension updated!", {
+      //   body: "Version " + thisVersion,
+      //   icon: chrome.runtime.getURL("images/icon.png"),
+      // });
     } else {
-      console.log("Reload");
+      console.log(`Extension reloaded`);
     }
   }
-
-  //Context menu
-  chrome.contextMenus.onClicked.addListener(onClickHandler);
-
-  //Page action only
-  //   chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
-  //     chrome.declarativeContent.onPageChanged.addRules([
-  //       {
-  //         conditions: [
-  //           new chrome.declarativeContent.PageStateMatcher({
-  //             pageUrl: { urlContains: "/sitecore/" },
-  //           }),
-  //           new chrome.declarativeContent.PageStateMatcher({
-  //             pageUrl: { urlContains: "sc_mode=" },
-  //           }),
-  //         ],
-  //         actions: [new chrome.declarativeContent.ShowPageAction()],
-  //       },
-  //     ]);
-  //   });
 });

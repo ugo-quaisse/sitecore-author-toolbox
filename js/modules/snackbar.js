@@ -20,7 +20,7 @@ const showSnackbar = (storage) => {
     let snackbarHtml = `
     <b>Welcome to Sitecore Author Toolbox ${global.extensionVersion}!</b><br />
     Live URL is now compatible with multi-sites!<br />Click "INFO" to find out more!`;
-    let html = `<div class="snackbar">${snackbarHtml}<button id="sbAction" onclick='javascript:window.open("https://uquaisse.io/extension-update/")'>INFO</button><button id="sbDismiss">DISMISS</button></div>`;
+    let html = `<div class="snackbar">${snackbarHtml}<button id="sbAction" onclick='javascript:window.open("https://uquaisse.io/sitecore/")'>INFO</button><button id="sbDismiss">DISMISS</button></div>`;
 
     //Is Snackbar is already visible in a parent frame?
     let parentSnackbar = parent.document.querySelector(".snackbar");

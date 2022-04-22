@@ -54,20 +54,17 @@ const sendNotification = (scTitle, scBody) => {
  * Send a notification to the browser when an action is ended up
  */
 const checkPublishNotification = (storage) => {
-  let target, observer;
-  target = document.querySelector("#LastPage");
+  let observer, notificationSubTitle, notificationBody, notificationResult, darkMode;
+  let target = document.querySelector("#LastPage");
   observer = new MutationObserver(function () {
     storage.feature_notification == undefined ? (storage.feature_notification = true) : false;
     storage.feature_experimentalui == undefined ? (storage.feature_experimentalui = false) : false;
-
     if (storage.feature_notification) {
-      target = document.querySelector("#LastPage");
-      let darkMode;
-      var notificationSubTitle = target.querySelector(".sc-text-largevalue") ? target.querySelector(".sc-text-largevalue").innerHTML : false;
+      notificationSubTitle = target.querySelector(".sc-text-largevalue") ? target.querySelector(".sc-text-largevalue").innerHTML : false;
       !notificationSubTitle ? (notificationSubTitle = target.querySelector("#Success > div").innerHTML) : false;
-      var notificationBody = target.querySelector(".scFieldLabel") ? target.querySelector(".scFieldLabel").innerHTML : false;
-      notificationBody = notificationBody == "Result:" ? "Finished " + document.querySelector("#ResultText").value.split("Finished")[1] : "";
-
+      notificationBody = target.querySelector(".scFieldLabel") ? target.querySelector(".scFieldLabel").innerHTML : false;
+      notificationResult = target.querySelector("#ResultText") ? target.querySelector("#ResultText").value : false;
+      //notificationBody = notificationBody == "Result:" ? "Finished " + document.querySelector("#ResultText").value.split("Finished")[1] : "";
       //Send notification
       sendNotification(notificationSubTitle, notificationBody);
 

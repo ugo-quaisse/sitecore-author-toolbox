@@ -171,15 +171,13 @@ document.querySelector(".save_settings").onclick = function (event) {
   //Get URL parameters
   let url = new URL(window.location.href);
   let fromLaunchpad = url.searchParams.get("launchpad");
-  let buttonLabel = "Save your preferences";
+  let buttonLabel = fromLaunchpad ? "Save your preferences" : "Save and reload Sitecore";
 
   //Reload sitecore
   if (!fromLaunchpad) {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (arrayOfTabs) {
-      let code = "window.location.reload();";
-      chrome.tabs.executeScript(arrayOfTabs[0].id, { code });
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      chrome.tabs.reload(tabs[0].id);
     });
-    buttonLabel = "Save and reload Sitecore";
   }
   document.querySelector(".save_settings").innerHTML = "Saving...";
   setTimeout(function () {

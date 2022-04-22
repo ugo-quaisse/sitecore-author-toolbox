@@ -117,7 +117,7 @@ const initWorkboxMenu = (storage, type = "CE") => {
       clickEvent = `window.location.href='/sitecore/shell/Applications/Workbox.aspx?sc_bw=1'`;
     }
     //prettier-ignore
-    let htmlIcon = `<span class="t-bottom t-sm" data-tooltip="Workbox notification"><img loading="lazy" id="scNotificationBell" onclick="${clickEvent}" src="${global.iconBell}" class="scIconMenu" accesskey="w" /></span>`;
+    let htmlIcon = `<span class="t-bottom t-sm" data-tooltip="Workbox notifications"><img loading="lazy" id="scNotificationBell" onclick="${clickEvent}" src="${global.iconBell}" class="scIconMenu" accesskey="w" /></span>`;
     menu ? menu.insertAdjacentHTML("afterbegin", htmlIcon) : false;
   }
 };

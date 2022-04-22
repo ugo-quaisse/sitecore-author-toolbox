@@ -96,10 +96,9 @@ const loadJsFile = (file) => {
  * Execute Javascript code
  */
 const exeJsCode = (code) => {
-  var script = document.createElement("script");
-  script.textContent = code;
-  (document.head || document.documentElement).appendChild(script);
-  script.remove();
+  document.documentElement.setAttribute("onreset", code);
+  document.documentElement.dispatchEvent(new CustomEvent("reset"));
+  document.documentElement.removeAttribute("onreset");
 };
 
 /**

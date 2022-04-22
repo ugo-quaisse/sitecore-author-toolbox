@@ -48,8 +48,6 @@ const initGroupedErrors = (storage) => {
     let scEditorTabs = document.querySelector("div#scEditorTabs");
     let scMainPanel = document.querySelector("div#MainPanel");
     let scMessageErrors = getErrors(storage);
-    console.log("Ugo Quaisse: Sitecore Author Toolbox: Grouped Errors");
-    console.log(scMessageErrors);
     //Insert message bar into Sitecore Content Editor
     if (scMessageErrors != false && !document.querySelector("#scMessageBarError")) {
       if (scEditorTabs) {

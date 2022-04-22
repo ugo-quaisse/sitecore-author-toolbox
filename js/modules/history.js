@@ -84,7 +84,7 @@ const historyNavigation = () => {
     if (event.state && event.state.id != "") {
       //Store a local value to tell toolboxscript we are changing item from back/previous button, so no need to add #hash as it's already performed by the browser
       localStorage.setItem("scBackPrevious", true);
-      exeJsCode(`scForm.invoke("item:load(id=` + event.state.id + `,language=` + event.state.language + `,version=` + event.state.version + `)");`);
+      exeJsCode(`scForm.invoke("item:load(id=${event.state.id},language=${event.state.language},version=${event.state.version})");`);
     }
   };
 };

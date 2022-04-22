@@ -4,7 +4,24 @@ import * as global from "./global.js";
 import { exeJsCode, loadCssFile, startDrag, sitecoreItemJson } from "./helpers.js";
 import { currentColorScheme } from "./dark.js";
 
-export { storeCurrentPageEE, initDefaultTextEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor, initRenderingSearchBox, initHighlightValidationError };
+export { updateEETitle, storeCurrentPageEE, initDefaultTextEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor, initRenderingSearchBox, initHighlightValidationError };
+
+/**
+ * Add button to toolbar to open datasource in CE
+ */
+const updateEETitle = (storage) => {
+  storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;
+  if (storage.feature_experienceeditor) {
+    // document.title = `✏️ ${document.title}`;
+    var link = document.querySelector("link[rel~='icon']");
+    if (!link) {
+      link = document.createElement("link");
+      link.rel = "icon";
+      document.getElementsByTagName("head")[0].appendChild(link);
+    }
+    link.href = global.iconExperienceEditor;
+  }
+};
 
 /**
  * Add button to toolbar to open datasource in CE

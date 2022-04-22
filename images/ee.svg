@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="72px" height="76px" viewBox="0 0 72 76" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group</title>
+    <defs>
+        <linearGradient x1="0%" y1="-5.55111512e-15%" x2="100%" y2="-5.55111512e-15%" id="linearGradient-1">
+            <stop stop-color="#EDF5F9" offset="0%"></stop>
+            <stop stop-color="#BDD5E3" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="0%" y1="-5.55111512e-15%" x2="100%" y2="-5.55111512e-15%" id="linearGradient-2">
+            <stop stop-color="#EDF5F9" offset="0%"></stop>
+            <stop stop-color="#BDD5E3" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="13.1289583%" y1="100%" x2="85.828176%" y2="100%" id="linearGradient-3">
+            <stop stop-color="#FED57E" offset="0%"></stop>
+            <stop stop-color="#E0A211" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="12.572816%" y1="100%" x2="85.338092%" y2="100%" id="linearGradient-4">
+            <stop stop-color="#D15D5D" offset="0%"></stop>
+            <stop stop-color="#9C2319" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="8.9663837%" y1="100%" x2="79.9976294%" y2="100%" id="linearGradient-5">
+            <stop stop-color="#B9D69A" offset="0%"></stop>
+            <stop stop-color="#98BA75" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <rect id="Rectangle" fill="url(#linearGradient-1)" x="25" y="27" width="23" height="49"></rect>
+            <rect id="Rectangle" fill="url(#linearGradient-2)" x="0" y="27" width="26" height="49"></rect>
+            <rect id="Rectangle" fill="url(#linearGradient-2)" x="46" y="27" width="26" height="49"></rect>
+            <path d="M36,0 C37.1913687,0 41.524702,9 49,27 L23,27 C30.475298,9 34.8086313,0 36,0 Z" id="Triangle" fill="url(#linearGradient-3)"></path>
+            <path d="M13,0 C14.2123819,0 18.5457153,9 26,27 L0,27 C7.45428472,9 11.7876181,0 13,0 Z" id="Triangle" fill="url(#linearGradient-4)"></path>
+            <path d="M59,0 C60.2620632,0 64.5953965,9 72,27 L46,27 C53.4046035,9 57.7379368,0 59,0 Z" id="Triangle" fill="url(#linearGradient-5)"></path>
+        </g>
+    </g>
+</svg>

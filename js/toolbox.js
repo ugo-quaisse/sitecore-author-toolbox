@@ -35,7 +35,7 @@ import { initLaunchpadIcon, initLaunchpadMenu } from "./modules/launchpad.js";
 import { initAutoExpandTree, initTreeGutterTooltips } from "./modules/contenttree.js";
 import { initQuerySuggestions } from "./modules/template.js";
 import { initPublishingStatus } from "./modules/publishingdashboard.js";
-import { storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor, initRenderingSearchBox } from "./modules/experienceeditor.js";
+import { updateEETitle, storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor, initRenderingSearchBox } from "./modules/experienceeditor.js";
 import { initHorizon } from "./modules/horizon.js";
 
 /**
@@ -297,6 +297,7 @@ chrome.storage.sync.get((storage) => {
       initMaterializeIcons(storage);
     } else {
       log("**** Website preview in EE ****", "orange");
+      updateEETitle(storage);
       addToolbarEditCE(storage);
       addToolbarTooltip(storage);
       addPlaceholderTooltip(storage);

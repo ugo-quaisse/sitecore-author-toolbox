@@ -18,6 +18,7 @@ export const extensionVersion = chrome.runtime.getManifest().version;
 export const extensionId = chrome.runtime.getURL("something").split("chrome-extension://")[1].split("/something")[0];
 export const iconSitecore = chrome.runtime.getURL("images/sitecore_logo.svg");
 export const iconSitecoreTree = chrome.runtime.getURL("images/sitecore_tree.svg");
+export const iconExperienceEditor = chrome.runtime.getURL("images/pencil.png");
 export const iconPreload = chrome.runtime.getURL("images/preload.svg");
 export const iconTimeout = chrome.runtime.getURL("images/timeout.svg");
 export const icon = chrome.runtime.getURL("images/rocket.svg");

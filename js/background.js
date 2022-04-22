@@ -228,6 +228,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
   //   console.table(e);
   //   console.table(e.scData);
   //   console.table(e.domain_manager);
+  //   console.table(e.site_manager);
   // });
   // chrome.storage.sync.clear();
 

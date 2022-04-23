@@ -1,7 +1,7 @@
 /* eslint-disable max-params */
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 import * as global from "./global.js";
-import { initStorageFeature } from "./helpers.js";
+import { initStorageFeature, setPlural } from "./helpers.js";
 
 export { checkLockedItems, getRelatedItems, getItemProperties };
 
@@ -59,7 +59,7 @@ const checkLockedItems = (item, storage) => {
 const getRelatedItems = (sitecoreItemID, scLanguage, scVersion) => {
   var ajax = new XMLHttpRequest();
   ajax.timeout = global.timeoutAsync;
-  ajax.open("GET", "/sitecore/shell/default.aspx?xmlcontrol=Gallery.Links&id=" + sitecoreItemID + "&la=" + scLanguage + "&vs=" + scVersion + "&db=master", true);
+  ajax.open("GET", `/sitecore/shell/default.aspx?xmlcontrol=Gallery.Links&id=${sitecoreItemID}&la=${scLanguage}&vs=${scVersion}&db=master`, true);
   ajax.onreadystatechange = function () {
     if (ajax.readyState === 4 && ajax.status == "200") {
       let html = new DOMParser().parseFromString(ajax.responseText, "text/html");
@@ -67,7 +67,16 @@ const getRelatedItems = (sitecoreItemID, scLanguage, scVersion) => {
       html.querySelectorAll("#Links > .scRef > .scLink").forEach((el) => {
         !relatedItems.includes(el.innerText) ? relatedItems.push(el.innerText) : false;
       });
-      console.table(relatedItems);
+      console.table(relatedItems.length);
+      let usageText = relatedItems.length > 0 ? `✅ ${relatedItems.length} time${setPlural(relatedItems.length)}` : `⚠️ Not used`;
+      let table = document.querySelector(".scEditorQuickInfo");
+      if (table) {
+        var row = table.insertRow(-1);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        cell1.innerHTML = `Usage`;
+        cell2.innerHTML = `<a href="#" onclick="javascript:return scContent.showGallery(this,event,'UsageFrame','Gallery.Links','id=${sitecoreItemID}&la=${scLanguage}&vs=${scVersion}&db=master&sc_content=master&ShowEditor=1&Ribbon.RenderTabs=true','600px','300px')">${usageText}</a>`;
+      }
     }
   };
   sitecoreItemID ? ajax.send(null) : false;
@@ -120,6 +129,6 @@ const getItemProperties = (itemId, language, version, storage) => {
       ajax.send(null);
     }, 500);
 
-    //getRelatedItems(itemId, language, version);
+    getRelatedItems(itemId, language, version);
   }
 };

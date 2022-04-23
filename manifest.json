@@ -1,6 +1,6 @@
 {
   "name": "Sitecore Author Toolbox",
-  "version": "7.1",
+  "version": "7.0.1",
   "manifest_version": 3,
   "description": "A set of handy tools for Sitecore Authors: Live URL, Grouped errors, Flags, Dark mode, Notifications, Media drag & drop...",
   "icons": {
@@ -11,7 +11,7 @@
   "background": {
     "service_worker": "js/background.js"
   },
-  "permissions": ["activeTab", "tabs", "storage", "downloads", "notifications", "declarativeContent", "contextMenus", "cookies", "scripting"],
+  "permissions": ["activeTab", "tabs", "storage", "downloads", "contextMenus", "cookies", "scripting"],
   "host_permissions": ["*://*/*"],
   "content_scripts": [
     {

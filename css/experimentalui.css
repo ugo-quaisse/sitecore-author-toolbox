@@ -2128,7 +2128,7 @@ body.satExperimentalUi .scEditorTabControlsHolder > .scMoreMenu > li.danger:hove
 
 body.satExperimentalUi .scGalleryFrame {
   border-radius: var(--radius);
-  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: -2px 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 body.satExperimentalUi .versionNumSelected,

@@ -117,6 +117,7 @@ export const iconOwl = chrome.runtime.getURL("images/owl.svg");
 export const iconTreeCollapsed = chrome.runtime.getURL("images/treemenu_collapsed.png");
 export const iconTreeExpanded = chrome.runtime.getURL("images/treemenu_expanded.png");
 export const iconIntro = chrome.runtime.getURL("images/intro.svg");
+export const bgPreview = chrome.runtime.getURL("images/bg_preview.jpg");
 
 export let timeout;
 export const isSitecore = windowLocationHref.includes("/sitecore/");
@@ -128,6 +129,7 @@ export let isPreviewMode = document.querySelector(".pagemode-preview");
 export let isEditMode = document.querySelector(".pagemode-edit, .on-page-editor"); // , #scCrossPiece, .scFrameSideVertical
 !isEditMode ? (isEditMode = windowLocationHref.includes("sc_mode=edit")) : false;
 !isEditMode ? (isEditMode = windowLocationHref.includes("/experienceeditor/")) : false;
+export const isEEPreview = windowLocationHref.includes("sat_ee_preview=true");
 export const isXmlControl = windowLocationHref.includes("default.aspx?xmlcontrol=");
 export const scDatabase = urlParams.get("sc_content");
 export const isGalleryLanguage = windowLocationHref.includes("gallery.language");

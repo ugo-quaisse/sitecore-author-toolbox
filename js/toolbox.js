@@ -35,7 +35,7 @@ import { initLaunchpadIcon, initLaunchpadMenu } from "./modules/launchpad.js";
 import { initAutoExpandTree, initTreeGutterTooltips } from "./modules/contenttree.js";
 import { initQuerySuggestions } from "./modules/template.js";
 import { initPublishingStatus } from "./modules/publishingdashboard.js";
-import { updateEETitle, storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor, initRenderingSearchBox } from "./modules/experienceeditor.js";
+import { initPreviewButtonsEE, updateEETitle, storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor, initRenderingSearchBox } from "./modules/experienceeditor.js";
 import { initHorizon } from "./modules/horizon.js";
 
 /**
@@ -279,7 +279,13 @@ chrome.storage.sync.get((storage) => {
      */
     if (global.isRibbon) {
       log("**** EE Ribbon ****", "orange");
+      initPreviewButtonsEE(storage);
       storeCurrentPageEE();
+    } else if (global.isPreviewMode && global.isEEPreview) {
+      document.querySelector("#ribbonPreLoadingIndicator").remove();
+      document.querySelector("#scWebEditRibbon").remove();
+      document.querySelector("#sc-ext-toggleRibon-button") ? document.querySelector("#sc-ext-toggleRibon-button").remove() : false;
+      log("**** Preview Mode ****", "orange");
     } else if (global.isGalleryLanguageExpEd) {
       log("**** Language Menu ****", "orange");
       initLanguageMenuEE(storage);

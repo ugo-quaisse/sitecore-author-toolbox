@@ -550,6 +550,84 @@ function changePreviewRotation(iframeId) {
 }
 
 /**
+ * Change device preview
+ */
+function changeDevicePreviewEE(device, orientation = "v") {
+  //Get preview URL
+  let parentUrl = parent.document.location.href.replace(`sc_mode=edit`, `sc_mode=preview`);
+
+  //Renaming the App Name and cleaning header bar
+  document.querySelector(".sc-globalheader-appName") ? (document.querySelector(".sc-globalheader-appName").innerHTML = `Preview Mode`) : false;
+
+  //Show close button
+  document.querySelector(".sc-globalHeader-loginInfo") ? document.querySelector(".sc-globalHeader-loginInfo").setAttribute(`style`, `visibility: hidden`) : false;
+  document.querySelector(`#EditorTabControls_Preview_Close`) ? (document.querySelector(`#EditorTabControls_Preview_Close`).style.display = `block`) : false;
+
+  //Set preview Iframe size
+  //Switch to device
+  switch (device) {
+    case "mobile":
+      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.width = `375px`;
+      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.height = `775px`;
+      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.marginTop = `50px`;
+      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.borderWidth = `15px`;
+      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.borderRadius = `15px`;
+      break;
+
+    case "tablet":
+      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.width = `1024px`;
+      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.height = `768px`;
+      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.marginTop = `50px`;
+      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.borderWidth = `25px`;
+      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.borderRadius = `25px`;
+      break;
+
+    case "web":
+      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.width = `100%`;
+      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.height = `100%`;
+      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.marginTop = `0px`;
+      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.borderWidth = `0px`;
+      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.borderRadius = `0px`;
+      break;
+
+    default:
+      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.width = `100%`;
+      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.height = `100%%`;
+      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.marginTop = `0px`;
+      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.borderWidth = `0px`;
+      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.borderRadius = `0px`;
+      break;
+  }
+
+  //Show Preview Iframe
+  parent.document.querySelector(`#EditorTabControls_Preview_Iframe`) ? (parent.document.querySelector(`#EditorTabControls_Preview_Iframe`).style.visibility = `visible`) : false;
+  parent.document.querySelector(`#EditorTabControls_Preview_Iframe`) ? (parent.document.querySelector(`#EditorTabControls_Preview_Iframe`).style.opacity = `1`) : false;
+  parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`) ? (parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).src = parentUrl + "&sat_ee_preview=true") : false;
+
+  //Preventing scroll of the background page
+  parent.document.querySelector("body") ? parent.document.querySelector("body").setAttribute(`style`, `overflow-y: hidden`) : false;
+}
+
+/**
+ * Change device preview
+ */
+function closeDevicePreviewEE() {
+  //Renaming the App Name and cleaning header bar
+  document.querySelector(".sc-globalheader-appName") ? (document.querySelector(".sc-globalheader-appName").innerHTML = `Experience Editor`) : false;
+
+  //hide close button
+  document.querySelector(".sc-globalHeader-loginInfo") ? document.querySelector(".sc-globalHeader-loginInfo").setAttribute(`style`, `visibility: visible`) : false;
+  document.querySelector(`#EditorTabControls_Preview_Close`) ? (document.querySelector(`#EditorTabControls_Preview_Close`).style.display = `none`) : false;
+
+  //Show Preview Iframe
+  parent.document.querySelector(`#EditorTabControls_Preview_Iframe`) ? (parent.document.querySelector(`#EditorTabControls_Preview_Iframe`).style.visibility = `hidden`) : false;
+  parent.document.querySelector(`#EditorTabControls_Preview_Iframe`) ? (parent.document.querySelector(`#EditorTabControls_Preview_Iframe`).style.opacity = `0`) : false;
+
+  //Removing preventing scroll of the background page
+  parent.document.querySelector("body") ? parent.document.querySelector("body").setAttribute(`style`, `overflow-y: unset`) : false;
+}
+
+/**
  * Show submenu in user menu account
  */
 function goToSubmenu(id, width = 300) {

@@ -787,6 +787,10 @@ export const jsonIcons = JSON.parse(
   {
     "search": "lock",
     "icon": "action::lock"
+  },
+  {
+    "search": "header",
+    "icon": "action::view_headline"
   }
 ]`
 );

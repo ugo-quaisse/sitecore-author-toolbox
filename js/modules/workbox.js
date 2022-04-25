@@ -80,7 +80,7 @@ const checkWorkbox = (storage) => {
           let scNotificationBell = document.querySelector("#scNotificationBell");
           if (scNotificationBell && wfNotification > 0) {
             html = '<span class="wbNotificationMenu"></span>';
-            scNotificationBell.setAttribute("title", "You have " + wfNotification + " notification" + setPlural(wfNotification) + " in your workbox");
+            scNotificationBell.setAttribute("title", `You have ${wfNotification} notification${setPlural(wfNotification)} in your workbox`);
             scNotificationBell.insertAdjacentHTML("afterend", html);
           }
         }

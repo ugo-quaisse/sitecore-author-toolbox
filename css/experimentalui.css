@@ -994,6 +994,45 @@ body.satExperimentalUi .scEditorHeaderButton > img {
   transition: transform 0.2s ease-in-out;
 }
 
+/* Experience Editor */
+
+body.satExperimentalUi #EditorTabControls_Preview_Iframe > iframe {
+  transition: all ease-out 0.3s;
+}
+
+body.satExperimentalUi div.scExpEditorTabControlsHolder {
+  margin: 0px;
+  height: auto;
+  text-indent: -78px;
+  border: 1px solid transparent;
+}
+
+body.satExperimentalUi div.scExpEditorTabControlsHolder button.scEditorHeaderButton,
+body.satExperimentalUi div.scExpEditorTabControlsHolder a.scEditorHeaderButton {
+  font-size: 12px;
+  padding: 0px;
+  position: relative;
+  border: 0px;
+  background-color: transparent;
+  margin: 0px 5px;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+body.satExperimentalUi div.scExpEditorTabControlsHolder button.scEditorHeaderButton:hover,
+body.satExperimentalUi div.scExpEditorTabControlsHolder a.scEditorHeaderButton:hover {
+  filter: brightness(0.95);
+}
+
+body.satExperimentalUi div.scExpEditorTabControlsHolder button.scEditorHeaderButton:disabled {
+  opacity: 0.5;
+}
+
+body.satExperimentalUi div.scExpEditorTabControlsHolder .scEditorHeaderButton > img {
+  transition: transform 0.2s ease-in-out;
+  filter: invert(1);
+}
+
 /*Overlay*/
 body.satExperimentalUi iframe.ui-widget-content {
   box-shadow: 0 15px 15px rgba(0, 0, 0, 0.3);

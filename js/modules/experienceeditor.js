@@ -4,7 +4,57 @@ import * as global from "./global.js";
 import { exeJsCode, loadCssFile, startDrag, sitecoreItemJson } from "./helpers.js";
 import { currentColorScheme } from "./dark.js";
 
-export { updateEETitle, storeCurrentPageEE, initDefaultTextEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor, initRenderingSearchBox, initHighlightValidationError };
+export {
+  initPreviewButtonsEE,
+  updateEETitle,
+  storeCurrentPageEE,
+  initDefaultTextEE,
+  addToolbarEditCE,
+  addToolbarTooltip,
+  addPlaceholderTooltip,
+  addHideRibbonButton,
+  resetExperienceEditor,
+  initRenderingSearchBox,
+  initHighlightValidationError,
+};
+
+/**
+ * Add button to toolbar to open datasource in CE
+ */
+const initPreviewButtonsEE = (storage) => {
+  storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;
+  if (storage.feature_experienceeditor) {
+    //Making room in the header bar section
+    document.querySelector(".sc-ext-dbName") ? document.querySelector(".sc-ext-dbName").setAttribute(`style`, `opacity:0`) : false;
+
+    //Experimental mode
+    let extraClass = storage.feature_experimentalui ? "t-bottom t-sm" : "t-bottom t-sm scButtonExtended";
+
+    let button = `
+    <div id="EditorTabControls_Preview" class="scExpEditorTabControlsHolder">
+        <button class="scEditorHeaderButton ${extraClass}" data-tooltip="Mobile preview" id="scMobileDeviceButton" type="button" onclick="changeDevicePreviewEE('mobile', 'v')"><img src="${global.iconMobile}" class="scLanguageIcon"></button>
+        - - - - -
+        <button class="scEditorHeaderButton ${extraClass}" data-tooltip="Tablet preview" id="scTabletDeviceButton" type="button" onclick="changeDevicePreviewEE('tablet', 'v')"><img src="${global.iconTablet}" class="scLanguageIcon"></button>
+        - - - - -
+        <button class="scEditorHeaderButton ${extraClass}" data-tooltip="Normal preview" id="scWebDeviceButton" type="button" onclick="changeDevicePreviewEE('web', 'v')"><img src="${global.iconWeb}" class="scLanguageIcon"></button>
+    </div>`;
+
+    //Add buttons to view
+    document.querySelector(".sc-globalHeader-content") ? document.querySelector(".sc-globalHeader-content").insertAdjacentHTML("beforeend", button) : false;
+
+    //Close button
+    let close = `<button id="EditorTabControls_Preview_Close" class="btn sc-button btn-primary" style="position: fixed; right: 13px; top: 9px; display:none" onclick="closeDevicePreviewEE()">Close preview</button>`;
+    document.querySelector(".sc-globalHeader-loginInfo") ? document.querySelector(".sc-globalHeader-loginInfo").insertAdjacentHTML("beforebegin", close) : false;
+
+    //Add overlay and iFrame
+    let previewIframe = `<div id="EditorTabControls_Preview_Iframe" class="satEEPreview" style="transition: all 0.1s ease; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(2px); z-index: 10000000;position: fixed;top: 50px;width: 100%; height: 100%;text-align: center; background-size: cover; background-image: url(${global.bgPreview}); background-position: bottom; visibility:hidden; opacity:0">
+      <iframe src="" style="background-color: #fff;width: 375px;border: 15px solid #333;border-radius: 15px;height: 750px;margin-top: 50px; box-shadow: 0 15px 15px rgba(0, 0, 0, 0.3); transition: all ease-out 0.3s;"></iframe>
+    </div>`;
+
+    //Add to view
+    parent.document.querySelector("body") ? parent.document.querySelector("body").insertAdjacentHTML("afterbegin", previewIframe) : false;
+  }
+};
 
 /**
  * Add button to toolbar to open datasource in CE
@@ -305,6 +355,7 @@ const resetExperienceEditor = (storage) => {
   if ((document.body && storage.feature_darkmode && !storage.feature_darkmode_auto) || (document.body && storage.feature_darkmode && storage.feature_darkmode_auto && currentColorScheme() == "dark")) {
     document.body ? document.body.classList.add("satEEDark") : false;
   }
+  document.querySelector("#sc-ext-toggleRibon-button") ? document.querySelector("#sc-ext-toggleRibon-button").remove() : false;
 };
 
 /**

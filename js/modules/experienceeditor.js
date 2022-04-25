@@ -31,7 +31,7 @@ const initPreviewButtonsEE = (storage) => {
     let extraClass = storage.feature_experimentalui ? "t-bottom t-sm" : "t-bottom t-sm scButtonExtended";
 
     let button = `
-    <div id="EditorTabControls_Preview" class="scExpEditorTabControlsHolder">
+    <div id="EditorTabControls_Preview" class="scExpEditorTabControlsHolder"> 
         <button class="scEditorHeaderButton ${extraClass}" data-tooltip="Mobile preview" id="scMobileDeviceButton" type="button" onclick="changeDevicePreviewEE('mobile', 'v')"><img src="${global.iconMobile}" class="scLanguageIcon"></button>
         - - - - -
         <button class="scEditorHeaderButton ${extraClass}" data-tooltip="Tablet preview" id="scTabletDeviceButton" type="button" onclick="changeDevicePreviewEE('tablet', 'v')"><img src="${global.iconTablet}" class="scLanguageIcon"></button>
@@ -43,7 +43,7 @@ const initPreviewButtonsEE = (storage) => {
     document.querySelector(".sc-globalHeader-content") ? document.querySelector(".sc-globalHeader-content").insertAdjacentHTML("beforeend", button) : false;
 
     //Close button
-    let close = `<button id="EditorTabControls_Preview_Close" class="btn sc-button btn-primary" style="position: fixed; right: 13px; top: 9px; display:none" onclick="closeDevicePreviewEE()">Close preview</button>`;
+    let close = `<button id="EditorTabControls_Preview_Close" data-state="close" class="btn sc-button btn-primary" style="position: fixed; right: 13px; top: 9px; display:none" onclick="closeDevicePreviewEE()">Close preview</button>`;
     document.querySelector(".sc-globalHeader-loginInfo") ? document.querySelector(".sc-globalHeader-loginInfo").insertAdjacentHTML("beforebegin", close) : false;
 
     //Add overlay and iFrame

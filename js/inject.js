@@ -570,8 +570,8 @@ function changeDevicePreviewEE(device, orientation = "v") {
       parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.width = `375px`;
       parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.height = `775px`;
       parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.marginTop = `50px`;
-      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.borderWidth = `15px`;
-      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.borderRadius = `15px`;
+      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.borderWidth = `17px`;
+      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.borderRadius = `17px`;
       break;
 
     case "tablet":
@@ -602,7 +602,12 @@ function changeDevicePreviewEE(device, orientation = "v") {
   //Show Preview Iframe
   parent.document.querySelector(`#EditorTabControls_Preview_Iframe`) ? (parent.document.querySelector(`#EditorTabControls_Preview_Iframe`).style.visibility = `visible`) : false;
   parent.document.querySelector(`#EditorTabControls_Preview_Iframe`) ? (parent.document.querySelector(`#EditorTabControls_Preview_Iframe`).style.opacity = `1`) : false;
-  parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`) ? (parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).src = parentUrl + "&sat_ee_preview=true") : false;
+  if (document.querySelector(`#EditorTabControls_Preview_Close`).dataset.state == `close`) {
+    parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`) ? (parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).src = parentUrl + "&sat_ee_preview=true") : false;
+  }
+
+  //Update state
+  document.querySelector(`#EditorTabControls_Preview_Close`) ? (document.querySelector(`#EditorTabControls_Preview_Close`).dataset.state = `open`) : false;
 
   //Preventing scroll of the background page
   parent.document.querySelector("body") ? parent.document.querySelector("body").setAttribute(`style`, `overflow-y: hidden`) : false;
@@ -618,6 +623,7 @@ function closeDevicePreviewEE() {
   //hide close button
   document.querySelector(".sc-globalHeader-loginInfo") ? document.querySelector(".sc-globalHeader-loginInfo").setAttribute(`style`, `visibility: visible`) : false;
   document.querySelector(`#EditorTabControls_Preview_Close`) ? (document.querySelector(`#EditorTabControls_Preview_Close`).style.display = `none`) : false;
+  document.querySelector(`#EditorTabControls_Preview_Close`) ? (document.querySelector(`#EditorTabControls_Preview_Close`).dataset.state = `close`) : false;
 
   //Show Preview Iframe
   parent.document.querySelector(`#EditorTabControls_Preview_Iframe`) ? (parent.document.querySelector(`#EditorTabControls_Preview_Iframe`).style.visibility = `hidden`) : false;

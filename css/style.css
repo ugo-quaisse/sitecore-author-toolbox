@@ -2151,7 +2151,7 @@ body.satExtension #Page {
   position: relative;
   left: 0px !important;
   top: 0px !important;
-  margin-top: 20px; 
+  margin-top: 20px;
 }
 
 /* Mobile portrait */
@@ -2231,6 +2231,24 @@ body.satExtension #Page {
   max-height: 80%;
   vertical-align: middle;
   transition: all 0.2s ease-in-out;
+}
+
+.scExpEditorTabControlsHolder .scButtonExtended {
+  border-radius: 0px !important;
+  padding: 0px 15px;
+  min-width: 50px;
+  height: 29px;
+  margin-right: 10px;
+  margin-top: -20px;
+  vertical-align: text-bottom;
+  border: none;
+  background-color: transparent;
+  box-shadow: inset 0 1px var(--white);
+}
+
+.scExpEditorTabControlsHolder .scButtonExtended > img {
+  transition: transform 0.2s ease-in-out;
+  filter: invert(1);
 }
 
 /* User Menu switches */

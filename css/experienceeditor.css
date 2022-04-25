@@ -98,6 +98,7 @@ body.satEE .zg-variant-switcher.expanded .zg-variant-list {
 body.satEE .zg-variant-switcher.expanded .zg-variant-tip {
   color: var(--accent) !important;
 }
+
 /* 
  * All below is for Experimental UI
  */
@@ -222,12 +223,11 @@ body.satEEExperimentalUi #commandRow > a:hover img {
   filter: invert(var(--accentRevert));
 }
 body.satEEExperimentalUi .scChromeWorkflowSection,
-body.satEEExperimentalUi #myItemsLoadingIndicator  {
+body.satEEExperimentalUi #myItemsLoadingIndicator {
   display: none;
 }
 body.satEEExperimentalUi .scChromeDsSection[title*="associated"],
-body.satEEExperimentalUi .scChromeDsSection[data-tooltip*="associated"]
-{
+body.satEEExperimentalUi .scChromeDsSection[data-tooltip*="associated"] {
   /* display: none; Bug when inserting a Datasource, it is not showing up in EE */
 }
 body.satEEExperimentalUi .scChromeDsSection img:last-child {

@@ -996,8 +996,6 @@ body.satExperimentalUi .scEditorHeaderButton > img {
 
 /* Experience Editor */
 
-
-
 body.satExperimentalUi div.scExpEditorTabControlsHolder {
   margin: 0px;
   height: auto;
@@ -2753,4 +2751,19 @@ body.satExperimentalUi .dynatree-node {
 
 body.satExperimentalUi .sc-fullWidth {
   overflow-y: hidden !important;
+}
+
+body.satExperimentalUi .sc-breadcrumb-item-path:hover,
+body.satEEExperimentalUi .sc-breadcrumb-item-path:hover {
+  background: unset;
+  border-color: transparent;
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+body.satEEExperimentalUi #breadcrumbMenuSubcontrol_context_menu nav.sc-breadcrumb {
+  border: none;
+  border-radius: var(--radius);
+  background: var(--background);
+  box-shadow: 0px 5px 10px 0px rgb(0 0 0 / 10%);
 }

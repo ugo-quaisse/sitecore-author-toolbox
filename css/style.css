@@ -2134,8 +2134,8 @@ body.satEE #Page {
   height: calc(100vh - 50px);
   background-size: cover;
   background-position: bottom;
-  visibility:hidden;
-  opacity:0;
+  visibility: hidden;
+  opacity: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2447,7 +2447,7 @@ body.satExtension [data-tooltip]:after {
   opacity: 0;
   pointer-events: none;
   transition: all 0.15s cubic-bezier(0.5, 1, 0.25, 1);
-  z-index: 1;
+  z-index: 10000000;
   font-family: sans-serif;
 }
 body.satEE [data-tooltip]:before,
@@ -2592,4 +2592,41 @@ body.satExtension .sc-flx-global-header {
 
 body.satExtension img[data-sc-id="InfoImage"] {
   height: auto;
+}
+
+/* Experience Editor */
+
+body.satExtension div.scExpEditorTabControlsHolder {
+  margin: 0px;
+  height: auto;
+  text-indent: -78px;
+  border: 1px solid transparent;
+}
+
+body.satExtension div.scExpEditorTabControlsHolder button.scEditorHeaderButton,
+body.satExtension div.scExpEditorTabControlsHolder a.scEditorHeaderButton {
+  font-size: 12px !important;
+  padding: 0px !important;
+  position: relative !important;
+  border: 0px !important;
+  background-color: transparent !important;
+  margin: 0px 5px !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+  min-width: unset !important;
+  vertical-align: unset !important;
+}
+
+body.satExtension div.scExpEditorTabControlsHolder button.scEditorHeaderButton:hover,
+body.satExtension div.scExpEditorTabControlsHolder a.scEditorHeaderButton:hover {
+  filter: brightness(0.95);
+}
+
+body.satExtension div.scExpEditorTabControlsHolder button.scEditorHeaderButton:disabled {
+  opacity: 0.5;
+}
+
+body.satExtension div.scExpEditorTabControlsHolder .scEditorHeaderButton > img {
+  transition: transform 0.2s ease-in-out;
+  filter: invert(1);
 }

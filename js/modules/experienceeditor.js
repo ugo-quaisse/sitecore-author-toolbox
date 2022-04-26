@@ -28,7 +28,7 @@ const initPreviewButtonsEE = (storage) => {
     document.querySelector(".sc-ext-dbName") ? document.querySelector(".sc-ext-dbName").setAttribute(`style`, `opacity:0`) : false;
 
     //Experimental mode
-    let extraClass = storage.feature_experimentalui ? "t-bottom t-sm" : "t-bottom t-sm scButtonExtended";
+    let extraClass = storage.feature_experimentalui ? "t-bottom t-sm" : "t-bottom t-sm";
 
     let button = `
     <div id="EditorTabControls_Preview" class="scExpEditorTabControlsHolder"> 
@@ -58,7 +58,6 @@ const initPreviewButtonsEE = (storage) => {
 
     //Add resize event
     parent.document.querySelector("body") ? parent.document.querySelector("body").setAttribute("onresize", `updatePreviewEE()`) : false;
-  
   }
 };
 

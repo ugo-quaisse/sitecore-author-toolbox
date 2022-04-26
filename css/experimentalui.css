@@ -996,7 +996,8 @@ body.satExperimentalUi .scEditorHeaderButton > img {
 
 /* Experience Editor */
 
-body.satExperimentalUi div.scExpEditorTabControlsHolder {
+body.satExperimentalUi div.scExpEditorTabControlsHolder,
+body.satEE div.scExpEditorTabControlsHolder {
   margin: 0px;
   height: auto;
   text-indent: -78px;
@@ -1004,7 +1005,9 @@ body.satExperimentalUi div.scExpEditorTabControlsHolder {
 }
 
 body.satExperimentalUi div.scExpEditorTabControlsHolder button.scEditorHeaderButton,
-body.satExperimentalUi div.scExpEditorTabControlsHolder a.scEditorHeaderButton {
+body.satExperimentalUi div.scExpEditorTabControlsHolder a.scEditorHeaderButton,
+body.satEE div.scExpEditorTabControlsHolder button.scEditorHeaderButton,
+body.satEE div.scExpEditorTabControlsHolder a.scEditorHeaderButton {
   font-size: 12px;
   padding: 0px;
   position: relative;

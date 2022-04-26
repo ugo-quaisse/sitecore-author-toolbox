@@ -91,7 +91,7 @@ const initExperimentalUi = (storage) => {
     //prettier-ignore
     SearchPanel ? (SearchPanel.innerHTML = `<button class="scMenuButton" type="button"><img src="${global.iconMenu}" class="scBurgerMenu"/></button> <div class="scBurgerMenuTitle t-top t-sm" data-tooltip="Go back home" onclick="javascript:return scForm.invoke('contenteditor:home', event)" title="Go back Home">${contentTitle}</div>`) : false;
     //Change menu theme
-    document.body ? document.body.classList.add("satExperimentalUi") : false;
+    document.body && !global.isPreviewMode ? document.body.classList.add("satExperimentalUi") : false;
     if (document.querySelector(".interfaceRadio[value='experimental']")) {
       document.querySelector(".interfaceRadio[value='experimental']").checked = true;
       document.querySelector(".themeMenuHint").innerText = "Experimental UI";

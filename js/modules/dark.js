@@ -1,3 +1,4 @@
+import * as global from "./global.js";
 import { loadCssFile } from "./helpers.js";
 
 export { currentColorScheme, initDarkMode, initDarkModeEditor, detectSwitchDarkMode };
@@ -22,7 +23,7 @@ const currentColorScheme = () => {
 // eslint-disable-next-line consistent-return
 const initDarkMode = (storage) => {
   if ((storage.feature_darkmode && !storage.feature_darkmode_auto) || (storage.feature_darkmode && storage.feature_darkmode_auto && currentColorScheme() == "dark")) {
-    document.body ? document.body.classList.add("satDark") : false;
+    document.body && !global.isPreviewMode ? document.body.classList.add("satDark") : false;
     if (storage.feature_darkmode_auto && document.querySelector(".darkmodeRadio[value='auto']")) {
       document.querySelector(".darkmodeRadio[value='auto']").checked = true;
       document.querySelector(".darkmodeRadio[value='auto']").dispatchEvent(new Event("click"));

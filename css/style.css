@@ -2118,6 +2118,7 @@ body.satExtension #ContentEditor {
   background-color: var(--grey4);
 }
 
+body.satEE #Page,
 body.satExtension #Page {
   background-color: var(--grey4);
   transition: transform 0.5s ease-in-out;
@@ -2125,8 +2126,24 @@ body.satExtension #Page {
   width: 100%;
 }
 
-#Page > #Shadow {
-  transition: width 0.5s ease-in-out, height 0.5s ease-in-out, border 0.5s ease-in-out, border-radius 0.5s ease-in-out;
+body.satEE #Page {
+  z-index: 10000000;
+  position: fixed;
+  top: 50px;
+  width: 100%;
+  height: calc(100vh - 50px);
+  background-size: cover;
+  background-position: bottom;
+  visibility:hidden;
+  opacity:0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body.satEE #Page > #Shadow,
+body.satExtension #Page > #Shadow {
+  transition: width 0.4s ease-out, height 0.4s ease-out, border 0.4s ease-out, border-radius 0.4s ease-out, transform 0.4s ease-out;
   margin-right: 0px;
   margin-bottom: 0px;
   margin: auto;
@@ -2142,8 +2159,17 @@ body.satExtension #Page {
   box-shadow: 0 10px 30px 0px rgba(0, 0, 0, 0.15);
 }
 
+body.satEE #Page > #Shadow {
+  background-color: transparent;
+  top: unset;
+  left: unset;
+  position: absolute;
+  transform: scale(0.5);
+}
+
 .scGalleryFrame iframe,
-#Page iframe {
+body.satEE #Page iframe,
+body.satExtension #Page iframe {
   background: transparent url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner32.gif") no-repeat center center;
   background-size: 32px;
   transition: border-radius 0.5s ease-in-out;
@@ -2154,60 +2180,81 @@ body.satExtension #Page {
   margin-top: 20px;
 }
 
+body.satEE #Page iframe {
+  background-color: var(--white);
+}
+
 /* Mobile portrait */
 
 #Page.mobile_v iframe {
-  border-radius: 27px;
-  margin-top: 0px;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 27px !important;
+  margin-top: 0px !important;
 }
 
 #Page.mobile_v > #Shadow {
-  width: 375px;
-  height: 812px;
-  border-width: 13px;
-  border-radius: 40px;
+  margin-top: 20px !important;
+  width: 375px !important;
+  height: 812px !important;
+  border-width: 13px !important;
+  border-radius: 40px !important;
 }
 
 /* Mobile landscape */
 
 #Page.mobile_h iframe {
-  border-radius: 27px;
-  margin-top: 0px;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 27px !important;
+  margin-top: 0px !important;
 }
 
 #Page.mobile_h > #Shadow {
-  width: 812px;
-  height: 375px;
-  border-width: 13px;
-  border-radius: 40px;
+  margin-top: 20px !important;
+  width: 812px !important;
+  height: 375px !important;
+  border-width: 13px !important;
+  border-radius: 40px !important;
 }
 
 /* Tablet portrait */
 
 #Page.tablet_v iframe {
-  border-radius: 17px;
-  margin-top: 0px;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 17px !important;
+  margin-top: 0px !important;
 }
 
 #Page.tablet_v > #Shadow {
-  width: 1024px;
-  height: 1366px;
-  border-width: 25px;
-  border-radius: 40px;
+  width: 1024px !important;
+  height: 1366px !important;
+  border-width: 25px !important;
+  border-radius: 40px !important;
 }
 
 /* Tablet landscape */
 
 #Page.tablet_h iframe {
-  border-radius: 17px;
-  margin-top: 0px;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 17px !important;
+  margin-top: 0px !important;
 }
 
 #Page.tablet_h > #Shadow {
-  width: 1366px;
-  height: 1024px;
-  border-width: 25px;
-  border-radius: 40px;
+  width: 1366px !important;
+  height: 1024px !important;
+  border-width: 25px !important;
+  border-radius: 40px !important;
+}
+
+/* Web landscape */
+
+#Page.web_h iframe,
+#Page.web_v iframe {
+  margin-top: 0px !important;
 }
 
 .scButtonExtended {

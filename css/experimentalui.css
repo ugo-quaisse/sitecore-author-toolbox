@@ -4,7 +4,7 @@
  */
 body.satExperimentalUi {
   -webkit-font-smoothing: antialiased;
-  color: var(--text) !important;
+  /* color: var(--text) !important; */
 }
 
 /* body.satExperimentalUi.contentEditor:after {
@@ -996,9 +996,7 @@ body.satExperimentalUi .scEditorHeaderButton > img {
 
 /* Experience Editor */
 
-body.satExperimentalUi #EditorTabControls_Preview_Iframe > iframe {
-  transition: all ease-out 0.3s;
-}
+
 
 body.satExperimentalUi div.scExpEditorTabControlsHolder {
   margin: 0px;

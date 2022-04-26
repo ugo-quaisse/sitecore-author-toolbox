@@ -34,7 +34,7 @@ const initPreviewButtonsEE = (storage) => {
     <div id="EditorTabControls_Preview" class="scExpEditorTabControlsHolder"> 
         <button class="scEditorHeaderButton ${extraClass}" data-tooltip="Mobile preview" id="scMobileDeviceButton" type="button" onclick="changeDevicePreviewEE('mobile', 'v')"><img src="${global.iconMobile}" class="scLanguageIcon"></button>
         - - - - -
-        <button class="scEditorHeaderButton ${extraClass}" data-tooltip="Tablet preview" id="scTabletDeviceButton" type="button" onclick="changeDevicePreviewEE('tablet', 'v')"><img src="${global.iconTablet}" class="scLanguageIcon"></button>
+        <button class="scEditorHeaderButton ${extraClass}" data-tooltip="Tablet preview" id="scTabletDeviceButton" type="button" onclick="changeDevicePreviewEE('tablet', 'h')"><img src="${global.iconTablet}" class="scLanguageIcon"></button>
         - - - - -
         <button class="scEditorHeaderButton ${extraClass}" data-tooltip="Normal preview" id="scWebDeviceButton" type="button" onclick="changeDevicePreviewEE('web', 'v')"><img src="${global.iconWeb}" class="scLanguageIcon"></button>
     </div>`;
@@ -47,12 +47,18 @@ const initPreviewButtonsEE = (storage) => {
     document.querySelector(".sc-globalHeader-loginInfo") ? document.querySelector(".sc-globalHeader-loginInfo").insertAdjacentHTML("beforebegin", close) : false;
 
     //Add overlay and iFrame
-    let previewIframe = `<div id="EditorTabControls_Preview_Iframe" class="satEEPreview" style="transition: all 0.1s ease; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(2px); z-index: 10000000;position: fixed;top: 50px;width: 100%; height: 100%;text-align: center; background-size: cover; background-image: url(${global.bgPreview}); background-position: bottom; visibility:hidden; opacity:0">
-      <iframe src="" style="background-color: #fff;width: 375px;border: 15px solid #333;border-radius: 15px;height: 750px;margin-top: 50px; box-shadow: 0 15px 15px rgba(0, 0, 0, 0.3); transition: all ease-out 0.3s;"></iframe>
+    let previewIframe = `<div id="Page" class="mobile_v" style="background-image: url(${global.bgPreview})">
+      <div id="Shadow">  
+      <iframe src="" width="100%" height="100%" frameborder="no" marginwidth="0" marginheight="0" onload="previewLoader('hide')"></iframe>
+      </div>
     </div>`;
 
     //Add to view
     parent.document.querySelector("body") ? parent.document.querySelector("body").insertAdjacentHTML("afterbegin", previewIframe) : false;
+
+    //Add resize event
+    parent.document.querySelector("body") ? parent.document.querySelector("body").setAttribute("onresize", `updatePreviewEE()`) : false;
+  
   }
 };
 

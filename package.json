@@ -50,7 +50,9 @@
     "last 1 Chrome version"
   ],
   "dependencies": {
-    "postcss-discard-duplicates": "^5.1.0",
-    "graceful-fs": "4.2.10"
+    "postcss-discard-duplicates": "^5.1.0"
+  },
+  "overrides": {
+    "graceful-fs": "^4.2.9"
   }
 }

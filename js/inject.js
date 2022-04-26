@@ -550,9 +550,14 @@ function changePreviewRotation(iframeId) {
 }
 
 /**
- * Change device preview
+ * Change device preview in Experience Editor
  */
 function changeDevicePreviewEE(device, orientation = "v") {
+  let ratio;
+
+  //Get preview page size
+  let pageHeight = parent.document.querySelector("#Page").clientHeight;
+
   //Get preview URL
   let parentUrl = parent.document.location.href.replace(`sc_mode=edit`, `sc_mode=preview`);
 
@@ -567,50 +572,65 @@ function changeDevicePreviewEE(device, orientation = "v") {
   //Switch to device
   switch (device) {
     case "mobile":
-      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.width = `375px`;
-      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.height = `775px`;
-      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.marginTop = `50px`;
-      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.borderWidth = `17px`;
-      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.borderRadius = `17px`;
+      ratio = pageHeight / 812 - 0.07;
+      ratio = Math.round(ratio * 100) / 100;
+      ratio > 1 ? (ratio = 1) : false;
+      //Add class
+      parent.document.querySelector(`#Page`).setAttribute("class", "mobile_" + orientation);
+      parent.document.querySelector(`#Page > #Shadow`).setAttribute("style", `transform:scale(${ratio})`);
       break;
 
     case "tablet":
-      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.width = `1024px`;
-      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.height = `768px`;
-      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.marginTop = `50px`;
-      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.borderWidth = `25px`;
-      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.borderRadius = `25px`;
+      ratio = pageHeight / 1024 - 0.05;
+      ratio = Math.round(ratio * 100) / 100;
+      ratio > 1 ? (ratio = 1) : false;
+      //Add class
+      parent.document.querySelector(`#Page`).setAttribute("class", "tablet_" + orientation);
+      parent.document.querySelector(`#Page > #Shadow`).setAttribute("style", `transform:scale(${ratio})`);
       break;
 
     case "web":
-      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.width = `100%`;
-      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.height = `100%`;
-      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.marginTop = `0px`;
-      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.borderWidth = `0px`;
-      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.borderRadius = `0px`;
+      ratio = 1;
+      //Add class
+      parent.document.querySelector(`#Page`).setAttribute("class", "web_" + orientation);
+      parent.document.querySelector(`#Page > #Shadow`).setAttribute("style", `transform:scale(${ratio})`);
       break;
 
     default:
-      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.width = `100%`;
-      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.height = `100%%`;
-      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.marginTop = `0px`;
-      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.borderWidth = `0px`;
-      parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).style.borderRadius = `0px`;
+      ratio = 1;
+      //Add class
+      parent.document.querySelector(`#Page`).setAttribute("class", "web_" + orientation);
+      parent.document.querySelector(`#Page > #Shadow`).setAttribute("style", `transform:scale(${ratio})`);
       break;
+
   }
 
   //Show Preview Iframe
-  parent.document.querySelector(`#EditorTabControls_Preview_Iframe`) ? (parent.document.querySelector(`#EditorTabControls_Preview_Iframe`).style.visibility = `visible`) : false;
-  parent.document.querySelector(`#EditorTabControls_Preview_Iframe`) ? (parent.document.querySelector(`#EditorTabControls_Preview_Iframe`).style.opacity = `1`) : false;
-  if (document.querySelector(`#EditorTabControls_Preview_Close`).dataset.state == `close`) {
-    parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`) ? (parent.document.querySelector(`#EditorTabControls_Preview_Iframe > iframe`).src = parentUrl + "&sat_ee_preview=true") : false;
+  parent.document.querySelector(`#Page`) ? (parent.document.querySelector(`#Page`).style.visibility = `visible`) : false;
+  parent.document.querySelector(`#Page`) ? (parent.document.querySelector(`#Page`).style.opacity = `1`) : false;
+  if (document.querySelector(`#EditorTabControls_Preview_Close`) && document.querySelector(`#EditorTabControls_Preview_Close`).dataset.state == `close`) {
+    previewLoader("show");
+    parent.document.querySelector(`#Page iframe`) ? (parent.document.querySelector(`#Page iframe`).src = parentUrl + "&sat_ee_preview=true") : false;
   }
 
   //Update state
+  //let ribbon = document.querySelector('#scWebEditRibbon');
   document.querySelector(`#EditorTabControls_Preview_Close`) ? (document.querySelector(`#EditorTabControls_Preview_Close`).dataset.state = `open`) : false;
 
   //Preventing scroll of the background page
   parent.document.querySelector("body") ? parent.document.querySelector("body").setAttribute(`style`, `overflow-y: hidden`) : false;
+}
+
+/**
+ * Update device preview
+ */
+function updatePreviewEE() {
+  let ribbon = document.querySelector('#scWebEditRibbon').contentDocument;
+  let statePreview = ribbon.querySelector(`#EditorTabControls_Preview_Close`) ? (ribbon.querySelector(`#EditorTabControls_Preview_Close`).dataset.state = `open`) : false;
+
+  let previewDevice = parent.document.querySelector("#Page").className.split("_") ? parent.document.querySelector("#Page").className.split("_")[0] : "mobile";
+  let previewOrientation = parent.document.querySelector("#Page").className.split("_") ? parent.document.querySelector("#Page").className.split("_")[1] : "v";
+  statePreview ? changeDevicePreviewEE(previewDevice, previewOrientation) : false;
 }
 
 /**
@@ -626,11 +646,16 @@ function closeDevicePreviewEE() {
   document.querySelector(`#EditorTabControls_Preview_Close`) ? (document.querySelector(`#EditorTabControls_Preview_Close`).dataset.state = `close`) : false;
 
   //Show Preview Iframe
-  parent.document.querySelector(`#EditorTabControls_Preview_Iframe`) ? (parent.document.querySelector(`#EditorTabControls_Preview_Iframe`).style.visibility = `hidden`) : false;
-  parent.document.querySelector(`#EditorTabControls_Preview_Iframe`) ? (parent.document.querySelector(`#EditorTabControls_Preview_Iframe`).style.opacity = `0`) : false;
+  parent.document.querySelector(`#Page`) ? (parent.document.querySelector(`#Page`).style.visibility = `hidden`) : false;
+  parent.document.querySelector(`#Page`) ? (parent.document.querySelector(`#Page`).style.opacity = `0`) : false;
 
   //Removing preventing scroll of the background page
   parent.document.querySelector("body") ? parent.document.querySelector("body").setAttribute(`style`, `overflow-y: unset`) : false;
+}
+
+function previewLoader(state = "show") {
+  state == "show" ? parent.document.querySelector(`#Page iframe`).style.backgroundImage = `url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner32.gif") !important` : false;
+  state == "hide" ? parent.document.querySelector(`#Page iframe`).style.backgroundImage = `none` : false;
 }
 
 /**

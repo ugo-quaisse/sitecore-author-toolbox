@@ -609,8 +609,6 @@ function changeDevicePreviewEE(device, orientation = "v") {
 
   }
 
-  console.log(maxHeight, ratioAdjust);
-
   //Show Preview Iframe
   parent.document.querySelector(`#Page`) ? (parent.document.querySelector(`#Page`).style.visibility = `visible`) : false;
   parent.document.querySelector(`#Page`) ? (parent.document.querySelector(`#Page`).style.opacity = `1`) : false;
@@ -632,8 +630,7 @@ function changeDevicePreviewEE(device, orientation = "v") {
  */
 function updatePreviewEE() {
   let ribbon = document.querySelector('#scWebEditRibbon').contentDocument;
-  let statePreview = ribbon.querySelector(`#EditorTabControls_Preview_Close`) ? (ribbon.querySelector(`#EditorTabControls_Preview_Close`).dataset.state = `open`) : false;
-
+  let statePreview = ribbon.querySelector(`#EditorTabControls_Preview_Close`) ? (ribbon.querySelector(`#EditorTabControls_Preview_Close`).dataset.state == `open`) : false;
   let previewDevice = parent.document.querySelector("#Page").className.split("_") ? parent.document.querySelector("#Page").className.split("_")[0] : "mobile";
   let previewOrientation = parent.document.querySelector("#Page").className.split("_") ? parent.document.querySelector("#Page").className.split("_")[1] : "v";
   statePreview ? changeDevicePreviewEE(previewDevice, previewOrientation) : false;
@@ -702,7 +699,6 @@ function fullscreenLightbox() {
  * Copy path lightbox
  */
 function copyPathLightbox(path) {
-  console.log(path);
   navigator.clipboard.writeText(path).then(
     function () {
       //Success

@@ -553,7 +553,7 @@ function changePreviewRotation(iframeId) {
  * Change device preview in Experience Editor
  */
 function changeDevicePreviewEE(device, orientation = "v") {
-  let ratio;
+  let ratio, maxHeight, ratioAdjust;
 
   //Get preview page size
   let pageHeight = parent.document.querySelector("#Page").clientHeight;
@@ -572,7 +572,9 @@ function changeDevicePreviewEE(device, orientation = "v") {
   //Switch to device
   switch (device) {
     case "mobile":
-      ratio = pageHeight / 812 - 0.07;
+      maxHeight = orientation == "v" ? 812 : 375;
+      ratioAdjust = orientation == "v" ? 0.06 : 0.2;
+      ratio = pageHeight / maxHeight - ratioAdjust;
       ratio = Math.round(ratio * 100) / 100;
       ratio > 1 ? (ratio = 1) : false;
       //Add class
@@ -581,7 +583,9 @@ function changeDevicePreviewEE(device, orientation = "v") {
       break;
 
     case "tablet":
-      ratio = pageHeight / 1024 - 0.05;
+      maxHeight = orientation == "v" ? 1024 : 768;
+      ratioAdjust = orientation == "v" ? 0.12 : 0.3;
+      ratio = pageHeight / maxHeight - ratioAdjust;
       ratio = Math.round(ratio * 100) / 100;
       ratio > 1 ? (ratio = 1) : false;
       //Add class
@@ -604,6 +608,8 @@ function changeDevicePreviewEE(device, orientation = "v") {
       break;
 
   }
+
+  console.log(maxHeight, ratioAdjust);
 
   //Show Preview Iframe
   parent.document.querySelector(`#Page`) ? (parent.document.querySelector(`#Page`).style.visibility = `visible`) : false;

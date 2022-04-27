@@ -32,11 +32,13 @@ const initPreviewButtonsEE = (storage) => {
 
     let button = `
     <div id="EditorTabControls_Preview" class="scExpEditorTabControlsHolder"> 
-        <button class="scEditorHeaderButton ${extraClass}" data-tooltip="Mobile preview" id="scMobileDeviceButton" type="button" onclick="changeDevicePreviewEE('mobile', 'v')"><img src="${global.iconMobile}" class="scLanguageIcon"></button>
+        <button class="scEditorHeaderButton scMobileDeviceButton ${extraClass}" data-tooltip="Mobile preview" id="scMobileDeviceButton" type="button" onclick="changeDevicePreviewEE('mobile', 'v')"><img src="${global.iconMobile}" class="scLanguageIcon"></button>
         - - - - -
-        <button class="scEditorHeaderButton ${extraClass}" data-tooltip="Tablet preview" id="scTabletDeviceButton" type="button" onclick="changeDevicePreviewEE('tablet', 'h')"><img src="${global.iconTablet}" class="scLanguageIcon"></button>
+        <button class="scEditorHeaderButton scTabletDeviceButton ${extraClass}" data-tooltip="Tablet preview" id="scTabletDeviceButton" type="button" onclick="changeDevicePreviewEE('tablet', 'v')"><img src="${global.iconTablet}" class="scLanguageIcon"></button>
         - - - - -
         <button class="scEditorHeaderButton ${extraClass}" data-tooltip="Normal preview" id="scWebDeviceButton" type="button" onclick="changeDevicePreviewEE('web', 'v')"><img src="${global.iconWeb}" class="scLanguageIcon"></button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="scEditorHeaderButton scRotateDeviceButton ${extraClass}" data-tooltip="Rotate" id="scRotateDeviceButton" type="button" onclick="changePreviewEERotation()" style="visibility:hidden"><img src="${global.iconRotate}" class="scLanguageIcon"></button>
     </div>`;
 
     //Add buttons to view

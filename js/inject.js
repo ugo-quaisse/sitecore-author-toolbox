@@ -553,7 +553,7 @@ function changePreviewRotation(iframeId) {
  * Change device preview in Experience Editor
  */
 function changeDevicePreviewEE(device, orientation = "v") {
-  let ratio, maxHeight, ratioAdjust;
+  let ratio, maxHeight;
 
   //Get preview page size
   let pageHeight = parent.document.querySelector("#Page").clientHeight;
@@ -568,13 +568,30 @@ function changeDevicePreviewEE(device, orientation = "v") {
   document.querySelector(".sc-globalHeader-loginInfo") ? document.querySelector(".sc-globalHeader-loginInfo").setAttribute(`style`, `visibility: hidden`) : false;
   document.querySelector(`#EditorTabControls_Preview_Close`) ? (document.querySelector(`#EditorTabControls_Preview_Close`).style.display = `block`) : false;
 
+  //Show rotate button
+  document.querySelector(".scRotateDeviceButton") ? document.querySelector(".scRotateDeviceButton").setAttribute(`style`, `visibility: visible`) : false;
+
+  //Rotate icons
+  if (orientation == "v") {
+    document.querySelectorAll("#scRotateDeviceButton > img, #scMobileDeviceButton > img, #scTabletDeviceButton > img").forEach(function (elem) {
+      elem.setAttribute("style", "transform: rotate(0deg);");
+    });
+    document.querySelector("#scMobileDeviceButton").setAttribute("onclick", `changeDevicePreviewEE('mobile', 'v')`);
+    document.querySelector("#scTabletDeviceButton").setAttribute("onclick", `changeDevicePreviewEE('tablet', 'v')`);
+  } else if (orientation == "h") {
+    document.querySelectorAll("#scRotateDeviceButton > img, #scMobileDeviceButton > img, #scTabletDeviceButton > img").forEach(function (elem) {
+      elem.setAttribute("style", "transform: rotate(90deg);");
+    });
+    document.querySelector("#scMobileDeviceButton").setAttribute("onclick", `changeDevicePreviewEE('mobile', 'h')`);
+    document.querySelector("#scTabletDeviceButton").setAttribute("onclick", `changeDevicePreviewEE('tablet', 'h')`);
+  }
+
   //Set preview Iframe size
   //Switch to device
   switch (device) {
     case "mobile":
       maxHeight = orientation == "v" ? 812 : 375;
-      ratioAdjust = orientation == "v" ? 0.06 : 0.2;
-      ratio = pageHeight / maxHeight - ratioAdjust;
+      ratio = (pageHeight - pageHeight * 0.1) / maxHeight;
       ratio = Math.round(ratio * 100) / 100;
       ratio > 1 ? (ratio = 1) : false;
       //Add class
@@ -583,9 +600,8 @@ function changeDevicePreviewEE(device, orientation = "v") {
       break;
 
     case "tablet":
-      maxHeight = orientation == "v" ? 1024 : 768;
-      ratioAdjust = orientation == "v" ? 0.12 : 0.3;
-      ratio = pageHeight / maxHeight - ratioAdjust;
+      maxHeight = orientation == "v" ? 1366 : 1024;
+      ratio = (pageHeight - pageHeight * 0.1) / maxHeight;
       ratio = Math.round(ratio * 100) / 100;
       ratio > 1 ? (ratio = 1) : false;
       //Add class
@@ -606,7 +622,6 @@ function changeDevicePreviewEE(device, orientation = "v") {
       parent.document.querySelector(`#Page`).setAttribute("class", "web_" + orientation);
       parent.document.querySelector(`#Page > #Shadow`).setAttribute("style", `transform:scale(${ratio})`);
       break;
-
   }
 
   //Show Preview Iframe
@@ -629,15 +644,30 @@ function changeDevicePreviewEE(device, orientation = "v") {
  * Update device preview
  */
 function updatePreviewEE() {
-  let ribbon = document.querySelector('#scWebEditRibbon').contentDocument;
-  let statePreview = ribbon.querySelector(`#EditorTabControls_Preview_Close`) ? (ribbon.querySelector(`#EditorTabControls_Preview_Close`).dataset.state == `open`) : false;
+  let ribbon = document.querySelector("#scWebEditRibbon").contentDocument;
+  let statePreview = ribbon.querySelector(`#EditorTabControls_Preview_Close`) ? ribbon.querySelector(`#EditorTabControls_Preview_Close`).dataset.state == `open` : false;
   let previewDevice = parent.document.querySelector("#Page").className.split("_") ? parent.document.querySelector("#Page").className.split("_")[0] : "mobile";
   let previewOrientation = parent.document.querySelector("#Page").className.split("_") ? parent.document.querySelector("#Page").className.split("_")[1] : "v";
   statePreview ? changeDevicePreviewEE(previewDevice, previewOrientation) : false;
 }
 
 /**
- * Change device preview
+ * Change device rotation
+ */
+function changePreviewEERotation() {
+  let orientation = parent.document.querySelector("#Page").getAttribute("class");
+  if (orientation !== null) {
+    let device = orientation.split("_");
+    if (device[1] == "v") {
+      changeDevicePreviewEE(device[0], "h");
+    } else if (device[1] == "h") {
+      changeDevicePreviewEE(device[0], "v");
+    }
+  }
+}
+
+/**
+ * Close device preview
  */
 function closeDevicePreviewEE() {
   //Renaming the App Name and cleaning header bar
@@ -648,6 +678,9 @@ function closeDevicePreviewEE() {
   document.querySelector(`#EditorTabControls_Preview_Close`) ? (document.querySelector(`#EditorTabControls_Preview_Close`).style.display = `none`) : false;
   document.querySelector(`#EditorTabControls_Preview_Close`) ? (document.querySelector(`#EditorTabControls_Preview_Close`).dataset.state = `close`) : false;
 
+  //Hide rotation button
+  document.querySelector(".scRotateDeviceButton") ? document.querySelector(".scRotateDeviceButton").setAttribute(`style`, `visibility: hidden`) : false;
+
   //Show Preview Iframe
   parent.document.querySelector(`#Page`) ? (parent.document.querySelector(`#Page`).style.visibility = `hidden`) : false;
   parent.document.querySelector(`#Page`) ? (parent.document.querySelector(`#Page`).style.opacity = `0`) : false;
@@ -657,8 +690,8 @@ function closeDevicePreviewEE() {
 }
 
 function previewLoader(state = "show") {
-  state == "show" ? parent.document.querySelector(`#Page iframe`).style.backgroundImage = `url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner32.gif") !important` : false;
-  state == "hide" ? parent.document.querySelector(`#Page iframe`).style.backgroundImage = `none` : false;
+  state == "show" ? (parent.document.querySelector(`#Page iframe`).style.backgroundImage = `url("chrome-extension://__MSG_@@extension_id__/images/sc-spinner32.gif") !important`) : false;
+  state == "hide" ? (parent.document.querySelector(`#Page iframe`).style.backgroundImage = `none`) : false;
 }
 
 /**

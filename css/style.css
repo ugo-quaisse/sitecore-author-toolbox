@@ -2228,8 +2228,8 @@ body.satEE #Page iframe {
 }
 
 #Page.tablet_v > #Shadow {
-  width: 1024px !important;
-  height: 1366px !important;
+  width: 810px !important;
+  height: 1080px !important;
   border-width: 25px !important;
   border-radius: 40px !important;
 }
@@ -2244,8 +2244,8 @@ body.satEE #Page iframe {
 }
 
 #Page.tablet_h > #Shadow {
-  width: 1366px !important;
-  height: 1024px !important;
+  width: 1080px !important;
+  height: 810px !important;
   border-width: 25px !important;
   border-radius: 40px !important;
 }
@@ -2599,7 +2599,7 @@ body.satExtension img[data-sc-id="InfoImage"] {
 body.satExtension div.scExpEditorTabControlsHolder {
   margin: 0px;
   height: auto;
-  text-indent: -78px;
+  text-indent: -80px;
   border: 1px solid transparent;
 }
 

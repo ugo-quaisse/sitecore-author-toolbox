@@ -25,9 +25,9 @@ const initPreviewButton = (storage) => {
     <div id="EditorTabControls_Preview" class="scEditorTabControlsHolder">
         <button disabled class="scEditorHeaderButton ${extraClass}" data-tooltip="Rotate" id="scRotateDeviceButton" type="button" onclick="changePreviewRotation('${iframeId}')"><img src="${global.iconRotate}" class="scLanguageIcon"></button>
         <input id="previewRange" type ="range" min ="0.3" max="1" step ="0.01" value ="1" onchange="updatePreviewSize('${iframeId}',this.value)"/>
-        <button class="scEditorHeaderButton ${extraClass}" data-tooltip="Mobile" id="scMobileDeviceButton" type="button" onclick="changeDevicePreview('${iframeId}', 'mobile', 'v')"><img src="${global.iconRotate}" class="scLanguageIcon"></button>
-        <button class="scEditorHeaderButton ${extraClass}" data-tooltip="Tablet" id="scTabletDeviceButton" type="button" onclick="changeDevicePreview('${iframeId}', 'tablet', 'v')"><img src="${global.iconRotate}" class="scLanguageIcon"></button>
-        <button class="scEditorHeaderButton ${extraClass}" data-tooltip="Normal" id="scWebDeviceButton" type="button" onclick="changeDevicePreview('${iframeId}', 'web', 'v')"><img src="${global.iconRotate}" class="scLanguageIcon"></button>
+        <button class="scEditorHeaderButton ${extraClass}" data-tooltip="Mobile" id="scMobileDeviceButton" type="button" onclick="changeDevicePreview('${iframeId}', 'mobile', 'v')"><img src="${global.iconMobile}" class="scLanguageIcon"></button>
+        <button class="scEditorHeaderButton ${extraClass}" data-tooltip="Tablet" id="scTabletDeviceButton" type="button" onclick="changeDevicePreview('${iframeId}', 'tablet', 'v')"><img src="${global.iconTablet}" class="scLanguageIcon"></button>
+        <button class="scEditorHeaderButton ${extraClass}" data-tooltip="Normal" id="scWebDeviceButton" type="button" onclick="changeDevicePreview('${iframeId}', 'web', 'v')"><img src="${global.iconWeb}" class="scLanguageIcon"></button>
     </div>`;
 
   //Add to view

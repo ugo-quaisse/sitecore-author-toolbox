@@ -457,7 +457,7 @@ function getParentNode(int = 1, tabLoadingTitle = "Loading...") {
  * Change device preview
  */
 function changeDevicePreview(iframeId, device, orientation = "v") {
-  let ratio;
+  let ratio, maxHeight;
 
   //Get preview page size
   let pageHeight = document.querySelector("#" + iframeId).clientHeight;
@@ -486,7 +486,8 @@ function changeDevicePreview(iframeId, device, orientation = "v") {
         .setAttribute("class", "mobile_" + orientation);
       //Check viewport height
 
-      ratio = pageHeight / 812 - 0.05;
+      maxHeight = orientation == "v" ? 812 : 375;
+      ratio = (pageHeight - pageHeight * 0.25) / maxHeight;
       ratio = Math.round(ratio * 100) / 100;
       ratio > 1 ? (ratio = 1) : false;
       document.querySelector("#previewRange").value = ratio;
@@ -506,7 +507,8 @@ function changeDevicePreview(iframeId, device, orientation = "v") {
         .setAttribute("class", "tablet_" + orientation);
       //Check viewport height
 
-      ratio = pageHeight / 1366 - 0.05;
+      maxHeight = orientation == "v" ? 1080 : 810;
+      ratio = (pageHeight - pageHeight * 0.25) / maxHeight;
       ratio = Math.round(ratio * 100) / 100;
       ratio > 1 ? (ratio = 1) : false;
       document.querySelector("#previewRange").value = ratio;
@@ -552,8 +554,9 @@ function changePreviewRotation(iframeId) {
 /**
  * Change device preview in Experience Editor
  */
-function changeDevicePreviewEE(device, orientation = "v") {
+function changeDevicePreviewEE(device, orientation = "v", resize = false) {
   let ratio, maxHeight;
+  let source = resize ? parent.document.querySelector("#scWebEditRibbon").contentDocument : document;
 
   //Get preview page size
   let pageHeight = parent.document.querySelector("#Page").clientHeight;
@@ -576,14 +579,16 @@ function changeDevicePreviewEE(device, orientation = "v") {
     document.querySelectorAll("#scRotateDeviceButton > img, #scMobileDeviceButton > img, #scTabletDeviceButton > img").forEach(function (elem) {
       elem.setAttribute("style", "transform: rotate(0deg);");
     });
-    document.querySelector("#scMobileDeviceButton").setAttribute("onclick", `changeDevicePreviewEE('mobile', 'v')`);
-    document.querySelector("#scTabletDeviceButton").setAttribute("onclick", `changeDevicePreviewEE('tablet', 'v')`);
+    //TODO: Fix when triggered from parent fram on resize
+    source.querySelector("#scMobileDeviceButton").setAttribute("onclick", `changeDevicePreviewEE('mobile', 'v')`);
+    source.querySelector("#scTabletDeviceButton").setAttribute("onclick", `changeDevicePreviewEE('tablet', 'v')`);
   } else if (orientation == "h") {
     document.querySelectorAll("#scRotateDeviceButton > img, #scMobileDeviceButton > img, #scTabletDeviceButton > img").forEach(function (elem) {
       elem.setAttribute("style", "transform: rotate(90deg);");
     });
-    document.querySelector("#scMobileDeviceButton").setAttribute("onclick", `changeDevicePreviewEE('mobile', 'h')`);
-    document.querySelector("#scTabletDeviceButton").setAttribute("onclick", `changeDevicePreviewEE('tablet', 'h')`);
+    //TODO: Fix when triggered from parent fram on resize
+    source.querySelector("#scMobileDeviceButton").setAttribute("onclick", `changeDevicePreviewEE('mobile', 'h')`);
+    source.querySelector("#scTabletDeviceButton").setAttribute("onclick", `changeDevicePreviewEE('tablet', 'h')`);
   }
 
   //Set preview Iframe size
@@ -600,7 +605,7 @@ function changeDevicePreviewEE(device, orientation = "v") {
       break;
 
     case "tablet":
-      maxHeight = orientation == "v" ? 1366 : 1024;
+      maxHeight = orientation == "v" ? 1080 : 810;
       ratio = (pageHeight - pageHeight * 0.1) / maxHeight;
       ratio = Math.round(ratio * 100) / 100;
       ratio > 1 ? (ratio = 1) : false;
@@ -644,11 +649,15 @@ function changeDevicePreviewEE(device, orientation = "v") {
  * Update device preview
  */
 function updatePreviewEE() {
+  let resizeTimer;
   let ribbon = document.querySelector("#scWebEditRibbon").contentDocument;
   let statePreview = ribbon.querySelector(`#EditorTabControls_Preview_Close`) ? ribbon.querySelector(`#EditorTabControls_Preview_Close`).dataset.state == `open` : false;
   let previewDevice = parent.document.querySelector("#Page").className.split("_") ? parent.document.querySelector("#Page").className.split("_")[0] : "mobile";
   let previewOrientation = parent.document.querySelector("#Page").className.split("_") ? parent.document.querySelector("#Page").className.split("_")[1] : "v";
-  statePreview ? changeDevicePreviewEE(previewDevice, previewOrientation) : false;
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(function () {
+    statePreview ? changeDevicePreviewEE(previewDevice, previewOrientation, true) : false;
+  }, 200);
 }
 
 /**

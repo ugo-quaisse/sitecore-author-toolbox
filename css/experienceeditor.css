@@ -99,6 +99,10 @@ body.satEE .zg-variant-switcher.expanded .zg-variant-tip {
   color: var(--accent) !important;
 }
 
+body.satEE #c-menu--slide-left {
+  box-shadow: rgba(0, 0, 0, 0.1) 2px -2px 4px;
+}
+
 /* 
  * All below is for Experimental UI
  */

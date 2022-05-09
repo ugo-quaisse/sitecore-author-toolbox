@@ -25,7 +25,19 @@ import { initAppName, initGravatarImage, initUserMenu, initIntroScreen } from ".
 import { initInstantSearch, enhancedSitecoreSearch } from "./modules/search.js";
 import { insertModal, insertPanel } from "./modules/insert.js";
 import { initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons, initUploadButton, initUploader, initLightbox, initMediaSearchBox } from "./modules/media.js";
-import { initOnboarding, initExperimentalUi, initInsertIcon, initGutter, initSitecoreRibbon, initSvgAnimation, initSvgAnimationPublish, initEventListeners, initTitleBarDesktop, initMaterializeIcons } from "./modules/experimentalui.js";
+import {
+  initOnboarding,
+  initExperimentalUi,
+  initInsertIcon,
+  initGutter,
+  initSitecoreRibbon,
+  initSvgAnimation,
+  initSvgAnimationPublish,
+  initEventListeners,
+  initTitleBarDesktop,
+  initMaterializeIcons,
+  insertSavebarEE,
+} from "./modules/experimentalui.js";
 import { initFavorites } from "./modules/favorites.js";
 import { initGroupedErrors } from "./modules/errors.js";
 import { enhancedBucketLists } from "./modules/buckets.js";
@@ -35,7 +47,7 @@ import { initLaunchpadIcon, initLaunchpadMenu } from "./modules/launchpad.js";
 import { initAutoExpandTree, initTreeGutterTooltips } from "./modules/contenttree.js";
 import { initQuerySuggestions } from "./modules/template.js";
 import { initPublishingStatus } from "./modules/publishingdashboard.js";
-import { initPreviewButtonsEE, updateEETitle, storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor, initRenderingSearchBox } from "./modules/experienceeditor.js";
+import { initPreviewButtonsEE, updateEETitle, storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, resetExperienceEditor, initRenderingSearchBox } from "./modules/experienceeditor.js";
 import { initHorizon } from "./modules/horizon.js";
 
 /**
@@ -281,6 +293,7 @@ chrome.storage.sync.get((storage) => {
       log("**** EE Ribbon ****", "orange");
       initPreviewButtonsEE(storage);
       storeCurrentPageEE();
+      insertSavebarEE();
     } else if (global.isPreviewMode && global.isEEPreview) {
       document.querySelector("#ribbonPreLoadingIndicator").remove();
       document.querySelector("#scWebEditRibbon").remove();
@@ -307,7 +320,7 @@ chrome.storage.sync.get((storage) => {
       addToolbarEditCE(storage);
       addToolbarTooltip(storage);
       addPlaceholderTooltip(storage);
-      addHideRibbonButton(storage);
+      //addHideRibbonButton(storage);
       resetExperienceEditor(storage);
       initMaterializeIcons(storage);
       //initHighlightValidationError(storage);

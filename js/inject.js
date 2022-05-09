@@ -255,7 +255,10 @@ const showSitecoreRibbon = () => {
 };
 
 const showSitecoreRibbonEE = () => {
-  //let ribbon = document.querySelector("div[data-sc-id='PageEditBar']");
+  if (document.querySelector("div[data-sc-id='PageEditBar']")) {
+    document.querySelector("div[data-sc-id='PageEditBar']").classList.toggle("hideSitecoreRibbon");
+  }
+
   document.querySelector("[data-sc-id='QuickRibbon']").click();
   if (document.querySelector("[data-sc-id='QuickRibbon'] > div").classList.contains("navigate_down")) {
     document.querySelector("#scSitecoreRibbon").classList.remove("scSitecoreRibbon");
@@ -826,4 +829,60 @@ function satLogout() {
 function showFullBreadcrumb() {
   document.querySelector(".scBreadcrumbShort").setAttribute("style", "display:none");
   document.querySelector(".scBreadcrumbFull").setAttribute("style", "display:block");
+}
+
+/**
+ * Save page in EE
+ */
+function savePage() {
+  let saveMessage = document.querySelector(".saveMessage");
+  let saveButton = document.querySelector(".scSaveButton");
+  saveButton.innerText = "Saving...";
+  saveButton.setAttribute("disabled", true);
+  document.body.style.cursor = "wait";
+
+  setTimeout(function () {
+    saveMessage.classList.add("success");
+    saveMessage.classList.add("visible");
+    saveMessage.innerHTML = "Saved! Reloading the page...";
+    saveButton.innerText = "Save";
+    saveButton.removeAttribute("disabled");
+  }, 500);
+
+  document.querySelector("a[data-sc-id='QuickSave']").click();
+}
+
+/**
+ * Publish page in EE
+ */
+function publishPage() {
+  document.querySelector("a[data-sc-id^='PublishRibbonButton']").click();
+}
+
+/**
+ * Settings page in EE
+ */
+function settingsPage() {
+  document.querySelector("a[data-sc-id^='ChangeRestrictionsButton']").click();
+}
+
+/**
+ * Add component in EE
+ */
+function addComponent() {
+  document.querySelector("a[data-sc-id^='QuickInsert-Component']").click();
+}
+
+/**
+ * Add page in EE
+ */
+function addPage() {
+  document.querySelector("a[data-sc-id^='InsertPageRibbonButton']").click();
+}
+
+/**
+ * Show tree in EE
+ */
+function showSitecoreTree() {
+  document.querySelector("#navigationTreeViewButton").click();
 }

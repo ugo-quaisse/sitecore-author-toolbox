@@ -1421,6 +1421,12 @@ body.satDark .scStartMenuPrograms {
   background-color: var(--black2) !important;
 }
 
+body.satDark .scStartMenuLeftOption,
+body.satDark .scStartMenuRightFolder,
+body.satDark .scStartMenuProgramsMenu {
+  color: var(--white) !important;
+}
+
 body.satDark .scStartMenuRightFolder:hover,
 body.satDark .scStartMenuProgramsMenu:hover,
 body.satDark .scStartMenuLeftOption:hover {

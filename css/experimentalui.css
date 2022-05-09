@@ -1867,7 +1867,8 @@ body.satExperimentalUi .scSaveBar > .scActions > .scPublishMenu > li:hover {
   background-color: var(--grey5);
 }
 
-body.satExperimentalUi .scSaveBar > .scActions > button {
+body.satExperimentalUi .scSaveBar > .scActions > button,
+body.satExperimentalUi .scEditorTabControlsHolder > button.scAddComponent {
   float: right;
   background-color: var(--grey);
   color: var(--black1);
@@ -2095,7 +2096,8 @@ body.satExperimentalUi .scSaveBar > .scActions > .scBurgerMenuTitle {
 }
 
 body.satExperimentalUi .scSaveBar > .scActions > button.scSaveButton,
-body.satExperimentalUi .scSaveBar > .scActions > button.scAddComponent,
+body.satExperimentalUi .scSaveBar > .scActions > button.scAddPage,
+body.satExperimentalUi .scEditorTabControlsHolder > button.scAddComponent,
 body.satExperimentalUi .scSaveBar > .scActions > button.scMenu,
 body.satExperimentalUi .scSaveBar > .scActions > button.scPreviewButton {
   color: var(--black3);
@@ -2113,13 +2115,15 @@ body.satExperimentalUi .scSaveBar > .scActions > button.scAddPage > img {
   width: 12px;
 }
 
-body.satExperimentalUi .scSaveBar > .scActions > button.scAddComponent {
+body.satExperimentalUi .scSaveBar > .scActions > button.scAddComponent,
+body.satExperimentalUi .scEditorTabControlsHolder > button.scAddComponent {
   float: left;
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
   padding: 8px 9px !important;
 }
-body.satExperimentalUi .scSaveBar > .scActions > button.scAddComponent > img {
+body.satExperimentalUi .scSaveBar > .scActions > button.scAddComponent > img,
+body.satExperimentalUi .scEditorTabControlsHolder > button.scAddComponent > img {
   width: 12px;
 }
 

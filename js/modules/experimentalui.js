@@ -774,20 +774,18 @@ const insertSavebarEE = (storage) => {
             <button class="scSaveButton" onclick="savePage()">Save</button>
             <div class="scBurgerMenuTitle">Content</div>
             <button class="scMenu" onclick="showSitecoreTree()"><img src="${global.iconMenu}" /></button>
-            <button class="scAddComponent" onclick="addPage()">NEW PAGE</button>
-            <button class="scAddComponent" onclick="addComponent()"><img src="${global.iconAdd}" /> ADD A COMPONENT</button>
+            <button class="scAddPage" onclick="addPage()">NEW PAGE</button>
             </div>
     </div>`;
-
-    //Add buttons
-    let scLanguage = document.querySelector(".sc-pageeditbar").dataset.scLanguage.toUpperCase();
-    let buttonLanguage = `<button class="scEditorHeaderButton" id="scLanguageButton" type="button" onclick="toggleLanguagePanel()"><img src="${global.iconLanguage}" class="scLanguageIcon"> ${scLanguage.toUpperCase()} ▾</button>`;
 
     //Variables
     let scItemId = document.querySelector(".sc-pageeditbar").dataset.scItemid;
     let scSitename = document.querySelector(".sc-pageeditbar").dataset.scSitename;
+    let scLanguage = document.querySelector(".sc-pageeditbar").dataset.scLanguage.toUpperCase();
     let scVersion = document.querySelector(".sc-pageeditbar").dataset.scVersion;
+    let buttonLanguage = `<button class="scEditorHeaderButton" id="scLanguageButton" type="button" onclick="toggleLanguagePanel()"><img src="${global.iconLanguage}" class="scLanguageIcon"> ${scLanguage.toUpperCase()} ▾</button>`;
     let buttonVersion = `<button class="scEditorHeaderButton" id="scVersionButton" type="button" onclick="toggleVersionPanel()"><img src="${global.iconVersion}" class="scLanguageIcon"> ${scVersion} ▾</button>`;
+    let buttonComponent = `<button class="scAddComponent" onclick="addComponent()"><img src="${global.iconAdd}" /> ADD A COMPONENT</button>`;
     let body = parent.document.querySelector("body");
 
     //Add iFrame Language
@@ -808,6 +806,7 @@ const insertSavebarEE = (storage) => {
     <div class="scEditorTabControlsHolder">
       ${buttonLanguage}
       ${buttonVersion}
+      ${buttonComponent}
     </div>
   </div>`;
 
@@ -866,7 +865,7 @@ const initGroupedErrorsEE = () => {
   let editorBar = document.querySelector(".scEditorTabControlsHolder");
   //Update message bar
   let errorMessage = `<div class="eeErrors"><img src="${global.iconSpinner}" style="width:16px"/> Checking errors...</div>`;
-  editorBar.insertAdjacentHTML("afterbegin", errorMessage);
+  editorBar.insertAdjacentHTML("beforeend", errorMessage);
   //Check errors
   setTimeout(() => {
     document.querySelectorAll(".sc-messageBar-messages-wrap > div").forEach(function (group) {

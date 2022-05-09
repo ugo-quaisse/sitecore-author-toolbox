@@ -743,31 +743,32 @@ const initMaterializeIcons = (storage) => {
 /**
  * Insert Save bar Experience Editor
  */
-const insertSavebarEE = () => {
-  //Reset Ribbon
-  document.querySelector("body").setAttribute("style", "overflow: hidden !important;");
-  //Add listener for refreshing
-  addEventListener("beforeunload", () => {
-    let saveMessage = document.querySelector(".saveMessage");
-    parent.document.body.style.cursor = "wait";
+const insertSavebarEE = (storage) => {
+  if (storage.feature_experimentalui === true && storage.feature_material_icons === true) {
+    //Reset Ribbon
+    document.querySelector("body").setAttribute("style", "overflow: hidden !important;");
+    //Add listener for refreshing
+    addEventListener("beforeunload", () => {
+      let saveMessage = document.querySelector(".saveMessage");
+      parent.document.body.style.cursor = "wait";
 
-    if (saveMessage) {
-      saveMessage.classList.add("warning");
-      saveMessage.classList.add("visible");
-      saveMessage.innerHTML = "Refreshing the page...";
-    }
-  });
-  //If preview mode
-  let scPrimaryBtn = `
+      if (saveMessage) {
+        saveMessage.classList.add("warning");
+        saveMessage.classList.add("visible");
+        saveMessage.innerHTML = "Refreshing the page...";
+      }
+    });
+    //If preview mode
+    let scPrimaryBtn = `
   <button id="scPublishMenuMore" class="grouped" type="button"><span class="scPublishMenuMoreArrow">▾</span></button>
     <ul class="scPublishMenu">             
       <li onclick="settingsPage()">Publishing settings...</li>
     </ul>
   <button class="scPublishButton primary primaryGrouped" onclick="publishPage()">Publish Page</button>`;
 
-  //Save Bar
-  //prettier-ignore
-  let scSaveBar = `<div class="scSaveBar scSaveBarEE" style="height:57px">
+    //Save Bar
+    //prettier-ignore
+    let scSaveBar = `<div class="scSaveBar scSaveBarEE" style="height:57px">
         <div class="scActions">
             ${scPrimaryBtn}
             <button class="scSaveButton" onclick="savePage()">Save</button>
@@ -778,80 +779,81 @@ const insertSavebarEE = () => {
             </div>
     </div>`;
 
-  //Add buttons
-  let scLanguage = document.querySelector(".sc-pageeditbar").dataset.scLanguage.toUpperCase();
-  let buttonLanguage = `<button class="scEditorHeaderButton" id="scLanguageButton" type="button" onclick="toggleLanguagePanel()"><img src="${global.iconLanguage}" class="scLanguageIcon"> ${scLanguage.toUpperCase()} ▾</button>`;
+    //Add buttons
+    let scLanguage = document.querySelector(".sc-pageeditbar").dataset.scLanguage.toUpperCase();
+    let buttonLanguage = `<button class="scEditorHeaderButton" id="scLanguageButton" type="button" onclick="toggleLanguagePanel()"><img src="${global.iconLanguage}" class="scLanguageIcon"> ${scLanguage.toUpperCase()} ▾</button>`;
 
-  //Variables
-  let scItemId = document.querySelector(".sc-pageeditbar").dataset.scItemid;
-  let scSitename = document.querySelector(".sc-pageeditbar").dataset.scSitename;
-  let scVersion = document.querySelector(".sc-pageeditbar").dataset.scVersion;
-  let buttonVersion = `<button class="scEditorHeaderButton" id="scVersionButton" type="button" onclick="toggleVersionPanel()"><img src="${global.iconVersion}" class="scLanguageIcon"> ${scVersion} ▾</button>`;
-  let body = parent.document.querySelector("body");
+    //Variables
+    let scItemId = document.querySelector(".sc-pageeditbar").dataset.scItemid;
+    let scSitename = document.querySelector(".sc-pageeditbar").dataset.scSitename;
+    let scVersion = document.querySelector(".sc-pageeditbar").dataset.scVersion;
+    let buttonVersion = `<button class="scEditorHeaderButton" id="scVersionButton" type="button" onclick="toggleVersionPanel()"><img src="${global.iconVersion}" class="scLanguageIcon"> ${scVersion} ▾</button>`;
+    let body = parent.document.querySelector("body");
 
-  //Add iFrame Language
-  parent.document.querySelector("#scLanguageIframe") ? parent.document.querySelector("#scLanguageIframe").remove() : false;
+    //Add iFrame Language
+    parent.document.querySelector("#scLanguageIframe") ? parent.document.querySelector("#scLanguageIframe").remove() : false;
 
-  //prettier-ignore
-  let iframeLanguage = `<iframe loading="lazy" id="scLanguageIframe" src="/sitecore/client/Applications/ExperienceEditor/Pages/Galleries/SelectLanguageGallery.aspx?itemId=${scItemId}&pageSite=UK&database=master&la=${scLanguage}&vs=${scVersion}"></iframe>`;
-  body && !document.querySelector("#scLanguageIframe") ? body.insertAdjacentHTML("beforeend", iframeLanguage) : false;
+    //prettier-ignore
+    let iframeLanguage = `<iframe loading="lazy" id="scLanguageIframe" src="/sitecore/client/Applications/ExperienceEditor/Pages/Galleries/SelectLanguageGallery.aspx?itemId=${scItemId}&pageSite=UK&database=master&la=${scLanguage}&vs=${scVersion}"></iframe>`;
+    body && !document.querySelector("#scLanguageIframe") ? body.insertAdjacentHTML("beforeend", iframeLanguage) : false;
 
-  //Add iFrame Version
-  document.querySelector("#scVersionIframe") ? document.querySelector("#scVersionIframe").remove() : false;
+    //Add iFrame Version
+    document.querySelector("#scVersionIframe") ? document.querySelector("#scVersionIframe").remove() : false;
 
-  //prettier-ignore
-  let iframeVersion = `<iframe loading="lazy" id="scVersionIframe" src="/sitecore/client/Applications/ExperienceEditor/Pages/Galleries/SelectVersionGallery.aspx?itemId=${scItemId}&pageSite=${scSitename}&database=master&la=${scLanguage}&vs=${scVersion}"></iframe>`;
-  body && !document.querySelector("#scVersionIframe") ? body.insertAdjacentHTML("beforeend", iframeVersion) : false;
+    //prettier-ignore
+    let iframeVersion = `<iframe loading="lazy" id="scVersionIframe" src="/sitecore/client/Applications/ExperienceEditor/Pages/Galleries/SelectVersionGallery.aspx?itemId=${scItemId}&pageSite=${scSitename}&database=master&la=${scLanguage}&vs=${scVersion}"></iframe>`;
+    body && !document.querySelector("#scVersionIframe") ? body.insertAdjacentHTML("beforeend", iframeVersion) : false;
 
-  let editorBar = `<div id="EditorTabs" class="EditorTabsEE">
+    let editorBar = `<div id="EditorTabs" class="EditorTabsEE">
     <div class="scEditorTabControlsHolder">
       ${buttonLanguage}
       ${buttonVersion}
     </div>
   </div>`;
 
-  //Insert Save Bar
-  let pageEditBar = document.querySelector("div[data-sc-id='PageEditBar']");
-  document.querySelector(".scSaveBar") ? document.querySelector(".scSaveBar").remove() : false;
-  pageEditBar ? pageEditBar.insertAdjacentHTML("afterend", scSaveBar + editorBar) : false;
+    //Insert Save Bar
+    let pageEditBar = document.querySelector("div[data-sc-id='PageEditBar']");
+    document.querySelector(".scSaveBar") ? document.querySelector(".scSaveBar").remove() : false;
+    pageEditBar ? pageEditBar.insertAdjacentHTML("afterend", scSaveBar + editorBar) : false;
 
-  //Save mesasge
-  let scSaveMessage = `<div class="saveMessage">Your changes have been saved successfully!</div>`;
-  !document.querySelector(".saveMessage") ? document.querySelector("body").insertAdjacentHTML("afterbegin", scSaveMessage) : false;
+    //Save mesasge
+    let scSaveMessage = `<div class="saveMessage">Your changes have been saved successfully!</div>`;
+    !document.querySelector(".saveMessage") ? document.querySelector("body").insertAdjacentHTML("afterbegin", scSaveMessage) : false;
 
-  //Listener save button
-  let target = document.querySelector("a[data-sc-id='QuickSave']");
-  let observer = new MutationObserver(function () {
-    if (target.classList.contains("disabled")) {
-      document.querySelector(".scSaveBar .scSaveButton").disabled = true;
-      // document.querySelector(".scSaveBar .scPublishButton").disabled = true;
-      document.querySelector(".scSaveBar .scSaveButton").innerText = "Save";
-      document.querySelector(".scSaveBar .scPublishButton").innerText = "Publish Page";
-      document.querySelector(".scSaveBar .scSaveButton").removeAttribute("style");
-    } else {
-      document.querySelector(".scSaveBar .scSaveButton").disabled = false;
-      // document.querySelector(".scSaveBar .scPublishButton").disabled = false;
-      document.querySelector(".scSaveBar .scSaveButton").innerText = "Save";
-      document.querySelector(".scSaveBar .scSaveButton").setAttribute("style", "background-color: var(--messageSuccessLink) !important; color: #fff !important;");
-      document.querySelector(".scSaveBar .scPublishButton").innerText = "Publish Page";
-    }
-  });
+    //Listener save button
+    let target = document.querySelector("a[data-sc-id='QuickSave']");
+    let observer = new MutationObserver(function () {
+      if (target.classList.contains("disabled")) {
+        document.querySelector(".scSaveBar .scSaveButton").disabled = true;
+        // document.querySelector(".scSaveBar .scPublishButton").disabled = true;
+        document.querySelector(".scSaveBar .scSaveButton").innerText = "Save";
+        document.querySelector(".scSaveBar .scPublishButton").innerText = "Publish Page";
+        document.querySelector(".scSaveBar .scSaveButton").removeAttribute("style");
+      } else {
+        document.querySelector(".scSaveBar .scSaveButton").disabled = false;
+        // document.querySelector(".scSaveBar .scPublishButton").disabled = false;
+        document.querySelector(".scSaveBar .scSaveButton").innerText = "Save";
+        document.querySelector(".scSaveBar .scSaveButton").setAttribute("style", "background-color: var(--messageSuccessLink) !important; color: #fff !important;");
+        document.querySelector(".scSaveBar .scPublishButton").innerText = "Publish Page";
+      }
+    });
 
-  //Observer UI
-  target ? observer.observe(target, { attributes: true }) : false;
+    //Observer UI
+    target ? observer.observe(target, { attributes: true }) : false;
 
-  //Get all placeholders and renderings
-  document.querySelectorAll('code[chrometype="placeholder"], code[chrometype="rendering"]').forEach(function (e) {
-    e.getAttribute("hintname") ? console.log(e.getAttribute("chrometype") + " -> ", e.getAttribute("hintname")) : false;
-  });
+    //Get all placeholders and renderings
+    document.querySelectorAll('code[chrometype="placeholder"], code[chrometype="rendering"]').forEach(function (e) {
+      e.getAttribute("hintname") ? console.log(e.getAttribute("chrometype") + " -> ", e.getAttribute("hintname")) : false;
+    });
 
-  document.querySelectorAll("[sc-part-of^='placeholder']").forEach(function (e) {
-    e.getAttribute("hintkey") ? console.log(e.getAttribute("hintkey")) : false;
-  });
+    document.querySelectorAll("[sc-part-of^='placeholder']").forEach(function (e) {
+      e.getAttribute("hintkey") ? console.log(e.getAttribute("hintkey")) : false;
+    });
 
-  document.querySelectorAll("[hintkey^='']").forEach(function (e) {
-    console.log(e.getAttribute("hintkey"));
-  });
+    document.querySelectorAll("[hintkey^='']").forEach(function (e) {
+      console.log(e.getAttribute("hintkey"));
+    });
+  }
 };
 
 /**

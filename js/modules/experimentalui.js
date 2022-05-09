@@ -5,7 +5,7 @@
 
 import * as global from "./global.js";
 import * as icons from "./icons.js";
-import { getMaterializeIcon, getScItemData, setTextColour } from "./helpers.js";
+import { getMaterializeIcon, getScItemData, setTextColour, setPlural } from "./helpers.js";
 import { findCountryName } from "./language.js";
 
 export {
@@ -32,6 +32,7 @@ export {
   initTitleBarDesktop,
   replaceIcons,
   initMaterializeIcons,
+  initGroupedErrorsEE,
 };
 
 /**
@@ -316,6 +317,7 @@ const insertNavigatorButton = () => {
 const initSitecoreRibbon = () => {
   let storage = localStorage.getItem("scSitecoreRibbon");
   let dock = document.querySelector(".scDockTop");
+  !dock && document.querySelector("div[data-sc-id='PageEditBar']") ? (dock = document.querySelector("div[data-sc-id='PageEditBar']")) : false;
   let icon = document.querySelector("#scSitecoreRibbon");
 
   if (storage == "true") {
@@ -744,6 +746,17 @@ const initMaterializeIcons = (storage) => {
 const insertSavebarEE = () => {
   //Reset Ribbon
   document.querySelector("body").setAttribute("style", "overflow: hidden !important;");
+  //Add listener for refreshing
+  addEventListener("beforeunload", () => {
+    let saveMessage = document.querySelector(".saveMessage");
+    parent.document.body.style.cursor = "wait";
+
+    if (saveMessage) {
+      saveMessage.classList.add("warning");
+      saveMessage.classList.add("visible");
+      saveMessage.innerHTML = "Refreshing the page...";
+    }
+  });
   //If preview mode
   let scPrimaryBtn = `
   <button id="scPublishMenuMore" class="grouped" type="button"><span class="scPublishMenuMoreArrow">▾</span></button>
@@ -758,15 +771,42 @@ const insertSavebarEE = () => {
         <div class="scActions">
             ${scPrimaryBtn}
             <button class="scSaveButton" onclick="savePage()">Save</button>
+            <div class="scBurgerMenuTitle">Content</div>
             <button class="scMenu" onclick="showSitecoreTree()"><img src="${global.iconMenu}" /></button>
             <!--<button class="scAddComponent" onclick="addPage()">+ New Page</button>-->
-            <button class="scAddComponent" onclick="addComponent()"><img src="${global.iconAdd}" /></button>
+            <button class="scAddComponent" onclick="addComponent()"><img src="${global.iconAdd}" /> ADD A COMPONENT</button>
             </div>
     </div>`;
 
+  //Add buttons
+  let scLanguage = document.querySelector(".sc-pageeditbar").dataset.scLanguage.toUpperCase();
+  let buttonLanguage = `<button class="scEditorHeaderButton" id="scLanguageButton" type="button" onclick="toggleLanguagePanel()"><img src="${global.iconLanguage}" class="scLanguageIcon"> ${scLanguage.toUpperCase()} ▾</button>`;
+
+  //Variables
+  let scItemId = document.querySelector(".sc-pageeditbar").dataset.scItemid;
+  let scSitename = document.querySelector(".sc-pageeditbar").dataset.scSitename;
+  let scVersion = document.querySelector(".sc-pageeditbar").dataset.scVersion;
+  let buttonVersion = `<button class="scEditorHeaderButton" id="scVersionButton" type="button" onclick="toggleVersionPanel()"><img src="${global.iconVersion}" class="scLanguageIcon"> ${scVersion} ▾</button>`;
+  let body = parent.document.querySelector("body");
+
+  //Add iFrame Language
+  parent.document.querySelector("#scLanguageIframe") ? parent.document.querySelector("#scLanguageIframe").remove() : false;
+
+  //prettier-ignore
+  let iframeLanguage = `<iframe loading="lazy" id="scLanguageIframe" src="/sitecore/client/Applications/ExperienceEditor/Pages/Galleries/SelectLanguageGallery.aspx?itemId=${scItemId}&pageSite=UK&database=master&la=${scLanguage}&vs=${scVersion}"></iframe>`;
+  body && !document.querySelector("#scLanguageIframe") ? body.insertAdjacentHTML("beforeend", iframeLanguage) : false;
+
+  //Add iFrame Version
+  document.querySelector("#scVersionIframe") ? document.querySelector("#scVersionIframe").remove() : false;
+
+  //prettier-ignore
+  let iframeVersion = `<iframe loading="lazy" id="scVersionIframe" src="/sitecore/client/Applications/ExperienceEditor/Pages/Galleries/SelectVersionGallery.aspx?itemId=${scItemId}&pageSite=${scSitename}&database=master&la=${scLanguage}&vs=${scVersion}"></iframe>`;
+  body && !document.querySelector("#scVersionIframe") ? body.insertAdjacentHTML("beforeend", iframeVersion) : false;
+
   let editorBar = `<div id="EditorTabs" class="EditorTabsEE">
     <div class="scEditorTabControlsHolder">
-      Buttons
+      ${buttonLanguage}
+      ${buttonVersion}
     </div>
   </div>`;
 
@@ -812,4 +852,58 @@ const insertSavebarEE = () => {
   document.querySelectorAll("[hintkey^='']").forEach(function (e) {
     console.log(e.getAttribute("hintkey"));
   });
+};
+
+/**
+ * Get Experience Editor Errors
+ */
+const initGroupedErrorsEE = () => {
+  let errors = 0;
+  let warnings = 0;
+  let notifications = 0;
+  let editorBar = document.querySelector(".scEditorTabControlsHolder");
+  //Update message bar
+  let errorMessage = `<div class="eeErrors"><img src="${global.iconSpinner}" style="width:16px"/> Checking errors...</div>`;
+  editorBar.insertAdjacentHTML("afterbegin", errorMessage);
+  //Check errors
+  setTimeout(() => {
+    document.querySelectorAll(".sc-messageBar-messages-wrap > div").forEach(function (group) {
+      if (group.dataset.bind.toLowerCase().includes("errors")) {
+        group.querySelectorAll(".sc-messageBar-messageText").forEach(function () {
+          errors++;
+        });
+      }
+      if (group.dataset.bind.toLowerCase().includes("warning")) {
+        group.querySelectorAll(".sc-messageBar-messageText").forEach(function () {
+          warnings++;
+        });
+      }
+      if (group.dataset.bind.toLowerCase().includes("notifications")) {
+        group.querySelectorAll(".sc-messageBar-messageText").forEach(function () {
+          notifications++;
+        });
+      }
+    });
+
+    //Update errorBar
+    let eeErrors = document.querySelector(".eeErrors");
+    let eeErrorsMessage = ``;
+    if (errors == 0 && warnings == 0 && notifications == 0) {
+      eeErrorsMessage = `✅ <span class="success">All good</span>`;
+      setTimeout(() => {
+        eeErrors.setAttribute("style", "opacity:0;");
+      }, 1000);
+    }
+    errors > 0 ? (eeErrorsMessage += `🚫 <span class="error">${errors} error${setPlural(errors)}</span> `) : false;
+    warnings > 0 ? (eeErrorsMessage += `⚠️ <span class="warning">${warnings} warning${setPlural(warnings)}</span> `) : false;
+    notifications > 0 ? (eeErrorsMessage += `💬 <span class="notification">${notifications} notification${setPlural(notifications)}</span> `) : false;
+    eeErrors.innerHTML = eeErrorsMessage;
+  }, 3000);
+
+  //TODO: also include page validation from /sitecore/shell/~/xaml/Sitecore.Shell.Applications.ContentEditor.Dialogs.ValidationResult.aspx?hdl=1E98663795764D71991F6D2EAD33AB8E
+  // document.querySelectorAll(".scValidatorResult").forEach(function (e) {
+  //   if (e.innerText != "OK") {
+  //     console.log(e.innerText);
+  //   }
+  // });
 };

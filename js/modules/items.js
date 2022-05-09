@@ -67,7 +67,6 @@ const getRelatedItems = (sitecoreItemID, scLanguage, scVersion) => {
       html.querySelectorAll("#Links > .scRef > .scLink").forEach((el) => {
         !relatedItems.includes(el.innerText) ? relatedItems.push(el.innerText) : false;
       });
-      console.table(relatedItems.length);
       let usageText = relatedItems.length > 0 ? `✅ ${relatedItems.length} time${setPlural(relatedItems.length)}` : `⚠️ Not used`;
       let table = document.querySelector(".scEditorQuickInfo");
       if (table) {

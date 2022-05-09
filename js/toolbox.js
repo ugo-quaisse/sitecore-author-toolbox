@@ -37,6 +37,7 @@ import {
   initTitleBarDesktop,
   initMaterializeIcons,
   insertSavebarEE,
+  initGroupedErrorsEE,
 } from "./modules/experimentalui.js";
 import { initFavorites } from "./modules/favorites.js";
 import { initGroupedErrors } from "./modules/errors.js";
@@ -291,9 +292,11 @@ chrome.storage.sync.get((storage) => {
      */
     if (global.isRibbon) {
       log("**** EE Ribbon ****", "orange");
+      initSitecoreRibbon();
       initPreviewButtonsEE(storage);
       storeCurrentPageEE();
       insertSavebarEE();
+      initGroupedErrorsEE();
     } else if (global.isPreviewMode && global.isEEPreview) {
       document.querySelector("#ribbonPreLoadingIndicator").remove();
       document.querySelector("#scWebEditRibbon").remove();

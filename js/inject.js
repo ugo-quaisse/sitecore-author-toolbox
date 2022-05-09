@@ -255,16 +255,26 @@ const showSitecoreRibbon = () => {
 };
 
 const showSitecoreRibbonEE = () => {
-  if (document.querySelector("div[data-sc-id='PageEditBar']")) {
-    document.querySelector("div[data-sc-id='PageEditBar']").classList.toggle("hideSitecoreRibbon");
+  let dock = document.querySelector("div[data-sc-id='PageEditBar']");
+  dock.classList.toggle("showSitecoreRibbon");
+
+  if (dock) {
+    //Update icon and local storage
+    if (dock.classList.contains("showSitecoreRibbon")) {
+      localStorage.setItem("scSitecoreRibbon", true);
+      document.querySelector("#scSitecoreRibbon").classList.add("scSitecoreRibbon");
+    } else {
+      localStorage.setItem("scSitecoreRibbon", false);
+      document.querySelector("#scSitecoreRibbon").classList.remove("scSitecoreRibbon");
+    }
   }
 
-  document.querySelector("[data-sc-id='QuickRibbon']").click();
-  if (document.querySelector("[data-sc-id='QuickRibbon'] > div").classList.contains("navigate_down")) {
-    document.querySelector("#scSitecoreRibbon").classList.remove("scSitecoreRibbon");
-  } else if (document.querySelector("[data-sc-id='QuickRibbon'] > div").classList.contains("navigate_up")) {
-    document.querySelector("#scSitecoreRibbon").classList.add("scSitecoreRibbon");
-  }
+  //Update panels
+  let ribbon = parent.document.querySelector("#scWebEditRibbon").getBoundingClientRect();
+  let iframeLanguage = parent.document.querySelector("#scLanguageIframe");
+  let iframeVersion = parent.document.querySelector("#scVersionIframe");
+  iframeLanguage.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
+  iframeVersion.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
 };
 
 const showLanguageMenu = () => {
@@ -839,12 +849,13 @@ function savePage() {
   let saveButton = document.querySelector(".scSaveButton");
   saveButton.innerText = "Saving...";
   saveButton.setAttribute("disabled", true);
-  document.body.style.cursor = "wait";
+  parent.document.body.style.cursor = "wait";
 
   setTimeout(function () {
+    saveMessage.classList.remove("warning");
     saveMessage.classList.add("success");
     saveMessage.classList.add("visible");
-    saveMessage.innerHTML = "Saved! Reloading the page...";
+    saveMessage.innerHTML = "Changes saved! Refreshing the page...";
     saveButton.innerText = "Save";
     saveButton.removeAttribute("disabled");
   }, 500);
@@ -885,4 +896,28 @@ function addPage() {
  */
 function showSitecoreTree() {
   document.querySelector("#navigationTreeViewButton").click();
+}
+
+/**
+ * Show language Panel in EE
+ */
+function toggleLanguagePanel() {
+  let ribbon = parent.document.querySelector("#scWebEditRibbon").getBoundingClientRect();
+  let iframeLanguage = parent.document.querySelector("#scLanguageIframe");
+  let iframeVersion = parent.document.querySelector("#scVersionIframe");
+  iframeLanguage ? iframeLanguage.classList.toggle("open") : false;
+  iframeVersion && iframeVersion.classList.contains("open") ? iframeVersion.classList.remove("open") : false;
+  iframeLanguage.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
+}
+
+/**
+ * Show language Panel in EE
+ */
+function toggleVersionPanel() {
+  let ribbon = parent.document.querySelector("#scWebEditRibbon").getBoundingClientRect();
+  let iframeLanguage = parent.document.querySelector("#scLanguageIframe");
+  let iframeVersion = parent.document.querySelector("#scVersionIframe");
+  iframeVersion ? iframeVersion.classList.toggle("open") : false;
+  iframeLanguage && iframeLanguage.classList.contains("open") ? iframeLanguage.classList.remove("open") : false;
+  iframeVersion.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
 }

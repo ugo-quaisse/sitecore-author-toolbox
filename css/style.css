@@ -82,7 +82,11 @@ body.satExtension button:active {
 }
 
 body.satExtension .sc-globalHeader-loginInfo {
-  padding: 0px 15px;
+  padding: 0px 18px;
+}
+
+body.satExtension.contentEditor .sc-globalHeader-loginInfo {
+  padding: 0px 15px !important;
 }
 
 body.satExtension .sc-globalHeader-content .col2:last-child {
@@ -927,7 +931,7 @@ body.satExtension .DesktopArea > iframe {
 }
 
 #scWebEditRibbon {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 22px 70px 4px rgba(0, 0, 0, 0.56), 0 0 0 1px rgba(0, 0, 0, 0) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 22px 70px 4px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 0, 0, 0) !important;
 }
 
 /*Custom folder Content Editor*/
@@ -1678,6 +1682,10 @@ body.satExtension .scInstantSearchResults {
   margin-right: 15px;
 }
 
+.contentEditor .sc-globalHeader-startButton {
+  margin-top: -1.5px !important;
+}
+
 .sc-globalheader-appName {
   color: #cccccc;
   font-size: 1.167em;
@@ -2033,7 +2041,7 @@ body.satExtension #scPanel {
   position: fixed;
   background-color: var(--white);
   top: 0px !important;
-  right: -440px !important;
+  right: -445px !important;
   left: unset !important;
   width: 400px !important;
   height: -webkit-fill-available !important;

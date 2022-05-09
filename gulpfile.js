@@ -15,7 +15,7 @@ gulp.task("minify-css", function () {
       })
     )
     .pipe(gulp.dest("css/"))
-    .pipe(wait(500))
+    .pipe(wait(750))
     .pipe(open({ uri: "http://reload.extensions" }));
   //https://chrome.google.com/webstore/detail/extensions-reloader/fimgfedafeadlieiabdeeaodndnlbhid
 });

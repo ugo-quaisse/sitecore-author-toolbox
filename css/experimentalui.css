@@ -150,6 +150,10 @@ body.satExperimentalUi .saveMessage.success {
   background-color: var(--messageSuccessLink);
 }
 
+body.satExperimentalUi .saveMessage.warning {
+  background-color: var(--messageWarningLink);
+}
+
 body.satExperimentalUi .saveMessage.visible {
   top: 30px;
   opacity: 1;
@@ -179,6 +183,7 @@ body.satExperimentalUi .scEditorGrid {
 
 body.satExperimentalUi .scValidatorPanel,
 body.satExperimentalUi .scDockTop,
+body.satExperimentalUi .sc-pageeditbar,
 body.satExperimentalUi .scDockBottom {
   display: none;
 }
@@ -215,7 +220,7 @@ body.satExperimentalUi #EditorTabs {
   background-color: var(--white);
   border-bottom: 0px solid #ffffff;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
-  z-index: 10;
+  z-index: 1;
 }
 
 body.satExperimentalUi #EditorFrames {
@@ -1096,15 +1101,40 @@ body.satExperimentalUi #scVersionIframe {
   left: unset !important;
   width: 400px !important;
   height: 100% !important;
-  border-radius: var(--radius);
+  border-radius: opx;
   box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1);
   transition: right ease-out 0.2s;
 }
 
 body.satExperimentalUi #scVersionIframe.open,
-body.satExperimentalUi #scLanguageIframe.open,
-body.satExperimentalUi #scPanel.open {
+body.satExperimentalUi #scLanguageIframe.open {
   right: 0px !important;
+}
+
+body.satEEExperimentalUi #scLanguageIframe,
+body.satEEExperimentalUi #scVersionIframe {
+  position: fixed;
+  background-color: var(--white);
+  top: 164px !important;
+  right: -420px !important;
+  left: unset !important;
+  width: 400px !important;
+  height: calc(100% - 165px) !important;
+  border-radius: opx;
+  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1);
+  transition: right ease-out 0.2s;
+  border: 0px;
+  z-index: 20001;
+}
+
+body.satEEExperimentalUi #scVersionIframe.open,
+body.satEEExperimentalUi #scLanguageIframe.open {
+  right: 0px !important;
+}
+
+body.satExperimentalUi .sc-language-gallery,
+body.satExperimentalUi .sc-versions-gallery {
+  background: var(--background);
 }
 
 /* Content Editor Tabs */
@@ -1851,19 +1881,26 @@ body.satExperimentalUi .scSaveBar > .scActions > button {
 }
 
 body.satExperimentalUi .scSaveBarEE {
-  padding: 15px;
+  padding: 13px;
   height: 57px;
 }
 
 body.satExperimentalUi .EditorTabsEE {
-  padding: 15px;
+  padding: 11px;
   height: 57px;
+  text-align: right;
+  z-index: 1 !important;
 }
-padding: 15px;
-min-height: 57px;
+
+body.satExperimentalUi .EditorTabsEE .scEditorTabControlsHolder {
+  margin: 0px;
+}
 
 body.satExperimentalUi .scPublishMenuMoreArrow {
   color: var(--accentText);
+}
+
+[data-sc-gallerycontainer="true"] {
 }
 
 body.satExperimentalUi .scBackground {
@@ -2047,6 +2084,16 @@ body.satExperimentalUi .scSaveBar > .scActions > button:disabled {
   opacity: 0.5;
 }
 
+body.satExperimentalUi .scSaveBar > .scActions > .scBurgerMenuTitle {
+  float: left;
+  color: var(--textFaded);
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 4.5px;
+  padding-right: 10px;
+  padding-left: 21px;
+}
+
 body.satExperimentalUi .scSaveBar > .scActions > button.scSaveButton,
 body.satExperimentalUi .scSaveBar > .scActions > button.scAddComponent,
 body.satExperimentalUi .scSaveBar > .scActions > button.scMenu,
@@ -2060,8 +2107,12 @@ body.satExperimentalUi .scSaveBar > .scActions > button.scPreviewButton {
 
 body.satExperimentalUi .scSaveBar > .scActions > button.scAddComponent {
   float: left;
-  background-color: var(--messageSuccessIcon) !important;
+  background-color: var(--accent) !important;
+  color: var(--accentText) !important;
   padding: 8px 9px !important;
+}
+body.satExperimentalUi .scSaveBar > .scActions > button.scAddComponent > img {
+  width: 12px;
 }
 
 body.satExperimentalUi .scSaveBar > .scActions > button.scMenu {
@@ -2824,4 +2875,29 @@ body.satEEExperimentalUi #breadcrumbMenuSubcontrol_context_menu nav.sc-breadcrum
   border-radius: var(--radius);
   background: var(--background);
   box-shadow: 0px 5px 10px 0px rgb(0 0 0 / 10%);
+}
+
+body.satExperimentalUi .eeErrors {
+  float: left;
+  margin: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+body.satExperimentalUi .eeErrors .error {
+  color: var(--messageDangerLink);
+}
+
+body.satExperimentalUi .eeErrors .warning {
+  color: var(--messageWarningLink);
+}
+
+body.satExperimentalUi .eeErrors .notification {
+  color: var(--messageInfoLink);
+}
+
+body.satExperimentalUi .eeErrors .success {
+  color: var(--messageSuccessLink);
 }

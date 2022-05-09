@@ -3235,3 +3235,23 @@ body.satDark .sc-border[data-sc-id="FallBackMessageBorder"] {
 body.satDark .gridParams td {
   border-color: transparent !important;
 }
+
+body.satDark .sc-gallery-option-content-header > span,
+body.satDark .sc-gallery-option-content-description > span,
+body.satDark .sc-gallery-additionaloption-labelcontainer > span,
+body.satDark .sc-gallery-versionoption-title > span {
+  color: var(--text);
+}
+
+body.satDark .main-grid {
+  border: 1px solid var(--black3);
+}
+
+body.satDark .commands-cell {
+  background-color: var(--black2);
+  border-left: 1px solid var(--black2);
+}
+
+body.satDark .sort-item {
+  border: 1px solid var(--black3);
+}

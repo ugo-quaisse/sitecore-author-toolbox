@@ -246,6 +246,10 @@ body.satExperimentalUi.satDark .scEditorTabControlsHolder {
   height: auto;
 }
 
+body.satExperimentalUi.satDark .EditorTabsEE .scEditorTabControlsHolder {
+  margin: 0px;
+}
+
 body.satExperimentalUi.satDark a.scEditorHeaderButton,
 body.satExperimentalUi.satDark button.scEditorHeaderButton {
   background-color: var(--black);
@@ -605,4 +609,11 @@ body.satExperimentalUi.satDark .scFormDialogFooter {
 
 body.satExperimentalUi.satDark .scInstantSearchResults {
   background-color: var(--experimentalBackground);
+}
+
+body.satExperimentalUi.satDark .sc-gallery-option-content:hover,
+body.satExperimentalUi.satDark .sc-gallery-options > a:hover,
+body.satExperimentalUi.satDark .sc-gallery-versionoption-content-active:hover {
+  background-color: var(--accent);
+  color: var(--accentText);
 }

@@ -86,6 +86,7 @@ export const iconWindowMax = chrome.runtime.getURL("images/window_max.svg");
 export const iconWindowMin = chrome.runtime.getURL("images/window_min.svg");
 export const urlLoader = chrome.runtime.getURL("images/ajax-loader.gif");
 export const urlLoaderiFrame = chrome.runtime.getURL("images/ajax-loader-iframe.gif");
+export const iconSpinner = chrome.runtime.getURL("images/sc-spinner.svg");
 export const urlLoaderDark = chrome.runtime.getURL("images/ajax-loader-dark.gif");
 export const dotGreen = chrome.runtime.getURL("images/dot_green.svg");
 export const dotRed = chrome.runtime.getURL("images/dot_red.svg");

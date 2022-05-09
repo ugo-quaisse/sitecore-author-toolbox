@@ -1,6 +1,11 @@
 body.satDark {
   border: none;
 }
+
+::-webkit-scrollbar-thumb {
+  background: var(--black5) !important;
+}
+
 body.satDark .sc-globalHeader {
   background-color: var(--black2);
 }

@@ -2105,6 +2105,14 @@ body.satExperimentalUi .scSaveBar > .scActions > button.scPreviewButton {
   height: 34px;
 }
 
+body.satExperimentalUi .scSaveBar > .scActions > button.scAddPage {
+  float: left;
+  padding: 8px 9px !important;
+}
+body.satExperimentalUi .scSaveBar > .scActions > button.scAddPage > img {
+  width: 12px;
+}
+
 body.satExperimentalUi .scSaveBar > .scActions > button.scAddComponent {
   float: left;
   background-color: var(--accent) !important;

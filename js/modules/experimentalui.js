@@ -774,7 +774,7 @@ const insertSavebarEE = (storage) => {
             <button class="scSaveButton" onclick="savePage()">Save</button>
             <div class="scBurgerMenuTitle">Content</div>
             <button class="scMenu" onclick="showSitecoreTree()"><img src="${global.iconMenu}" /></button>
-            <!--<button class="scAddComponent" onclick="addPage()">+ New Page</button>-->
+            <button class="scAddComponent" onclick="addPage()">NEW PAGE</button>
             <button class="scAddComponent" onclick="addComponent()"><img src="${global.iconAdd}" /> ADD A COMPONENT</button>
             </div>
     </div>`;

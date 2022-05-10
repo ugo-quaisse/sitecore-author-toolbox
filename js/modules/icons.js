@@ -791,6 +791,10 @@ export const jsonIcons = JSON.parse(
   {
     "search": "header",
     "icon": "action::view_headline"
+  },
+  {
+    "search": "slideshow",
+    "icon": "image::slideshow"
   }
 ]`
 );

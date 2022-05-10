@@ -1112,7 +1112,8 @@ body.satExperimentalUi #scLanguageIframe.open {
 }
 
 body.satEEExperimentalUi #scLanguageIframe,
-body.satEEExperimentalUi #scVersionIframe {
+body.satEEExperimentalUi #scVersionIframe,
+body.satEEExperimentalUi #scSettingsIframe {
   position: fixed;
   background-color: var(--white);
   top: 164px !important;
@@ -1124,17 +1125,47 @@ body.satEEExperimentalUi #scVersionIframe {
   box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1);
   transition: right ease-out 0.2s;
   border: 0px;
-  z-index: 20001;
+  z-index: 10000;
+}
+
+body.satExperimentalUi .lockedItem {
+  background-image: linear-gradient(45deg, #f7d871 25%, #fffbe5 25%, #fffbe5 50%, #f7d871 50%, #f7d871 75%, #fffbe5 75%, #fffbe5 100%);
+  background-size: 40px 40px;
+  background-position: 0 0;
+}
+
+body.satEEExperimentalUi #scTreeIframe {
+  position: fixed;
+  background-color: var(--white);
+  top: 164px !important;
+  left: -420px !important;
+  right: unset !important;
+  width: 400px !important;
+  height: calc(100% - 165px) !important;
+  border-radius: opx;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  transition: left ease-out 0.2s;
+  border: 0px;
+  z-index: 10000;
 }
 
 body.satEEExperimentalUi #scVersionIframe.open,
-body.satEEExperimentalUi #scLanguageIframe.open {
+body.satEEExperimentalUi #scLanguageIframe.open,
+body.satEEExperimentalUi #scSettingsIframe.open {
   right: 0px !important;
+}
+
+body.satEEExperimentalUi #scTreeIframe.open {
+  left: 0px !important;
 }
 
 body.satExperimentalUi .sc-language-gallery,
 body.satExperimentalUi .sc-versions-gallery {
   background: var(--background);
+}
+
+body.satExperimentalUi [data-sc-id="ContentBorder"] {
+  width: 100%;
 }
 
 /* Content Editor Tabs */
@@ -2105,24 +2136,31 @@ body.satExperimentalUi .scSaveBar > .scActions > button.scPreviewButton {
   text-transform: uppercase;
   font-size: 12px;
   height: 34px;
+  min-width: 34px;
+  z-index: 1;
+}
+
+body.satExperimentalUi .scSaveBar > .scActions > button.scAddPage,
+body.satExperimentalUi .scSaveBar > .scActions > button.scMenu {
+  text-transform: unset;
 }
 
 body.satExperimentalUi .scSaveBar > .scActions > button.scAddPage {
   float: left;
   padding: 8px 9px !important;
+  z-index: 0 !important;
 }
 body.satExperimentalUi .scSaveBar > .scActions > button.scAddPage > img {
   width: 12px;
 }
 
-body.satExperimentalUi .scSaveBar > .scActions > button.scAddComponent,
 body.satExperimentalUi .scEditorTabControlsHolder > button.scAddComponent {
   float: left;
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
   padding: 8px 9px !important;
 }
-body.satExperimentalUi .scSaveBar > .scActions > button.scAddComponent > img,
+
 body.satExperimentalUi .scEditorTabControlsHolder > button.scAddComponent > img {
   width: 12px;
 }
@@ -2134,7 +2172,14 @@ body.satExperimentalUi .scSaveBar > .scActions > button.scMenu {
 
 body.satExperimentalUi .scSaveBar > .scActions > button.scMenu > img {
   width: 14px;
-  filter: invert(var(--accentRevert));
+  margin-top: -4px;
+}
+
+body.satExperimentalUi .sc-gallery-option-content:hover,
+body.satExperimentalUi .sc-gallery-options > a:hover,
+body.satExperimentalUi .sc-gallery-versionoption-content-active:hover {
+  background-color: var(--accent);
+  color: var(--accentText);
 }
 
 body.satExperimentalUi .alert {
@@ -2895,7 +2940,17 @@ body.satExperimentalUi .eeErrors {
   font-size: 14px;
   font-weight: 500;
   opacity: 1;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 1px 8px;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-top: 4px;
   transition: opacity 0.5s ease-out;
+  cursor: pointer;
+}
+
+body.satExperimentalUi .eeErrors:hover {
+  background-color: rgba(0, 0, 0, 0.08);
 }
 
 body.satExperimentalUi .eeErrors .error {

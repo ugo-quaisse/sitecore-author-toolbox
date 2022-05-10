@@ -5,7 +5,7 @@
 
 import * as global from "./global.js";
 import * as icons from "./icons.js";
-import { getMaterializeIcon, getScItemData, setTextColour, setPlural } from "./helpers.js";
+import { getMaterializeIcon, getScItemData, setTextColour } from "./helpers.js";
 import { findCountryName } from "./language.js";
 
 export {
@@ -750,7 +750,7 @@ const insertSavebarEE = (storage) => {
     //Add listener for refreshing
     addEventListener("beforeunload", () => {
       let saveMessage = document.querySelector(".saveMessage");
-      parent.document.body.style.cursor = "wait";
+      parent.document.querySelector("html").setAttribute("style", "cursor: wait !important");
 
       if (saveMessage) {
         saveMessage.classList.add("warning");
@@ -764,17 +764,17 @@ const insertSavebarEE = (storage) => {
     <ul class="scPublishMenu">             
       <li onclick="settingsPage()">Publishing settings...</li>
     </ul>
-  <button class="scPublishButton primary primaryGrouped" onclick="publishPage()">Publish Page</button>`;
+  <button class="scPublishButton primary primaryGrouped" onclick="publishPage()">Save and Publish</button>`;
 
     //Save Bar
-    //prettier-ignore
     let scSaveBar = `<div class="scSaveBar scSaveBarEE" style="height:57px">
         <div class="scActions">
             ${scPrimaryBtn}
             <button class="scSaveButton" onclick="savePage()">Save</button>
+            <!--<button class="scSaveButton" onclick="changeDevicePreviewEE('mobile', 'v')">Preview</button>-->
             <div class="scBurgerMenuTitle">Content</div>
-            <button class="scMenu" onclick="showSitecoreTree()"><img src="${global.iconMenu}" /></button>
-            <button class="scAddPage" onclick="addPage()">NEW PAGE</button>
+            <button id="scTreeButton" class="scMenu t-right t-sm" onclick="toggleTreePanel()" data-tooltip="Show Sitecore Tree"><img src="${global.iconMenu}" /></button>
+            <button class="scAddPage t-right t-sm" onclick="addPage()" data-tooltip="Create a new page"><img src="${global.iconAddDark}" /></button>
             </div>
     </div>`;
 
@@ -783,29 +783,39 @@ const insertSavebarEE = (storage) => {
     let scSitename = document.querySelector(".sc-pageeditbar").dataset.scSitename;
     let scLanguage = document.querySelector(".sc-pageeditbar").dataset.scLanguage.toUpperCase();
     let scVersion = document.querySelector(".sc-pageeditbar").dataset.scVersion;
-    let buttonLanguage = `<button class="scEditorHeaderButton" id="scLanguageButton" type="button" onclick="toggleLanguagePanel()"><img src="${global.iconLanguage}" class="scLanguageIcon"> ${scLanguage.toUpperCase()} ▾</button>`;
-    let buttonVersion = `<button class="scEditorHeaderButton" id="scVersionButton" type="button" onclick="toggleVersionPanel()"><img src="${global.iconVersion}" class="scLanguageIcon"> ${scVersion} ▾</button>`;
-    let buttonComponent = `<button class="scAddComponent" onclick="addComponent()"><img src="${global.iconAdd}" /> ADD A COMPONENT</button>`;
     let body = parent.document.querySelector("body");
 
-    //Add iFrame Language
-    parent.document.querySelector("#scLanguageIframe") ? parent.document.querySelector("#scLanguageIframe").remove() : false;
+    //Buttons
+    let buttonComponent = `<button class="scAddComponent" onclick="addComponent()"><img src="${global.iconPencil}" /> ADD A COMPONENT</button>`;
+    let buttonLanguage = `<button class="scEditorHeaderButton" id="scLanguageButton" type="button" onclick="toggleLanguagePanel()"><img src="${global.iconLanguage}" class="scLanguageIcon"> ${scLanguage.toUpperCase()} ▾</button>`;
+    let buttonVersion = `<button class="scEditorHeaderButton" id="scVersionButton" type="button" onclick="toggleVersionPanel()"><img src="${global.iconVersion}" class="scLanguageIcon"> ${scVersion} ▾</button>`;
+    let buttonMore = `<button class="scEditorHeaderButton" id="scMoreButton" title="More actions" type="button" onclick="toggleSettingsPanel()"><img src="${global.iconCog}" class="scLanguageIcon"></button>`;
 
-    //prettier-ignore
+    //Sitecore Tree iFrame
+    document.querySelector("#scTreeIframe") ? document.querySelector("#scTreeIframe").remove() : false;
+    let iframeTree = `<iframe loading="lazy" id="scTreeIframe" src="/sitecore/client/Applications/ExperienceEditor/Pages/NavigationTreeView.aspx?lang=${scLanguage}"></iframe>`;
+    body && !document.querySelector("#scTreeIframe") ? body.insertAdjacentHTML("beforeend", iframeTree) : false;
+
+    //Language iFrame
+    parent.document.querySelector("#scLanguageIframe") ? parent.document.querySelector("#scLanguageIframe").remove() : false;
     let iframeLanguage = `<iframe loading="lazy" id="scLanguageIframe" src="/sitecore/client/Applications/ExperienceEditor/Pages/Galleries/SelectLanguageGallery.aspx?itemId=${scItemId}&pageSite=UK&database=master&la=${scLanguage}&vs=${scVersion}"></iframe>`;
     body && !document.querySelector("#scLanguageIframe") ? body.insertAdjacentHTML("beforeend", iframeLanguage) : false;
 
-    //Add iFrame Version
+    //Version iFrame
     document.querySelector("#scVersionIframe") ? document.querySelector("#scVersionIframe").remove() : false;
-
-    //prettier-ignore
     let iframeVersion = `<iframe loading="lazy" id="scVersionIframe" src="/sitecore/client/Applications/ExperienceEditor/Pages/Galleries/SelectVersionGallery.aspx?itemId=${scItemId}&pageSite=${scSitename}&database=master&la=${scLanguage}&vs=${scVersion}"></iframe>`;
     body && !document.querySelector("#scVersionIframe") ? body.insertAdjacentHTML("beforeend", iframeVersion) : false;
+
+    //Settings iFrame
+    document.querySelector("#scSettingsIframe") ? document.querySelector("#scSettingsIframe").remove() : false;
+    let iframeSettings = `<iframe id="scSettingsIframe" src="/sitecore/shell/default.aspx?xmlcontrol=LayoutDetails&id=${scItemId}&la=${scLanguage}&vs=${scVersion}"></iframe>`;
+    body && !document.querySelector("#scSettingsIframe") ? body.insertAdjacentHTML("beforeend", iframeSettings) : false;
 
     let editorBar = `<div id="EditorTabs" class="EditorTabsEE">
     <div class="scEditorTabControlsHolder">
       ${buttonLanguage}
       ${buttonVersion}
+      ${buttonMore}
       ${buttonComponent}
     </div>
   </div>`;
@@ -824,34 +834,57 @@ const insertSavebarEE = (storage) => {
     let observer = new MutationObserver(function () {
       if (target.classList.contains("disabled")) {
         document.querySelector(".scSaveBar .scSaveButton").disabled = true;
-        // document.querySelector(".scSaveBar .scPublishButton").disabled = true;
         document.querySelector(".scSaveBar .scSaveButton").innerText = "Save";
-        document.querySelector(".scSaveBar .scPublishButton").innerText = "Publish Page";
+        document.querySelector(".scSaveBar .scPublishButton").innerText = "Save and Publish";
         document.querySelector(".scSaveBar .scSaveButton").removeAttribute("style");
       } else {
         document.querySelector(".scSaveBar .scSaveButton").disabled = false;
-        // document.querySelector(".scSaveBar .scPublishButton").disabled = false;
         document.querySelector(".scSaveBar .scSaveButton").innerText = "Save";
-        document.querySelector(".scSaveBar .scSaveButton").setAttribute("style", "background-color: var(--messageSuccessLink) !important; color: #fff !important;");
-        document.querySelector(".scSaveBar .scPublishButton").innerText = "Publish Page";
+        document.querySelector(".scSaveBar .scPublishButton").innerText = "Save and Publish";
       }
     });
 
     //Observer UI
     target ? observer.observe(target, { attributes: true }) : false;
 
+    //Listener to close all panels
+    document.addEventListener("click", (event) => {
+      closeAllPanelsEE(event);
+    });
+    parent.document.addEventListener("click", (event) => {
+      closeAllPanelsEE(event);
+    });
+
     //Get all placeholders and renderings
-    document.querySelectorAll('code[chrometype="placeholder"], code[chrometype="rendering"]').forEach(function (e) {
-      e.getAttribute("hintname") ? console.log(e.getAttribute("chrometype") + " -> ", e.getAttribute("hintname")) : false;
+    ///sitecore/shell/default.aspx?xmlcontrol=DeviceEditor&de=%7BFE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3%7D&id=%7B25818957-9772-41d1-be0e-eee6fb7b4526%7D&vs=1&la=en
+    document.querySelectorAll("#Renderings table tr td:nth-child(2) b").forEach((item) => {
+      console.log(item.innerText);
     });
+  }
+};
 
-    document.querySelectorAll("[sc-part-of^='placeholder']").forEach(function (e) {
-      e.getAttribute("hintkey") ? console.log(e.getAttribute("hintkey")) : false;
-    });
-
-    document.querySelectorAll("[hintkey^='']").forEach(function (e) {
-      console.log(e.getAttribute("hintkey"));
-    });
+/**
+ * Close all EE panel - Utility function
+ */
+const closeAllPanelsEE = (event) => {
+  if (
+    event.path[0].id != "scLanguageButton" &&
+    event.path[1].id != "scLanguageButton" &&
+    event.path[0].id != "scVersionButton" &&
+    event.path[1].id != "scVersionButton" &&
+    event.path[0].id != "scMoreButton" &&
+    event.path[1].id != "scMoreButton" &&
+    event.path[0].id != "scTreeButton" &&
+    event.path[1].id != "scTreeButton"
+  ) {
+    let iframeLanguage = parent.document.querySelector("#scLanguageIframe");
+    iframeLanguage && iframeLanguage.classList.contains("open") ? iframeLanguage.classList.remove("open") : false;
+    let iframeVersion = parent.document.querySelector("#scVersionIframe");
+    iframeVersion && iframeVersion.classList.contains("open") ? iframeVersion.classList.remove("open") : false;
+    // let iframeSettings = parent.document.querySelector("#scSettingsIframe");
+    // iframeSettings && iframeSettings.classList.contains("open") ? iframeSettings.classList.remove("open") : false;
+    let iframeTree = parent.document.querySelector("#scTreeIframe");
+    iframeTree && iframeTree.classList.contains("open") ? iframeTree.classList.remove("open") : false;
   }
 };
 
@@ -862,7 +895,10 @@ const initGroupedErrorsEE = () => {
   let errors = 0;
   let warnings = 0;
   let notifications = 0;
+  let scBurgerMenuTitle = document.querySelector(".scBurgerMenuTitle");
   let editorBar = document.querySelector(".scEditorTabControlsHolder");
+  //Lock button
+  let lockButton = `<button class="scSaveButton t-left t-sm" onclick="unlockPage()" data-tooltip="Unlock this item"><img src="${global.iconLocked}" style="width: 15px;"/></button>`;
   //Update message bar
   let errorMessage = `<div class="eeErrors"><img src="${global.iconSpinner}" style="width:16px"/> Checking errors...</div>`;
   editorBar.insertAdjacentHTML("beforeend", errorMessage);
@@ -875,8 +911,11 @@ const initGroupedErrorsEE = () => {
         });
       }
       if (group.dataset.bind.toLowerCase().includes("warning")) {
-        group.querySelectorAll(".sc-messageBar-messageText").forEach(function () {
+        group.querySelectorAll(".sc-messageBar-messageText").forEach(function (item) {
           warnings++;
+          if (item.innerText.toLowerCase().includes("has locked this item")) {
+            scBurgerMenuTitle.insertAdjacentHTML("beforebegin", lockButton);
+          }
         });
       }
       if (group.dataset.bind.toLowerCase().includes("notifications")) {
@@ -895,11 +934,11 @@ const initGroupedErrorsEE = () => {
         eeErrors.setAttribute("style", "opacity:0;");
       }, 1000);
     }
-    errors > 0 ? (eeErrorsMessage += `🚫 <span class="error">${errors} error${setPlural(errors)}</span> `) : false;
-    warnings > 0 ? (eeErrorsMessage += `⚠️ <span class="warning">${warnings} warning${setPlural(warnings)}</span> `) : false;
-    notifications > 0 ? (eeErrorsMessage += `💬 <span class="notification">${notifications} notification${setPlural(notifications)}</span> `) : false;
+    errors > 0 ? (eeErrorsMessage += `🚫 <span class="error">${errors}</span> `) : false;
+    warnings > 0 ? (eeErrorsMessage += `⚠️ <span class="warning">${warnings}</span> `) : false;
+    notifications > 0 ? (eeErrorsMessage += `💬 <span class="notification">${notifications}</span> `) : false;
     eeErrors.innerHTML = eeErrorsMessage;
-  }, 3000);
+  }, 5000);
 
   //TODO: also include page validation from /sitecore/shell/~/xaml/Sitecore.Shell.Applications.ContentEditor.Dialogs.ValidationResult.aspx?hdl=1E98663795764D71991F6D2EAD33AB8E
   // document.querySelectorAll(".scValidatorResult").forEach(function (e) {

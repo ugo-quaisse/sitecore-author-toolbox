@@ -270,11 +270,17 @@ const showSitecoreRibbonEE = () => {
   }
 
   //Update panels
-  let ribbon = parent.document.querySelector("#scWebEditRibbon").getBoundingClientRect();
-  let iframeLanguage = parent.document.querySelector("#scLanguageIframe");
-  let iframeVersion = parent.document.querySelector("#scVersionIframe");
-  iframeLanguage.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
-  iframeVersion.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
+  setTimeout(() => {
+    let ribbon = parent.document.querySelector("#scWebEditRibbon").getBoundingClientRect();
+    let iframeLanguage = parent.document.querySelector("#scLanguageIframe");
+    let iframeVersion = parent.document.querySelector("#scVersionIframe");
+    let iframeSettings = parent.document.querySelector("#scSettingsIframe");
+    let iframeTree = parent.document.querySelector("#scTreeIframe");
+    iframeLanguage.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
+    iframeVersion.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
+    iframeSettings.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
+    iframeTree.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
+  }, 2);
 };
 
 const showLanguageMenu = () => {
@@ -849,7 +855,7 @@ function savePage() {
   let saveButton = document.querySelector(".scSaveButton");
   saveButton.innerText = "Saving...";
   saveButton.setAttribute("disabled", true);
-  parent.document.body.style.cursor = "wait";
+  parent.document.querySelector("html").setAttribute("style", "cursor: wait !important");
 
   setTimeout(function () {
     saveMessage.classList.remove("warning");
@@ -878,6 +884,13 @@ function settingsPage() {
 }
 
 /**
+ * Unlock page
+ */
+function unlockPage() {
+  document.querySelector("a[data-sc-id^='LockRibbonButton']").click();
+}
+
+/**
  * Add component in EE
  */
 function addComponent() {
@@ -892,32 +905,57 @@ function addPage() {
 }
 
 /**
- * Show tree in EE
+ * Show Sitecore Tree Panel in EE
  */
-function showSitecoreTree() {
-  document.querySelector("#navigationTreeViewButton").click();
+function toggleTreePanel() {
+  let ribbon = parent.document.querySelector("#scWebEditRibbon").getBoundingClientRect();
+  let iframeTree = parent.document.querySelector("#scTreeIframe");
+  iframeTree ? iframeTree.classList.toggle("open") : false;
+  iframeTree.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
 }
 
 /**
- * Show language Panel in EE
+ * Show Language Panel in EE
  */
 function toggleLanguagePanel() {
   let ribbon = parent.document.querySelector("#scWebEditRibbon").getBoundingClientRect();
   let iframeLanguage = parent.document.querySelector("#scLanguageIframe");
   let iframeVersion = parent.document.querySelector("#scVersionIframe");
+  let iframeSettings = parent.document.querySelector("#scSettingsIframe");
   iframeLanguage ? iframeLanguage.classList.toggle("open") : false;
   iframeVersion && iframeVersion.classList.contains("open") ? iframeVersion.classList.remove("open") : false;
+  iframeSettings && iframeSettings.classList.contains("open") ? iframeSettings.classList.remove("open") : false;
   iframeLanguage.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
 }
 
 /**
- * Show language Panel in EE
+ * Show Version Panel in EE
  */
 function toggleVersionPanel() {
   let ribbon = parent.document.querySelector("#scWebEditRibbon").getBoundingClientRect();
   let iframeLanguage = parent.document.querySelector("#scLanguageIframe");
   let iframeVersion = parent.document.querySelector("#scVersionIframe");
+  let iframeSettings = parent.document.querySelector("#scSettingsIframe");
   iframeVersion ? iframeVersion.classList.toggle("open") : false;
   iframeLanguage && iframeLanguage.classList.contains("open") ? iframeLanguage.classList.remove("open") : false;
+  iframeSettings && iframeSettings.classList.contains("open") ? iframeSettings.classList.remove("open") : false;
   iframeVersion.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
+}
+
+/**
+ * Show settings Panel in EE
+ */
+function toggleSettingsPanel() {
+  let ribbon = parent.document.querySelector("#scWebEditRibbon").getBoundingClientRect();
+  let iframeLanguage = parent.document.querySelector("#scLanguageIframe");
+  let iframeVersion = parent.document.querySelector("#scVersionIframe");
+  let iframeSettings = parent.document.querySelector("#scSettingsIframe");
+  iframeSettings ? iframeSettings.classList.toggle("open") : false;
+  iframeLanguage && iframeLanguage.classList.contains("open") ? iframeLanguage.classList.remove("open") : false;
+  iframeVersion && iframeVersion.classList.contains("open") ? iframeVersion.classList.remove("open") : false;
+  iframeSettings.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
+  //Hide header and footer
+  iframeSettings.contentDocument.querySelector(".scFormDialogHeader").setAttribute("style", "display:none");
+  iframeSettings.contentDocument.querySelector(".scFormDialogFooter").setAttribute("style", "display:none");
+  iframeSettings.contentDocument.querySelector(".scDialogContentContainer").setAttribute("style", "padding: 0px 15px;");
 }

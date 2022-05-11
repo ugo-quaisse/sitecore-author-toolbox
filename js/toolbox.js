@@ -50,7 +50,7 @@ import { initQuerySuggestions } from "./modules/template.js";
 import { initPublishingStatus } from "./modules/publishingdashboard.js";
 import { initPreviewButtonsEE, updateEETitle, storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, resetExperienceEditor, initRenderingSearchBox } from "./modules/experienceeditor.js";
 import { initHorizon } from "./modules/horizon.js";
-
+import { initTabSections } from "./modules/tabs.js";
 /**
  * Get all user's settings from chrome storage
  */
@@ -193,6 +193,7 @@ chrome.storage.sync.get((storage) => {
       addHelptextIcons();
       enhancedBucketLists();
       initMaterializeIcons(storage);
+      initTabSections(storage);
     } else if (global.isExperienceProfile) {
       log("**** Experience Profile ****", "orange");
       initGravatarImage(storage);

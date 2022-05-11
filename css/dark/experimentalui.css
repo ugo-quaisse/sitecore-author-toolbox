@@ -238,10 +238,17 @@ body.satExperimentalUi.satDark .scSaveBar {
 
 body.satExperimentalUi.satDark .scSaveBar > .scActions > button {
   background-color: var(--black2);
-  color: var(--white);
 }
 
-body.satExperimentalUi.satDark .scEditorTabControlsHolder {
+body.satExperimentalUi .scSaveBar > .scActions > button.scSaveButton {
+  color: var(--text);
+}
+
+body.satExperimentalUi.satDark .scMenu {
+  background-color: var(--black2) !important;
+  color: var(--white);
+}
+scMenu t-right t-sm body.satExperimentalUi.satDark .scEditorTabControlsHolder {
   margin: 11px 13px;
   height: auto;
 }
@@ -614,6 +621,37 @@ body.satExperimentalUi.satDark .scInstantSearchResults {
 body.satExperimentalUi.satDark .sc-gallery-option-content:hover,
 body.satExperimentalUi.satDark .sc-gallery-options > a:hover,
 body.satExperimentalUi.satDark .sc-gallery-versionoption-content-active:hover {
+  background-color: var(--accent);
+  color: var(--accentText);
+}
+
+body.satExperimentalUi.satDark .scSaveBar > .scActions > button.scAddPage > img,
+body.satExperimentalUi.satDark .scSaveBar > .scActions > button.scMenu > img {
+  filter: invert(1);
+}
+
+body.satExperimentalUi.satDark .scRollover,
+body.satExperimentalUi.satDark .scRollover_Hover {
+  color: var(--accent);
+}
+
+body.satExperimentalUi.satDark .dynatree-title {
+  color: var(--text) !important;
+}
+
+body.satExperimentalUi.satDark .scSaveBar > .scActions > .scPublishMenuEE {
+  color: var(--text);
+  background-color: var(--black1) !important;
+}
+
+body.satExperimentalUi.satDark td.scCalendarCell,
+body.satExperimentalUi.satDark td.scCalendarToday,
+body.satExperimentalUi.satDark td.scCalendarTodayCell {
+  color: var(--text);
+}
+
+body.satExperimentalUi.satDark td.scCalendarCell:hover,
+body.satExperimentalUi.satDark td.scCalendarToday:hover {
   background-color: var(--accent);
   color: var(--accentText);
 }

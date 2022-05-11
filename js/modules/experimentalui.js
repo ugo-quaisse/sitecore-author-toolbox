@@ -758,25 +758,6 @@ const insertSavebarEE = (storage) => {
         saveMessage.innerHTML = "Refreshing the page...";
       }
     });
-    //If preview mode
-    let scPrimaryBtn = `
-  <button id="scPublishMenuMore" class="grouped" type="button"><span class="scPublishMenuMoreArrow">▾</span></button>
-    <ul class="scPublishMenu">             
-      <li onclick="settingsPage()">Publishing settings...</li>
-    </ul>
-  <button class="scPublishButton primary primaryGrouped" onclick="publishPage()">Save and Publish</button>`;
-
-    //Save Bar
-    let scSaveBar = `<div class="scSaveBar scSaveBarEE" style="height:57px">
-        <div class="scActions">
-            ${scPrimaryBtn}
-            <button class="scSaveButton" onclick="savePage()">Save</button>
-            <!--<button class="scSaveButton" onclick="changeDevicePreviewEE('mobile', 'v')">Preview</button>-->
-            <div class="scBurgerMenuTitle">Content</div>
-            <button id="scTreeButton" class="scMenu t-right t-sm" onclick="toggleTreePanel()" data-tooltip="Show Sitecore Tree"><img src="${global.iconMenu}" /></button>
-            <button class="scAddPage t-right t-sm" onclick="addPage()" data-tooltip="Create a new page"><img src="${global.iconAddDark}" /></button>
-            </div>
-    </div>`;
 
     //Variables
     let scItemId = document.querySelector(".sc-pageeditbar").dataset.scItemid;
@@ -784,12 +765,6 @@ const insertSavebarEE = (storage) => {
     let scLanguage = document.querySelector(".sc-pageeditbar").dataset.scLanguage.toUpperCase();
     let scVersion = document.querySelector(".sc-pageeditbar").dataset.scVersion;
     let body = parent.document.querySelector("body");
-
-    //Buttons
-    let buttonComponent = `<button class="scAddComponent" onclick="addComponent()"><img src="${global.iconPencil}" /> ADD A COMPONENT</button>`;
-    let buttonLanguage = `<button class="scEditorHeaderButton" id="scLanguageButton" type="button" onclick="toggleLanguagePanel()"><img src="${global.iconLanguage}" class="scLanguageIcon"> ${scLanguage.toUpperCase()} ▾</button>`;
-    let buttonVersion = `<button class="scEditorHeaderButton" id="scVersionButton" type="button" onclick="toggleVersionPanel()"><img src="${global.iconVersion}" class="scLanguageIcon"> ${scVersion} ▾</button>`;
-    let buttonMore = `<button class="scEditorHeaderButton" id="scMoreButton" title="More actions" type="button" onclick="toggleSettingsPanel()"><img src="${global.iconCog}" class="scLanguageIcon"></button>`;
 
     //Sitecore Tree iFrame
     document.querySelector("#scTreeIframe") ? document.querySelector("#scTreeIframe").remove() : false;
@@ -811,19 +786,42 @@ const insertSavebarEE = (storage) => {
     let iframeSettings = `<iframe id="scSettingsIframe" src="/sitecore/shell/default.aspx?xmlcontrol=LayoutDetails&id=${scItemId}&la=${scLanguage}&vs=${scVersion}"></iframe>`;
     body && !document.querySelector("#scSettingsIframe") ? body.insertAdjacentHTML("beforeend", iframeSettings) : false;
 
-    let editorBar = `<div id="EditorTabs" class="EditorTabsEE">
+    //Errors iFrame
+    document.querySelector("#scErrorsIframe") ? document.querySelector("#scErrorsIframe").remove() : false;
+    let iframeErrors = `<div id="scErrorsIframe">List of errors</div>`;
+    body && !document.querySelector("#scErrorsIframe") ? body.insertAdjacentHTML("beforeend", iframeErrors) : false;
+
+    //Primary Bar with buttons
+    let scSaveBar = `<div id="SaveTabs" class="scSaveBar scSaveBarEE">
+        <div class="scActions">
+            <button id="scPublishMenuMore" class="grouped" type="button"><span class="scPublishMenuMoreArrow">▾</span></button>
+              <ul class="scPublishMenu scPublishMenuEE">             
+                <li onclick="settingsPage()">Publishing settings...</li>
+              </ul>
+            <button class="scPublishButton primary primaryGrouped" onclick="publishPage()">Save and Publish</button>
+            <button class="scSaveButton" onclick="savePage()">Save</button>
+            <!--<button class="scSaveButton" onclick="changeDevicePreviewEE('mobile', 'v')">Preview</button>-->
+            
+            <div class="scBurgerMenuTitle">Content</div>
+            <button id="scTreeButton" class="scMenu t-right t-sm" onclick="toggleTreePanel()" data-tooltip="Show Sitecore Tree"><img src="${global.iconMenu}" /></button>
+            <button class="scAddPage t-right t-sm" onclick="addPage()" data-tooltip="Create a new page"><img src="${global.iconAddDark}" /></button>
+            </div>
+    </div>`;
+
+    //Secondary Bar with buttons
+    let scEditorBar = `<div id="EditorTabs" class="EditorTabsEE">
     <div class="scEditorTabControlsHolder">
-      ${buttonLanguage}
-      ${buttonVersion}
-      ${buttonMore}
-      ${buttonComponent}
+      <button class="scEditorHeaderButton" id="scLanguageButton" type="button" onclick="toggleLanguagePanel()"><img src="${global.iconLanguage}" class="scLanguageIcon"> ${scLanguage.toUpperCase()} ▾</button>
+      <button class="scEditorHeaderButton" id="scVersionButton" type="button" onclick="toggleVersionPanel()"><img src="${global.iconVersion}" class="scLanguageIcon"> ${scVersion} ▾</button>
+      <button class="scEditorHeaderButton" id="scMoreButton" title="More actions" type="button" onclick="toggleSettingsPanel()"><img src="${global.iconCog}" class="scLanguageIcon"></button>
+      <button class="scAddComponent" onclick="addComponent()"><img src="${global.iconPencil}" /> ADD A COMPONENT</button>
     </div>
   </div>`;
 
     //Insert Save Bar
     let pageEditBar = document.querySelector("div[data-sc-id='PageEditBar']");
     document.querySelector(".scSaveBar") ? document.querySelector(".scSaveBar").remove() : false;
-    pageEditBar ? pageEditBar.insertAdjacentHTML("afterend", scSaveBar + editorBar) : false;
+    pageEditBar ? pageEditBar.insertAdjacentHTML("afterend", scSaveBar + scEditorBar) : false;
 
     //Save mesasge
     let scSaveMessage = `<div class="saveMessage">Your changes have been saved successfully!</div>`;
@@ -850,6 +848,7 @@ const insertSavebarEE = (storage) => {
     //Listener to close all panels
     document.addEventListener("click", (event) => {
       closeAllPanelsEE(event);
+      showPublishMenuMore(event);
     });
     parent.document.addEventListener("click", (event) => {
       closeAllPanelsEE(event);
@@ -889,38 +888,64 @@ const closeAllPanelsEE = (event) => {
 };
 
 /**
+ * Close all EE panel - Utility function
+ */
+const showPublishMenuMore = (event) => {
+  if (document.querySelector(".scPublishMenu")) {
+    let moreButton = document.querySelector("#scPublishMenuMore").getBoundingClientRect();
+    let moreMenu = document.querySelector(".scPublishMenuEE");
+    let posY = moreButton.top + moreButton.height;
+    moreMenu.setAttribute("style", `top: ${posY}px !important;`);
+    event.target.id == "scPublishMenuMore" || event.target.className == "scPublishMenuMoreArrow" ? document.querySelector(".scPublishMenu").classList.toggle("visible") : document.querySelector(".scPublishMenu").classList.remove("visible");
+  }
+};
+
+/**
  * Get Experience Editor Errors
  */
 const initGroupedErrorsEE = () => {
   let errors = 0;
   let warnings = 0;
   let notifications = 0;
+  let textPanel = `<h2>Issues report:</h2><br />`;
   let scBurgerMenuTitle = document.querySelector(".scBurgerMenuTitle");
   let editorBar = document.querySelector(".scEditorTabControlsHolder");
   //Lock button
   let lockButton = `<button class="scSaveButton t-left t-sm" onclick="unlockPage()" data-tooltip="Unlock this item"><img src="${global.iconLocked}" style="width: 15px;"/></button>`;
   //Update message bar
-  let errorMessage = `<div class="eeErrors"><img src="${global.iconSpinner}" style="width:16px"/> Checking errors...</div>`;
+  let errorMessage = `<div class="eeErrors t-right t-sm" onclick="toggleNotificationsPanel()" data-tooltip="Show Notifications"><img src="${global.iconSpinner}" style="width:16px"/> Checking errors...</div>`;
   editorBar.insertAdjacentHTML("beforeend", errorMessage);
   //Check errors
   setTimeout(() => {
     document.querySelectorAll(".sc-messageBar-messages-wrap > div").forEach(function (group) {
       if (group.dataset.bind.toLowerCase().includes("errors")) {
-        group.querySelectorAll(".sc-messageBar-messageText").forEach(function () {
-          errors++;
+        group.querySelectorAll(".sc-messageBar-messageText").forEach(function (item) {
+          item.innerText != "" ? errors++ : false;
+
+          let parser = new DOMParser();
+          let errorDom = parser.parseFromString(item.innerHTML, "text/html");
+          let errorId = errorDom.querySelector(".OptionTitle").id;
+          errorDom.querySelector(".OptionTitle").remove();
+          textPanel += `🚫 Error: ${errorDom.innerHTML}`;
+          console.log(errorId);
+          textPanel += ` - <a href="#" class="OptionTitle" onclick="showError('${errorId}')">Show in page</a><hr />`;
+          //Add click to show the error
+          //document.querySelector("[id='0B0C4532-710E-43EC-A87B-82969AD5DB08_2BC71ADC-50DA-4C08-AAF2-D6E10C4B4016_0']").click()
         });
       }
       if (group.dataset.bind.toLowerCase().includes("warning")) {
         group.querySelectorAll(".sc-messageBar-messageText").forEach(function (item) {
-          warnings++;
+          item.innerText != "" ? warnings++ : false;
+          textPanel += `⚠️ Warning: ${item.innerHTML}<hr />`;
           if (item.innerText.toLowerCase().includes("has locked this item")) {
             scBurgerMenuTitle.insertAdjacentHTML("beforebegin", lockButton);
           }
         });
       }
       if (group.dataset.bind.toLowerCase().includes("notifications")) {
-        group.querySelectorAll(".sc-messageBar-messageText").forEach(function () {
-          notifications++;
+        group.querySelectorAll(".sc-messageBar-messageText").forEach(function (item) {
+          item.innerText != "" ? notifications++ : false;
+          textPanel += `💬 Notification: ${item.innerHTML}<hr />`;
         });
       }
     });
@@ -938,6 +963,10 @@ const initGroupedErrorsEE = () => {
     warnings > 0 ? (eeErrorsMessage += `⚠️ <span class="warning">${warnings}</span> `) : false;
     notifications > 0 ? (eeErrorsMessage += `💬 <span class="notification">${notifications}</span> `) : false;
     eeErrors.innerHTML = eeErrorsMessage;
+
+    //Update panel
+    let iframeErrors = parent.document.querySelector("#scErrorsIframe");
+    iframeErrors.innerHTML = textPanel;
   }, 5000);
 
   //TODO: also include page validation from /sitecore/shell/~/xaml/Sitecore.Shell.Applications.ContentEditor.Dialogs.ValidationResult.aspx?hdl=1E98663795764D71991F6D2EAD33AB8E

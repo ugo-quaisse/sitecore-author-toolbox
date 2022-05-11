@@ -866,6 +866,11 @@ function savePage() {
     saveButton.removeAttribute("disabled");
   }, 500);
 
+  setTimeout(function () {
+    saveMessage.classList.remove("visible");
+    saveMessage.innerHTML = "Changes saved! Refreshing the page...";
+  }, 10000);
+
   document.querySelector("a[data-sc-id='QuickSave']").click();
 }
 
@@ -905,11 +910,21 @@ function addPage() {
 }
 
 /**
+ * Show error in EE
+ */
+function showError(id) {
+  console.log(id);
+  let ribbon = parent.document.querySelector("#scWebEditRibbon");
+  ribbon.contentDocument.querySelector("[id='" + id + "']").click();
+}
+/**
  * Show Sitecore Tree Panel in EE
  */
 function toggleTreePanel() {
   let ribbon = parent.document.querySelector("#scWebEditRibbon").getBoundingClientRect();
   let iframeTree = parent.document.querySelector("#scTreeIframe");
+  let iframeErrors = parent.document.querySelector("#scErrorsIframe");
+  iframeErrors && iframeErrors.classList.contains("open") ? iframeErrors.classList.remove("open") : false;
   iframeTree ? iframeTree.classList.toggle("open") : false;
   iframeTree.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
 }
@@ -958,4 +973,16 @@ function toggleSettingsPanel() {
   iframeSettings.contentDocument.querySelector(".scFormDialogHeader").setAttribute("style", "display:none");
   iframeSettings.contentDocument.querySelector(".scFormDialogFooter").setAttribute("style", "display:none");
   iframeSettings.contentDocument.querySelector(".scDialogContentContainer").setAttribute("style", "padding: 0px 15px;");
+}
+
+/**
+ * Show notifications messages Panel in EE
+ */
+function toggleNotificationsPanel() {
+  let ribbon = parent.document.querySelector("#scWebEditRibbon").getBoundingClientRect();
+  let iframeErrors = parent.document.querySelector("#scErrorsIframe");
+  let iframeTree = parent.document.querySelector("#scTreeIframe");
+  iframeTree && iframeTree.classList.contains("open") ? iframeTree.classList.remove("open") : false;
+  iframeErrors ? iframeErrors.classList.toggle("open") : false;
+  iframeErrors.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
 }

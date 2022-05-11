@@ -261,13 +261,19 @@ body.satDark .scCalendarDay {
 
 body.satDark .scCalendarSelected {
   background-color: #d0ebf6;
-  color: var(--black1);
+  color: var(--text);
+}
+
+body.satDark td.scCalendarCell,
+body.satDark td.scCalendarToday,
+body.satDark td.scCalendarTodayCell {
+  color: var(--text);
 }
 
 body.satDark td.scCalendarCell:hover,
 body.satDark td.scCalendarToday:hover {
   background-color: #e3e3e3;
-  color: var(--black1);
+  color: var(--text);
 }
 
 body.satDark .scCalendarCellOtherMonth {

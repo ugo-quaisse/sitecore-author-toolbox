@@ -795,6 +795,22 @@ export const jsonIcons = JSON.parse(
   {
     "search": "slideshow",
     "icon": "image::slideshow"
+  },
+  {
+    "search": "paragraph",
+    "icon": "editor::short_text"
+  },
+  {
+    "search": "indent_increase",
+    "icon": "editor::format_indent_increase"
+  },
+  {
+    "search": "indent_decrease",
+    "icon": "editor::format_indent_decrease"
+  },
+  {
+    "search": "file",
+    "icon": "editor::insert_drive_file"
   }
 ]`
 );

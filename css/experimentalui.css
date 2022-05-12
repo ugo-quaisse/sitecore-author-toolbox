@@ -996,6 +996,7 @@ body.satExperimentalUi a.scEditorHeaderButton {
   margin: 0px 5px;
   box-shadow: none;
   cursor: pointer;
+  max-height: 34px;
 }
 
 body.satExperimentalUi button.scEditorHeaderButton:hover,
@@ -2180,6 +2181,8 @@ body.satExperimentalUi .scEditorTabControlsHolder > button.scAddComponent {
   background-color: var(--accent) !important;
   color: var(--accentText) !important;
   padding: 8px 9px !important;
+  min-height: 34px;
+  margin-top: 0px;
 }
 
 body.satExperimentalUi .scEditorTabControlsHolder > button.scAddComponent > img {
@@ -2970,7 +2973,6 @@ body.satEEExperimentalUi #breadcrumbMenuSubcontrol_context_menu nav.sc-breadcrum
 
 body.satExperimentalUi .eeErrors {
   float: left;
-  margin: 8px;
   font-size: 14px;
   font-weight: 500;
   opacity: 1;
@@ -2978,9 +2980,14 @@ body.satExperimentalUi .eeErrors {
   padding: 1px 8px;
   border-radius: 3px;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  margin-top: 4px;
+  margin: 5px 8px 5px;
   transition: opacity 0.5s ease-out;
   cursor: pointer;
+}
+
+body.satExperimentalUi .scRollover,
+body.satExperimentalUi .scRollover_Hover {
+  color: var(--accent);
 }
 
 body.satExperimentalUi .eeErrors:hover {

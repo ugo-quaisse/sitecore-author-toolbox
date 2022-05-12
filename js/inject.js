@@ -869,6 +869,7 @@ function savePage() {
   setTimeout(function () {
     saveMessage.classList.remove("visible");
     saveMessage.innerHTML = "Changes saved! Refreshing the page...";
+    parent.document.querySelector("html").setAttribute("style", "cursor: default !important");
   }, 10000);
 
   document.querySelector("a[data-sc-id='QuickSave']").click();

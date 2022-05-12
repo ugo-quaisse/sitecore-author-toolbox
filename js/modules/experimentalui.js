@@ -685,7 +685,7 @@ const replaceIcons = (
         icon.src = global.iconSitecoreTree;
         icon.classList.add("scMaterialIcon");
       } else if (filename.includes("flag_")) {
-        icon.src = chrome.runtime.getURL("images/Flags/svg/" + findCountryName(filename) + ".svg");
+        icon.src = chrome.runtime.getURL("images/Flags/svg/" + findCountryName(filename).replace(".aspx", "") + ".svg");
         icon.classList.add("scNoContrastedFlag");
         icon.classList.add("scMaterialIcon");
       } else {
@@ -804,7 +804,7 @@ const insertSavebarEE = (storage) => {
             
             <div class="scBurgerMenuTitle">Content</div>
             <button id="scTreeButton" class="scMenu t-right t-sm" onclick="toggleTreePanel()" data-tooltip="Show Sitecore Tree"><img src="${global.iconMenu}" /></button>
-            <button class="scAddPage t-right t-sm" onclick="addPage()" data-tooltip="Create a new page"><img src="${global.iconAddDark}" /></button>
+            <button class="scAddPage t-right t-sm" onclick="addPage()" data-tooltip="Create a new page"><img src="${global.iconPencil}" /></button>
             </div>
     </div>`;
 
@@ -814,7 +814,7 @@ const insertSavebarEE = (storage) => {
       <button class="scEditorHeaderButton" id="scLanguageButton" type="button" onclick="toggleLanguagePanel()"><img src="${global.iconLanguage}" class="scLanguageIcon"> ${scLanguage.toUpperCase()} ▾</button>
       <button class="scEditorHeaderButton" id="scVersionButton" type="button" onclick="toggleVersionPanel()"><img src="${global.iconVersion}" class="scLanguageIcon"> ${scVersion} ▾</button>
       <button class="scEditorHeaderButton" id="scMoreButton" title="More actions" type="button" onclick="toggleSettingsPanel()"><img src="${global.iconCog}" class="scLanguageIcon"></button>
-      <button class="scAddComponent" onclick="addComponent()"><img src="${global.iconPencil}" /> ADD A COMPONENT</button>
+      <button class="scAddComponent" onclick="addComponent()"><img src="${global.iconAdd}" /> ADD A COMPONENT</button>
     </div>
   </div>`;
 

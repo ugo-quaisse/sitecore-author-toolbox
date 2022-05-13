@@ -84,7 +84,7 @@ const getRelatedItems = (sitecoreItemID, scLanguage, scVersion) => {
 /**
  * Get all items properties
  */
-const getItemProperties = (itemId, language, version, storage) => {
+const getItemProperties = (itemId, language, version, storage, format = "html") => {
   storage.feature_quickinfoenhancement = initStorageFeature(storage.feature_quickinfoenhancement, true);
   if (storage.feature_quickinfoenhancement) {
     global.debug ? console.log("Check item properties") : false;
@@ -97,30 +97,46 @@ const getItemProperties = (itemId, language, version, storage) => {
       if (ajax.readyState === 4 && ajax.status == "200") {
         //If success
         let html = new DOMParser().parseFromString(ajax.responseText, "text/html");
+        if (format == "html") {
+          html.querySelectorAll(".scListControl tr").forEach(function (line) {
+            let table = document.querySelector(".scEditorQuickInfo");
 
-        html.querySelectorAll(".scListControl tr").forEach(function (line) {
-          let table = document.querySelector(".scEditorQuickInfo");
-          if (line.querySelector(".scValue") !== null && table) {
-            if (
-              line.querySelector(".scKey").innerText.replace(":", "").toLowerCase() == "modified" ||
-              // line.querySelector(".scKey").innerText.replace(":", "").toLowerCase() == "reminder date" ||
-              // line.querySelector(".scKey").innerText.replace(":", "").toLowerCase() == "workflow" ||
-              line.querySelector(".scKey").innerText.replace(":", "").toLowerCase() == "state" ||
-              // line.querySelector(".scKey").innerText.replace(":", "").toLowerCase() == "lock" ||
-              line.querySelector(".scKey").innerText.replace(":", "").toLowerCase() == "archive" ||
-              (line.querySelector(".scKey").innerText.replace(":", "").toLowerCase() == "created" && !line.querySelector(".scValue").innerText.includes(" by "))
-            ) {
-              var row = table.insertRow(-1);
-              var cell1 = row.insertCell(0);
-              var cell2 = row.insertCell(1);
-              cell1.innerHTML = line.querySelector(".scKey").innerText;
-              cell2.innerHTML = line.querySelector(".scValue").innerText.includes("(final state)") ? `<span class="scWorkflowChipFinal">${line.querySelector(".scValue").innerText}</span>` : line.querySelector(".scValue").innerText;
-              cell2.innerHTML = line.querySelector(".scValue").innerText.toLowerCase().includes("no workflow state assigned")
-                ? `<span class="scWorkflowChipNone">${line.querySelector(".scValue").innerText}</span>`
-                : line.querySelector(".scValue").innerText;
+            if (line.querySelector(".scValue") !== null && table) {
+              if (
+                line.querySelector(".scKey").innerText.replace(":", "").toLowerCase() == "modified" ||
+                // line.querySelector(".scKey").innerText.replace(":", "").toLowerCase() == "reminder date" ||
+                // line.querySelector(".scKey").innerText.replace(":", "").toLowerCase() == "workflow" ||
+                line.querySelector(".scKey").innerText.replace(":", "").toLowerCase() == "state" ||
+                // line.querySelector(".scKey").innerText.replace(":", "").toLowerCase() == "lock" ||
+                line.querySelector(".scKey").innerText.replace(":", "").toLowerCase() == "archive" ||
+                (line.querySelector(".scKey").innerText.replace(":", "").toLowerCase() == "created" && !line.querySelector(".scValue").innerText.includes(" by "))
+              ) {
+                var row = table.insertRow(-1);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                cell1.innerHTML = line.querySelector(".scKey").innerText;
+                cell2.innerHTML = line.querySelector(".scValue").innerText.includes("(final state)") ? `<span class="scWorkflowChipFinal">${line.querySelector(".scValue").innerText}</span>` : line.querySelector(".scValue").innerText;
+                cell2.innerHTML = line.querySelector(".scValue").innerText.toLowerCase().includes("no workflow state assigned")
+                  ? `<span class="scWorkflowChipNone">${line.querySelector(".scValue").innerText}</span>`
+                  : line.querySelector(".scValue").innerText;
+              }
             }
-          }
-        });
+          });
+        } else if (format == "raw") {
+          html.querySelectorAll(".scListControl tr").forEach(function (line) {
+            if (line.querySelector(".scValue .scItemID") !== null && line.querySelector(".scKey").innerText.toLowerCase().includes("item path")) {
+              let itemPath = line.querySelector(".scValue .scItemID").value ? line.querySelector(".scValue .scItemID").value : false;
+              //Update live URLs TODO
+              //Path to live URL
+              //Display URLs for all lang published
+              document.querySelectorAll("#Languages > input").forEach((lang) => {
+                if (lang.checked) {
+                  console.log("Live URL for:", lang.value, itemId, itemPath);
+                }
+              });
+            }
+          });
+        }
       }
     };
 

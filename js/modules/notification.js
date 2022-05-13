@@ -4,6 +4,7 @@
 
 import { currentColorScheme } from "./dark.js";
 import { checkUrlStatus } from "./url.js";
+import { getItemProperties } from "./items.js";
 
 export { checkNotificationPermissions, sendNotification, checkPublishNotification };
 
@@ -67,6 +68,12 @@ const checkPublishNotification = (storage) => {
       //notificationBody = notificationBody == "Result:" ? "Finished " + document.querySelector("#ResultText").value.split("Finished")[1] : "";
       //Send notification
       sendNotification(notificationSubTitle, notificationBody);
+
+      //Get item properties
+      let urlSearchParams = new URLSearchParams(window.location.search);
+      let params = Object.fromEntries(urlSearchParams.entries());
+      let itemId = params.id ? params.id : false;
+      getItemProperties(itemId, "", "", storage, "raw");
 
       //Is dark mode on?
       darkMode = !!((storage.feature_darkmode && !storage.feature_darkmode_auto) || (storage.feature_darkmode && storage.feature_darkmode_auto && currentColorScheme() == "dark"));

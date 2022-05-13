@@ -26,7 +26,6 @@ const initTabSections = (storage) => {
       //let sectionClass = section.getAttribute("class");
       let sectionSelected, sectionPanelDisplay, sectionErrorHtml, sectionErrorClass, sectionError;
       let lastClickedTab = localStorage.getItem("scTabSection");
-      console.log(sectionTitle);
       //Detect active panel and show it if there, othjerwise fallback to quick Info
       if (sectionActiveCount == false && lastClickedTab != null && sectionTitle == lastClickedTab) {
         sectionSelected = "scEditorTabSelected";

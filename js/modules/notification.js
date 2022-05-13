@@ -73,7 +73,7 @@ const checkPublishNotification = (storage) => {
       let urlSearchParams = new URLSearchParams(window.location.search);
       let params = Object.fromEntries(urlSearchParams.entries());
       let itemId = params.id ? params.id : false;
-      getItemProperties(itemId, "", "", storage, "raw");
+      getItemProperties(itemId, "", "", storage, "liveUrl");
 
       //Is dark mode on?
       darkMode = !!((storage.feature_darkmode && !storage.feature_darkmode_auto) || (storage.feature_darkmode && storage.feature_darkmode_auto && currentColorScheme() == "dark"));

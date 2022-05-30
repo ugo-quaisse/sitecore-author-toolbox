@@ -81,10 +81,6 @@ export const jsonIcons = JSON.parse(
     "icon": "editor::monetization_on"
   },
   {
-    "search": "pie",
-    "icon": "editor::pie_chart"
-  },
-  {
     "search": "flag_checkered.png",
     "icon": "content::flag"
   },
@@ -351,6 +347,30 @@ export const jsonIcons = JSON.parse(
   {
     "search": "folder_",
     "icon": "file::folder"
+  },
+  {
+    "search": "folder2_",
+    "icon": "file::folder"
+  },
+  {
+    "search": "folders2",
+    "icon": "file::folder"
+  },
+  {
+    "search": "size",
+    "icon": "action::aspect_ratio"
+  },
+  {
+    "search": "flag",
+    "icon": "content::flag"
+  },
+  {
+    "search": "dog",
+    "icon": "action::pets"
+  },
+  {
+    "search": "cat",
+    "icon": "action::pets"
   },
   {
     "search": "document.png",
@@ -811,6 +831,26 @@ export const jsonIcons = JSON.parse(
   {
     "search": "file",
     "icon": "editor::insert_drive_file"
+  },
+  {
+    "search": "quotation",
+    "icon": "editor::format_quote"
+  },
+  {
+    "search": "quote",
+    "icon": "editor::format_quote"
+  },
+  {
+    "search": "piece",
+    "icon": "action::extension"
+  },
+  {
+    "search": "pie",
+    "icon": "editor::pie_chart"
+  },
+  {
+    "search": "routes",
+    "icon": "maps::directions"
   }
 ]`
 );

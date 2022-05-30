@@ -619,7 +619,10 @@ const initEventListeners = () => {
 
     //Quick Info panel
     if (document.querySelector("#scInfoButton")) {
+      console.log(event.path[0].className);
       if (event.path[0].className != "itemDetail" && event.path[0].className != "open") {
+        console.log("click", event.target.id, event.path[1].id, event.target.id, event.path[0].className);
+        console.log(scPanel);
         event.target.id == "scInfoButton" || event.path[1].id == "scInfoButton" || event.target.id == "scPanel" || event.path[0].className == "content" ? scPanel.classList.toggle("open") : scPanel.classList.remove("open");
       }
     }

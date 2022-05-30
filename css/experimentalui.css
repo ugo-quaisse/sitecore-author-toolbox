@@ -75,6 +75,7 @@ body.satExperimentalUi #scPanel {
 
 body.satExperimentalUi #scPanel > .content {
   padding: 0px;
+  font-size: 13px;
 }
 
 body.satExperimentalUi #scPanel h1 {
@@ -1112,7 +1113,8 @@ body.satExperimentalUi #scVersionIframe {
 }
 
 body.satExperimentalUi #scVersionIframe.open,
-body.satExperimentalUi #scLanguageIframe.open {
+body.satExperimentalUi #scLanguageIframe.open,
+body.satExperimentalUi #scPanel.open {
   right: 0px !important;
 }
 

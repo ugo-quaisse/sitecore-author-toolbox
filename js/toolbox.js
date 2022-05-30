@@ -48,7 +48,7 @@ import { initLaunchpadIcon, initLaunchpadMenu } from "./modules/launchpad.js";
 import { initAutoExpandTree, initTreeGutterTooltips } from "./modules/contenttree.js";
 import { initQuerySuggestions } from "./modules/template.js";
 import { initPublishingStatus } from "./modules/publishingdashboard.js";
-import { initPreviewButtonsEE, updateEETitle, storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, resetExperienceEditor, initRenderingSearchBox } from "./modules/experienceeditor.js";
+import { initPreviewButtonsEE, updateEETitle, storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, resetExperienceEditor, initRenderingSearchBox, initOptionalFields } from "./modules/experienceeditor.js";
 import { initHorizon } from "./modules/horizon.js";
 import { initTabSections } from "./modules/tabs.js";
 /**
@@ -327,6 +327,7 @@ chrome.storage.sync.get((storage) => {
       //addHideRibbonButton(storage);
       resetExperienceEditor(storage);
       initMaterializeIcons(storage);
+      initOptionalFields(storage);
       //initHighlightValidationError(storage);
     }
   }

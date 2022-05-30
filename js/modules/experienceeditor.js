@@ -16,6 +16,7 @@ export {
   resetExperienceEditor,
   initRenderingSearchBox,
   initHighlightValidationError,
+  initOptionalFields,
 };
 
 /**
@@ -413,6 +414,19 @@ const initRenderingSearchBox = (storage) => {
           document.querySelector(`#Tabs_tab_${tabNumber}`).setAttribute("style", "opacity:1");
         }
       });
+    });
+  }
+};
+
+/**
+ * Highlight validation errors in the page TODO
+ */
+const initOptionalFields = (storage) => {
+  storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;
+  if (storage.feature_experienceeditor) {
+    document.querySelectorAll('[scwatermark="true"]').forEach((elem) => {
+      //elem.tagName.toLowerCase() == "code" ? elem.parentNode.setAttribute("style", `opacity: ${opacity} !important;`) : elem.setAttribute("style", `opacity: ${opacity} !important;`);
+      elem.tagName.toLowerCase() == "code" ? elem.parentNode.classList.add("sat-watermark") : elem.classList.add("sat-watermark");
     });
   }
 };

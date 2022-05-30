@@ -189,8 +189,6 @@ const initLiveUrl = (storage) => {
       chrome.runtime.sendMessage({ greeting: "sxa_site" }, function (response) {
         //Build live URL object
         let urlInfo = buildLiveUrl(ScItem, ScSite, response);
-        //console.log(ScSite);
-        //console.log(urlInfo);
         //Hide preview button if exists
         document.querySelector(".scPreviewButton") ? document.querySelector(".scPreviewButton").setAttribute("style", "display: block") : false;
         //Html chips
@@ -210,7 +208,7 @@ const initLiveUrl = (storage) => {
               <div class="scMessageBarText">To view this page in <b>"${scLanguageTxtLong}"</b></div>
               <ul class="scMessageBarOptions" style="margin:0px">
                 <li class="scMessageBarOptionBullet">
-                  <a href="${decodeURI(ScSite.url)}" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this page</a> ${urlInfo.alternativeUrl}
+                  <a href="${decodeURI(urlInfo.liveUrl)}" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this page</a> ${urlInfo.alternativeUrl}
                 </li>
               </ul>
               </div>

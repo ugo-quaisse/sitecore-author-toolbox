@@ -26,7 +26,7 @@ const getFeatures = () => {
     toggleFeature(storage.feature_rtl, "#feature_rtl", true);
     toggleFeature(storage.feature_charscount, "#feature_charscount", true);
     toggleFeature(storage.feature_autoexpand, "#feature_autoexpand", true);
-    toggleFeature(storage.feature_quickinfoenhancement, "#feature_quickinfoenhancement", true);
+    toggleFeature(storage.feature_quickinfoenhancement, "#feature_quickinfoenhancement", false);
     toggleFeature(storage.feature_translatemode, "#feature_translatemode", false);
     toggleFeature(storage.feature_contenteditor, "#feature_contenteditor", true);
     toggleFeature(storage.feature_experienceeditor, "#feature_experienceeditor", true);

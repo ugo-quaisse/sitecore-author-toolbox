@@ -23,6 +23,16 @@ legend {
   font-family: "Open Sans", sans-serif;
   margin-top: 10px;
 }
+legend > i {
+  font-size: 9px;
+  color: #ee3524;
+  padding: 2px 0px;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-align: left;
+  font-family: "Open Sans", sans-serif;
+  margin-top: 10px;
+}
 fieldset {
   border: 1px solid #f0f0f0;
   border-bottom: none;

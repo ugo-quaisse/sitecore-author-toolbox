@@ -361,6 +361,10 @@ export const jsonIcons = JSON.parse(
     "icon": "action::aspect_ratio"
   },
   {
+    "search": "sizes",
+    "icon": "image::collections"
+  },
+  {
     "search": "flag",
     "icon": "content::flag"
   },
@@ -399,10 +403,6 @@ export const jsonIcons = JSON.parse(
   {
     "search": "clipboard_check",
     "icon": "av::web_asset"
-  },
-  {
-    "search": "sizes",
-    "icon": "image::collections"
   },
   {
     "search": "document_chart",

@@ -773,7 +773,7 @@ function copyPathLightbox(path) {
  * Open Lightbox
  */
 function openLightbox(id, from = "frame") {
-  let lightbox = parent.document.querySelector("#scLightbox");
+  let lightbox = parent.document.querySelector("#scLightbox") ? parent.document.querySelector("#scLightbox") : document.querySelector("#scLightbox");
   let item = from == "frame" ? document.querySelector(`img[data-id='${id}']`) : document.querySelector("iframe[src*='/Media/']").contentDocument.querySelector(`img[data-id='${id}']`);
   let img = item.src.replace("&h=180", "").replace("&w=180", "").replace("&h=300", "").replace("&thn=1", "");
   let name = item.dataset.name;
@@ -972,7 +972,7 @@ function toggleSettingsPanel() {
   iframeSettings.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
   //Hide header and footer
   iframeSettings.contentDocument.querySelector(".scFormDialogHeader").setAttribute("style", "display:none");
-  iframeSettings.contentDocument.querySelector(".scFormDialogFooter").setAttribute("style", "display:none");
+  //iframeSettings.contentDocument.querySelector(".scFormDialogFooter").setAttribute("style", "display:none");
   iframeSettings.contentDocument.querySelector(".scDialogContentContainer").setAttribute("style", "padding: 0px 15px;");
 }
 

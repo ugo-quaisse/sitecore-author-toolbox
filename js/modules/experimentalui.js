@@ -927,10 +927,9 @@ const initGroupedErrorsEE = () => {
 
           let parser = new DOMParser();
           let errorDom = parser.parseFromString(item.innerHTML, "text/html");
-          let errorId = errorDom.querySelector(".OptionTitle").id;
-          errorDom.querySelector(".OptionTitle").remove();
+          let errorId = errorDom.querySelector(".OptionTitle") ? errorDom.querySelector(".OptionTitle").id : false;
+          errorId ? errorDom.querySelector(".OptionTitle").remove() : false;
           textPanel += `🚫 Error: ${errorDom.innerHTML}`;
-          console.log(errorId);
           textPanel += ` - <a href="#" class="OptionTitle" onclick="showError('${errorId}')">Show in page</a><hr />`;
           //Add click to show the error
           //document.querySelector("[id='0B0C4532-710E-43EC-A87B-82969AD5DB08_2BC71ADC-50DA-4C08-AAF2-D6E10C4B4016_0']").click()

@@ -171,7 +171,6 @@ const initLiveUrl = (storage) => {
   let ScSite = getSiteUrl(storage, ScItem.pathFull, ScItem.language);
   let siteName = ScItem.pathFull.split("/home/")[0].split("/").reverse();
   let pathToHome = ScItem.pathFull.split("/home/")[0] + "/home/";
-  let isCdServer = false;
   //Template type
   let isContent = ScItem.pathFull.includes("/sitecore/content/");
   let isMedia = ScItem.pathFull.includes("/sitecore/media library/");
@@ -239,7 +238,7 @@ const initLiveUrl = (storage) => {
         /**
          * Live status
          */
-        if (storage.feature_urlstatus && isCdServer && !isMedia) {
+        if (storage.feature_urlstatus && urlInfo.isCdServer && !isMedia) {
           chrome.runtime.sendMessage(
             {
               greeting: "get_pagestatus",

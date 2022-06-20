@@ -1312,6 +1312,8 @@ body.satExperimentalUi .scMessageBar {
   border-radius: var(--radius) !important;
   vertical-align: top;
   margin: 25px 20px 20px 20px;
+  max-height: 125px;
+  overflow: auto;
 
   /* display: inline-flex;
   min-width: calc(50% - 30px);

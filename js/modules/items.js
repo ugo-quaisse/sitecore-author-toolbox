@@ -88,7 +88,9 @@ const getRelatedItems = (sitecoreItemID, scLanguage, scVersion) => {
  */
 const getItemProperties = (itemId, language, version, storage, format = "html") => {
   storage.feature_quickinfoenhancement = initStorageFeature(storage.feature_quickinfoenhancement, true);
-  if (storage.feature_quickinfoenhancement) {
+  storage.feature_urls = initStorageFeature(storage.feature_urls, true);
+
+  if ((storage.feature_quickinfoenhancement && format == "html") || (storage.feature_urls && format == "liveUrl")) {
     global.debug ? console.log("Check item properties") : false;
     let itemUrl = `sitecore/shell/default.aspx?xmlcontrol=ContentEditor.Properties&id=${itemId}&la=${language}&vs=${version}`;
     var ajax = new XMLHttpRequest();
@@ -155,7 +157,7 @@ const getItemProperties = (itemId, language, version, storage, format = "html") 
                   let flag = findCountryName(langLabel);
                   flag = storage.feature_experimentalui ? chrome.runtime.getURL("images/Flags/svg/" + flag + ".svg") : chrome.runtime.getURL("images/Flags/16x16/flag_" + flag + ".png");
                   flag = `<img loading="lazy" id="scFlag" src="${flag}" style="display: inline !important; vertical-align: middle; padding-right: 2px; width:16px !important" onerror="this.onerror=null;this.src='${global.iconFlagGeneric}';">`;
-                  liveUrlsHtml += `<a href="${ScUrl.liveUrl.toLowerCase()}" target="_blank" style="
+                  liveUrlsHtml += `<a class="liveUrlPublish" href="${ScUrl.liveUrl.toLowerCase()}" target="_blank" style="
     color: var(--messageSuccessLink);">${flag} ${langLabel} - Open this page <img src="${global.iconExternalLink}" style="padding-left: 2px; width:11px"/></a><br />`;
                 }
                 i++;

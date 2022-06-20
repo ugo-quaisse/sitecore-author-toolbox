@@ -48,7 +48,24 @@ function scSaveAnimation(id) {
     }, 2500);
   }
 }
-
+/**
+ * Overwrtting Sitecore scSaveAnimation function
+ */
+// const hookAjax = () => {
+//   XMLHttpRequest.prototype.realSend = XMLHttpRequest.prototype.send;
+//   XMLHttpRequest.prototype.send = function (value) {
+//     this.addEventListener(
+//       "progress",
+//       function () {
+//         // eslint-disable-next-line no-invalid-this
+//         console.log("Loading", this.responseURL);
+//       },
+//       false
+//     );
+//     this.realSend(value);
+//   };
+// };
+// hookAjax();
 const copyTranslate = (leftElemId, rightElemId) => {
   var left = document.querySelector("#" + leftElemId);
   var right = document.querySelector("#" + rightElemId);
@@ -972,7 +989,7 @@ function toggleSettingsPanel() {
   iframeSettings.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
   //Hide header and footer
   iframeSettings.contentDocument.querySelector(".scFormDialogHeader").setAttribute("style", "display:none");
-  //iframeSettings.contentDocument.querySelector(".scFormDialogFooter").setAttribute("style", "display:none");
+  iframeSettings.contentDocument.querySelector(".scFormDialogFooter").setAttribute("style", "display:none");
   iframeSettings.contentDocument.querySelector(".scDialogContentContainer").setAttribute("style", "padding: 0px 15px;");
 }
 

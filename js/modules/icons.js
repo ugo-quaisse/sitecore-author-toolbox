@@ -93,6 +93,10 @@ export const jsonIcons = JSON.parse(
     "icon": "action::settings"
   },
   {
+    "search": "dropdown",
+    "icon": "navigation::chevron_bottom"
+  },
+  {
     "search": "menu",
     "icon": "navigation::menu"
   },

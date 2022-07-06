@@ -86,7 +86,7 @@ const getRelatedItems = (sitecoreItemID, scLanguage, scVersion) => {
  */
 const getItemProperties = (itemId, language, version, storage) => {
   storage.feature_quickinfoenhancement = initStorageFeature(storage.feature_quickinfoenhancement, true);
-  if (storage.feature_quickinfoenhancement) {
+  if (storage.feature_quickinfoenhancement && itemId) {
     global.debug ? console.log("Check item properties") : false;
     let itemUrl = `sitecore/shell/default.aspx?xmlcontrol=ContentEditor.Properties&id=${itemId}&la=${language}&vs=${version}`;
     var ajax = new XMLHttpRequest();

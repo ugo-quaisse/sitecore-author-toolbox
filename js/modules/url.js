@@ -59,7 +59,7 @@ const getSiteUrl = (storage, path, language) => {
               key == "useDisplayName" ? (siteDisplayName = value) : false;
             }
             let siteStorage = Object.entries(site)[0][0].slice(-1) != "/" ? Object.entries(site)[0][0] + "/" : Object.entries(site)[0][0];
-            if (siteLanguage == "" && siteStorage.toLowerCase() == homePath.toLowerCase()) {
+            if (homePath && siteLanguage == "" && siteStorage.toLowerCase() == homePath.toLowerCase()) {
               liveUrl = Object.entries(site)[0][1].slice(-1) == "/" ? decodeURI(Object.entries(site)[0][1].slice(0, -1)) : decodeURI(Object.entries(site)[0][1]);
               //Fill scSite object
               scSite.path = siteStorage.toLowerCase();
@@ -101,18 +101,18 @@ const getSiteUrl = (storage, path, language) => {
  */
 const getHomePath = (itemPath) => {
   const homeFolder = "/home/";
-  if (itemPath.includes(homeFolder)) {
+  if (itemPath && itemPath.includes(homeFolder)) {
     return itemPath.split(homeFolder)[0] + homeFolder;
   }
 
   const itemPathTrailingSlashesTrimmed = trimTrailingSlash(itemPath);
-  if (!itemPathTrailingSlashesTrimmed.includes("/")) {
+  if (itemPathTrailingSlashesTrimmed && !itemPathTrailingSlashesTrimmed.includes("/")) {
     return itemPath;
   }
 
-  const lastOccurrenceOfSlash = itemPathTrailingSlashesTrimmed.lastIndexOf("/");
+  const lastOccurrenceOfSlash = itemPathTrailingSlashesTrimmed ? itemPathTrailingSlashesTrimmed.lastIndexOf("/") : false;
 
-  return itemPathTrailingSlashesTrimmed.substring(0, lastOccurrenceOfSlash) + "/";
+  return lastOccurrenceOfSlash ? itemPathTrailingSlashesTrimmed.substring(0, lastOccurrenceOfSlash) + "/" : false;
 };
 
 /**
@@ -168,6 +168,9 @@ const initLiveUrl = (storage) => {
   let scLanguageTxtLong = scEditorHeaderVersionsLanguage ? scEditorHeaderVersionsLanguage.getAttribute("title") : false;
   let barStyle = !storage.feature_experimentalui ? "scWarning" : "scSuccess";
   //Live URL
+  if (!ScItem.id) {
+    return;
+  }
   let ScSite = getSiteUrl(storage, ScItem.pathFull, ScItem.language);
   let siteName = ScItem.pathFull.split("/home/")[0].split("/").reverse();
   let pathToHome = ScItem.pathFull.split("/home/")[0] + "/home/";
@@ -178,10 +181,10 @@ const initLiveUrl = (storage) => {
   let isSettings = ScItem.pathFull.includes("/settings/");
   let isPresentation = ScItem.pathFull.includes("/presentation/");
   let isEmailTemplate = ScItem.pathFull.includes("/sitecore/content/email/");
-  let isDictionnary = ScItem.template.includes("/sitecore/templates/system/dictionary/");
+  let isDictionnary = ScItem.template ? ScItem.template.includes("/sitecore/templates/system/dictionary/") : false;
 
   //Excluding data, presentation, settings, email, dictionnary
-  if (isContent && !isData && !isPresentation && !isSettings && !isEmailTemplate && !isDictionnary) {
+  if (ScItem.id && isContent && !isData && !isPresentation && !isSettings && !isEmailTemplate && !isDictionnary) {
     //If not added yet
     if (!document.querySelector("#scMessageBarUrl") && storage.feature_urls) {
       //Get cookie sxa_site
@@ -259,7 +262,7 @@ const initLiveUrl = (storage) => {
 const pathFromHome = (itemPath) => {
   const homeFolder = "/home/";
 
-  if (itemPath.includes(homeFolder)) {
+  if (itemPath && itemPath.includes(homeFolder)) {
     const pathParts = itemPath.toLowerCase().split(homeFolder);
 
     // handle multiple "home" nodes in the path by joining them
@@ -268,13 +271,17 @@ const pathFromHome = (itemPath) => {
 
   const itemPathTrailingSlashesTrimmed = trimTrailingSlash(itemPath);
 
-  if (!itemPathTrailingSlashesTrimmed.includes("/")) {
-    return itemPath;
+  if (itemPathTrailingSlashesTrimmed) {
+    if (!itemPathTrailingSlashesTrimmed.includes("/")) {
+      return itemPath;
+    }
+
+    const lastOccurrenceOfSlash = itemPathTrailingSlashesTrimmed.lastIndexOf("/") + 1;
+
+    return itemPathTrailingSlashesTrimmed.substring(lastOccurrenceOfSlash);
   }
 
-  const lastOccurrenceOfSlash = itemPathTrailingSlashesTrimmed.lastIndexOf("/") + 1;
-
-  return itemPathTrailingSlashesTrimmed.substring(lastOccurrenceOfSlash);
+  return false;
 };
 
 /**

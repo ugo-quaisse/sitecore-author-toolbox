@@ -88,8 +88,6 @@ const getRelatedItems = (sitecoreItemID, scLanguage, scVersion) => {
  */
 const getItemProperties = (itemId, language, version, storage, format = "html") => {
   storage.feature_quickinfoenhancement = initStorageFeature(storage.feature_quickinfoenhancement, true);
-  storage.feature_urls = initStorageFeature(storage.feature_urls, true);
-
   if ((storage.feature_quickinfoenhancement && format == "html") || (storage.feature_urls && format == "liveUrl")) {
     global.debug ? console.log("Check item properties") : false;
     let itemUrl = `sitecore/shell/default.aspx?xmlcontrol=ContentEditor.Properties&id=${itemId}&la=${language}&vs=${version}`;

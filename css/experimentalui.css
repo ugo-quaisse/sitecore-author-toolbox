@@ -786,6 +786,11 @@ body.satExperimentalUi div.scContentTreeNode {
   font-size: 14px;
 }
 
+body.satExperimentalUi #Templates div.scContentTreeNode > img {
+  margin-bottom: 0px;
+  padding: 4px 0px;
+}
+
 body.satExperimentalUi div.scContentTreeNode > img {
   position: relative;
   z-index: 10;
@@ -1312,7 +1317,7 @@ body.satExperimentalUi .scMessageBar {
   border-radius: var(--radius) !important;
   vertical-align: top;
   margin: 25px 20px 20px 20px;
-  max-height: 125px;
+  max-height: 230px;
   overflow: auto;
 
   /* display: inline-flex;

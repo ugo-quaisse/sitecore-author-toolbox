@@ -45,7 +45,7 @@ const showSnackbar = (storage) => {
  */
 const showSnackbarSite = (storage, ScItem) => {
   storage.feature_urls == initStorageFeature(storage.feature_urls, true);
-  if (storage.feature_urls) {
+  if (storage.feature_urls && ScItem.id) {
     //Get SiteName
     let siteName = ScItem.pathFull.split("/home/")[0].split("/").reverse();
     let pathToHome = ScItem.pathFull.split("/home/")[0] + "/home/";

@@ -258,7 +258,7 @@ const isFileExists = (fileName) => {
 /**
  * Remove trailing slashes
  */
-const trimTrailingSlash = (path) => path.replace(/\/$/u, "");
+const trimTrailingSlash = (path) => (path ? path.replace(/\/$/u, "") : false);
 
 /*
  * A JavaScript implementation of the RSA Data Security, Inc. MD5 Message

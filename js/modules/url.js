@@ -150,7 +150,7 @@ const initLiveUrl = (storage) => {
   let isSettings = ScItem.pathFull.includes("/settings/");
   let isPresentation = ScItem.pathFull.includes("/presentation/");
   let isEmailTemplate = ScItem.pathFull.includes("/sitecore/content/email/");
-  let isDictionnary = ScItem.template.includes("/sitecore/templates/system/dictionary/");
+  let isDictionnary = ScItem.template ? ScItem.template.includes("/sitecore/templates/system/dictionary/") : false;
 
   //Excluding data, presentation, settings, email, dictionnary
   if (ScItem.id && isContent && !isData && !isPresentation && !isSettings && !isEmailTemplate && !isDictionnary) {

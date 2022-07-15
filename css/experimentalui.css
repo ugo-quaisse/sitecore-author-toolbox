@@ -1103,6 +1103,9 @@ body.satExperimentalUi .scUploaderOver .btn-default {
 body.satExperimentalUi #Renderings {
   padding: 0px 10px;
 }
+body.satExperimentalUi #Renderings > div > div > table b {
+  color: var(--accent) !important;
+}
 body.satExperimentalUi #scLanguageIframe,
 body.satExperimentalUi #scVersionIframe {
   position: fixed;

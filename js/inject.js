@@ -1017,3 +1017,13 @@ function closeNotify(event) {
     //Check if other visible notification and move them down
   }, 1000);
 }
+
+/**
+ * Scroll to a datasource in experience editor, from a notify message
+ */
+function scrollToDatasourceEE(id) {
+  let datasourceId = id.replace("{", "").replace("}", "");
+  let rendering = parent.document.querySelector(".scLooseFrameZone[sc_item*='" + datasourceId + "' i]");
+  console.log(datasourceId);
+  rendering ? window.scrollTo(0, parent.document.querySelector(".scLooseFrameZone[sc_item*='" + datasourceId + "' i]").offsetTop - 300) : false;
+}

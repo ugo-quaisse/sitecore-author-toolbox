@@ -23,7 +23,7 @@
   left: 0;
 }
 .notifications-container.notify-is-right {
-  right: 0;
+  right: 10px;
 }
 .notifications-container.notify-is-top {
   top: 0;

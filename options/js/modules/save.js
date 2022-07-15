@@ -149,6 +149,7 @@ const saveSettings = () => {
     feature_translatemode: document.querySelector("#feature_translatemode").checked,
     feature_contenteditor: document.querySelector("#feature_contenteditor").checked,
     feature_experienceeditor: document.querySelector("#feature_experienceeditor").checked,
+    feature_eenotify: document.querySelector("#feature_eenotify").checked,
     feature_cetabs: document.querySelector("#feature_cetabs").checked,
     feature_rtecolor: document.querySelector("#feature_rtecolor").checked,
     feature_messagebar: document.querySelector("#feature_messagebar").checked,

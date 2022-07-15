@@ -1149,8 +1149,7 @@ body.satExperimentalUi .lockedItem {
   background-position: 0 0;
 }
 
-body.satEEExperimentalUi #scTreeIframe,
-body.satEEExperimentalUi #scErrorsIframe {
+body.satEEExperimentalUi #scTreeIframe {
   position: fixed;
   background-color: var(--white);
   top: 164px !important;
@@ -1171,15 +1170,8 @@ body.satEEExperimentalUi #scSettingsIframe.open {
   right: 0px !important;
 }
 
-body.satEEExperimentalUi #scTreeIframe.open,
-body.satEEExperimentalUi #scErrorsIframe.open {
+body.satEEExperimentalUi #scTreeIframe.open {
   left: 0px !important;
-}
-
-body.satEEExperimentalUi #scErrorsIframe {
-  padding: 10px;
-  background-color: var(--background);
-  color: var(--text);
 }
 
 body.satExperimentalUi .sc-language-gallery,

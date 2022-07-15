@@ -941,8 +941,6 @@ function showError(id) {
 function toggleTreePanel() {
   let ribbon = parent.document.querySelector("#scWebEditRibbon").getBoundingClientRect();
   let iframeTree = parent.document.querySelector("#scTreeIframe");
-  let iframeErrors = parent.document.querySelector("#scErrorsIframe");
-  iframeErrors && iframeErrors.classList.contains("open") ? iframeErrors.classList.remove("open") : false;
   iframeTree ? iframeTree.classList.toggle("open") : false;
   iframeTree.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
 }
@@ -998,24 +996,19 @@ function toggleSettingsPanel() {
  */
 function toggleNotificationsPanel() {
   let ribbon = parent.document.querySelector("#scWebEditRibbon").getBoundingClientRect();
-  let iframeErrors = parent.document.querySelector("#scErrorsIframe");
   let iframeTree = parent.document.querySelector("#scTreeIframe");
   iframeTree && iframeTree.classList.contains("open") ? iframeTree.classList.remove("open") : false;
-  iframeErrors ? iframeErrors.classList.toggle("open") : false;
-  iframeErrors.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
 }
 
 /**
  * Show notifications messages Panel in EE
  */
 function closeNotify(event) {
-  console.log("FADE OUT", event.path[1]);
   event.path[1].classList.remove("notify--fadeIn");
   setTimeout(() => {
-    console.log("REMOVE FROM DOM", event.path[2]);
     event.path[1].remove();
     //Check if other visible notification and move them down
-  }, 1000);
+  }, 500);
 }
 
 /**
@@ -1024,6 +1017,15 @@ function closeNotify(event) {
 function scrollToDatasourceEE(id) {
   let datasourceId = id.replace("{", "").replace("}", "");
   let rendering = parent.document.querySelector(".scLooseFrameZone[sc_item*='" + datasourceId + "' i]");
-  console.log(datasourceId);
-  rendering ? window.scrollTo(0, parent.document.querySelector(".scLooseFrameZone[sc_item*='" + datasourceId + "' i]").offsetTop - 300) : false;
+  rendering ? window.scrollTo(0, rendering.offsetTop - 300) : false;
+  rendering.setAttribute("style", "border:red 2px solid");
+}
+
+/**
+ * Scroll to a datasource in experience editor, from a notify message
+ */
+function openValidationEE() {
+  console.log(parent.document.querySelector("[data-sc-id*='ValidationRibbonButton' i]"));
+  console.log(document.querySelector("[data-sc-id*='ValidationRibbonButton' i]"));
+  parent.document.querySelector("[data-sc-id*='ValidationRibbonButton' i]").click();
 }

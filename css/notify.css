@@ -1,10 +1,12 @@
 .notifications-container {
-  max-height: 100vh;
+  max-height: calc(100vh - 100px);
   max-width: 380px;
   pointer-events: none;
   position: fixed;
   width: 100%;
   z-index: 99999;
+  -webkit-font-smoothing: antialiased !important;
+  text-rendering: optimizelegibility !important;
 }
 .notifications-container.notify-is-x-center {
   left: 50%;
@@ -23,7 +25,7 @@
   left: 0;
 }
 .notifications-container.notify-is-right {
-  right: 10px;
+  right: 0px;
 }
 .notifications-container.notify-is-top {
   top: 0;
@@ -63,7 +65,7 @@
   display: flex;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   overflow: hidden;
-  padding: min(12px, var(--notify-padding)); !important;
+  padding: 12px !important;
   position: relative;
   text-decoration: none;
   transition-timing-function: ease;
@@ -94,13 +96,22 @@
   pointer-events: none;
 }
 .notify__title {
-  font-size: 1rem;
+  font-size: 16px !important;
   font-weight: 600;
   padding-right: calc(var(--notify-padding) + var(--notify-close-icon-size));
+  line-height: 1.6 !important;
 }
 .notify__text {
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
+  font-size: 14px !important;
+  font-size: 0.875rem !important;
+  margin-top: 0.25rem !important;
+  line-height: 1.6 !important;
+}
+.notify__text > a {
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  color: var(--notify-white);
+  text-decoration: underline !important;
 }
 .notify--type-1 {
   background-color: #fff;

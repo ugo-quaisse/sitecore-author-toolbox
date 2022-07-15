@@ -17,6 +17,8 @@ export {
   initRenderingSearchBox,
   initHighlightValidationError,
   initOptionalFields,
+  initNotificationsEE,
+  initGroupedErrorsEE,
 };
 
 /**
@@ -428,5 +430,225 @@ const initOptionalFields = (storage) => {
       //elem.tagName.toLowerCase() == "code" ? elem.parentNode.setAttribute("style", `opacity: ${opacity} !important;`) : elem.setAttribute("style", `opacity: ${opacity} !important;`);
       elem.tagName.toLowerCase() == "code" ? elem.parentNode.classList.add("sat-watermark") : elem.classList.add("sat-watermark");
     });
+  }
+};
+
+/**
+ * Init notifications in Experience Editor
+ */
+const initNotificationsEE = () => {
+  let html = `<div class="notifications-container notify-is-right notify-is-bottom" style="--distance:20px;"></div>`;
+  parent.document.querySelector("body").insertAdjacentHTML("beforeend", html);
+  //Event listener
+};
+
+/**
+ * Init notifications in Experience Editor
+ */
+const addNotificationsEE = (title, message, type = "success") => {
+  let icon;
+  switch (type) {
+    case "success":
+      icon = global.notifyIconSuccess;
+      break;
+
+    case "warning":
+      icon = global.notifyIconWarning;
+      break;
+
+    case "error":
+      icon = global.notifyIconError;
+      break;
+
+    default:
+      icon = global.notifyIconSuccess;
+      break;
+  }
+  let html = `<div class="notify notify--type-3 notify--${type} notify--fade notify--fadeIn" style="--gap:10px; transition-duration: 300ms;">
+                  <div class="notify__icon">
+                    ${icon}
+                  </div>
+                  <div class="notify__close" onclick="closeNotify(event)">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="m8.94 8 4.2-4.193a.67.67 0 0 0-.947-.947L8 7.06l-4.193-4.2a.67.67 0 1 0-.947.947L7.06 8l-4.2 4.193a.667.667 0 0 0 .217 1.093.666.666 0 0 0 .73-.146L8 8.94l4.193 4.2a.665.665 0 0 0 .947 0 .665.665 0 0 0 0-.947L8.94 8Z" fill="currentColor"></path></svg>
+                  </div>
+                  <div class="notify-content">
+                    <div class="notify__title">${title}</div>
+                    <div class="notify__text">${message}</div>
+                  </div>
+                </div>`;
+  parent.document.querySelector("body .notifications-container").insertAdjacentHTML("afterbegin", html);
+};
+
+/**
+ * Get Experience Editor Errors
+ */
+const initGroupedErrorsEE = (storage) => {
+  storage.feature_eenotify == undefined ? (storage.feature_eenotify = true) : false;
+  if (storage.feature_eenotify) {
+    initNotificationsEE();
+    //Datasource fields validation
+    setTimeout(() => {
+      let urlParams = new URLSearchParams(parent.window.location.search);
+      let sc_token = document.getElementsByName("__RequestVerificationToken")[0].value;
+      let sc_itemid = urlParams.get("sc_itemid");
+      let sc_language = parent.document.querySelector("input#scLanguage").value;
+      let sc_version = urlParams.get("sc_version") || 1;
+      let scFieldValues = ``;
+      parent.document.querySelectorAll("#scFieldValues > input").forEach(function (item) {
+        scFieldValues += `"${item.id}":"",`;
+      });
+      scFieldValues += `######`;
+      scFieldValues = scFieldValues.replace(`,######`, ``).replace(`######`, ``);
+      let scErrorType = `error`;
+      fetch("/-/speak/request/v1/expeditor/ExperienceEditor.FieldsValidation.ValidateFields", {
+        headers: {
+          accept: "*/*",
+          "accept-language": "fr,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,en-GB-oxendict;q=0.6",
+          "cache-control": "no-cache",
+          "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+          pragma: "no-cache",
+          "sec-ch-ua": '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
+          "sec-ch-ua-mobile": "?0",
+          "sec-ch-ua-platform": '"macOS"',
+          "sec-fetch-dest": "empty",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-site": "same-origin",
+          "x-requested-with": "XMLHttpRequest",
+        },
+        referrer: "https://dev-weu-sitecore-01-cm.6952f9b6f3ab41099033.westeurope.aksapp.io/sitecore/",
+        referrerPolicy: "strict-origin-when-cross-origin",
+        body:
+          "__RequestVerificationToken=" +
+          sc_token +
+          '&data={"language":"' +
+          sc_language +
+          '","version":' +
+          sc_version +
+          ',"isFallback":false,"isHome":false,"itemId":"' +
+          sc_itemid +
+          '","database":"master","value":"{0930CAE5-BB35-4B57-B9B4-7D8E8CD1A8F1}","scValidatorsKey":"VK_SC_PAGEEDITOR","scFieldValues":{' +
+          scFieldValues +
+          "}}",
+        method: "POST",
+        mode: "cors",
+        credentials: "include",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          data.responseValue.value.forEach((item) => {
+            //Priority
+            if (item.Priority == 0) {
+              scErrorType = "error";
+            } else {
+              scErrorType = "warning";
+            }
+            //Unknown error
+            if (item.Text.includes("[unknown]")) {
+              item.Text = `Language version "${sc_language}" seems missing for a datasource`;
+              scErrorType = "warning";
+            }
+            //Is present in page
+            //let datasourceId = item.DataSourceId.replace("{", "").replace("}", "");
+            //let rendering = parent.document.querySelector(".scLooseFrameZone[sc_item*='" + datasourceId + "' i]");
+            //let text = rendering ? `- <a onclick='scrollToDatasourceEE("${item.DataSourceId}")' style="color:rgba(255, 255, 255, 0.8); cursor:pointer">Show this error</a>` : ``;
+            addNotificationsEE(
+              `${item.Text}`,
+              `<a href="/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#${item.DataSourceId}_${sc_language.toLowerCase()}_${sc_version}" class="OptionTitle" target="_blank">Fix this error</a>`,
+              scErrorType
+            );
+          });
+        });
+    }, 500);
+
+    //Page fields validation
+    setTimeout(() => {
+      let urlParams = new URLSearchParams(parent.window.location.search);
+      let sc_token = document.getElementsByName("__RequestVerificationToken")[0].value;
+      let sc_itemid = urlParams.get("sc_itemid");
+      let sc_language = parent.document.querySelector("input#scLanguage").value;
+      let sc_version = urlParams.get("sc_version") || 1;
+      let scFieldValues = ``;
+      parent.document.querySelectorAll("#scFieldValues > input").forEach(function (item) {
+        scFieldValues += `"${item.id}":"",`;
+      });
+      scFieldValues += `######`;
+      scFieldValues = scFieldValues.replace(`,######`, ``).replace(`######`, ``);
+      fetch("/-/speak/request/v1/expeditor/ExperienceEditor.Proofing.Validation", {
+        headers: {
+          accept: "*/*",
+          "accept-language": "fr,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,en-GB-oxendict;q=0.6",
+          "cache-control": "no-cache",
+          "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+          pragma: "no-cache",
+          "sec-ch-ua": '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
+          "sec-ch-ua-mobile": "?0",
+          "sec-ch-ua-platform": '"macOS"',
+          "sec-fetch-dest": "empty",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-site": "same-origin",
+          "x-requested-with": "XMLHttpRequest",
+        },
+        referrer: "https://dev-weu-sitecore-01-cm.6952f9b6f3ab41099033.westeurope.aksapp.io/sitecore/",
+        referrerPolicy: "strict-origin-when-cross-origin",
+        body:
+          "__RequestVerificationToken=" +
+          sc_token +
+          '&data={"language":"' +
+          sc_language +
+          '","version":' +
+          sc_version +
+          ',"isFallback":false,"isHome":false,"itemId":"' +
+          sc_itemid +
+          '","database":"master","value":"{0930CAE5-BB35-4B57-B9B4-7D8E8CD1A8F1}","scValidatorsKey":"VK_SC_PAGEEDITOR","scFieldValues":{' +
+          scFieldValues +
+          "}}",
+        method: "POST",
+        mode: "cors",
+        credentials: "include",
+      })
+        .then((response) => response.json())
+        .then((data) => fetch(data.responseValue.value))
+        .then((response) => response.text())
+        .then((data) => {
+          let dom = new DOMParser().parseFromString(data, "text/html");
+          let validatorLink = dom.querySelector("form").getAttribute("action");
+          dom.querySelectorAll(".scListControl tr").forEach(function (line) {
+            if (line.querySelectorAll("td") && line.querySelectorAll("td").length == 3) {
+              let errorType = line.querySelectorAll("td")[0].querySelector("img").src;
+              if (errorType.includes("yellow.png") && !line.querySelector("td.scValidatorTitle > div:last-child").innerText.includes("Spaces are URL encoded")) {
+                addNotificationsEE(
+                  line.querySelector("td.scValidatorTitle > div:last-child").innerText,
+                  `${line.querySelector("td.scValidatorResult").innerText} <a href="${validatorLink}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">Review</a>`,
+                  `warning`
+                );
+              } else if (errorType.includes("red.png") && !line.querySelector("td.scValidatorResult").innerText.includes("(403)")) {
+                addNotificationsEE(
+                  line.querySelector("td.scValidatorTitle > div:last-child").innerText,
+                  `${line.querySelector("td.scValidatorResult").innerText} <a href="${validatorLink}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">Review</a>`,
+                  `error`
+                );
+              }
+            }
+          });
+        });
+    }, 600);
+
+    //Validation bar warnings and info
+    setTimeout(() => {
+      document.querySelectorAll(".sc-messageBar-messages-wrap > div").forEach(function (group) {
+        if (group.dataset.bind.toLowerCase().includes("warning")) {
+          group.querySelectorAll(".sc-messageBar-messageText").forEach(function (item) {
+            console.log("WARNINGS -----> ", item.innerText);
+            addNotificationsEE(item.innerText, ``, `warning`);
+          });
+        }
+        if (group.dataset.bind.toLowerCase().includes("notifications")) {
+          group.querySelectorAll(".sc-messageBar-messageText").forEach(function (item) {
+            console.log("NOTIFICATIONS -----> ", item.innerText);
+            addNotificationsEE(item.innerText, ``, `success`);
+          });
+        }
+      });
+    }, 3000);
   }
 };

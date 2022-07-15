@@ -1,3 +1,4 @@
+/* eslint-disable no-tabs */
 /* eslint-disable max-params */
 /* eslint-disable newline-per-chained-call */
 /* eslint-disable array-element-newline */
@@ -32,6 +33,8 @@ export {
   initTitleBarDesktop,
   replaceIcons,
   initMaterializeIcons,
+  initNotificationsEE,
+  addNotificationsEE,
   initGroupedErrorsEE,
 };
 
@@ -858,7 +861,7 @@ const insertSavebarEE = (storage) => {
     });
 
     //Get all placeholders and renderings
-    ///sitecore/shell/default.aspx?xmlcontrol=DeviceEditor&de=%7BFE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3%7D&id=%7B25818957-9772-41d1-be0e-eee6fb7b4526%7D&vs=1&la=en
+    ///sitecore/shell/default.aspx?xmlcontrol=DeviceEditor&de={FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}&id={25818957-9772-41d1-be0e-eee6fb7b4526}&vs=1&la=en
     document.querySelectorAll("#Renderings table tr td:nth-child(2) b").forEach((item) => {
       console.log(item.innerText);
     });
@@ -904,77 +907,194 @@ const showPublishMenuMore = (event) => {
 };
 
 /**
+ * Init notifications in Experience Editor
+ */
+const initNotificationsEE = () => {
+  let html = `<div class="notifications-container notify-is-right notify-is-bottom" style="--distance:20px;"></div>`;
+  parent.document.querySelector("body").insertAdjacentHTML("beforeend", html);
+  //Event listener
+};
+
+/**
+ * Init notifications in Experience Editor
+ */
+const addNotificationsEE = (title, message, type = "success") => {
+  let html = `<div class="notify notify--type-3 notify--${type} notify--fade notify--fadeIn" style="--gap:10px; transition-duration: 300ms;">
+                  <div class="notify__icon">
+                    <svg height="32" width="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="m19.627 11.72-5.72 5.733-2.2-2.2a1.335 1.335 0 0 0-2.255.381 1.334 1.334 0 0 0 .375 1.5l3.133 3.146a1.333 1.333 0 0 0 1.88 0l6.667-6.667a1.334 1.334 0 1 0-1.88-1.893ZM16 2.667a13.333 13.333 0 1 0 0 26.666 13.333 13.333 0 0 0 0-26.666Zm0 24a10.666 10.666 0 1 1 0-21.333 10.666 10.666 0 0 1 0 21.333Z"></path></svg>
+                  </div>
+                  <div class="notify__close" onclick="closeNotify(event)">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="m8.94 8 4.2-4.193a.67.67 0 0 0-.947-.947L8 7.06l-4.193-4.2a.67.67 0 1 0-.947.947L7.06 8l-4.2 4.193a.667.667 0 0 0 .217 1.093.666.666 0 0 0 .73-.146L8 8.94l4.193 4.2a.665.665 0 0 0 .947 0 .665.665 0 0 0 0-.947L8.94 8Z" fill="currentColor"></path></svg>
+                  </div>
+                  <div class="notify-content">
+                    <div class="notify__title">${title}</div>
+                    <div class="notify__text">${message}</div>
+                  </div>
+                </div>`;
+  parent.document.querySelector("body .notifications-container").insertAdjacentHTML("afterbegin", html);
+};
+
+/**
  * Get Experience Editor Errors
  */
-const initGroupedErrorsEE = () => {
-  let errors = 0;
-  let warnings = 0;
-  let notifications = 0;
-  let textPanel = `<h2>Issues report:</h2><br />`;
-  let scBurgerMenuTitle = document.querySelector(".scBurgerMenuTitle");
-  let editorBar = document.querySelector(".scEditorTabControlsHolder");
-  //Lock button
-  let lockButton = `<button class="scSaveButton t-left t-sm" onclick="unlockPage()" data-tooltip="Unlock this item"><img src="${global.iconLocked}" style="width: 15px;"/></button>`;
-  //Update message bar
-  let errorMessage = `<div class="eeErrors t-right t-sm" onclick="toggleNotificationsPanel()" data-tooltip="Show Notifications"><img src="${global.iconSpinner}" style="width:16px"/> Checking errors...</div>`;
-  editorBar.insertAdjacentHTML("beforeend", errorMessage);
-  //Check errors
-  setTimeout(() => {
-    document.querySelectorAll(".sc-messageBar-messages-wrap > div").forEach(function (group) {
-      if (group.dataset.bind.toLowerCase().includes("errors")) {
-        group.querySelectorAll(".sc-messageBar-messageText").forEach(function (item) {
-          item.innerText != "" ? errors++ : false;
+const initGroupedErrorsEE = (storage) => {
+  if (storage.feature_experimentalui === true) {
+    initNotificationsEE();
+    let errors = 0;
+    let warnings = 0;
+    let notifications = 0;
+    let textPanel = `<h2>Issues report:</h2><br />`;
+    let scBurgerMenuTitle = document.querySelector(".scBurgerMenuTitle");
+    let editorBar = document.querySelector(".scEditorTabControlsHolder");
+    //Lock button
+    let lockButton = `<button class="scSaveButton t-left t-sm" onclick="unlockPage()" data-tooltip="Unlock this item"><img src="${global.iconLocked}" style="width: 15px;"/></button>`;
+    //Update message bar
+    let errorMessage = `<div class="eeErrors t-right t-sm" onclick="toggleNotificationsPanel()" data-tooltip="Show Notifications"><img src="${global.iconSpinner}" style="width:16px"/> Checking errors...</div>`;
+    editorBar.insertAdjacentHTML("beforeend", errorMessage);
+    //Check errors
+    setTimeout(() => {
+      document.querySelectorAll(".sc-messageBar-messages-wrap > div").forEach(function (group) {
+        if (group.dataset.bind.toLowerCase().includes("errors")) {
+          group.querySelectorAll(".sc-messageBar-messageText").forEach(function (item) {
+            item.innerText != "" ? errors++ : false;
 
-          let parser = new DOMParser();
-          let errorDom = parser.parseFromString(item.innerHTML, "text/html");
-          let errorId = errorDom.querySelector(".OptionTitle") ? errorDom.querySelector(".OptionTitle").id : false;
-          errorId ? errorDom.querySelector(".OptionTitle").remove() : false;
-          textPanel += `🚫 Error: ${errorDom.innerHTML}`;
-          textPanel += ` - <a href="#" class="OptionTitle" onclick="showError('${errorId}')">Show in page</a><hr />`;
-          //Add click to show the error
-          //document.querySelector("[id='0B0C4532-710E-43EC-A87B-82969AD5DB08_2BC71ADC-50DA-4C08-AAF2-D6E10C4B4016_0']").click()
-        });
+            let parser = new DOMParser();
+            let errorDom = parser.parseFromString(item.innerHTML, "text/html");
+            let errorId = errorDom.querySelector(".OptionTitle") ? errorDom.querySelector(".OptionTitle").id : false;
+            errorId ? errorDom.querySelector(".OptionTitle").remove() : false;
+            textPanel += `🚫 Error: ${errorDom.innerHTML}`;
+            textPanel += ` - <a href="#" class="OptionTitle" onclick="showError('${errorId}')">Show in page</a><hr />`;
+            //Add click to show the error
+            //document.querySelector("[id='0B0C4532-710E-43EC-A87B-82969AD5DB08_2BC71ADC-50DA-4C08-AAF2-D6E10C4B4016_0']").click()
+          });
+        }
+        if (group.dataset.bind.toLowerCase().includes("warning")) {
+          group.querySelectorAll(".sc-messageBar-messageText").forEach(function (item) {
+            item.innerText != "" ? warnings++ : false;
+            textPanel += `⚠️ Warning: ${item.innerHTML}<hr />`;
+
+            if (item.innerText.toLowerCase().includes("has locked this item")) {
+              scBurgerMenuTitle.insertAdjacentHTML("beforebegin", lockButton);
+            }
+          });
+        }
+        if (group.dataset.bind.toLowerCase().includes("notifications")) {
+          group.querySelectorAll(".sc-messageBar-messageText").forEach(function (item) {
+            item.innerText != "" ? notifications++ : false;
+            textPanel += `💬 Notification: ${item.innerHTML}<hr />`;
+          });
+        }
+      });
+
+      //Update errorBar
+      let eeErrors = document.querySelector(".eeErrors");
+      let eeErrorsMessage = ``;
+      if (errors == 0 && warnings == 0 && notifications == 0) {
+        eeErrorsMessage = `✅ <span class="success">All good</span>`;
+        setTimeout(() => {
+          eeErrors.setAttribute("style", "opacity:0;");
+        }, 1000);
       }
-      if (group.dataset.bind.toLowerCase().includes("warning")) {
-        group.querySelectorAll(".sc-messageBar-messageText").forEach(function (item) {
-          item.innerText != "" ? warnings++ : false;
-          textPanel += `⚠️ Warning: ${item.innerHTML}<hr />`;
-          if (item.innerText.toLowerCase().includes("has locked this item")) {
-            scBurgerMenuTitle.insertAdjacentHTML("beforebegin", lockButton);
-          }
-        });
-      }
-      if (group.dataset.bind.toLowerCase().includes("notifications")) {
-        group.querySelectorAll(".sc-messageBar-messageText").forEach(function (item) {
-          item.innerText != "" ? notifications++ : false;
-          textPanel += `💬 Notification: ${item.innerHTML}<hr />`;
-        });
-      }
-    });
+      errors > 0 ? (eeErrorsMessage += `🚫 <span class="error">${errors}</span> `) : false;
+      warnings > 0 ? (eeErrorsMessage += `⚠️ <span class="warning">${warnings}</span> `) : false;
+      notifications > 0 ? (eeErrorsMessage += `💬 <span class="notification">${notifications}</span> `) : false;
+      eeErrors.innerHTML = eeErrorsMessage;
 
-    //Update errorBar
-    let eeErrors = document.querySelector(".eeErrors");
-    let eeErrorsMessage = ``;
-    if (errors == 0 && warnings == 0 && notifications == 0) {
-      eeErrorsMessage = `✅ <span class="success">All good</span>`;
-      setTimeout(() => {
-        eeErrors.setAttribute("style", "opacity:0;");
-      }, 1000);
-    }
-    errors > 0 ? (eeErrorsMessage += `🚫 <span class="error">${errors}</span> `) : false;
-    warnings > 0 ? (eeErrorsMessage += `⚠️ <span class="warning">${warnings}</span> `) : false;
-    notifications > 0 ? (eeErrorsMessage += `💬 <span class="notification">${notifications}</span> `) : false;
-    eeErrors.innerHTML = eeErrorsMessage;
-
-    //Update panel
-    let iframeErrors = parent.document.querySelector("#scErrorsIframe");
-    iframeErrors.innerHTML = textPanel;
-  }, 5000);
-
+      //Update panel
+      let iframeErrors = parent.document.querySelector("#scErrorsIframe");
+      iframeErrors.innerHTML = textPanel;
+    }, 5000);
+  }
   //TODO: also include page validation from /sitecore/shell/~/xaml/Sitecore.Shell.Applications.ContentEditor.Dialogs.ValidationResult.aspx?hdl=1E98663795764D71991F6D2EAD33AB8E
   // document.querySelectorAll(".scValidatorResult").forEach(function (e) {
   //   if (e.innerText != "OK") {
   //     console.log(e.innerText);
   //   }
   // });
+  // document.querySelectorAll(".scListControl tr").forEach(function (line) {
+  //   let total = line.querySelectorAll("td").length;
+  //   if (total == 3) {
+  //     let errorType = line.querySelectorAll("td")[0].querySelector("img").src;
+  //     if (errorType.include("yellow.png") || errorType.include("red.png")) {
+  //       console.log(line.querySelector("td.scValidatorTitle").innerText);
+  //     }
+  //   }
+  // });
+  let urlParams = new URLSearchParams(parent.window.location.search);
+  let sc_token = document.getElementsByName("__RequestVerificationToken")[0].value;
+  let sc_itemid = urlParams.get("sc_itemid");
+  let sc_language = parent.document.querySelector("input#scLanguage").value;
+  let sc_version = urlParams.get("sc_version");
+  //let scDeviceID = parent.document.querySelector("input#scDeviceID").value;
+  // fetch("/-/speak/request/v1/expeditor/ExperienceEditor.Proofing.Validation", {
+  //   headers: {
+  //     accept: "*/*",
+  //     "accept-language": "fr,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,en-GB-oxendict;q=0.6",
+  //     "cache-control": "no-cache",
+  //     "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+  //     pragma: "no-cache",
+  //     "sec-ch-ua": '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
+  //     "sec-ch-ua-mobile": "?0",
+  //     "sec-ch-ua-platform": '"macOS"',
+  //     "sec-fetch-dest": "empty",
+  //     "sec-fetch-mode": "cors",
+  //     "sec-fetch-site": "same-origin",
+  //     "x-requested-with": "XMLHttpRequest",
+  //   },
+  //   referrer: "https://dev-weu-sitecore-01-cm.6952f9b6f3ab41099033.westeurope.aksapp.io/sitecore/",
+  //   referrerPolicy: "strict-origin-when-cross-origin",
+  //   body: "__RequestVerificationToken=" + sc_token + '&data={"language":"' + sc_language + '","version":' + sc_version + ',"itemId":"' + sc_itemid + '","database":"master","scValidatorsKey":"VK_SC_PAGEEDITOR","scFieldValues":{}}',
+  //   method: "POST",
+  //   mode: "cors",
+  //   credentials: "include",
+  // })
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     console.log(data.responseValue.value);
+
+  //     return fetch(data.responseValue.value);
+  //   })
+  //   .then((response) => response.text())
+  //   .then((data) => {
+  //     console.log(data);
+  //   });
+  fetch("/-/speak/request/v1/expeditor/ExperienceEditor.FieldsValidation.ValidateFields", {
+    headers: {
+      accept: "*/*",
+      "accept-language": "fr,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,en-GB-oxendict;q=0.6",
+      "cache-control": "no-cache",
+      "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+      pragma: "no-cache",
+      "sec-ch-ua": '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": '"macOS"',
+      "sec-fetch-dest": "empty",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-site": "same-origin",
+      "x-requested-with": "XMLHttpRequest",
+    },
+    referrer: "https://dev-weu-sitecore-01-cm.6952f9b6f3ab41099033.westeurope.aksapp.io/sitecore/",
+    referrerPolicy: "strict-origin-when-cross-origin",
+    body:
+      "__RequestVerificationToken=" +
+      sc_token +
+      "&data={%22language%22:%22en%22,%22version%22:1,%22isFallback%22:false,%22isHome%22:false,%22itemId%22:%22" +
+      sc_itemid +
+      "%22,%22database%22:%22master%22,%22deviceId%22:%22%257bFE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3%257d%22,%22isLocked%22:false,%22isLockedByCurrentUser%22:false,%22canLock%22:true,%22canUnlock%22:true,%22ribbonUrl%22:%22%2F%3Fsc_mode=edit%26sc_itemid={ce1264e5-9bab-4e9b-90a8-a837e6eebb70}%26sc_lang=en%26sc_site=uk%26sc_ee_fb=false%22,%22siteName%22:%22UK%22,%22isReadOnly%22:false,%22webEditMode%22:%22edit%22,%22requireLockBeforeEdit%22:false,%22virtualFolder%22:%22%2F%22,%22isInFinalWorkFlow%22:true,%22canEdit%22:true,%22canReadLanguage%22:true,%22canWriteLanguage%22:true,%22isEditAllVersionsAllowed%22:true,%22isEditAllVersionsTicked%22:false,%22canSelectVersion%22:true,%22latestVersionResponse%22:%22%22,%22itemNotifications%22:%5B%5D,%22argument%22:%22%22,%22value%22:%22{0930CAE5-BB35-4B57-B9B4-7D8E8CD1A8F1}%22,%22scValidatorsKey%22:%22VK_SC_PAGEEDITOR%22,%22scFieldValues%22:{%22fld_6C7114B9E6FE4105911BF28DF3B7EFD8_93A6CABCB75C46D09F652BF88F75A8B3_en_1_f057a5abdcce437cb327f3772522c84b_118147%22:%22%26lt%3Blink+text=%5C%22%5C%22+anchor=%5C%22%5C%22+linktype=%5C%22internal%5C%22+class=%5C%22%5C%22+title=%5C%22%5C%22++querystring=%5C%22%5C%22+id=%5C%22{4517AF35-B43B-4B3C-899B-B75CAE76AA98}%5C%22+%2F%26gt%3B%22,%22fld_FD1A89A8BA3342139FB05B193959493B_502EBE57BD42415BBB2015F3CDA39D99_en_1_9dd045e420b4480da0be56c30d9ecd71_118003%22:%22%22,%22fld_FD1A89A8BA3342139FB05B193959493B_20FAAE4251B8475E8CE8991EB58816D9_en_1_9dd045e420b4480da0be56c30d9ecd71_118006%22:%22%22,%22fld_CE1264E59BAB4E9B90A8A837E6EEBB70_9C38DD484AF74345879F41C2503E4BEF_en_1_77033051b2e14fd0af9c03147083f35e_117962%22:%2220220712Z%22,%22fld_CE1264E59BAB4E9B90A8A837E6EEBB70_FE9A086C42BC42D0AEB43793DA82827E_en_1_77033051b2e14fd0af9c03147083f35e_117961%22:%22%22,%22fld_7CF5C8E897D844EEAABD118F27103358_AE9E9A58F6B349D7B4AAFF12A5BA5A55_en_1_395edd63f9454062980666a8c9303e9e_118009%22:%22%26lt%3Bimage+source=%5C%22https:%2F%2Fcdn.royalcanin-weshare-online.io%2Fp1a6oW4BBKJuub5qRl_4%2Fv2%2Fcan-you-cut-the-hair-of-a-cat%5C%22+updated=%5C%222020-02-13T08:29:12Z%5C%22+width=%5C%225184%5C%22+height=%5C%223456%5C%22+%2F%26gt%3B%22,%22fld_E3386DD72E44422CBA5781A35D6F6EBE_47668513C20B440DBABA492ABD779F27_en_1_848cd52bf9ed4c399077631c78d73376_118012%22:%22%22,%22fld_087D48B9439C4CACA179E2D9950D0F25_47668513C20B440DBABA492ABD779F27_en_1_4269f0d432864364a684b311a219f1da_118018%22:%22%22,%22fld_706787562ACF434290DE827C254AF6A7_56DC196DADBB476CBCC6630DC51940C6_en_1_c0f8220c65d34b57bad6c8c96b23e4df_118022%22:%22%22,%22fld_706787562ACF434290DE827C254AF6A7_88336C5CDD5042A6AFDC7DE763F9704F_en_1_c0f8220c65d34b57bad6c8c96b23e4df_118021%22:%22%22,%22fld_706787562ACF434290DE827C254AF6A7_A6F460C454A44272A77FC44AF46F1535_en_1_c0f8220c65d34b57bad6c8c96b23e4df_118020%22:%22%22,%22fld_9DC71F6DCCB04C829430CB285C274552_56DC196DADBB476CBCC6630DC51940C6_en_1_7d1a2d572f0d4b988f82edd72f3d2eb4_118026%22:%22%22,%22fld_9DC71F6DCCB04C829430CB285C274552_88336C5CDD5042A6AFDC7DE763F9704F_en_1_7d1a2d572f0d4b988f82edd72f3d2eb4_118025%22:%22%22,%22fld_9DC71F6DCCB04C829430CB285C274552_A6F460C454A44272A77FC44AF46F1535_en_1_7d1a2d572f0d4b988f82edd72f3d2eb4_118024%22:%22%22,%22fld_0D9E7B07253A4A30BFF006BC0B5383B3_47668513C20B440DBABA492ABD779F27_en_1_fc27342422ec4049aa616f8ac477c4ab_118029%22:%22%22,%22fld_9113DD76177D49B29A3ABF990D6A3F7F_47668513C20B440DBABA492ABD779F27_en_1_18090ab087a647788a9fa3420a1d70d7_118033%22:%22%22,%22fld_8714BA6697A547C59AB3FF4B4D189646_B1F90E4C952E4FF89C4E1D797B7B939E_en_1_c16dfffe925243f594f27adf1eaa75c2_118036%22:%22%22,%22fld_8714BA6697A547C59AB3FF4B4D189646_8F0F7AB6D9104AB8AE1675602DF589AD_en_1_c16dfffe925243f594f27adf1eaa75c2_118035%22:%22%22,%22fld_684D0EE9FADA4559B88B6EBA25DAFDA9_47668513C20B440DBABA492ABD779F27_en_1_77014d9c8f764deb89a2c77c0413c7f0_118040%22:%22%22,%22fld_F06D2A351046426F983A68DD612ABAB2_CFBAF02C26BA4545ADD5973BB6A32AFC_en_1_eb25230a8ee140eca59d78629791f9a9_118046%22:%22%22,%22fld_A6436BFE2B9A4F10ABCB6EB89909D0B1_D9D011F197CC4E0B8BB398C842DC0CCA_en_1_ab8fa8ac0c974de0bf7fe4b2a5f1d9b3_118047%22:%22Sources%22,%22fld_1321C595A0D349AB94DC2E08F6933F71_84B8DDC22C534B0DB144537E721A8A61_en_1_cb8f06356add4fe481197383282edb2c_118049%22:%22%22,%22fld_1321C595A0D349AB94DC2E08F6933F71_4C898478502B4A10A185F88AC4EB6B43_en_1_cb8f06356add4fe481197383282edb2c_118048%22:%22%22}}",
+    method: "POST",
+    mode: "cors",
+    credentials: "include",
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data.responseValue.value);
+      data.responseValue.value.forEach((item) => {
+        console.log(item.Text);
+        addNotificationsEE(
+          `${item.Text}`,
+          `<a href="/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#${item.DataSourceId}_${sc_language.toLowerCase()}_${sc_version}" class="OptionTitle" target="_blank" style="color:rgba(255, 255, 255, 0.8)">Fix this error</a>`,
+          "error"
+        );
+      });
+    });
 };

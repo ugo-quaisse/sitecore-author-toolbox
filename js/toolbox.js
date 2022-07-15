@@ -297,7 +297,7 @@ chrome.storage.sync.get((storage) => {
       initPreviewButtonsEE(storage);
       storeCurrentPageEE();
       insertSavebarEE(storage);
-      initGroupedErrorsEE();
+      initGroupedErrorsEE(storage);
     } else if (global.isPreviewMode && global.isEEPreview) {
       document.querySelector("#ribbonPreLoadingIndicator").remove();
       document.querySelector("#scWebEditRibbon").remove();

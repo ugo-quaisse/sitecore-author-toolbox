@@ -1004,3 +1004,16 @@ function toggleNotificationsPanel() {
   iframeErrors ? iframeErrors.classList.toggle("open") : false;
   iframeErrors.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
 }
+
+/**
+ * Show notifications messages Panel in EE
+ */
+function closeNotify(event) {
+  console.log("FADE OUT", event.path[1]);
+  event.path[1].classList.remove("notify--fadeIn");
+  setTimeout(() => {
+    console.log("REMOVE FROM DOM", event.path[2]);
+    event.path[1].remove();
+    //Check if other visible notification and move them down
+  }, 1000);
+}

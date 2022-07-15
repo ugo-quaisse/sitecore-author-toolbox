@@ -553,7 +553,7 @@ const initGroupedErrorsEE = (storage) => {
             //let text = rendering ? `- <a onclick='scrollToDatasourceEE("${item.DataSourceId}")' style="color:rgba(255, 255, 255, 0.8); cursor:pointer">Show this error</a>` : ``;
             addNotificationsEE(
               `${item.Text}`,
-              `<a href="/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#${item.DataSourceId}_${sc_language.toLowerCase()}_${sc_version}" class="OptionTitle" target="_blank">Fix this error</a>`,
+              `<a href="/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#${item.DataSourceId}_${sc_language.toLowerCase()}_${sc_version}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">Fix this error</a>`,
               scErrorType
             );
           });

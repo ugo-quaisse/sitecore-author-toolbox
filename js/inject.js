@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable require-jsdoc */
 /* eslint-disable default-param-last */
 /* eslint-disable consistent-return */
@@ -1007,8 +1008,17 @@ function closeNotify(event) {
   event.path[1].classList.remove("notify--fadeIn");
   setTimeout(() => {
     event.path[1].remove();
-    //Check if other visible notification and move them down
   }, 500);
+}
+
+function closeAllNotify() {
+  document.querySelectorAll(".notify").forEach(function (item) {
+    item.classList.remove("notify--fadeIn");
+    setTimeout(() => {
+      item.remove();
+    }, 500);
+  });
+  document.querySelector(".notify-clearall").remove();
 }
 
 /**
@@ -1022,10 +1032,8 @@ function scrollToDatasourceEE(id) {
 }
 
 /**
- * Scroll to a datasource in experience editor, from a notify message
+ * Open validation window fron EE
  */
 function openValidationEE() {
-  console.log(parent.document.querySelector("[data-sc-id*='ValidationRibbonButton' i]"));
-  console.log(document.querySelector("[data-sc-id*='ValidationRibbonButton' i]"));
   parent.document.querySelector("[data-sc-id*='ValidationRibbonButton' i]").click();
 }

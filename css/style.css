@@ -300,6 +300,10 @@ body.satExtension #scLightbox > .scLightboxContent {
   z-index: 1000;
 }
 
+body.satExtension .scWorkBoxData {
+  color: var(--text);
+}
+
 body.satExtension #scLightbox > .scLightboxContent > img {
   max-width: 80vw;
   max-height: 80vh;

@@ -153,6 +153,7 @@ body.satEEExperimentalUi .scChromeDropDown {
 }
 body.satEEExperimentalUi .scChromeDropDown img {
   top: 11px;
+  position: initial;
 }
 body.satEEExperimentalUi .scChromeDropDown span {
   margin-left: 25px !important;

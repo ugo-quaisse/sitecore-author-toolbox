@@ -859,6 +859,10 @@ export const jsonIcons = JSON.parse(
   {
     "search": "generic",
     "icon": "maps::directions"
+  },
+  {
+    "search": "bullet_square_glass_blue",
+    "icon": "maps::directions"
   }
 ]`
 );

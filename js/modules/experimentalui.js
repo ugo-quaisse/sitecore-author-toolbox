@@ -619,10 +619,7 @@ const initEventListeners = () => {
 
     //Quick Info panel
     if (document.querySelector("#scInfoButton")) {
-      console.log(event.path[0].className);
       if (event.path[0].className != "itemDetail" && event.path[0].className != "open") {
-        console.log("click", event.target.id, event.path[1].id, event.target.id, event.path[0].className);
-        console.log(scPanel);
         event.target.id == "scInfoButton" || event.path[1].id == "scInfoButton" || event.target.id == "scPanel" || event.path[0].className == "content" ? scPanel.classList.toggle("open") : scPanel.classList.remove("open");
       }
     }
@@ -854,9 +851,9 @@ const insertSavebarEE = (storage) => {
 
     //Get all placeholders and renderings
     ///sitecore/shell/default.aspx?xmlcontrol=DeviceEditor&de={FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}&id={25818957-9772-41d1-be0e-eee6fb7b4526}&vs=1&la=en
-    document.querySelectorAll("#Renderings table tr td:nth-child(2) b").forEach((item) => {
-      console.log(item.innerText);
-    });
+    // document.querySelectorAll("#Renderings table tr td:nth-child(2) b").forEach((item) => {
+    //   console.log(item.innerText);
+    // });
   }
 };
 

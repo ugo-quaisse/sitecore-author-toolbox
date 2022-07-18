@@ -396,7 +396,6 @@ const initRenderingSearchBox = (storage) => {
         var result = tab.querySelectorAll(".hideTab").length;
         // eslint-disable-next-line newline-per-chained-call
         var tabNumber = tab.getAttribute("id").split("_").pop();
-        console.log(tabNumber, result);
         if (result === 0) {
           document.querySelector(`#Tabs_tab_${tabNumber}`).setAttribute("style", "opacity:0.2");
         } else {
@@ -604,12 +603,11 @@ const initGroupedErrorsEE = (storage) => {
             let doc = new DOMParser().parseFromString(item.innerHTML, "text/html");
             let count = 0;
             doc.querySelectorAll("a").forEach(function (link) {
-              console.log(link);
               link.setAttribute(`onclick`, `document.querySelector('#scWebEditRibbon').contentDocument.querySelectorAll("[data-bind*='notifications' i] .sc-messageBar-messageText a")[${count}].click()`);
               link.setAttribute("style", "opacity:0.8; padding: 0px 10px 0px 0px;");
               count++;
             });
-            let docTitle = new DOMParser().parseFromString(item.innerHTML, "text/html");
+            let docTitle = item.innerHTML ? new DOMParser().parseFromString(item.innerHTML, "text/html") : ``;
             docTitle.querySelectorAll("a").forEach(function (link) {
               link.remove();
             });

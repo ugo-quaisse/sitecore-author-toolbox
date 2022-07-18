@@ -369,7 +369,6 @@ const changeTitleWindow = (storage) => {
  */
 const initCheckboxes = (storage) => {
   storage.feature_contenteditor == undefined ? (storage.feature_contenteditor = true) : false;
-  console.log("Checkboxes");
   if (storage.feature_contenteditor) {
     loadCssFile("css/checkbox.min.css");
     for (var field of document.querySelectorAll("*:not(#Languages) > input[type=checkbox]")) {

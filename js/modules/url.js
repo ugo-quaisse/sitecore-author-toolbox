@@ -79,7 +79,6 @@ const getSiteUrl = (storage, path, language) => {
     for (domain in storage.domain_manager) {
       if (window.location.origin == domain) {
         liveUrl = decodeURI(storage.domain_manager[domain]);
-        // console.log("**Domain Manager**", liveUrl);
         //Fill scSite object
         scSite.path = domain.toLowerCase();
         scSite.url = liveUrl.toLowerCase();
@@ -236,7 +235,7 @@ const initLiveUrl = (storage) => {
         }
 
         //Insert link into Quickinfo table
-        liveUrlQuickInfo(ScSite.url);
+        liveUrlQuickInfo(urlInfo.liveUrl);
 
         /**
          * Live status
@@ -245,7 +244,7 @@ const initLiveUrl = (storage) => {
           chrome.runtime.sendMessage(
             {
               greeting: "get_pagestatus",
-              url: ScSite.url,
+              url: urlInfo.liveUrl,
               source: null,
               experimental: true,
             },
@@ -323,7 +322,6 @@ const checkUrlStatus = (status, source = null, experimental = false) => {
     liveUrlStatus = source.querySelector(".liveUrlStatus");
     liveUrlLoader = source.querySelector(".liveUrlLoader");
   }
-
   //Show badge
   document.querySelector(".liveUrlBadge") ? document.querySelector(".liveUrlBadge").classList.remove("hide") : false;
   //Check response

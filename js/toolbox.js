@@ -263,9 +263,10 @@ chrome.storage.sync.get((storage) => {
       initAppName(storage, "Select Rendering");
       initRenderingSearchBox(storage);
       initMaterializeIcons(storage);
-    } else if (global.isXmlControl && !global.isRichText) {
+    } else if (global.isXmlControl && !global.isRichText && !global.isWorkbox) {
       log("**** XML Control (Window) ****", "orange");
       initCheckboxes(storage);
+      initTabSections(storage);
       initDateTimeField(storage);
       initPasswordField(storage);
       initMaterializeIcons(storage);

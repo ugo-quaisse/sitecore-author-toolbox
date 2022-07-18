@@ -117,7 +117,6 @@ const exportSites = () => {
   if (error) {
     alert("You have some errors...");
   } else {
-    console.log(JSON.stringify(json));
     let result = JSON.stringify(json, null, 2);
     let today = new Date().toISOString().slice(0, 10);
     // Save as file

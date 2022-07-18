@@ -78,7 +78,6 @@ const initTabSections = (storage) => {
     } else if (scEditorHeader) {
       scEditorPanel.insertAdjacentHTML("afterend", scEditorTabs);
     } else if (scEditorPanel) {
-      console.log(scEditorTabs);
       scEditorPanel.insertAdjacentHTML("afterbegin", scEditorTabs);
     }
     //If there is no active tab

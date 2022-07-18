@@ -932,7 +932,6 @@ function addPage() {
  * Show error in EE
  */
 function showError(id) {
-  console.log(id);
   let ribbon = parent.document.querySelector("#scWebEditRibbon");
   ribbon.contentDocument.querySelector("[id='" + id + "']").click();
 }

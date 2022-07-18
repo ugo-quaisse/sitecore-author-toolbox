@@ -88,7 +88,6 @@ document.querySelector("#settings").onclick = function () {
   document.querySelector(".importSitesVisible").addEventListener("click", chooseJson);
   //Get status of advanced mode
   let advancedMode = localStorage.getItem("scAdvancedMode");
-  console.log(advancedMode);
   advancedMode == "true" || null ? document.querySelector(".advanced_mode").click() : document.querySelector(".basic_mode").click();
   //Generating list of sites
   chrome.storage.sync.get(["site_manager"], (storage) => {

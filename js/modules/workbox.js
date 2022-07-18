@@ -12,7 +12,7 @@ export { checkWorkbox };
  */
 const checkWorkbox = (storage) => {
   storage.feature_workbox = initStorageFeature(storage.feature_workbox, false);
-  if (storage.feature_workbox && !storage.feature_experimentalui) {
+  if (storage.feature_workbox) {
     var wfNotification = 0;
     var wfChecksum = "#checksum#";
 
@@ -76,11 +76,11 @@ const checkWorkbox = (storage) => {
             }
           });
 
-          //Show badge menu
-          let scNotificationBell = document.querySelector("#scNotificationBell");
+          //Show badge menu && !storage.feature_experimentalui
+          let scNotificationBell = document.querySelector("#satWorkboxNotifications");
           if (scNotificationBell && wfNotification > 0) {
-            html = '<span class="wbNotificationMenu"></span>';
-            scNotificationBell.setAttribute("title", `You have ${wfNotification} notification${setPlural(wfNotification)} in your workbox`);
+            html = `<span class="wbNotificationMenu"></span>`;
+            scNotificationBell.dataset.tooltip = `${wfNotification} notification${setPlural(wfNotification)} in your workbox`;
             scNotificationBell.insertAdjacentHTML("afterend", html);
           }
         }

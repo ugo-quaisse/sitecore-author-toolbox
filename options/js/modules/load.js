@@ -26,10 +26,11 @@ const getFeatures = () => {
     toggleFeature(storage.feature_rtl, "#feature_rtl", true);
     toggleFeature(storage.feature_charscount, "#feature_charscount", true);
     toggleFeature(storage.feature_autoexpand, "#feature_autoexpand", true);
-    toggleFeature(storage.feature_quickinfoenhancement, "#feature_quickinfoenhancement", true);
+    toggleFeature(storage.feature_quickinfoenhancement, "#feature_quickinfoenhancement", false);
     toggleFeature(storage.feature_translatemode, "#feature_translatemode", false);
     toggleFeature(storage.feature_contenteditor, "#feature_contenteditor", true);
     toggleFeature(storage.feature_experienceeditor, "#feature_experienceeditor", true);
+    toggleFeature(storage.feature_eenotify, "#feature_eenotify", true);
     toggleFeature(storage.feature_cetabs, "#feature_cetabs", false);
     toggleFeature(storage.feature_rtecolor, "#feature_rtecolor", true);
     toggleFeature(storage.feature_messagebar, "#feature_messagebar", false);
@@ -63,7 +64,6 @@ const parseJsonSites = (json) => {
           key == "languageEmbedding" ? (embedding = value) : false;
           key == "useDisplayName" ? (display = value) : false;
         }
-        console.log(site, display);
         //Default values
         lang = lang == undefined ? "" : lang;
         embedding = embedding == undefined ? true : embedding;

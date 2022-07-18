@@ -248,10 +248,6 @@ body.satExperimentalUi.satDark .scMenu {
   background-color: var(--black2) !important;
   color: var(--white);
 }
-scMenu t-right t-sm body.satExperimentalUi.satDark .scEditorTabControlsHolder {
-  margin: 11px 13px;
-  height: auto;
-}
 
 body.satExperimentalUi.satDark .EditorTabsEE .scEditorTabControlsHolder {
   margin: 0px;

@@ -114,10 +114,10 @@ const initWorkboxMenu = (storage, type = "CE") => {
       //prettier-ignore
       clickEvent = `javascript:scSitecore.prototype.showModalDialog('${global.workboxPage.replace("&sc_bw=1", "&sc_bw=0")}', '', 'center:yes; help:no; resizable:yes; scroll:yes; status:no; dialogMinHeight:200; dialogMinWidth:300; dialogWidth:1100; dialogHeight:700; header:Workbox', null, null); false`;
     } else {
-      clickEvent = document.querySelector("[data-sc-id='WorkboxRibbonButton']") ? `openWorkboxEE()` : `parent.window.location.href='/sitecore/shell/Applications/Workbox.aspx?sc_bw=1'`;
+      clickEvent = `window.location.href='/sitecore/shell/Applications/Workbox.aspx?sc_bw=1'`;
     }
     //prettier-ignore
-    let htmlIcon = `<span id="satWorkboxNotifications" class="t-bottom t-sm" data-tooltip="Workbox notifications"><img loading="lazy" id="scNotificationBell" onclick="${clickEvent}" src="${global.iconBell}" class="scIconMenu" accesskey="w" /></span>`;
+    let htmlIcon = `<span class="t-bottom t-sm" data-tooltip="Workbox notifications"><img loading="lazy" id="scNotificationBell" onclick="${clickEvent}" src="${global.iconBell}" class="scIconMenu" accesskey="w" /></span>`;
     menu ? menu.insertAdjacentHTML("afterbegin", htmlIcon) : false;
   }
 };

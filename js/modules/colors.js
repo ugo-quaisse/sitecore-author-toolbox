@@ -130,7 +130,9 @@ const hexToRgb = (hex) => {
  * Convert color to filters
  */
 const getFiltersCss = (hex) => {
+  console.log(hex);
   var color = hexToRgb(hex);
+  console.log(color);
   var targetColor = color.split(",");
   targetColor = [
     parseInt(targetColor[0]), // [R]

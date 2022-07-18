@@ -13,8 +13,10 @@ const initPublishingStatus = (storage) => {
   var target = document.querySelector(".sc-progressindicatorpanel");
   var observer = new MutationObserver(function () {
     let status = document.querySelectorAll(`span[title^="Status"]`)[1];
+    console.log(status);
     if (storage.feature_contenteditor == true && status) {
       //Add spinner
+      console.log(status.innerHTML);
       status.innerText === "In progress" ? (status.innerHTML = `In Progress <img src='${global.urlLoaderiFrame}' width='20px'/>`) : false;
     }
   });

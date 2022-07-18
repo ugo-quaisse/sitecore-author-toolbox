@@ -15790,6 +15790,7 @@ myEditor = CodeMirror.fromTextArea(textarea, {
   theme: cmTheme,
 });
 
+console.log("go");
 myEditor.refresh();
 
 var pending;

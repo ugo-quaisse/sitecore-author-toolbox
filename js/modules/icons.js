@@ -81,6 +81,10 @@ export const jsonIcons = JSON.parse(
     "icon": "editor::monetization_on"
   },
   {
+    "search": "pie",
+    "icon": "editor::pie_chart"
+  },
+  {
     "search": "flag_checkered.png",
     "icon": "content::flag"
   },
@@ -91,10 +95,6 @@ export const jsonIcons = JSON.parse(
   {
     "search": "gear",
     "icon": "action::settings"
-  },
-  {
-    "search": "dropdown",
-    "icon": "navigation::chevron_bottom"
   },
   {
     "search": "menu",
@@ -353,34 +353,6 @@ export const jsonIcons = JSON.parse(
     "icon": "file::folder"
   },
   {
-    "search": "folder2_",
-    "icon": "file::folder"
-  },
-  {
-    "search": "folders2",
-    "icon": "file::folder"
-  },
-  {
-    "search": "size",
-    "icon": "action::aspect_ratio"
-  },
-  {
-    "search": "sizes",
-    "icon": "image::collections"
-  },
-  {
-    "search": "flag",
-    "icon": "content::flag"
-  },
-  {
-    "search": "dog",
-    "icon": "action::pets"
-  },
-  {
-    "search": "cat",
-    "icon": "action::pets"
-  },
-  {
     "search": "document.png",
     "icon": "action::description"
   },
@@ -407,6 +379,10 @@ export const jsonIcons = JSON.parse(
   {
     "search": "clipboard_check",
     "icon": "av::web_asset"
+  },
+  {
+    "search": "sizes",
+    "icon": "image::collections"
   },
   {
     "search": "document_chart",
@@ -815,54 +791,6 @@ export const jsonIcons = JSON.parse(
   {
     "search": "header",
     "icon": "action::view_headline"
-  },
-  {
-    "search": "slideshow",
-    "icon": "image::slideshow"
-  },
-  {
-    "search": "paragraph",
-    "icon": "editor::short_text"
-  },
-  {
-    "search": "indent_increase",
-    "icon": "editor::format_indent_increase"
-  },
-  {
-    "search": "indent_decrease",
-    "icon": "editor::format_indent_decrease"
-  },
-  {
-    "search": "file",
-    "icon": "editor::insert_drive_file"
-  },
-  {
-    "search": "quotation",
-    "icon": "editor::format_quote"
-  },
-  {
-    "search": "quote",
-    "icon": "editor::format_quote"
-  },
-  {
-    "search": "piece",
-    "icon": "action::extension"
-  },
-  {
-    "search": "pie",
-    "icon": "editor::pie_chart"
-  },
-  {
-    "search": "routes",
-    "icon": "maps::directions"
-  },
-  {
-    "search": "generic",
-    "icon": "maps::directions"
-  },
-  {
-    "search": "bullet_square_glass_blue",
-    "icon": "maps::directions"
   }
 ]`
 );

@@ -165,25 +165,25 @@ const addSite = (domain, path, cd, lang = "", embedding = true, displayName = tr
     let html = `
     <div class="site" id="site_${countSites}">
         <div class="cm_url">
-            <label for="sitePath">Site path in Sitecore</label>
+            <label for="sitePath">Sitecore site path</label>
             <input id="sitePath" name="key" type="text" placeholder="e.g /sitecore/content/home" value="${decodeURI(path)}">
         </div>
         <div class="arrow">➝</div>
         <div class="cd_url">
-            <label for="siteUrl">Site URL (CD or Edge)</label>
+            <label for="siteUrl">Site URL</label>
             <input id="siteUrl" name="value" type="url" placeholder="e.g https://..." pattern="https?://.*" value="${decodeURI(cd)}"> 
         </div>
-        <div class="lang_url" style="${showAdvanced}" title="Iif empty, applies to all languages. Enter if you want to use this URL for a specific language.">
-            <label for="langUrl">Language ℹ️</label>
+        <div class="lang_url" style="${showAdvanced}" title="Whether or not you want to bind this URL to a specific language version. (if empty, applies to all languages)">
+            <label for="langUrl">Language</label>
             <input id="langUrl" name="lang" type="url" placeholder="e.g fr-FR" value="${decodeURI(lang)}"> 
         </div>
-        <div class="embedding_url" style="${showAdvanced}" title="Check if you want to add language code in the URL">
-            <label for="langUrl">Embed ℹ️</label>
+        <div class="embedding_url" style="${showAdvanced}" title="Whether or not you want to add language code in the URL">
+            <label for="langUrl">Embedding</label>
             <input id="embeddingUrl_${countSites}" name="embedding" class="scCheckbox" type="checkbox" ${languageEmbedding} />
             <label for="embeddingUrl_${countSites}" class="scLabel"></label>
         </div>
-        <div class="displayName_url" style="${showAdvanced}" title="If you want to use Display Name instead of Item Name in your URL">
-            <label for="langUrl">Display name ℹ️</label>
+        <div class="displayName_url" style="${showAdvanced}" title="Whether or not you want to use Display Name instead of Item Name in your URL">
+            <label for="langUrl">Display name</label>
             <input id="displayNameUrl_${countSites}" name="displayName" class="scCheckbox" type="checkbox" ${languageDisplayName} />
             <label for="displayNameUrl_${countSites}" class="scLabel"></label>
         </div>

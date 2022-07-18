@@ -49,6 +49,7 @@ const showSnackbarSite = (storage, ScItem) => {
     //Get SiteName
     let siteName = ScItem.pathFull.split("/home/")[0].split("/").reverse();
     let pathToHome = ScItem.pathFull.split("/home/")[0] + "/home/";
+
     //Get site in userstorage (settings)
     let ScSite = getSiteUrl(storage, pathToHome, ScItem.language);
     let siteUrl = ScSite.url;
@@ -59,7 +60,7 @@ const showSnackbarSite = (storage, ScItem) => {
 
     //Snackbar settings
     //prettier0ignore
-    let snackbarHtml = `"<b>${siteName[0].toUpperCase()}" site detected (lang: ${ScItem.language.toUpperCase()})</b><br /> Are you using a publishing target server?<br />Click "Add site" to configure it now.`;
+    let snackbarHtml = `<b>"` + siteName[0].toUpperCase() + `" site detected</b><br /> Are you using a CD server for publishing?<br />Click "Add site" to configure it now.`;
     //prettier-ignore
     let html = `<div class="snackbarSite">${snackbarHtml}<button id="sbActionSite" onclick="addSite('${global.launchpadPage}','${global.urlOrigin}','${pathToHome}', '${siteName[0].toUpperCase()}')">ADD&nbsp;SITE</button><button id="sbDismissSite">DISMISS</button></div>`;
 
@@ -69,7 +70,6 @@ const showSnackbarSite = (storage, ScItem) => {
     });
 
     //Show Snackbar
-
     if (!ScItem.pathFull.includes(`/sitecore/templates/`) && ScItem.pathFull.includes(`/home/`) && Object.values(existing).indexOf(siteName[0].toUpperCase()) === -1 && siteUrl == undefined) {
       document.querySelector("body").insertAdjacentHTML("beforeend", html);
       //Add listener on click #sbDismiss

@@ -25,19 +25,7 @@ import { initAppName, initGravatarImage, initUserMenu, initIntroScreen } from ".
 import { initInstantSearch, enhancedSitecoreSearch } from "./modules/search.js";
 import { insertModal, insertPanel } from "./modules/insert.js";
 import { initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons, initUploadButton, initUploader, initLightbox, initMediaSearchBox } from "./modules/media.js";
-import {
-  initOnboarding,
-  initExperimentalUi,
-  initInsertIcon,
-  initGutter,
-  initSitecoreRibbon,
-  initSvgAnimation,
-  initSvgAnimationPublish,
-  initEventListeners,
-  initTitleBarDesktop,
-  initMaterializeIcons,
-  insertSavebarEE,
-} from "./modules/experimentalui.js";
+import { initOnboarding, initExperimentalUi, initInsertIcon, initGutter, initSitecoreRibbon, initSvgAnimation, initSvgAnimationPublish, initEventListeners, initTitleBarDesktop, initMaterializeIcons } from "./modules/experimentalui.js";
 import { initFavorites } from "./modules/favorites.js";
 import { initGroupedErrors } from "./modules/errors.js";
 import { enhancedBucketLists } from "./modules/buckets.js";
@@ -47,20 +35,9 @@ import { initLaunchpadIcon, initLaunchpadMenu } from "./modules/launchpad.js";
 import { initAutoExpandTree, initTreeGutterTooltips } from "./modules/contenttree.js";
 import { initQuerySuggestions } from "./modules/template.js";
 import { initPublishingStatus } from "./modules/publishingdashboard.js";
-import {
-  initPreviewButtonsEE,
-  updateEETitle,
-  storeCurrentPageEE,
-  addToolbarEditCE,
-  addToolbarTooltip,
-  addPlaceholderTooltip,
-  resetExperienceEditor,
-  initRenderingSearchBox,
-  initOptionalFields,
-  initGroupedErrorsEE,
-} from "./modules/experienceeditor.js";
+import { initPreviewButtonsEE, updateEETitle, storeCurrentPageEE, addToolbarEditCE, addToolbarTooltip, addPlaceholderTooltip, addHideRibbonButton, resetExperienceEditor, initRenderingSearchBox } from "./modules/experienceeditor.js";
 import { initHorizon } from "./modules/horizon.js";
-import { initTabSections } from "./modules/tabs.js";
+
 /**
  * Get all user's settings from chrome storage
  */
@@ -203,7 +180,6 @@ chrome.storage.sync.get((storage) => {
       addHelptextIcons();
       enhancedBucketLists();
       initMaterializeIcons(storage);
-      initTabSections(storage);
     } else if (global.isExperienceProfile) {
       log("**** Experience Profile ****", "orange");
       initGravatarImage(storage);
@@ -263,10 +239,9 @@ chrome.storage.sync.get((storage) => {
       initAppName(storage, "Select Rendering");
       initRenderingSearchBox(storage);
       initMaterializeIcons(storage);
-    } else if (global.isXmlControl && !global.isRichText && !global.isWorkbox) {
+    } else if (global.isXmlControl && !global.isRichText) {
       log("**** XML Control (Window) ****", "orange");
       initCheckboxes(storage);
-      initTabSections(storage);
       initDateTimeField(storage);
       initPasswordField(storage);
       initMaterializeIcons(storage);
@@ -304,13 +279,8 @@ chrome.storage.sync.get((storage) => {
      */
     if (global.isRibbon) {
       log("**** EE Ribbon ****", "orange");
-      document.querySelector("body").classList.add("satEEExperimentalUi");
-      initSitecoreRibbon();
       initPreviewButtonsEE(storage);
       storeCurrentPageEE();
-      insertSavebarEE(storage);
-      initGroupedErrorsEE(storage);
-      checkWorkbox(storage);
     } else if (global.isPreviewMode && global.isEEPreview) {
       document.querySelector("#ribbonPreLoadingIndicator").remove();
       document.querySelector("#scWebEditRibbon").remove();
@@ -337,10 +307,10 @@ chrome.storage.sync.get((storage) => {
       addToolbarEditCE(storage);
       addToolbarTooltip(storage);
       addPlaceholderTooltip(storage);
-      //addHideRibbonButton(storage);
+      addHideRibbonButton(storage);
       resetExperienceEditor(storage);
       initMaterializeIcons(storage);
-      initOptionalFields(storage);
+      //initHighlightValidationError(storage);
     }
   }
 

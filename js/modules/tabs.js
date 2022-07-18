@@ -20,12 +20,14 @@ const initTabSections = (storage) => {
     //Remove existing tabs
     scEditorTabs ? scEditorTabs.remove() : false;
     scEditorTabs = '<div id="scEditorTabs"><ul>';
+
     for (let section of scEditorSectionCaption) {
       let sectionTitle = section.innerText;
       let sectionId = section.getAttribute("id");
       //let sectionClass = section.getAttribute("class");
       let sectionSelected, sectionPanelDisplay, sectionErrorHtml, sectionErrorClass, sectionError;
       let lastClickedTab = localStorage.getItem("scTabSection");
+
       //Detect active panel and show it if there, othjerwise fallback to quick Info
       if (sectionActiveCount == false && lastClickedTab != null && sectionTitle == lastClickedTab) {
         sectionSelected = "scEditorTabSelected";
@@ -77,9 +79,8 @@ const initTabSections = (storage) => {
       scMessageBar[scMessageBar.length - 1].insertAdjacentHTML("afterend", scEditorTabs);
     } else if (scEditorHeader) {
       scEditorPanel.insertAdjacentHTML("afterend", scEditorTabs);
-    } else if (scEditorPanel) {
-      scEditorPanel.insertAdjacentHTML("afterbegin", scEditorTabs);
     }
+
     //If there is no active tab
     var tab = document.querySelector(".scEditorTab");
     if (sectionActiveCount == 0 && tab != null) {

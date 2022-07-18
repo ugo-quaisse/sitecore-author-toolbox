@@ -15,9 +15,7 @@ export {
   addHideRibbonButton,
   resetExperienceEditor,
   initRenderingSearchBox,
-  initOptionalFields,
-  initNotificationsEE,
-  initGroupedErrorsEE,
+  initHighlightValidationError,
 };
 
 /**
@@ -368,6 +366,18 @@ const resetExperienceEditor = (storage) => {
 };
 
 /**
+ * Highlight validation errors in the page TODO
+ */
+const initHighlightValidationError = (storage) => {
+  storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;
+  if (storage.feature_experienceeditor) {
+    document.querySelectorAll(".alert-error .sc-messageBar-messageText-container .OptionTitle").forEach((elem) => {
+      console.log(elem.id);
+    });
+  }
+};
+
+/**
  * Init Rendering Search box
  */
 const initRenderingSearchBox = (storage) => {
@@ -396,6 +406,7 @@ const initRenderingSearchBox = (storage) => {
         var result = tab.querySelectorAll(".hideTab").length;
         // eslint-disable-next-line newline-per-chained-call
         var tabNumber = tab.getAttribute("id").split("_").pop();
+        console.log(tabNumber, result);
         if (result === 0) {
           document.querySelector(`#Tabs_tab_${tabNumber}`).setAttribute("style", "opacity:0.2");
         } else {
@@ -403,233 +414,5 @@ const initRenderingSearchBox = (storage) => {
         }
       });
     });
-  }
-};
-
-/**
- * Highlight validation errors in the page TODO
- */
-const initOptionalFields = (storage) => {
-  storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;
-  if (storage.feature_experienceeditor) {
-    document.querySelectorAll('[scwatermark="true"]').forEach((elem) => {
-      //elem.tagName.toLowerCase() == "code" ? elem.parentNode.setAttribute("style", `opacity: ${opacity} !important;`) : elem.setAttribute("style", `opacity: ${opacity} !important;`);
-      elem.tagName.toLowerCase() == "code" ? elem.parentNode.classList.add("sat-watermark") : elem.classList.add("sat-watermark");
-    });
-  }
-};
-
-/**
- * Init notifications in Experience Editor
- */
-const initNotificationsEE = () => {
-  let html = `<div class="notifications-container notify-is-right notify-is-bottom" style="--distance:20px;" data-count="0"></div>`;
-  parent.document.querySelector("body").insertAdjacentHTML("beforeend", html);
-  //Event listener
-};
-
-/**
- * Init notifications in Experience Editor
- */
-// eslint-disable-next-line no-unused-vars, max-params
-const addNotificationsEE = (title, message, type = "success", autoclose = 0) => {
-  let icon;
-  switch (type) {
-    case "success":
-      icon = global.notifyIconSuccess;
-      break;
-
-    case "warning":
-      icon = global.notifyIconWarning;
-      break;
-
-    case "error":
-      icon = global.notifyIconError;
-      break;
-
-    case "notifications":
-      icon = global.notifyIconInfo;
-      break;
-
-    default:
-      icon = global.notifyIconSuccess;
-      break;
-  }
-  let html = `<div class="notify notify--type-3 notify--${type} notify--fade notify--fadeIn" style="--gap:15px; transition-duration: 300ms;">
-                  <div class="notify__icon">
-                    ${icon}
-                  </div>
-                  <div class="notify__close" onclick="closeNotify(event)">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="m8.94 8 4.2-4.193a.67.67 0 0 0-.947-.947L8 7.06l-4.193-4.2a.67.67 0 1 0-.947.947L7.06 8l-4.2 4.193a.667.667 0 0 0 .217 1.093.666.666 0 0 0 .73-.146L8 8.94l4.193 4.2a.665.665 0 0 0 .947 0 .665.665 0 0 0 0-.947L8.94 8Z" fill="currentColor"></path></svg>
-                  </div>
-                  <div class="notify-content">
-                    <div class="notify__title">${title}</div>
-                    <div class="notify__text">${message}</div>
-                  </div>
-                </div>`;
-
-  parent.document.querySelector("body .notifications-container").insertAdjacentHTML("afterbegin", html);
-  parent.document.querySelector("body .notifications-container").dataset.count++;
-
-  if (autoclose > 0) {
-    setTimeout(() => {
-      parent.document.querySelector(".notify").classList.remove("notify--fadeIn");
-      setTimeout(() => {
-        parent.document.querySelector(".notify").remove();
-      }, 500);
-    }, autoclose);
-  }
-};
-
-/**
- * Get Experience Editor Errors
- */
-const initGroupedErrorsEE = (storage) => {
-  storage.feature_eenotify == undefined ? (storage.feature_eenotify = true) : false;
-  let editMode = parent.window.location ? parent.window.location.href.includes("sc_mode=edit") : false;
-  if (storage.feature_eenotify && editMode) {
-    initNotificationsEE();
-    //Variables
-    let urlParams = new URLSearchParams(parent.window.location.search);
-    let sc_token = document.getElementsByName("__RequestVerificationToken")[0].value;
-    let sc_itemid = urlParams.get("sc_itemid");
-    let sc_language = parent.document.querySelector("input#scLanguage").value;
-    let sc_version = urlParams.get("sc_version") || 1;
-    let scFieldValues = ``;
-    parent.document.querySelectorAll("#scFieldValues > input").forEach(function (item) {
-      scFieldValues += `"${item.id}":"",`;
-    });
-    scFieldValues += `######`;
-    scFieldValues = scFieldValues.replace(`,######`, ``).replace(`######`, ``);
-
-    //1. Datasource fields validation
-    setTimeout(() => {
-      let scErrorType = `error`;
-      fetch("/-/speak/request/v1/expeditor/ExperienceEditor.FieldsValidation.ValidateFields", {
-        headers: {
-          "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-        },
-        body:
-          "__RequestVerificationToken=" +
-          sc_token +
-          '&data={"language":"' +
-          sc_language +
-          '","version":' +
-          sc_version +
-          ',"isFallback":false,"isHome":false,"itemId":"' +
-          sc_itemid +
-          '","database":"master","value":"{0930CAE5-BB35-4B57-B9B4-7D8E8CD1A8F1}","scValidatorsKey":"VK_SC_PAGEEDITOR","scFieldValues":{' +
-          scFieldValues +
-          "}}",
-        method: "POST",
-        mode: "cors",
-        credentials: "include",
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          data.responseValue.value.forEach((item) => {
-            //Priority
-            if (item.Priority == 0) {
-              scErrorType = "error";
-            } else {
-              scErrorType = "warning";
-            }
-            //Unknown error
-            if (item.Text.includes("[unknown]")) {
-              item.Text = `Language version "${sc_language}" seems missing for a datasource`;
-              scErrorType = "warning";
-            }
-            addNotificationsEE(
-              `${item.Text}`,
-              `<a href="/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#${item.DataSourceId}_${sc_language.toLowerCase()}_${sc_version}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">Fix this error</a>`,
-              scErrorType
-            );
-          });
-        });
-    }, 500);
-
-    //2. Page fields validation
-    setTimeout(() => {
-      fetch("/-/speak/request/v1/expeditor/ExperienceEditor.Proofing.Validation", {
-        headers: {
-          "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-        },
-        body:
-          "__RequestVerificationToken=" +
-          sc_token +
-          '&data={"language":"' +
-          sc_language +
-          '","version":' +
-          sc_version +
-          ',"isFallback":false,"isHome":false,"itemId":"' +
-          sc_itemid +
-          '","database":"master","value":"{0930CAE5-BB35-4B57-B9B4-7D8E8CD1A8F1}","scValidatorsKey":"VK_SC_PAGEEDITOR","scFieldValues":{' +
-          scFieldValues +
-          "}}",
-        method: "POST",
-        mode: "cors",
-        credentials: "include",
-      })
-        .then((response) => response.json())
-        .then((data) => fetch(data.responseValue.value))
-        .then((response) => response.text())
-        .then((data) => {
-          let dom = new DOMParser().parseFromString(data, "text/html");
-          let validatorLink = dom.querySelector("form").getAttribute("action");
-          dom.querySelectorAll(".scListControl tr").forEach(function (line) {
-            if (line.querySelectorAll("td") && line.querySelectorAll("td").length == 3) {
-              let errorType = line.querySelectorAll("td")[0].querySelector("img").src;
-              let fixLink = `<a href="sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#${sc_itemid}_${sc_language}_${sc_version}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">Fix this error</a>`;
-              //Unknown error
-              if (line.querySelector("td.scValidatorResult").innerText.includes("[unknown]")) {
-                line.querySelector("td.scValidatorResult").innerText = `Language version "${sc_language}" seems missing for a field`;
-              }
-              if (errorType.includes("yellow.png") && !line.querySelector("td.scValidatorTitle > div:last-child").innerText.includes("XHTML")) {
-                addNotificationsEE(line.querySelector("td.scValidatorResult").innerText, `${fixLink} &nbsp; <a href="${validatorLink}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">More details</a>`, `warning`);
-              } else if (errorType.includes("red.png") && !line.querySelector("td.scValidatorResult").innerText.includes("(403)")) {
-                addNotificationsEE(line.querySelector("td.scValidatorResult").innerText, `${fixLink} &nbsp; <a href="${validatorLink}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">More details</a>`, `error`);
-              }
-            }
-          });
-        });
-    }, 600);
-
-    //3. Validation bar warnings and info
-    setTimeout(() => {
-      document.querySelectorAll(".sc-messageBar-messages-wrap > div").forEach(function (group) {
-        if (group.dataset.bind.toLowerCase().includes("notifications") || group.dataset.bind.toLowerCase().includes("warning")) {
-          let className = group.dataset.bind.toLowerCase().includes("notifications") ? "info" : "warning";
-          group.querySelectorAll(".sc-messageBar-messageText").forEach(function (item) {
-            let doc = new DOMParser().parseFromString(item.innerHTML, "text/html");
-            let count = 0;
-            doc.querySelectorAll("a").forEach(function (link) {
-              link.setAttribute(`onclick`, `document.querySelector('#scWebEditRibbon').contentDocument.querySelectorAll("[data-bind*='notifications' i] .sc-messageBar-messageText a")[${count}].click()`);
-              link.setAttribute("style", "opacity:0.8; padding: 0px 10px 0px 0px;");
-              count++;
-            });
-            let docTitle = item.innerHTML ? new DOMParser().parseFromString(item.innerHTML, "text/html") : ``;
-            docTitle.querySelectorAll("a").forEach(function (link) {
-              link.remove();
-            });
-            docTitle = docTitle.querySelector("body").innerHTML;
-            let docAction = ``;
-            doc.querySelectorAll("a").forEach(function (link) {
-              docAction += link.outerHTML + " ";
-            });
-            docAction = docAction.includes("has locked this item") ? `Try unlocking from the "Home" tab` : docAction;
-            docTitle != "" ? addNotificationsEE(docTitle, docAction, className) : false;
-          });
-        }
-      });
-    }, 4000);
-
-    //4. Check if no error on this page
-    setTimeout(() => {
-      if (parent.document.querySelector("body .notifications-container").dataset.count == 0) {
-        addNotificationsEE(`This page looks great! 🎉`, `No error found on this page.`, `success`, 4000);
-      } else if (parent.document.querySelector("body .notifications-container").dataset.count > 3) {
-        parent.document.querySelector("body .notifications-container").insertAdjacentHTML("afterbegin", `<div onclick="closeAllNotify()" class="notify-clearall">Clear All</div>`);
-      }
-    }, 4500);
   }
 };

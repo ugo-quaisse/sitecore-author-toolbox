@@ -88,7 +88,7 @@ document.querySelector("#settings").onclick = function () {
   document.querySelector(".importSitesVisible").addEventListener("click", chooseJson);
   //Get status of advanced mode
   let advancedMode = localStorage.getItem("scAdvancedMode");
-  advancedMode == "true" || null ? document.querySelector(".advanced_mode").click() : document.querySelector(".basic_mode").click();
+  advancedMode == "true" ? document.querySelector(".advanced_mode").click() : document.querySelector(".basic_mode").click();
   //Generating list of sites
   chrome.storage.sync.get(["site_manager"], (storage) => {
     storage.site_manager ? parseJsonSites(storage.site_manager) : false;
@@ -134,6 +134,11 @@ document.querySelector(".exportSites").onclick = function (event) {
 document.querySelector(".save_sites").onclick = function (event) {
   event.preventDefault();
   saveSites();
+};
+
+//Show hints
+document.querySelector(".show_hint").onclick = function () {
+  document.querySelector("#hint").setAttribute("style", "display:inline-block");
 };
 
 //Show advanced mode

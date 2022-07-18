@@ -75,7 +75,6 @@ body.satExperimentalUi #scPanel {
 
 body.satExperimentalUi #scPanel > .content {
   padding: 0px;
-  font-size: 13px;
 }
 
 body.satExperimentalUi #scPanel h1 {
@@ -151,10 +150,6 @@ body.satExperimentalUi .saveMessage.success {
   background-color: var(--messageSuccessLink);
 }
 
-body.satExperimentalUi .saveMessage.warning {
-  background-color: var(--messageWarningLink);
-}
-
 body.satExperimentalUi .saveMessage.visible {
   top: 30px;
   opacity: 1;
@@ -184,7 +179,6 @@ body.satExperimentalUi .scEditorGrid {
 
 body.satExperimentalUi .scValidatorPanel,
 body.satExperimentalUi .scDockTop,
-body.satExperimentalUi .sc-pageeditbar,
 body.satExperimentalUi .scDockBottom {
   display: none;
 }
@@ -195,10 +189,6 @@ body.satExperimentalUi .sc-global-logo {
   background: url(chrome-extension://__MSG_@@extension_id__/images/square-logo.svg) center center no-repeat;
   background-color: var(--accent);
   background-size: 105%;
-}
-
-body.satEEExperimentalUi .sc-global-logo {
-  margin-top: 10px;
 }
 
 body.satExperimentalUi .sc-global-logo.medium.sc10launchpad {
@@ -221,11 +211,7 @@ body.satExperimentalUi #EditorTabs {
   background-color: var(--white);
   border-bottom: 0px solid #ffffff;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
-  z-index: 2;
-}
-
-body.satExperimentalUi .scMarginAbsolute {
-  bottom: 0px;
+  z-index: 10;
 }
 
 body.satExperimentalUi #EditorFrames {
@@ -273,12 +259,7 @@ body.satExperimentalUi input[type="color"]::-webkit-color-swatch {
 
 body.satExperimentalUi .wbNotificationMenu {
   background-color: var(--accent);
-  right: 115px;
-  top: 38px;
-}
-
-body.satEEExperimentalUi .wbNotificationMenu {
-  right: 118px !important;
+  right: 117px;
 }
 
 body.satExperimentalUi #scSitecoreRibbon {
@@ -375,10 +356,6 @@ body.satExperimentalUi #scModal .main .scIconTextModal {
 
 body.satExperimentalUi .showSitecoreRibbon {
   display: block !important;
-}
-
-body.satExperimentalUi .hideSitecoreRibbon {
-  display: none !important;
 }
 
 body.satExperimentalUi .scSitecoreRibbon {
@@ -1007,7 +984,6 @@ body.satExperimentalUi a.scEditorHeaderButton {
   margin: 0px 5px;
   box-shadow: none;
   cursor: pointer;
-  max-height: 34px;
 }
 
 body.satExperimentalUi button.scEditorHeaderButton:hover,
@@ -1108,9 +1084,6 @@ body.satExperimentalUi .scUploaderOver .btn-default {
 body.satExperimentalUi #Renderings {
   padding: 0px 10px;
 }
-body.satExperimentalUi #Renderings > div > div > table b {
-  color: var(--accent) !important;
-}
 body.satExperimentalUi #scLanguageIframe,
 body.satExperimentalUi #scVersionIframe {
   position: fixed;
@@ -1120,7 +1093,7 @@ body.satExperimentalUi #scVersionIframe {
   left: unset !important;
   width: 400px !important;
   height: 100% !important;
-  border-radius: opx;
+  border-radius: var(--radius);
   box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1);
   transition: right ease-out 0.2s;
 }
@@ -1129,63 +1102,6 @@ body.satExperimentalUi #scVersionIframe.open,
 body.satExperimentalUi #scLanguageIframe.open,
 body.satExperimentalUi #scPanel.open {
   right: 0px !important;
-}
-
-body.satEEExperimentalUi #scLanguageIframe,
-body.satEEExperimentalUi #scVersionIframe,
-body.satEEExperimentalUi #scSettingsIframe {
-  position: fixed;
-  background-color: var(--white);
-  top: 164px !important;
-  right: -420px !important;
-  left: unset !important;
-  width: 400px !important;
-  height: calc(100% - 165px) !important;
-  border-radius: opx;
-  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1);
-  transition: right ease-out 0.2s;
-  border: 0px;
-  z-index: 10000;
-}
-
-body.satExperimentalUi .lockedItem {
-  background-image: linear-gradient(45deg, #f7d871 25%, #fffbe5 25%, #fffbe5 50%, #f7d871 50%, #f7d871 75%, #fffbe5 75%, #fffbe5 100%);
-  background-size: 40px 40px;
-  background-position: 0 0;
-}
-
-body.satEEExperimentalUi #scTreeIframe {
-  position: fixed;
-  background-color: var(--white);
-  top: 164px !important;
-  left: -420px !important;
-  right: unset !important;
-  width: 400px !important;
-  height: calc(100% - 165px) !important;
-  border-radius: opx;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-  transition: left ease-out 0.2s;
-  border: 0px;
-  z-index: 10000;
-}
-
-body.satEEExperimentalUi #scVersionIframe.open,
-body.satEEExperimentalUi #scLanguageIframe.open,
-body.satEEExperimentalUi #scSettingsIframe.open {
-  right: 0px !important;
-}
-
-body.satEEExperimentalUi #scTreeIframe.open {
-  left: 0px !important;
-}
-
-body.satExperimentalUi .sc-language-gallery,
-body.satExperimentalUi .sc-versions-gallery {
-  background: var(--background);
-}
-
-body.satExperimentalUi [data-sc-id="ContentBorder"] {
-  width: 100%;
 }
 
 /* Content Editor Tabs */
@@ -1317,8 +1233,6 @@ body.satExperimentalUi .scMessageBar {
   border-radius: var(--radius) !important;
   vertical-align: top;
   margin: 25px 20px 20px 20px;
-  max-height: 230px;
-  overflow: auto;
 
   /* display: inline-flex;
   min-width: calc(50% - 30px);
@@ -1404,10 +1318,6 @@ body.satExperimentalUi .scInformation .liveStatusRed {
 body.satExperimentalUi .scInformation .liveUrlLoader,
 body.satExperimentalUi .scInformation .liveUrlBadge {
   background-color: var(--messageInfoLink);
-}
-
-[data-sc-id="NotificationBar"] {
-  height: 57px;
 }
 
 [data-bind="foreach: notifications" i] > .alert-info {
@@ -1830,7 +1740,7 @@ body.satExperimentalUi .scSaveBar > .scBreadcrumb {
   text-indent: 0px;
   font-size: 13px;
   color: var(--textFaded);
-  max-width: 58%;
+  max-width: 60%;
   width: -webkit-fill-available;
   white-space: nowrap;
   overflow: hidden;
@@ -1920,17 +1830,7 @@ body.satExperimentalUi .scSaveBar > .scActions > .scPublishMenu > li:hover {
   background-color: var(--grey5);
 }
 
-body.satExperimentalUi .scSaveBar > .scActions > .scPublishMenuEE {
-  top: 95px !important;
-  padding: 0px !important;
-}
-
-body.satExperimentalUi .scSaveBar > .scActions > .scPublishMenuEE > li {
-  width: 100% !important;
-}
-
-body.satExperimentalUi .scSaveBar > .scActions > button,
-body.satExperimentalUi .scEditorTabControlsHolder > button.scAddComponent {
+body.satExperimentalUi .scSaveBar > .scActions > button {
   float: right;
   background-color: var(--grey);
   color: var(--black1);
@@ -1943,27 +1843,8 @@ body.satExperimentalUi .scEditorTabControlsHolder > button.scAddComponent {
   margin-top: -2px;
 }
 
-body.satExperimentalUi .scSaveBarEE {
-  padding: 13px;
-  height: 57px;
-}
-
-body.satExperimentalUi .EditorTabsEE {
-  padding: 11px;
-  height: 57px;
-  text-align: right;
-  z-index: 1 !important;
-}
-
-body.satExperimentalUi .EditorTabsEE .scEditorTabControlsHolder {
-  margin: 0px;
-}
-
 body.satExperimentalUi .scPublishMenuMoreArrow {
   color: var(--accentText);
-}
-
-[data-sc-gallerycontainer="true"] {
 }
 
 body.satExperimentalUi .scBackground {
@@ -2147,98 +2028,13 @@ body.satExperimentalUi .scSaveBar > .scActions > button:disabled {
   opacity: 0.5;
 }
 
-body.satExperimentalUi .scSaveBar > .scActions > .scBurgerMenuTitle {
-  float: left;
-  color: var(--textFaded);
-  font-size: 16px;
-  font-weight: 700;
-  margin-top: 4.5px;
-  padding-right: 10px;
-  padding-left: 21px;
-}
-
 body.satExperimentalUi .scSaveBar > .scActions > button.scSaveButton,
-body.satExperimentalUi .scSaveBar > .scActions > button.scAddPage,
-body.satExperimentalUi .scEditorTabControlsHolder > button.scAddComponent,
-body.satExperimentalUi .scSaveBar > .scActions > button.scMenu,
 body.satExperimentalUi .scSaveBar > .scActions > button.scPreviewButton {
   color: var(--black3);
   font-weight: 600;
   text-transform: uppercase;
   font-size: 12px;
   height: 34px;
-  min-width: 34px;
-  z-index: 1;
-}
-
-body.satExperimentalUi .scSaveBar > .scActions > button.scAddPage,
-body.satExperimentalUi .scSaveBar > .scActions > button.scMenu {
-  text-transform: unset;
-}
-
-body.satExperimentalUi .scSaveBar > .scActions > button.scAddPage {
-  float: left;
-  padding: 8px 9px !important;
-  z-index: 0 !important;
-}
-body.satExperimentalUi .scSaveBar > .scActions > button.scAddPage > img {
-  width: 12px;
-}
-
-body.satExperimentalUi .scEditorTabControlsHolder > button.scAddComponent {
-  float: left;
-  background-color: var(--accent) !important;
-  color: var(--accentText) !important;
-  padding: 8px 9px !important;
-  min-height: 34px;
-  margin-top: 0px;
-}
-
-body.satExperimentalUi .scEditorTabControlsHolder > button.scAddComponent > img {
-  width: 12px;
-}
-
-body.satExperimentalUi .scSaveBar > .scActions > button.scMenu {
-  float: left;
-  padding: 10px;
-}
-
-body.satExperimentalUi .scSaveBar > .scActions > button.scMenu > img {
-  width: 14px;
-  margin-top: -4px;
-}
-
-body.satExperimentalUi .sc-gallery-option-content:hover,
-body.satExperimentalUi .sc-gallery-options > a:hover,
-body.satExperimentalUi .sc-gallery-versionoption-content-active:hover {
-  background-color: var(--accent);
-  color: var(--accentText);
-}
-
-body.satExperimentalUi .alert {
-  background-color: var(--messageWarningBar) !important;
-  color: var(--messageWarningLink) !important;
-}
-
-body.satExperimentalUi .alert-error {
-  background-color: var(--messageDangerBar) !important;
-  color: var(--messageDangerLink) !important;
-}
-
-body.satExperimentalUi .alert .OptionTitle {
-  color: var(--messageWarningLink) !important;
-}
-
-body.satExperimentalUi .alert-error .OptionTitle {
-  color: var(--messageDangerLink) !important;
-}
-
-body.satExperimentalUi .alert .alert-ico-background {
-  background-color: var(--messageWarningBgIcon) !important;
-}
-
-body.satExperimentalUi .alert-error .alert-ico-background {
-  background-color: var(--messageDangerBgIcon) !important;
 }
 
 body.satExperimentalUi .scSaveBar > .scActions > button.primary {
@@ -2978,43 +2774,4 @@ body.satEEExperimentalUi #breadcrumbMenuSubcontrol_context_menu nav.sc-breadcrum
   border-radius: var(--radius);
   background: var(--background);
   box-shadow: 0px 5px 10px 0px rgb(0 0 0 / 10%);
-}
-
-body.satExperimentalUi .eeErrors {
-  float: left;
-  font-size: 14px;
-  font-weight: 500;
-  opacity: 1;
-  background-color: rgba(0, 0, 0, 0.05);
-  padding: 1px 8px;
-  border-radius: 3px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  margin: 5px 8px 5px;
-  transition: opacity 0.5s ease-out;
-  cursor: pointer;
-}
-
-body.satExperimentalUi .scRollover,
-body.satExperimentalUi .scRollover_Hover {
-  color: var(--accent);
-}
-
-body.satExperimentalUi .eeErrors:hover {
-  background-color: rgba(0, 0, 0, 0.08);
-}
-
-body.satExperimentalUi .eeErrors .error {
-  color: var(--messageDangerLink);
-}
-
-body.satExperimentalUi .eeErrors .warning {
-  color: var(--messageWarningLink);
-}
-
-body.satExperimentalUi .eeErrors .notification {
-  color: var(--messageInfoLink);
-}
-
-body.satExperimentalUi .eeErrors .success {
-  color: var(--messageSuccessLink);
 }

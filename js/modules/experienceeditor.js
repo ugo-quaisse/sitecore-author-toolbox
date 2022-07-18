@@ -586,7 +586,7 @@ const initGroupedErrorsEE = (storage) => {
               }
               if (errorType.includes("yellow.png") && !line.querySelector("td.scValidatorTitle > div:last-child").innerText.includes("XHTML")) {
                 addNotificationsEE(line.querySelector("td.scValidatorResult").innerText, `${fixLink} &nbsp; <a href="${validatorLink}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">More details</a>`, `warning`);
-              } else if (errorType.includes("red.png") && !line.querySelector("td.scValidatorResult").innerText.includes("(403)")) {
+              } else if (errorType.includes("red.png") && !line.querySelector("td.scValidatorResult").innerText.includes("(403)") && !line.querySelector("td.scValidatorTitle > div:last-child").innerText.includes("XHTML")) {
                 addNotificationsEE(line.querySelector("td.scValidatorResult").innerText, `${fixLink} &nbsp; <a href="${validatorLink}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">More details</a>`, `error`);
               }
             }

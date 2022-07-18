@@ -630,9 +630,35 @@ body.satExperimentalUi.satDark .scSaveBar > .scActions > button.scMenu > img {
   filter: invert(1);
 }
 
-body.satExperimentalUi.satDark .scRollover,
-body.satExperimentalUi.satDark .scRollover_Hover {
+body.satExperimentalUi.satDark .scRollover {
   color: var(--accent);
+}
+
+body.satExperimentalUi.satDark .scRollover_Hover {
+  text-decoration: underline;
+}
+
+body.satExperimentalUi.satDark .scWorkboxToolbarButtons .scRollover {
+  background-color: var(--accent);
+  color: var(--text);
+  box-shadow: unset !important;
+  box-shadow: unset !important;
+  text-shadow: unset !important;
+  background-image: unset !important;
+  border-radius: var(--radius) !important;
+  border: unset !important;
+}
+
+body.satExperimentalUi.satDark .scWorkboxToolbarButtons .scRollover_Hover {
+  opacity: 0.8;
+  background-color: var(--accent);
+  color: var(--text);
+  box-shadow: unset !important;
+  box-shadow: unset !important;
+  text-shadow: unset !important;
+  background-image: unset !important;
+  border-radius: var(--radius) !important;
+  border: unset !important;
 }
 
 body.satExperimentalUi.satDark .dynatree-title {

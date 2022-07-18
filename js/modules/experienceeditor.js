@@ -487,7 +487,8 @@ const addNotificationsEE = (title, message, type = "success", autoclose = 0) => 
  */
 const initGroupedErrorsEE = (storage) => {
   storage.feature_eenotify == undefined ? (storage.feature_eenotify = true) : false;
-  if (storage.feature_eenotify) {
+  let editMode = parent.window.location ? parent.window.location.href.includes("sc_mode=edit") : false;
+  if (storage.feature_eenotify && editMode) {
     initNotificationsEE();
     //Variables
     let urlParams = new URLSearchParams(parent.window.location.search);

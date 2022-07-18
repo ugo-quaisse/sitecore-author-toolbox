@@ -99,6 +99,18 @@ body.satEE .zg-variant-switcher.expanded .zg-variant-tip {
   color: var(--accent) !important;
 }
 
+body.satEE #c-menu--slide-left {
+  box-shadow: rgba(0, 0, 0, 0.1) 2px -2px 4px;
+}
+
+body.satEE .sat-watermark {
+  opacity: 0.5 !important;
+}
+
+body.satEE .sat-watermark:hover {
+  opacity: 1 !important;
+}
+
 /* 
  * All below is for Experimental UI
  */
@@ -141,6 +153,7 @@ body.satEEExperimentalUi .scChromeDropDown {
 }
 body.satEEExperimentalUi .scChromeDropDown img {
   top: 11px;
+  position: initial;
 }
 body.satEEExperimentalUi .scChromeDropDown span {
   margin-left: 25px !important;

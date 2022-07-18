@@ -4,6 +4,7 @@
 
 import { currentColorScheme } from "./dark.js";
 import { checkUrlStatus } from "./url.js";
+import { getItemProperties } from "./items.js";
 
 export { checkNotificationPermissions, sendNotification, checkPublishNotification };
 
@@ -32,7 +33,7 @@ const checkNotificationPermissions = () => {
  */
 const sendNotification = (scTitle, scBody) => {
   //Show notification
-  new Notification(scTitle, {
+  let notification = new Notification(scTitle, {
     body: scBody,
     icon: chrome.runtime.getURL("images/icon.png"),
   });
@@ -54,7 +55,7 @@ const sendNotification = (scTitle, scBody) => {
  * Send a notification to the browser when an action is ended up
  */
 const checkPublishNotification = (storage) => {
-  let observer, notificationSubTitle, notificationBody, notificationResult, darkMode;
+  let observer, notificationSubTitle, notificationBody, notificationResult, notificationLink, darkMode;
   let target = document.querySelector("#LastPage");
   observer = new MutationObserver(function () {
     storage.feature_notification == undefined ? (storage.feature_notification = true) : false;
@@ -65,8 +66,13 @@ const checkPublishNotification = (storage) => {
       notificationBody = target.querySelector(".scFieldLabel") ? target.querySelector(".scFieldLabel").innerHTML : false;
       notificationResult = target.querySelector("#ResultText") ? target.querySelector("#ResultText").value : false;
       //notificationBody = notificationBody == "Result:" ? "Finished " + document.querySelector("#ResultText").value.split("Finished")[1] : "";
-      //Send notification
-      sendNotification(notificationSubTitle, notificationBody);
+      sendNotification(notificationSubTitle, notificationBody, notificationLink);
+
+      //Get item properties
+      let urlSearchParams = new URLSearchParams(window.location.search);
+      let params = Object.fromEntries(urlSearchParams.entries());
+      let itemId = params.id ? params.id : false;
+      getItemProperties(itemId, "", "", storage, "liveUrl");
 
       //Is dark mode on?
       darkMode = !!((storage.feature_darkmode && !storage.feature_darkmode_auto) || (storage.feature_darkmode && storage.feature_darkmode_auto && currentColorScheme() == "dark"));

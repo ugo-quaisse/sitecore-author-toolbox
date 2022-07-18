@@ -117,7 +117,6 @@ const exportSites = () => {
   if (error) {
     alert("You have some errors...");
   } else {
-    console.log(JSON.stringify(json));
     let result = JSON.stringify(json, null, 2);
     let today = new Date().toISOString().slice(0, 10);
     // Save as file
@@ -149,6 +148,7 @@ const saveSettings = () => {
     feature_translatemode: document.querySelector("#feature_translatemode").checked,
     feature_contenteditor: document.querySelector("#feature_contenteditor").checked,
     feature_experienceeditor: document.querySelector("#feature_experienceeditor").checked,
+    feature_eenotify: document.querySelector("#feature_eenotify").checked,
     feature_cetabs: document.querySelector("#feature_cetabs").checked,
     feature_rtecolor: document.querySelector("#feature_rtecolor").checked,
     feature_messagebar: document.querySelector("#feature_messagebar").checked,

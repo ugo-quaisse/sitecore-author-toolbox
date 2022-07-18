@@ -1,3 +1,4 @@
+/* eslint-disable no-tabs */
 /* eslint-disable max-params */
 /* eslint-disable newline-per-chained-call */
 /* eslint-disable array-element-newline */
@@ -12,6 +13,7 @@ export {
   initOnboarding,
   initExperimentalUi,
   insertSavebar,
+  insertSavebarEE,
   insertBreadcrumb,
   insertLanguageButton,
   insertVersionButton,
@@ -315,6 +317,7 @@ const insertNavigatorButton = () => {
 const initSitecoreRibbon = () => {
   let storage = localStorage.getItem("scSitecoreRibbon");
   let dock = document.querySelector(".scDockTop");
+  !dock && document.querySelector("div[data-sc-id='PageEditBar']") ? (dock = document.querySelector("div[data-sc-id='PageEditBar']")) : false;
   let icon = document.querySelector("#scSitecoreRibbon");
 
   if (storage == "true") {
@@ -682,7 +685,7 @@ const replaceIcons = (
         icon.src = global.iconSitecoreTree;
         icon.classList.add("scMaterialIcon");
       } else if (filename.includes("flag_")) {
-        icon.src = chrome.runtime.getURL("images/Flags/svg/" + findCountryName(filename) + ".svg");
+        icon.src = chrome.runtime.getURL("images/Flags/svg/" + findCountryName(filename).replace(".aspx", "") + ".svg");
         icon.classList.add("scNoContrastedFlag");
         icon.classList.add("scMaterialIcon");
       } else {
@@ -734,5 +737,160 @@ const initMaterializeIcons = (storage) => {
           subtree: true,
         })
       : false;
+  }
+};
+
+/**
+ * Insert Save bar Experience Editor
+ */
+const insertSavebarEE = (storage) => {
+  if (storage.feature_experimentalui === true && storage.feature_material_icons === true) {
+    //Reset Ribbon
+    document.querySelector("body").setAttribute("style", "overflow: hidden !important;");
+    //Add listener for refreshing
+    addEventListener("beforeunload", () => {
+      let saveMessage = document.querySelector(".saveMessage");
+      parent.document.querySelector("html").setAttribute("style", "cursor: wait !important");
+
+      if (saveMessage) {
+        saveMessage.classList.add("warning");
+        saveMessage.classList.add("visible");
+        saveMessage.innerHTML = "Refreshing the page...";
+      }
+    });
+
+    //Variables
+    let scItemId = document.querySelector(".sc-pageeditbar").dataset.scItemid;
+    let scSitename = document.querySelector(".sc-pageeditbar").dataset.scSitename;
+    let scLanguage = document.querySelector(".sc-pageeditbar").dataset.scLanguage.toUpperCase();
+    let scVersion = document.querySelector(".sc-pageeditbar").dataset.scVersion;
+    let body = parent.document.querySelector("body");
+
+    //Sitecore Tree iFrame
+    document.querySelector("#scTreeIframe") ? document.querySelector("#scTreeIframe").remove() : false;
+    let iframeTree = `<iframe loading="lazy" id="scTreeIframe" src="/sitecore/client/Applications/ExperienceEditor/Pages/NavigationTreeView.aspx?lang=${scLanguage}"></iframe>`;
+    body && !document.querySelector("#scTreeIframe") ? body.insertAdjacentHTML("beforeend", iframeTree) : false;
+
+    //Language iFrame
+    parent.document.querySelector("#scLanguageIframe") ? parent.document.querySelector("#scLanguageIframe").remove() : false;
+    let iframeLanguage = `<iframe loading="lazy" id="scLanguageIframe" src="/sitecore/client/Applications/ExperienceEditor/Pages/Galleries/SelectLanguageGallery.aspx?itemId=${scItemId}&pageSite=UK&database=master&la=${scLanguage}&vs=${scVersion}"></iframe>`;
+    body && !document.querySelector("#scLanguageIframe") ? body.insertAdjacentHTML("beforeend", iframeLanguage) : false;
+
+    //Version iFrame
+    document.querySelector("#scVersionIframe") ? document.querySelector("#scVersionIframe").remove() : false;
+    let iframeVersion = `<iframe loading="lazy" id="scVersionIframe" src="/sitecore/client/Applications/ExperienceEditor/Pages/Galleries/SelectVersionGallery.aspx?itemId=${scItemId}&pageSite=${scSitename}&database=master&la=${scLanguage}&vs=${scVersion}"></iframe>`;
+    body && !document.querySelector("#scVersionIframe") ? body.insertAdjacentHTML("beforeend", iframeVersion) : false;
+
+    //Settings iFrame
+    document.querySelector("#scSettingsIframe") ? document.querySelector("#scSettingsIframe").remove() : false;
+    let iframeSettings = `<iframe id="scSettingsIframe" src="/sitecore/shell/default.aspx?xmlcontrol=LayoutDetails&id=${scItemId}&la=${scLanguage}&vs=${scVersion}"></iframe>`;
+    body && !document.querySelector("#scSettingsIframe") ? body.insertAdjacentHTML("beforeend", iframeSettings) : false;
+
+    //Primary Bar with buttons
+    let scSaveBar = `<div id="SaveTabs" class="scSaveBar scSaveBarEE">
+        <div class="scActions">
+            <button id="scPublishMenuMore" class="grouped" type="button"><span class="scPublishMenuMoreArrow">▾</span></button>
+              <ul class="scPublishMenu scPublishMenuEE">             
+                <li onclick="settingsPage()">Publishing settings...</li>
+              </ul>
+            <button class="scPublishButton primary primaryGrouped" onclick="publishPage()">Save and Publish</button>
+            <button class="scSaveButton" onclick="savePage()">Save</button>
+            <!--<button class="scSaveButton" onclick="changeDevicePreviewEE('mobile', 'v')">Preview</button>-->
+            
+            <div class="scBurgerMenuTitle">Content</div>
+            <button id="scTreeButton" class="scMenu t-right t-sm" onclick="toggleTreePanel()" data-tooltip="Show Sitecore Tree"><img src="${global.iconMenu}" /></button>
+            <button class="scAddPage t-right t-sm" onclick="addPage()" data-tooltip="Create a new page"><img src="${global.iconPencil}" /></button>
+            </div>
+    </div>`;
+
+    //Secondary Bar with buttons
+    let scEditorBar = `<div id="EditorTabs" class="EditorTabsEE">
+    <div class="scEditorTabControlsHolder">
+      <button class="scEditorHeaderButton" id="scLanguageButton" type="button" onclick="toggleLanguagePanel()"><img src="${global.iconLanguage}" class="scLanguageIcon"> ${scLanguage.toUpperCase()} ▾</button>
+      <button class="scEditorHeaderButton" id="scVersionButton" type="button" onclick="toggleVersionPanel()"><img src="${global.iconVersion}" class="scLanguageIcon"> ${scVersion} ▾</button>
+      <button class="scEditorHeaderButton" id="scMoreButton" title="More actions" type="button" onclick="toggleSettingsPanel()"><img src="${global.iconCog}" class="scLanguageIcon"></button>
+      <button class="scAddComponent" onclick="addComponent()"><img src="${global.iconAdd}" /> ADD A COMPONENT</button>
+    </div>
+  </div>`;
+
+    //Insert Save Bar
+    let pageEditBar = document.querySelector("div[data-sc-id='PageEditBar']");
+    document.querySelector(".scSaveBar") ? document.querySelector(".scSaveBar").remove() : false;
+    pageEditBar ? pageEditBar.insertAdjacentHTML("afterend", scSaveBar + scEditorBar) : false;
+
+    //Save mesasge
+    let scSaveMessage = `<div class="saveMessage">Your changes have been saved successfully!</div>`;
+    !document.querySelector(".saveMessage") ? document.querySelector("body").insertAdjacentHTML("afterbegin", scSaveMessage) : false;
+
+    //Listener save button
+    let target = document.querySelector("a[data-sc-id='QuickSave']");
+    let observer = new MutationObserver(function () {
+      if (target.classList.contains("disabled")) {
+        document.querySelector(".scSaveBar .scSaveButton").disabled = true;
+        document.querySelector(".scSaveBar .scSaveButton").innerText = "Save";
+        document.querySelector(".scSaveBar .scPublishButton").innerText = "Save and Publish";
+        document.querySelector(".scSaveBar .scSaveButton").removeAttribute("style");
+      } else {
+        document.querySelector(".scSaveBar .scSaveButton").disabled = false;
+        document.querySelector(".scSaveBar .scSaveButton").innerText = "Save";
+        document.querySelector(".scSaveBar .scPublishButton").innerText = "Save and Publish";
+      }
+    });
+
+    //Observer UI
+    target ? observer.observe(target, { attributes: true }) : false;
+
+    //Listener to close all panels
+    document.addEventListener("click", (event) => {
+      closeAllPanelsEE(event);
+      showPublishMenuMore(event);
+    });
+    parent.document.addEventListener("click", (event) => {
+      closeAllPanelsEE(event);
+    });
+
+    //Get all placeholders and renderings
+    ///sitecore/shell/default.aspx?xmlcontrol=DeviceEditor&de={FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}&id={25818957-9772-41d1-be0e-eee6fb7b4526}&vs=1&la=en
+    // document.querySelectorAll("#Renderings table tr td:nth-child(2) b").forEach((item) => {
+    //   console.log(item.innerText);
+    // });
+  }
+};
+
+/**
+ * Close all EE panel - Utility function
+ */
+const closeAllPanelsEE = (event) => {
+  if (
+    event.path[0].id != "scLanguageButton" &&
+    event.path[1].id != "scLanguageButton" &&
+    event.path[0].id != "scVersionButton" &&
+    event.path[1].id != "scVersionButton" &&
+    event.path[0].id != "scMoreButton" &&
+    event.path[1].id != "scMoreButton" &&
+    event.path[0].id != "scTreeButton" &&
+    event.path[1].id != "scTreeButton"
+  ) {
+    let iframeLanguage = parent.document.querySelector("#scLanguageIframe");
+    iframeLanguage && iframeLanguage.classList.contains("open") ? iframeLanguage.classList.remove("open") : false;
+    let iframeVersion = parent.document.querySelector("#scVersionIframe");
+    iframeVersion && iframeVersion.classList.contains("open") ? iframeVersion.classList.remove("open") : false;
+    // let iframeSettings = parent.document.querySelector("#scSettingsIframe");
+    // iframeSettings && iframeSettings.classList.contains("open") ? iframeSettings.classList.remove("open") : false;
+    let iframeTree = parent.document.querySelector("#scTreeIframe");
+    iframeTree && iframeTree.classList.contains("open") ? iframeTree.classList.remove("open") : false;
+  }
+};
+
+/**
+ * Close all EE panel - Utility function
+ */
+const showPublishMenuMore = (event) => {
+  if (document.querySelector(".scPublishMenu")) {
+    let moreButton = document.querySelector("#scPublishMenuMore").getBoundingClientRect();
+    let moreMenu = document.querySelector(".scPublishMenuEE");
+    let posY = moreButton.top + moreButton.height;
+    moreMenu.setAttribute("style", `top: ${posY}px !important;`);
+    event.target.id == "scPublishMenuMore" || event.target.className == "scPublishMenuMoreArrow" ? document.querySelector(".scPublishMenu").classList.toggle("visible") : document.querySelector(".scPublishMenu").classList.remove("visible");
   }
 };

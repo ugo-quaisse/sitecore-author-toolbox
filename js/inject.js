@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable require-jsdoc */
 /* eslint-disable default-param-last */
 /* eslint-disable consistent-return */
@@ -48,7 +49,24 @@ function scSaveAnimation(id) {
     }, 2500);
   }
 }
-
+/**
+ * Overwrtting Sitecore scSaveAnimation function
+ */
+// const hookAjax = () => {
+//   XMLHttpRequest.prototype.realSend = XMLHttpRequest.prototype.send;
+//   XMLHttpRequest.prototype.send = function (value) {
+//     this.addEventListener(
+//       "progress",
+//       function () {
+//         // eslint-disable-next-line no-invalid-this
+//         console.log("Loading", this.responseURL);
+//       },
+//       false
+//     );
+//     this.realSend(value);
+//   };
+// };
+// hookAjax();
 const copyTranslate = (leftElemId, rightElemId) => {
   var left = document.querySelector("#" + leftElemId);
   var right = document.querySelector("#" + rightElemId);
@@ -255,13 +273,32 @@ const showSitecoreRibbon = () => {
 };
 
 const showSitecoreRibbonEE = () => {
-  //let ribbon = document.querySelector("div[data-sc-id='PageEditBar']");
-  document.querySelector("[data-sc-id='QuickRibbon']").click();
-  if (document.querySelector("[data-sc-id='QuickRibbon'] > div").classList.contains("navigate_down")) {
-    document.querySelector("#scSitecoreRibbon").classList.remove("scSitecoreRibbon");
-  } else if (document.querySelector("[data-sc-id='QuickRibbon'] > div").classList.contains("navigate_up")) {
-    document.querySelector("#scSitecoreRibbon").classList.add("scSitecoreRibbon");
+  let dock = document.querySelector("div[data-sc-id='PageEditBar']");
+  dock.classList.toggle("showSitecoreRibbon");
+
+  if (dock) {
+    //Update icon and local storage
+    if (dock.classList.contains("showSitecoreRibbon")) {
+      localStorage.setItem("scSitecoreRibbon", true);
+      document.querySelector("#scSitecoreRibbon").classList.add("scSitecoreRibbon");
+    } else {
+      localStorage.setItem("scSitecoreRibbon", false);
+      document.querySelector("#scSitecoreRibbon").classList.remove("scSitecoreRibbon");
+    }
   }
+
+  //Update panels
+  setTimeout(() => {
+    let ribbon = parent.document.querySelector("#scWebEditRibbon").getBoundingClientRect();
+    let iframeLanguage = parent.document.querySelector("#scLanguageIframe");
+    let iframeVersion = parent.document.querySelector("#scVersionIframe");
+    let iframeSettings = parent.document.querySelector("#scSettingsIframe");
+    let iframeTree = parent.document.querySelector("#scTreeIframe");
+    iframeLanguage.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
+    iframeVersion.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
+    iframeSettings.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
+    iframeTree.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
+  }, 2);
 };
 
 const showLanguageMenu = () => {
@@ -754,7 +791,7 @@ function copyPathLightbox(path) {
  * Open Lightbox
  */
 function openLightbox(id, from = "frame") {
-  let lightbox = parent.document.querySelector("#scLightbox");
+  let lightbox = parent.document.querySelector("#scLightbox") ? parent.document.querySelector("#scLightbox") : document.querySelector("#scLightbox");
   let item = from == "frame" ? document.querySelector(`img[data-id='${id}']`) : document.querySelector("iframe[src*='/Media/']").contentDocument.querySelector(`img[data-id='${id}']`);
   let img = item.src.replace("&h=180", "").replace("&w=180", "").replace("&h=300", "").replace("&thn=1", "");
   let name = item.dataset.name;
@@ -826,4 +863,183 @@ function satLogout() {
 function showFullBreadcrumb() {
   document.querySelector(".scBreadcrumbShort").setAttribute("style", "display:none");
   document.querySelector(".scBreadcrumbFull").setAttribute("style", "display:block");
+}
+
+/**
+ * Save page in EE
+ */
+function savePage() {
+  let saveMessage = document.querySelector(".saveMessage");
+  let saveButton = document.querySelector(".scSaveButton");
+  saveButton.innerText = "Saving...";
+  saveButton.setAttribute("disabled", true);
+  parent.document.querySelector("html").setAttribute("style", "cursor: wait !important");
+
+  setTimeout(function () {
+    saveMessage.classList.remove("warning");
+    saveMessage.classList.add("success");
+    saveMessage.classList.add("visible");
+    saveMessage.innerHTML = "Changes saved! Refreshing the page...";
+    saveButton.innerText = "Save";
+    saveButton.removeAttribute("disabled");
+  }, 500);
+
+  setTimeout(function () {
+    saveMessage.classList.remove("visible");
+    saveMessage.innerHTML = "Changes saved! Refreshing the page...";
+    parent.document.querySelector("html").setAttribute("style", "cursor: default !important");
+  }, 10000);
+
+  document.querySelector("a[data-sc-id='QuickSave']").click();
+}
+
+/**
+ * Publish page in EE
+ */
+function publishPage() {
+  document.querySelector("a[data-sc-id^='PublishRibbonButton']").click();
+}
+
+/**
+ * Settings page in EE
+ */
+function settingsPage() {
+  document.querySelector("a[data-sc-id^='ChangeRestrictionsButton']").click();
+}
+
+/**
+ * Unlock page
+ */
+function unlockPage() {
+  document.querySelector("a[data-sc-id^='LockRibbonButton']").click();
+}
+
+/**
+ * Add component in EE
+ */
+function addComponent() {
+  document.querySelector("a[data-sc-id^='QuickInsert-Component']").click();
+}
+
+/**
+ * Add page in EE
+ */
+function addPage() {
+  document.querySelector("a[data-sc-id^='InsertPageRibbonButton']").click();
+}
+
+/**
+ * Show error in EE
+ */
+function showError(id) {
+  let ribbon = parent.document.querySelector("#scWebEditRibbon");
+  ribbon.contentDocument.querySelector("[id='" + id + "']").click();
+}
+/**
+ * Show Sitecore Tree Panel in EE
+ */
+function toggleTreePanel() {
+  let ribbon = parent.document.querySelector("#scWebEditRibbon").getBoundingClientRect();
+  let iframeTree = parent.document.querySelector("#scTreeIframe");
+  iframeTree ? iframeTree.classList.toggle("open") : false;
+  iframeTree.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
+}
+
+/**
+ * Show Language Panel in EE
+ */
+function toggleLanguagePanel() {
+  let ribbon = parent.document.querySelector("#scWebEditRibbon").getBoundingClientRect();
+  let iframeLanguage = parent.document.querySelector("#scLanguageIframe");
+  let iframeVersion = parent.document.querySelector("#scVersionIframe");
+  let iframeSettings = parent.document.querySelector("#scSettingsIframe");
+  iframeLanguage ? iframeLanguage.classList.toggle("open") : false;
+  iframeVersion && iframeVersion.classList.contains("open") ? iframeVersion.classList.remove("open") : false;
+  iframeSettings && iframeSettings.classList.contains("open") ? iframeSettings.classList.remove("open") : false;
+  iframeLanguage.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
+}
+
+/**
+ * Show Version Panel in EE
+ */
+function toggleVersionPanel() {
+  let ribbon = parent.document.querySelector("#scWebEditRibbon").getBoundingClientRect();
+  let iframeLanguage = parent.document.querySelector("#scLanguageIframe");
+  let iframeVersion = parent.document.querySelector("#scVersionIframe");
+  let iframeSettings = parent.document.querySelector("#scSettingsIframe");
+  iframeVersion ? iframeVersion.classList.toggle("open") : false;
+  iframeLanguage && iframeLanguage.classList.contains("open") ? iframeLanguage.classList.remove("open") : false;
+  iframeSettings && iframeSettings.classList.contains("open") ? iframeSettings.classList.remove("open") : false;
+  iframeVersion.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
+}
+
+/**
+ * Show settings Panel in EE
+ */
+function toggleSettingsPanel() {
+  let ribbon = parent.document.querySelector("#scWebEditRibbon").getBoundingClientRect();
+  let iframeLanguage = parent.document.querySelector("#scLanguageIframe");
+  let iframeVersion = parent.document.querySelector("#scVersionIframe");
+  let iframeSettings = parent.document.querySelector("#scSettingsIframe");
+  iframeSettings ? iframeSettings.classList.toggle("open") : false;
+  iframeLanguage && iframeLanguage.classList.contains("open") ? iframeLanguage.classList.remove("open") : false;
+  iframeVersion && iframeVersion.classList.contains("open") ? iframeVersion.classList.remove("open") : false;
+  iframeSettings.setAttribute("style", `top: ${ribbon.height}px !important; height: calc(100% - ${ribbon.height}px) !important;`);
+  //Hide header and footer
+  iframeSettings.contentDocument.querySelector(".scFormDialogHeader").setAttribute("style", "display:none");
+  iframeSettings.contentDocument.querySelector(".scFormDialogFooter").setAttribute("style", "display:none");
+  iframeSettings.contentDocument.querySelector(".scDialogContentContainer").setAttribute("style", "padding: 0px 15px;");
+}
+
+/**
+ * Show notifications messages Panel in EE
+ */
+function toggleNotificationsPanel() {
+  let ribbon = parent.document.querySelector("#scWebEditRibbon").getBoundingClientRect();
+  let iframeTree = parent.document.querySelector("#scTreeIframe");
+  iframeTree && iframeTree.classList.contains("open") ? iframeTree.classList.remove("open") : false;
+}
+
+/**
+ * Show notifications messages Panel in EE
+ */
+function closeNotify(event) {
+  event.path[1].classList.remove("notify--fadeIn");
+  setTimeout(() => {
+    event.path[1].remove();
+  }, 500);
+}
+
+function closeAllNotify() {
+  document.querySelectorAll(".notify").forEach(function (item) {
+    item.classList.remove("notify--fadeIn");
+    setTimeout(() => {
+      item.remove();
+    }, 500);
+  });
+  document.querySelector(".notify-clearall").remove();
+}
+
+/**
+ * Scroll to a datasource in experience editor, from a notify message
+ */
+function scrollToDatasourceEE(id) {
+  let datasourceId = id.replace("{", "").replace("}", "");
+  let rendering = parent.document.querySelector(".scLooseFrameZone[sc_item*='" + datasourceId + "' i]");
+  rendering ? window.scrollTo(0, rendering.offsetTop - 300) : false;
+  rendering.setAttribute("style", "border:red 2px solid");
+}
+
+/**
+ * Open validation window fron EE
+ */
+function openValidationEE() {
+  parent.document.querySelector("[data-sc-id*='ValidationRibbonButton' i]") ? parent.document.querySelector("[data-sc-id*='ValidationRibbonButton' i]").click() : false;
+}
+
+/**
+ * Open workbox from EE
+ */
+function openWorkboxEE() {
+  document.querySelector('[data-sc-id="WorkboxRibbonButton"]') ? document.querySelector('[data-sc-id="WorkboxRibbonButton"]').click() : false;
 }

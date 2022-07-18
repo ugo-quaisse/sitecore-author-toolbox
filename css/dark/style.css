@@ -1,11 +1,6 @@
 body.satDark {
   border: none;
 }
-
-::-webkit-scrollbar-thumb {
-  background: var(--black5) !important;
-}
-
 body.satDark .sc-globalHeader {
   background-color: var(--black2);
 }
@@ -97,28 +92,6 @@ body.satDark textarea {
   color: var(--text) !important;
   background-color: var(--black2) !important;
   border-color: var(--black3);
-}
-
-body.satDark #ClickableArea {
-  background-color: var(--black2) !important;
-}
-
-body.satDark .scWorkBoxData {
-  color: var(--text);
-}
-
-body.satDark .scToolbar {
-  background-color: var(--black2) !important;
-  color: var(--text);
-}
-
-body.satDark .scToolbutton {
-  color: var(--text) !important;
-}
-
-body.satDark .scToolbutton_Down {
-  color: var(--text) !important;
-  background-color: var(--black4) !important;
 }
 
 body.satDark .scContentControlHtml {
@@ -283,19 +256,13 @@ body.satDark .scCalendarDay {
 
 body.satDark .scCalendarSelected {
   background-color: #d0ebf6;
-  color: var(--text);
-}
-
-body.satDark td.scCalendarCell,
-body.satDark td.scCalendarToday,
-body.satDark td.scCalendarTodayCell {
-  color: var(--text);
+  color: var(--black1);
 }
 
 body.satDark td.scCalendarCell:hover,
 body.satDark td.scCalendarToday:hover {
   background-color: #e3e3e3;
-  color: var(--text);
+  color: var(--black1);
 }
 
 body.satDark .scCalendarCellOtherMonth {
@@ -1447,12 +1414,6 @@ body.satDark .scChecked {
 body.satDark .scStartMenu,
 body.satDark .scStartMenuPrograms {
   background-color: var(--black2) !important;
-}
-
-body.satDark .scStartMenuLeftOption,
-body.satDark .scStartMenuRightFolder,
-body.satDark .scStartMenuProgramsMenu {
-  color: var(--white) !important;
 }
 
 body.satDark .scStartMenuRightFolder:hover,
@@ -3273,24 +3234,4 @@ body.satDark .sc-border[data-sc-id="FallBackMessageBorder"] {
 
 body.satDark .gridParams td {
   border-color: transparent !important;
-}
-
-body.satDark .sc-gallery-option-content-header > span,
-body.satDark .sc-gallery-option-content-description > span,
-body.satDark .sc-gallery-additionaloption-labelcontainer > span,
-body.satDark .sc-gallery-versionoption-title > span {
-  color: var(--text);
-}
-
-body.satDark .main-grid {
-  border: 1px solid var(--black3);
-}
-
-body.satDark .commands-cell {
-  background-color: var(--black2);
-  border-left: 1px solid var(--black2);
-}
-
-body.satDark .sort-item {
-  border: 1px solid var(--black3);
 }

@@ -108,6 +108,7 @@ const instantSearch = () => {
         }
 
         if (event.key === "Enter") {
+          console.log("press enter");
           event.preventDefault();
         }
 

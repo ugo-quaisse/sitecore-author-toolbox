@@ -138,27 +138,18 @@
             <label for="feature_rtl" class="scLabel"></label>
             <span class="scFeatureName">RTL (Arabic, Hebrew, Persian, Urdu, Sindhi) <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank" rel="noopener">Info</a></span>
           </div>
+          <!-- Favorites sidebar -->
+          <div class="scFeature">
+            <input id="feature_favorites" name="feature_favorites" class="scCheckbox" type="checkbox" />
+            <label for="feature_favorites" class="scLabel"></label>
+            <span class="scFeatureName">Favorites sidebar <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank" rel="noopener">Info</a></span>
+          </div>
           <!-- Translate mode copy button -->
           <div class="scFeature">
             <input id="feature_translatemode" name="feature_translatemode" class="scCheckbox" type="checkbox" />
             <label for="feature_translatemode" class="scLabel"></label>
             <span class="scFeatureName">Translate mode copy button <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank" rel="noopener">Info</a></span>
           </div>
-          <!-- Fancy message bars -->
-          <div class="scFeature">
-            <input id="feature_messagebar" name="feature_messagebar" class="scCheckbox" type="checkbox" />
-            <label for="feature_messagebar" class="scLabel"></label>
-            <span class="scFeatureName">Fancy message bars <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank" rel="noopener">Info</a></span>
-          </div>
-          <!-- Other enhancements -->
-          <div class="scFeature">
-            <input id="feature_contenteditor" name="feature_contenteditor" class="scCheckbox" type="checkbox" />
-            <label for="feature_contenteditor" class="scLabel"></label>
-            <span class="scFeatureName">Other enhancements <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank" rel="noopener">Info</a></span>
-          </div>
-        </fieldset>
-        <legend>Content Editor <i>⚠️ Can slow down performances</i></legend>
-        <fieldset>
           <!-- Quick info -->
           <div class="scFeature">
             <input id="feature_quickinfoenhancement" name="feature_quickinfoenhancement" class="scCheckbox" type="checkbox" />
@@ -183,11 +174,17 @@
             <label for="feature_reminder" class="scLabel"></label>
             <span class="scFeatureName">Reminder bar <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank" rel="noopener">Info</a></span>
           </div>
-          <!-- Favorites sidebar -->
+          <!-- Fancy message bars -->
           <div class="scFeature">
-            <input id="feature_favorites" name="feature_favorites" class="scCheckbox" type="checkbox" />
-            <label for="feature_favorites" class="scLabel"></label>
-            <span class="scFeatureName">Favorites sidebar <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank" rel="noopener">Info</a></span>
+            <input id="feature_messagebar" name="feature_messagebar" class="scCheckbox" type="checkbox" />
+            <label for="feature_messagebar" class="scLabel"></label>
+            <span class="scFeatureName">Fancy message bars <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank" rel="noopener">Info</a></span>
+          </div>
+          <!-- Other enhancements -->
+          <div class="scFeature">
+            <input id="feature_contenteditor" name="feature_contenteditor" class="scCheckbox" type="checkbox" />
+            <label for="feature_contenteditor" class="scLabel"></label>
+            <span class="scFeatureName">Other enhancements <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank" rel="noopener">Info</a></span>
           </div>
         </fieldset>
         <legend>Media Library</legend>
@@ -213,12 +210,6 @@
         </fieldset>
         <legend>Experience Editor</legend>
         <fieldset>
-          <!-- Warnning notifications -->
-          <div class="scFeature">
-            <input id="feature_eenotify" name="feature_eenotify" class="scCheckbox" type="checkbox" />
-            <label for="feature_eenotify" class="scLabel"></label>
-            <span class="scFeatureName">Notification center <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank" rel="noopener">Info</a></span>
-          </div>
           <!-- Right click to open in EE -->
           <div class="scFeature">
             <input id="feature_contextmenu" name="feature_contextmenu" class="scCheckbox" type="checkbox" />
@@ -263,27 +254,27 @@
       </div>
       <!-- Panel domains -->
       <div id="domains">
-        <h2>1. How to configure your sites</h2>
+        <p>
+          <a class="show_hint">How to configure your sites</a>
+        </p>
         <div id="hint">
           <ul>
             <li>Copy the Sitecore site path from the Homepage Quick Info section</li>
             <li>Enter your Site Url</li>
-            <li>Optionnal: If you need to embed language code in a specific place, add <code>{lang}</code> token in your "site URL". (e.g https://yoursite.com/folder-{lang}/</li>
-            <li>Optionnal: If you want to disable language embedding for a given site, turn off "Embed" in Advanced mode.</li>
-            <li>Optionnal: If you need to configure a specific URL for a given language, add language code in "Language" field in Advanced mode. (e.g "en" or "fr-fr")</li>
+            <li>If needed, add <code>{lang}</code> token in your "site URL" if you want to embed language at a specific place.</li>
+            <li>If you want to disable language embedding for a given site, click Advanced Mode and switch off embedding.</li>
+            <li>If you need to get a specific URL for a given language, click Advanced Mode and add Sitecore language in this field (e.g "en" or "fr-fr")</li>
             <li>More help available at <a href="https://uquaisse.io/sat_domains" target="_blank" rel="noopener">https://uquaisse.io</a></li>
           </ul>
         </div>
 
         <div id="sitesButtons">
-          <h2>2. Backup / restore your sites</h2>
           <input class="importSites" type="file" accept=".json" style="display: none" />
           <input class="importSitesVisible" type="button" value="⤒ IMPORT (.JSON)" />
           <input class="exportSites" type="button" value="⤓ EXPORT (.JSON)" />
         </div>
 
         <div id="modes">
-          <h2>3. List of you sites</h2>
           <a class="advanced_mode">[Show Advanced mode]</a>
           <a class="basic_mode" style="display: none">[Show Basic mode]</a>
         </div>

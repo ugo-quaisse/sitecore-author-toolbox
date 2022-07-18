@@ -6,13 +6,14 @@
 import * as global from "./global.js";
 import { getScItemData, log, initStorageFeature, trimTrailingSlash } from "./helpers.js";
 
-export { getSiteUrl, buildLiveUrl, initLiveUrl, checkUrlStatus };
+export { getSiteUrl, initLiveUrl, checkUrlStatus };
 
 /**
  * Find and Match site URL from user's storage
  */
 const getSiteUrl = (storage, path, language) => {
   storage.site_manager == initStorageFeature(storage.site_manager, true);
+
   //Initialisation
   const homePath = getHomePath(path);
   let liveUrl;
@@ -79,6 +80,7 @@ const getSiteUrl = (storage, path, language) => {
     for (domain in storage.domain_manager) {
       if (window.location.origin == domain) {
         liveUrl = decodeURI(storage.domain_manager[domain]);
+        // console.log("**Domain Manager**", liveUrl);
         //Fill scSite object
         scSite.path = domain.toLowerCase();
         scSite.url = liveUrl.toLowerCase();
@@ -115,44 +117,6 @@ const getHomePath = (itemPath) => {
 };
 
 /**
- * Build live URL of a page based on different scenarios
- */
-const buildLiveUrl = (ScItem, ScSite, response = false) => {
-  let urlInfo = {};
-  urlInfo.badge = `CM server (click to configure)`;
-  urlInfo.alternativeUrl = `${window.location.origin}/?sc_itemid=${ScItem.id}&sc_mode=normal&sc_lang=${ScItem.language}&sc_version=${ScItem.version}`;
-  urlInfo.isCdServer = false;
-  urlInfo.sitecorePath = pathFromHome(ScItem.pathFull);
-  urlInfo.liveUrl = ScSite.url;
-
-  if (urlInfo.liveUrl == undefined) {
-    urlInfo.liveUrl = `${window.location.origin}/${ScItem.language}/${urlInfo.sitecorePath}`;
-    //Update alternative Url
-    urlInfo.alternativeUrl = `or try <a href="${urlInfo.alternativeUrl}" target="_blank" class="scMessageBarOption">this alternative link</a>`;
-    urlInfo.alternativeUrl = response.farewell ? urlInfo.alternativeUrl.replace("xxxsxa_sitexxx", response.farewell) : (urlInfo.alternativeUrl = urlInfo.alternativeUrl.replace("&sc_site=xxxsxa_sitexxx", ""));
-  } else {
-    urlInfo.badge = "CD server";
-    urlInfo.isCdServer = true;
-    //Language embedding position detection
-    urlInfo.liveUrl = urlInfo.liveUrl.includes("{lang}") ? `${urlInfo.liveUrl.replace("{lang}", ScItem.language)}/${urlInfo.sitecorePath}` : `${urlInfo.liveUrl}/${ScItem.language}/${urlInfo.sitecorePath}`;
-    //Language embedding disabled
-    ScSite.languageEmbedding == false ? (urlInfo.liveUrl = urlInfo.liveUrl.replace(`/${ScItem.language}/`, `/`)) : false;
-    //Display name enabled
-    if (ScSite.displayName && ScItem.displayName && ScItem.name != "home") {
-      const split = trimTrailingSlash(urlInfo.liveUrl).split("/");
-      const requiredPath = split.slice(0, split.length - 1).join("/") + "/";
-      urlInfo.liveUrl = requiredPath + ScItem.displayName;
-    }
-    //Replace white space with dash
-    urlInfo.liveUrl = urlInfo.liveUrl.replaceAll(" ", "-");
-    //Alternative URL not needed
-    urlInfo.alternativeUrl = ``;
-  }
-
-  return urlInfo;
-};
-
-/**
  * Show live URL of a page
  */
 const initLiveUrl = (storage) => {
@@ -165,6 +129,7 @@ const initLiveUrl = (storage) => {
   let scEditorTabs = document.querySelector("div#scEditorTabs");
   let scEditorHeaderVersionsLanguage = document.querySelector(".scEditorHeaderVersionsLanguage");
   let scLanguageTxtLong = scEditorHeaderVersionsLanguage ? scEditorHeaderVersionsLanguage.getAttribute("title") : false;
+  let badge;
   let barStyle = !storage.feature_experimentalui ? "scWarning" : "scSuccess";
   //Live URL
   if (!ScItem.id) {
@@ -173,9 +138,14 @@ const initLiveUrl = (storage) => {
   let ScSite = getSiteUrl(storage, ScItem.pathFull, ScItem.language);
   let siteName = ScItem.pathFull.split("/home/")[0].split("/").reverse();
   let pathToHome = ScItem.pathFull.split("/home/")[0] + "/home/";
+  let alternativeUrl = window.location.origin + "/?sc_itemid=" + ScItem.id + "&sc_mode=normal&sc_lang=" + ScItem.language + "&sc_version=" + ScItem.version;
+  let isCdServer = false;
+  //Path
+  let sitecorePath = pathFromHome(ScItem.pathFull);
   //Template type
   let isContent = ScItem.pathFull.includes("/sitecore/content/");
   let isMedia = ScItem.pathFull.includes("/sitecore/media library/");
+  //let isSxaSite = ScItem.template.split("/").pop() == "site";
   let isData = ScItem.pathFull.includes("/data/");
   let isSettings = ScItem.pathFull.includes("/settings/");
   let isPresentation = ScItem.pathFull.includes("/presentation/");
@@ -188,29 +158,51 @@ const initLiveUrl = (storage) => {
     if (!document.querySelector("#scMessageBarUrl") && storage.feature_urls) {
       //Get cookie sxa_site
       chrome.runtime.sendMessage({ greeting: "sxa_site" }, function (response) {
-        //Build live URL object
-        let urlInfo = buildLiveUrl(ScItem, ScSite, response);
-        //Hide preview button if exists
+        //Update live Url
+        if (ScSite.url == undefined) {
+          badge = "CM server";
+          ScSite.url = window.location.origin + "/" + ScItem.language + "/" + sitecorePath;
+          //Update alternative Url
+          alternativeUrl = `or try <a href="${alternativeUrl}" target="_blank" class="scMessageBarOption">this alternative link</a>`;
+          alternativeUrl = response.farewell ? alternativeUrl.replace("xxxsxa_sitexxx", response.farewell) : (alternativeUrl = alternativeUrl.replace("&sc_site=xxxsxa_sitexxx", ""));
+        } else {
+          badge = "CD server";
+          isCdServer = true;
+          //Language embedding position
+          ScSite.url = ScSite.url.includes("{lang}") ? ScSite.url.replace("{lang}", ScItem.language) + "/" + sitecorePath : ScSite.url + "/" + ScItem.language + "/" + sitecorePath;
+          //Language embedding disabled
+          ScSite.languageEmbedding == false ? (ScSite.url = ScSite.url.replace("/" + ScItem.language + "/", "/")) : false;
+          //Display name enabled
+          if (ScSite.displayName && ScItem.displayName && ScItem.name != "home") {
+            const split = trimTrailingSlash(ScSite.url).split("/");
+            const requiredPath = split.slice(0, split.length - 1).join("/") + "/";
+            ScSite.url = requiredPath + ScItem.displayName;
+          }
+          //Replace white space with dash
+          ScSite.url = ScSite.url.replaceAll(" ", "-");
+          //Alternative URL
+          alternativeUrl = ``;
+        }
+
+        //Experimentation
         document.querySelector(".scPreviewButton") ? document.querySelector(".scPreviewButton").setAttribute("style", "display: block") : false;
-        //Html chips
-        let statusDiv = storage.feature_urlstatus && urlInfo.isCdServer ? `<span class="liveUrlLoader">Checking...</span>` : ``;
-        let cdConfigDiv = !urlInfo.isCdServer ? `` : `hide`;
-        //Prepare LiveURL message Bar (scInformation scWarning scError)
+
+        let statusDiv = storage.feature_urlstatus && isCdServer ? `<span class="liveUrlLoader">Checking...</span>` : ``;
+        let cdConfigDiv = !isCdServer ? `` : `hide`;
+
+        //Prepare HTML (scInformation scWarning scError)
+        //prettier-ignore
         let scMessage = `<div id="scMessageBarLiveUrl" class="scMessageBar ${barStyle}">
             <div class="scMessageBarIcon" style="background-image:url(${global.icon})"></div>
             <div class="scMessageBarTextContainer">
               <div class="scMessageBarTitle">Sitecore Live URL
               ${statusDiv}
-              <span class="liveUrlBadge t-sm t-right ${cdConfigDiv}" onclick="addSite('${global.launchpadPage}','${
-          global.urlOrigin
-        }','${pathToHome}', '${siteName[0].toUpperCase()}')" data-tooltip="Click to configure your sites" title="Click to configure your sites">${urlInfo.badge}</span>
+              <span class="liveUrlBadge t-sm t-top ${cdConfigDiv}" onclick="addSite('${global.launchpadPage}','${global.urlOrigin}','${pathToHome}', '${siteName[0].toUpperCase()}')" data-tooltip="Click to configure your sites" title="Click to configure your sites">${badge}</span>
               <span class="liveUrlStatus"></span>
               </div>
               <div class="scMessageBarText">To view this page in <b>"${scLanguageTxtLong}"</b></div>
               <ul class="scMessageBarOptions" style="margin:0px">
-                <li class="scMessageBarOptionBullet">
-                  <a href="${decodeURI(urlInfo.liveUrl)}" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this page</a> ${urlInfo.alternativeUrl}
-                </li>
+              <li class="scMessageBarOptionBullet"><a href="${decodeURI(ScSite.url)}" target="_blank" class="scMessageBarOption sitecoreItemPath">Open this page</a> ${alternativeUrl}</li>
               </ul>
               </div>
             </div>`;
@@ -235,16 +227,16 @@ const initLiveUrl = (storage) => {
         }
 
         //Insert link into Quickinfo table
-        liveUrlQuickInfo(urlInfo.liveUrl);
+        liveUrlQuickInfo(ScSite.url);
 
         /**
          * Live status
          */
-        if (storage.feature_urlstatus && urlInfo.isCdServer && !isMedia) {
+        if (storage.feature_urlstatus && isCdServer && !isMedia) {
           chrome.runtime.sendMessage(
             {
               greeting: "get_pagestatus",
-              url: urlInfo.liveUrl,
+              url: ScSite.url,
               source: null,
               experimental: true,
             },
@@ -322,6 +314,7 @@ const checkUrlStatus = (status, source = null, experimental = false) => {
     liveUrlStatus = source.querySelector(".liveUrlStatus");
     liveUrlLoader = source.querySelector(".liveUrlLoader");
   }
+
   //Show badge
   document.querySelector(".liveUrlBadge") ? document.querySelector(".liveUrlBadge").classList.remove("hide") : false;
   //Check response

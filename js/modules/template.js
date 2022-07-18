@@ -40,6 +40,7 @@ const initQuerySuggestions = (storage) => {
     template.insertAdjacentHTML("beforeend", datalist);
     //Add autocomplete
     document.querySelectorAll("#TemplatePanel .scTableFieldSourceInput").forEach(function (elem) {
+      console.log(elem);
       elem.setAttribute("list", "queries");
     });
   }

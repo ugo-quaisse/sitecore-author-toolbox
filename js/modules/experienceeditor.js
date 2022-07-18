@@ -456,7 +456,7 @@ const addNotificationsEE = (title, message, type = "success", autoclose = 0) => 
       icon = global.notifyIconSuccess;
       break;
   }
-  let html = `<div class="notify notify--type-3 notify--${type} notify--fade notify--fadeIn" style="--gap:10px; transition-duration: 300ms;">
+  let html = `<div class="notify notify--type-3 notify--${type} notify--fade notify--fadeIn" style="--gap:15px; transition-duration: 300ms;">
                   <div class="notify__icon">
                     ${icon}
                   </div>

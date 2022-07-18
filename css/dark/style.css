@@ -103,6 +103,24 @@ body.satDark #ClickableArea {
   background-color: var(--black2) !important;
 }
 
+body.satDark .scWorkBoxData {
+  color: var(--text);
+}
+
+body.satDark .scToolbar {
+  background-color: var(--black2) !important;
+  color: var(--text);
+}
+
+body.satDark .scToolbutton {
+  color: var(--text) !important;
+}
+
+body.satDark .scToolbutton_Down {
+  color: var(--text) !important;
+  background-color: var(--black4) !important;
+}
+
 body.satDark .scContentControlHtml {
   background-color: var(--black2) !important;
   color: var(--text);

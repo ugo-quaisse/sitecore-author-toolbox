@@ -1,5 +1,5 @@
 .notifications-container {
-  max-height: calc(100vh - 100px);
+  max-height: calc(100vh - 0px);
   max-width: 380px;
   pointer-events: none;
   position: fixed;
@@ -100,17 +100,27 @@
   font-weight: 600;
   padding-right: calc(var(--notify-padding) + var(--notify-close-icon-size));
   line-height: 1.6 !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }
 .notify__text {
   font-size: 14px !important;
   font-size: 0.875rem !important;
   margin-top: 0.25rem !important;
   line-height: 1.6 !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }
 .notify__text > a {
   font-size: 14px !important;
   line-height: 1.6 !important;
-  color: var(--notify-white);
+  color: var(--notify-white) !important;
   text-decoration: underline !important;
 }
 .notify--type-1 {
@@ -251,4 +261,28 @@
 }
 .notify.notify-autoclose.notify--info::before {
   background-color: var(--notify-info-progress);
+}
+.notify-clearall {
+  color: var(--white) !important;
+  background-color: var(--messageSuccessLink) !important;
+  width: 75px !important;
+  text-align: center !important;
+  font-size: 14px !important;
+  border-radius: 20px;
+  float: right !important;
+  margin: 5px 20px 5px 0px !important;
+  box-shadow: 0px 4px 5px rgb(0 0 0 / 10%) !important;
+  padding: 3px 5px !important;
+  opacity: 0.95 !important;
+  cursor: pointer !important;
+  font-weight: 400 !important;
+  transition: all 0.1s ease 0s;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.notify-clearall:hover {
+  color: var(--white) !important;
+  background-color: var(--messageSuccessLink) !important;
+  opacity: 1 !important;
+  box-shadow: 0px 4px 5px rgb(0 0 0 / 20%) !important;
 }

@@ -15,7 +15,6 @@ export {
   addHideRibbonButton,
   resetExperienceEditor,
   initRenderingSearchBox,
-  initHighlightValidationError,
   initOptionalFields,
   initNotificationsEE,
   initGroupedErrorsEE,
@@ -369,18 +368,6 @@ const resetExperienceEditor = (storage) => {
 };
 
 /**
- * Highlight validation errors in the page TODO
- */
-const initHighlightValidationError = (storage) => {
-  storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;
-  if (storage.feature_experienceeditor) {
-    document.querySelectorAll(".alert-error .sc-messageBar-messageText-container .OptionTitle").forEach((elem) => {
-      console.log(elem.id);
-    });
-  }
-};
-
-/**
  * Init Rendering Search box
  */
 const initRenderingSearchBox = (storage) => {
@@ -437,7 +424,7 @@ const initOptionalFields = (storage) => {
  * Init notifications in Experience Editor
  */
 const initNotificationsEE = () => {
-  let html = `<div class="notifications-container notify-is-right notify-is-bottom" style="--distance:20px;"></div>`;
+  let html = `<div class="notifications-container notify-is-right notify-is-bottom" style="--distance:20px;" data-count="0"></div>`;
   parent.document.querySelector("body").insertAdjacentHTML("beforeend", html);
   //Event listener
 };
@@ -445,7 +432,8 @@ const initNotificationsEE = () => {
 /**
  * Init notifications in Experience Editor
  */
-const addNotificationsEE = (title, message, type = "success") => {
+// eslint-disable-next-line no-unused-vars, max-params
+const addNotificationsEE = (title, message, type = "success", autoclose = 0) => {
   let icon;
   switch (type) {
     case "success":
@@ -458,6 +446,10 @@ const addNotificationsEE = (title, message, type = "success") => {
 
     case "error":
       icon = global.notifyIconError;
+      break;
+
+    case "notifications":
+      icon = global.notifyIconInfo;
       break;
 
     default:
@@ -476,7 +468,18 @@ const addNotificationsEE = (title, message, type = "success") => {
                     <div class="notify__text">${message}</div>
                   </div>
                 </div>`;
+
   parent.document.querySelector("body .notifications-container").insertAdjacentHTML("afterbegin", html);
+  parent.document.querySelector("body .notifications-container").dataset.count++;
+
+  if (autoclose > 0) {
+    setTimeout(() => {
+      parent.document.querySelector(".notify").classList.remove("notify--fadeIn");
+      setTimeout(() => {
+        parent.document.querySelector(".notify").remove();
+      }, 500);
+    }, autoclose);
+  }
 };
 
 /**
@@ -486,37 +489,26 @@ const initGroupedErrorsEE = (storage) => {
   storage.feature_eenotify == undefined ? (storage.feature_eenotify = true) : false;
   if (storage.feature_eenotify) {
     initNotificationsEE();
-    //Datasource fields validation
+    //Variables
+    let urlParams = new URLSearchParams(parent.window.location.search);
+    let sc_token = document.getElementsByName("__RequestVerificationToken")[0].value;
+    let sc_itemid = urlParams.get("sc_itemid");
+    let sc_language = parent.document.querySelector("input#scLanguage").value;
+    let sc_version = urlParams.get("sc_version") || 1;
+    let scFieldValues = ``;
+    parent.document.querySelectorAll("#scFieldValues > input").forEach(function (item) {
+      scFieldValues += `"${item.id}":"",`;
+    });
+    scFieldValues += `######`;
+    scFieldValues = scFieldValues.replace(`,######`, ``).replace(`######`, ``);
+
+    //1. Datasource fields validation
     setTimeout(() => {
-      let urlParams = new URLSearchParams(parent.window.location.search);
-      let sc_token = document.getElementsByName("__RequestVerificationToken")[0].value;
-      let sc_itemid = urlParams.get("sc_itemid");
-      let sc_language = parent.document.querySelector("input#scLanguage").value;
-      let sc_version = urlParams.get("sc_version") || 1;
-      let scFieldValues = ``;
-      parent.document.querySelectorAll("#scFieldValues > input").forEach(function (item) {
-        scFieldValues += `"${item.id}":"",`;
-      });
-      scFieldValues += `######`;
-      scFieldValues = scFieldValues.replace(`,######`, ``).replace(`######`, ``);
       let scErrorType = `error`;
       fetch("/-/speak/request/v1/expeditor/ExperienceEditor.FieldsValidation.ValidateFields", {
         headers: {
-          accept: "*/*",
-          "accept-language": "fr,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,en-GB-oxendict;q=0.6",
-          "cache-control": "no-cache",
           "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-          pragma: "no-cache",
-          "sec-ch-ua": '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
-          "sec-ch-ua-mobile": "?0",
-          "sec-ch-ua-platform": '"macOS"',
-          "sec-fetch-dest": "empty",
-          "sec-fetch-mode": "cors",
-          "sec-fetch-site": "same-origin",
-          "x-requested-with": "XMLHttpRequest",
         },
-        referrer: "https://dev-weu-sitecore-01-cm.6952f9b6f3ab41099033.westeurope.aksapp.io/sitecore/",
-        referrerPolicy: "strict-origin-when-cross-origin",
         body:
           "__RequestVerificationToken=" +
           sc_token +
@@ -547,10 +539,6 @@ const initGroupedErrorsEE = (storage) => {
               item.Text = `Language version "${sc_language}" seems missing for a datasource`;
               scErrorType = "warning";
             }
-            //Is present in page
-            //let datasourceId = item.DataSourceId.replace("{", "").replace("}", "");
-            //let rendering = parent.document.querySelector(".scLooseFrameZone[sc_item*='" + datasourceId + "' i]");
-            //let text = rendering ? `- <a onclick='scrollToDatasourceEE("${item.DataSourceId}")' style="color:rgba(255, 255, 255, 0.8); cursor:pointer">Show this error</a>` : ``;
             addNotificationsEE(
               `${item.Text}`,
               `<a href="/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#${item.DataSourceId}_${sc_language.toLowerCase()}_${sc_version}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">Fix this error</a>`,
@@ -560,36 +548,12 @@ const initGroupedErrorsEE = (storage) => {
         });
     }, 500);
 
-    //Page fields validation
+    //2. Page fields validation
     setTimeout(() => {
-      let urlParams = new URLSearchParams(parent.window.location.search);
-      let sc_token = document.getElementsByName("__RequestVerificationToken")[0].value;
-      let sc_itemid = urlParams.get("sc_itemid");
-      let sc_language = parent.document.querySelector("input#scLanguage").value;
-      let sc_version = urlParams.get("sc_version") || 1;
-      let scFieldValues = ``;
-      parent.document.querySelectorAll("#scFieldValues > input").forEach(function (item) {
-        scFieldValues += `"${item.id}":"",`;
-      });
-      scFieldValues += `######`;
-      scFieldValues = scFieldValues.replace(`,######`, ``).replace(`######`, ``);
       fetch("/-/speak/request/v1/expeditor/ExperienceEditor.Proofing.Validation", {
         headers: {
-          accept: "*/*",
-          "accept-language": "fr,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,en-GB-oxendict;q=0.6",
-          "cache-control": "no-cache",
           "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-          pragma: "no-cache",
-          "sec-ch-ua": '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
-          "sec-ch-ua-mobile": "?0",
-          "sec-ch-ua-platform": '"macOS"',
-          "sec-fetch-dest": "empty",
-          "sec-fetch-mode": "cors",
-          "sec-fetch-site": "same-origin",
-          "x-requested-with": "XMLHttpRequest",
         },
-        referrer: "https://dev-weu-sitecore-01-cm.6952f9b6f3ab41099033.westeurope.aksapp.io/sitecore/",
-        referrerPolicy: "strict-origin-when-cross-origin",
         body:
           "__RequestVerificationToken=" +
           sc_token +
@@ -615,40 +579,58 @@ const initGroupedErrorsEE = (storage) => {
           dom.querySelectorAll(".scListControl tr").forEach(function (line) {
             if (line.querySelectorAll("td") && line.querySelectorAll("td").length == 3) {
               let errorType = line.querySelectorAll("td")[0].querySelector("img").src;
-              if (errorType.includes("yellow.png") && !line.querySelector("td.scValidatorTitle > div:last-child").innerText.includes("Spaces are URL encoded")) {
-                addNotificationsEE(
-                  line.querySelector("td.scValidatorTitle > div:last-child").innerText,
-                  `${line.querySelector("td.scValidatorResult").innerText} <a href="${validatorLink}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">Review</a>`,
-                  `warning`
-                );
+              let fixLink = `<a href="sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#${sc_itemid}_${sc_language}_${sc_version}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">Fix this error</a>`;
+              //Unknown error
+              if (line.querySelector("td.scValidatorResult").innerText.includes("[unknown]")) {
+                line.querySelector("td.scValidatorResult").innerText = `Language version "${sc_language}" seems missing for a field`;
+              }
+              if (errorType.includes("yellow.png") && !line.querySelector("td.scValidatorTitle > div:last-child").innerText.includes("XHTML")) {
+                addNotificationsEE(line.querySelector("td.scValidatorResult").innerText, `${fixLink} &nbsp; <a href="${validatorLink}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">More details</a>`, `warning`);
               } else if (errorType.includes("red.png") && !line.querySelector("td.scValidatorResult").innerText.includes("(403)")) {
-                addNotificationsEE(
-                  line.querySelector("td.scValidatorTitle > div:last-child").innerText,
-                  `${line.querySelector("td.scValidatorResult").innerText} <a href="${validatorLink}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">Review</a>`,
-                  `error`
-                );
+                addNotificationsEE(line.querySelector("td.scValidatorResult").innerText, `${fixLink} &nbsp; <a href="${validatorLink}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">More details</a>`, `error`);
               }
             }
           });
         });
     }, 600);
 
-    //Validation bar warnings and info
+    //3. Validation bar warnings and info
     setTimeout(() => {
       document.querySelectorAll(".sc-messageBar-messages-wrap > div").forEach(function (group) {
-        if (group.dataset.bind.toLowerCase().includes("warning")) {
+        if (group.dataset.bind.toLowerCase().includes("notifications") || group.dataset.bind.toLowerCase().includes("warning")) {
+          let className = group.dataset.bind.toLowerCase().includes("notifications") ? "info" : "warning";
           group.querySelectorAll(".sc-messageBar-messageText").forEach(function (item) {
-            console.log("WARNINGS -----> ", item.innerText);
-            addNotificationsEE(item.innerText, ``, `warning`);
-          });
-        }
-        if (group.dataset.bind.toLowerCase().includes("notifications")) {
-          group.querySelectorAll(".sc-messageBar-messageText").forEach(function (item) {
-            console.log("NOTIFICATIONS -----> ", item.innerText);
-            addNotificationsEE(item.innerText, ``, `success`);
+            let doc = new DOMParser().parseFromString(item.innerHTML, "text/html");
+            let count = 0;
+            doc.querySelectorAll("a").forEach(function (link) {
+              console.log(link);
+              link.setAttribute(`onclick`, `document.querySelector('#scWebEditRibbon').contentDocument.querySelectorAll("[data-bind*='notifications' i] .sc-messageBar-messageText a")[${count}].click()`);
+              link.setAttribute("style", "opacity:0.8; padding: 0px 10px 0px 0px;");
+              count++;
+            });
+            let docTitle = new DOMParser().parseFromString(item.innerHTML, "text/html");
+            docTitle.querySelectorAll("a").forEach(function (link) {
+              link.remove();
+            });
+            docTitle = docTitle.querySelector("body").innerHTML;
+            let docAction = ``;
+            doc.querySelectorAll("a").forEach(function (link) {
+              docAction += link.outerHTML + " ";
+            });
+            docAction = docAction.includes("has locked this item") ? `Try unlocking from the "Home" tab` : docAction;
+            docTitle != "" ? addNotificationsEE(docTitle, docAction, className) : false;
           });
         }
       });
-    }, 3000);
+    }, 4000);
+
+    //4. Check if no error on this page
+    setTimeout(() => {
+      if (parent.document.querySelector("body .notifications-container").dataset.count == 0) {
+        addNotificationsEE(`This page looks great! 🎉`, `No error found on this page.`, `success`, 4000);
+      } else if (parent.document.querySelector("body .notifications-container").dataset.count > 3) {
+        parent.document.querySelector("body .notifications-container").insertAdjacentHTML("afterbegin", `<div onclick="closeAllNotify()" class="notify-clearall">Clear All</div>`);
+      }
+    }, 4500);
   }
 };

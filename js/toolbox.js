@@ -338,7 +338,6 @@ chrome.storage.sync.get((storage) => {
       resetExperienceEditor(storage);
       initMaterializeIcons(storage);
       initOptionalFields(storage);
-      //initHighlightValidationError(storage);
     }
   }
 

@@ -470,6 +470,10 @@ body.satExperimentalUi.satDark .scRibbonToolbarLargeComboButtonDown:hover {
   color: var(--accentText) !important;
 }
 
+body.satExperimentalUi.satDark .scSaveBar > .scBreadcrumb > span > i {
+  filter: invert(1) !important;
+}
+
 body.satExperimentalUi.satDark .scStretch {
   background-color: var(--black2) !important;
   color: var(--text);

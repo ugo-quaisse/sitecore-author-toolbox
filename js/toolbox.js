@@ -304,11 +304,13 @@ chrome.storage.sync.get((storage) => {
      */
     if (global.isRibbon) {
       log("**** EE Ribbon ****", "orange");
+      document.querySelector("body").classList.add("satEEExperimentalUi");
       initSitecoreRibbon();
       initPreviewButtonsEE(storage);
       storeCurrentPageEE();
       insertSavebarEE(storage);
       initGroupedErrorsEE(storage);
+      checkWorkbox(storage);
     } else if (global.isPreviewMode && global.isEEPreview) {
       document.querySelector("#ribbonPreLoadingIndicator").remove();
       document.querySelector("#scWebEditRibbon").remove();

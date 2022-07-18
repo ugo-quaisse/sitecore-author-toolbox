@@ -119,7 +119,7 @@ const getHomePath = (itemPath) => {
  */
 const buildLiveUrl = (ScItem, ScSite, response = false) => {
   let urlInfo = {};
-  urlInfo.badge = `CM server`;
+  urlInfo.badge = `CM server (click to configure)`;
   urlInfo.alternativeUrl = `${window.location.origin}/?sc_itemid=${ScItem.id}&sc_mode=normal&sc_lang=${ScItem.language}&sc_version=${ScItem.version}`;
   urlInfo.isCdServer = false;
   urlInfo.sitecorePath = pathFromHome(ScItem.pathFull);
@@ -201,7 +201,7 @@ const initLiveUrl = (storage) => {
             <div class="scMessageBarTextContainer">
               <div class="scMessageBarTitle">Sitecore Live URL
               ${statusDiv}
-              <span class="liveUrlBadge t-sm t-top ${cdConfigDiv}" onclick="addSite('${global.launchpadPage}','${
+              <span class="liveUrlBadge t-sm t-right ${cdConfigDiv}" onclick="addSite('${global.launchpadPage}','${
           global.urlOrigin
         }','${pathToHome}', '${siteName[0].toUpperCase()}')" data-tooltip="Click to configure your sites" title="Click to configure your sites">${urlInfo.badge}</span>
               <span class="liveUrlStatus"></span>

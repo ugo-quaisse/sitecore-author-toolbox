@@ -1035,5 +1035,12 @@ function scrollToDatasourceEE(id) {
  * Open validation window fron EE
  */
 function openValidationEE() {
-  parent.document.querySelector("[data-sc-id*='ValidationRibbonButton' i]").click();
+  parent.document.querySelector("[data-sc-id*='ValidationRibbonButton' i]") ? parent.document.querySelector("[data-sc-id*='ValidationRibbonButton' i]").click() : false;
+}
+
+/**
+ * Open workbox from EE
+ */
+function openWorkboxEE() {
+  document.querySelector('[data-sc-id="WorkboxRibbonButton"]') ? document.querySelector('[data-sc-id="WorkboxRibbonButton"]').click() : false;
 }

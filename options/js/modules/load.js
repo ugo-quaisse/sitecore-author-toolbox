@@ -64,7 +64,6 @@ const parseJsonSites = (json) => {
           key == "languageEmbedding" ? (embedding = value) : false;
           key == "useDisplayName" ? (display = value) : false;
         }
-        console.log(site, display);
         //Default values
         lang = lang == undefined ? "" : lang;
         embedding = embedding == undefined ? true : embedding;

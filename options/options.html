@@ -157,7 +157,7 @@
             <span class="scFeatureName">Other enhancements <a href="https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki/" class="infoLink" target="_blank" rel="noopener">Info</a></span>
           </div>
         </fieldset>
-        <legend>Content Editor <i>⚠️ Can reduce editor's performance</i></legend>
+        <legend>Content Editor <i>⚠️ Can slow down performances</i></legend>
         <fieldset>
           <!-- Quick info -->
           <div class="scFeature">
@@ -263,27 +263,27 @@
       </div>
       <!-- Panel domains -->
       <div id="domains">
-        <p>
-          <a class="show_hint">How to configure your sites</a>
-        </p>
+        <h2>1. How to configure your sites</h2>
         <div id="hint">
           <ul>
             <li>Copy the Sitecore site path from the Homepage Quick Info section</li>
             <li>Enter your Site Url</li>
-            <li>If needed, add <code>{lang}</code> token in your "site URL" if you want to embed language at a specific place.</li>
-            <li>If you want to disable language embedding for a given site, click Advanced Mode and switch off embedding.</li>
-            <li>If you need to get a specific URL for a given language, click Advanced Mode and add Sitecore language in this field (e.g "en" or "fr-fr")</li>
+            <li>Optionnal: If you need to embed language code in a specific place, add <code>{lang}</code> token in your "site URL". (e.g https://yoursite.com/folder-{lang}/</li>
+            <li>Optionnal: If you want to disable language embedding for a given site, turn off "Embed" in Advanced mode.</li>
+            <li>Optionnal: If you need to configure a specific URL for a given language, add language code in "Language" field in Advanced mode. (e.g "en" or "fr-fr")</li>
             <li>More help available at <a href="https://uquaisse.io/sat_domains" target="_blank" rel="noopener">https://uquaisse.io</a></li>
           </ul>
         </div>
 
         <div id="sitesButtons">
+          <h2>2. Backup / restore your sites</h2>
           <input class="importSites" type="file" accept=".json" style="display: none" />
           <input class="importSitesVisible" type="button" value="⤒ IMPORT (.JSON)" />
           <input class="exportSites" type="button" value="⤓ EXPORT (.JSON)" />
         </div>
 
         <div id="modes">
+          <h2>3. List of you sites</h2>
           <a class="advanced_mode">[Show Advanced mode]</a>
           <a class="basic_mode" style="display: none">[Show Basic mode]</a>
         </div>

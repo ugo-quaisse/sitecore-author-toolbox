@@ -273,7 +273,12 @@ body.satExperimentalUi input[type="color"]::-webkit-color-swatch {
 
 body.satExperimentalUi .wbNotificationMenu {
   background-color: var(--accent);
-  right: 117px;
+  right: 115px;
+  top: 38px;
+}
+
+body.satEEExperimentalUi .wbNotificationMenu {
+  right: 118px !important;
 }
 
 body.satExperimentalUi #scSitecoreRibbon {

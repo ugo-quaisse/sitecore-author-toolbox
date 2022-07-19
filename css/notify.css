@@ -286,3 +286,7 @@
   opacity: 1 !important;
   box-shadow: 0px 4px 5px rgb(0 0 0 / 20%) !important;
 }
+
+.notify a.OptionTitle[target="_blank"]:after {
+  content: "" !important;
+}

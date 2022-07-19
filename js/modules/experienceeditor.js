@@ -600,24 +600,27 @@ const initGroupedErrorsEE = (storage) => {
         if (group.dataset.bind.toLowerCase().includes("notifications") || group.dataset.bind.toLowerCase().includes("warning")) {
           let className = group.dataset.bind.toLowerCase().includes("notifications") ? "info" : "warning";
           group.querySelectorAll(".sc-messageBar-messageText").forEach(function (item) {
+            //Get content
             let doc = new DOMParser().parseFromString(item.innerHTML, "text/html");
+            //Links
             let count = 0;
+            let docAction = ``;
             doc.querySelectorAll("a").forEach(function (link) {
               link.setAttribute(`onclick`, `document.querySelector('#scWebEditRibbon').contentDocument.querySelectorAll("[data-bind*='notifications' i] .sc-messageBar-messageText a")[${count}].click()`);
               link.setAttribute("style", "opacity:0.8; padding: 0px 10px 0px 0px;");
+              docAction += link.outerHTML + " ";
               count++;
             });
+            //Title
             let docTitle = item.innerHTML ? new DOMParser().parseFromString(item.innerHTML, "text/html") : ``;
             docTitle.querySelectorAll("a").forEach(function (link) {
               link.remove();
             });
             docTitle = docTitle.querySelector("body").innerHTML;
-            let docAction = ``;
-            doc.querySelectorAll("a").forEach(function (link) {
-              docAction += link.outerHTML + " ";
-            });
+            //Exceptions
             docAction = docAction.includes("has locked this item") ? `Try unlocking from the "Home" tab` : docAction;
-            docTitle != "" ? addNotificationsEE(docTitle, docAction, className) : false;
+            //Show notification
+            docTitle != `` ? addNotificationsEE(docTitle, docAction, className) : false;
           });
         }
       });

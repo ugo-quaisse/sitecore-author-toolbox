@@ -176,7 +176,7 @@ const initLiveUrl = (storage) => {
   //Template type
   let isContent = ScItem.pathFull.includes("/sitecore/content/");
   let isMedia = ScItem.pathFull.includes("/sitecore/media library/");
-  let isData = ScItem.pathFull.includes("/data/");
+  let isData = ScItem.pathFull.includes("/data/") || ScItem.pathFull.includes("/page components/");
   let isSettings = ScItem.pathFull.includes("/settings/");
   let isPresentation = ScItem.pathFull.includes("/presentation/");
   let isEmailTemplate = ScItem.pathFull.includes("/sitecore/content/email/");

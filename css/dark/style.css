@@ -99,10 +99,6 @@ body.satDark textarea {
   border-color: var(--black3);
 }
 
-body.satDark #ClickableArea {
-  background-color: var(--black2) !important;
-}
-
 body.satDark .scWorkBoxData {
   color: var(--text);
 }

@@ -1,6 +1,6 @@
 {
   "name": "sitecore-author-toolbox",
-  "version": "7.1.2",
+  "version": "7.2.1",
   "description": "A set of handy tools for Sitecore Authors: Live URL, Grouped errors, Flags, Dark mode, Notifications, Media drag & drop...",
   "scripts": {
     "dev": "gulp",

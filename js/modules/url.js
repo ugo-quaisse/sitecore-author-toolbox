@@ -131,7 +131,7 @@ const buildLiveUrl = (ScItem, ScSite, response = false) => {
     urlInfo.alternativeUrl = `or try <a href="${urlInfo.alternativeUrl}" target="_blank" class="scMessageBarOption">this alternative link</a>`;
     urlInfo.alternativeUrl = response.farewell ? urlInfo.alternativeUrl.replace("xxxsxa_sitexxx", response.farewell) : (urlInfo.alternativeUrl = urlInfo.alternativeUrl.replace("&sc_site=xxxsxa_sitexxx", ""));
   } else {
-    urlInfo.badge = "CD server";
+    urlInfo.badge = "CD/Edge";
     urlInfo.isCdServer = true;
     //Language embedding position detection
     urlInfo.liveUrl = urlInfo.liveUrl.includes("{lang}") ? `${urlInfo.liveUrl.replace("{lang}", ScItem.language)}/${urlInfo.sitecorePath}` : `${urlInfo.liveUrl}/${ScItem.language}/${urlInfo.sitecorePath}`;
@@ -326,7 +326,7 @@ const checkUrlStatus = (status, source = null, experimental = false) => {
   document.querySelector(".liveUrlBadge") ? document.querySelector(".liveUrlBadge").classList.remove("hide") : false;
   //Check response
   if (status == "404") {
-    html = `<span class='liveStatusRed'><img loading='lazy' src='${global.dotRed}'/> Not published (${status})</span>`;
+    html = `<span class='liveStatusRed'><img loading='lazy' src='${global.dotRed}'/> Not found (${status})</span>`;
     barStyle = "scError";
   } else if (status == "500") {
     html = `<span class='liveStatusRed'><img loading='lazy' src='${global.dotRed}'/> Server error (code: ${status})</span>`;

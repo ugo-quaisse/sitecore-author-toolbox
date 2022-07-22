@@ -613,14 +613,16 @@ const initGroupedErrorsEE = (storage) => {
             });
             //Title
             let docTitle = item.innerHTML ? new DOMParser().parseFromString(item.innerHTML, "text/html") : ``;
-            docTitle.querySelectorAll("a").forEach(function (link) {
-              link.remove();
-            });
-            docTitle = docTitle.querySelector("body").innerHTML;
-            //Exceptions
-            docAction = docAction.includes("has locked this item") ? `Try unlocking from the "Home" tab` : docAction;
-            //Show notification
-            docTitle != `` ? addNotificationsEE(docTitle, docAction, className) : false;
+            if (docTitle != ``) {
+              docTitle.querySelectorAll("a").forEach(function (link) {
+                link.remove();
+              });
+              docTitle = docTitle.querySelector("body").innerHTML;
+              //Exceptions
+              docAction = docAction.includes("has locked this item") ? `Try unlocking from the "Home" tab` : docAction;
+              //Show notification
+              addNotificationsEE(docTitle, docAction, className);
+            }
           });
         }
       });

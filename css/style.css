@@ -1714,8 +1714,8 @@ ul.sc-accountInformation li:last-child:after {
   border: 3px solid transparent;
   margin-right: 2px;
   cursor: pointer;
-  height: unset;
-  width: unset;
+  height: 38px;
+  width: 38px;
   margin: unset;
   margin-left: 10px;
   margin-right: 2px;

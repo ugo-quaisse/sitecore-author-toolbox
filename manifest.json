@@ -1,6 +1,6 @@
 {
   "name": "Sitecore Author Toolbox",
-  "version": "7.2.1",
+  "version": "7.3",
   "manifest_version": 3,
   "description": "A set of handy tools for Sitecore Authors: Live URL, Grouped errors, Flags, Dark mode, Notifications, Media drag & drop...",
   "icons": {

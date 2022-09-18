@@ -41,6 +41,8 @@ body.satExperimentalUi .scStartButton {
 
 body.satExperimentalUi #globalHeaderUserPortrait {
   border-width: 2px;
+  width: 36px;
+  height: 36px;
 }
 
 body.satExperimentalUi #globalHeaderUserPortrait:hover {

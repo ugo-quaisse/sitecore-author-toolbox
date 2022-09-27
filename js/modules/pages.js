@@ -1,18 +1,18 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 
-// import * as global from "./global.js";
-import { loadCssFile } from "./helpers.js";
+import * as global from "./global.js";
+import { loadCssFile, initStorageFeature } from "./helpers.js";
 import { currentColorScheme } from "./dark.js";
 import { getAccentColor } from "./experimentalui.js";
 
-export { initHorizon };
+export { initPages, initPagesRTL };
 
 /**
- * Reset Experience Editor CSS
+ * Init Style
  */
-const initHorizon = (storage) => {
-  storage.feature_experienceeditor == undefined ? (storage.feature_experienceeditor = true) : false;
-  storage.feature_experienceeditor ? loadCssFile("css/horizon.css") : false;
+const initPages = (storage) => {
+  storage.feature_experienceeditor = initStorageFeature(storage.feature_experienceeditor, false);
+  storage.feature_experienceeditor ? loadCssFile("css/pages.css") : false;
   //Remove satExtension satDark satExperimetalUI from main frame
   document.body ? document.body.classList.add("satHZ") : false;
   document.body ? document.body.classList.remove("satExtension") : false;
@@ -23,4 +23,17 @@ const initHorizon = (storage) => {
     document.body ? document.body.classList.add("satHZDark") : false;
   }
   getAccentColor();
+};
+
+/**
+ * Enable RTL
+ */
+const initPagesRTL = (storage) => {
+  storage.feature_rtl = initStorageFeature(storage.feature_rtl, true);
+  if (storage.feature_rtl) {
+    console.log(global.rteLanguages);
+    if (global.urlParams.get("sc_lang") == "ar-ae") {
+      loadCssFile("css/rtl.min.css");
+    }
+  }
 };

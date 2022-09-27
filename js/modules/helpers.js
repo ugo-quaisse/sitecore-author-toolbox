@@ -165,6 +165,7 @@ const getScItemData = () => {
     tr.cells[0].innerText == "Item owner:" && tr.cells[1].querySelector("input") ? (scItem.owner = tr.cells[1].querySelector("input").value.toLowerCase()) : false;
     scItem.language = document.querySelector("#scLanguage") ? document.querySelector("#scLanguage").value.toLowerCase() : "en";
     scItem.version = document.querySelector(".scEditorHeaderVersionsVersion > span") ? document.querySelector(".scEditorHeaderVersionsVersion > span").innerText : "1";
+    scItem.version = scItem.version.includes(" of ") ? scItem.version.split(" of ")[0].replace(" ", "") : scItem.version;
   }
   return scItem;
 };

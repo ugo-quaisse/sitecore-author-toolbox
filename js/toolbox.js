@@ -59,8 +59,9 @@ import {
   initOptionalFields,
   initGroupedErrorsEE,
 } from "./modules/experienceeditor.js";
-import { initHorizon } from "./modules/horizon.js";
+import { initPages, initPagesRTL } from "./modules/pages.js";
 import { initTabSections } from "./modules/tabs.js";
+import { initCollection } from "./modules/collection.js";
 /**
  * Get all user's settings from chrome storage
  */
@@ -98,7 +99,8 @@ chrome.storage.sync.get((storage) => {
       showSnackbar(storage);
       contentTreeScrollTo();
       initLightbox();
-      initIntroScreen();
+      //initIntroScreen();
+      initCollection(storage);
       if (storage.feature_experimentalui) {
         log("**** Experimental ****", "yellow");
         initAppName(storage, "Content Editor");
@@ -346,12 +348,13 @@ chrome.storage.sync.get((storage) => {
 
   /*
    *********************
-   * Horizon detection *
+   * Pages detection *
    *********************
    */
-  if (global.isHorizon || global.isHorizonFieldBuilder || global.isHorizonExplorer) {
-    log("Horizon detected", "red");
+  if (global.isPages || global.isPagesFieldBuilder || global.isPagesExplorer) {
+    log("Pages detected", "red");
     document.body ? document.body.classList.add("satExtension") : false;
-    initHorizon(storage);
+    initPages(storage);
+    initPagesRTL(storage);
   }
 });

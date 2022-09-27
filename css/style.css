@@ -121,7 +121,8 @@ body.satExtension #scCreatePlus {
   visibility: hidden;
 }
 
-body.satExtension #scModal {
+body.satExtension #scModal,
+body.satExtension #scModalCollection {
   visibility: hidden;
   opacity: 0;
   transition: all ease-in-out 0.2s;
@@ -602,7 +603,8 @@ body.satExtension .ui-widget-overlay:after {
   visibility: visible;
 }
 
-body.satExtension .scOverlay {
+body.satExtension .scOverlay,
+body.satExtension .scCollectionOverlay {
   background: rgba(0, 0, 0, 0.3);
   margin: 0;
   padding: 0;
@@ -1730,6 +1732,10 @@ ul.sc-accountInformation li:last-child:after {
   z-index: 1 !important;
 }
 
+#scCollection {
+  padding: 0px 20px;
+}
+
 .scAccountMenu {
   position: absolute;
   right: 5px;
@@ -1918,7 +1924,60 @@ body.satExtension #scModal {
   transition: all ease-in-out 0.2s;
 }
 
-#scModal .header {
+body.satExtension dialog {
+  text-align: center;
+  background-color: #333;
+  color: #333;
+  border: none;
+  padding: 30px;
+  border-radius: 5px;
+  box-shadow: 0 3px 10px 2px rgba(0, 0, 0, 0.5);
+  width: 500px;
+  max-width: 80%;
+}
+
+body.satExtension dialog[open] {
+  animation: toggle-modal 0.3s ease-in-out;
+}
+
+body.satExtension dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+body.satExtension dialog h2 {
+  margin: 0 0 30px;
+  color: #eee;
+}
+
+@keyframes toggle-modal {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+body.satExtension #scModalCollection {
+  position: absolute;
+  width: 850px;
+  height: 720px;
+  padding: 0px;
+  visibility: hidden;
+  z-index: 10;
+  left: calc(50% - 850px / 2);
+  top: calc(50% - (720px / 2) - 20px);
+  opacity: 0;
+  background-color: var(--white);
+  border-radius: 5px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0px 5px 40px rgba(0, 0, 0, 0.2);
+  transition: all ease-in-out 0.2s;
+}
+
+#scModal .header,
+#scModalCollection .header {
   width: calc(100% - 54px);
   background-color: #111111;
   padding: 25px 27px 10px 27px;
@@ -1928,7 +1987,8 @@ body.satExtension #scModal {
   line-height: 40px;
 }
 
-#scModal .header .close {
+#scModal .header .close,
+#scModalCollection .header .close {
   position: absolute;
   right: 17px;
   top: 22px;
@@ -1940,7 +2000,8 @@ body.satExtension #scModal {
   cursor: pointer;
 }
 
-#scModal .header .maximize {
+#scModal .header .maximize,
+#scModalCollection .header .maximize {
   position: absolute;
   right: 51px;
   top: 22px;
@@ -1953,16 +2014,19 @@ body.satExtension #scModal {
 }
 
 #scModal .header .close:hover,
-#scModal .header .maximize:hover {
+#scModalCollection .header .close:hover,
+#scModal .header .maximize:hover,
+#scModalCollection .header .maximize:hover {
   opacity: 1;
 }
 
-#scModal .main {
+#scModal .main,
+#scModalCollection .main {
   height: calc(100% - 75px);
   overflow: auto;
 }
 
-#scModal .noResult {
+#scModal .noResult #scModalCollection .noResult {
   margin: auto;
   font-size: 18px;
   font-family: "Open Sans", Arial, "Microsoft YaHei", sans-serif;
@@ -1994,7 +2058,8 @@ body.satExtension #scModal {
   border-radius: 5px;
 }
 
-#scModal .footer {
+#scModal .footer,
+#scModalCollection .footer {
   width: calc(100% - 54px);
   background-color: #e3e3e3;
   padding: 20px 27px;
@@ -2010,7 +2075,8 @@ body.satExtension #scModal {
   white-space: nowrap;
 }
 
-#scModal .footer b {
+#scModal .footer b,
+#scModalCollection .footer b {
   font-weight: normal;
   background-color: #1e8aff;
   color: #fff;
@@ -2021,6 +2087,7 @@ body.satExtension #scModal {
 .scInstantSearchResults > .preload,
 #scPanel > .preload,
 #scModal > .preload,
+#scModalCollection > .preload,
 #svgAnimation {
   width: 100px;
   height: 24px;

@@ -1,3 +1,4 @@
+/* eslint-disable no-script-url */
 /* eslint-disable no-tabs */
 /* eslint-disable max-params */
 /* eslint-disable newline-per-chained-call */
@@ -416,6 +417,12 @@ const initColorPicker = (storage) => {
  */
 const setInsertIcon = (treeNode) => {
   let id = treeNode.replace("Tree_Node_", "");
+  let language = document.querySelector("#scLanguage") ? document.querySelector("#scLanguage").value : "en";
+  let idFormat = id.replace(
+    // eslint-disable-next-line prefer-named-capture-group
+    /([0-z]{8})([0-z]{4})([0-z]{4})([0-z]{4})([0-z]{12})/u,
+    "$1-$2-$3-$4-$5"
+  );
   let a = document.querySelector("#Tree_Node_" + id);
   let itemName = a.querySelector("span").innerText;
   let active = document.querySelector(".scContentTreeNodeActive") ? document.querySelector(".scContentTreeNodeActive").id.replace("Tree_Node_", "") : false;
@@ -447,14 +454,15 @@ const setInsertIcon = (treeNode) => {
   document.querySelectorAll(".scEditItemIcon").forEach((el) => {
     el.remove();
   });
-  //Add Edit icon
+  //Custom editor
+  let userEditor = !global.isXmCloud ? `Edit in Experience Editor` : `Edit in Pages`;
   //prettier-ignore
-  a.insertAdjacentHTML("afterend", `<span id="scIconEE${id}" class="scEditItemIcon ${activeClass} t-left t-sm" data-tooltip="Edit in Experience Editor" onclick="javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor(id={` +
-        id.replace(
-        // eslint-disable-next-line prefer-named-capture-group
-        /([0-z]{8})([0-z]{4})([0-z]{4})([0-z]{4})([0-z]{12})/u,
-        "$1-$2-$3-$4-$5") + `})')"></span>`
-  );
+  let userEditorAction = !global.isXmCloud
+    ? `javascript:return scForm.postEvent(this,event,'webedit:openexperienceeditor(id={${idFormat}})')`
+    : `javascript:window.open('https://pages.sitecorecloud.io/composer/pages/editor?sc_itemid=${idFormat}&sc_lang=${language}&sc_version=${getScItemData().version}')`;
+
+  //prettier-ignore
+  a.insertAdjacentHTML("afterend", `<span id="scIconEE${id}" class="scEditItemIcon ${activeClass} t-left t-sm" data-tooltip="${userEditor}" onclick="${userEditorAction}"></span>`);
   target = document.querySelector("#scIconEE" + id);
   target ? target.setAttribute("style", "opacity:1") : false;
 

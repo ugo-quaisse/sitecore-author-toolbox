@@ -9,6 +9,7 @@ import { isFileExists } from "./helpers.js";
  */
 export const timeoutAsync = 4000;
 export const windowLocationHref = window.location.href.replace(/&amp;/g, "&").toLowerCase();
+export const windowHost = window.location.host.toLowerCase();
 export const queryString = window.location.search.toLowerCase();
 export const urlOrigin = new URL(windowLocationHref).origin;
 export const urlParams = new URLSearchParams(queryString);
@@ -122,6 +123,7 @@ export const iconOwl = chrome.runtime.getURL("images/owl.svg");
 export const iconTreeCollapsed = chrome.runtime.getURL("images/treemenu_collapsed.png");
 export const iconTreeExpanded = chrome.runtime.getURL("images/treemenu_expanded.png");
 export const iconIntro = chrome.runtime.getURL("images/intro.svg");
+export const iconCollection = chrome.runtime.getURL("images/collection.svg");
 export const bgPreview = chrome.runtime.getURL("images/bg_preview.jpg");
 
 export let timeout;
@@ -174,6 +176,7 @@ export const isChangePassword = windowLocationHref.includes("changepassword.aspx
 export const isUserManager = windowLocationHref.includes("user%20manager.aspx");
 export const isContentEditor = document.querySelector("#scLanguage");
 export const isExperienceEditor = windowLocationHref.includes("/applications/experienceeditor/");
+export const isXmCloud = windowHost.includes("sitecorecloud.io");
 export const isContentHome = windowLocationHref.includes("/content/");
 export const isLoginPage = windowLocationHref.includes("sitecore/login");
 export const isLaunchpad = windowLocationHref.includes("/applications/launchpad");
@@ -203,9 +206,9 @@ export const isRules = windowLocationHref.includes("rules.aspx");
 export const isCss = windowLocationHref.includes(".css");
 export const isSearch = windowLocationHref.includes("showresult.aspx");
 export const isExperienceProfile = windowLocationHref.includes("/applications/experienceprofile/");
-export const isHorizon = windowLocationHref.includes("/composer/pages/");
-export const isHorizonFieldBuilder = windowLocationHref.includes("/content/fieldbuilder/");
-export const isHorizonExplorer = windowLocationHref.includes("/content/explorer/");
+export const isPages = windowLocationHref.includes("/composer/pages/");
+export const isPagesFieldBuilder = windowLocationHref.includes("/content/fieldbuilder");
+export const isPagesExplorer = windowLocationHref.includes("/content/explorer");
 export const isWorkbox = windowLocationHref.includes("workbox");
 export const scQuickInfo = document.querySelector(".scEditorHeaderQuickInfoInput");
 export const scUrlHash = window.location.hash.substr(1);

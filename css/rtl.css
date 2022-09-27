@@ -3,7 +3,8 @@
 #Editors input[type="password"],
 #Editors select,
 #Editors textarea,
-#ContentWrapper {
+#ContentWrapper,
+sc-field-builder input {
   direction: rtl !important;
   text-align: unset;
 }

@@ -347,6 +347,29 @@ chrome.storage.sync.get((storage) => {
   }
 
   /*
+   **********************
+   * XM Cloud detection *
+   **********************
+   */
+  if (global.isXmCloud) {
+    console.log("XM CLOUD!");
+    global.urlParams.get("tab").toLowerCase() == "tools" ? console.log("Tab tools") : false;
+    let url = location.href;
+    document.body.addEventListener(
+      "click",
+      () => {
+        requestAnimationFrame(() => {
+          if (url !== location.href) {
+            console.log("url changed");
+            url = location.href;
+          }
+        });
+      },
+      true
+    );
+  }
+
+  /*
    *********************
    * Pages detection *
    *********************

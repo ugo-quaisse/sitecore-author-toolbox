@@ -584,7 +584,7 @@ const initGroupedErrorsEE = (storage) => {
               if (line.querySelector("td.scValidatorResult").innerText.includes("[unknown]")) {
                 line.querySelector("td.scValidatorResult").innerText = `Language version "${sc_language}" seems missing for a field`;
               }
-              if (errorType.includes("yellow.png") && !line.querySelector("td.scValidatorTitle > div:last-child").innerText.includes("XHTML")) {
+              if (errorType.includes("yellow.png") && !line.querySelector("td.scValidatorTitle > div:last-child").innerText.toLowerCase().includes("spaces")) {
                 addNotificationsEE(line.querySelector("td.scValidatorResult").innerText, `${fixLink} &nbsp; <a href="${validatorLink}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">More details</a>`, `warning`);
               } else if (errorType.includes("red.png") && !line.querySelector("td.scValidatorResult").innerText.includes("(403)") && !line.querySelector("td.scValidatorTitle > div:last-child").innerText.includes("XHTML")) {
                 addNotificationsEE(line.querySelector("td.scValidatorResult").innerText, `${fixLink} &nbsp; <a href="${validatorLink}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">More details</a>`, `error`);
@@ -632,7 +632,8 @@ const initGroupedErrorsEE = (storage) => {
     setTimeout(() => {
       if (parent.document.querySelector("body .notifications-container").dataset.count == 0) {
         addNotificationsEE(`This page looks great! 🎉`, `No error found on this page.`, `success`, 4000);
-      } else if (parent.document.querySelector("body .notifications-container").dataset.count > 3) {
+      }
+      if (parent.document.querySelector("body .notifications-container").dataset.count > 3) {
         parent.document.querySelector("body .notifications-container").insertAdjacentHTML("afterbegin", `<div onclick="closeAllNotify()" class="notify-clearall">Clear All</div>`);
       }
     }, 4500);

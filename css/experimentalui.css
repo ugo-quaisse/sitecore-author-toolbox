@@ -234,6 +234,7 @@ body.satExperimentalUi #EditorFrames {
   margin-top: 56px;
   height: auto;
   background-color: var(--experimentalBackground);
+  margin-bottom: 50px;
 }
 
 body.satExperimentalUi #SearchPanel {
@@ -2198,6 +2199,7 @@ body.satExperimentalUi .scEditorTabControlsHolder > button.scAddComponent {
 
 body.satExperimentalUi .scEditorTabControlsHolder > button.scAddComponent > img {
   width: 12px;
+  filter: invert(var(--accentInvert)) !important;
 }
 
 body.satExperimentalUi .scSaveBar > .scActions > button.scMenu {
@@ -2661,6 +2663,10 @@ body.satExperimentalUi #Editor_contentIframe {
 
 body.satExperimentalUi .scComboboxDropDown {
   min-height: 8px;
+  padding: 13px 5px 12px 5px;
+  border-left: none;
+  border-radius: none;
+  box-shadow: unset;
 }
 
 body.satExperimentalUi .scCalendarUI {

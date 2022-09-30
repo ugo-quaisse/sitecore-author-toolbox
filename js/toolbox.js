@@ -272,6 +272,7 @@ chrome.storage.sync.get((storage) => {
       initDateTimeField(storage);
       initPasswordField(storage);
       initMaterializeIcons(storage);
+      initAutoExpandTree(storage);
     } else if (global.isSourceBrowser) {
       log("**** Source Browser ****", "orange");
     } else if (global.isGalleryLinks) {

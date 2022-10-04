@@ -58,6 +58,8 @@ Requires that Sitecore is installed to the default directory of /sitecore/.
 ## Supported Sitecore version
 
 Tested on Sitecore versions:
+* 10.3.0 XM Cloud
+* 10.2.0
 * 10.1.0 (rev. 005207)
 * 10.0.1 (rev. 004842)
 * 9.3.0 (rev. 003498)

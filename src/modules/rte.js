@@ -39,7 +39,7 @@ const initSyntaxHighlighterRte = (storage) => {
       //Inject codemirror
       loadCssFile("css/codemirror.min.css");
       loadCssFile("css/dark/ayu-dark.css");
-      loadJsFile("js/codemirror.min.js");
+      loadJsFile("src/lib/codemirror.min.js");
       //RTE Tabs
       let reTextArea = global.isRichTextEditor ? document.querySelector(".reTextArea") : false;
       let darkModeTheme = initDarkModeEditor(storage);
@@ -74,7 +74,7 @@ const initSyntaxHighlighterScriban = (storage) => {
         //Inject codemirror
         loadCssFile("css/codemirror.min.css");
         loadCssFile("css/dark/ayu-dark.css");
-        loadJsFile("js/codemirror.js");
+        loadJsFile("src/lib/codemirror.js");
         scribanTemplate.insertAdjacentHTML("afterend", '<input type="hidden" class="scDarkMode" value="' + darkModeTheme + '" />');
         scribanTemplate.insertAdjacentHTML("afterend", '<input type="hidden" class="scEditor" value="scribanTemplate" />');
       }

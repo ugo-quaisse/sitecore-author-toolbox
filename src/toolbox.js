@@ -74,7 +74,7 @@ chrome.storage.sync.get((storage) => {
   if (global.isSitecore && global.isSitecoreJs && !global.isEditMode && !global.isLoginPage && !global.isCss) {
     log("Sitecore detected", "red");
     document.body ? document.body.classList.add("satExtension") : false;
-    loadJsFile("js/inject.js");
+    loadJsFile("src/lib/inject.js");
     checkNotificationPermissions();
     checkPublishNotification(storage);
     initAutoExpandTree(storage);
@@ -290,7 +290,7 @@ chrome.storage.sync.get((storage) => {
   if ((global.isEditMode && !global.isLoginPage) || (global.isPreviewMode && !global.isLoginPage) || (global.isSitecoreModule && !global.isLoginPage)) {
     log("Experience Editor detected", "red");
     document.body ? document.body.classList.add("satExtension") : false;
-    loadJsFile("js/inject.js");
+    loadJsFile("src/lib/inject.js");
     checkNotificationPermissions();
     checkPublishNotification(storage);
     keyEventListeners();

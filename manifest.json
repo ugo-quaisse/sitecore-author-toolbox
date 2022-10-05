@@ -9,7 +9,7 @@
   },
   "default_locale": "en",
   "background": {
-    "service_worker": "js/background.js"
+    "service_worker": "src/background.js"
   },
   "permissions": ["activeTab", "tabs", "storage", "downloads", "contextMenus", "cookies", "scripting"],
   "host_permissions": ["*://*/*"],
@@ -17,7 +17,7 @@
     {
       "matches": ["<all_urls>"],
       "css": ["css/main.min.css"],
-      "js": ["js/app.js"],
+      "js": ["src/app.js"],
       "run_at": "document_end",
       "all_frames": true
     }
@@ -35,7 +35,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["images/*", "css/*", "js/*", "audio/*", "options/*", "data/icons.json"],
+      "resources": ["images/*", "css/*", "src/*", "audio/*", "options/*", "data/icons.json"],
       "matches": ["<all_urls>"]
     }
   ]

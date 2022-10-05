@@ -6,7 +6,7 @@
  * ugo.quaisse@gmail.com
  */
 (async () => {
-  const contentScript = await import(chrome.runtime.getURL("src/toolbox.min.js"));
+  const contentScript = await import(chrome.runtime.getURL("src/toolbox.js"));
   try {
     contentScript.main();
   } catch (e) {

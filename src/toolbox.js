@@ -354,7 +354,7 @@ chrome.storage.sync.get((storage) => {
    */
   if (global.isXmCloud) {
     console.log("XM CLOUD!");
-    global.urlParams.get("tab").toLowerCase() == "tools" ? console.log("Tab tools") : false;
+    global.urlParams.get("tab") == "tools" ? console.log("Tab tools") : false;
     let url = location.href;
     document.body.addEventListener(
       "click",

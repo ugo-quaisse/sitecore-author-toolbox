@@ -11,10 +11,9 @@ export { initAutoExpandTree, initTreeGutterTooltips };
 const initAutoExpandTree = (storage) => {
   storage.feature_autoexpand = initStorageFeature(storage.feature_autoexpand, false);
   storage.feature_autoexpandcount = initStorageFeature(storage.feature_autoexpandcount, true);
-
-  if (storage.feature_autoexpand && document.querySelector(".scContentTree")) {
+  if (storage.feature_autoexpand && document.querySelector(".scContentTree, .scContentTreeNode")) {
     //Content tree
-    document.querySelector(".scContentTree").addEventListener(
+    document.querySelector(".scContentTree, .scContentTreeNode").addEventListener(
       "click",
       function (event) {
         //Change EditorFrames opacity on load item
@@ -42,10 +41,15 @@ const initAutoExpandTree = (storage) => {
         //Content Tree
         if (event.target.matches(".scContentTreeNodeGlyph")) {
           let glyphId = event.target.id;
-
+          let xmlControl = false;
+          if (glyphId == "") {
+            glyphId = event.target.parentNode.id;
+            xmlControl = true;
+          }
+          console.log(glyphId, xmlControl);
           setTimeout(function () {
             if (document && glyphId) {
-              let subTreeDiv = document.querySelector("#" + glyphId).nextSibling.nextSibling.nextSibling;
+              let subTreeDiv = !xmlControl ? document.querySelector("#" + glyphId).nextSibling.nextSibling.nextSibling : document.querySelector("#" + glyphId + " > div");
               if (subTreeDiv) {
                 let newNodes = subTreeDiv.querySelectorAll(".scContentTreeNode");
                 newNodes.length == 1 ? newNodes[0].querySelector(".scContentTreeNodeGlyph").click() : false;
@@ -101,30 +105,29 @@ const initAutoExpandTree = (storage) => {
  */
 const initTreeGutterTooltips = () => {
   //TODO buggy feature with position absolute
-  var target = document.querySelector("#ContentTreeInnerPanel");
-  var observer = new MutationObserver(function () {
-    document.querySelectorAll(".scContentTreeNodeGutterIcon").forEach(function (el) {
-      let parent = el.parentElement;
-      let image = el.parentElement.querySelector("img");
-      let attrExists = parent.hasAttribute("data-tooltip");
-      if (!attrExists) {
-        image.setAttribute("data-tooltip", el.getAttribute("title"));
-        image.classList.add("t-right");
-        image.classList.add("t-xs");
-        //parent.setAttribute("style", "position:absolute");
-        el.removeAttribute("title");
-      }
-    });
-  });
-
-  //Observer
-  if (target) {
-    let config = {
-      attributes: false,
-      childList: true,
-      characterData: false,
-      subtree: true,
-    };
-    //observer.observe(target, config);
-  }
+  // var target = document.querySelector("#ContentTreeInnerPanel");
+  // var observer = new MutationObserver(function () {
+  //   document.querySelectorAll(".scContentTreeNodeGutterIcon").forEach(function (el) {
+  //     let parent = el.parentElement;
+  //     let image = el.parentElement.querySelector("img");
+  //     let attrExists = parent.hasAttribute("data-tooltip");
+  //     if (!attrExists) {
+  //       image.setAttribute("data-tooltip", el.getAttribute("title"));
+  //       image.classList.add("t-right");
+  //       image.classList.add("t-xs");
+  //       //parent.setAttribute("style", "position:absolute");
+  //       el.removeAttribute("title");
+  //     }
+  //   });
+  // });
+  // //Observer
+  // if (target) {
+  //   let config = {
+  //     attributes: false,
+  //     childList: true,
+  //     characterData: false,
+  //     subtree: true,
+  //   };
+  //   //observer.observe(target, config);
+  // }
 };

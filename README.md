@@ -106,9 +106,11 @@ npm run dev
 
 Main program execution is located under https://github.com/ugo-quaisse/sitecore-author-toolbox/blob/master/js/toolbox.js
 
-## Support
+## Support & documenation
 
 The official support Twitter account for the library is at <https://twitter.com/uquaisse>.
+
+The official documentation can be found under the [wiki section](https://github.com/ugo-quaisse/sitecore-author-toolbox/wiki).
 
 ![Licence](https://img.shields.io/github/license/ugo-quaisse/sitecore-author-toolbox)
 

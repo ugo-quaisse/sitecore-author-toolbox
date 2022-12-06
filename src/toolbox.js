@@ -74,7 +74,7 @@ chrome.storage.sync.get((storage) => {
   if (global.isSitecore && global.isSitecoreJs && !global.isEditMode && !global.isLoginPage && !global.isCss) {
     log("Sitecore detected", "red");
     document.body ? document.body.classList.add("satExtension") : false;
-    loadJsFile("js/inject.js");
+    loadJsFile("src/lib/inject.js");
     checkNotificationPermissions();
     checkPublishNotification(storage);
     initAutoExpandTree(storage);
@@ -291,7 +291,7 @@ chrome.storage.sync.get((storage) => {
   if ((global.isEditMode && !global.isLoginPage) || (global.isPreviewMode && !global.isLoginPage) || (global.isSitecoreModule && !global.isLoginPage)) {
     log("Experience Editor detected", "red");
     document.body ? document.body.classList.add("satExtension") : false;
-    loadJsFile("js/inject.js");
+    loadJsFile("src/lib/inject.js");
     checkNotificationPermissions();
     checkPublishNotification(storage);
     keyEventListeners();
@@ -354,7 +354,7 @@ chrome.storage.sync.get((storage) => {
    */
   if (global.isXmCloud) {
     console.log("XM CLOUD!");
-    global.urlParams.get("tab").toLowerCase() == "tools" ? console.log("Tab tools") : false;
+    global.urlParams.get("tab") == "tools" ? console.log("Tab tools") : false;
     let url = location.href;
     document.body.addEventListener(
       "click",

@@ -579,7 +579,7 @@ const initGroupedErrorsEE = (storage) => {
           dom.querySelectorAll(".scListControl tr").forEach(function (line) {
             if (line.querySelectorAll("td") && line.querySelectorAll("td").length == 3) {
               let errorType = line.querySelectorAll("td")[0].querySelector("img").src;
-              let fixLink = `<a href="sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#${sc_itemid}_${sc_language}_${sc_version}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">Fix this error</a>`;
+              let fixLink = `<a href="/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#${sc_itemid}_${sc_language}_${sc_version}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">Fix this error</a>`;
               //Unknown error
               if (line.querySelector("td.scValidatorResult").innerText.includes("[unknown]")) {
                 line.querySelector("td.scValidatorResult").innerText = `Language version "${sc_language}" seems missing for a field`;

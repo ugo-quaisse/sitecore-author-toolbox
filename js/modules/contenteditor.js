@@ -296,6 +296,40 @@ const initCharsCount = (storage) => {
   storage.feature_charscount == undefined ? (storage.feature_charscount = true) : false;
   if (storage.feature_charscount) {
     /*
+     * Add characters count next to each rich text fields
+     */
+    setTimeout(function () {
+      var id = 0;
+      document.querySelectorAll(".defaultFieldEditorsFrameContainer > iframe").forEach((field) => {
+        var richTextContent = field.contentDocument.querySelector("#ContentWrapper");
+        if (richTextContent) {
+          charsText = richTextContent.innerText.length > 1 ? richTextContent.innerText.length + " chars" : richTextContent.innerText.length + " char";
+          countHtml = `<div id="richtextchars_${id}" class="satCharsCount" style="position: absolute; bottom: 1px; right: 10px; padding: 6px 10px; border-radius: 4px; line-height: 20px; opacity:0.5;">${charsText}</div>`;
+          richTextContent.insertAdjacentHTML("afterend", countHtml);
+          //Onchange
+          let observer = new MutationObserver((mutations) => {
+            for (let mutation of mutations) {
+              console.log(mutation.target.nextElementSibling.id);
+              if (mutation.target.nextElementSibling.id.includes("richtextchars_")) {
+                charsText = richTextContent.innerText.length > 1 ? richTextContent.innerText.length + " chars" : richTextContent.innerText.length + " char";
+                mutation.target.nextElementSibling.innerText = charsText;
+              }
+            }
+          });
+          //Observer
+          richTextContent
+            ? observer.observe(richTextContent, {
+                attributes: false,
+                childList: true,
+                characterData: false,
+                subtree: false,
+              })
+            : false;
+        }
+        id++;
+      });
+    }, 1000);
+    /*
      * Add a characters count next to each input and textarea field
      */
     var scTextFields = document.querySelectorAll("input, textarea");

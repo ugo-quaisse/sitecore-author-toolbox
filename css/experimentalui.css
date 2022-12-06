@@ -2552,11 +2552,6 @@ body.satExperimentalUi .scContentControlNavigation > img {
   margin: 0px !important;
 }
 
-body.satExperimentalUi .SelectedRow td.DataCell {
-  background-color: var(--accentTransparent);
-  color: var(--accentText);
-}
-
 body.satExperimentalUi .sort-item.hover,
 body.satExperimentalUi .sort-item.editable:hover {
   background-color: var(--accentTransparent);
@@ -3025,4 +3020,14 @@ body.satExperimentalUi .eeErrors .notification {
 
 body.satExperimentalUi .eeErrors .success {
   color: var(--messageSuccessLink);
+}
+
+body.satExperimentalUi .Row td.DataCell {
+  padding: 10px;
+}
+
+body.satExperimentalUi .SelectedRow td.DataCell {
+  background-color: var(--accent);
+  color: var(--accentText);
+  padding: 10px;
 }

@@ -21,7 +21,7 @@ import { resumeFromWhereYouLeftOff, historyNavigation } from "./modules/history.
 import { checkNotificationPermissions, checkPublishNotification } from "./modules/notification.js";
 import { initFlagRibbonEE, initLanguageMenuEE, initLanguageMenuCE, initFlagsPublishingWindow, initFlagsPublish } from "./modules/language.js";
 import { initCharsCount, initCheckboxes, initDateTimeField, initPasswordField, refreshContentEditor, contentTreeScrollTo, keyEventListeners, resetContentEditor } from "./modules/contenteditor.js";
-import { initAppName, initGravatarImage, initUserMenu, initIntroScreen } from "./modules/users.js";
+import { initLaunchpadColor, initAppName, initGravatarImage, initUserMenu, initIntroScreen } from "./modules/users.js";
 import { initInstantSearch, enhancedSitecoreSearch } from "./modules/search.js";
 import { insertModal, insertPanel } from "./modules/insert.js";
 import { initMediaExplorer, initMediaCounter, initMediaDragDrop, initMediaViewButtons, initUploadButton, initUploader, initLightbox, initMediaSearchBox } from "./modules/media.js";
@@ -100,7 +100,7 @@ chrome.storage.sync.get((storage) => {
       contentTreeScrollTo();
       initLightbox();
       //initIntroScreen();
-      initCollection(storage);
+      //initCollection(storage);
       if (storage.feature_experimentalui) {
         log("**** Experimental ****", "yellow");
         initAppName(storage, "Content Editor");
@@ -124,6 +124,7 @@ chrome.storage.sync.get((storage) => {
      */
     if (global.isLaunchpad) {
       log("**** Launchpad ****", "orange");
+      initLaunchpadColor();
       initLaunchpadIcon(storage);
       checkWorkbox(storage);
       showSnackbar(storage);

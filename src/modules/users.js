@@ -1,10 +1,10 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log", "info", "table", "time", "timeEnd"] }] */
 import * as global from "./global.js";
-import { exeJsCode, calcMD5 } from "./helpers.js";
+import { exeJsCode, calcMD5, rgbToHex } from "./helpers.js";
 import { currentColorScheme } from "./dark.js";
 import { initExperimentalUi, getAccentColor, initColorPicker } from "./experimentalui.js";
 
-export { initIntroScreen, getGravatar, initGravatarImage, initAppName, initWorkboxMenu, initUserPortraitMenu, initRibbonToggleMenu, initUserMenu };
+export { initIntroScreen, getGravatar, initGravatarImage, initLaunchpadColor, initAppName, initWorkboxMenu, initUserPortraitMenu, initRibbonToggleMenu, initUserMenu };
 
 /**
  * Init Introduction scree
@@ -90,7 +90,7 @@ const initGravatarImage = (storage) => {
 };
 
 /**
- * Attach Dropdown User Menu to the profil image
+ * Attach App Name next to the Sitecore grid icon
  */
 const initAppName = (storage, name = "Content Editor") => {
   if (storage.feature_experimentalui) {
@@ -99,6 +99,20 @@ const initAppName = (storage, name = "Content Editor") => {
     let newDashboard = document.querySelector("link[href*='/applications/launchpad/launchpad.css' i]");
     let htmlApp = `<div class="sc-globalheader-appName">${name}</div>`;
     startButton && !newDashboard ? startButton.insertAdjacentHTML("afterend", htmlApp) : false;
+  }
+};
+
+/**
+ * Attach App Name next to the Sitecore grid icon
+ */
+const initLaunchpadColor = () => {
+  var globalHeader = document.querySelector(".sc-globalHeader");
+  var globalHeaderColor = globalHeader ? window.getComputedStyle(globalHeader).backgroundColor : false;
+  var colorValues = globalHeaderColor.split("(")[1].split(")")[0].replaceAll(" ", "").split(",");
+  var hex = false;
+  if (colorValues) {
+    hex = rgbToHex(parseInt(colorValues[0]), parseInt(colorValues[1]), parseInt(colorValues[2])).toUpperCase();
+    hex == "#FFFFFF" && document.querySelector("#scNotificationBell") ? document.querySelector("#scNotificationBell").setAttribute("style", "filter: contrast(0)") : false;
   }
 };
 

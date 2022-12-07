@@ -16,7 +16,25 @@
 
 import * as global from "./global.js";
 
-export { log, loadCssFile, loadJsFile, exeJsCode, initStorageFeature, getMaterializeIcon, sitecoreItemJson, fetchTimeout, getScItemData, setPlural, setTextColour, isFileExists, trimTrailingSlash, repositionElement, startDrag, calcMD5 };
+export {
+  log,
+  loadCssFile,
+  loadJsFile,
+  exeJsCode,
+  initStorageFeature,
+  getMaterializeIcon,
+  sitecoreItemJson,
+  fetchTimeout,
+  getScItemData,
+  setPlural,
+  setTextColour,
+  isFileExists,
+  trimTrailingSlash,
+  repositionElement,
+  startDrag,
+  calcMD5,
+  rgbToHex,
+};
 
 /**
  * Show colored log message in console
@@ -430,4 +448,19 @@ function calcMD5(str) {
 
 String.prototype.capitalize = function () {
   return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
+/*
+ * Convert RGB to Hex
+ */
+const rgbToHex = (r, g, b) => {
+  var hex =
+    "#" +
+    [r, g, b]
+      .map((x) => {
+        const hex = x.toString(16);
+        return hex.length === 1 ? "0" + hex : hex;
+      })
+      .join("");
+  return hex;
 };

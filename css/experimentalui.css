@@ -69,7 +69,7 @@ body.satExperimentalUi .sc-launchpad-item .icon.sc10launchpad {
   background-color: var(--accent) !important;
 }
 body.satExperimentalUi .sc-launchpad-item .icon.sc10launchpad > img {
-  filter: brightness(var(--accentBrightness));
+  filter: invert(var(--accentRevert)) brightness(var(--accentBrightness));
 }
 body.satExperimentalUi #scPanel {
   padding: 0px 20px;

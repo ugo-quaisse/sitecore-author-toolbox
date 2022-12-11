@@ -61,7 +61,7 @@ import {
 } from "./modules/experienceeditor.js";
 import { initPages, initPagesRTL } from "./modules/pages.js";
 import { initTabSections } from "./modules/tabs.js";
-import { initCollection } from "./modules/collection.js";
+//import { initCollection } from "./modules/collection.js";
 /**
  * Get all user's settings from chrome storage
  */

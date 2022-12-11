@@ -508,6 +508,10 @@ body.satDark .scContentControlAttachmentImage {
   border: 1px solid #e3e3e3;
 }
 
+body.satDark .sc-applicationHeader-title {
+  color: var(--text);
+}
+
 body.satDark .scMultilistNav a:nth-of-type(2) {
   border-right: 1px solid var(--text) !important;
 }
@@ -1591,7 +1595,7 @@ body.satDark .liveStatusGreen {
   color: var(--lightgreen);
 }
 body.satDark .sc-launchpad-item {
-  background-color: var(--black1);
+  background-color: var(--black2);
   border-color: var(--black4);
 }
 body.satDark .sc-launchpad-item .sc-launchpad-text {

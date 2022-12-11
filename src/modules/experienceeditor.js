@@ -527,24 +527,28 @@ const initGroupedErrorsEE = (storage) => {
       })
         .then((response) => response.json())
         .then((data) => {
-          data.responseValue.value.forEach((item) => {
-            //Priority
-            if (item.Priority == 0) {
-              scErrorType = "error";
-            } else {
-              scErrorType = "warning";
-            }
-            //Unknown error
-            if (item.Text.includes("[unknown]")) {
-              item.Text = `Language version "${sc_language}" seems missing for a datasource`;
-              scErrorType = "warning";
-            }
-            addNotificationsEE(
-              `${item.Text}`,
-              `<a href="/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#${item.DataSourceId}_${sc_language.toLowerCase()}_${sc_version}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">Fix this error</a>`,
-              scErrorType
-            );
-          });
+          if (data.responseValue) {
+            data.responseValue.value.forEach((item) => {
+              //Priority
+              if (item.Priority == 0) {
+                scErrorType = "error";
+              } else {
+                scErrorType = "warning";
+              }
+              //Unknown error
+              if (item.Text.includes("[unknown]")) {
+                item.Text = `Language version "${sc_language}" seems missing for a datasource`;
+                scErrorType = "warning";
+              }
+              addNotificationsEE(
+                `${item.Text}`,
+                `<a href="/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#${
+                  item.DataSourceId
+                }_${sc_language.toLowerCase()}_${sc_version}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">Fix this error</a>`,
+                scErrorType
+              );
+            });
+          }
         });
     }, 500);
 
@@ -571,26 +575,32 @@ const initGroupedErrorsEE = (storage) => {
         credentials: "include",
       })
         .then((response) => response.json())
-        .then((data) => fetch(data.responseValue.value))
-        .then((response) => response.text())
         .then((data) => {
-          let dom = new DOMParser().parseFromString(data, "text/html");
-          let validatorLink = dom.querySelector("form").getAttribute("action");
-          dom.querySelectorAll(".scListControl tr").forEach(function (line) {
-            if (line.querySelectorAll("td") && line.querySelectorAll("td").length == 3) {
-              let errorType = line.querySelectorAll("td")[0].querySelector("img").src;
-              let fixLink = `<a href="/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#${sc_itemid}_${sc_language}_${sc_version}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">Fix this error</a>`;
-              //Unknown error
-              if (line.querySelector("td.scValidatorResult").innerText.includes("[unknown]")) {
-                line.querySelector("td.scValidatorResult").innerText = `Language version "${sc_language}" seems missing for a field`;
+          data.responseValue ? fetch(data.responseValue.value) : false;
+        })
+        .then((response) => {
+          response ? response.text() : false;
+        })
+        .then((data) => {
+          if (data) {
+            let dom = new DOMParser().parseFromString(data, "text/html");
+            let validatorLink = dom.querySelector("form").getAttribute("action");
+            dom.querySelectorAll(".scListControl tr").forEach(function (line) {
+              if (line.querySelectorAll("td") && line.querySelectorAll("td").length == 3) {
+                let errorType = line.querySelectorAll("td")[0].querySelector("img").src;
+                let fixLink = `<a href="/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1#${sc_itemid}_${sc_language}_${sc_version}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">Fix this error</a>`;
+                //Unknown error
+                if (line.querySelector("td.scValidatorResult").innerText.includes("[unknown]")) {
+                  line.querySelector("td.scValidatorResult").innerText = `Language version "${sc_language}" seems missing for a field`;
+                }
+                if (errorType.includes("yellow.png") && !line.querySelector("td.scValidatorTitle > div:last-child").innerText.toLowerCase().includes("spaces")) {
+                  addNotificationsEE(line.querySelector("td.scValidatorResult").innerText, `${fixLink} &nbsp; <a href="${validatorLink}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">More details</a>`, `warning`);
+                } else if (errorType.includes("red.png") && !line.querySelector("td.scValidatorResult").innerText.includes("(403)") && !line.querySelector("td.scValidatorTitle > div:last-child").innerText.includes("XHTML")) {
+                  addNotificationsEE(line.querySelector("td.scValidatorResult").innerText, `${fixLink} &nbsp; <a href="${validatorLink}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">More details</a>`, `error`);
+                }
               }
-              if (errorType.includes("yellow.png") && !line.querySelector("td.scValidatorTitle > div:last-child").innerText.toLowerCase().includes("spaces")) {
-                addNotificationsEE(line.querySelector("td.scValidatorResult").innerText, `${fixLink} &nbsp; <a href="${validatorLink}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">More details</a>`, `warning`);
-              } else if (errorType.includes("red.png") && !line.querySelector("td.scValidatorResult").innerText.includes("(403)") && !line.querySelector("td.scValidatorTitle > div:last-child").innerText.includes("XHTML")) {
-                addNotificationsEE(line.querySelector("td.scValidatorResult").innerText, `${fixLink} &nbsp; <a href="${validatorLink}" class="OptionTitle" target="_blank" style="color:rgba(255,255,255,0.8)">More details</a>`, `error`);
-              }
-            }
-          });
+            });
+          }
         });
     }, 600);
 

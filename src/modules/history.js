@@ -44,7 +44,7 @@ const resumeFromWhereYouLeftOff = (storage) => {
       //Security check
       storage.scLanguage == undefined ? (storage.scLanguage = "en") : false;
       //SVG animation
-      storage.feature_experimentalui ? document.querySelector("#svgAnimation").setAttribute("style", "opacity:1") : false;
+      storage.feature_experimentalui && document.querySelector("#svgAnimation") ? document.querySelector("#svgAnimation").setAttribute("style", "opacity:1") : false;
       //Reload from where you left off
       if (storage.scItemID && storage.feature_reloadnode === true) {
         log("[Read " + storage.scSource + "] Item : " + storage.scItemID, "beige");

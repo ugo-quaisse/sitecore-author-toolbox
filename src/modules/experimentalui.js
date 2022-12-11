@@ -663,7 +663,7 @@ const initTitleBarDesktop = () => {
   dock && global.isWindowedMode
     ? dock.insertAdjacentHTML("beforebegin", `<div class="titleBarDesktop scWindowHandle" ondblclick="javascript:scWin.maximizeWindow();"><span class="titleBarText">New window</span> ` + close + max + min + `</div>`)
     : false;
-  if (dock.classList.contains("showSitecoreRibbon") && document.querySelector(".titleBarDesktop")) {
+  if (dock.classList.contains("showSitecoreRibbon") && document.querySelector(".titleBarDesktop") == true) {
     document.querySelector(".titleBarDesktop").classList.add("hide");
   } else if (document.querySelector(".titleBarDesktop")) {
     document.querySelector(".titleBarDesktop").classList.remove("hide");

@@ -72,7 +72,8 @@ body.satExperimentalUi .sc-launchpad-item .icon.sc10launchpad > img {
   filter: invert(var(--accentRevert)) brightness(var(--accentBrightness));
 }
 body.satExperimentalUi #scPanel {
-  padding: 0px 20px;
+  padding: 0px 20px 20px 20px;
+  overflow: scroll;
 }
 
 body.satExperimentalUi #scPanel > .content {

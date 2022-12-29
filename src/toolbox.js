@@ -364,7 +364,6 @@ chrome.storage.sync.get((storage) => {
       () => {
         requestAnimationFrame(() => {
           if (url !== location.href) {
-            console.log("url changed");
             url = location.href;
           }
         });

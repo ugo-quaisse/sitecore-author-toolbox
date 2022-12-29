@@ -100,14 +100,10 @@ const showSnackbarBattery = (percentage, time) => {
 
     //Is Snackbar is already visible in a parent frame?
     let parentSnackbar = parent.document.querySelector(".snackbarBattery");
-    console.log("test1", hiddenBatteryScreen, parentSnackbar);
 
     //Show Snackbar
     if (!parentSnackbar) {
-      console.log("test2", parentSnackbar);
-
       document.querySelector("body").insertAdjacentHTML("beforeend", html);
-
       //Add listener on click #sbDismiss
       document.querySelectorAll("#sbAction, #sbDismiss").forEach(function (elem) {
         elem.addEventListener("click", function () {

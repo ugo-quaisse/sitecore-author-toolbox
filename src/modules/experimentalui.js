@@ -253,18 +253,17 @@ const insertMoreButton = () => {
 
   let panel = document.querySelector("#scPanel");
   //prettier-ignore
-  let html =
-    `<div class="content satItemDetails">
+  let html = `<div class="content satItemDetails">
       <h2>Item details</h2>
-      <h3>Item ID:</h3> <span class="itemDetail">${ScItem.id}</span>
-      <h3>Name:</h3> <span class="itemDetail">${ScItem.name}</span>
-      <h3>Path:</h3> <span class="itemDetail scItemPath">${ScItem.path}</span>
-      <h3>Template:</h3> <span class="itemDetail">${ScItem.template}</span>
-      <h3>Template ID:</h3> <span class="itemDetail">${ScItem.templateId}</span>
-      <h3>From:</h3> <span class="itemDetail">${ScItem.from}</span>
-      <h3>Owner:</h3> <span class="itemDetail">${ScItem.owner}</span>
-      <h3>Language:</h3> <span class="itemDetail">${ScItem.language}</span>
-      <h3>Version:</h3> <span class="itemDetail">${ScItem.version}</span>
+      <h3>Item ID:</h3> <input class="itemDetail" value="${ScItem.id}" />
+      <h3>Name:</h3> <input class="itemDetail" value="${ScItem.name}" />
+      <h3>Path:</h3> <input class="itemDetail" value="${ScItem.path}" />
+      <h3>Template:</h3> <input class="itemDetail" value="${ScItem.templateId}" />
+      <h3>Template ID:</h3> <input class="itemDetail" value="${ScItem.template}" />
+      <h3>From:</h3> <input class="itemDetail" value="${ScItem.from}" />
+      <h3>Owner:</h3> <input class="itemDetail" value="${ScItem.owner}" />
+      <h3>Language:</h3> <input class="itemDetail" value="${ScItem.language}" />
+      <h3>Version:</h3> <input class="itemDetail" value="${ScItem.version}" />
     </div>`;
   panel ? (panel.innerHTML = html) : false;
 };

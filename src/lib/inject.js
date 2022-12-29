@@ -1043,3 +1043,11 @@ function openValidationEE() {
 function openWorkboxEE() {
   document.querySelector('[data-sc-id="WorkboxRibbonButton"]') ? document.querySelector('[data-sc-id="WorkboxRibbonButton"]').click() : false;
 }
+
+/**
+ * Switch to dark mode
+ */
+function switchToDarkMode() {
+  document.querySelector(".darkmodeRadio[value='dark']").dispatchEvent(new Event("click"));
+  document.querySelector(".darkmodeRadio[value='dark']").checked = true;
+}

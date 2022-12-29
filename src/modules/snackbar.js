@@ -5,10 +5,10 @@ import * as global from "./global.js";
 import { getSiteUrl } from "./url.js";
 import { initStorageFeature } from "./helpers.js";
 
-export { showSnackbar, showSnackbarSite };
+export { showSnackbar, showSnackbarSite, showSnackbarBattery };
 
 /**
- * Show Materialize-style message bar from bottom-right
+ * Show Welcome Snackbar
  */
 const showSnackbar = (storage) => {
   //Snackbar settings
@@ -41,7 +41,7 @@ const showSnackbar = (storage) => {
 };
 
 /**
- * Show Materialize-style message bar from bottom-right
+ * Show Nez Site Detection Snackbar
  */
 const showSnackbarSite = (storage, ScItem) => {
   storage.feature_urls == initStorageFeature(storage.feature_urls, true);
@@ -79,6 +79,40 @@ const showSnackbarSite = (storage, ScItem) => {
           existing[length++] = siteName[0].toUpperCase();
           localStorage.setItem("sbDismissSites", JSON.stringify(existing));
           document.querySelector(".snackbarSite").setAttribute("style", "display: none");
+        });
+      });
+    }
+  }
+};
+
+/**
+ * Show Battery Snackbar
+ */
+const showSnackbarBattery = (percentage, time) => {
+  //Snackbar settings
+  let hiddenBatteryScreen = localStorage.getItem("scSaveBatteryPrompt");
+  if (hiddenBatteryScreen != "true") {
+    //prettier-ignore
+    let snackbarHtml = `
+    <b>Your battery is getting low</b><br />
+    You only have ${percentage}% of battery left.<br />Switch to Dark Mode to save battery?`;
+    let html = `<div class="snackbar snackbarBattery">${snackbarHtml}<button id="sbAction" onclick='switchToDarkMode()'>SWITCH</button><button id="sbDismiss">DISMISS</button></div>`;
+
+    //Is Snackbar is already visible in a parent frame?
+    let parentSnackbar = parent.document.querySelector(".snackbarBattery");
+    console.log("test1", hiddenBatteryScreen, parentSnackbar);
+
+    //Show Snackbar
+    if (!parentSnackbar) {
+      console.log("test2", parentSnackbar);
+
+      document.querySelector("body").insertAdjacentHTML("beforeend", html);
+
+      //Add listener on click #sbDismiss
+      document.querySelectorAll("#sbAction, #sbDismiss").forEach(function (elem) {
+        elem.addEventListener("click", function () {
+          localStorage.setItem("scSaveBatteryPrompt", true);
+          document.querySelector(".snackbar").remove();
         });
       });
     }

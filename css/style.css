@@ -1306,7 +1306,8 @@ body.satExtension #scEditorTabs {
 }
 
 body.satExtension .snackbar,
-body.satExtension .snackbarSite {
+body.satExtension .snackbarSite,
+body.satExtension .snackbarBattery {
   animation: slide 0.4s forwards;
   transition: right ease-in-out 0.4s;
   bottom: 60px;
@@ -1335,19 +1336,28 @@ body.satExtension .snackbarSite {
   background-position-x: 18px;
 }
 
+body.satExtension .snackbarBattery {
+  background: url(chrome-extension://__MSG_@@extension_id__/images/battery.svg) center left #333 no-repeat;
+  background-size: 9%;
+  background-position-x: 18px;
+}
+
 body.satExtension .snackbar > b,
-body.satExtension .snackbarSite > b {
+body.satExtension .snackbarSite > b,
+body.satExtension .snackbarBattery > b {
   display: contents;
   font-weight: bold;
 }
 
 body.satExtension .snackbar > u,
-body.satExtension .snackbarSite > u {
+body.satExtension .snackbarSite > u,
+body.satExtension .snackbarBattery > u {
   display: contents;
 }
 
 body.satExtension .snackbar > button,
-body.satExtension .snackbarSite > button {
+body.satExtension .snackbarSite > button,
+body.satExtension .snackbarBattery > button {
   background-color: transparent !important;
   border: none !important;
   color: #dc291d;

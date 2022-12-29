@@ -61,6 +61,7 @@ import {
 } from "./modules/experienceeditor.js";
 import { initPages, initPagesRTL } from "./modules/pages.js";
 import { initTabSections } from "./modules/tabs.js";
+import { getBatteryLevel } from "./modules/battery.js";
 //import { initCollection } from "./modules/collection.js";
 /**
  * Get all user's settings from chrome storage
@@ -82,6 +83,7 @@ chrome.storage.sync.get((storage) => {
     initUserMenu(storage);
     initDarkMode(storage);
     detectSwitchDarkMode(storage);
+    getBatteryLevel(storage);
     /*
      **********************
      * 1. CE Application  *
@@ -354,7 +356,7 @@ chrome.storage.sync.get((storage) => {
    **********************
    */
   if (global.isXmCloud) {
-    console.log("XM CLOUD!");
+    log("**** XM Cloud ****", "orange");
     global.urlParams.get("tab") == "tools" ? console.log("Tab tools") : false;
     let url = location.href;
     document.body.addEventListener(
